@@ -74,13 +74,10 @@ services:
         delay: 5s
         max_attempts: 3
         window: 30s
-  pgadmin:
-    image: dpage/pgadmin4
+  adminer:
+    image: adminer:4.8.0-standalone
     networks:
       - estime
-    environment:
-      PGADMIN_DEFAULT_EMAIL: {{ PGADMIN_DEFAULT_EMAIL }}
-      PGADMIN_DEFAULT_PASSWORD: {{ PGADMIN_DEFAULT_PASSWORD }}
     deploy:
       replicas: 1
       resources:
