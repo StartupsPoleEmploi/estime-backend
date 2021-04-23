@@ -1,0 +1,23 @@
+{"properties": [
+  {
+    "name": "emploi-store-dev.coordonnees-api-uri",
+    "type": "java.lang.String",
+    "description": "A description for 'emploi-store-dev.coordonnees-api-uri'"
+  },
+  {
+    "name": "emploi-store-dev.date-naissance-api-uri",
+    "type": "java.lang.String",
+    "description": "A description for 'emploi-store-dev.date-naissance-api-uri'"
+  },
+  {
+    "name": "emploi-store-dev.detail-indemnisation-api-uri",
+    "type": "java.lang.String",
+    "description": "A description for 'emploi-store-dev.detail-indemnisation-api-uri'"
+  },
+  {
+    "name": "openfisca-api-uri",
+    "type": "java.lang.String",
+    "description": "A description for 'open-fisca-api-uri'"
+  }
+  
+]}

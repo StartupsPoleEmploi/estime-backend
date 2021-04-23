@@ -1,0 +1,54 @@
+# manage server configuration
+server:
+  servlet:
+    contextPath: "/estime/v1"
+    
+# manage spring configuration
+spring:
+  application:
+    name: "estime-backend"
+  profiles:
+    active: "--ENVIRONMENT--"
+  security:
+    oauth2:
+      client:
+        provider:
+          oauth-pole-emploi:
+            token-uri: "--PE_CONNECT_TOKEN_URI--"
+            user-info-uri: "--PE_CONNECT_USER_INFO_URI--"
+        registration:
+          estime:
+            authorization-grant-type: "authorization_code"
+            client-id: "--PE_CONNECT_CLIENT_ID--"
+            client-secret: "--PE_CONNECT_CLIENT_SECRET--"
+            provider: "oauth-pole-emploi"
+      resourceserver:
+        jwt:
+          jwk-set-uri: "--PE_CONNECT_JWK_SET_URI--"
+          issuer-uri: "--PE_CONNECT_ISSUER_URI--"
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://postgres:5432/estime-db?currentSchema=estime
+    username: --DATABASE_USERNAME--
+    password: --DATABASE_PASSWORD--
+
+#manage monitoring endpoints
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        
+#emploi store dev
+emploi-store-dev:
+  coordonnees-api-uri : "--ESD_COORDONNEES_API_URI--"
+  date-naissance-api-uri : "--ESD_DATE_NAISSANCE_API_URI--"
+  detail-indemnisation-api-uri : "--ESD_DETAIL_INDEMNISATION_API_URI--"
+  
+#open fisca
+openfisca-api-uri: "http://openfisca-france:5000/calculate"
