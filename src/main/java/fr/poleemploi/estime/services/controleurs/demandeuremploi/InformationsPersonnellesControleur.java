@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
@@ -22,13 +22,13 @@ public class InformationsPersonnellesControleur {
         if(informationsPersonnelles == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "informationsPersonnelles"));
         }  else {
-            if(StringUtils.isEmpty(informationsPersonnelles.getCodePostal())) {
+            if(ObjectUtils.isEmpty(informationsPersonnelles.getCodePostal())) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "codePostal de informationsPersonnelles"));
             }
             if(informationsPersonnelles.getDateNaissance() == null) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "dateNaissance de informationsPersonnelles"));
             }
-            if (StringUtils.isEmpty(informationsPersonnelles.getNationalite())) {
+            if (ObjectUtils.isEmpty(informationsPersonnelles.getNationalite())) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nationalite de informationsPersonnelles"));
             } else {
                 controleNationalite(informationsPersonnelles);                

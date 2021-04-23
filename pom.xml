@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.1.RELEASE</version>
+        <version>2.4.5</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>fr.poleemploi</groupId>
@@ -112,7 +112,7 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>2.2.4</version>
+            <version>2.4.1</version>
         </dependency>
 
         <!-- *************************** others dependencies ************************** -->
@@ -120,22 +120,16 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-        </dependency>
-        <!-- selma - Java bean mapping - https://github.com/xebia-france/selma -->
-        <dependency>
-            <groupId>fr.xebia.extras</groupId>
-            <artifactId>selma</artifactId>
-            <version>${selma.version}</version>
         </dependency>
     </dependencies>
     <profiles>

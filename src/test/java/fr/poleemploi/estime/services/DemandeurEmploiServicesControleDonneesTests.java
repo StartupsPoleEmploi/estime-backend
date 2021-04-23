@@ -9,16 +9,13 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -39,11 +36,10 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.test.utile.TestUtile;
 
-@ExtendWith(SpringExtension.class)
+
 @SpringBootTest
 @ContextConfiguration
-@AutoConfigureTestDatabase
-@TestPropertySource(locations="classpath:application-test.yml")
+@TestPropertySource(locations="classpath:application-test.properties")
 class DemandeurEmploiServicesControleDonneesTests {
 
     @Autowired

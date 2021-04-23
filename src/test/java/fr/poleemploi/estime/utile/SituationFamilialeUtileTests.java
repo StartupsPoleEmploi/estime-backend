@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.logique.simulateuraidessociales.poleemploi.aides.Agepi;
@@ -22,10 +20,10 @@ import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.test.utile.TestUtile;
 
-@ExtendWith(SpringExtension.class)
+
 @ContextConfiguration
 @SpringBootTest
-@AutoConfigureTestDatabase
+@TestPropertySource(locations="classpath:application-test.properties")
 class SituationFamilialeUtileTests {
     
     @Autowired

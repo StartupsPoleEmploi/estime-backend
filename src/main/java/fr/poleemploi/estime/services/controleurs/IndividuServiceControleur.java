@@ -2,7 +2,7 @@ package fr.poleemploi.estime.services.controleurs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.controleurs.demandeuremploi.BeneficiaireAidesSocialesControleur;
@@ -34,13 +34,13 @@ public class IndividuServiceControleur {
         if (peConnectPayload == null) {
             throw new BadRequestException(BadRequestMessages.INDIVIDU_OBLIGATOIRE.getMessage());
         } else {
-            if (StringUtils.isEmpty(peConnectPayload.getCode())) {
+            if (ObjectUtils.isEmpty(peConnectPayload.getCode())) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "code de peConnectPayload"));
             }
-            if (StringUtils.isEmpty(peConnectPayload.getRedirectURI())) {
+            if (ObjectUtils.isEmpty(peConnectPayload.getRedirectURI())) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "redirectURI de peConnectPayload"));
             }
-            if (StringUtils.isEmpty(peConnectPayload.getNonce())) {
+            if (ObjectUtils.isEmpty(peConnectPayload.getNonce())) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nonce de peConnectPayload"));
             } 
         }   
@@ -51,7 +51,7 @@ public class IndividuServiceControleur {
             throw new BadRequestException(BadRequestMessages.INDIVIDU_OBLIGATOIRE.getMessage());
         } else {
             if(individu.getPeConnectAuthorization() == null 
-             || (individu.getPeConnectAuthorization() != null && StringUtils.isEmpty(individu.getPeConnectAuthorization().getAccessToken().isEmpty()))) {
+             || (individu.getPeConnectAuthorization() != null && ObjectUtils.isEmpty(individu.getPeConnectAuthorization().getAccessToken().isEmpty()))) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "accessToken de peConnectAuthorization"));
             }
         }   

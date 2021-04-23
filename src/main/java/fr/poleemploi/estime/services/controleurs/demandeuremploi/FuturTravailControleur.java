@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
@@ -47,7 +47,7 @@ public class FuturTravailControleur {
     }
     
     private void controlerTypeDeContrat(FuturTravail futurTravail) {
-        if(StringUtils.isEmpty(futurTravail.getTypeContrat())) {
+        if(ObjectUtils.isEmpty(futurTravail.getTypeContrat())) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "typeContrat de futurTravail"));
         }
         isTypeContratCorrect(futurTravail.getTypeContrat());

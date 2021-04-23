@@ -2,6 +2,7 @@ package fr.poleemploi.estime.configuration.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,6 +15,7 @@ import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 @Configuration
+@Profile({"recette","production"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")

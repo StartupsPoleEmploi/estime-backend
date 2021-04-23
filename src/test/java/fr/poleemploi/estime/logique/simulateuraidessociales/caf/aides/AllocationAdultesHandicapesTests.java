@@ -6,15 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.services.ressources.AideSociale;
@@ -23,11 +20,10 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
-@ExtendWith(SpringExtension.class)
+
 @SpringBootTest
 @ContextConfiguration
-@AutoConfigureTestDatabase
-@TestPropertySource(locations="classpath:application-test.yml")
+@TestPropertySource(locations="classpath:application-test.properties")
 class AllocationAdultesHandicapesTests {
 
     @Autowired
@@ -38,6 +34,8 @@ class AllocationAdultesHandicapesTests {
     public static class SpringConfig {
 
     }
+    
+  
   
     @Test
     void simulerAAHTest1() {

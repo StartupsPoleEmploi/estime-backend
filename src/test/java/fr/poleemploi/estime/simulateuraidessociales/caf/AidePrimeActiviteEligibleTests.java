@@ -3,24 +3,22 @@ package fr.poleemploi.estime.simulateuraidessociales.caf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.PrimeActivite;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 
-@ExtendWith(SpringExtension.class)
+
 @ContextConfiguration
 @SpringBootTest
-@AutoConfigureTestDatabase
+@TestPropertySource(locations="classpath:application-test.properties")
 class AidePrimeActiviteEligibleTests {
 
     @Autowired

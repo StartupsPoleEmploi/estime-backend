@@ -3,23 +3,21 @@ package fr.poleemploi.estime.utile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 
-@ExtendWith(SpringExtension.class)
+
 @ContextConfiguration
 @SpringBootTest
-@AutoConfigureTestDatabase
+@TestPropertySource(locations="classpath:application-test.properties")
 class InformationsPersonnellesUtileTests {
     
     public static final String CODE_POSTAL_MAYOTTE = "97600";
