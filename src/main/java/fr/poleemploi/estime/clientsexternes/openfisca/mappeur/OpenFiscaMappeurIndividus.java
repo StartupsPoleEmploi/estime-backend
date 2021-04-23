@@ -17,9 +17,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
+
+import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.StatutsMarital;
@@ -44,13 +44,13 @@ public class OpenFiscaMappeurIndividus {
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
     
-    public JSONObject creerConjointJSON(Personne conjoint, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public JSONObject creerConjointJSON(Personne conjoint, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject conjointJSON = new JSONObject();
         openFiscaMappeurRessourcesFinancieres.addRessourcesFinancieresPersonne(conjointJSON, conjoint, dateDebutSimulation, numeroMoisSimule);
         return conjointJSON;
     }
     
-    public JSONObject creerDemandeurJSON(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public JSONObject creerDemandeurJSON(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject demandeurJSON = new JSONObject();
         demandeurJSON.put(DATE_NAISSANCE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(getDateNaissance(demandeurEmploi), dateDebutSimulation, numeroMoisSimule));            
         demandeurJSON.put(STATUT_MARITAL, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(getStatutMarital(demandeurEmploi), dateDebutSimulation, numeroMoisSimule));
@@ -59,14 +59,14 @@ public class OpenFiscaMappeurIndividus {
         return demandeurJSON;
     }
     
-    public void ajouterPersonneACharge(JSONObject individu, List<Personne> personnesACharge, LocalDate dateJour, int numeroMoisSimule) throws JSONException {
+    public void ajouterPersonneACharge(JSONObject individu, List<Personne> personnesACharge, LocalDate dateJour, int numeroMoisSimule) {
         int index = 1;
         for (Personne personneACharge : personnesACharge) {
             individu.put(ENFANT + index++, creerEnfantJSON(personneACharge, dateJour, numeroMoisSimule));
         }
     }
     
-    private void addRessourcesFinancieresDemandeur(JSONObject demandeurJSON, DemandeurEmploi demandeurEmploi, SimulationAidesSociales simulationAidesSociales, int numeroMoisSimule, LocalDate dateDebutSimulation) throws JSONException {
+    private void addRessourcesFinancieresDemandeur(JSONObject demandeurJSON, DemandeurEmploi demandeurEmploi, SimulationAidesSociales simulationAidesSociales, int numeroMoisSimule, LocalDate dateDebutSimulation) {
         if(ressourcesFinancieresUtile.hasAllocationAdultesHandicapes(demandeurEmploi)) {
             String codeAideAAH = AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
             demandeurJSON.put(AAH, openFiscaMappeurPeriode.creerPeriodesAideSocialeJSON(demandeurEmploi, simulationAidesSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule));            
@@ -91,7 +91,7 @@ public class OpenFiscaMappeurIndividus {
         }
     }
     
-    private JSONObject creerEnfantJSON(Personne personneACharge, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    private JSONObject creerEnfantJSON(Personne personneACharge, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject enfant = new JSONObject();
         enfant.put(DATE_NAISSANCE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(dateUtile.convertDateToString(personneACharge.getInformationsPersonnelles().getDateNaissance(), DateUtile.DATE_FORMAT_YYYY_MM_DD), dateDebutSimulation, numeroMoisSimule));
         enfant.put(ENFANT_A_CHARGE, creerEnfantACharge(dateDebutSimulation));
@@ -99,7 +99,7 @@ public class OpenFiscaMappeurIndividus {
         return enfant;
     }
     
-    private JSONObject creerEnfantACharge(LocalDate dateDebutSimulation) throws JSONException {
+    private JSONObject creerEnfantACharge(LocalDate dateDebutSimulation) {
         JSONObject enfantACharge = new JSONObject();
         enfantACharge.put(String.valueOf(dateDebutSimulation.getYear()), true);
         return enfantACharge;

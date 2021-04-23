@@ -9,9 +9,9 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
+
+import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
 import fr.poleemploi.estime.services.ressources.Personne;
@@ -26,7 +26,7 @@ public class OpenFiscaMappeurRessourcesPersonne {
     @Autowired
     private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
 
-    public void addRessourcesFinancieresPersonne(JSONObject personneJSON, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public void addRessourcesFinancieresPersonne(JSONObject personneJSON, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule){
         RessourcesFinancieres ressourcesFinancieres = personne.getRessourcesFinancieres();
         if(ressourcesFinancieres != null) {
             if(ressourcesFinancieres.getSalaireNet() > 0) {
@@ -38,7 +38,7 @@ public class OpenFiscaMappeurRessourcesPersonne {
         }
     }
 
-    private void addRessourcesFinancieresCAF(JSONObject personneJSON, RessourcesFinancieres ressourcesFinancieres, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    private void addRessourcesFinancieresCAF(JSONObject personneJSON, RessourcesFinancieres ressourcesFinancieres, LocalDate dateDebutSimulation, int numeroMoisSimule){
         if(ressourcesFinancieres.getAllocationsCAF() != null 
            && ressourcesFinancieres.getAllocationsCAF().getAllocationMensuelleNetAAH() != null
            && ressourcesFinancieres.getAllocationsCAF().getAllocationMensuelleNetAAH() > 0) {
@@ -46,7 +46,7 @@ public class OpenFiscaMappeurRessourcesPersonne {
         }
     }
 
-    private void addRessourcesFinancieresPoleEmploi(JSONObject personneJSON, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    private void addRessourcesFinancieresPoleEmploi(JSONObject personneJSON, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule){
         RessourcesFinancieres ressourcesFinancieres = personne.getRessourcesFinancieres();
         if(ressourcesFinancieres.getAllocationsPoleEmploi() != null) {
             if(beneficiaireAidesSocialesUtile.isBeneficiaireARE(personne)
@@ -62,7 +62,7 @@ public class OpenFiscaMappeurRessourcesPersonne {
         }
     }
     
-    private void addRessourcesFinancieresCPAM(JSONObject personneJSON, RessourcesFinancieres ressourcesFinancieres, LocalDate dateDebutPeriodeSimulee, int numeroMoisSimule) throws JSONException {
+    private void addRessourcesFinancieresCPAM(JSONObject personneJSON, RessourcesFinancieres ressourcesFinancieres, LocalDate dateDebutPeriodeSimulee, int numeroMoisSimule){
         if(ressourcesFinancieres.getAllocationsCPAM() != null 
            && ressourcesFinancieres.getAllocationsCPAM().getPensionInvalidite() != null
            && ressourcesFinancieres.getAllocationsCPAM().getPensionInvalidite() > 0) {

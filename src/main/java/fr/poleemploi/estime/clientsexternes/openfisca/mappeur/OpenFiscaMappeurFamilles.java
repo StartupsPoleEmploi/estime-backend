@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
+
+import com.github.tsohr.JSONArray;
+import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
@@ -49,7 +49,7 @@ public class OpenFiscaMappeurFamilles {
     private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
         
     
-    public JSONObject creerFamilleJSON(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeInferieur25ansOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public JSONObject creerFamilleJSON(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeInferieur25ansOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject famille = new JSONObject();
         famille.put(PARENTS, creerParentsJSON(demandeurEmploi));
         famille.put(ENFANTS, creerPersonnesAChargeJSON(personneAChargeInferieur25ansOptional));

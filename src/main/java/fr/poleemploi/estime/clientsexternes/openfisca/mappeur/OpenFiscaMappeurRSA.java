@@ -10,10 +10,9 @@ import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import com.github.tsohr.JSONObject;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -43,7 +42,7 @@ public class OpenFiscaMappeurRSA {
         }
     }
     
-    public JSONObject creerRSAJson(LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {        
+    public JSONObject creerRSAJson(LocalDate dateDebutSimulation, int numeroMoisSimule) {        
         JSONObject rsaJSON = new JSONObject();
         rsaJSON.put(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAides(dateDebutSimulation, numeroMoisSimule), JSONObject.NULL);
         return rsaJSON;

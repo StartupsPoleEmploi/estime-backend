@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
+
+import com.github.tsohr.JSONArray;
+import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
@@ -27,7 +27,7 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile
 import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.PrimeActivite;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.SimulationAidesSociales; 
+import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 
 
 @Component
@@ -51,7 +51,7 @@ public class OpenFiscaMappeur {
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
     
-    public JSONObject mapDemandeurEmploiToOpenFiscaPayload(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public JSONObject mapDemandeurEmploiToOpenFiscaPayload(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject payloadOpenFisca = new JSONObject();
         Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, PrimeActivite.AGE_MAX_PERSONNE_A_CHARGE);
         payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulationAidesSociales, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
@@ -62,7 +62,7 @@ public class OpenFiscaMappeur {
         return payloadOpenFisca;
     }
     
-    private JSONObject creerIndividusJSON(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    private JSONObject creerIndividusJSON(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject individu = new JSONObject();
         individu.put(DEMANDEUR, openFiscaMappeurIndividus.creerDemandeurJSON(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
         if(personneAChargeAgeInferieureAgeLimiteOptional.isPresent()) {
@@ -74,13 +74,13 @@ public class OpenFiscaMappeur {
         return individu;
     }
     
-    private JSONObject creerFamillesJSON(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    private JSONObject creerFamillesJSON(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject familles = new JSONObject();
         familles.put(FAMILLE1, openFiscaMappeurFamilles.creerFamilleJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
         return familles;
     }
     
-    private JSONObject creerMenagesJSON(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    private JSONObject creerMenagesJSON(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject menagesJSON = new JSONObject();
         JSONObject menage1JSON = new JSONObject();
         JSONArray personneReferenceJSON = new JSONArray();

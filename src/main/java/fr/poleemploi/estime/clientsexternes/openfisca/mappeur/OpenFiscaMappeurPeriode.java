@@ -3,9 +3,10 @@ package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
+
+import com.github.tsohr.JSONException;
+import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
@@ -34,7 +35,7 @@ public class OpenFiscaMappeurPeriode {
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
-    public JSONObject creerPeriodesSur36MoisAvecValeurJSON(Object valeur, LocalDate dateDebutSimulation) throws JSONException {
+    public JSONObject creerPeriodesSur36MoisAvecValeurJSON(Object valeur, LocalDate dateDebutSimulation) {
         JSONObject periode = new JSONObject();
         LocalDate datePlusNbrPeriodeMois = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, NOMBRE_MOIS_PERIODE_OPENFISCA + 1);
         for (int nombreMoisAEnlever = 36; nombreMoisAEnlever >= 1 ; nombreMoisAEnlever--) {
@@ -44,7 +45,7 @@ public class OpenFiscaMappeurPeriode {
         return periode;
     }
 
-    public JSONObject creerPeriodesAvecValeurJSON(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public JSONObject creerPeriodesAvecValeurJSON(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject periode = new JSONObject();
         for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode <= OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA ; numeroMoisPeriode++) {
             periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), valeur);
@@ -52,16 +53,19 @@ public class OpenFiscaMappeurPeriode {
         return periode;
     }
     
-    public JSONObject creerPeriodesRSAAvecValeurJSON(float montantRsaDemandeur, float prochaineDeclarationRsa, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public JSONObject creerPeriodesRSAAvecValeurJSON(float montantRsaDemandeur, float prochaineDeclarationRsa, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject periode = new JSONObject();
         for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode <= OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA ; numeroMoisPeriode++) {
-            if(numeroMoisPeriode <= prochaineDeclarationRsa) periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), montantRsaDemandeur);                
-            else periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), null); 
+            if(numeroMoisPeriode <= prochaineDeclarationRsa) {
+                periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), montantRsaDemandeur);                
+            } else {
+                periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), JSONObject.NULL);                 
+            }
         }
         return periode;
     }
 
-    public JSONObject creerPeriodesAllocationsLogementMensuellesNetFoyer(AllocationsLogementMensuellesNetFoyer allocationsLogementMensuellesNetFoyer, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public JSONObject creerPeriodesAllocationsLogementMensuellesNetFoyer(AllocationsLogementMensuellesNetFoyer allocationsLogementMensuellesNetFoyer, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject periode = new JSONObject();        
         periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), allocationsLogementMensuellesNetFoyer.getMoisNMoins3());             
         periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), allocationsLogementMensuellesNetFoyer.getMoisNMoins2());             
@@ -79,7 +83,7 @@ public class OpenFiscaMappeurPeriode {
      * @return
      * @throws JSONException
      */
-    public JSONObject creerPeriodesSalaireJSON(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public JSONObject creerPeriodesSalaireJSON(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject periode = new JSONObject();
         for (int numeroMoisPeriodeOpenfisca = NUMERO_MOIS_PERIODE; numeroMoisPeriodeOpenfisca <= NOMBRE_MOIS_PERIODE_OPENFISCA ; numeroMoisPeriodeOpenfisca++) {
             if(isMoisPeriodeOpenFiscaAvantPeriodeSimulation(numeroMoisSimule, numeroMoisPeriodeOpenfisca)) {
@@ -99,7 +103,7 @@ public class OpenFiscaMappeurPeriode {
         return periode;
     }
     
-    public JSONObject creerPeriodesAideSocialeJSON(DemandeurEmploi demandeurEmploi, SimulationAidesSociales simulationAidesSociales, String codeAideSociale, LocalDate dateDebutSimulation, int numeroMoisSimule) throws JSONException {
+    public JSONObject creerPeriodesAideSocialeJSON(DemandeurEmploi demandeurEmploi, SimulationAidesSociales simulationAidesSociales, String codeAideSociale, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject periode = new JSONObject();
         int numeroMoisMontantARecuperer = numeroMoisSimule - OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA;
         for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode <= OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode++) { 
@@ -115,7 +119,7 @@ public class OpenFiscaMappeurPeriode {
         return periode;
     }
 
-    public JSONObject creerPeriodesAnneesAvecValeurJSON(Object valeur, LocalDate dateDebutSimulation) throws JSONException {
+    public JSONObject creerPeriodesAnneesAvecValeurJSON(Object valeur, LocalDate dateDebutSimulation) {
         JSONObject periode = new JSONObject();
         int anneeDateSimulation = dateDebutSimulation.getYear();
         String anneeMoinsUnAnneeSimulation = String.valueOf(anneeDateSimulation - 1);
