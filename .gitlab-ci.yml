@@ -15,7 +15,7 @@ build_application :
   stage: build-application
   image: registry.beta.pole-emploi.fr/customize-docker-images/maven
   script:
-    - 'mvn --batch-mode -Dmaven.repo.local=.m2/repository clean install'
+    - 'mvn --batch-mode -DskipTests -Dmaven.repo.local=.m2/repository clean install'
     - 'mkdir -p ./target/app && (cd ./target/app; jar -xf ../*.jar)'
   artifacts:
     paths:
