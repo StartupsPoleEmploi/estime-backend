@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 @Configuration
-@Profile({"recette","production"})
+@Profile({"localhost","recette","production"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
