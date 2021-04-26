@@ -12,11 +12,11 @@ CREATE TABLE estime.suivi_parcours_utilisateur (
     PRIMARY KEY (id_suivi_parcours_utilisateur)
 );
 
-create role estime with encrypted password '<password>';
-revoke all on schema public from public;
-revoke all on schema public from estime;
-revoke all on database estime_database from public;
-revoke all on database estime_database from estime;
-grant connect on database estime_database to estime;
-grant usage on schema estime TO estime;
-grant select on all tables in schema estime to estime;
+CREATE ROLE estime WITH ENCRYPTED PASSWORD '<password>';
+REVOKE ALL ON SCHEMA public FROM public;
+REVOKE ALL ON SCHEMA public FROM estime;
+REVOKE ALL ON DATABASE estime_database FROM public;
+REVOKE ALL ON DATABASE estime_database FROM estime;
+GRANT CONNECT ON DATABASE estime_database TO estime;
+GRANT USAGE ON SCHEMA estime TO estime;
+GRANT SELECT ON ALL TABLES IN SCHEMA estime TO estime;
