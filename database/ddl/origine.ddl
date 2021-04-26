@@ -11,3 +11,12 @@ CREATE TABLE estime.suivi_parcours_utilisateur (
     date_creation TIMESTAMP,
     PRIMARY KEY (id_suivi_parcours_utilisateur)
 );
+
+create role estime with encrypted password '<password>';
+revoke all on schema public from public;
+revoke all on schema public from estime;
+revoke all on database estime_database from public;
+revoke all on database estime_database from estime;
+grant connect on database estime_database to estime;
+grant usage on schema estime TO estime;
+grant select on all tables in schema estime to estime;
