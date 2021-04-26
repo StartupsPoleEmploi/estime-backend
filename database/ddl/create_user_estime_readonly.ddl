@@ -1,6 +1,5 @@
-## création d'un role estime ayant simplement les droits de lecture.
-
 CREATE ROLE estime WITH ENCRYPTED PASSWORD '<password>';
+alter role estime with login;
 REVOKE ALL ON SCHEMA public FROM public;
 REVOKE ALL ON SCHEMA public FROM estime;
 REVOKE ALL ON DATABASE estime_database FROM public;
