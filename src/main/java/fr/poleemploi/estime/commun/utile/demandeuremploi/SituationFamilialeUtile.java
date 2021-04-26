@@ -58,7 +58,7 @@ public class SituationFamilialeUtile {
             List<Personne> personnesACharge = demandeurEmploi.getSituationFamiliale().getPersonnesACharge();
             montantRSA = montantRSA.add(getMontantTotalRSADesPersonnesCharge(personnesACharge));
         }
-        return montantRSA.setScale(0, RoundingMode.HALF_UP).floatValue();
+        return montantRSA.setScale(0, RoundingMode.DOWN).floatValue();
     }
     
     public boolean isSeulPlusDe18Mois(DemandeurEmploi demandeurEmploi) {

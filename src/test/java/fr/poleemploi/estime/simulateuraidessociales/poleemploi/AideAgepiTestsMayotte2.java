@@ -269,8 +269,8 @@ class AideAgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 98 euros
-        assertThat(agepi.getMontant()).isEqualTo(98);
+        //alors le montant retourné est de 97 euros
+        assertThat(agepi.getMontant()).isEqualTo(97);
     }
     
     @Test

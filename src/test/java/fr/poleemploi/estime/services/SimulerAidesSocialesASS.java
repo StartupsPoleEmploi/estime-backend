@@ -83,7 +83,7 @@ class SimulerAidesSocialesASS {
         SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
         //Alors les aides du premier mois 11/2020 sont :
-        // AGEPI : 400 euros, Aide mobilité : 450 euros, ASS : 507 euros
+        // AGEPI : 400 euros, Aide mobilité : 450 euros, ASS : 506 euros
         SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
         assertThat(simulationMois1).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -98,11 +98,11 @@ class SimulerAidesSocialesASS {
                 assertThat(aideMobilite.getMontant()).isEqualTo(450);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-                assertThat(ass.getMontant()).isEqualTo(507);
+                assertThat(ass.getMontant()).isEqualTo(506);
             });
         }); 
         //Alors les aides du second mois 12/2020 sont :
-        //ASS : 524 euros
+        //ASS : 523 euros
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -111,11 +111,11 @@ class SimulerAidesSocialesASS {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-                assertThat(ass.getMontant()).isEqualTo(524);
+                assertThat(ass.getMontant()).isEqualTo(523);
             });
         });
         //Alors les aides du troisième mois 01/2021 sont :
-        //ASS : 524 euros
+        //ASS : 523 euros
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -124,7 +124,7 @@ class SimulerAidesSocialesASS {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-                assertThat(ass.getMontant()).isEqualTo(524);
+                assertThat(ass.getMontant()).isEqualTo(523);
             });
         });
         //Alors les aides du quatrième mois 02/2021 sont :
@@ -181,7 +181,7 @@ class SimulerAidesSocialesASS {
         SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
         //Alors les aides du premier mois 11/2020 sont :
-        // AGEPI : 400 euros, Aide mobilité : 258 euros, ASS : 507 euros
+        // AGEPI : 400 euros, Aide mobilité : 258 euros, ASS : 506 euros
         SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
         assertThat(simulationMois1).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -196,11 +196,11 @@ class SimulerAidesSocialesASS {
                 assertThat(aideMobilite.getMontant()).isEqualTo(450);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-                assertThat(ass.getMontant()).isEqualTo(507f);
+                assertThat(ass.getMontant()).isEqualTo(506f);
             });
         }); 
         //Alors les aides du second mois 12/2020 sont :
-        //ASS : 524 euros
+        //ASS : 523 euros
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -209,7 +209,7 @@ class SimulerAidesSocialesASS {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-                assertThat(ass.getMontant()).isEqualTo(524f);
+                assertThat(ass.getMontant()).isEqualTo(523f);
             });
         });
         //Alors les aides du troisième mois 01/2021 sont :
@@ -282,7 +282,7 @@ class SimulerAidesSocialesASS {
         SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
         //Alors les aides du premier mois 11/2020 sont :
-        // AGEPI : 400 euros, Aide mobilité : 258 euros, ASS : 507 euros
+        // AGEPI : 400 euros, Aide mobilité : 258 euros, ASS : 506 euros
         SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
         assertThat(simulationMois1).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -300,7 +300,7 @@ class SimulerAidesSocialesASS {
             });
             assertThat(simulation.getMesAides().get(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
                 assertThat(ass).isNotNull();
-                assertThat(ass.getMontant()).isEqualTo(507);
+                assertThat(ass.getMontant()).isEqualTo(506);
             });
         }); 
         //Alors les aides du second mois 12/2020 sont :

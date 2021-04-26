@@ -129,7 +129,7 @@ public class Agepi {
      * @return montant arrondi au supérieur à 0 chiffre après la virgule 
      */
     private float calculerMontantMayotte(int montantHorsMayotte) {
-        return BigDecimal.valueOf(montantHorsMayotte).divide(BigDecimal.valueOf(2)).setScale(0, RoundingMode.HALF_UP).floatValue();
+        return BigDecimal.valueOf(montantHorsMayotte).divide(BigDecimal.valueOf(2)).setScale(0, RoundingMode.DOWN).floatValue();
     }
 
     /**

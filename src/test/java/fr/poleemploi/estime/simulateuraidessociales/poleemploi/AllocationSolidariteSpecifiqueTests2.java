@@ -73,8 +73,8 @@ class AllocationSolidariteSpecifiqueTests2 {
         Optional<AideSociale> ass = allocationSolidariteSpecifiqueUtile.calculer(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors 
-        //le montant de l'ASS sur le mois de novembre 2021 est de 507 euros
-        assertThat(ass.get().getMontant()).isEqualTo(507);
+        //le montant de l'ASS sur le mois de novembre 2021 est de 506 euros
+        assertThat(ass.get().getMontant()).isEqualTo(506);
         //le message d'alerte sur le renouvellement de l'aide est présent
         assertThat(ass.get().getMessageAlerte()).isEqualTo(MessagesAlertesAideSociale.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
     }
@@ -100,8 +100,8 @@ class AllocationSolidariteSpecifiqueTests2 {
         //Lorsque je calcul le montant de l'ASS sur le mois total 
         Optional<AideSociale> ass = allocationSolidariteSpecifiqueUtile.calculer(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
-        //alors le montant de l'ASS sur le mois de décembre 2021 est de 524 euros
-        assertThat(ass.get().getMontant()).isEqualTo(524);
+        //alors le montant de l'ASS sur le mois de décembre 2021 est de 523 euros
+        assertThat(ass.get().getMontant()).isEqualTo(523);
         //le message d'alerte sur le renouvellement de l'aide est présent
         assertThat(ass.get().getMessageAlerte()).isEqualTo(MessagesAlertesAideSociale.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
     }
@@ -128,8 +128,8 @@ class AllocationSolidariteSpecifiqueTests2 {
          Optional<AideSociale> ass = allocationSolidariteSpecifiqueUtile.calculer(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors 
-        //le montant de l'ASS sur le mois de janvier 2021 est de 524 euros
-        assertThat(ass.get().getMontant()).isEqualTo(524);
+        //le montant de l'ASS sur le mois de janvier 2021 est de 523 euros
+        assertThat(ass.get().getMontant()).isEqualTo(523);
         //le message d'alerte sur le renouvellement de l'aide n'est pas présent
         assertThat(ass.get().getMessageAlerte()).isNull();
     }
@@ -156,8 +156,8 @@ class AllocationSolidariteSpecifiqueTests2 {
         Optional<AideSociale> ass = allocationSolidariteSpecifiqueUtile.calculer(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors 
-        //le montant de l'ASS sur le mois de février 2021 est de 473 euros
-        assertThat(ass.get().getMontant()).isEqualTo(473);
+        //le montant de l'ASS sur le mois de février 2021 est de 472 euros
+        assertThat(ass.get().getMontant()).isEqualTo(472);
         //le message d'alerte sur le renouvellement de l'aide n'est pas présent
         assertThat(ass.get().getMessageAlerte()).isNull();;
     }

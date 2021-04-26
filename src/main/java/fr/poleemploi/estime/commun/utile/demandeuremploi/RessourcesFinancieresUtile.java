@@ -47,7 +47,7 @@ public class RessourcesFinancieresUtile {
             float revenusTravailleurIndependant1Mois = getRevenusTravailleurIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres());
             montantTotal = montantTotal.add(BigDecimal.valueOf(revenusTravailleurIndependant1Mois));
         }
-        return montantTotal.setScale(0, RoundingMode.HALF_UP).floatValue();
+        return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
     }
     
     

@@ -85,7 +85,7 @@ public class AideMobilite {
     private float calculerMontantAideMobilite(DemandeurEmploi demandeurEmploi) {
         BigDecimal montantAideFraisKilometriques = calculerMontantAideFraisKilometriques(demandeurEmploi);
         BigDecimal montantAideFraisRepas = calculerMontantAideFraisRepas(demandeurEmploi); 
-        return montantAideFraisKilometriques.add(montantAideFraisRepas).setScale(0, RoundingMode.HALF_UP).floatValue();
+        return montantAideFraisKilometriques.add(montantAideFraisRepas).setScale(0, RoundingMode.DOWN).floatValue();
     }
 
     private BigDecimal calculerMontantAideFraisRepas(DemandeurEmploi demandeurEmploi) {
@@ -98,7 +98,7 @@ public class AideMobilite {
         if((informationsPersonnellesUtile.isDeFranceMetropolitaine(demandeurEmploi) && distanceKmAllerRetourDomicileTravail >= TRAJET_KM_ALLER_RETOUR_MINIMUM) 
                 || (informationsPersonnellesUtile.isDesDOM(demandeurEmploi) && distanceKmAllerRetourDomicileTravail >= TRAJET_KM_ALLER_RETOUR_MINIMUM_DOM)) {
             BigDecimal nombreKmParMois = caluclerNombreKilometresMensuels(demandeurEmploi);
-            return nombreKmParMois.multiply(BigDecimal.valueOf(INDEMNITE_KILOMETRIQUE)).setScale(0, RoundingMode.FLOOR);
+            return nombreKmParMois.multiply(BigDecimal.valueOf(INDEMNITE_KILOMETRIQUE)).setScale(0, RoundingMode.DOWN);
         }         
 
         return BigDecimal.ZERO;

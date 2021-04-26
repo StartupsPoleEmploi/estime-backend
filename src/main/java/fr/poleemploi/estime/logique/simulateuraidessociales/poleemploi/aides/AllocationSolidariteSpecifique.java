@@ -65,7 +65,7 @@ public class AllocationSolidariteSpecifique {
            && demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi() != null 
            && demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().getAllocationJournaliereNet() != null) {
             float montantJournalierNetSolidariteSpecifique = demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().getAllocationJournaliereNet();
-            return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.HALF_UP).floatValue();            
+            return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();            
         }
         return 0;
     }
