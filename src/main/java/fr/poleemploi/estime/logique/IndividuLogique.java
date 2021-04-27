@@ -73,11 +73,7 @@ public class IndividuLogique {
             } else {            
                 individu.setIdPoleEmploi(userInfoESD.getSub());
                 individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
-
-                if(individu.isPopulationAutorisee()) {
-                    individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);                 
-                }
-
+                individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);                 
             } 
 
             suiviUtilisateurUtile.tracerParcoursUtilisateur(
