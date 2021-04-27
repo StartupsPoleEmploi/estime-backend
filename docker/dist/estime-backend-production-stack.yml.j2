@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  estime-backend:
+    image: registry.beta.pole-emploi.fr/estime/estime-backend:release
+    environment:
+      ENVIRONMENT: "{{ ENVIRONMENT_PROD }}"
+      PE_CONNECT_CLIENT_ID: "{{ PE_CONNECT_CLIENT_ID }}"
+      PE_CONNECT_CLIENT_SECRET: "{{ PE_CONNECT_CLIENT_SECRET }}"
+      PE_CONNECT_ISSUER_URI: "{{ PE_CONNECT_ISSUER_URI }}"
+      PE_CONNECT_JWK_SET_URI: "{{ PE_CONNECT_JWK_SET_URI }}"
+      PE_CONNECT_TOKEN_URI: "{{ PE_CONNECT_TOKEN_URI }}"
+      PE_CONNECT_USER_INFO_URI: "{{ PE_CONNECT_USER_INFO_URI }}"
+      ESD_COORDONNEES_API_URI: "{{ ESD_COORDONNEES_API_URI }}"
+      ESD_DATE_NAISSANCE_API_URI: "{{ ESD_DATE_NAISSANCE_API_URI }}"
+      ESD_DETAIL_INDEMNISATION_API_URI: "{{ ESD_DETAIL_INDEMNISATION_API_URI }}"
+      TZ: "Europe/Paris"
+    networks:
+     - estime
+    healthcheck:
+      test: curl -v --silent http://localhost:8080/estime/v1/actuator/health 2>&1 | grep UP || exit 1
+      timeout: 30s
+      interval: 1m
+      retries: 10
+      start_period: 180s
+    deploy:
+      replicas: 2
+      resources:
+        reservations:
+          cpus: '0.50'
+          memory: 512Mi
+        limits:
+          cpus: '1'
+          memory: 1536Mi
+      update_config:
+        parallelism: 1
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 180s
+
+networks:
+  estime:
+    external: true
+    name: estime
+ 
