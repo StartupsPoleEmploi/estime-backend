@@ -11,9 +11,9 @@
     </parent>
     <groupId>fr.poleemploi</groupId>
     <artifactId>estime-backend</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <name>estime-backend</name>
-    <description>Estime Backaend Project</description>
+    <description>Estime Backend Project</description>
 
     <properties>
         <java.version>11</java.version>
