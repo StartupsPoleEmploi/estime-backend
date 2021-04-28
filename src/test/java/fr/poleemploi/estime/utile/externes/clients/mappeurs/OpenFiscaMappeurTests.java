@@ -210,6 +210,39 @@ class OpenFiscaMappeurTests {
     }
     
     @Test
+    void mapDemandeurPensionInvaliditeEtASIToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+        
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("openfisca-mappeur/demandeur-avec-pension-invalidite-et-asi.json");
+
+        DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
+        
+        FuturTravail futurTravail = new FuturTravail();
+        futurTravail.setSalaireMensuelNet(800);
+        demandeurEmploi.setFuturTravail(futurTravail);
+        
+        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+        informationsPersonnelles.setDateNaissance(testUtile.getDate("08-01-1979"));
+        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+        
+        SituationFamiliale situationFamiliale = new SituationFamiliale();
+        situationFamiliale.setIsEnCouple(false);
+        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+
+        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
+        allocationsCPAM.setPensionInvalidite(200f);
+        allocationsCPAM.setAllocationSupplementaireInvalidite(200f);
+        ressourcesFinancieres.setAllocationsCPAM(allocationsCPAM);
+        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
+        
+        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        
+        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+    }
+    
+    @Test
     void mapDemandeurRSAToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
         String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("openfisca-mappeur/demandeur-avec-rsa.json");

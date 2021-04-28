@@ -87,7 +87,7 @@ public class OpenFiscaMappeurIndividus {
         }
         if(ressourcesFinancieresUtile.hasPensionInvalidite(demandeurEmploi)) {
             demandeurJSON.put(PENSION_INVALIDITE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(demandeurEmploi.getRessourcesFinancieres().getAllocationsCPAM().getPensionInvalidite(), dateDebutSimulation, numeroMoisSimule));
-            demandeurJSON.put(ASI, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(0, dateDebutSimulation, numeroMoisSimule));
+            demandeurJSON.put(ASI, openFiscaMappeurPeriode.creerPeriodesASIJSON(demandeurEmploi.getRessourcesFinancieres().getAllocationsCPAM().getAllocationSupplementaireInvalidite(), dateDebutSimulation, numeroMoisSimule));
         }
     }
     

@@ -216,12 +216,60 @@ class AidePrimeActivitePopulationPensionInvalidite {
         assertThat(montantPrimeActivite).isEqualTo(27);
     }
     
+    @Test
+    void calculerPrimeActivitePensionInvaliditeTest4() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+
+        //Si DE France Métropolitaine, célibataire, 0 enfant à charge, 
+        //ASS de 16.89€ journalière
+        //pension d'invalidité 200€ par mois, asi 200€ par mois
+        //futur contrat CDI avec salaire net 800 euros/mois
+        DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
+
+        FuturTravail futurTravail = new FuturTravail();
+        futurTravail.setSalaireMensuelNet(800);
+        demandeurEmploi.setFuturTravail(futurTravail);
+
+        SituationFamiliale situationFamiliale = new SituationFamiliale();
+        situationFamiliale.setIsEnCouple(false);
+        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+
+        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
+        allocationsCPAM.setPensionInvalidite(200f);
+        allocationsCPAM.setAllocationSupplementaireInvalidite(200f);
+        ressourcesFinancieres.setAllocationsCPAM(allocationsCPAM);
+        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
+        allocationsPoleEmploi.setAllocationJournaliereNet(16.89f);
+        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
+        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        
+        SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
+        List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
+        simulationsMensuelles.add(testUtile.createSimulationMensuelleASS(506.7f));
+        simulationsMensuelles.add(testUtile.createSimulationMensuelleASS(523.6f));
+        simulationsMensuelles.add(testUtile.createSimulationMensuelleASS(523.6f));
+        simulationsMensuelles.add(testUtile.createSimulationMensuelleASS(0));
+        simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);
+        
+        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("25-01-2021");  
+
+        //Lorsque je calcul le montant de la prime d'activité
+        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+
+        //Alors le montant de la prime d'activité pour le 06/2021 est de 0 euros (résultat simulateur CAF : TODO ldetre retrouver valeur CAF)
+        assertThat(montantPrimeActivite).isEqualTo(0);
+    }
+    
     /*****************************************  en couple  ***************************************************************/
 
     
 
     @Test
-    void calculerPrimeActivitePensionInvaliditeTest4() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+    void calculerPrimeActivitePensionInvaliditeTest5() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
         //Si DE France Métropolitaine, en couple, conjoint 200 pension invalidite, 
         //ASS de 16.89€ journalière
@@ -271,7 +319,7 @@ class AidePrimeActivitePopulationPensionInvalidite {
     }
     
     @Test
-    void calculerPrimeActivitePensionInvaliditeTest5() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+    void calculerPrimeActivitePensionInvaliditeTest6() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
         //Si DE France Métropolitaine, en couple, conjoint 200 pension invalidite, 
         //ASS de 16.89€ journalière
@@ -325,7 +373,7 @@ class AidePrimeActivitePopulationPensionInvalidite {
     }
     
     @Test
-    void calculerPrimeActivitePensionInvaliditeTest6() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+    void calculerPrimeActivitePensionInvaliditeTest7() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
         //Si DE France Métropolitaine, en couple, conjoint salaire 1000 euros et 200 pension invalidite, 
         //ASS de 16.89€ journalière
@@ -376,7 +424,7 @@ class AidePrimeActivitePopulationPensionInvalidite {
     }
     
     @Test
-    void calculerPrimeActivitePensionInvaliditeTest7() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+    void calculerPrimeActivitePensionInvaliditeTest8() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
         //Si DE France Métropolitaine, en couple, conjoint salaire 1000 euros et 200 pension invalidite,
         // 1 enfant de 1 an,
