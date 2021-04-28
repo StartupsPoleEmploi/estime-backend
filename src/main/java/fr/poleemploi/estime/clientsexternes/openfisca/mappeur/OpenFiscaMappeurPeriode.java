@@ -73,6 +73,16 @@ public class OpenFiscaMappeurPeriode {
         periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), allocationsLogementMensuellesNetFoyer.getMoisN());
         return periode;
     }
+    
+
+    public JSONObject creerPeriodesASIJSON(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+        JSONObject periode = new JSONObject();
+        for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode <= OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA ; numeroMoisPeriode++) {
+            if(valeur != null) periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), valeur);
+            else periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), 0);
+        }
+        return periode;
+    }
 
 
     /**

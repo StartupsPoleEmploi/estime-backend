@@ -35,6 +35,7 @@ public class RessourcesFinancieresUtile {
         }
         if(beneficiaireAidesSocialesUtile.isBeneficiairePensionInvalidite(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAllocationsCPAM().getPensionInvalidite()));
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAllocationsCPAM().getAllocationSupplementaireInvalidite()));
         }
         if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationMensuelleNetRSA()));
