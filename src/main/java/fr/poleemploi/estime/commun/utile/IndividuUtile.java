@@ -50,7 +50,7 @@ public class IndividuUtile {
             ressourcesFinancieres.setAllocationsPoleEmploi(creerAllocationsPoleEmploi(detailIndemnisation));
         }
         ressourcesFinancieres.setAllocationsCAF(creerAllocationCAF());
-        ressourcesFinancieres.setAllocationsCPAM(new AllocationsCPAM());
+        ressourcesFinancieres.setAllocationsCPAM(creerAllocationsCPAM());
 
         individu.setRessourcesFinancieres(ressourcesFinancieres);
     }
@@ -75,5 +75,11 @@ public class IndividuUtile {
         allocationsLogementMensuellesNetFoyer.setMoisNMoins2(0);
         allocationsLogementMensuellesNetFoyer.setMoisNMoins3(0);
         return allocationsLogementMensuellesNetFoyer;
+    }
+    
+    private AllocationsCPAM creerAllocationsCPAM() {
+        AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
+        allocationsCPAM.setAllocationSupplementaireInvalidite(0f);
+        return allocationsCPAM;
     }
 }

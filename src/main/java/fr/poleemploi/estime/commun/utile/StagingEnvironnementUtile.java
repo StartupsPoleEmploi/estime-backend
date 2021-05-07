@@ -84,7 +84,7 @@ public class StagingEnvironnementUtile {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(0);
         creerBouchonAllocationCAF(ressourcesFinancieres);
-        ressourcesFinancieres.setAllocationsCPAM(new AllocationsCPAM());
+        creerBouchonAllocationCPAM(ressourcesFinancieres);
         return ressourcesFinancieres;
     }
 
@@ -102,6 +102,12 @@ public class StagingEnvironnementUtile {
         allocationsLogementMensuellesNetFoyer.setMoisNMoins2(0);
         allocationsLogementMensuellesNetFoyer.setMoisNMoins3(0);
         return allocationsLogementMensuellesNetFoyer;
+    }
+    
+    private void creerBouchonAllocationCPAM(RessourcesFinancieres ressourcesFinancieres) {
+        AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
+        allocationsCPAM.setAllocationSupplementaireInvalidite(0f);
+        ressourcesFinancieres.setAllocationsCPAM(allocationsCPAM);
     }
     
     private boolean isPopulationAutorisee(UserInfoESD userInfoESD) {
