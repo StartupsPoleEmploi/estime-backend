@@ -10,15 +10,16 @@ import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.NationalitesUtile;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
+import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 
 @Component
 public class InformationsPersonnellesControleur {
-    
+
     @Autowired
     private NationalitesUtile nationalitesUtile;
 
-    public void controlerDonnees(InformationsPersonnelles informationsPersonnelles) {
+    public void controlerDonnees(InformationsPersonnelles informationsPersonnelles, BeneficiaireAidesSociales beneficiaireAidesSociales) {
         if(informationsPersonnelles == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "informationsPersonnelles"));
         }  else {
@@ -32,15 +33,20 @@ public class InformationsPersonnellesControleur {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nationalite de informationsPersonnelles"));
             } else {
                 controleNationalite(informationsPersonnelles);                
-            }           
+            }  
+
+            if(beneficiaireAidesSociales.isBeneficiaireRSA() && informationsPersonnelles.getIsProprietaireSansPretOuLogeGratuit() == null) {
+                throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "isProprietaireSansPretOuLogeGratuit de informationsPersonnelles"));
+
+            }            
         }
     }
 
     private void controleNationalite(InformationsPersonnelles informationsPersonnelles) {
         isValeurNationnaliteCorrecte(informationsPersonnelles.getNationalite());
         if(Nationalites.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite())
-           && informationsPersonnelles.getTitreSejourEnFranceValide() == null) {     
-             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "titreSejourEnFranceValide de informationsPersonnelles"));
+                && informationsPersonnelles.getTitreSejourEnFranceValide() == null) {     
+            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "titreSejourEnFranceValide de informationsPersonnelles"));
         }
     }
 

@@ -55,7 +55,7 @@ public class RSA {
     
     private boolean isEligiblePourReportRSA(int prochaineDeclarationRSA, int numeroMoisSimule) {
         return (numeroMoisSimule == 1 && (prochaineDeclarationRSA == 0 || prochaineDeclarationRSA == 2 || prochaineDeclarationRSA == 3)) 
-                || (numeroMoisSimule == 2 && prochaineDeclarationRSA == 0 || prochaineDeclarationRSA == 3) ;
+                || (numeroMoisSimule == 2 && (prochaineDeclarationRSA == 0 || prochaineDeclarationRSA == 3)) ;
     }
 
     private Optional<AideSociale> calculer(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {

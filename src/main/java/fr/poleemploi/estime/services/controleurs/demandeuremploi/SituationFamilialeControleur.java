@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
+import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
@@ -13,21 +14,26 @@ import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 @Component
 public class SituationFamilialeControleur {
 
-    public void controlerDonnees(SituationFamiliale situationFamiliale) {
+    public void controlerDonnees(SituationFamiliale situationFamiliale, BeneficiaireAidesSociales beneficiaireAidesSociales) {
         if(situationFamiliale == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "situationFamiliale"));
         } else {
-            controlerEnCouple(situationFamiliale);
+            controlerEnCouple(situationFamiliale, beneficiaireAidesSociales);
             controlerPersonnesACharges(situationFamiliale.getPersonnesACharge());            
         }
     }
 
-    private void controlerEnCouple(SituationFamiliale situationFamiliale) {
+    private void controlerEnCouple(SituationFamiliale situationFamiliale, BeneficiaireAidesSociales beneficiaireAidesSociales) {
         if(situationFamiliale.getIsEnCouple() == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "enCouple de situationFamiliale"));
         }
         if(situationFamiliale.getIsEnCouple().booleanValue() && situationFamiliale.getConjoint() == null) {
-             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "conjoint de situationFamiliale"));
+            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "conjoint de situationFamiliale"));
+        }
+        if(beneficiaireAidesSociales.isBeneficiaireRSA() 
+                && !situationFamiliale.getIsEnCouple().booleanValue() 
+                && situationFamiliale.getIsSeulPlusDe18Mois() == null) {
+            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "isSeulPlusDe18Mois dans situationFamiliale"));
         }
     }
 
