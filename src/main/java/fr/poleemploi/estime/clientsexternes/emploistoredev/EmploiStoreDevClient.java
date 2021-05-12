@@ -54,8 +54,8 @@ public class EmploiStoreDevClient {
     
     
     public PeConnectAuthorizationESD callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
+        HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreDevUtile.getAccesTokenRequeteHTTP(code, redirectURI);
         try {
-            HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreDevUtile.getAccesTokenRequeteHTTP(code, redirectURI);
             //TODO JLA pour test
             LOGGER.info(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), "test", requeteHTTP.toString()));
             ResponseEntity<PeConnectAuthorizationESD> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP , PeConnectAuthorizationESD.class);
