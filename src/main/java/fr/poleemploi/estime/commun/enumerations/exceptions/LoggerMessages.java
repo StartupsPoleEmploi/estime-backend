@@ -2,6 +2,7 @@ package fr.poleemploi.estime.commun.enumerations.exceptions;
 
 public enum LoggerMessages {
     
+    DETAIL_REQUETE_HTTP("Erreur Technique HttpClientErrorException : erreur %s avec requête %s"),
     ENREGISTREMENT_SUIVI_UTILISATEUR_IMPOSSIBLE_USER_INFO_KO("Erreur Technique : enregistrement suivi utilisateur non effectué car problème récupération du userInfo"),
     USER_INFO_KO("Erreur Technique : impossible de récupérer infos individu"),
     RETOUR_SERVICE_KO("Erreur Technique : erreur %s en retour du service %s."),

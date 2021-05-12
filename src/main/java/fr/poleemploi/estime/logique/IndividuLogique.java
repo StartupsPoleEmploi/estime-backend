@@ -76,6 +76,7 @@ public class IndividuLogique {
                 individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);                 
             } 
 
+            //@TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
             suiviUtilisateurUtile.tracerParcoursUtilisateur(
                     userInfoESD.getSub(), 
                     userInfoESD.getFamilyName(), 
@@ -83,7 +84,7 @@ public class IndividuLogique {
                     userInfoESD.getEmail(), 
                     suiviUtilisateurUtile.getParcoursAccesService(individu), 
                     individu.getBeneficiaireAidesSociales(), 
-                    individu.isPopulationAutorisee());            
+                    true);            
 
             individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
 

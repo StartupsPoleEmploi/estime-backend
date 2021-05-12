@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.CoordonneesESD;
@@ -54,19 +55,24 @@ public class EmploiStoreDevClient {
     
     public PeConnectAuthorizationESD callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
         HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreDevUtile.getAccesTokenRequeteHTTP(code, redirectURI);
-        ResponseEntity<PeConnectAuthorizationESD> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP , PeConnectAuthorizationESD.class);
-        if(reponse.getStatusCode().equals(HttpStatus.OK)) {
-            PeConnectAuthorizationESD informationsAccessTokenESD = reponse.getBody();
-            if(informationsAccessTokenESD.getNonce().compareTo(nonce) != 0) {
-                LOGGER.info(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
-                throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+        try {
+            ResponseEntity<PeConnectAuthorizationESD> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP , PeConnectAuthorizationESD.class);
+            if(reponse.getStatusCode().equals(HttpStatus.OK)) {
+                PeConnectAuthorizationESD informationsAccessTokenESD = reponse.getBody();
+                if(informationsAccessTokenESD.getNonce().compareTo(nonce) != 0) {
+                    LOGGER.info(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
+                    throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+                }
+                return informationsAccessTokenESD;
+            } else {
+                String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), accessTokenURI);
+                LOGGER.error(messageError);
+                throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage()); 
             }
-            return informationsAccessTokenESD;
-        } else {
-            String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), accessTokenURI);
-            LOGGER.error(messageError);
-            throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage()); 
-        }
+        } catch (HttpClientErrorException e) {
+            LOGGER.info(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
+            throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+        }        
     }
     
    public Optional<UserInfoESD> callUserInfoEndPoint(String bearerToken) {

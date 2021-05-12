@@ -18,8 +18,6 @@ function replace_properties_in_application {
   perl -i -p -e "s|--ESD_COORDONNEES_API_URI--|${ESD_COORDONNEES_API_URI}|g" app/application.yml
   perl -i -p -e "s|--ESD_DATE_NAISSANCE_API_URI--|${ESD_DATE_NAISSANCE_API_URI}|g" app/application.yml
   perl -i -p -e "s|--ESD_DETAIL_INDEMNISATION_API_URI--|${ESD_DETAIL_INDEMNISATION_API_URI}|g" app/application.yml
-  
-  cat app/application.yml
 }
 
 function start_estime_application {
