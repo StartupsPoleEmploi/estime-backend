@@ -93,6 +93,7 @@ public class StagingEnvironnementUtile {
         allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(0);
         allocationsCAF.setAllocationsLogementMensuellesNetFoyer(creerBouchonAllocationsLogement());
         allocationsCAF.setPensionsAlimentairesFoyer(0);
+        allocationsCAF.setPrestationAccueilJeuneEnfant(0);
         ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
     }
 

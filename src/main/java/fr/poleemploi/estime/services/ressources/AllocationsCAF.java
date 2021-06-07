@@ -7,6 +7,7 @@ public class AllocationsCAF {
     private float allocationsFamilialesMensuellesNetFoyer;
     private AllocationsLogementMensuellesNetFoyer allocationsLogementMensuellesNetFoyer;
     private float pensionsAlimentairesFoyer;
+    private float prestationAccueilJeuneEnfant;
     private Integer prochaineDeclarationRSA;
     
     public float getAllocationsFamilialesMensuellesNetFoyer() {
@@ -45,12 +46,19 @@ public class AllocationsCAF {
     public void setPensionsAlimentairesFoyer(float pensionsAlimentairesFoyer) {
         this.pensionsAlimentairesFoyer = pensionsAlimentairesFoyer;
     }
+    public float getPrestationAccueilJeuneEnfant() {
+        return prestationAccueilJeuneEnfant;
+    }
+    public void setPrestationAccueilJeuneEnfant(float prestationAccueilJeuneEnfant) {
+        this.prestationAccueilJeuneEnfant = prestationAccueilJeuneEnfant;
+    }
     @Override
     public String toString() {
         return "AllocationsCAF [allocationMensuelleNetAAH=" + allocationMensuelleNetAAH + ", allocationMensuelleNetRSA="
-                + allocationMensuelleNetRSA + ", prochaineDeclarationRSA=" + prochaineDeclarationRSA
-                + ", allocationsFamilialesMensuellesNetFoyer=" + allocationsFamilialesMensuellesNetFoyer
-                + ", allocationsLogementMensuellesNetFoyer=" + allocationsLogementMensuellesNetFoyer
-                + ", pensionsAlimentairesFoyer=" + pensionsAlimentairesFoyer + "]";
+                + allocationMensuelleNetRSA + ", allocationsFamilialesMensuellesNetFoyer="
+                + allocationsFamilialesMensuellesNetFoyer + ", allocationsLogementMensuellesNetFoyer="
+                + allocationsLogementMensuellesNetFoyer + ", pensionsAlimentairesFoyer=" + pensionsAlimentairesFoyer
+                + ", prestationAccueilJeuneEnfant=" + prestationAccueilJeuneEnfant + ", prochaineDeclarationRSA="
+                + prochaineDeclarationRSA + "]";
     }
 }

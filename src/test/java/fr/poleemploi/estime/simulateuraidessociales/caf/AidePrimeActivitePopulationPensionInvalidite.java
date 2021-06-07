@@ -212,8 +212,8 @@ class AidePrimeActivitePopulationPensionInvalidite {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 06/2021 est de 27 euros (résultat simulateur CAF : pas le droit à cette prestation)
-        assertThat(montantPrimeActivite).isEqualTo(27);
+        //Alors le montant de la prime d'activité pour le 06/2021 est de 84 euros (résultat simulateur CAF : pas le droit à cette prestation)
+        assertThat(montantPrimeActivite).isEqualTo(84);
     }
     
     @Test

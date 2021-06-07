@@ -83,6 +83,12 @@ public class RessourcesFinancieresUtile {
                 && demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getPensionsAlimentairesFoyer() > 0;
     }
 
+    public boolean hasPrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi) {
+        return demandeurEmploi.getRessourcesFinancieres() != null 
+                && demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF() != null 
+                && demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getPrestationAccueilJeuneEnfant() >= 0;
+    }
+
     public boolean hasRevenusImmobilier(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getRessourcesFinancieres() != null 
                 && demandeurEmploi.getRessourcesFinancieres().getRevenusImmobilier3DerniersMois() != null

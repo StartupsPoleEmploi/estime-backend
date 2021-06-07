@@ -28,6 +28,7 @@ public class ParametresOpenFisca {
     public static final String PENSIONS_ALIMENTAIRES_PERCUES = "pensions_alimentaires_percues";
     public static final String PENSION_INVALIDITE = "pensions_invalidite";
     public static final String PERSONNE_DE_REFERENCE = "personne_de_reference";
+    public static final String PRESTATION_ACCUEIL_JEUNE_ENFANT = "paje_base";
     public static final String PPA = "ppa";
     public static final String REVENUS_LOCATIFS = "revenus_locatifs";
     public static final String RSA = "rsa";
