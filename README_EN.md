@@ -128,6 +128,14 @@ foo@bar:~$ mvn -v
                 jwt:
                   jwk-set-uri: "%% à renseigner %%"
                   issuer-uri: "%% à renseigner %%"
+          jpa:
+            hibernate:
+              ddl-auto: none
+          datasource:
+            url: %% à renseigner %%
+            username: %% à renseigner %%
+            password: %% à renseigner %%
+            driver-class-name: %% à renseigner %%
         management:
           endpoint:
             health:
