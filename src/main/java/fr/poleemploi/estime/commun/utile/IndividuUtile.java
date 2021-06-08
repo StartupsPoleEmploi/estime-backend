@@ -66,6 +66,7 @@ public class IndividuUtile {
         allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(0);
         allocationsCAF.setAllocationsLogementMensuellesNetFoyer(creerAllocationsLogement());
         allocationsCAF.setPensionsAlimentairesFoyer(0);
+        allocationsCAF.setPrestationAccueilJeuneEnfant(0);
         return allocationsCAF;
     }
 

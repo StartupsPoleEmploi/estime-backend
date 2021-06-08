@@ -8,6 +8,7 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANTS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PARENTS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PPA;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PRESTATION_ACCUEIL_JEUNE_ENFANT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.RSA;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.RSA_ISOLEMENT_RECENT;
 
@@ -59,6 +60,9 @@ public class OpenFiscaMappeurFamilles {
         if(ressourcesFinancieresUtile.hasAllocationFamiliale(demandeurEmploi)) {
             famille.put(AF, openFiscaPeriodeMappeur.creerPeriodesAvecValeurJSON(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationsFamilialesMensuellesNetFoyer(), dateDebutSimulation, numeroMoisSimule));                   
         }
+        if(ressourcesFinancieresUtile.hasPrestationAccueilJeuneEnfant(demandeurEmploi)) {
+            famille.put(PRESTATION_ACCUEIL_JEUNE_ENFANT, openFiscaPeriodeMappeur.creerPeriodesAvecValeurJSON(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getPrestationAccueilJeuneEnfant(), dateDebutSimulation, numeroMoisSimule));
+        }   
         if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
             float montantRsaDemandeur = ressourcesFinancieresUtile.getAllocationsRSANet(demandeurEmploi);
             if(montantRsaDemandeur > 0) {

@@ -57,7 +57,7 @@ public class OpenFiscaClient {
     
     private String callApiCalculate(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         try {
-            JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+            JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);            
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 

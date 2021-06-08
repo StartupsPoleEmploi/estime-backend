@@ -20,7 +20,8 @@ public class SituationFamilialeUtile {
     private PersonneUtile personneUtile;
 
     public boolean isEnCouple(DemandeurEmploi demandeurEmploi) {
-        return demandeurEmploi.getSituationFamiliale().getIsEnCouple().booleanValue();
+        return demandeurEmploi.getSituationFamiliale().getIsEnCouple() !=null 
+                && demandeurEmploi.getSituationFamiliale().getIsEnCouple().booleanValue();
     }
     
     public boolean hasPersonnesACharge(DemandeurEmploi demandeurEmploi) {
