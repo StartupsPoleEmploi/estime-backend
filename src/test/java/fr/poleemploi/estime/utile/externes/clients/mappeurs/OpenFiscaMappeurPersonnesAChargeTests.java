@@ -32,6 +32,7 @@ import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.test.utile.TestUtile;
 
@@ -63,7 +64,10 @@ class OpenFiscaMappeurPersonnesAChargeTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -101,7 +105,10 @@ class OpenFiscaMappeurPersonnesAChargeTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -139,7 +146,10 @@ class OpenFiscaMappeurPersonnesAChargeTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -179,7 +189,10 @@ class OpenFiscaMappeurPersonnesAChargeTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(800);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -213,7 +226,10 @@ class OpenFiscaMappeurPersonnesAChargeTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -252,7 +268,10 @@ class OpenFiscaMappeurPersonnesAChargeTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -265,7 +284,10 @@ class OpenFiscaMappeurPersonnesAChargeTests {
         BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
         personneACharge.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         RessourcesFinancieres ressourcesFinancieresPersonneACharge = new RessourcesFinancieres();
-        ressourcesFinancieresPersonneACharge.setSalaireNet(900f);
+        Salaire salairepersonneACharge = new Salaire();
+        salairepersonneACharge.setMontantNet(900);
+        salairepersonneACharge.setMontantBrut(1165);
+        ressourcesFinancieresPersonneACharge.setSalaire(salaire);
         personneACharge.setRessourcesFinancieres(ressourcesFinancieresPersonneACharge);
         personnesACharge.add(personneACharge);
         situationFamiliale.setPersonnesACharge(personnesACharge);
@@ -287,7 +309,10 @@ class OpenFiscaMappeurPersonnesAChargeTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();

@@ -30,6 +30,7 @@ import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.test.utile.TestUtile;
 
@@ -61,7 +62,10 @@ class OpenFiscaMappeurConjointTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -97,7 +101,10 @@ class OpenFiscaMappeurConjointTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -133,7 +140,10 @@ class OpenFiscaMappeurConjointTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -170,7 +180,10 @@ class OpenFiscaMappeurConjointTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -203,7 +216,10 @@ class OpenFiscaMappeurConjointTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -239,7 +255,10 @@ class OpenFiscaMappeurConjointTests {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -250,7 +269,11 @@ class OpenFiscaMappeurConjointTests {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        ressourcesFinancieres.setSalaireNet(1200f);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        futurTravail.setSalaire(salaire);
+        ressourcesFinancieres.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieres);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);

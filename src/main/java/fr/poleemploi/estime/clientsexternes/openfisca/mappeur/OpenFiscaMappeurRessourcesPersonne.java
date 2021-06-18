@@ -4,7 +4,8 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHOMAGE_NET;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_NET;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
 
 import java.time.LocalDate;
 
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Component;
 import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres; 
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire; 
 
 @Component
 public class OpenFiscaMappeurRessourcesPersonne {
@@ -25,12 +28,17 @@ public class OpenFiscaMappeurRessourcesPersonne {
     
     @Autowired
     private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
+    
+    @Autowired
+    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
     public void addRessourcesFinancieresPersonne(JSONObject personneJSON, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule){
         RessourcesFinancieres ressourcesFinancieres = personne.getRessourcesFinancieres();
         if(ressourcesFinancieres != null) {
-            if(ressourcesFinancieres.getSalaireNet() > 0) {
-                personneJSON.put(SALAIRE_NET, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(ressourcesFinancieres.getSalaireNet(), dateDebutSimulation, numeroMoisSimule));                  
+            if(ressourcesFinancieresUtile.hasSalaire(ressourcesFinancieres)) {
+                Salaire salaire = ressourcesFinancieres.getSalaire();
+                personneJSON.put(SALAIRE_BASE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(salaire.getMontantBrut(), dateDebutSimulation, numeroMoisSimule));                  
+                personneJSON.put(SALAIRE_IMPOSABLE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(salaire.getMontantNet(), dateDebutSimulation, numeroMoisSimule));
             }
             addRessourcesFinancieresCAF(personneJSON, ressourcesFinancieres, dateDebutSimulation, numeroMoisSimule);
             addRessourcesFinancieresPoleEmploi(personneJSON, personne, dateDebutSimulation, numeroMoisSimule);

@@ -71,10 +71,9 @@ public class AllocationAdultesHandicapes {
             return 0;
         }   
     }
-    
-    
+        
     private BigDecimal calculerPartSalairePourDeduction(DemandeurEmploi demandeurEmploi) {
-        BigDecimal salaireBrut = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaireMensuelBrut());
+        BigDecimal salaireBrut = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaire().getMontantBrut());
         if(isSalaireInferieurOuEgalSalaireBrutPalier(salaireBrut)) {
             return salaireBrut.multiply(BigDecimal.valueOf(POURCENTAGE_SALAIRE_PALIER_1)).setScale(0, RoundingMode.DOWN);           
         } else {

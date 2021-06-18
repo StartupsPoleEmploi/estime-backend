@@ -153,6 +153,10 @@ public class RessourcesFinancieresUtile {
     public boolean hasSalairesAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation() != null;
     }
+    
+    public boolean hasSalaire(RessourcesFinancieres ressourcesFinancieres) {
+        return ressourcesFinancieres.getSalaire() != null && ressourcesFinancieres.getSalaire().getMontantNet() > 0;
+    }
 
     public Optional<Salaire> getSalaireAvantSimulation(DemandeurEmploi demandeurEmploi, int nMoisAvant) {
         if(hasSalairesAvantPeriodeSimulation(demandeurEmploi)) {
