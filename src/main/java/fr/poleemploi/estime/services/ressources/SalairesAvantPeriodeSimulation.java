@@ -2,26 +2,26 @@ package fr.poleemploi.estime.services.ressources;
 
 public class SalairesAvantPeriodeSimulation {
 
-    private float salaireMoisDemandeSimulation;
-    private float salaireMoisMoins1MoisDemandeSimulation;
-    private float salaireMoisMoins2MoisDemandeSimulation;
+    private Salaire salaireMoisDemandeSimulation;
+    private Salaire salaireMoisMoins1MoisDemandeSimulation;
+    private Salaire salaireMoisMoins2MoisDemandeSimulation;
     
-    public float getSalaireMoisDemandeSimulation() {
+    public Salaire getSalaireMoisDemandeSimulation() {
         return salaireMoisDemandeSimulation;
     }
-    public void setSalaireMoisDemandeSimulation(float salaireMoisDemandeSimulation) {
+    public void setSalaireMoisDemandeSimulation(Salaire salaireMoisDemandeSimulation) {
         this.salaireMoisDemandeSimulation = salaireMoisDemandeSimulation;
     }
-    public float getSalaireMoisMoins1MoisDemandeSimulation() {
+    public Salaire getSalaireMoisMoins1MoisDemandeSimulation() {
         return salaireMoisMoins1MoisDemandeSimulation;
     }
-    public void setSalaireMoisMoins1MoisDemandeSimulation(float salaireMoisMoins1MoisDemandeSimulation) {
+    public void setSalaireMoisMoins1MoisDemandeSimulation(Salaire salaireMoisMoins1MoisDemandeSimulation) {
         this.salaireMoisMoins1MoisDemandeSimulation = salaireMoisMoins1MoisDemandeSimulation;
     }
-    public float getSalaireMoisMoins2MoisDemandeSimulation() {
+    public Salaire getSalaireMoisMoins2MoisDemandeSimulation() {
         return salaireMoisMoins2MoisDemandeSimulation;
     }
-    public void setSalaireMoisMoins2MoisDemandeSimulation(float salaireMoisMoins2MoisDemandeSimulation) {
+    public void setSalaireMoisMoins2MoisDemandeSimulation(Salaire salaireMoisMoins2MoisDemandeSimulation) {
         this.salaireMoisMoins2MoisDemandeSimulation = salaireMoisMoins2MoisDemandeSimulation;
     }
     @Override

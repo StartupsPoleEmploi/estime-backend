@@ -6,8 +6,7 @@ public class FuturTravail {
     private float nombreHeuresTravailleesSemaine;
     private Integer nombreMoisContratCDD;
     private int nombreTrajetsDomicileTravail;
-    private float salaireMensuelBrut;    
-    private float salaireMensuelNet;
+    private Salaire salaire;  
     private String typeContrat;
     
     public int getNombreTrajetsDomicileTravail() {
@@ -21,18 +20,12 @@ public class FuturTravail {
     }
     public void setTypeContrat(String typeContrat) {
         this.typeContrat = typeContrat;
-    }    
-    public float getSalaireMensuelBrut() {
-        return salaireMensuelBrut;
+    }     
+    public Salaire getSalaire() {
+        return salaire;
     }
-    public void setSalaireMensuelBrut(float salaireMensuelBrut) {
-        this.salaireMensuelBrut = salaireMensuelBrut;
-    }
-    public float getSalaireMensuelNet() {
-        return salaireMensuelNet;
-    }
-    public void setSalaireMensuelNet(float salaireMensuelNet) {
-        this.salaireMensuelNet = salaireMensuelNet;
+    public void setSalaire(Salaire salaire) {
+        this.salaire = salaire;
     }
     public float getNombreHeuresTravailleesSemaine() {
         return nombreHeuresTravailleesSemaine;
@@ -56,8 +49,7 @@ public class FuturTravail {
     public String toString() {
         return "FuturTravail [distanceKmDomicileTravail=" + distanceKmDomicileTravail
                 + ", nombreHeuresTravailleesSemaine=" + nombreHeuresTravailleesSemaine + ", nombreMoisContratCDD="
-                + nombreMoisContratCDD + ", nombreTrajetsDomicileTravail=" + nombreTrajetsDomicileTravail
-                + ", salaireMensuelBrut=" + salaireMensuelBrut + ", salaireMensuelNet=" + salaireMensuelNet
-                + ", typeContrat=" + typeContrat + "]";
+                + nombreMoisContratCDD + ", nombreTrajetsDomicileTravail=" + nombreTrajetsDomicileTravail + ", salaire="
+                + salaire + ", typeContrat=" + typeContrat + "]";
     }
 }

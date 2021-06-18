@@ -33,7 +33,8 @@ public class ParametresOpenFisca {
     public static final String REVENUS_LOCATIFS = "revenus_locatifs";
     public static final String RSA = "rsa";
     public static final String RSA_ISOLEMENT_RECENT = "rsa_isolement_recent";
-    public static final String SALAIRE_NET = "salaire_net";
+    public static final String SALAIRE_BASE = "salaire_de_base";
+    public static final String SALAIRE_IMPOSABLE = "salaire_imposable";
     public static final String STATUT_MARITAL = "statut_marital";
     public static final String STATUT_OCCUPATION_LOGEMENT = "statut_occupation_logement";    
     public static final String TNS_AUTRES_REVENUS = "tns_autres_revenus";     

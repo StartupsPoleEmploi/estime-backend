@@ -9,7 +9,7 @@ public class RessourcesFinancieres {
     private Integer nombreMoisTravaillesDerniersMois;
     private Float revenusCreateurEntreprise3DerniersMois;
     private Float revenusImmobilier3DerniersMois;
-    private float salaireNet;
+    private Salaire salaire;
     private SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation;
     
     public AllocationsCAF getAllocationsCAF() {
@@ -54,11 +54,11 @@ public class RessourcesFinancieres {
     public void setRevenusImmobilier3DerniersMois(Float revenusImmobilier3DerniersMois) {
         this.revenusImmobilier3DerniersMois = revenusImmobilier3DerniersMois;
     }
-    public float getSalaireNet() {
-        return salaireNet;
+    public Salaire getSalaire() {
+        return salaire;
     }
-    public void setSalaireNet(float salaireNet) {
-        this.salaireNet = salaireNet;
+    public void setSalaire(Salaire salaire) {
+        this.salaire = salaire;
     }
     public SalairesAvantPeriodeSimulation getSalairesAvantPeriodeSimulation() {
         return salairesAvantPeriodeSimulation;
@@ -66,7 +66,6 @@ public class RessourcesFinancieres {
     public void setSalairesAvantPeriodeSimulation(SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation) {
         this.salairesAvantPeriodeSimulation = salairesAvantPeriodeSimulation;
     }
-    
     @Override
     public String toString() {
         return "RessourcesFinancieres [allocationsCAF=" + allocationsCAF + ", allocationsPoleEmploi="
@@ -74,7 +73,7 @@ public class RessourcesFinancieres {
                 + hasTravailleAuCoursDerniersMois + ", nombreMoisTravaillesDerniersMois="
                 + nombreMoisTravaillesDerniersMois + ", revenusCreateurEntreprise3DerniersMois="
                 + revenusCreateurEntreprise3DerniersMois + ", revenusImmobilier3DerniersMois="
-                + revenusImmobilier3DerniersMois + ", salaireNet=" + salaireNet + ", salairesAvantPeriodeSimulation="
+                + revenusImmobilier3DerniersMois + ", salaire=" + salaire + ", salairesAvantPeriodeSimulation="
                 + salairesAvantPeriodeSimulation + "]";
     }
 }

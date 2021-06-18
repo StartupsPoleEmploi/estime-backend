@@ -9,7 +9,8 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSIONS_ALIMENTAIRES_PERCUES;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.REVENUS_LOCATIFS;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_NET;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_MARITAL;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TNS_AUTRES_REVENUS;
 
@@ -54,7 +55,8 @@ public class OpenFiscaMappeurIndividus {
         JSONObject demandeurJSON = new JSONObject();
         demandeurJSON.put(DATE_NAISSANCE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(getDateNaissance(demandeurEmploi), dateDebutSimulation, numeroMoisSimule));            
         demandeurJSON.put(STATUT_MARITAL, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(getStatutMarital(demandeurEmploi), dateDebutSimulation, numeroMoisSimule));
-        demandeurJSON.put(SALAIRE_NET, openFiscaMappeurPeriode.creerPeriodesSalaireJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+        demandeurJSON.put(SALAIRE_BASE, openFiscaMappeurPeriode.creerPeriodesSalaireJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+        openFiscaMappeurPeriode.creerPeriodesSalaireImposableJSON(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
         addRessourcesFinancieresDemandeur(demandeurJSON, demandeurEmploi, simulationAidesSociales, numeroMoisSimule, dateDebutSimulation);
         return demandeurJSON;
     }
