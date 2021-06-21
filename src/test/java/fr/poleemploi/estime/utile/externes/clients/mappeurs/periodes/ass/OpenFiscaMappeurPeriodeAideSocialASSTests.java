@@ -31,6 +31,7 @@ import fr.poleemploi.estime.services.ressources.AllocationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 import fr.poleemploi.test.utile.BouchonAideSociale;
@@ -188,8 +189,10 @@ class OpenFiscaMappeurPeriodeAideSocialASSTests {
         futurTravail.setDistanceKmDomicileTravail(15);
         futurTravail.setNombreHeuresTravailleesSemaine(35);
         futurTravail.setNombreTrajetsDomicileTravail(20);
-        futurTravail.setSalaireMensuelBrut(1200);
-        futurTravail.setSalaireMensuelNet(950);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(950);
+        salaire.setMontantBrut(1228);
+        futurTravail.setSalaire(salaire);
         futurTravail.setTypeContrat(TypesContratTravail.CDI.toString());
         demandeurEmploi.setFuturTravail(futurTravail);
         

@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.simulateuraidessociales.caf;
+package fr.poleemploi.estime.logique.simulateuraidessociales.caf;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,6 +30,7 @@ import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
@@ -65,14 +66,20 @@ class AidePrimeActivitePopulationASSEnCouple {
         //futur contrat CDI avec salaire net 900 euros/mois
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1200);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -100,8 +107,8 @@ class AidePrimeActivitePopulationASSEnCouple {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 82 euros (résultat simulateur CAF : 81 euros)
-        assertThat(montantPrimeActivite).isEqualTo(82);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 85 euros (résultat simulateur CAF : 81 euros)
+        assertThat(montantPrimeActivite).isEqualTo(85);
     }
 
     @Test
@@ -112,14 +119,20 @@ class AidePrimeActivitePopulationASSEnCouple {
         //futur contrat CDI avec salaire net 1900 euros/mois
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(1900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(1900);
+        salaire.setMontantBrut(2428);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1200);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -160,7 +173,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -170,7 +186,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1200);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -198,8 +217,8 @@ class AidePrimeActivitePopulationASSEnCouple {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 137 euros (résultat simulateur CAF : 136 euros)
-        assertThat(montantPrimeActivite).isEqualTo(137);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 140 euros (résultat simulateur CAF : 136 euros)
+        assertThat(montantPrimeActivite).isEqualTo(140);
     }
 
     @Test
@@ -212,7 +231,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -223,7 +245,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1200);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -254,8 +279,8 @@ class AidePrimeActivitePopulationASSEnCouple {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 148 euros (résultat simulateur CAF : 147 euros)
-        assertThat(montantPrimeActivite).isEqualTo(148);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 152 euros (résultat simulateur CAF : 147 euros)
+        assertThat(montantPrimeActivite).isEqualTo(152);
     }
 
     @Test
@@ -268,7 +293,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -279,7 +307,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1200);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -315,8 +346,8 @@ class AidePrimeActivitePopulationASSEnCouple {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 142 euros (résultat simulateur CAF : 141 euros)
-        assertThat(montantPrimeActivite).isEqualTo(142);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 145 euros (résultat simulateur CAF : 141 euros)
+        assertThat(montantPrimeActivite).isEqualTo(145);
     }
 
     @Test
@@ -329,7 +360,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -341,7 +375,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1200);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -372,8 +409,8 @@ class AidePrimeActivitePopulationASSEnCouple {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 108 euros (résultat simulateur CAF : 107 euros)
-        assertThat(montantPrimeActivite).isEqualTo(108);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 111 euros (résultat simulateur CAF : 107 euros)
+        assertThat(montantPrimeActivite).isEqualTo(111);
     }
 
     @Test
@@ -386,7 +423,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -398,7 +438,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1200);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -434,8 +477,8 @@ class AidePrimeActivitePopulationASSEnCouple {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 61 euros (résultat simulateur CAF : 61 euros)
-        assertThat(montantPrimeActivite).isEqualTo(61);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 64 euros (résultat simulateur CAF : 61 euros)
+        assertThat(montantPrimeActivite).isEqualTo(64);
     }
     
     @Test
@@ -448,7 +491,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -461,7 +507,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1200);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -492,8 +541,8 @@ class AidePrimeActivitePopulationASSEnCouple {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 125 euros (résultat simulateur CAF : 96 euros - 112 euros sans CF)
-        assertThat(montantPrimeActivite).isEqualTo(125);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 128 euros (résultat simulateur CAF : 96 euros - 112 euros sans CF)
+        assertThat(montantPrimeActivite).isEqualTo(128);
     }
 
     @Test
@@ -506,7 +555,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -519,7 +571,10 @@ class AidePrimeActivitePopulationASSEnCouple {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1200);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1200);
+        salaireConjoint.setMontantBrut(1544);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -555,7 +610,7 @@ class AidePrimeActivitePopulationASSEnCouple {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 70 euros (résultat simulateur CAF : 41 )
-        assertThat(montantPrimeActivite).isEqualTo(70);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 73 euros (résultat simulateur CAF : 41 )
+        assertThat(montantPrimeActivite).isEqualTo(73);
     }
 }

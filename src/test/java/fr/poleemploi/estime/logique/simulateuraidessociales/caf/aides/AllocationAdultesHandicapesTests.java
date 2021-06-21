@@ -19,6 +19,7 @@ import fr.poleemploi.estime.services.ressources.AllocationsCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 
 
 @SpringBootTest
@@ -35,8 +36,6 @@ class AllocationAdultesHandicapesTests {
 
     }
     
-  
-  
     @Test
     void simulerAAHTest1() {
 
@@ -46,7 +45,11 @@ class AllocationAdultesHandicapesTests {
         //AAH = 451 euros 
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelBrut(1000);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(770);
+        salaire.setMontantBrut(1000);        
+        futurTravail.setSalaire(salaire);
+        
         demandeurEmploi.setFuturTravail(futurTravail);
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
@@ -74,7 +77,10 @@ class AllocationAdultesHandicapesTests {
         //AAH = 450 euros 
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelBrut(400);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(295);
+        salaire.setMontantBrut(400);        
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
@@ -104,7 +110,10 @@ class AllocationAdultesHandicapesTests {
         //AAH = 450 euros 
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelBrut(500);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(374);
+        salaire.setMontantBrut(500);        
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);

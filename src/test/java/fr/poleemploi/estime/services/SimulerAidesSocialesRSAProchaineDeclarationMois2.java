@@ -36,6 +36,7 @@ import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -107,7 +108,7 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
         }); 
         //Alors les aides du second mois 12/2020 sont :
-        //Prime d'activité : 151f (simulateur CAF : ? euros), RSA : 615f euros (simulateur CAF : ? euros)
+        //Prime d'activité : 144 (simulateur CAF : ? euros), RSA : 623 euros (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -116,14 +117,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du troisième mois 01/2021 sont :
-        //RSA : 615f (simulateur CAF : ? euros), PPA : 151f (simulateur CAF : ? euros)
+        //RSA : 623 (simulateur CAF : ? euros), PPA : 144 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -132,14 +133,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du quatrième mois 02/2021 sont :
-        //RSA : 615f (simulateur CAF : ? euros), PPA : 151f (simulateur CAF : ? euros)
+        //RSA : 623 (simulateur CAF : ? euros), PPA : 144 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -148,14 +149,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du cinquième mois 03/2021 sont :
-        //Prime d'activité : 452f euros (simulateur CAF : ? euros), RSA : 148f (simulateur CAF : ? euros)
+        //Prime d'activité : 430 euros (simulateur CAF : ? euros), RSA : 174 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -164,14 +165,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(452f);
+                assertThat(ppa.getMontant()).isEqualTo(430);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(148f);
+                assertThat(rsa.getMontant()).isEqualTo(174);
             });
         });
         //Alors les aides du sixième mois 04/2021 sont :
-        //Prime d'activité : 452f euros (simulateur CAF : ? euros), RSA : 148f (simulateur CAF : ? euros)
+        //Prime d'activité : 430 euros (simulateur CAF : ? euros), RSA : 174 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -180,10 +181,10 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(452f);
+                assertThat(ppa.getMontant()).isEqualTo(430);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(148f);
+                assertThat(rsa.getMontant()).isEqualTo(174);
             });
         });
     }
@@ -196,7 +197,10 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
         //futur contrat CDI, 1245 euros par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(850);
+        Salaire salaireMoisDemande = new Salaire();
+        salaireMoisDemande.setMontantNet(850);
+        salaireMoisDemande.setMontantBrut(1101);        
+        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisDemande);
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
 
 
@@ -224,7 +228,7 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
         }); 
         //Alors les aides du second mois 12/2020 sont :
-        //RSA : 615f euros (simulateur CAF : ? euros), PPA : 151f (simulateur CAF : ? euros)
+        //RSA : 623 euros (simulateur CAF : ? euros), PPA : 144 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -233,14 +237,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du troisième mois 01/2021 sont :
-        //PPA : 151f (simulateur CAF : ? euros), RSA : 615f (simulateur CAF : ? euros)
+        //PPA : 144 (simulateur CAF : ? euros), RSA : 623 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -249,14 +253,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du quatrième mois 02/2021 sont :
-        //Prime d'activité : 151f euros (simulateur CAF : ? euros), RSA : 615f (simulateur CAF : ? euros)
+        //Prime d'activité : 144 euros (simulateur CAF : ? euros), RSA : 623 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -265,14 +269,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du cinquième mois 03/2021 sont :
-        //Prime d'activité : 452f euros (simulateur CAF : ? euros), RSA : 148f (simulateur CAF : ? euros)
+        //Prime d'activité : 430 euros (simulateur CAF : ? euros), RSA : 174 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -281,14 +285,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(452f);
+                assertThat(ppa.getMontant()).isEqualTo(430);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(148f);
+                assertThat(rsa.getMontant()).isEqualTo(174);
             });
         });
         //Alors les aides du sixième mois 04/2021 sont :
-        //Prime d'activité : 452f euros (simulateur CAF : ? euros), RSA : 148f (simulateur CAF : ? euros)
+        //Prime d'activité : 430 euros (simulateur CAF : ? euros), RSA : 174 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -297,10 +301,10 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(452f);
+                assertThat(ppa.getMontant()).isEqualTo(430);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(148f);
+                assertThat(rsa.getMontant()).isEqualTo(174);
             });
         });
     }
@@ -314,8 +318,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
         //futur contrat CDI, 1245 euros par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets 
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(850);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(800);
+        Salaire salaireMoisDemande = new Salaire();
+        salaireMoisDemande.setMontantNet(850);
+        salaireMoisDemande.setMontantBrut(1101);        
+        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisDemande);
+        Salaire salaireMoisMoins1Mois = new Salaire();
+        salaireMoisMoins1Mois.setMontantNet(800);
+        salaireMoisMoins1Mois.setMontantBrut(1038); 
+        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisMoins1Mois);
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
 
         //Lorsque je simule mes aides le 20/10/2020
@@ -344,7 +354,7 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
         }); 
         //Alors les aides du second mois 12/2020 sont :
-        //RSA : 615f euros (simulateur CAF : ? euros), PPA : 151f (simulateur CAF : ? euros)
+        //RSA : 623 euros (simulateur CAF : ? euros), PPA : 144 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -353,14 +363,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du troisième mois 01/2021 sont :
-        //Prime d'activité : 151f euros (simulateur CAF : ? euros), RSA : 615f (simulateur CAF : ? euros)
+        //Prime d'activité : 144 euros (simulateur CAF : ? euros), RSA : 623 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -369,14 +379,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du quatrième mois 02/2021 sont :
-        //Prime d'activité : 151f euros (simulateur CAF : ? euros), RSA : 615f (simulateur CAF : ? euros)
+        //Prime d'activité : 144 euros (simulateur CAF : ? euros), RSA : 623 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -385,14 +395,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du cinquième mois 03/2021 sont :
-        //Prime d'activité : 452f euros (simulateur CAF : ? euros), RSA : 148f (simulateur CAF : ? euros)
+        //Prime d'activité : 430 euros (simulateur CAF : ? euros), RSA : 174 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -402,14 +412,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa).isNotNull();
-                assertThat(ppa.getMontant()).isEqualTo(452f);
+                assertThat(ppa.getMontant()).isEqualTo(430);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(148f);
+                assertThat(rsa.getMontant()).isEqualTo(174);
             });
         });
         //Alors les aides du sixième mois 04/2021 sont :
-        //Prime d'activité : 452f euros (Simulateur CAF : ? euros), RSA : 148f (simulateur CAF : ? euros)
+        //Prime d'activité : 430 euros (Simulateur CAF : ? euros), RSA : 174 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -419,10 +429,10 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa).isNotNull();
-                assertThat(ppa.getMontant()).isEqualTo(452f);
+                assertThat(ppa.getMontant()).isEqualTo(430);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(148f);
+                assertThat(rsa.getMontant()).isEqualTo(174);
             });
         });
     }
@@ -437,9 +447,18 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
         
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(850);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(800);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(750);
+        Salaire salaireMoisDemande = new Salaire();
+        salaireMoisDemande.setMontantNet(850);
+        salaireMoisDemande.setMontantBrut(1101);        
+        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisDemande);
+        Salaire salaireMoisMoins1Mois = new Salaire();
+        salaireMoisMoins1Mois.setMontantNet(800);
+        salaireMoisMoins1Mois.setMontantBrut(1038); 
+        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisMoins1Mois);
+        Salaire salaireMoisMoins2Mois = new Salaire();
+        salaireMoisMoins2Mois.setMontantNet(750);
+        salaireMoisMoins2Mois.setMontantBrut(975); 
+        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireMoisMoins2Mois);
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
         
         //Lorsque je simule mes aides le 20/10/2020
@@ -466,7 +485,7 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
         }); 
         //Alors les aides du second mois 12/2020 sont :
-        //Prime d'activité : 151f euros (simulateur CAF : ? euros), RSA : 615f euros (simulateur CAF : ? euros)
+        //Prime d'activité : 144 euros (simulateur CAF : ? euros), RSA : 623 euros (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -475,14 +494,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du troisième mois 01/2021 sont :
-        //Prime d'activité : 151f euros (simulateur CAF : ? euros), RSA : 615f (simulateur CAF : ? euros)
+        //Prime d'activité : 144 euros (simulateur CAF : ? euros), RSA : 623 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -491,14 +510,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du quatrième mois 02/2021 sont :
-        //Prime d'activité : 151f euros (simulateur CAF : ? euros), RSA : 615f (simulateur CAF : ? euros)
+        //Prime d'activité : 144 euros (simulateur CAF : ? euros), RSA : 623 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -507,14 +526,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(151f);
+                assertThat(ppa.getMontant()).isEqualTo(144);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(615f);
+                assertThat(rsa.getMontant()).isEqualTo(623);
             });
         });
         //Alors les aides du cinquième mois 03/2021 sont :
-        //Prime d'activité : 452f euros (Simulateur CAF : ? euros), RSA : 148f (simulateur CAF : ? euros)
+        //Prime d'activité : 430 euros (Simulateur CAF : ? euros), RSA : 174 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -523,14 +542,14 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(452f);
+                assertThat(ppa.getMontant()).isEqualTo(430);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(148f);
+                assertThat(rsa.getMontant()).isEqualTo(174);
             });
         });
         //Alors les aides du sixième mois 04/2021 sont :
-        //Prime d'activité : 452f euros (Simulateur CAF : 413 euros), RSA : 148f (simulateur CAF : ? euros)
+        //Prime d'activité : 430 euros (Simulateur CAF : 413 euros), RSA : 174 (simulateur CAF : ? euros)
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -539,10 +558,10 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(452f);
+                assertThat(ppa.getMontant()).isEqualTo(430);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(148f);
+                assertThat(rsa.getMontant()).isEqualTo(174);
             });
         });
     }
@@ -576,8 +595,10 @@ class SimulerAidesSocialesRSAProchaineDeclarationMois2 {
 
         FuturTravail futurTravail = new FuturTravail();
         futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurTravail.setSalaireMensuelBrut(912);
-        futurTravail.setSalaireMensuelNet(700);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(700);
+        salaire.setMontantBrut(912);        
+        futurTravail.setSalaire(salaire);
         futurTravail.setDistanceKmDomicileTravail(80);
         futurTravail.setNombreHeuresTravailleesSemaine(20);
         futurTravail.setNombreTrajetsDomicileTravail(12);

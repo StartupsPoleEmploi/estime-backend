@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.simulateuraidessociales.caf;
+package fr.poleemploi.estime.logique.simulateuraidessociales.caf;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

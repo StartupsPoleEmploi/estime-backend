@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.simulateuraidessociales.caf;
+package fr.poleemploi.estime.logique.simulateuraidessociales.caf;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,6 +31,7 @@ import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
@@ -68,7 +69,10 @@ class AidePrimeActivitePopulationPensionInvalidite {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(800);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(800);
+        salaire.setMontantBrut(1038);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -101,8 +105,8 @@ class AidePrimeActivitePopulationPensionInvalidite {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 06/2021 est de 30 euros (résultat simulateur CAF : TODO ldetre retrouver valeur CAF)
-        assertThat(montantPrimeActivite).isEqualTo(30);
+        //Alors le montant de la prime d'activité pour le 06/2021 est de 32 euros (résultat simulateur CAF : TODO ldetre retrouver valeur CAF)
+        assertThat(montantPrimeActivite).isEqualTo(32);
     }
     
     @Test
@@ -115,7 +119,10 @@ class AidePrimeActivitePopulationPensionInvalidite {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(800);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(800);
+        salaire.setMontantBrut(1038);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
 
@@ -152,8 +159,8 @@ class AidePrimeActivitePopulationPensionInvalidite {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 06/2021 est de 73 euros (résultat simulateur CAF : 368€)
-        assertThat(montantPrimeActivite).isEqualTo(73);
+        //Alors le montant de la prime d'activité pour le 06/2021 est de 74 euros (résultat simulateur CAF : 368€)
+        assertThat(montantPrimeActivite).isEqualTo(74);
     }
     
     @Test
@@ -166,7 +173,10 @@ class AidePrimeActivitePopulationPensionInvalidite {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(800);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(800);
+        salaire.setMontantBrut(1038);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
 
@@ -212,8 +222,8 @@ class AidePrimeActivitePopulationPensionInvalidite {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 06/2021 est de 84 euros (résultat simulateur CAF : pas le droit à cette prestation)
-        assertThat(montantPrimeActivite).isEqualTo(84);
+        //Alors le montant de la prime d'activité pour le 06/2021 est de 86 euros (résultat simulateur CAF : pas le droit à cette prestation)
+        assertThat(montantPrimeActivite).isEqualTo(86);
     }
     
     @Test
@@ -226,7 +236,10 @@ class AidePrimeActivitePopulationPensionInvalidite {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(800);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(800);
+        salaire.setMontantBrut(1038);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -277,7 +290,10 @@ class AidePrimeActivitePopulationPensionInvalidite {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(800);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(800);
+        salaire.setMontantBrut(1038);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -328,7 +344,10 @@ class AidePrimeActivitePopulationPensionInvalidite {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(800);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(800);
+        salaire.setMontantBrut(1038);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -381,14 +400,20 @@ class AidePrimeActivitePopulationPensionInvalidite {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(800);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(800);
+        salaire.setMontantBrut(1038);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         Personne conjoint = new Personne();
         situationFamiliale.setIsEnCouple(true);
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1000);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1000);
+        salaireConjoint.setMontantBrut(1291);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
         allocationsCPAM.setPensionInvalidite(200f);
         ressourcesFinancieresConjoint.setAllocationsCPAM(allocationsCPAM);
@@ -432,7 +457,10 @@ class AidePrimeActivitePopulationPensionInvalidite {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(800);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(800);
+        salaire.setMontantBrut(1038);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -442,7 +470,10 @@ class AidePrimeActivitePopulationPensionInvalidite {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        ressourcesFinancieresConjoint.setSalaireNet(1000);
+        Salaire salaireConjoint = new Salaire();
+        salaireConjoint.setMontantNet(1000);
+        salaireConjoint.setMontantBrut(1291);
+        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
         allocationsCPAM.setPensionInvalidite(200f);
         ressourcesFinancieresConjoint.setAllocationsCPAM(allocationsCPAM);

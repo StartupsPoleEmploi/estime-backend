@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.simulateuraidessociales.caf;
+package fr.poleemploi.estime.logique.simulateuraidessociales.caf;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,6 +30,7 @@ import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
@@ -65,7 +66,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         //futur contrat CDI avec salaire net 900 euros/mois
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
@@ -90,13 +94,13 @@ class AidePrimeActivitePopulationASSCelibataire {
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
         //Lorsque je fais une simulation le 01/07/2020
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 93 euros (résultat simulateur CAF : 93 euros)
-        assertThat(montantPrimeActivite).isEqualTo(93);
+        assertThat(montantPrimeActivite).isEqualTo(95);
     }
 
     @Test
@@ -107,7 +111,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         //futur contrat CDI avec salaire net 1900 euros/mois
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(1900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(1900);
+        salaire.setMontantBrut(2428);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
@@ -132,9 +139,9 @@ class AidePrimeActivitePopulationASSCelibataire {
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("05-07-2020");        
 
-        //Lorsque je calcul le montant de la prime d'activité avec salaires 07/2020 = 1900, 08/2020 = 1900, 09/2020 = 1900 
+        //Lorsque je fais une simulation le 01/07/2020
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");        
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 0 euros (résultat simulateur CAF : pas droit à cette préstation)
@@ -150,7 +157,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -181,13 +191,12 @@ class AidePrimeActivitePopulationASSCelibataire {
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("05-07-2020");  
-
-        //Lorsque je calcul le montant de la prime d'activité
+        //Lorsque je fais une simulation le 01/07/2020
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020"); 
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 155 euros (résultat simulateur CAF : 148 euros)
-        assertThat(montantPrimeActivite).isEqualTo(155);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 156 euros (résultat simulateur CAF : 148 euros)
+        assertThat(montantPrimeActivite).isEqualTo(156);
     }
 
     @Test
@@ -199,7 +208,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -235,13 +247,12 @@ class AidePrimeActivitePopulationASSCelibataire {
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("05-07-2020");  
-
-        //Lorsque je calcul le montant de la prime d'activité
+        //Lorsque je fais une simulation le 01/07/2020
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020"); 
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 110 euros (résultat simulateur CAF : 104 euros)
-        assertThat(montantPrimeActivite).isEqualTo(110);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 112 euros (résultat simulateur CAF : 104 euros)
+        assertThat(montantPrimeActivite).isEqualTo(112);
     }
 
     @Test
@@ -253,7 +264,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -285,13 +299,12 @@ class AidePrimeActivitePopulationASSCelibataire {
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("05-07-2020");  
-
-        //Lorsque je calcul le montant de la prime d'activité
+        //Lorsque je fais une simulation le 01/07/2020
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020"); 
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 135 euros (résultat simulateur CAF : 119 euros)
-        assertThat(montantPrimeActivite).isEqualTo(135);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 136 euros (résultat simulateur CAF : 119 euros)
+        assertThat(montantPrimeActivite).isEqualTo(136);
     }
 
     @Test
@@ -303,7 +316,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -345,8 +361,8 @@ class AidePrimeActivitePopulationASSCelibataire {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 80 euros (résultat simulateur CAF : 65 euros)
-        assertThat(montantPrimeActivite).isEqualTo(80);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 81 euros (résultat simulateur CAF : 65 euros)
+        assertThat(montantPrimeActivite).isEqualTo(81);
     }
 
     @Test
@@ -358,7 +374,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -396,8 +415,8 @@ class AidePrimeActivitePopulationASSCelibataire {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 63 euros (résultat simulateur CAF : 15 euros - 100 euros sans compter CF)
-        assertThat(montantPrimeActivite).isEqualTo(63);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 65 euros (résultat simulateur CAF : 15 euros - 100 euros sans compter CF)
+        assertThat(montantPrimeActivite).isEqualTo(65);
     }
 
     @Test
@@ -409,7 +428,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -465,7 +487,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -504,8 +529,8 @@ class AidePrimeActivitePopulationASSCelibataire {
         //Lorsque je calcul le montant de la prime d'activité
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 49 euros (résultat simulateur CAF : pas droit à cette prestation euros)
-        assertThat(montantPrimeActivite).isEqualTo(49);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 51 euros (résultat simulateur CAF : pas droit à cette prestation euros)
+        assertThat(montantPrimeActivite).isEqualTo(51);
     }
 
     @Test
@@ -518,7 +543,10 @@ class AidePrimeActivitePopulationASSCelibataire {
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
 
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();

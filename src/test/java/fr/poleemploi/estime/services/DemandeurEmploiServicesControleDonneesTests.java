@@ -33,6 +33,7 @@ import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.test.utile.TestUtile;
 
@@ -158,7 +159,10 @@ class DemandeurEmploiServicesControleDonneesTests {
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
         FuturTravail futurTravail = creerFuturTravail();
-        futurTravail.setSalaireMensuelNet(0);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(0);
+        salaire.setMontantBrut(0);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
@@ -175,12 +179,15 @@ class DemandeurEmploiServicesControleDonneesTests {
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
         FuturTravail futurTravail = creerFuturTravail();
-        futurTravail.setSalaireMensuelBrut(0);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(0);
+        salaire.setMontantBrut(0);
+        futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
             individuService.simulerAidesSociales(demandeurEmploi);
-        }).getMessage()).isEqualTo(BadRequestMessages.SALAIRE_MENSUEL_BRUT_ZERO.getMessage());
+        }).getMessage()).isEqualTo(BadRequestMessages.SALAIRE_MENSUEL_NET_ZERO.getMessage());
     }
     
     /**************       Beneficiaire Aides Sociales     **************/
@@ -555,8 +562,10 @@ class DemandeurEmploiServicesControleDonneesTests {
         futurTravail.setNombreMoisContratCDD(6);
         futurTravail.setDistanceKmDomicileTravail(50);
         futurTravail.setNombreHeuresTravailleesSemaine(15);
-        futurTravail.setSalaireMensuelBrut(1200);
-        futurTravail.setSalaireMensuelNet(900);
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1200);
+        futurTravail.setSalaire(salaire);        
         futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
         return futurTravail;
     }

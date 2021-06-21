@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.simulateuraidessociales.caf;
+package fr.poleemploi.estime.logique.simulateuraidessociales.caf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.FileNotFoundException;
@@ -30,6 +30,7 @@ import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
@@ -60,8 +61,6 @@ class AideRSAPopulationASSEnCouple {
          // en location, nat.Fra, CP 67 000,
          // en couple salaire 1200€ net
          // Contrat 20h 700€, RSA 400€ 80 € APL, 80€ Alloc fam
-         int montantSalaireNet = 700;
-         int montantSalaireNetConjoint = 1200;
          float montantRSA = 400.0f;
          float montantASSJournalier = 16.89f;
          float montantASSMois1 = 523.6f;
@@ -79,7 +78,10 @@ class AideRSAPopulationASSEnCouple {
          
          DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
          FuturTravail futurTravail = new FuturTravail();
-         futurTravail.setSalaireMensuelNet(montantSalaireNet);
+         Salaire salaire = new Salaire();
+         salaire.setMontantNet(700);
+         salaire.setMontantBrut(912);
+         futurTravail.setSalaire(salaire);
          demandeurEmploi.setFuturTravail(futurTravail);
          
          RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
@@ -113,7 +115,10 @@ class AideRSAPopulationASSEnCouple {
          situationFamiliale.setIsEnCouple(enCouple); 
          Personne conjoint = new Personne();
          RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-         ressourcesFinancieresConjoint.setSalaireNet(montantSalaireNetConjoint);
+         Salaire salaireConjoint = new Salaire();
+         salaireConjoint.setMontantNet(1200);
+         salaireConjoint.setMontantBrut(1544);
+         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
          conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
          situationFamiliale.setConjoint(conjoint);
          situationFamiliale.setIsSeulPlusDe18Mois(seulPlusDe18Mois);
@@ -137,8 +142,6 @@ class AideRSAPopulationASSEnCouple {
          // en location, nat.Fra, CP 67 000,
          // en couple salaire 1200€ net
          // 1 enfant 01/02/2014 Contrat 20h 700€, RSA 400€ 80 € APL, 80€ Alloc fam
-         int montantSalaireNet = 700;
-         int montantSalaireNetConjoint = 1200;
          float montantRSA = 400.0f;
          float montantASSJournalier = 16.89f;
          float montantASSMois1 = 523.6f;
@@ -157,7 +160,10 @@ class AideRSAPopulationASSEnCouple {
          
          DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
          FuturTravail futurTravail = new FuturTravail();
-         futurTravail.setSalaireMensuelNet(montantSalaireNet);
+         Salaire salaire = new Salaire();
+         salaire.setMontantNet(700);
+         salaire.setMontantBrut(912);
+         futurTravail.setSalaire(salaire);
          demandeurEmploi.setFuturTravail(futurTravail);
          
          RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
@@ -194,7 +200,10 @@ class AideRSAPopulationASSEnCouple {
          situationFamiliale.setIsEnCouple(enCouple); 
          Personne conjoint = new Personne();
          RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-         ressourcesFinancieresConjoint.setSalaireNet(montantSalaireNetConjoint);
+         Salaire salaireConjoint = new Salaire();
+         salaireConjoint.setMontantNet(1200);
+         salaireConjoint.setMontantBrut(1544);
+         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
          conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
          situationFamiliale.setConjoint(conjoint);
          situationFamiliale.setIsSeulPlusDe18Mois(seulPlusDe18Mois);
@@ -219,7 +228,6 @@ class AideRSAPopulationASSEnCouple {
          // en location, nat.Fra, CP 67 000,
          // en couple conjoint sans ressource
          // Contrat 20h 700€, RSA 400€ 80 € APL, 80€ Alloc fam
-         int montantSalaireNet = 700;
          float montantRSA = 400.0f;
          float montantASSJournalier = 16.89f;
          float montantASSMois1 = 523.6f;
@@ -237,7 +245,10 @@ class AideRSAPopulationASSEnCouple {
          
          DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
          FuturTravail futurTravail = new FuturTravail();
-         futurTravail.setSalaireMensuelNet(montantSalaireNet);
+         Salaire salaire = new Salaire();
+         salaire.setMontantNet(700);
+         salaire.setMontantBrut(912);
+         futurTravail.setSalaire(salaire);
          demandeurEmploi.setFuturTravail(futurTravail);
          
          RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
@@ -283,7 +294,7 @@ class AideRSAPopulationASSEnCouple {
          float montantRsaMois3 = openFiscaClient.calculerMontantRSA(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, 3);
 
          //TODO: vérifier montant CAF
-         assertThat(montantRsaMois3).isEqualTo(301);       
+         assertThat(montantRsaMois3).isEqualTo(318);       
      }
      
      @Test
@@ -293,7 +304,6 @@ class AideRSAPopulationASSEnCouple {
          // en location, nat.Fra, CP 67 000,
          // en couple conjoint sans ressource
          // 1 enfant 01/02/2014 Contrat 20h 700€, RSA 400€ 80 € APL, 80€ Alloc fam
-         int montantSalaireNet = 700;
          float montantRSA = 400.0f;
          float montantASSJournalier = 16.89f;
          float montantASSMois1 = 523.6f;
@@ -312,7 +322,10 @@ class AideRSAPopulationASSEnCouple {
          
          DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
          FuturTravail futurTravail = new FuturTravail();
-         futurTravail.setSalaireMensuelNet(montantSalaireNet);
+         Salaire salaire = new Salaire();
+         salaire.setMontantNet(700);
+         salaire.setMontantBrut(912);
+         futurTravail.setSalaire(salaire);
          demandeurEmploi.setFuturTravail(futurTravail);
          
          RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
@@ -361,6 +374,6 @@ class AideRSAPopulationASSEnCouple {
          float montantRsaMois3 = openFiscaClient.calculerMontantRSA(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, 3);
 
          //TODO: vérifier montant CAF
-         assertThat(montantRsaMois3).isEqualTo(470);       
+         assertThat(montantRsaMois3).isEqualTo(487);       
      }
 }
