@@ -2,7 +2,6 @@ package utiletests;
 
 import java.time.LocalDate;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +20,6 @@ public class BouchonDemandeur {
     
     @SpyBean
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
-    
-    @Autowired
-    private TestUtile testUtile;
-    
-    
     
     @SpyBean
     private DateUtile dateUtile;   
