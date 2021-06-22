@@ -98,7 +98,7 @@ class AideRSAPopulationCelibataire {
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         float montantRsaMois3 = openFiscaClient.calculerMontantRSA(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, 1);
         //TODO: vérifier montant CAF
-        assertThat(montantRsaMois3).isEqualTo(102);       
+        assertThat(montantRsaMois3).isEqualTo(497);       
     }
     
     

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.services.ressources.AideSociale;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
@@ -25,15 +24,6 @@ public class RSA {
     @Autowired
     private OpenFiscaClient openFiscaClient;
 
-    @Autowired
-    private InformationsPersonnellesUtile informationsPersonnellesUtile;
-
-    public boolean isEligible(DemandeurEmploi demandeurEmploi) {
-        return informationsPersonnellesUtile.isFrancais(demandeurEmploi.getInformationsPersonnelles())
-                || informationsPersonnellesUtile.isEuropeenOuSuisse(demandeurEmploi.getInformationsPersonnelles())
-                || (informationsPersonnellesUtile.isNotFrancaisOuEuropeenOuSuisse(demandeurEmploi.getInformationsPersonnelles())
-                        && informationsPersonnellesUtile.isTitreSejourEnFranceValide(demandeurEmploi.getInformationsPersonnelles()));            
-    }
 
     public void simulerRSA(SimulationAidesSociales simulationAidesSociales, Map<String, AideSociale>  aidesEligiblesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         List<SimulationMensuelle> simulationsMensuelles = simulationAidesSociales.getSimulationsMensuelles();
