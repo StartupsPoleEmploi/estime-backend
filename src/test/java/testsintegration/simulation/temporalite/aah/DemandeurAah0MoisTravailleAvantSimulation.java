@@ -32,7 +32,7 @@ class DemandeurAah0MoisTravailleAvantSimulation extends CommunTests {
     
 
     @Configuration
-    @ComponentScan({"utile.tests","fr.poleemploi.estime", "testsintegration.temporalite.aah"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }

@@ -59,7 +59,7 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
     @Test
     void mapDemandeurPersonneAChargeAAHToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("openfisca-mappeur/personnes-a-charge/demandeur-avec-enfant-aah.json");
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsPersonnesACharge/demandeur-avec-enfant-aah.json");
 
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
@@ -100,7 +100,7 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
     @Test
     void mapDemandeurPersonneAChargeAREToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("openfisca-mappeur/personnes-a-charge/demandeur-avec-enfant-are.json");
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsPersonnesACharge/demandeur-avec-enfant-are.json");
 
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
@@ -141,7 +141,7 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
     @Test
     void mapDemandeurPersonneAChargeASSToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("openfisca-mappeur/personnes-a-charge/demandeur-avec-enfant-ass.json");
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsPersonnesACharge/demandeur-avec-enfant-ass.json");
 
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
@@ -184,7 +184,7 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
         //Si DE France Métropolitaine, en couple, conjoint 200 pension invalidite, 
         //1 enfant de 1an
         //futur contrat CDI avec salaire net 800 euros/mois
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("openfisca-mappeur/personnes-a-charge/demandeur-avec-enfant-pension-invalidite.json");
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsPersonnesACharge/demandeur-avec-enfant-pension-invalidite.json");
 
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
@@ -221,7 +221,7 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
     @Test
     void mapDemandeurPersonneAChargeRSAToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("openfisca-mappeur/personnes-a-charge/demandeur-avec-enfant-rsa.json");
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsPersonnesACharge/demandeur-avec-enfant-rsa.json");
 
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
@@ -263,7 +263,7 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
     @Test
     void mapDemandeurPersonneAChargeSalaireToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("openfisca-mappeur/personnes-a-charge/demandeur-avec-enfant-salaire.json");
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsPersonnesACharge/demandeur-avec-enfant-salaire.json");
 
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         
@@ -304,7 +304,7 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
     @Test
     void mapDemandeurPersonnesAChargeToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("openfisca-mappeur/personnes-a-charge/demandeur-avec-enfants-et-af.json");
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsPersonnesACharge/demandeur-avec-enfants-et-af.json");
 
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
         

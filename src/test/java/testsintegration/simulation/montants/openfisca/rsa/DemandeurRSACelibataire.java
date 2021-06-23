@@ -42,7 +42,7 @@ class DemandeurRSACelibataire extends CommunTests {
     private UtileTests utileTests;
     
     @Configuration
-    @ComponentScan({"utile.tests","fr.poleemploi.estime", "testsintegration.montantssimules.openfisca.rsa"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }
