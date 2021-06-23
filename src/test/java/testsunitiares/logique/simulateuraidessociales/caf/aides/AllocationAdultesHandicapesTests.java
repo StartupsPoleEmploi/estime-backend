@@ -32,7 +32,7 @@ class AllocationAdultesHandicapesTests {
     private AllocationAdultesHandicapes allocationAdultesHandicapes;
 
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }

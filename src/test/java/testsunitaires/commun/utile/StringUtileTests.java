@@ -22,7 +22,7 @@ class StringUtileTests {
     private StringUtile stringUtile;
     
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }

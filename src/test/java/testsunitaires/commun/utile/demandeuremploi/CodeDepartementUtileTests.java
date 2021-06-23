@@ -22,7 +22,7 @@ class CodeDepartementUtileTests {
     private CodeDepartementUtile codeDepartementUtile;
     
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }

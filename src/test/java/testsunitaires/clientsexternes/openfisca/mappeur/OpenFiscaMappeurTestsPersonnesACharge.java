@@ -34,13 +34,13 @@ import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
-import utiletests.TestUtile;
+import utile.tests.UtileTests;
 
 
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations="classpath:application-test.properties")
-class OpenFiscaMappeurTestsPersonnesACharge {
+class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
     
     private static final int NUMERA_MOIS_SIMULE_PPA = 5;
     
@@ -48,10 +48,10 @@ class OpenFiscaMappeurTestsPersonnesACharge {
     private OpenFiscaMappeur openFiscaMappeur;
     
     @Autowired
-    TestUtile testUtile;
+    UtileTests testUtile;
     
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }
@@ -76,7 +76,7 @@ class OpenFiscaMappeurTestsPersonnesACharge {
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         List<Personne> personnesACharge = new ArrayList<Personne>();
-        Personne personneACharge = testUtile.createPersonne(testUtile.getDate("05-07-2000"));
+        Personne personneACharge = createPersonne(testUtile.getDate("05-07-2000"));
         BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
         beneficiaireAidesSociales.setBeneficiaireAAH(true);
         personneACharge.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
@@ -117,7 +117,7 @@ class OpenFiscaMappeurTestsPersonnesACharge {
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         List<Personne> personnesACharge = new ArrayList<Personne>();
-        Personne personneACharge = testUtile.createPersonne(testUtile.getDate("05-07-2000"));
+        Personne personneACharge = createPersonne(testUtile.getDate("05-07-2000"));
         BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
         beneficiaireAidesSociales.setBeneficiaireARE(true);
         personneACharge.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
@@ -158,7 +158,7 @@ class OpenFiscaMappeurTestsPersonnesACharge {
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         List<Personne> personnesACharge = new ArrayList<Personne>();
-        Personne personneACharge = testUtile.createPersonne(testUtile.getDate("05-07-2000"));
+        Personne personneACharge = createPersonne(testUtile.getDate("05-07-2000"));
         BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
         beneficiaireAidesSociales.setBeneficiaireASS(true);
         personneACharge.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
@@ -201,7 +201,7 @@ class OpenFiscaMappeurTestsPersonnesACharge {
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, testUtile.getDate("09-09-2000"));
+        createPersonne(personnesACharge, testUtile.getDate("09-09-2000"));
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
         allocationsCPAM.setPensionInvalidite(200f);
@@ -238,7 +238,7 @@ class OpenFiscaMappeurTestsPersonnesACharge {
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         List<Personne> personnesACharge = new ArrayList<Personne>();
-        Personne personneACharge = testUtile.createPersonne(testUtile.getDate("05-07-2000"));
+        Personne personneACharge = createPersonne(testUtile.getDate("05-07-2000"));
         BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
         beneficiaireAidesSociales.setBeneficiaireRSA(true);
         personneACharge.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
@@ -280,7 +280,7 @@ class OpenFiscaMappeurTestsPersonnesACharge {
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         List<Personne> personnesACharge = new ArrayList<Personne>();
-        Personne personneACharge = testUtile.createPersonne(testUtile.getDate("05-07-2000"));
+        Personne personneACharge = createPersonne(testUtile.getDate("05-07-2000"));
         BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
         personneACharge.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         RessourcesFinancieres ressourcesFinancieresPersonneACharge = new RessourcesFinancieres();
@@ -321,9 +321,9 @@ class OpenFiscaMappeurTestsPersonnesACharge {
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, testUtile.getDate("05-07-2016")); 
-        testUtile.createPersonne(personnesACharge, testUtile.getDate("05-07-2014"));   
-        testUtile.createPersonne(personnesACharge, testUtile.getDate("05-07-2012")); 
+        createPersonne(personnesACharge, testUtile.getDate("05-07-2016")); 
+        createPersonne(personnesACharge, testUtile.getDate("05-07-2014"));   
+        createPersonne(personnesACharge, testUtile.getDate("05-07-2012")); 
         situationFamiliale.setPersonnesACharge(personnesACharge);
         situationFamiliale.setIsEnCouple(false);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);

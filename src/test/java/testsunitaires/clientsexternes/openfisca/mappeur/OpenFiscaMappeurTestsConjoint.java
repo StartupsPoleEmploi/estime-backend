@@ -32,7 +32,7 @@ import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
-import utiletests.TestUtile;
+import utile.tests.UtileTests;
 
 
 @ContextConfiguration
@@ -46,10 +46,10 @@ class OpenFiscaMappeurTestsConjoint {
     private OpenFiscaMappeur openFiscaMappeur;
     
     @Autowired
-    TestUtile testUtile;
+    UtileTests testUtile;
     
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }

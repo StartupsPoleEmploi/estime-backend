@@ -21,7 +21,7 @@ import fr.poleemploi.estime.services.ressources.AideSociale;
 import fr.poleemploi.estime.services.ressources.AllocationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
-import utiletests.TestUtile;
+import utile.tests.UtileTests;
 
 
 @ContextConfiguration
@@ -33,12 +33,12 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
     private AllocationSolidariteSpecifique allocationSolidariteSpecifiqueUtile;
 
     @Autowired
-    private TestUtile testUtile;
+    private UtileTests testUtile;
     
     private LocalDate dateDebutSimulation;
     
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }

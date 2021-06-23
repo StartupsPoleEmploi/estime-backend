@@ -42,28 +42,24 @@ import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
-import utiletests.BouchonAideSociale;
-import utiletests.TestUtile;
+import utile.tests.UtileTests;
 
 
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations="classpath:application-test.properties")
-class OpenFiscaMappeurPeriodeTestsASS {
-    
-    @Autowired
-    private BouchonAideSociale bouchonAideSociale;
+class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
     
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;
     
     @Autowired
-    TestUtile testUtile;
+    UtileTests testUtile;
     
     private LocalDate dateDebutSimulation;
     
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }
@@ -517,7 +513,7 @@ class OpenFiscaMappeurPeriodeTestsASS {
         simulationMensuelleMois.setDatePremierJourMoisSimule(dateDebutSimulation);
         HashMap<String, AideSociale> aidesEligiblesPourMois1 = new HashMap<>();
         if(montantASS > 0) {
-            AideSociale aideSocialeASSMois1 = bouchonAideSociale.getAideSocialeASS(montantASS);
+            AideSociale aideSocialeASSMois1 = getAideSocialeASS(montantASS);
             aidesEligiblesPourMois1.put(codeAideASS, aideSocialeASSMois1);            
         }
         simulationMensuelleMois.setMesAides(aidesEligiblesPourMois1);

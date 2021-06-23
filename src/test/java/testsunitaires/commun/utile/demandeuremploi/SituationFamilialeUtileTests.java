@@ -18,7 +18,7 @@ import fr.poleemploi.estime.logique.simulateuraidessociales.poleemploi.aides.Age
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
-import utiletests.TestUtile;
+import utile.tests.UtileTests;
 
 
 @ContextConfiguration
@@ -30,10 +30,10 @@ class SituationFamilialeUtileTests {
     private SituationFamilialeUtile situationFamilialeUtile;
     
     @Autowired
-    private TestUtile testUtile;
+    private UtileTests testUtile;
     
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }

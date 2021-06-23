@@ -16,7 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import utiletests.TestUtile;
+import utile.tests.UtileTests;
 
 
 @ContextConfiguration
@@ -28,10 +28,10 @@ class DateUtileTests {
     private DateUtile dateUtile;
     
     @Autowired
-    private TestUtile testUtile;
+    private UtileTests testUtile;
     
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }

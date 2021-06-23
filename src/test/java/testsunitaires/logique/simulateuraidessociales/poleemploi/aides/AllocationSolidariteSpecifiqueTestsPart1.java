@@ -29,7 +29,7 @@ class AllocationSolidariteSpecifiqueTestsPart1 {
     private AllocationSolidariteSpecifique allocationSolidariteSpecifiqueUtile;
     
     @Configuration
-    @ComponentScan({"utiletests","fr.poleemploi.estime"})
+    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }
