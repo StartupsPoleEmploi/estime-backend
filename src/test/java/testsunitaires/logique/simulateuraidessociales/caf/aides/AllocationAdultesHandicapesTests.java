@@ -1,4 +1,4 @@
-package testsunitiares.logique.simulateuraidessociales.caf.aides;
+package testsunitaires.logique.simulateuraidessociales.caf.aides;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
