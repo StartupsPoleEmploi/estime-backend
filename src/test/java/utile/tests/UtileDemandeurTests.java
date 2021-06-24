@@ -1,8 +1,9 @@
 package utile.tests;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
@@ -13,16 +14,18 @@ import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 
 @Component
-public class DemandeurBaseTests {
+public class UtileDemandeurTests {
     
-    public DemandeurEmploi creerBaseDemandeurEmploi(String population) throws ParseException {
+    public DemandeurEmploi creerBaseDemandeurEmploi(String population, boolean isEnCouple, int nbEnfant) throws ParseException {
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-
+        demandeurEmploi.setIdPoleEmploi("idPoleEmploi");
+        
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setNom("DUPONT");
         informationsPersonnelles.setPrenom("DANIEL");
@@ -31,6 +34,7 @@ public class DemandeurBaseTests {
         demandeurEmploi.setBeneficiaireAidesSociales(creerBeneficiaireAidesSociales(population));
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
+        intiSituationFamiliale(isEnCouple, nbEnfant, situationFamiliale);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
         FuturTravail futurTravail = new FuturTravail();
@@ -40,7 +44,7 @@ public class DemandeurBaseTests {
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         initRessourcesFinancieres(ressourcesFinancieres, population);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres); 
+        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);                 
 
         return demandeurEmploi;
     }
@@ -99,6 +103,24 @@ public class DemandeurBaseTests {
         default:
             break;
         }        
+    }
+    
+    private void intiSituationFamiliale(boolean isEnCouple, int nbEnfant, SituationFamiliale situationFamiliale) {
+        situationFamiliale.setIsEnCouple(isEnCouple);
+        if(isEnCouple) {
+            Personne conjoint = new Personne();
+            situationFamiliale.setConjoint(conjoint);
+        }
+        if(nbEnfant > 0) {
+            List<Personne> personnesACharge = new ArrayList<>();
+            for (int i = 0; i < nbEnfant; i++) {  
+                Personne personneACharge = new Personne();
+                InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+                personneACharge.setInformationsPersonnelles(informationsPersonnelles);
+                personnesACharge.add(personneACharge);
+            }
+            situationFamiliale.setPersonnesACharge(personnesACharge);
+        }
     }
 
     private BeneficiaireAidesSociales creerBeneficiaireAidesSociales(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {

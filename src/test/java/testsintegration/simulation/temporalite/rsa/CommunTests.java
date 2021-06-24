@@ -18,7 +18,7 @@ import fr.poleemploi.estime.clientsexternes.emploistoredev.EmploiStoreDevClient;
 import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import utile.tests.DemandeurBaseTests;
+import utile.tests.UtileDemandeurTests;
 import utile.tests.UtileTests;
 
 public class CommunTests {
@@ -33,7 +33,7 @@ public class CommunTests {
     protected DateUtile dateUtile;
     
     @Autowired
-    protected DemandeurBaseTests demandeurBaseTests;
+    protected UtileDemandeurTests demandeurBaseTests;
     
     
     protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
