@@ -57,5 +57,15 @@ public class UtileTests {
         return  LocalDate.parse(dateString, formatter);
     }
     
+    //TODO JLA : à supprimer
+    public void createPersonne(List<Personne> personnesACharge, int age) {
+        Personne personne1 = new Personne();
+        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+        informationsPersonnelles.setDateNaissance(getDateNaissanceFromAge(age));
+        personne1.setInformationsPersonnelles(informationsPersonnelles);
+        personnesACharge.add(personne1);
+    }
+
+    
     
 }
