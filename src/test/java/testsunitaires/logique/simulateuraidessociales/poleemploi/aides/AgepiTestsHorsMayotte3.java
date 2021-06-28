@@ -2,9 +2,6 @@ package testsunitaires.logique.simulateuraidessociales.poleemploi.aides;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,14 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
+import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.logique.simulateuraidessociales.poleemploi.aides.Agepi;
 import fr.poleemploi.estime.services.ressources.AideSociale;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.FuturTravail;
-import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
-import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import utile.tests.UtileTests;
 
 
@@ -36,7 +30,7 @@ class AgepiTestsHorsMayotte3 {
     private Agepi agepiUtile;
     
     @Autowired
-    UtileTests testUtile;
+    UtileTests utileTests;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -50,23 +44,15 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest10() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 15h/semaine, 1 enfant à charge de 12ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(15);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 12);  
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
-        
+        boolean isEnCouple = false;
+        int nbEnfant = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(12));
+                 
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
@@ -80,22 +66,14 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest11() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 20h/semaine, 1 enfant à charge de 9ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(20);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-        
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                 
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -109,23 +87,15 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest12() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 20h/semaine, 2 enfants à charge de 9ans et 8ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(20);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-        
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        testUtile.createPersonne(personnesACharge, 8); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 2;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                 
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -138,24 +108,16 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest13() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 20h/semaine, 3 enfants à charge de 9ans, 8ans et 8ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(20);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        testUtile.createPersonne(personnesACharge, 8); 
-        testUtile.createPersonne(personnesACharge, 8); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 3;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                 
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -168,25 +130,17 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest14() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 20h/semaine, 4 enfants à charge de 9ans, 8ans, 8ans et 5ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(20);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        testUtile.createPersonne(personnesACharge, 8); 
-        testUtile.createPersonne(personnesACharge, 8); 
-        testUtile.createPersonne(personnesACharge, 5); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 4;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                 
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(3).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(5));
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -199,22 +153,14 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest15() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 20h/semaine, pas d'enfants à charge
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(20);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 13);  
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(13));                 
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -229,22 +175,14 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest16() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 35h/semaine, 1 enfant à charge de 9ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(35);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-        
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -258,23 +196,15 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest17() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 35h/semaine, 2 enfants à charge de 9ans et 8ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(35);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-        
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        testUtile.createPersonne(personnesACharge, 8); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 2;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -287,25 +217,17 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest18() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 35h/semaine, 3 enfants à charge de 9ans, 8ans et 8ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(35);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+        boolean isEnCouple = false;
+        int nbEnfant = 3;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
 
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        testUtile.createPersonne(personnesACharge, 8); 
-        testUtile.createPersonne(personnesACharge, 8); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
-        
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
@@ -317,26 +239,18 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest19() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 35h/semaine, 4 enfants à charge de 9ans, 8ans, 8ans et 5ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(35);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-        
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        testUtile.createPersonne(personnesACharge, 8); 
-        testUtile.createPersonne(personnesACharge, 8); 
-        testUtile.createPersonne(personnesACharge, 5); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
-        
+        boolean isEnCouple = false;
+        int nbEnfant = 4;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(3).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(5));
+
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
@@ -347,23 +261,15 @@ class AgepiTestsHorsMayotte3 {
     @Test
     void calculerMontantAgepiTest20() {
         
-        //Si DE France métropolitaine, futur contrat CDI avec 35h/semaine, pas d'enfants à charge
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(35);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 10);  
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        //Si DE France métropolitaine, futur contrat CDI avec 35h/semaine, 1 enfant à charge de 10ans
+        boolean isEnCouple = false;
+        int nbEnfant = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(10));              
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -378,22 +284,14 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest21() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 40h/semaine, 1 enfant à charge de 9ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(40);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(40);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -406,23 +304,15 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest22() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 40h/semaine, 2 enfants à charge de 9ans et 8ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(40);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        testUtile.createPersonne(personnesACharge, 8); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 2;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(40);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                      
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -435,24 +325,17 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest23() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 40h/semaine, 3 enfants à charge de 9ans, 8ans et 8ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        boolean isEnCouple = false;
+        int nbEnfant = 3;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(40);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                      
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
         
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(40);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-        
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        testUtile.createPersonne(personnesACharge, 8); 
-        testUtile.createPersonne(personnesACharge, 8); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -465,25 +348,17 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest24() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 40h/semaine, 4 enfants à charge de 9ans, 8ans, 5ans et 8ans
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(40);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 9);  
-        testUtile.createPersonne(personnesACharge, 8); 
-        testUtile.createPersonne(personnesACharge, 8); 
-        testUtile.createPersonne(personnesACharge, 5); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 4;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(40);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                      
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(3).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(5));        
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
@@ -496,22 +371,14 @@ class AgepiTestsHorsMayotte3 {
     void calculerMontantAgepiTest25() {
         
         //Si DE France métropolitaine, futur contrat CDI avec 40h/semaine, pas d'enfants à charge
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        
-        FuturTravail futurContratTravail = new FuturTravail();
-        futurContratTravail.setTypeContrat(TypesContratTravail.CDI.name());
-        futurContratTravail.setNombreHeuresTravailleesSemaine(40);
-        demandeurEmploi.setFuturTravail(futurContratTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 16); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfant = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(40);
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(16));                      
         
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);

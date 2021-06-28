@@ -8,16 +8,12 @@ import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.services.ressources.AideSociale;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
-import utile.tests.UtileDemandeurTests;
 import utile.tests.UtileTests;
 
 public class CommunTests {
     
     @Autowired
     protected UtileTests utileTests;
-    
-    @Autowired
-    protected UtileDemandeurTests utileDemandeurTests;
     
     public SimulationMensuelle createSimulationMensuelleASS(float montantASS) {
         SimulationMensuelle simulationMensuelle = new SimulationMensuelle();

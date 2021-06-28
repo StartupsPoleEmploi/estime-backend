@@ -30,7 +30,6 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
-import utile.tests.UtileTests;
 
 
 @SpringBootTest
@@ -42,9 +41,6 @@ class DemandeurASSEnCouple extends CommunTests {
 
     @Autowired
     private OpenFiscaClient openFiscaClient;
-    
-    @Autowired
-    private UtileTests utileTests;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -62,7 +58,7 @@ class DemandeurASSEnCouple extends CommunTests {
         //futur contrat CDI avec salaire net 900 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
@@ -100,7 +96,7 @@ class DemandeurASSEnCouple extends CommunTests {
         //futur contrat CDI avec salaire net 1900 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
@@ -138,7 +134,7 @@ class DemandeurASSEnCouple extends CommunTests {
         //futur contrat CDI avec salaire net 900 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(6));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
@@ -178,7 +174,7 @@ class DemandeurASSEnCouple extends CommunTests {
         //futur contrat CDI avec salaire net 900 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 2;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(6));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
@@ -223,7 +219,7 @@ class DemandeurASSEnCouple extends CommunTests {
         //futur contrat CDI avec salaire net 900 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 2;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(6));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
@@ -234,7 +230,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);    
         AllocationsCAF allocationsCAF = new AllocationsCAF();
         allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(132);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileDemandeurTests.creerAllocationsLogementMensuellesNetFoyer(20));
+        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(20));
         demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
@@ -269,7 +265,7 @@ class DemandeurASSEnCouple extends CommunTests {
         //futur contrat CDI avec salaire net 900 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 3;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(6));
@@ -315,7 +311,7 @@ class DemandeurASSEnCouple extends CommunTests {
         //futur contrat CDI avec salaire net 900 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 3;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(6));
@@ -327,7 +323,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);    
         AllocationsCAF allocationsCAF = new AllocationsCAF();
         allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(473);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileDemandeurTests.creerAllocationsLogementMensuellesNetFoyer(140));
+        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(140));
         demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres(    );
@@ -362,7 +358,7 @@ class DemandeurASSEnCouple extends CommunTests {
         //futur contrat CDI avec salaire net 900 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 4;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(6));
@@ -409,7 +405,7 @@ class DemandeurASSEnCouple extends CommunTests {
         //futur contrat CDI avec salaire net 900 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 4;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(6));
@@ -422,7 +418,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);    
         AllocationsCAF allocationsCAF = new AllocationsCAF();
         allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(729);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileDemandeurTests.creerAllocationsLogementMensuellesNetFoyer(230));
+        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(230));
         demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();

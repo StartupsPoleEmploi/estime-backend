@@ -2,8 +2,7 @@ package testsunitaires.commun.utile.demandeuremploi;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
+import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.logique.simulateuraidessociales.poleemploi.aides.Agepi;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import utile.tests.UtileTests;
 
 
@@ -30,8 +28,8 @@ class SituationFamilialeUtileTests {
     private SituationFamilialeUtile situationFamilialeUtile;
     
     @Autowired
-    private UtileTests testUtile;
-    
+    private UtileTests utileTests;
+
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
@@ -39,16 +37,13 @@ class SituationFamilialeUtileTests {
     }
   
     @Test
-    void getNombreEnfantAChargeInferieurAgeTest1() {
+    void getNombreEnfantAChargeInferieurAgeTest1() throws ParseException {
         
         //si 1 enfant à charge de 15 ans
-        DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
-       
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 15);        
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfants = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfants);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(15));
         
         //lorsque l'on appelle getNombreEnfantAChargeInferieurAgeLimite avec age limite Agepi.AGE_MAX_ENFANT
         int nombreEnfant = situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, Agepi.AGE_MAX_ENFANT);
@@ -58,18 +53,15 @@ class SituationFamilialeUtileTests {
     }
     
     @Test
-    void getNombreEnfantAChargeInferieurAgeTest2() {
+    void getNombreEnfantAChargeInferieurAgeTest2() throws ParseException {
         
         //si 3 enfants à charge de 15 ans, 10 ans et 9 ans
-        DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
-        
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        testUtile.createPersonne(personnesACharge, 15);
-        testUtile.createPersonne(personnesACharge, 10);
-        testUtile.createPersonne(personnesACharge, 9); 
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        boolean isEnCouple = false;
+        int nbEnfants = 3;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfants);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(15));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(10));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));        
         
         //lorsque l'on appelle getNombreEnfantAChargeInferieurAgeLimite avec age limite Agepi.AGE_MAX_ENFANT
         int nombreEnfant = situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, Agepi.AGE_MAX_ENFANT);

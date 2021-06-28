@@ -3,13 +3,19 @@ package testsunitaires.clientsexternes.openfisca.mappeur;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.services.ressources.AideSociale;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
+import utile.tests.UtileTests;
 
 public class CommunTests {    
+    
+    @Autowired
+    protected UtileTests utileTests;
     
     protected AideSociale getAideSocialeAAH(float montant) {
         AideSociale aideAgepi = new AideSociale();

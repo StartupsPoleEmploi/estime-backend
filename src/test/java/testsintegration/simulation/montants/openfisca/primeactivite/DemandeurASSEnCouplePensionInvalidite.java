@@ -31,7 +31,6 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
-import utile.tests.UtileTests;
 
 
 @ContextConfiguration
@@ -43,9 +42,6 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
     
     @Autowired
     private OpenFiscaClient openFiscaClient;
-
-    @Autowired
-    private UtileTests testUtile;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -61,7 +57,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         //futur contrat CDI avec salaire net 800 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
@@ -70,7 +66,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
         AllocationsCAF allocationsCAF = new AllocationsCAF();
         allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(1100);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileDemandeurTests.creerAllocationsLogementMensuellesNetFoyer(150));
+        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(150));
         demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);  
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
@@ -88,7 +84,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);
 
         //Lorsque je calcul le montant de la prime d'activité
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("05-07-2020");  
+        LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0 euros (résultat simulateur CAF : 368€ )
@@ -104,7 +100,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         //futur contrat CDI avec salaire net 800 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(1));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
@@ -114,7 +110,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
         AllocationsCAF allocationsCAF = new AllocationsCAF();
         allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(1100);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileDemandeurTests.creerAllocationsLogementMensuellesNetFoyer(150));
+        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(150));
         demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);  
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
@@ -132,7 +128,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);
 
         //Lorsque je calcul le montant de la prime d'activité
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("05-07-2020");  
+        LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0 euros (résultat simulateur CAF : 533€)
@@ -147,7 +143,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         //futur contrat CDI avec salaire net 800 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("08-01-1979"));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
@@ -156,7 +152,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
         AllocationsCAF allocationsCAF = new AllocationsCAF();
         allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(1100);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileDemandeurTests.creerAllocationsLogementMensuellesNetFoyer(150));
+        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(150));
         demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);  
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
@@ -178,7 +174,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);        
 
         //Lorsque je calcul le montant de la prime d'activité
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("05-07-2020");  
+        LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0 euros (résultat simulateur CAF : TODO ldetre : 83€)
@@ -193,7 +189,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         //futur contrat CDI avec salaire net 800 euros/mois
         boolean isEnCouple = true;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi =  utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("08-01-1979"));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(1));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
@@ -203,7 +199,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
         AllocationsCAF allocationsCAF = new AllocationsCAF();
         allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(1100);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileDemandeurTests.creerAllocationsLogementMensuellesNetFoyer(150));
+        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(150));
         demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);  
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
@@ -225,7 +221,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);       
 
         //Lorsque je calcul le montant de la prime d'activité
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("05-07-2020");  
+        LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0 euros (résultat simulateur CAF : 274€)

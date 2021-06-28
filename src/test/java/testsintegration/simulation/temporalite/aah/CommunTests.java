@@ -24,7 +24,6 @@ import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import utile.tests.UtileDemandeurTests;
 import utile.tests.UtileTests;
 
 public class CommunTests {
@@ -34,9 +33,6 @@ public class CommunTests {
 
     @SpyBean
     protected DateUtile dateUtile;        
-    
-    @Autowired
-    protected UtileDemandeurTests utileDemandeurTests;
     
     @SpyBean
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
@@ -48,7 +44,7 @@ public class CommunTests {
         
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
@@ -82,7 +78,7 @@ public class CommunTests {
         doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
 
         //mock retour appel détail indemnisation de l'ESD 
-        DetailIndemnisationESD detailIndemnisationESD = utileDemandeurTests.creerDetailIndemnisationESD(TypePopulation.AAH.getLibelle());        
+        DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.AAH.getLibelle());        
         doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
     }    
 }
