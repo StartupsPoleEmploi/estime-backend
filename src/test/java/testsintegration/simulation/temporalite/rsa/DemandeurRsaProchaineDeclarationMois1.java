@@ -163,7 +163,7 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
 
         //Si DE Français, date naissance 5/07/1986, code postal 44200, en couple, non propriétaire
         //Futur contrat CDI 35h, salaire net 1231€ brut 1583€,kilométrage domicile -> taf = 10kms + 20 trajets
-        //RSA 300€, déclaration trimetrielle en M1, non travaillé au cours des 3 derniers mois
+        //RSA 170€, déclaration trimetrielle en M1, non travaillé au cours des 3 derniers mois
         //APL 420€
         //conjoint salaire 700€
         //enfant 4 ans (05/03/2017)
@@ -180,7 +180,7 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationMensuelleNetRSA(300f);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationMensuelleNetRSA(170f);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(420f));
