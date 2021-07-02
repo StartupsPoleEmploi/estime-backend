@@ -11,7 +11,8 @@ public class InformationsPersonnelles {
     private LocalDate dateNaissance;
     private String email;
     private boolean hasRevenusImmobilier;
-    private boolean isCreateurEntreprise;
+    private boolean travailleurIndependant;
+    private boolean microEntrepreneur;
     private boolean isSalarie;
     private boolean isSansRessource;
     private String nationalite;
@@ -45,11 +46,17 @@ public class InformationsPersonnelles {
     public void setHasRevenusImmobilier(boolean hasRevenusImmobilier) {
         this.hasRevenusImmobilier = hasRevenusImmobilier;
     }
-    public boolean isCreateurEntreprise() {
-        return isCreateurEntreprise;
+    public boolean isTravailleurIndependant() {
+        return travailleurIndependant;
     }
-    public void setCreateurEntreprise(boolean isCreateurEntreprise) {
-        this.isCreateurEntreprise = isCreateurEntreprise;
+    public void setTravailleurIndependant(boolean travailleurIndependant) {
+        this.travailleurIndependant = travailleurIndependant;
+    }
+    public boolean isMicroEntrepreneur() {
+        return microEntrepreneur;
+    }
+    public void setMicroEntrepreneur(boolean microEntrepreneur) {
+        this.microEntrepreneur = microEntrepreneur;
     }
     public boolean isSalarie() {
         return isSalarie;
@@ -96,10 +103,10 @@ public class InformationsPersonnelles {
     @Override
     public String toString() {
         return "InformationsPersonnelles [codePostal=" + codePostal + ", dateNaissance=" + dateNaissance + ", email="
-                + email + ", hasRevenusImmobilier=" + hasRevenusImmobilier + ", isCreateurEntreprise="
-                + isCreateurEntreprise + ", isSalarie=" + isSalarie + ", isSansRessource=" + isSansRessource
-                + ", nationalite=" + nationalite + ", nom=" + nom + ", prenom=" + prenom
-                + ", titreSejourEnFranceValide=" + titreSejourEnFranceValide + ", isProprietaireSansPretOuLogeGratuit="
-                + isProprietaireSansPretOuLogeGratuit + "]";
+                + email + ", hasRevenusImmobilier=" + hasRevenusImmobilier + ", travailleurIndependant="
+                + travailleurIndependant + ", microEntrepreneur=" + microEntrepreneur + ", isSalarie=" + isSalarie
+                + ", isSansRessource=" + isSansRessource + ", nationalite=" + nationalite + ", nom=" + nom + ", prenom="
+                + prenom + ", titreSejourEnFranceValide=" + titreSejourEnFranceValide
+                + ", isProprietaireSansPretOuLogeGratuit=" + isProprietaireSansPretOuLogeGratuit + "]";
     }
 }

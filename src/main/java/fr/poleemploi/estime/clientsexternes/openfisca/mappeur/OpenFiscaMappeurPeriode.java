@@ -78,6 +78,15 @@ public class OpenFiscaMappeurPeriode {
         return periode;
     }
     
+    public JSONObject creerPeriodesMicroEntreprise(float montantRevenusMicroEntrepriseSur1Mois, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+        JSONObject periode = new JSONObject();
+        for(int i = 0; i < 3; i++) {
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, i), montantRevenusMicroEntrepriseSur1Mois);
+        }
+        return periode;
+    }
+    
+    
     public JSONObject creerPeriodesASIJSON(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject periode = new JSONObject();
         for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode <= OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA ; numeroMoisPeriode++) {

@@ -46,8 +46,12 @@ public class RessourcesFinancieresUtile {
             float revenusImmobilierSur1Mois = getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres());
             montantTotal = montantTotal.add(BigDecimal.valueOf(revenusImmobilierSur1Mois));
         }
-        if(hasRevenusTravailleurIndependant(demandeurEmploi)) {
-            float revenusTravailleurIndependant1Mois = getRevenusTravailleurIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres());
+        if(hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
+            float revenusTravailleurIndependant1Mois = getRevenusMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres());
+            montantTotal = montantTotal.add(BigDecimal.valueOf(revenusTravailleurIndependant1Mois));
+        }
+        if(hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
+            float revenusTravailleurIndependant1Mois = getBeneficesTravailleurIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres());
             montantTotal = montantTotal.add(BigDecimal.valueOf(revenusTravailleurIndependant1Mois));
         }
         return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
@@ -97,10 +101,16 @@ public class RessourcesFinancieresUtile {
                 && demandeurEmploi.getRessourcesFinancieres().getRevenusImmobilier3DerniersMois() > 0;
     }
 
-    public boolean hasRevenusTravailleurIndependant(DemandeurEmploi demandeurEmploi) {
-        return demandeurEmploi.getRessourcesFinancieres() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getRevenusCreateurEntreprise3DerniersMois() != null
-                && demandeurEmploi.getRessourcesFinancieres().getRevenusCreateurEntreprise3DerniersMois() > 0;
+    public boolean hasRevenusMicroEntreprise(RessourcesFinancieres ressourcesFinancieres) {
+        return ressourcesFinancieres != null 
+                && ressourcesFinancieres.getRevenusMicroEntreprise3DerniersMois() != null
+                && ressourcesFinancieres.getRevenusMicroEntreprise3DerniersMois() > 0;
+    }
+    
+    public boolean hasBeneficesTravailleurIndependant(RessourcesFinancieres ressourcesFinancieres) {
+        return ressourcesFinancieres != null 
+                && ressourcesFinancieres.getBeneficesTravailleurIndependantDernierExercice() != null
+                && ressourcesFinancieres.getBeneficesTravailleurIndependantDernierExercice() > 0;
     }
 
     public boolean hasAllocationSolidariteSpecifique(RessourcesFinancieres ressourcesFinancieres) {
@@ -120,8 +130,12 @@ public class RessourcesFinancieresUtile {
         return BigDecimal.valueOf(ressourcesFinancieres.getRevenusImmobilier3DerniersMois()).divide(BigDecimal.valueOf(3), 0, RoundingMode.HALF_UP).floatValue();        
     }
 
-    public float getRevenusTravailleurIndependantSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
-        return BigDecimal.valueOf(ressourcesFinancieres.getRevenusCreateurEntreprise3DerniersMois()).divide(BigDecimal.valueOf(3), 0, RoundingMode.HALF_UP).floatValue();        
+    public float getRevenusMicroEntrepriseSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
+        return BigDecimal.valueOf(ressourcesFinancieres.getRevenusMicroEntreprise3DerniersMois()).divide(BigDecimal.valueOf(3), 0, RoundingMode.HALF_UP).floatValue();        
+    }
+    
+    public float getBeneficesTravailleurIndependantSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
+        return BigDecimal.valueOf(ressourcesFinancieres.getBeneficesTravailleurIndependantDernierExercice()).divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_UP).floatValue();        
     }
 
     public boolean hasAllocationsCAF(DemandeurEmploi demandeurEmploi) {

@@ -179,7 +179,7 @@ class OpenFiscaMappeurTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        ressourcesFinancieres.setRevenusCreateurEntreprise3DerniersMois(1000f);
+        ressourcesFinancieres.setBeneficesTravailleurIndependantDernierExercice(1000f);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
@@ -190,6 +190,39 @@ class OpenFiscaMappeurTests {
     }   
     
     
+    @Test
+    void mapDemandeurRevenusMicroEntrepriseToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+        
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTests/demandeur-avec-revenus-micro-entreprise.json");
+
+        DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
+        
+        FuturTravail futurTravail = new FuturTravail();
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(1040);
+        salaire.setMontantBrut(1342);
+        futurTravail.setSalaire(salaire);
+        demandeurEmploi.setFuturTravail(futurTravail);
+        
+        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+        
+        SituationFamiliale situationFamiliale = new SituationFamiliale();
+        situationFamiliale.setIsEnCouple(false);
+        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        
+        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        ressourcesFinancieres.setRevenusMicroEntreprise3DerniersMois(600f);
+        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+        
+        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        
+        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+    }   
+        
     @Test
     void mapDemandeurPensionInvaliditeToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         

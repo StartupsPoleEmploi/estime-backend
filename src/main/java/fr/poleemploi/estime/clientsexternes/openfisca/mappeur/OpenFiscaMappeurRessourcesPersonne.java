@@ -6,6 +6,8 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TNS_AUTRES_REVENUS;
 
 import java.time.LocalDate;
 
@@ -39,6 +41,12 @@ public class OpenFiscaMappeurRessourcesPersonne {
                 Salaire salaire = ressourcesFinancieres.getSalaire();
                 personneJSON.put(SALAIRE_BASE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(salaire.getMontantBrut(), dateDebutSimulation, numeroMoisSimule));                  
                 personneJSON.put(SALAIRE_IMPOSABLE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(salaire.getMontantNet(), dateDebutSimulation, numeroMoisSimule));
+            }
+            if(ressourcesFinancieresUtile.hasBeneficesTravailleurIndependant(ressourcesFinancieres)) {
+                personneJSON.put(TNS_AUTRES_REVENUS, openFiscaMappeurPeriode.creerPeriodesAnneesAvecValeurJSON(ressourcesFinancieres.getBeneficesTravailleurIndependantDernierExercice(), dateDebutSimulation));
+            } 
+            if(ressourcesFinancieresUtile.hasRevenusMicroEntreprise(ressourcesFinancieres)) {
+                personneJSON.put(TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES, openFiscaMappeurPeriode.creerPeriodesMicroEntreprise(this.ressourcesFinancieresUtile.getRevenusMicroEntrepriseSur1Mois(ressourcesFinancieres), dateDebutSimulation, numeroMoisSimule));
             }
             addRessourcesFinancieresCAF(personneJSON, ressourcesFinancieres, dateDebutSimulation, numeroMoisSimule);
             addRessourcesFinancieresPoleEmploi(personneJSON, personne, dateDebutSimulation, numeroMoisSimule);

@@ -7,7 +7,8 @@ public class RessourcesFinancieres {
     private AllocationsCPAM allocationsCPAM;
     private Boolean hasTravailleAuCoursDerniersMois;
     private Integer nombreMoisTravaillesDerniersMois;
-    private Float revenusCreateurEntreprise3DerniersMois;
+    private Float beneficesTravailleurIndependantDernierExercice;
+    private Float revenusMicroEntreprise3DerniersMois;
     private Float revenusImmobilier3DerniersMois;
     private Salaire salaire;
     private SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation;
@@ -42,11 +43,17 @@ public class RessourcesFinancieres {
     public void setNombreMoisTravaillesDerniersMois(Integer nombreMoisTravaillesDerniersMois) {
         this.nombreMoisTravaillesDerniersMois = nombreMoisTravaillesDerniersMois;
     }
-    public Float getRevenusCreateurEntreprise3DerniersMois() {
-        return revenusCreateurEntreprise3DerniersMois;
+    public Float getBeneficesTravailleurIndependantDernierExercice() {
+        return beneficesTravailleurIndependantDernierExercice;
     }
-    public void setRevenusCreateurEntreprise3DerniersMois(Float revenusCreateurEntreprise3DerniersMois) {
-        this.revenusCreateurEntreprise3DerniersMois = revenusCreateurEntreprise3DerniersMois;
+    public void setBeneficesTravailleurIndependantDernierExercice(Float beneficesTravailleurIndependantDernierExercice) {
+        this.beneficesTravailleurIndependantDernierExercice = beneficesTravailleurIndependantDernierExercice;
+    }
+    public Float getRevenusMicroEntreprise3DerniersMois() {
+        return revenusMicroEntreprise3DerniersMois;
+    }
+    public void setRevenusMicroEntreprise3DerniersMois(Float revenusMicroEntreprise3DerniersMois) {
+        this.revenusMicroEntreprise3DerniersMois = revenusMicroEntreprise3DerniersMois;
     }
     public Float getRevenusImmobilier3DerniersMois() {
         return revenusImmobilier3DerniersMois;
@@ -71,8 +78,9 @@ public class RessourcesFinancieres {
         return "RessourcesFinancieres [allocationsCAF=" + allocationsCAF + ", allocationsPoleEmploi="
                 + allocationsPoleEmploi + ", allocationsCPAM=" + allocationsCPAM + ", hasTravailleAuCoursDerniersMois="
                 + hasTravailleAuCoursDerniersMois + ", nombreMoisTravaillesDerniersMois="
-                + nombreMoisTravaillesDerniersMois + ", revenusCreateurEntreprise3DerniersMois="
-                + revenusCreateurEntreprise3DerniersMois + ", revenusImmobilier3DerniersMois="
+                + nombreMoisTravaillesDerniersMois + ", beneficesTravailleurIndependantDernierExercice="
+                + beneficesTravailleurIndependantDernierExercice + ", revenusMicroEntreprise3DerniersMois="
+                + revenusMicroEntreprise3DerniersMois + ", revenusImmobilier3DerniersMois="
                 + revenusImmobilier3DerniersMois + ", salaire=" + salaire + ", salairesAvantPeriodeSimulation="
                 + salairesAvantPeriodeSimulation + "]";
     }

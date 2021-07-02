@@ -11,6 +11,7 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.REVENUS_LOCATIFS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_MARITAL;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TNS_AUTRES_REVENUS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -78,8 +79,11 @@ public class OpenFiscaMappeurIndividus {
             float revenusImmobilierSur1Mois = ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres());
             demandeurJSON.put(REVENUS_LOCATIFS, openFiscaMappeurPeriode.creerPeriodesSur36MoisAvecValeurJSON(revenusImmobilierSur1Mois, dateDebutSimulation));
         } 
-        if(ressourcesFinancieresUtile.hasRevenusTravailleurIndependant(demandeurEmploi)) {
-            demandeurJSON.put(TNS_AUTRES_REVENUS, openFiscaMappeurPeriode.creerPeriodesAnneesAvecValeurJSON(demandeurEmploi.getRessourcesFinancieres().getRevenusCreateurEntreprise3DerniersMois(), dateDebutSimulation));
+        if(ressourcesFinancieresUtile.hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
+            demandeurJSON.put(TNS_AUTRES_REVENUS, openFiscaMappeurPeriode.creerPeriodesAnneesAvecValeurJSON(demandeurEmploi.getRessourcesFinancieres().getBeneficesTravailleurIndependantDernierExercice(), dateDebutSimulation));
+        } 
+        if(ressourcesFinancieresUtile.hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
+            demandeurJSON.put(TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES, openFiscaMappeurPeriode.creerPeriodesMicroEntreprise(this.ressourcesFinancieresUtile.getRevenusMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres()), dateDebutSimulation, numeroMoisSimule));
         }
         if(ressourcesFinancieresUtile.hasPensionsAlimentaires(demandeurEmploi)) {
             demandeurJSON.put(PENSIONS_ALIMENTAIRES_PERCUES, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getPensionsAlimentairesFoyer(), dateDebutSimulation, numeroMoisSimule));

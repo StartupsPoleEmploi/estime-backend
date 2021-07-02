@@ -37,5 +37,6 @@ public class ParametresOpenFisca {
     public static final String SALAIRE_IMPOSABLE = "salaire_imposable";
     public static final String STATUT_MARITAL = "statut_marital";
     public static final String STATUT_OCCUPATION_LOGEMENT = "statut_occupation_logement";    
-    public static final String TNS_AUTRES_REVENUS = "tns_autres_revenus";     
+    public static final String TNS_AUTRES_REVENUS = "tns_autres_revenus";    
+    public static final String TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES = "tns_auto_entrepreneur_chiffre_affaires";
 }
