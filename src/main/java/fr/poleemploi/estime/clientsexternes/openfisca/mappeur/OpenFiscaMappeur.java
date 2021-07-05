@@ -86,7 +86,7 @@ public class OpenFiscaMappeur {
         JSONArray personneReferenceJSON = new JSONArray();
         personneReferenceJSON.put("demandeur");
         menage1JSON.put(PERSONNE_DE_REFERENCE, personneReferenceJSON);
-        menage1JSON.put(STATUT_OCCUPATION_LOGEMENT, openFiscaPeriodeMappeur.creerPeriodesAvecValeurJSON(informationsPersonnellesUtile.getStatutOccupationLogement(demandeurEmploi), dateDebutSimulation, numeroMoisSimule));
+        menage1JSON.put(STATUT_OCCUPATION_LOGEMENT, openFiscaPeriodeMappeur.creerPeriodes(informationsPersonnellesUtile.getStatutOccupationLogement(demandeurEmploi), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
         menagesJSON.put(MENAGE1, menage1JSON);
         return menagesJSON;
     }
