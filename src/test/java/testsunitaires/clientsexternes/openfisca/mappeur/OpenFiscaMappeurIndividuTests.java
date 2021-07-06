@@ -23,7 +23,6 @@ import com.github.tsohr.JSONObject;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurIndividu;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import utile.tests.UtileDemandeurTests;
 import utile.tests.UtileTests;
 
 @ContextConfiguration
@@ -37,9 +36,6 @@ class OpenFiscaMappeurIndividuTests {
     
     @Autowired
     UtileTests utileTests;
-    
-    @Autowired
-    UtileDemandeurTests utileDemandeurTests;
     
     private static final int NUMERA_MOIS_SIMULE_PPA = 5;
     
@@ -56,7 +52,7 @@ class OpenFiscaMappeurIndividuTests {
         
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getRessourcesFinancieres().setBeneficesTravailleurIndependantDernierExercice(12000f);
         
@@ -73,7 +69,7 @@ class OpenFiscaMappeurIndividuTests {
         
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileDemandeurTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getRessourcesFinancieres().setRevenusMicroEntreprise3DerniersMois(9000f);
         
