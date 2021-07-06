@@ -6,6 +6,8 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TNS_AUTRES_REVENUS;
 
 import java.time.LocalDate;
 
@@ -37,8 +39,14 @@ public class OpenFiscaMappeurRessourcesPersonne {
         if(ressourcesFinancieres != null) {
             if(ressourcesFinancieresUtile.hasSalaire(ressourcesFinancieres)) {
                 Salaire salaire = ressourcesFinancieres.getSalaire();
-                personneJSON.put(SALAIRE_BASE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(salaire.getMontantBrut(), dateDebutSimulation, numeroMoisSimule));                  
-                personneJSON.put(SALAIRE_IMPOSABLE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(salaire.getMontantNet(), dateDebutSimulation, numeroMoisSimule));
+                personneJSON.put(SALAIRE_BASE, openFiscaMappeurPeriode.creerPeriodes(salaire.getMontantBrut(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));                  
+                personneJSON.put(SALAIRE_IMPOSABLE, openFiscaMappeurPeriode.creerPeriodes(salaire.getMontantNet(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            }
+            if(ressourcesFinancieresUtile.hasBeneficesTravailleurIndependant(ressourcesFinancieres)) {
+                personneJSON.put(TNS_AUTRES_REVENUS, openFiscaMappeurPeriode.creerPeriodesAnnees(ressourcesFinancieres.getBeneficesTravailleurIndependantDernierExercice(), dateDebutSimulation));
+            } 
+            if(ressourcesFinancieresUtile.hasRevenusMicroEntreprise(ressourcesFinancieres)) {
+                personneJSON.put(TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES, openFiscaMappeurPeriode.creerPeriodes(this.ressourcesFinancieresUtile.getRevenusMicroEntrepriseSur1Mois(ressourcesFinancieres), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA_TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES));
             }
             addRessourcesFinancieresCAF(personneJSON, ressourcesFinancieres, dateDebutSimulation, numeroMoisSimule);
             addRessourcesFinancieresPoleEmploi(personneJSON, personne, dateDebutSimulation, numeroMoisSimule);
@@ -50,7 +58,7 @@ public class OpenFiscaMappeurRessourcesPersonne {
         if(ressourcesFinancieres.getAllocationsCAF() != null 
            && ressourcesFinancieres.getAllocationsCAF().getAllocationMensuelleNetAAH() != null
            && ressourcesFinancieres.getAllocationsCAF().getAllocationMensuelleNetAAH() > 0) {
-            personneJSON.put(AAH, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(ressourcesFinancieres.getAllocationsCAF().getAllocationMensuelleNetAAH(), dateDebutSimulation, numeroMoisSimule));                                
+            personneJSON.put(AAH, openFiscaMappeurPeriode.creerPeriodes(ressourcesFinancieres.getAllocationsCAF().getAllocationMensuelleNetAAH(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));                                
         }
     }
 
@@ -60,12 +68,12 @@ public class OpenFiscaMappeurRessourcesPersonne {
             if(beneficiaireAidesSocialesUtile.isBeneficiaireARE(personne)
                && ressourcesFinancieres.getAllocationsPoleEmploi().getAllocationMensuelleNet() != null 
                && ressourcesFinancieres.getAllocationsPoleEmploi().getAllocationMensuelleNet() > 0) {
-                personneJSON.put(CHOMAGE_NET, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(ressourcesFinancieres.getAllocationsPoleEmploi().getAllocationMensuelleNet(), dateDebutSimulation, numeroMoisSimule));                                
+                personneJSON.put(CHOMAGE_NET, openFiscaMappeurPeriode.creerPeriodes(ressourcesFinancieres.getAllocationsPoleEmploi().getAllocationMensuelleNet(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));                                
             }
             if(beneficiaireAidesSocialesUtile.isBeneficiaireASS(personne)
                && ressourcesFinancieres.getAllocationsPoleEmploi().getAllocationMensuelleNet() != null 
                && ressourcesFinancieres.getAllocationsPoleEmploi().getAllocationMensuelleNet() > 0) {
-                personneJSON.put(ASS, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(ressourcesFinancieres.getAllocationsPoleEmploi().getAllocationMensuelleNet(), dateDebutSimulation, numeroMoisSimule));                                
+                personneJSON.put(ASS, openFiscaMappeurPeriode.creerPeriodes(ressourcesFinancieres.getAllocationsPoleEmploi().getAllocationMensuelleNet(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));                                
             }
         }
     }
@@ -74,7 +82,7 @@ public class OpenFiscaMappeurRessourcesPersonne {
         if(ressourcesFinancieres.getAllocationsCPAM() != null 
            && ressourcesFinancieres.getAllocationsCPAM().getPensionInvalidite() != null
            && ressourcesFinancieres.getAllocationsCPAM().getPensionInvalidite() > 0) {
-            personneJSON.put(PENSION_INVALIDITE, openFiscaMappeurPeriode.creerPeriodesAvecValeurJSON(ressourcesFinancieres.getAllocationsCPAM().getPensionInvalidite(), dateDebutPeriodeSimulee, numeroMoisSimule));                                
+            personneJSON.put(PENSION_INVALIDITE, openFiscaMappeurPeriode.creerPeriodes(ressourcesFinancieres.getAllocationsCPAM().getPensionInvalidite(), dateDebutPeriodeSimulee, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));                                
         }
     }
 }

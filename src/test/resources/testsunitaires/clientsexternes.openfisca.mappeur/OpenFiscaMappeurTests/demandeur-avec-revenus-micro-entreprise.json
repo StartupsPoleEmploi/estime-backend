@@ -1,0 +1,48 @@
+{
+  "individus": {
+    "demandeur": {
+      "date_naissance": {
+        "2020-08": "1986-07-05",
+        "2020-09": "1986-07-05",
+        "2020-10": "1986-07-05",
+        "2020-11": "1986-07-05"
+      },
+      "statut_marital": {
+        "2020-08": "celibataire",
+        "2020-09": "celibataire",
+        "2020-10": "celibataire",
+        "2020-11": "celibataire"
+      },
+      "salaire_de_base": {
+        "2020-08": 1342,
+        "2020-09": 1342,
+        "2020-10": 1342,
+        "2020-11": 1342
+      },
+      "salaire_imposable": {
+        "2020-08": 1040,
+        "2020-09": 1040,
+        "2020-10": 1040,
+        "2020-11": 1040
+      },
+      "tns_auto_entrepreneur_chiffre_affaires": {
+        "2020-08": 200,
+        "2020-09": 200,
+        "2020-10": 200
+      }
+    }
+  },
+  "familles": {
+    "famille1": {
+      "parents": [
+        "demandeur"
+      ],
+      "enfants": [
+        
+      ],
+      "ppa": {
+        "2020-11": null
+      }
+    }
+  }
+}

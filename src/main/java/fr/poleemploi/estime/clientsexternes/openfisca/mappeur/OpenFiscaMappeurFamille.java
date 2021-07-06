@@ -29,7 +29,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
 
 @Component
-public class OpenFiscaMappeurFamilles {
+public class OpenFiscaMappeurFamille {
     
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
@@ -58,21 +58,21 @@ public class OpenFiscaMappeurFamilles {
             famille.put(APL, openFiscaPeriodeMappeur.creerPeriodesAllocationsLogementMensuellesNetFoyer(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationsLogementMensuellesNetFoyer(), dateDebutSimulation, numeroMoisSimule));            
         }
         if(ressourcesFinancieresUtile.hasAllocationFamiliale(demandeurEmploi)) {
-            famille.put(AF, openFiscaPeriodeMappeur.creerPeriodesAvecValeurJSON(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationsFamilialesMensuellesNetFoyer(), dateDebutSimulation, numeroMoisSimule));                   
+            famille.put(AF, openFiscaPeriodeMappeur.creerPeriodes(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationsFamilialesMensuellesNetFoyer(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));                   
         }
         if(ressourcesFinancieresUtile.hasPrestationAccueilJeuneEnfant(demandeurEmploi)) {
-            famille.put(PRESTATION_ACCUEIL_JEUNE_ENFANT, openFiscaPeriodeMappeur.creerPeriodesAvecValeurJSON(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getPrestationAccueilJeuneEnfant(), dateDebutSimulation, numeroMoisSimule));
+            famille.put(PRESTATION_ACCUEIL_JEUNE_ENFANT, openFiscaPeriodeMappeur.creerPeriodes(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getPrestationAccueilJeuneEnfant(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
         }   
         if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
             float montantRsaDemandeur = ressourcesFinancieresUtile.getAllocationsRSANet(demandeurEmploi);
             if(montantRsaDemandeur > 0) {
                 famille.put(RSA, openFiscaMappeurRSA.creerRSAJson(dateDebutSimulation, numeroMoisSimule));
-                famille.put(RSA_ISOLEMENT_RECENT, openFiscaPeriodeMappeur.creerPeriodesAvecValeurJSON(!situationFamilialeUtile.isSeulPlusDe18Mois(demandeurEmploi), dateDebutSimulation, numeroMoisSimule));
+                famille.put(RSA_ISOLEMENT_RECENT, openFiscaPeriodeMappeur.creerPeriodes(!situationFamilialeUtile.isSeulPlusDe18Mois(demandeurEmploi), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
             }
         } else {
             float montantRsaFamille = situationFamilialeUtile.calculerMontantRsaFamille(demandeurEmploi);
             if(montantRsaFamille > 0) {
-               famille.put(RSA, openFiscaPeriodeMappeur.creerPeriodesAvecValeurJSON(montantRsaFamille, dateDebutSimulation, numeroMoisSimule));
+               famille.put(RSA, openFiscaPeriodeMappeur.creerPeriodes(montantRsaFamille, dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
             }
         }
         famille.put(PPA, openFiscaMappeurPrimeActivite.creerPrimeActiviteJSON(dateDebutSimulation, numeroMoisSimule));
