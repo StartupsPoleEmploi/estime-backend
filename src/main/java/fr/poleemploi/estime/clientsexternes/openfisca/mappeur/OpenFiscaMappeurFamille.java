@@ -29,7 +29,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
 
 @Component
-public class OpenFiscaMappeurFamilles {
+public class OpenFiscaMappeurFamille {
     
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;

@@ -30,7 +30,7 @@ import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 
 @Component
-public class OpenFiscaMappeurIndividus {
+public class OpenFiscaMappeurIndividu {
     
     @Autowired
     private DateUtile dateUtile;

@@ -43,10 +43,10 @@ public class OpenFiscaMappeur {
     private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
     
     @Autowired
-    private OpenFiscaMappeurFamilles openFiscaMappeurFamilles;
+    private OpenFiscaMappeurFamille openFiscaMappeurFamilles;
 
     @Autowired
-    private OpenFiscaMappeurIndividus openFiscaMappeurIndividus;
+    private OpenFiscaMappeurIndividu openFiscaMappeurIndividus;
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
