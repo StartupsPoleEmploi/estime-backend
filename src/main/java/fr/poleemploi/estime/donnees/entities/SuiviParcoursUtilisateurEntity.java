@@ -25,9 +25,28 @@ public class SuiviParcoursUtilisateurEntity {
     private String idPoleEmploi;
     private String nom;
     private String email;
+    private boolean esdBeneficiaireAssuranceChomage;
+    private String esdCodeIndemnisation;
     private String prenom;
     private String suiviParcours;
     private String typePopulation;
+
+    
+    public boolean isEsdBeneficiaireAssuranceChomage() {
+        return esdBeneficiaireAssuranceChomage;
+    }
+
+    public void setEsdBeneficiaireAssuranceChomage(boolean esdBeneficiaireAssuranceChomage) {
+        this.esdBeneficiaireAssuranceChomage = esdBeneficiaireAssuranceChomage;
+    }
+
+    public String getEsdCodeIndemnisation() {
+        return esdCodeIndemnisation;
+    }
+
+    public void setEsdCodeIndemnisation(String esdCodeIndemnisation) {
+        this.esdCodeIndemnisation = esdCodeIndemnisation;
+    }
 
     public String getNom() {
         return nom;
@@ -127,7 +146,8 @@ public class SuiviParcoursUtilisateurEntity {
     public String toString() {
         return "SuiviParcoursUtilisateurEntity [idSuiviParcoursUtilisateur=" + idSuiviParcoursUtilisateur
                 + ", dateCreation=" + dateCreation + ", idPoleEmploi=" + idPoleEmploi + ", nom=" + nom + ", email="
-                + email + ", prenom=" + prenom + ", suiviParcours=" + suiviParcours + ", typePopulation="
-                + typePopulation + "]";
+                + email + ", esdBeneficiaireAssuranceChomage=" + esdBeneficiaireAssuranceChomage
+                + ", esdCodeIndemnisation=" + esdCodeIndemnisation + ", prenom=" + prenom + ", suiviParcours="
+                + suiviParcours + ", typePopulation=" + typePopulation + "]";
     }
 }

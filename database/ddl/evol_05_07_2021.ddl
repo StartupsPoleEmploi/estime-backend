@@ -1,0 +1,5 @@
+ALTER TABLE estime.suivi_parcours_utilisateur
+ADD esd_code_indemnisation TEXT;
+
+ALTER TABLE estime.suivi_parcours_utilisateur
+ADD esd_beneficiaire_assurance_chomage BOOLEAN;

@@ -3,6 +3,7 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.AllocationsCAF;
 import fr.poleemploi.estime.services.ressources.AllocationsCPAM;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
@@ -18,9 +19,9 @@ public class IndividuUtile {
      * Seule la population ASS est pour le moment autorisée.
      */
     public boolean isPopulationAutorisee(DetailIndemnisationESD detailIndemnisationESD) {
-        return detailIndemnisationESD.isBeneficiairePrestationSolidarite()
+        return isBeneficiaireASS(detailIndemnisationESD)
                 && !detailIndemnisationESD.isBeneficiaireAAH()
-                && !detailIndemnisationESD.isBeneficiaireAssuranceChomage()
+                && !isBeneficiaireARE(detailIndemnisationESD)
                 && !detailIndemnisationESD.isBeneficiaireRSA();
     }
     
@@ -32,8 +33,8 @@ public class IndividuUtile {
     private void addInformationsBeneficiaireAidesSociales(Individu individu, DetailIndemnisationESD detailIndemnisation) {
         BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
         beneficiaireAidesSociales.setBeneficiaireAAH(detailIndemnisation.isBeneficiaireAAH());
-        beneficiaireAidesSociales.setBeneficiaireARE(detailIndemnisation.isBeneficiaireAssuranceChomage());
-        beneficiaireAidesSociales.setBeneficiaireASS(detailIndemnisation.isBeneficiairePrestationSolidarite());
+        beneficiaireAidesSociales.setBeneficiaireARE(isBeneficiaireARE(detailIndemnisation));
+        beneficiaireAidesSociales.setBeneficiaireASS(isBeneficiaireASS(detailIndemnisation));
         beneficiaireAidesSociales.setBeneficiaireRSA(detailIndemnisation.isBeneficiaireRSA());
         beneficiaireAidesSociales.setTopAAHRecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiaireAAH());
         beneficiaireAidesSociales.setTopARERecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiaireAssuranceChomage());
@@ -83,4 +84,13 @@ public class IndividuUtile {
         allocationsCPAM.setAllocationSupplementaireInvalidite(0f);
         return allocationsCPAM;
     }
+    
+    private boolean isBeneficiaireARE(DetailIndemnisationESD detailIndemnisationESD) {
+        return detailIndemnisationESD.getCodeIndemnisation() != null && TypePopulation.ARE.getLibelle().equals(detailIndemnisationESD.getCodeIndemnisation());
+    }
+    
+    private boolean isBeneficiaireASS(DetailIndemnisationESD detailIndemnisationESD) {
+        return detailIndemnisationESD.getCodeIndemnisation() != null && TypePopulation.ASS.getLibelle().equals(detailIndemnisationESD.getCodeIndemnisation());
+    }
+
 }

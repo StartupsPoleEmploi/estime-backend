@@ -3,6 +3,8 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.UserInfoESD;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.donnees.entities.SuiviParcoursUtilisateurEntity;
@@ -24,20 +26,29 @@ public class SuiviUtilisateurUtile {
 
     @Autowired
     private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
-
-    public void tracerParcoursUtilisateur(String idPoleEmploi, String nom, String prenom, String email, String parcours, BeneficiaireAidesSociales beneficiaireAidesSociales, boolean isValoriserInfosPerso) {
+    
+    public void tracerParcoursUtilisateur(UserInfoESD userInfoESD, String parcours, BeneficiaireAidesSociales beneficiaireAidesSociales, DetailIndemnisationESD detailIndemnisationESD) {
 
         SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(
-                idPoleEmploi, 
-                nom, 
-                prenom, 
-                email, 
+                userInfoESD, 
                 parcours, 
                 getTypePopulation(beneficiaireAidesSociales), 
-                isValoriserInfosPerso);
+                detailIndemnisationESD);
 
         suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity); 
     }
+
+
+    public void tracerParcoursUtilisateur(String idPoleEmploi, String parcours, BeneficiaireAidesSociales beneficiaireAidesSociales) {
+
+        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(
+                idPoleEmploi,
+                parcours, 
+                getTypePopulation(beneficiaireAidesSociales));
+
+        suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity); 
+    }
+
     
 
     public void supprimerTracesParcoursUtilisateur(String idPoleEmploi) {        
@@ -59,19 +70,34 @@ public class SuiviUtilisateurUtile {
                 beneficiaireAidesSociales.isBeneficiaireAAH());  
     }    
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(String idPoleEmploi, String nom, String prenom, String email, String parcours, String typePopulation, boolean isValoriserInfosPerso) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoESD userInfoESD, String parcours, String typePopulation, DetailIndemnisationESD detailIndemnisationESD) {
+        
+        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
+        suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
+        suiviParcoursUtilisateurEntity.setIdPoleEmploi(userInfoESD.getSub());
+        suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
+        suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
+        suiviParcoursUtilisateurEntity.setEmail(userInfoESD.getEmail());
+        suiviParcoursUtilisateurEntity.setNom(userInfoESD.getFamilyName());
+        suiviParcoursUtilisateurEntity.setPrenom(userInfoESD.getGivenName());
+        
+        if(detailIndemnisationESD.getCodeIndemnisation() != null) {
+            suiviParcoursUtilisateurEntity.setEsdCodeIndemnisation(detailIndemnisationESD.getCodeIndemnisation());            
+        }
+        suiviParcoursUtilisateurEntity.setEsdBeneficiaireAssuranceChomage(detailIndemnisationESD.isBeneficiaireAssuranceChomage());
+        return suiviParcoursUtilisateurEntity;       
+    }
+    
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(String idPoleEmploi, String parcours, String typePopulation) {
+        
         SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
         suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
         suiviParcoursUtilisateurEntity.setIdPoleEmploi(idPoleEmploi);
         suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
-        suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
-        if(isValoriserInfosPerso) {
-            suiviParcoursUtilisateurEntity.setEmail(email);
-            suiviParcoursUtilisateurEntity.setNom(nom);
-            suiviParcoursUtilisateurEntity.setPrenom(prenom);
-        }
+        suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);   
         return suiviParcoursUtilisateurEntity;       
     }
+
 
     private String getTypePopulation(boolean isBeneficiaireARE, boolean isBeneficiaireASS, boolean isBeneficiaireRSA, boolean isBeneficiaireAAH) {
         StringBuilder typePopulationBuilder = new StringBuilder("");

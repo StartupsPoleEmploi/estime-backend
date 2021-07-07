@@ -78,13 +78,11 @@ public class IndividuLogique {
 
             //@TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
             suiviUtilisateurUtile.tracerParcoursUtilisateur(
-                    userInfoESD.getSub(), 
-                    userInfoESD.getFamilyName(), 
-                    userInfoESD.getGivenName(), 
-                    userInfoESD.getEmail(), 
+                    userInfoESD, 
                     suiviUtilisateurUtile.getParcoursAccesService(individu), 
                     individu.getBeneficiaireAidesSociales(), 
-                    true);            
+                    detailIndemnisationESD);       
+          
 
             individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
 
@@ -111,12 +109,8 @@ public class IndividuLogique {
 
         suiviUtilisateurUtile.tracerParcoursUtilisateur(
                 demandeurEmploi.getIdPoleEmploi(), 
-                null, 
-                null, 
-                null, 
                 ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(), 
-                individu.getBeneficiaireAidesSociales(), 
-                false);     
+                individu.getBeneficiaireAidesSociales());         
 
         return demandeurEmploi;
     } 
@@ -126,12 +120,9 @@ public class IndividuLogique {
         
         suiviUtilisateurUtile.tracerParcoursUtilisateur(
                 demandeurEmploi.getIdPoleEmploi(), 
-                null, 
-                null, 
-                null, 
                 ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), 
-                demandeurEmploi.getBeneficiaireAidesSociales(), 
-                false);   
+                demandeurEmploi.getBeneficiaireAidesSociales());  
+
 
         return simulationAidesSociales;
     }
