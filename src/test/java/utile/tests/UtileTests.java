@@ -33,6 +33,7 @@ import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
+import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 
 @Component
@@ -62,21 +63,21 @@ public class UtileTests {
         LocalDate minusMonths = minusYears.minusMonths(1);
         return minusMonths;
     }
-    
+
     public LocalDate getDate(String dateString) throws ParseException {
         DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return  LocalDate.parse(dateString, formatter);
     }   
-    
+
     public DemandeurEmploi creerBaseDemandeurEmploi(String population, boolean isEnCouple, int nbEnfant) {
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         demandeurEmploi.setIdPoleEmploi("idPoleEmploi");
-        
+
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setNom("DUPONT");
         informationsPersonnelles.setPrenom("DANIEL");
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-        
+
         demandeurEmploi.setBeneficiaireAidesSociales(creerBeneficiaireAidesSociales(population));
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -94,7 +95,7 @@ public class UtileTests {
 
         return demandeurEmploi;
     }
-    
+
     public BeneficiaireAidesSociales creerBeneficiaireAidesSociales(String population) {
         switch (population) {
         case "AAH":
@@ -109,8 +110,8 @@ public class UtileTests {
             return creerBeneficiaireAidesSociales(false, false, false, false);
         }
     }
-    
-    
+
+
     public DetailIndemnisationESD creerDetailIndemnisationESD(String population) {
         switch (population) {
         case "AAH":
@@ -125,7 +126,7 @@ public class UtileTests {
             return null;
         }
     }
-    
+
     public AllocationsLogementMensuellesNetFoyer creerAllocationsLogementMensuellesNetFoyer(float montant) {
         AllocationsLogementMensuellesNetFoyer apl = new AllocationsLogementMensuellesNetFoyer();
         apl.setMoisN(montant);
@@ -134,7 +135,27 @@ public class UtileTests {
         apl.setMoisNMoins3(montant);
         return apl;
     }
-    
+
+    public SalairesAvantPeriodeSimulation creerSalairesAvantPeriodeSimulation(
+            float salaireNetMoisM0, float salaireBrutMoisM0, 
+            float salaireNetMoisMoins1, float salaireBrutMoisMoins1, 
+            float salaireNetMoisMoins2, float salaireBrutMoisMoins2) {
+        
+        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
+        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(creerSalaire(salaireNetMoisM0, salaireBrutMoisM0));
+        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(creerSalaire(salaireNetMoisMoins1, salaireBrutMoisMoins1));
+        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(creerSalaire(salaireNetMoisMoins2, salaireBrutMoisMoins2));
+
+        return salairesAvantPeriodeSimulation;
+    }
+
+    private Salaire creerSalaire(float salaireNet, float salaireBrut) {
+        Salaire salaireMoisM = new Salaire();
+        salaireMoisM.setMontantNet(salaireNet);
+        salaireMoisM.setMontantBrut(salaireBrut);
+        return salaireMoisM;
+    }
+
     private void initRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres, String population) {
         switch (population) {
         case "AAH" :
@@ -151,7 +172,7 @@ public class UtileTests {
             break;
         }        
     }
-    
+
     private void intiSituationFamiliale(boolean isEnCouple, int nbEnfant, SituationFamiliale situationFamiliale) {
         situationFamiliale.setIsEnCouple(isEnCouple);
         if(isEnCouple) {
@@ -178,7 +199,7 @@ public class UtileTests {
         beneficiaireAidesSociales.setBeneficiaireRSA(beneficiaireRSA);
         return beneficiaireAidesSociales;
     }
-    
+
     private DetailIndemnisationESD creerDetailIndemnisationESD(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(beneficiaireAAH);
@@ -187,4 +208,6 @@ public class UtileTests {
         detailIndemnisationESD.setBeneficiaireRSA(beneficiaireRSA);
         return detailIndemnisationESD;
     }
+    
+   
 }

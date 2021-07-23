@@ -26,8 +26,6 @@ import com.github.tsohr.JSONObject;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPeriode;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 
 @ContextConfiguration
 @SpringBootTest
@@ -80,22 +78,8 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(0);
-        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        Salaire salaireMoisM = new Salaire();
-        salaireMoisM.setMontantNet(380);
-        salaireMoisM.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisM);
-        Salaire salaireMoisM1 = new Salaire();
-        salaireMoisM1.setMontantNet(380);
-        salaireMoisM1.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisM1);
-        Salaire salaireMoisM2 = new Salaire();
-        salaireMoisM2.setMontantNet(0);
-        salaireMoisM2.setMontantBrut(0);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireMoisM2);
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);  
+        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -124,21 +108,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(1);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        Salaire salaireMoisM = new Salaire();
-        salaireMoisM.setMontantNet(380);
-        salaireMoisM.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisM);
-        Salaire salaireMoisM1 = new Salaire();
-        salaireMoisM1.setMontantNet(380);
-        salaireMoisM1.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisM1);
-        Salaire salaireMoisM2 = new Salaire();
-        salaireMoisM2.setMontantNet(0);
-        salaireMoisM2.setMontantBrut(0);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireMoisM2);
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -166,22 +136,8 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(1);
-        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        Salaire salaireMoisM = new Salaire();
-        salaireMoisM.setMontantNet(380);
-        salaireMoisM.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisM);
-        Salaire salaireMoisM1 = new Salaire();
-        salaireMoisM1.setMontantNet(380);
-        salaireMoisM1.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisM1);
-        Salaire salaireMoisM2 = new Salaire();
-        salaireMoisM2.setMontantNet(0);
-        salaireMoisM2.setMontantBrut(0);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireMoisM2);
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);  
+        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -210,21 +166,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(2);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        Salaire salaireMoisM = new Salaire();
-        salaireMoisM.setMontantNet(380);
-        salaireMoisM.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisM);
-        Salaire salaireMoisM1 = new Salaire();
-        salaireMoisM1.setMontantNet(380);
-        salaireMoisM1.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisM1);
-        Salaire salaireMoisM2 = new Salaire();
-        salaireMoisM2.setMontantNet(0);
-        salaireMoisM2.setMontantBrut(0);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireMoisM2);
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -253,21 +195,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(2);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        Salaire salaireMoisM = new Salaire();
-        salaireMoisM.setMontantNet(380);
-        salaireMoisM.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisM);
-        Salaire salaireMoisM1 = new Salaire();
-        salaireMoisM1.setMontantNet(380);
-        salaireMoisM1.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisM1);
-        Salaire salaireMoisM2 = new Salaire();
-        salaireMoisM2.setMontantNet(0);
-        salaireMoisM2.setMontantBrut(0);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireMoisM2);
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -298,21 +226,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(3);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        Salaire salaireMoisM = new Salaire();
-        salaireMoisM.setMontantNet(380);
-        salaireMoisM.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisM);
-        Salaire salaireMoisM1 = new Salaire();
-        salaireMoisM1.setMontantNet(380);
-        salaireMoisM1.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisM1);
-        Salaire salaireMoisM2 = new Salaire();
-        salaireMoisM2.setMontantNet(0);
-        salaireMoisM2.setMontantBrut(0);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireMoisM2);
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -342,21 +256,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(3);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        Salaire salaireMoisM = new Salaire();
-        salaireMoisM.setMontantNet(380);
-        salaireMoisM.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisM);
-        Salaire salaireMoisM1 = new Salaire();
-        salaireMoisM1.setMontantNet(380);
-        salaireMoisM1.setMontantBrut(508);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisM1);
-        Salaire salaireMoisM2 = new Salaire();
-        salaireMoisM2.setMontantNet(0);
-        salaireMoisM2.setMontantBrut(0);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireMoisM2);
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
