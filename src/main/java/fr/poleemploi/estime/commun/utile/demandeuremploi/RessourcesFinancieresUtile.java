@@ -13,6 +13,7 @@ import fr.poleemploi.estime.logique.simulateuraidessociales.poleemploi.aides.All
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
+import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
 
 @Component
 public class RessourcesFinancieresUtile {
@@ -157,11 +158,30 @@ public class RessourcesFinancieresUtile {
         return 0;
     }
 
-    public int getNombreMoisTravaillesDerniersMois(DemandeurEmploi demandeurEmploi) {
-        if(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois() != null) {
-            return demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois();
+    /**
+     * Fonction qui permet de récupérer le nombre de mois travaillés en cumul salaire afin d'établir la temporalité
+     * @param demandeurEmploi
+     * @param contexteAAH si vrai : se base sur le champ select (1 à 6 mois) sinon se base sur le nombre de mois travaillés dont le montant du salaire est supérieur à 0
+     * @return
+     */
+    public int getNombreMoisTravaillesDerniersMois(DemandeurEmploi demandeurEmploi, boolean contexteAAH) {
+        int nombreMoisTravaillesDerniersMois = 0;
+        if(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois() != null && demandeurEmploi.getRessourcesFinancieres().getHasTravailleAuCoursDerniersMois()) {
+            if(contexteAAH) nombreMoisTravaillesDerniersMois = demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois();
+            else {
+                nombreMoisTravaillesDerniersMois += this.isMoisTravaille(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisDemandeSimulation())?1:0;
+                nombreMoisTravaillesDerniersMois += this.isMoisTravaille(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisMoins1MoisDemandeSimulation())?1:0;
+                nombreMoisTravaillesDerniersMois += this.isMoisTravaille(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisMoins2MoisDemandeSimulation())?1:0;
+            }
         }
-        return 0;
+        return nombreMoisTravaillesDerniersMois;
+    }
+    
+    private boolean isMoisTravaille(SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulation) {
+        if(salaireAvantPeriodeSimulation != null && salaireAvantPeriodeSimulation.getSalaire() != null) {
+            return !salaireAvantPeriodeSimulation.isSansSalaire() && salaireAvantPeriodeSimulation.getSalaire().getMontantNet() > 0;            
+        }
+        return false;
     }
 
     public boolean hasSalairesAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi) {
@@ -176,11 +196,11 @@ public class RessourcesFinancieresUtile {
         if(hasSalairesAvantPeriodeSimulation(demandeurEmploi)) {
             switch (nMoisAvant) {
                 case 1:
-                    return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisMoins1MoisDemandeSimulation());
+                    return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisMoins1MoisDemandeSimulation().getSalaire());
                 case 2:                
-                    return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisMoins2MoisDemandeSimulation());            
+                    return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisMoins2MoisDemandeSimulation().getSalaire());            
                 default:
-                    return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisDemandeSimulation());
+                    return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisDemandeSimulation().getSalaire());
             }
         }
         return Optional.empty();

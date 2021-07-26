@@ -55,6 +55,7 @@ public class CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationMensuelleNetAAH(900f);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationsFamilialesMensuellesNetFoyer(90);
 

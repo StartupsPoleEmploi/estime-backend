@@ -105,6 +105,8 @@ public class UtileTests {
             return creerBeneficiaireAidesSociales(false, false, true, false);
         case "RSA":
             return creerBeneficiaireAidesSociales(false, false, false, true);
+        case "AAH_ASS":
+            return creerBeneficiaireAidesSociales(true, false, true, false);
         default:
             return creerBeneficiaireAidesSociales(false, false, false, false);
         }
@@ -121,6 +123,8 @@ public class UtileTests {
             return creerDetailIndemnisationESD(false, false, true, false);
         case "RSA":
             return creerDetailIndemnisationESD(false, false, false, true);
+        case "AAH_ASS":
+            return creerDetailIndemnisationESD(true, false, true, false);
         default:
             return null;
         }
@@ -136,17 +140,20 @@ public class UtileTests {
     }
     
     private void initRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres, String population) {
+        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
+        AllocationsCAF allocationsCAF = new AllocationsCAF();
         switch (population) {
         case "AAH" :
         case "RSA":
-            AllocationsCAF allocationsCAF = new AllocationsCAF();
             ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
             break;
         case "ARE":
         case "ASS":
-            AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
             ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
             break;
+        case "AAH_ASS":
+            ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
+            ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);            
         default:
             break;
         }        
