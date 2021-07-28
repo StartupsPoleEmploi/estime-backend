@@ -1,4 +1,4 @@
-package testsintegration.simulation.temporalite.aah;
+package testsintegration.simulation.temporalite.aahEtAss;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -32,50 +32,55 @@ public class CommunTests {
     private UtileTests utileTests;
 
     @SpyBean
-    protected DateUtile dateUtile;        
-    
+    protected DateUtile dateUtile;
+
     @SpyBean
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
-    
+
     @SpyBean
     private EmploiStoreDevClient detailIndemnisationPoleEmploiClient;
-    
+
     protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
-        
+
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH_ASS.getLibelle(),
+                isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles()
+                .setDateNaissance(utileTests.getDateNaissanceFromAge(9));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
-        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
+        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationMensuelleNetAAH(900f);
         demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationsFamilialesMensuellesNetFoyer(90);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi()
+                .setDateDerniereOuvertureDroitASS(utileTests.getDate("14-04-2020"));
 
         return demandeurEmploi;
     }
-    
-    
 
-    protected void initMocks(DemandeurEmploi demandeurEmploi) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        //mock tracer parcours utilisateur 
-        doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateur(
-                demandeurEmploi.getIdPoleEmploi(), 
-                ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(),
-                demandeurEmploi.getBeneficiaireAidesSociales());
-        
-        //mock création date de demande de simulation
+    protected void initMocks(DemandeurEmploi demandeurEmploi) throws ParseException, JsonIOException,
+            JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+        // mock tracer parcours utilisateur
+        doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(),
+                ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAidesSociales());
+
+        // mock création date de demande de simulation
         doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
 
-        //mock retour appel détail indemnisation de l'ESD 
-        DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.AAH.getLibelle());        
-        doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
-    }    
+        // mock retour appel détail indemnisation de l'ESD
+        DetailIndemnisationESD detailIndemnisationESD = utileTests
+                .creerDetailIndemnisationESD(TypePopulation.AAH_ASS.getLibelle());
+        doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient)
+                .callDetailIndemnisationEndPoint(Mockito.any(String.class));
+    }
 }

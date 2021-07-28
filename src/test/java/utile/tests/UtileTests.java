@@ -33,8 +33,10 @@ import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
+import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
+
 
 @Component
 public class UtileTests {
@@ -106,6 +108,8 @@ public class UtileTests {
             return creerBeneficiaireAidesSociales(false, false, true, false);
         case "RSA":
             return creerBeneficiaireAidesSociales(false, false, false, true);
+        case "AAH_ASS":
+            return creerBeneficiaireAidesSociales(true, false, true, false);
         default:
             return creerBeneficiaireAidesSociales(false, false, false, false);
         }
@@ -122,6 +126,8 @@ public class UtileTests {
             return creerDetailIndemnisationESD(false, false, true, false);
         case "RSA":
             return creerDetailIndemnisationESD(false, false, false, true);
+        case "AAH_ASS":
+            return creerDetailIndemnisationESD(true, false, true, false);
         default:
             return null;
         }
@@ -142,9 +148,17 @@ public class UtileTests {
             float salaireNetMoisMoins2, float salaireBrutMoisMoins2) {
         
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(creerSalaire(salaireNetMoisM0, salaireBrutMoisM0));
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(creerSalaire(salaireNetMoisMoins1, salaireBrutMoisMoins1));
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(creerSalaire(salaireNetMoisMoins2, salaireBrutMoisMoins2));
+        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
+        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
+        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new SalaireAvantPeriodeSimulation();
+        
+	salaireAvantPeriodeSimulationMoisDemande.setSalaire(creerSalaire(salaireNetMoisM0, salaireBrutMoisM0));
+	salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(creerSalaire(salaireNetMoisMoins1, salaireBrutMoisMoins1));
+	salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(creerSalaire(salaireNetMoisMoins2, salaireBrutMoisMoins2));
+
+	salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
+	salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
+	salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
 
         return salairesAvantPeriodeSimulation;
     }
@@ -157,17 +171,20 @@ public class UtileTests {
     }
 
     private void initRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres, String population) {
+        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
+        AllocationsCAF allocationsCAF = new AllocationsCAF();
         switch (population) {
         case "AAH" :
         case "RSA":
-            AllocationsCAF allocationsCAF = new AllocationsCAF();
             ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
             break;
         case "ARE":
         case "ASS":
-            AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
             ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
             break;
+        case "AAH_ASS":
+            ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
+            ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);            
         default:
             break;
         }        

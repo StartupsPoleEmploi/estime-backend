@@ -76,7 +76,7 @@ public class AllocationSolidariteSpecifique {
 
     public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi) {
         if(demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi() != null) {        
-            int nombreMoisCumulesASSPercueEtSalaire = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi);            
+            int nombreMoisCumulesASSPercueEtSalaire = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi, false);
             if(futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
                 return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
             } else if(futurTravailUtile.hasContratCDD(demandeurEmploi.getFuturTravail())) {

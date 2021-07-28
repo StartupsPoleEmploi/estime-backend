@@ -12,6 +12,7 @@ import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.logique.simulateuraidessociales.utile.AideSocialeUtile;
 import fr.poleemploi.estime.logique.simulateuraidessociales.utile.SimulateurAidesSocialesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.services.ressources.AideSociale;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
@@ -24,7 +25,9 @@ public class AllocationAdultesHandicapes {
     
     @Autowired
     private AideSocialeUtile aideSocialeUtile;
-    
+
+    @Autowired
+    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
     /**
      * Méthode permettant de calculer le montant de l'AAH sur la période de simulation de N mois
      * Voici la règle sur 6 mois :
@@ -38,13 +41,12 @@ public class AllocationAdultesHandicapes {
      *
      */
     public void simulerAAH(Map<String, AideSociale>  aidesEligiblesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        int nombreMoisTravaillesDerniersMois = demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois();
+        int nombreMoisTravaillesDerniersMois = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi, true); 
         int diffNbrMoisSimulationEtNbrMoisTravailles = SimulateurAidesSocialesUtile.NOMBRE_MOIS_MAX_A_SIMULER - nombreMoisTravaillesDerniersMois;
-        
         if(numeroMoisSimule > diffNbrMoisSimulationEtNbrMoisTravailles) {
             float montantAllocationAAHReduit = calculerMontantReduit(demandeurEmploi);
             if(montantAllocationAAHReduit > 0) {
-                ajouterAideSocialeAAH(aidesEligiblesPourCeMois, montantAllocationAAHReduit);                
+                ajouterAideSocialeAAH(aidesEligiblesPourCeMois, montantAllocationAAHReduit);             
             }
         } else {
             //le demandeur cumule son AAH avant la simulation

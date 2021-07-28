@@ -22,6 +22,7 @@ import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Salaire;
+import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -51,14 +52,26 @@ class DemandeurAss3MoisCumulSalaireAvantSimulation extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
+        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
         Salaire salaireMoisDemande = new Salaire();
         salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);        
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireMoisDemande);
+        salaireMoisDemande.setMontantBrut(1101);
+        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
+        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
+        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
         Salaire salaireMoisMoins1Mois = new Salaire();
         salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038); 
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireMoisMoins1Mois);
+        salaireMoisMoins1Mois.setMontantBrut(1038);
+        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
+        salairesAvantPeriodeSimulation
+                .setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
+        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new SalaireAvantPeriodeSimulation();
+        Salaire salaireMoisMoins2Mois = new Salaire();
+        salaireMoisMoins2Mois.setMontantNet(800);
+        salaireMoisMoins2Mois.setMontantBrut(1038);
+        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
+        salairesAvantPeriodeSimulation
+                .setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
         
         //Lorsque je simule mes aides le 20/10/2020

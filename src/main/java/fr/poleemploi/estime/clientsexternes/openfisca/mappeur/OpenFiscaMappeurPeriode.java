@@ -186,10 +186,10 @@ public class OpenFiscaMappeurPeriode {
         int nombreMoisTravaillesDerniersMois = demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois();
         if(nombreMoisTravaillesDerniersMois > 0) {
             if(numeroMoisPeriodeOpenfisca == 0) {
-                return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisMoins1MoisDemandeSimulation());            
+                return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisMoins1MoisDemandeSimulation().getSalaire());            
             }
             if(numeroMoisPeriodeOpenfisca == 1) {
-                return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisDemandeSimulation());            
+                return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisDemandeSimulation().getSalaire());            
             }
         }
         return Optional.empty();
