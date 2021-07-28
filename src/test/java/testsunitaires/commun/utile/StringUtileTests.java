@@ -3,30 +3,15 @@ package testsunitaires.commun.utile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.utile.StringUtile;
 
 
-@ContextConfiguration
-@SpringBootTest
-@TestPropertySource(locations="classpath:application-test.properties")
 class StringUtileTests {
     
-    @Autowired
-    private StringUtile stringUtile;
+    private StringUtile stringUtile = new StringUtile();
     
-    @Configuration
-    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
-    public static class SpringConfig {
-
-    }
-    
+   
     @Test
     void isNumericTest1() {
         

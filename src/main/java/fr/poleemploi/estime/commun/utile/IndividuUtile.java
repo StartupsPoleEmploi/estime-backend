@@ -14,22 +14,22 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
 public class IndividuUtile {
-       
+
     /**
-     * Seule la population ASS est pour le moment autorisée.
+     * Population autorisée ASS, RSA ou AAH, et pouvant cumuler ces 3 aides.
      */
     public boolean isPopulationAutorisee(DetailIndemnisationESD detailIndemnisationESD) {
-        return isBeneficiaireASS(detailIndemnisationESD)
-                && !detailIndemnisationESD.isBeneficiaireAAH()
-                && !isBeneficiaireARE(detailIndemnisationESD)
-                && !detailIndemnisationESD.isBeneficiaireRSA();
+        return !isBeneficiaireARE(detailIndemnisationESD) && 
+                (isBeneficiaireASS(detailIndemnisationESD) || 
+                 detailIndemnisationESD.isBeneficiaireAAH() || 
+                 detailIndemnisationESD.isBeneficiaireRSA());
     }
-    
+
     public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD) {
         addInformationsBeneficiaireAidesSociales(individu, detailIndemnisationESD);
         addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
     }
-    
+
     private void addInformationsBeneficiaireAidesSociales(Individu individu, DetailIndemnisationESD detailIndemnisation) {
         BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
         beneficiaireAidesSociales.setBeneficiaireAAH(detailIndemnisation.isBeneficiaireAAH());
@@ -42,7 +42,7 @@ public class IndividuUtile {
         beneficiaireAidesSociales.setTopRSARecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiaireRSA());
         individu.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
     }
-    
+
     private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisation) {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(0);
@@ -78,17 +78,17 @@ public class IndividuUtile {
         allocationsLogementMensuellesNetFoyer.setMoisNMoins3(0);
         return allocationsLogementMensuellesNetFoyer;
     }
-    
+
     private AllocationsCPAM creerAllocationsCPAM() {
         AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
         allocationsCPAM.setAllocationSupplementaireInvalidite(0f);
         return allocationsCPAM;
     }
-    
+
     private boolean isBeneficiaireARE(DetailIndemnisationESD detailIndemnisationESD) {
         return detailIndemnisationESD.getCodeIndemnisation() != null && TypePopulation.ARE.getLibelle().equals(detailIndemnisationESD.getCodeIndemnisation());
     }
-    
+
     private boolean isBeneficiaireASS(DetailIndemnisationESD detailIndemnisationESD) {
         return detailIndemnisationESD.getCodeIndemnisation() != null && TypePopulation.ASS.getLibelle().equals(detailIndemnisationESD.getCodeIndemnisation());
     }
