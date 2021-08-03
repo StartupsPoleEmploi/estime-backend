@@ -5,6 +5,7 @@ public enum AidesSociales {
     AGEPI("AGEPI", "Aide à la Garde d'Enfants pour Parent Isolé", "agepi.html"),
     AIDE_MOBILITE("AM", "Aide à la mobilité", "aide-mobilite.html"),
     ALLOCATION_ADULTES_HANDICAPES("AAH", "Allocation aux Adultes Handicapés", "aah.html"),
+    ALLOCATION_RETOUR_EMPLOI("ARE", "Allocation de Retour à l'Emploi", "are.html"),
     ALLOCATION_SOLIDARITE_SPECIFIQUE("ASS", "Allocation de Solidarité Spécifique", "ass.html"),
     PRIME_ACTIVITE("PA", "Prime d'Activité", "prime-activite.html"),
     PENSION_INVALIDITE("PI", "Pension d'invalidité",""),

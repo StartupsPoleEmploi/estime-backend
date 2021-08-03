@@ -10,8 +10,10 @@ public class ParametresOpenFisca {
     public static final String AF = "af";
     public static final String AGE = "age";
     public static final String APL = "aide_logement";
+    public static final String ASF = "asf";
     public static final String ASI = "asi";
     public static final String ASS = "ass";
+    public static final String CF = "cf";
     public static final String CHOMAGE_NET = "chomage_net";
     public static final String CONJOINT = "conjoint";
     public static final String DATE_NAISSANCE = "date_naissance";

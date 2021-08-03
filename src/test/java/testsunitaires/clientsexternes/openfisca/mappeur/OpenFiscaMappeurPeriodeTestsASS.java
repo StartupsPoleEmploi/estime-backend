@@ -241,7 +241,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
 
         JSONObject demandeurJSON = new JSONObject();
@@ -274,7 +274,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(1);
 
@@ -308,7 +308,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
@@ -364,7 +364,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
 
@@ -398,7 +398,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
@@ -454,7 +454,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
@@ -502,7 +502,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(15);
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
         return demandeurEmploi;
     }

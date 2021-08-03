@@ -18,6 +18,9 @@ import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 @Component
 public class SimulateurAidesCAF {
     
+    //Pour la prime d'activité et le RSA , le majeur âgé de plus de 25 ans ne peut pas être considéré comme à charge
+    public static final int AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA = 25;
+    
     @Autowired
     private AllocationAdultesHandicapes allocationAdultesHandicapes;
     

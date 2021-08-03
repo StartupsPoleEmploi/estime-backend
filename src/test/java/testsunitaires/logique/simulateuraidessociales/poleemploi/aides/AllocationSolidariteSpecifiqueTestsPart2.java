@@ -18,8 +18,9 @@ import org.springframework.test.context.TestPropertySource;
 import fr.poleemploi.estime.commun.enumerations.MessagesAlertesAideSociale;
 import fr.poleemploi.estime.logique.simulateuraidessociales.poleemploi.aides.AllocationSolidariteSpecifique;
 import fr.poleemploi.estime.services.ressources.AideSociale;
-import fr.poleemploi.estime.services.ressources.AllocationsPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import utile.tests.UtileTests;
 
@@ -60,10 +61,12 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        allocationsPoleEmploi.setAllocationJournaliereNet(16.89f);
-        allocationsPoleEmploi.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-04-2020"));
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationASS allocationASS = new AllocationASS();
+        allocationASS.setAllocationJournaliereNet(16.89f);
+        allocationASS.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-04-2020"));
+        prestationsPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-11-2021";
@@ -88,10 +91,12 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        allocationsPoleEmploi.setAllocationJournaliereNet(16.89f);
-        allocationsPoleEmploi.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-04-2020"));
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationASS allocationASS = new AllocationASS();
+        allocationASS.setAllocationJournaliereNet(16.89f);
+        allocationASS.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-04-2020"));
+        prestationsPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-12-2021";
@@ -115,10 +120,12 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        allocationsPoleEmploi.setAllocationJournaliereNet(16.89f);
-        allocationsPoleEmploi.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-09-2020"));
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationASS allocationASS = new AllocationASS();
+        allocationASS.setAllocationJournaliereNet(16.89f);
+        allocationASS.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-09-2020"));
+        prestationsPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-01-2021";
@@ -143,10 +150,12 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        allocationsPoleEmploi.setAllocationJournaliereNet(16.89f);
-        allocationsPoleEmploi.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-09-2020"));
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationASS allocationASS = new AllocationASS();
+        allocationASS.setAllocationJournaliereNet(16.89f);
+        allocationASS.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-09-2020"));
+        prestationsPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-02-2021";

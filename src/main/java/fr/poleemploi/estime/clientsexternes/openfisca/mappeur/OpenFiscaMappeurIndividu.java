@@ -86,11 +86,11 @@ public class OpenFiscaMappeurIndividu {
             demandeurJSON.put(TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES, openFiscaMappeurPeriode.creerPeriodes(this.ressourcesFinancieresUtile.getRevenusMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres()), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA_TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES));
         }
         if(ressourcesFinancieresUtile.hasPensionsAlimentaires(demandeurEmploi)) {
-            demandeurJSON.put(PENSIONS_ALIMENTAIRES_PERCUES, openFiscaMappeurPeriode.creerPeriodes(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getPensionsAlimentairesFoyer(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            demandeurJSON.put(PENSIONS_ALIMENTAIRES_PERCUES, openFiscaMappeurPeriode.creerPeriodes(demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getPrestationsFamiliales().getPensionsAlimentairesFoyer(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
         }
         if(ressourcesFinancieresUtile.hasPensionInvalidite(demandeurEmploi)) {
-            demandeurJSON.put(PENSION_INVALIDITE, openFiscaMappeurPeriode.creerPeriodes(demandeurEmploi.getRessourcesFinancieres().getAllocationsCPAM().getPensionInvalidite(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-            demandeurJSON.put(ASI, openFiscaMappeurPeriode.creerPeriodesValeurNulleEgaleZero(demandeurEmploi.getRessourcesFinancieres().getAllocationsCPAM().getAllocationSupplementaireInvalidite(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            demandeurJSON.put(PENSION_INVALIDITE, openFiscaMappeurPeriode.creerPeriodes(demandeurEmploi.getRessourcesFinancieres().getPrestationsCPAM().getPensionInvalidite(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            demandeurJSON.put(ASI, openFiscaMappeurPeriode.creerPeriodesValeurNulleEgaleZero(demandeurEmploi.getRessourcesFinancieres().getPrestationsCPAM().getAllocationSupplementaireInvalidite(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
         }
     }
     

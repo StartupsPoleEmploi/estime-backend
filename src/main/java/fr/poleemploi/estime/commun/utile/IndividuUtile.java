@@ -3,13 +3,16 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.services.ressources.AllocationsCAF;
-import fr.poleemploi.estime.services.ressources.AllocationsCPAM;
+import fr.poleemploi.estime.services.ressources.AllocationARE;
+import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.AllocationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.Individu;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsCPAM;
+import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
@@ -47,28 +50,34 @@ public class IndividuUtile {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(0);
 
-        if((detailIndemnisation.isBeneficiaireAssuranceChomage() || detailIndemnisation.isBeneficiairePrestationSolidarite())) {
-            ressourcesFinancieres.setAllocationsPoleEmploi(creerAllocationsPoleEmploi(detailIndemnisation));
+        if(detailIndemnisation.getCodeIndemnisation() != null) {
+            ressourcesFinancieres.setPrestationsPoleEmploi(creerPrestationPoleEmploi(detailIndemnisation));
         }
-        ressourcesFinancieres.setAllocationsCAF(creerAllocationCAF());
-        ressourcesFinancieres.setAllocationsCPAM(creerAllocationsCPAM());
+        ressourcesFinancieres.setPrestationsCAF(creerPrestationsCAF());
+        ressourcesFinancieres.setPrestationsCPAM(creerPrestationssCPAM());
 
         individu.setRessourcesFinancieres(ressourcesFinancieres);
     }
 
-    private AllocationsPoleEmploi creerAllocationsPoleEmploi(DetailIndemnisationESD detailIndemnisation) {
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        allocationsPoleEmploi.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());             
-        return allocationsPoleEmploi;
+    private PrestationsPoleEmploi creerPrestationPoleEmploi(DetailIndemnisationESD detailIndemnisation) {
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        if(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
+            AllocationASS allocationASS = new AllocationASS();
+            allocationASS.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());  
+            prestationsPoleEmploi.setAllocationASS(allocationASS);
+        }
+        if(AidesSociales.ALLOCATION_RETOUR_EMPLOI.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
+            AllocationARE allocationARE = new AllocationARE();
+            allocationARE.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());  
+            prestationsPoleEmploi.setAllocationARE(allocationARE);
+        }         
+        return prestationsPoleEmploi;
     }
 
-    private AllocationsCAF creerAllocationCAF() {
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(0);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(creerAllocationsLogement());
-        allocationsCAF.setPensionsAlimentairesFoyer(0);
-        allocationsCAF.setPrestationAccueilJeuneEnfant(0);
-        return allocationsCAF;
+    private PrestationsCAF creerPrestationsCAF() {
+        PrestationsCAF prestationsCAF = new PrestationsCAF();        
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(creerAllocationsLogement());
+        return prestationsCAF;
     }
 
     private AllocationsLogementMensuellesNetFoyer creerAllocationsLogement() {
@@ -79,10 +88,10 @@ public class IndividuUtile {
         return allocationsLogementMensuellesNetFoyer;
     }
 
-    private AllocationsCPAM creerAllocationsCPAM() {
-        AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
-        allocationsCPAM.setAllocationSupplementaireInvalidite(0f);
-        return allocationsCPAM;
+    private PrestationsCPAM creerPrestationssCPAM() {
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setAllocationSupplementaireInvalidite(0f);
+        return prestationsCPAM;
     }
 
     private boolean isBeneficiaireARE(DetailIndemnisationESD detailIndemnisationESD) {

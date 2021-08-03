@@ -50,7 +50,7 @@ public class AllocationAdultesHandicapes {
             }
         } else {
             //le demandeur cumule son AAH avant la simulation
-            float montantAllocationAAHAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationMensuelleNetAAH();
+            float montantAllocationAAHAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetAAH();
             ajouterAideSocialeAAH(aidesEligiblesPourCeMois, montantAllocationAAHAvantSimulation);
         }
     }
@@ -62,7 +62,7 @@ public class AllocationAdultesHandicapes {
      * @return montant AAH réduit
      */
     private float calculerMontantReduit(DemandeurEmploi demandeurEmploi) {
-        BigDecimal montantAllocationAAHAvantSimulation = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationMensuelleNetAAH());
+        BigDecimal montantAllocationAAHAvantSimulation = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetAAH());
         
         BigDecimal partSalaireADeduire = calculerPartSalairePourDeduction(demandeurEmploi);
         float montantReduitAllocationAAH = montantAllocationAAHAvantSimulation.subtract(partSalaireADeduire).setScale(0, RoundingMode.DOWN).floatValue();

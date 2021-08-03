@@ -2,9 +2,9 @@ package fr.poleemploi.estime.services.ressources;
 
 public class RessourcesFinancieres {
 
-    private AllocationsCAF allocationsCAF;
-    private AllocationsPoleEmploi allocationsPoleEmploi;
-    private AllocationsCPAM allocationsCPAM;
+    private PrestationsCAF prestationsCAF;
+    private PrestationsPoleEmploi prestationsPoleEmploi;
+    private PrestationsCPAM prestationsCPAM;
     private Boolean hasTravailleAuCoursDerniersMois;
     private Integer nombreMoisTravaillesDerniersMois;
     private Float beneficesTravailleurIndependantDernierExercice;
@@ -13,23 +13,23 @@ public class RessourcesFinancieres {
     private Salaire salaire;
     private SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation;
     
-    public AllocationsCAF getAllocationsCAF() {
-        return allocationsCAF;
+    public PrestationsCAF getPrestationsCAF() {
+        return prestationsCAF;
     }
-    public void setAllocationsCAF(AllocationsCAF allocationsCAF) {
-        this.allocationsCAF = allocationsCAF;
+    public void setPrestationsCAF(PrestationsCAF prestationsCAF) {
+        this.prestationsCAF = prestationsCAF;
     }
-    public AllocationsPoleEmploi getAllocationsPoleEmploi() {
-        return allocationsPoleEmploi;
+    public PrestationsPoleEmploi getPrestationsPoleEmploi() {
+        return prestationsPoleEmploi;
     }
-    public void setAllocationsPoleEmploi(AllocationsPoleEmploi allocationsPoleEmploi) {
-        this.allocationsPoleEmploi = allocationsPoleEmploi;
+    public void setPrestationsPoleEmploi(PrestationsPoleEmploi prestationsPoleEmploi) {
+        this.prestationsPoleEmploi = prestationsPoleEmploi;
     }
-    public AllocationsCPAM getAllocationsCPAM() {
-        return allocationsCPAM;
+    public PrestationsCPAM getPrestationsCPAM() {
+        return prestationsCPAM;
     }
-    public void setAllocationsCPAM(AllocationsCPAM allocationsCPAM) {
-        this.allocationsCPAM = allocationsCPAM;
+    public void setPrestationsCPAM(PrestationsCPAM prestationsCPAM) {
+        this.prestationsCPAM = prestationsCPAM;
     }
     public Boolean getHasTravailleAuCoursDerniersMois() {
         return hasTravailleAuCoursDerniersMois;
@@ -73,10 +73,11 @@ public class RessourcesFinancieres {
     public void setSalairesAvantPeriodeSimulation(SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation) {
         this.salairesAvantPeriodeSimulation = salairesAvantPeriodeSimulation;
     }
+    
     @Override
     public String toString() {
-        return "RessourcesFinancieres [allocationsCAF=" + allocationsCAF + ", allocationsPoleEmploi="
-                + allocationsPoleEmploi + ", allocationsCPAM=" + allocationsCPAM + ", hasTravailleAuCoursDerniersMois="
+        return "RessourcesFinancieres [prestationsCAF=" + prestationsCAF + ", prestationsPoleEmploi="
+                + prestationsPoleEmploi + ", prestationsCPAM=" + prestationsCPAM + ", hasTravailleAuCoursDerniersMois="
                 + hasTravailleAuCoursDerniersMois + ", nombreMoisTravaillesDerniersMois="
                 + nombreMoisTravaillesDerniersMois + ", beneficesTravailleurIndependantDernierExercice="
                 + beneficesTravailleurIndependantDernierExercice + ", revenusMicroEntreprise3DerniersMois="

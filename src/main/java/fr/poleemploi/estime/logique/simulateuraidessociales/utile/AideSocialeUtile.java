@@ -53,7 +53,7 @@ public class AideSocialeUtile {
     
     public float getMontantAideSocialeAvantSimulation(int numeroMoisMontantARecuperer, DemandeurEmploi demandeurEmploi, String codeAideSociale, LocalDate dateDebutSimulation) {
         if(AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode().equals(codeAideSociale)) {
-            return demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationMensuelleNetAAH();
+            return demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetAAH();
         }
         if(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(codeAideSociale)) {
             LocalDate moisAvantPeriodeSimulation = getMoisAvantSimulation(numeroMoisMontantARecuperer, dateDebutSimulation);

@@ -4,16 +4,13 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class AllocationsPoleEmploi {
+public class AllocationASS {
     
     private Float allocationJournaliereNet;
     private Float allocationMensuelleNet;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateDerniereOuvertureDroitASS;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate dateReliquat;
-    private Integer dureeReliquat;
-
+    
     public Float getAllocationJournaliereNet() {
         return allocationJournaliereNet;
     }
@@ -32,23 +29,10 @@ public class AllocationsPoleEmploi {
     public void setDateDerniereOuvertureDroitASS(LocalDate dateDerniereOuvertureDroitASS) {
         this.dateDerniereOuvertureDroitASS = dateDerniereOuvertureDroitASS;
     }
-    public LocalDate getDateReliquat() {
-        return dateReliquat;
-    }
-    public void setDateReliquat(LocalDate dateReliquat) {
-        this.dateReliquat = dateReliquat;
-    }
-    public Integer getDureeReliquat() {
-        return dureeReliquat;
-    }
-    public void setDureeReliquat(Integer dureeReliquat) {
-        this.dureeReliquat = dureeReliquat;
-    }
+    
     @Override
     public String toString() {
-        return "AllocationsPoleEmploi [allocationJournaliereNet=" + allocationJournaliereNet
-                + ", allocationMensuelleNet=" + allocationMensuelleNet + ", dateDerniereOuvertureDroitASS="
-                + dateDerniereOuvertureDroitASS + ", dateReliquat=" + dateReliquat + ", dureeReliquat=" + dureeReliquat
-                + "]";
+        return "AllocationASS [allocationJournaliereNet=" + allocationJournaliereNet + ", allocationMensuelleNet="
+                + allocationMensuelleNet + ", dateDerniereOuvertureDroitASS=" + dateDerniereOuvertureDroitASS + "]";
     }
 }

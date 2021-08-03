@@ -62,9 +62,10 @@ public class AllocationSolidariteSpecifique {
     public float calculerMontant(DemandeurEmploi demandeurEmploi, LocalDate mois) {
         int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);    
         if(demandeurEmploi.getRessourcesFinancieres() != null 
-           && demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi() != null 
-           && demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().getAllocationJournaliereNet() != null) {
-            float montantJournalierNetSolidariteSpecifique = demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().getAllocationJournaliereNet();
+           && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi() != null 
+           && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS() != null
+           && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null) {
+            float montantJournalierNetSolidariteSpecifique = demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().getAllocationJournaliereNet();
             return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();            
         }
         return 0;
@@ -75,7 +76,7 @@ public class AllocationSolidariteSpecifique {
     }
 
     public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi) {
-        if(demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi() != null) {        
+        if(demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi() != null) {        
             int nombreMoisCumulesASSPercueEtSalaire = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi, false);
             if(futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
                 return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
@@ -96,7 +97,7 @@ public class AllocationSolidariteSpecifique {
      * @return message d'alerte sinon vide
      */
     private  Optional<String> getMessageAlerte(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-        LocalDate dateDerniereOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().getDateDerniereOuvertureDroitASS();
+        LocalDate dateDerniereOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroitASS();
         LocalDate dateFinDroitASS = dateUtile.ajouterMoisALocalDate(dateDerniereOuvertureDroitASS, 6);
         LocalDate date3emeMoisSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, 3);
         if(dateUtile.isDateAvant(dateFinDroitASS, date3emeMoisSimulation)) {

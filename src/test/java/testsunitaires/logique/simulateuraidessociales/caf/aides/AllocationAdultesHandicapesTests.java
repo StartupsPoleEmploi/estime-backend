@@ -16,7 +16,7 @@ import org.springframework.test.context.TestPropertySource;
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.AllocationAdultesHandicapes;
 import fr.poleemploi.estime.services.ressources.AideSociale;
-import fr.poleemploi.estime.services.ressources.AllocationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
@@ -53,9 +53,9 @@ class AllocationAdultesHandicapesTests {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationMensuelleNetAAH(450f);
-        ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        prestationsCAF.setAllocationMensuelleNetAAH(450f);
+        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         // Lorsque l'on appel simulerAAH
@@ -85,9 +85,9 @@ class AllocationAdultesHandicapesTests {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationMensuelleNetAAH(450f);
-        ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        prestationsCAF.setAllocationMensuelleNetAAH(450f);
+        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         // Lorsque l'on appel simulerAAH
@@ -120,9 +120,9 @@ class AllocationAdultesHandicapesTests {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationMensuelleNetAAH(450f);
-        ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        prestationsCAF.setAllocationMensuelleNetAAH(450f);
+        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         // Lorsque l'on appel simulerAAH

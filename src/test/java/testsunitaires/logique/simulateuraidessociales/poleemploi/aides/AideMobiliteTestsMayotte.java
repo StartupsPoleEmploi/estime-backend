@@ -15,7 +15,8 @@ import org.springframework.test.context.TestPropertySource;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.logique.simulateuraidessociales.poleemploi.aides.AideMobilite;
 import fr.poleemploi.estime.services.ressources.AideSociale;
-import fr.poleemploi.estime.services.ressources.AllocationsPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AllocationARE;
+import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
@@ -67,9 +68,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(14.68f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(14.68f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on vérifie son éligibilité
@@ -99,9 +102,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(14.38f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(14.38f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on vérifie son éligibilité
@@ -132,9 +137,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(14.68f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(14.68f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         //Lorsque l'on vérifie son éligibilité
@@ -165,9 +172,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(14.68f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(14.68f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on vérifie son éligibilité
@@ -313,9 +322,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(12.68f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(12.68f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on vérifie son éligibilité
@@ -345,9 +356,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(12.68f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(12.68f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on vérifie son éligibilité
@@ -377,9 +390,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(30.28f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(30.28f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on vérifie son éligibilité
@@ -410,9 +425,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(12.68f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(12.68f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
          
         //Lorsque l'on vérifie son éligibilité
@@ -448,9 +465,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(19.38f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(19.38f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on calcul le montant de l'aide à la mobilité
@@ -481,9 +500,11 @@ class AideMobiliteTestsMayotte {
         demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPE = new AllocationsPoleEmploi();
-        allocationsPE.setAllocationJournaliereNet(19.38f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPE);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationARE allocationARE = new AllocationARE();
+        allocationARE.setAllocationJournaliereNet(19.38f);
+        prestationsPoleEmploi.setAllocationARE(allocationARE);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on calcul le montant de l'aide à la mobilité

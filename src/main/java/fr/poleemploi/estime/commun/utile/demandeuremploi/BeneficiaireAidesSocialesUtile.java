@@ -52,8 +52,13 @@ public class BeneficiaireAidesSocialesUtile {
     }
     
     private boolean isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibilite(DemandeurEmploi demandeurEmploi) {
-        if(isBeneficiaireAidesSociales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi() != null) {
-            float indemnisationJournaliereNet = demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().getAllocationJournaliereNet();
+        
+        if(isBeneficiaireAidesSociales(demandeurEmploi) 
+           && demandeurEmploi.getRessourcesFinancieres() != null 
+           && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi() != null
+           && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE() != null) {
+            
+            float indemnisationJournaliereNet = demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().getAllocationJournaliereNet();
             return (!informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) &&  indemnisationJournaliereNet <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE) 
                     || (informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && indemnisationJournaliereNet <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE_MAYOTTE);
         }

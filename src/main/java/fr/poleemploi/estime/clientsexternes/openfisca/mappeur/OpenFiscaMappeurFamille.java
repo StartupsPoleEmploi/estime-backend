@@ -1,7 +1,9 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AF;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASF;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.APL;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CF;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CONJOINT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEMANDEUR;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT;
@@ -27,6 +29,7 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUt
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
+import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
 
 @Component
 public class OpenFiscaMappeurFamille {
@@ -55,14 +58,15 @@ public class OpenFiscaMappeurFamille {
         famille.put(PARENTS, creerParentsJSON(demandeurEmploi));
         famille.put(ENFANTS, creerPersonnesAChargeJSON(personneAChargeInferieur25ansOptional));
         if(ressourcesFinancieresUtile.hasAllocationLogement(demandeurEmploi)) {
-            famille.put(APL, openFiscaPeriodeMappeur.creerPeriodesAllocationsLogementMensuellesNetFoyer(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationsLogementMensuellesNetFoyer(), dateDebutSimulation, numeroMoisSimule));            
+            famille.put(APL, openFiscaPeriodeMappeur.creerPeriodesAllocationsLogementMensuellesNetFoyer(demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationsLogementMensuellesNetFoyer(), dateDebutSimulation, numeroMoisSimule));            
         }
-        if(ressourcesFinancieresUtile.hasAllocationFamiliale(demandeurEmploi)) {
-            famille.put(AF, openFiscaPeriodeMappeur.creerPeriodes(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationsFamilialesMensuellesNetFoyer(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));                   
+        if(ressourcesFinancieresUtile.hasPrestationsFamiliales(demandeurEmploi)) {
+            PrestationsFamiliales prestationsFamiliales = demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getPrestationsFamiliales();
+            famille.put(ASF, openFiscaPeriodeMappeur.creerPeriodes(prestationsFamiliales.getAllocationSoutienFamilial(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));                   
+            famille.put(AF, openFiscaPeriodeMappeur.creerPeriodes(prestationsFamiliales.getAllocationsFamiliales(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            famille.put(CF, openFiscaPeriodeMappeur.creerPeriodes(prestationsFamiliales.getComplementFamilial(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            famille.put(PRESTATION_ACCUEIL_JEUNE_ENFANT, openFiscaPeriodeMappeur.creerPeriodes(prestationsFamiliales.getPrestationAccueilJeuneEnfant(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
         }
-        if(ressourcesFinancieresUtile.hasPrestationAccueilJeuneEnfant(demandeurEmploi)) {
-            famille.put(PRESTATION_ACCUEIL_JEUNE_ENFANT, openFiscaPeriodeMappeur.creerPeriodes(demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getPrestationAccueilJeuneEnfant(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-        }   
         if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
             float montantRsaDemandeur = ressourcesFinancieresUtile.getAllocationsRSANet(demandeurEmploi);
             if(montantRsaDemandeur > 0) {

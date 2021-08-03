@@ -24,6 +24,7 @@ import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
@@ -68,10 +69,10 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationMensuelleNetRSA(500f);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationMensuelleNetRSA(500f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(310f));
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(310f));
         
         //Lorsque je simule mes aides le 20/10/2020
         initMocks("20-10-2020");
@@ -179,12 +180,16 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationMensuelleNetRSA(350f);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationMensuelleNetRSA(350f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(490f));
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationsFamilialesMensuellesNetFoyer(130f);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setPrestationAccueilJeuneEnfant(170f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(490f));
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setAllocationsFamiliales(130f);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsFamiliales.setPrestationAccueilJeuneEnfant(170f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setPrestationsFamiliales(prestationsFamiliales);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -311,11 +316,11 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationMensuelleNetRSA(380f);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationMensuelleNetRSA(380f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);       
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 380, 508, 0, 0));
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(310f));
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(310f));
         
         //Lorsque je simule mes aides le 23/07/2021
         initMocks("23-07-2021");
@@ -435,11 +440,11 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationMensuelleNetRSA(500f);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationMensuelleNetRSA(500f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);       
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(0, 0, 380, 508, 500, 659));
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(310f));
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(310f));
         
         //Lorsque je simule mes aides le 23/07/2021
         initMocks("23-07-2021");

@@ -24,7 +24,8 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
-import fr.poleemploi.estime.services.ressources.AllocationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -59,7 +60,7 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
@@ -91,7 +92,7 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(2428);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
@@ -125,10 +126,14 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(110);
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(0);
+        prestationsFamiliales.setAllocationSoutienFamilial(110);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
 
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
@@ -161,11 +166,15 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(110);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(300));
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(0);
+        prestationsFamiliales.setAllocationSoutienFamilial(110);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(300));
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
        
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
@@ -199,10 +208,14 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(362);
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(362);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
         
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
@@ -236,11 +249,15 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(362);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(380));
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(362);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(380));
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
         
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
@@ -275,10 +292,14 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(899);
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(899);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
                 
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
@@ -313,11 +334,15 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(899);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(450));
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(899);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(450));
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
         
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
@@ -353,10 +378,14 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(1189);
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);        
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(1189);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);        
         
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
@@ -393,11 +422,15 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(1189);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(520));
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);         
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(1189);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);        
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(520));
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);         
         
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();

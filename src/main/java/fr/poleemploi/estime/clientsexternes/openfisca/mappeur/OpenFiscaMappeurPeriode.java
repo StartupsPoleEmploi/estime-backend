@@ -204,7 +204,7 @@ public class OpenFiscaMappeurPeriode {
     }
 
     private Optional<Salaire> getSalaireAvantPeriodeSimulationDemandeurRSA(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
-        Integer prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getProchaineDeclarationRSA();
+        Integer prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getProchaineDeclarationRSA();
         if((prochaineDeclarationRSA == 3 || prochaineDeclarationRSA == 0) && numeroMoisPeriodeOpenfisca == 0) {
             return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 0);            
         }        

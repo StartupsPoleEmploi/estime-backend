@@ -52,7 +52,7 @@ class AgepiTestsMayotte2 {
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.38f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.38f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(10)); 
         
         //Lorsque l'on vérifie son éligibilité
@@ -71,7 +71,7 @@ class AgepiTestsMayotte2 {
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9)); 
 
         //Lorsque l'on vérifie son éligibilité
@@ -92,7 +92,7 @@ class AgepiTestsMayotte2 {
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(30.28f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
                 
         //Lorsque l'on vérifie son éligibilité
@@ -112,7 +112,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDD.name());
         demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(2);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(30.28f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(30.28f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));           
         
         //Lorsque l'on vérifie son éligibilité
@@ -134,7 +134,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(10);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));        
             
         //Lorsque l'on calcul le montant de l'agepi
@@ -155,7 +155,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(10);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9)); 
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));              
         
@@ -176,7 +176,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(10);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9)); 
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));                
@@ -198,7 +198,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(10);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9)); 
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
@@ -221,7 +221,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(10);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(15)); 
         
         //Lorsque l'on calcul le montant de l'agepi
@@ -243,7 +243,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9)); 
       
         //Lorsque l'on calcul le montant de l'agepi
@@ -264,7 +264,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9)); 
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
       
@@ -285,7 +285,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9)); 
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
@@ -307,7 +307,7 @@ class AgepiTestsMayotte2 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9)); 
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(8));

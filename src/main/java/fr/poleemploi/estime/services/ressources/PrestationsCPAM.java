@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.services.ressources;
 
-public class AllocationsCPAM {
+public class PrestationsCPAM {
     private Float pensionInvalidite;
     private Float allocationSupplementaireInvalidite;
 

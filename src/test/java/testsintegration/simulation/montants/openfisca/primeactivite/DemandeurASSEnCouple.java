@@ -24,7 +24,8 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
-import fr.poleemploi.estime.services.ressources.AllocationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
@@ -64,7 +65,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
         salaireConjoint.setMontantNet(1200);
@@ -102,7 +103,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(2428);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
         salaireConjoint.setMontantNet(1200);
@@ -141,7 +142,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);        
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
         salaireConjoint.setMontantNet(1200);
@@ -182,10 +183,14 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);    
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(132);
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(132);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);  
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -227,11 +232,15 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);    
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(132);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(20));
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(132);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(20));
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -274,10 +283,14 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);    
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(473);
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(473);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -320,11 +333,15 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);    
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(473);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(140));
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(473);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(140));
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres(    );
         Salaire salaireConjoint = new Salaire();
@@ -368,10 +385,14 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);    
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(729);
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(729);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -415,11 +436,15 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);    
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(729);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(230));
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(729);
+        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(230));
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();

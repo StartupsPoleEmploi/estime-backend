@@ -51,7 +51,7 @@ class AgepiTestsMayotte1 {
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.68f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                      
         
         //Lorsque l'on vérifie son éligibilité
@@ -70,7 +70,7 @@ class AgepiTestsMayotte1 {
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.38f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.38f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                      
                
         //Lorsque l'on vérifie son éligibilité
@@ -90,7 +90,7 @@ class AgepiTestsMayotte1 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDD.name());
         demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(3);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.38f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.38f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                       
                
         //Lorsque l'on vérifie son éligibilité
@@ -110,7 +110,7 @@ class AgepiTestsMayotte1 {
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDD.name());
         demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.38f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.38f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));                       
                  
         //Lorsque l'on vérifie son éligibilité
@@ -165,7 +165,7 @@ class AgepiTestsMayotte1 {
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(14.38f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.38f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));    
 
         //Lorsque l'on vérifie son éligibilité

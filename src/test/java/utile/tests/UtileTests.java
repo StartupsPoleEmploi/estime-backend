@@ -23,9 +23,12 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.services.ressources.AllocationsCAF;
+import fr.poleemploi.estime.commun.enumerations.AidesSociales;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.AllocationARE;
+import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.AllocationsPoleEmploi;
+import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
@@ -146,19 +149,19 @@ public class UtileTests {
             float salaireNetMoisM0, float salaireBrutMoisM0, 
             float salaireNetMoisMoins1, float salaireBrutMoisMoins1, 
             float salaireNetMoisMoins2, float salaireBrutMoisMoins2) {
-        
+
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
         SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
         SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
         SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new SalaireAvantPeriodeSimulation();
-        
-	salaireAvantPeriodeSimulationMoisDemande.setSalaire(creerSalaire(salaireNetMoisM0, salaireBrutMoisM0));
-	salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(creerSalaire(salaireNetMoisMoins1, salaireBrutMoisMoins1));
-	salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(creerSalaire(salaireNetMoisMoins2, salaireBrutMoisMoins2));
 
-	salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-	salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-	salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
+        salaireAvantPeriodeSimulationMoisDemande.setSalaire(creerSalaire(salaireNetMoisM0, salaireBrutMoisM0));
+        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(creerSalaire(salaireNetMoisMoins1, salaireBrutMoisMoins1));
+        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(creerSalaire(salaireNetMoisMoins2, salaireBrutMoisMoins2));
+
+        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
+        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
+        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
 
         return salairesAvantPeriodeSimulation;
     }
@@ -171,20 +174,18 @@ public class UtileTests {
     }
 
     private void initRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres, String population) {
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
         switch (population) {
         case "AAH" :
         case "RSA":
-            ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
+            ressourcesFinancieres.setPrestationsCAF(new PrestationsCAF());
             break;
         case "ARE":
         case "ASS":
-            ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
+            ressourcesFinancieres.setPrestationsPoleEmploi(creerPrestationPoleEmploi(population));
             break;
         case "AAH_ASS":
-            ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
-            ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);            
+            ressourcesFinancieres.setPrestationsCAF(new PrestationsCAF());
+            ressourcesFinancieres.setPrestationsPoleEmploi(creerPrestationPoleEmploi(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));            
         default:
             break;
         }        
@@ -225,6 +226,17 @@ public class UtileTests {
         detailIndemnisationESD.setBeneficiaireRSA(beneficiaireRSA);
         return detailIndemnisationESD;
     }
-    
-   
+
+    private PrestationsPoleEmploi creerPrestationPoleEmploi(String population) {
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        if(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(population)) {
+            AllocationASS allocationASS = new AllocationASS();
+            prestationsPoleEmploi.setAllocationASS(allocationASS);
+        }
+        if(AidesSociales.ALLOCATION_RETOUR_EMPLOI.getCode().equals(population)) {
+            AllocationARE allocationARE = new AllocationARE();
+            prestationsPoleEmploi.setAllocationARE(allocationARE);
+        }
+        return prestationsPoleEmploi;
+    }
 }

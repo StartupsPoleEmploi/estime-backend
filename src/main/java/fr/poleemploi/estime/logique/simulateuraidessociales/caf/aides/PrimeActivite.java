@@ -21,8 +21,7 @@ import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 @Component
 public class PrimeActivite {
-
-    public static final int AGE_MAX_PERSONNE_A_CHARGE = 25;
+   
     //le montant calculé au mois N est reporté au mois N+1 et N+2, la validité du montant s'étale donc sur 3 mois
     public static final int NBR_MOIS_VALIDITE_MONTANT = 3;
 
@@ -73,7 +72,7 @@ public class PrimeActivite {
 
     private boolean isPrimeActiviteACalculerEnFonctionDuRSA(Optional<AideSociale> primeActiviteMoisPrecedent, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
-            Integer prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getProchaineDeclarationRSA();
+            Integer prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getProchaineDeclarationRSA();
             return isRSAACalculer(numeroMoisSimule, prochaineDeclarationRSA);
         } 
         return isPrimeActiviteACalculer(primeActiviteMoisPrecedent, numeroMoisSimule, demandeurEmploi);

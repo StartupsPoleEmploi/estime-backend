@@ -27,7 +27,7 @@ public class RSA {
 
     public void simulerRSA(SimulationAidesSociales simulationAidesSociales, Map<String, AideSociale>  aidesEligiblesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         List<SimulationMensuelle> simulationsMensuelles = simulationAidesSociales.getSimulationsMensuelles();
-        int prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getProchaineDeclarationRSA();
+        int prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getProchaineDeclarationRSA();
         if(isRSAACalculer(numeroMoisSimule, prochaineDeclarationRSA)) {
             Optional<AideSociale> aideRsaOptional = calculer(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
             if(aideRsaOptional.isPresent()) {
@@ -68,7 +68,7 @@ public class RSA {
     }
     
     private AideSociale getRSADeclare(DemandeurEmploi demandeurEmploi) {        
-        float montantDeclare = demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().getAllocationMensuelleNetRSA();
+        float montantDeclare = demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA();
         return creerAideSocialeRSA(montantDeclare, true);        
     }
 

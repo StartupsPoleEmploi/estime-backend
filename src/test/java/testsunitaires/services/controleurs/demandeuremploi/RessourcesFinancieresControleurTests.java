@@ -22,8 +22,9 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
-import fr.poleemploi.estime.services.ressources.AllocationsCAF;
-import fr.poleemploi.estime.services.ressources.AllocationsPoleEmploi;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
@@ -95,9 +96,11 @@ class RessourcesFinancieresControleurTests extends CommunTests {
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        allocationsPoleEmploi.setAllocationJournaliereNet(0f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationASS allocationASS = new AllocationASS();
+        allocationASS.setAllocationJournaliereNet(0f);
+        prestationsPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         
@@ -118,9 +121,11 @@ class RessourcesFinancieresControleurTests extends CommunTests {
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        allocationsPoleEmploi.setAllocationJournaliereNet(16.89f);
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationASS allocationASS = new AllocationASS();
+        allocationASS.setAllocationJournaliereNet(16.89f);
+        prestationsPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         
@@ -142,10 +147,12 @@ class RessourcesFinancieresControleurTests extends CommunTests {
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        allocationsPoleEmploi.setAllocationJournaliereNet(16.89f);
-        allocationsPoleEmploi.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-04-2020"));
-        ressourcesFinancieres.setAllocationsPoleEmploi(allocationsPoleEmploi);
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationASS allocationASS = new AllocationASS();
+        allocationASS.setAllocationJournaliereNet(16.89f);
+        allocationASS.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-04-2020"));
+        prestationsPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         
@@ -202,9 +209,9 @@ class RessourcesFinancieresControleurTests extends CommunTests {
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationMensuelleNetAAH(0f);
-        ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        prestationsCAF.setAllocationMensuelleNetAAH(0f);
+        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         
@@ -225,9 +232,9 @@ class RessourcesFinancieresControleurTests extends CommunTests {
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationMensuelleNetAAH(900f);
-        ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        prestationsCAF.setAllocationMensuelleNetAAH(900f);
+        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(null);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 

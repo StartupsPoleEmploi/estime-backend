@@ -20,7 +20,8 @@ import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.services.ressources.AllocationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.UtileTests;
 
@@ -51,11 +52,16 @@ public class CommunTests {
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);   
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setDateDerniereOuvertureDroitASS(utileTests.getDate("14-04-2020"));
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(90);
-        demandeurEmploi.getRessourcesFinancieres().setAllocationsCAF(allocationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);   
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroitASS(utileTests.getDate("14-04-2020"));
+        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(0);
+        prestationsFamiliales.setAllocationSoutienFamilial(90);
+        prestationsFamiliales.setComplementFamilial(0); 
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
 
         return demandeurEmploi;
     }

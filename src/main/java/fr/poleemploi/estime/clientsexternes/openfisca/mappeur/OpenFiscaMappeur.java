@@ -24,7 +24,7 @@ import com.github.tsohr.JSONObject;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
-import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.PrimeActivite;
+import fr.poleemploi.estime.logique.simulateuraidessociales.caf.SimulateurAidesCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
@@ -53,7 +53,7 @@ public class OpenFiscaMappeur {
     
     public JSONObject mapDemandeurEmploiToOpenFiscaPayload(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject payloadOpenFisca = new JSONObject();
-        Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, PrimeActivite.AGE_MAX_PERSONNE_A_CHARGE);
+        Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA);
         payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulationAidesSociales, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
         payloadOpenFisca.put(FAMILLES, creerFamillesJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
         if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi) ) {

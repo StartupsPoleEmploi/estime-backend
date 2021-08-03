@@ -6,12 +6,13 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.UserInfoESD;
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.Environnements;
-import fr.poleemploi.estime.services.ressources.AllocationsCAF;
-import fr.poleemploi.estime.services.ressources.AllocationsCPAM;
+import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.AllocationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.Individu;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsCPAM;
+import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
@@ -26,7 +27,6 @@ public class StagingEnvironnementUtile {
             String population = userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
             addInfosIndemnisation(individu, population);
     }
-
 
     public boolean isStagingEnvironnement() {
         return environment.equals(Environnements.LOCALHOST.getLibelle()) || 
@@ -70,14 +70,16 @@ public class StagingEnvironnementUtile {
 
     private RessourcesFinancieres creerBouchonRessourcesFinancieresASS() {
         RessourcesFinancieres ressourcesFinancieres = creerBouchonRessourcesFinancieres();
-        ressourcesFinancieres.setAllocationsPoleEmploi(creerBouchonAllocationsPoleEmploi(16.89f));
+        ressourcesFinancieres.setPrestationsPoleEmploi(creerBouchonPrestationsPoleEmploiAvecASS(16.89f));
         return ressourcesFinancieres;
     }
 
-    private AllocationsPoleEmploi creerBouchonAllocationsPoleEmploi(float montant) {
-        AllocationsPoleEmploi allocationsPoleEmploi = new AllocationsPoleEmploi();
-        allocationsPoleEmploi.setAllocationJournaliereNet(montant);
-        return allocationsPoleEmploi;
+    private PrestationsPoleEmploi creerBouchonPrestationsPoleEmploiAvecASS(float montant) {
+        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AllocationASS allocationASS = new AllocationASS();
+        allocationASS.setAllocationJournaliereNet(montant);
+        prestationsPoleEmploi.setAllocationASS(allocationASS);
+        return prestationsPoleEmploi;
     }
 
     private RessourcesFinancieres creerBouchonRessourcesFinancieres() {
@@ -89,12 +91,9 @@ public class StagingEnvironnementUtile {
     }
 
     private void creerBouchonAllocationCAF(RessourcesFinancieres ressourcesFinancieres) {
-        AllocationsCAF allocationsCAF = new AllocationsCAF();
-        allocationsCAF.setAllocationsFamilialesMensuellesNetFoyer(0);
-        allocationsCAF.setAllocationsLogementMensuellesNetFoyer(creerBouchonAllocationsLogement());
-        allocationsCAF.setPensionsAlimentairesFoyer(0);
-        allocationsCAF.setPrestationAccueilJeuneEnfant(0);
-        ressourcesFinancieres.setAllocationsCAF(allocationsCAF);
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(creerBouchonAllocationsLogement());
+        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
     }
 
     private AllocationsLogementMensuellesNetFoyer creerBouchonAllocationsLogement() {
@@ -106,9 +105,9 @@ public class StagingEnvironnementUtile {
     }
     
     private void creerBouchonAllocationCPAM(RessourcesFinancieres ressourcesFinancieres) {
-        AllocationsCPAM allocationsCPAM = new AllocationsCPAM();
-        allocationsCPAM.setAllocationSupplementaireInvalidite(0f);
-        ressourcesFinancieres.setAllocationsCPAM(allocationsCPAM);
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setAllocationSupplementaireInvalidite(0f);
+        ressourcesFinancieres.setPrestationsCPAM(prestationsCPAM);
     }
     
     private boolean isPopulationAutorisee(UserInfoESD userInfoESD) {

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.PrimeActivite;
+import fr.poleemploi.estime.logique.simulateuraidessociales.caf.SimulateurAidesCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
 
@@ -31,7 +31,7 @@ public class SituationFamilialeUtile {
     }
     
     public boolean hasPersonnesAChargeEligiblesPourPriseEnComptePrimeActivite(DemandeurEmploi demandeurEmploi) {
-        return getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, PrimeActivite.AGE_MAX_PERSONNE_A_CHARGE) > 0;
+        return getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA) > 0;
     }
     
     public int getNombrePersonnesAChargeAgeInferieureAgeLimite(DemandeurEmploi demandeurEmploi, int ageLimite) {
@@ -70,7 +70,7 @@ public class SituationFamilialeUtile {
     private float getMontantRsaConjoint(DemandeurEmploi demandeurEmploi) {
         Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
         if(personneUtile.hasAllocationRSA(conjoint)) {
-            return conjoint.getRessourcesFinancieres().getAllocationsCAF().getAllocationMensuelleNetRSA();
+            return conjoint.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA();
         }
         return 0;
     }
@@ -79,7 +79,7 @@ public class SituationFamilialeUtile {
         BigDecimal montantRSA = BigDecimal.ZERO;
         for (Personne personneACharge : personnesACharge) {
             if(personneUtile.hasAllocationRSA(personneACharge)) {
-                float allocationMensuelleNetRSA = personneACharge.getRessourcesFinancieres().getAllocationsCAF().getAllocationMensuelleNetRSA();
+                float allocationMensuelleNetRSA = personneACharge.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA();
                 montantRSA = montantRSA.add(BigDecimal.valueOf(allocationMensuelleNetRSA));
             }
         }

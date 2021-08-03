@@ -24,6 +24,8 @@ import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
 import utile.tests.UtileTests;
 
 public class CommunTests {
@@ -59,11 +61,16 @@ public class CommunTests {
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationMensuelleNetAAH(900f);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsCAF().setAllocationsFamilialesMensuellesNetFoyer(90);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi().setAllocationJournaliereNet(16.89f);
-        demandeurEmploi.getRessourcesFinancieres().getAllocationsPoleEmploi()
-                .setDateDerniereOuvertureDroitASS(utileTests.getDate("14-04-2020"));
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationMensuelleNetAAH(900f);
+        PrestationsCAF prestationsCAF= new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(0);
+        prestationsFamiliales.setAllocationSoutienFamilial(90);
+        prestationsFamiliales.setComplementFamilial(0);   
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroitASS(utileTests.getDate("14-04-2020"));
 
         return demandeurEmploi;
     }
