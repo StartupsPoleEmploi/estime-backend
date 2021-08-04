@@ -54,18 +54,19 @@ public class SimulateurAidesSociales {
     }
 
     private void simulerAidesPourCeMois(SimulationAidesSociales simulationAidesSociales, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
-
         LocalDate dateMoisASimuler = getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
+
+        SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
         simulationMensuelle.setDatePremierJourMoisSimule(dateMoisASimuler);                           
+        simulationAidesSociales.getSimulationsMensuelles().add(simulationMensuelle);
+
         HashMap<String, AideSociale> aidesEligiblesPourCeMois = new HashMap<>();
-
-        simulateurAidesPoleEmploi.simulerAidesPoleEmploi(aidesEligiblesPourCeMois, numeroMoisSimule, dateMoisASimuler, demandeurEmploi, dateDebutSimulation);
-        simulateurAidesCAF.simulerAidesCAF(simulationAidesSociales, aidesEligiblesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
-
         simulationMensuelle.setMesAides(aidesEligiblesPourCeMois);
 
-        simulationAidesSociales.getSimulationsMensuelles().add(simulationMensuelle);
+        simulateurAidesCAF.simulerAidesCAF(simulationAidesSociales, aidesEligiblesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+        simulateurAidesPoleEmploi.simulerAidesPoleEmploi(aidesEligiblesPourCeMois, numeroMoisSimule, dateMoisASimuler, demandeurEmploi, dateDebutSimulation);
+
+
     }
     
     private LocalDate getDateMoisASimuler(LocalDate dateDebutSimulation, int numeroMoisSimule) {

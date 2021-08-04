@@ -31,7 +31,7 @@ import utile.tests.UtileTests;
 public class CommunTests {
 
     @Autowired
-    private UtileTests utileTests;
+    protected UtileTests utileTests;
 
     @SpyBean
     protected DateUtile dateUtile;        
@@ -63,10 +63,10 @@ public class CommunTests {
         PrestationsCAF prestationsCAF= new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
         prestationsFamiliales.setAllocationsFamiliales(0);
-        prestationsFamiliales.setAllocationSoutienFamilial(90);
+        prestationsFamiliales.setAllocationSoutienFamilial(117);
         prestationsFamiliales.setComplementFamilial(0);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
-        
+        prestationsCAF.setAllocationMensuelleNetAAH(900f);
         demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
 
         return demandeurEmploi;

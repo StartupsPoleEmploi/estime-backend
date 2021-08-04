@@ -16,9 +16,9 @@ import org.springframework.test.context.TestPropertySource;
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.AllocationAdultesHandicapes;
 import fr.poleemploi.estime.services.ressources.AideSociale;
-import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 

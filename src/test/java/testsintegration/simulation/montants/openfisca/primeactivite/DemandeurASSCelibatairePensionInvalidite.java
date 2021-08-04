@@ -24,10 +24,10 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.PrestationsCPAM;
 import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
-import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 

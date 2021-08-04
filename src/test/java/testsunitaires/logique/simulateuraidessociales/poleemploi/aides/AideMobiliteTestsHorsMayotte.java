@@ -16,11 +16,11 @@ import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.logique.simulateuraidessociales.poleemploi.aides.AideMobilite;
 import fr.poleemploi.estime.services.ressources.AideSociale;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
-import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import utile.tests.UtileTests;
 

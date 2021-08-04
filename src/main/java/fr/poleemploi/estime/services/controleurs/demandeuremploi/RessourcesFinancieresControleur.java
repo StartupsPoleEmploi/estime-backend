@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
-import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
@@ -47,7 +47,7 @@ public class RessourcesFinancieresControleur {
         if(prestationsCAF == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "allocationsCAF dans RessourcesFinancieres de DemandeurEmploi"));
         }
-        if(prestationsCAF.getAllocationMensuelleNetAAH() <= 0) {
+        if(prestationsCAF.getAllocationMensuelleNetAAH() != null && prestationsCAF.getAllocationMensuelleNetAAH() <= 0) {
             throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationMensuelleNetAAH"));
         }        
         if(ressourcesFinancieres.getNombreMoisTravaillesDerniersMois() == null) { 

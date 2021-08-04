@@ -39,11 +39,12 @@ public class SimulateurAidesCAF {
     public void simulerAidesCAF(SimulationAidesSociales simulationAidesSociales, Map<String, AideSociale>  aidesEligiblesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         if(isEligibleAidesCAF(demandeurEmploi)) {
             
-            primeActivite.simulerPrimeActivite(simulationAidesSociales, aidesEligiblesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
-            
             if(beneficiaireAidesSocialesUtile.isBeneficiaireAAH(demandeurEmploi)) {
                 allocationAdultesHandicapes.simulerAAH(aidesEligiblesPourCeMois, numeroMoisSimule, demandeurEmploi);
             }
+            
+            primeActivite.simulerPrimeActivite(simulationAidesSociales, aidesEligiblesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+            
             if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
                 rsa.simulerRSA(simulationAidesSociales, aidesEligiblesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
             }

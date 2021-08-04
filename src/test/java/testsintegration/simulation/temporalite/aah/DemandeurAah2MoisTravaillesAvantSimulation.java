@@ -21,8 +21,6 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -46,26 +44,18 @@ class DemandeurAah2MoisTravaillesAvantSimulation extends CommunTests {
             JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
         // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
-        // enfant à charge de 9ans, af = 90€
-        // AAH = 900€, 2 mois travaillé avant simulation
+        // enfant à charge de 9ans, af = 117€
+        // AAH = 900€
+        // travaillé avant simulation en  M0 salaire net 850€, en M-1 salaire net 800€
         // futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par
         // mois, 35h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038);
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation
-                .setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
+        
+        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();       
+        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1101, 850));
+        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1038, 800));
+        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(0, 0));        
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
 
         // Lorsque je simule mes aides le 20/10/2020
@@ -92,9 +82,11 @@ class DemandeurAah2MoisTravaillesAvantSimulation extends CommunTests {
                         assertThat(ass.getMontant()).isEqualTo(900);
                     });
         });
+        
+        //TODO montant : écart de 36€ avec CAF
         // Alors les aides du second mois 12/2020 sont :
         // AAH : 900€
-        // Prime d'activité : 222€ (simulateur CAF : 211€)
+        // Prime d'activité : 222€ (simulateur CAF : 186€)
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -110,9 +102,10 @@ class DemandeurAah2MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(222);
             });
         });
+        
         // Alors les aides du troisième mois 01/2021 sont :
         // AAH : 900€
-        // Prime d'activité : 222€ (simulateur CAF : 211€)
+        // Prime d'activité : 222€
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -128,9 +121,10 @@ class DemandeurAah2MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(222);
             });
         });
+        
         // Alors les aides du quatrième mois 02/2021 sont :
         // AAH : 900€
-        // Prime d'activité : 222€ (simulateur CAF : 211€)
+        // Prime d'activité : 222€
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -146,6 +140,7 @@ class DemandeurAah2MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(222);
             });
         });
+        
         // Alors les aides du cinquième mois 03/2021 sont :
         // AAH : 180€
         // Prime d'activité : 193€ (simulateur CAF : 182€)
@@ -164,6 +159,7 @@ class DemandeurAah2MoisTravaillesAvantSimulation extends CommunTests {
                         assertThat(ass.getMontant()).isEqualTo(180);
                     });
         });
+        
         // Alors les aides du sixième mois 04/2021 sont :
         // AAH : 180€
         // Prime d'activité : 193€ (simulateur CAF : 182€)

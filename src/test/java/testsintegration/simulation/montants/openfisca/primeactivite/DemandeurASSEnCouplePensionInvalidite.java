@@ -24,10 +24,10 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.PrestationsCPAM;
 import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
-import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
@@ -177,7 +177,6 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //TODO montant : écart de 26€ avec CAF
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : 26€)
         assertThat(montantPrimeActivite).isEqualTo(0);
     }

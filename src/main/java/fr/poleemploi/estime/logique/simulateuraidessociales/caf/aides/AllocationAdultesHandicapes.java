@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.logique.simulateuraidessociales.utile.AideSocialeUtile;
 import fr.poleemploi.estime.logique.simulateuraidessociales.utile.SimulateurAidesSocialesUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.services.ressources.AideSociale;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 

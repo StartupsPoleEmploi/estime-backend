@@ -24,16 +24,16 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
-import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
+import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
@@ -164,6 +164,15 @@ public class UtileTests {
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
 
         return salairesAvantPeriodeSimulation;
+    }
+    
+    public SalaireAvantPeriodeSimulation creerSalaireAvantPeriodeSimulation(float montantBrut, float montantNet) {
+        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(montantNet);
+        salaire.setMontantBrut(montantBrut);
+        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaire);
+        return salaireAvantPeriodeSimulationMoisDemande;
     }
 
     private Salaire creerSalaire(float salaireNet, float salaireBrut) {
