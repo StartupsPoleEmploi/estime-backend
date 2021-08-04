@@ -123,14 +123,14 @@ class DemandeurASSEnCouple extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");        
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 0€ (résultat simulateur CAF : pas droit à cette prestation)
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 0€ (résultat simulateur CAF : 0€)
         assertThat(montantPrimeActivite).isEqualTo(0);
     }
 
     @Test
     void calculerPrimeActiviteEnCoupleTest3() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, en couple, conjoint salaire 1200€, 1 enfant à charge de 6ans, 
+        //Si DE France Métropolitaine, en couple, conjoint salaire 1200€, 1 enfant de 6ans, 
         //ass M1(06/2020)= 506,7 M2(07/2020) = 523,6€ | M3(08/2020) = 523,6€ | M4(09/2020) = 0€, 
         //futur contrat CDI avec salaire net 900€/mois
         boolean isEnCouple = true;
@@ -314,8 +314,8 @@ class DemandeurASSEnCouple extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //TODO Montant 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 111€ (résultat simulateur CAF : ??€)
+        //TODO montant : écart de 34€ avec CAF
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 111€ (résultat simulateur CAF : 77€)
         assertThat(montantPrimeActivite).isEqualTo(111);
     }
 
@@ -367,8 +367,8 @@ class DemandeurASSEnCouple extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //TODO Montant 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 64€ (résultat simulateur CAF : ??€)
+        //TODO montant : écart de 34€ avec CAF
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 64€ (résultat simulateur CAF : 30€)
         assertThat(montantPrimeActivite).isEqualTo(64);
     }
     
@@ -420,8 +420,8 @@ class DemandeurASSEnCouple extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //TODO Montant 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 128€ (résultat simulateur CAF : ??)
+        //TODO montant : écart de 34€ avec CAF
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 128€ (résultat simulateur CAF : 94€)
         assertThat(montantPrimeActivite).isEqualTo(128);
     }
 
@@ -474,8 +474,8 @@ class DemandeurASSEnCouple extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //TODO Montant
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 74€ (résultat simulateur CAF : ?? )
+        //TODO montant : écart de 34€ avec CAF
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 74€ (résultat simulateur CAF : 40€ )
         assertThat(montantPrimeActivite).isEqualTo(74);
     }
 }
