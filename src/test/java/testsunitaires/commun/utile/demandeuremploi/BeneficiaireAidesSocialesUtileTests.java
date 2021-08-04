@@ -41,7 +41,7 @@ class BeneficiaireAidesSocialesUtileTests {
     @Test
     void isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest1() throws ParseException {
         
-        //si DE France Metropolitaine et montant journalier = 29,38 euros (= seuil max.)
+        //si DE France Metropolitaine et montant journalier = 29,38€ (= seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
@@ -56,7 +56,7 @@ class BeneficiaireAidesSocialesUtileTests {
     @Test
     void isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest2() throws ParseException {
         
-        //si DE France Metropolitaine et montant journalier = 18,38 euros (< seuil max.)
+        //si DE France Metropolitaine et montant journalier = 18,38€ (< seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(18.38f);
@@ -71,7 +71,7 @@ class BeneficiaireAidesSocialesUtileTests {
     @Test
     void isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest3() throws ParseException {
         
-        //si DE Mayotte et montant journalier = 14.68 euros (= seuil max.)
+        //si DE Mayotte et montant journalier = 14.68€ (= seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);      
@@ -86,7 +86,7 @@ class BeneficiaireAidesSocialesUtileTests {
     @Test
     void isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest4() throws ParseException {
         
-        //si DE Mayotte et montant journalier = 12.68 euros (< seuil max.)
+        //si DE Mayotte et montant journalier = 12.68€ (< seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(12.68f);  
@@ -101,7 +101,7 @@ class BeneficiaireAidesSocialesUtileTests {
     @Test
     void isNotBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest1() throws ParseException {
         
-        //si DE Mayotte et montant journalier = 39,38 euros (> seuil max.)
+        //si DE Mayotte et montant journalier = 39,38€ (> seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(39.38f);        
@@ -116,7 +116,7 @@ class BeneficiaireAidesSocialesUtileTests {
     @Test
     void isNotBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest2() throws ParseException {
         
-        //si DE Mayotte et montant journalier = 16.68 euros (> seuil max.)
+        //si DE Mayotte et montant journalier = 16.68€ (> seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(16.68f);   

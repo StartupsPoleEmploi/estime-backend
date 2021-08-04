@@ -45,7 +45,7 @@ class AgepiTestsMayotte1 {
     @Test
     void isEligibleMayotteTest1() {
         
-        //Si DE Mayotte, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.68 euros (= seuil max.)
+        //Si DE Mayotte, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.68€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -64,7 +64,7 @@ class AgepiTestsMayotte1 {
     @Test
     void isEligibleMayotteTest2() {
         
-        //Si DE Mayotte, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38 euros (< seuil max.)
+        //Si DE Mayotte, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38€ (< seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -83,7 +83,7 @@ class AgepiTestsMayotte1 {
     @Test
     void isEligibleMayotteTest3() throws ParseException {
         
-        //Si DE Mayotte, futur contrat CDD de 3 mois ( = minimum exigé) , pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38 euros (< seuil max.)
+        //Si DE Mayotte, futur contrat CDD de 3 mois ( = minimum exigé) , pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38€ (< seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -103,7 +103,7 @@ class AgepiTestsMayotte1 {
     @Test
     void isEligibleMayotteTest4() throws ParseException {
         
-        //Si DE Mayotte, futur contrat CDD de 4 mois ( > minimum exigé), pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38 euros (< seuil max.)
+        //Si DE Mayotte, futur contrat CDD de 4 mois ( > minimum exigé), pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38€ (< seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -165,7 +165,7 @@ class AgepiTestsMayotte1 {
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.38f);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(14.38f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));    
 
         //Lorsque l'on vérifie son éligibilité

@@ -53,9 +53,9 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
     @Test
     void calculerPrimeActivitePensionInvaliditeTest1() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, en couple, conjoint 200 pension invalidite, 
+        //Si DE France Métropolitaine, en couple, pas d'enfants, conjoint 200€ pension invalidite, 
         //ASS de 16.89€ journalière
-        //futur contrat CDI avec salaire net 800 euros/mois
+        //futur contrat CDI avec salaire net 800€/mois
         boolean isEnCouple = true;
         int nbEnfant = 0;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -65,6 +65,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
         prestationsFamiliales.setAllocationsFamiliales(1100);
@@ -75,9 +76,9 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);  
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        PrestationsCPAM allocationsCPAMConjoint = new PrestationsCPAM();
-        allocationsCPAMConjoint.setPensionInvalidite(200f);
-        ressourcesFinancieresConjoint.setPrestationsCPAM(allocationsCPAMConjoint);
+        PrestationsCPAM prestationsCPAMConjoint = new PrestationsCPAM();
+        prestationsCPAMConjoint.setPensionInvalidite(200f);
+        ressourcesFinancieresConjoint.setPrestationsCPAM(prestationsCPAMConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
                 
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
@@ -92,30 +93,31 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 01/2021 est de 0 euros (résultat simulateur CAF : 368€ )
+        //TODO montant 
+        //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : 368€ )
         assertThat(montantPrimeActivite).isEqualTo(0);
     }
     
     @Test
-    void calculerPrimeActivitePensionInvaliditeTest6() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+    void calculerPrimeActivitePensionInvaliditeTest2() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, en couple, conjoint 200 pension invalidite, 
+        //Si DE France Métropolitaine, en couple, 1 enfant de 4 ans, conjoint 200€ pension invalidite, 
         //ASS de 16.89€ journalière
-        // 1 enfant de 1 an
-        //futur contrat CDI avec salaire net 800 euros/mois
+        //futur contrat CDI avec salaire net 800€/mois
         boolean isEnCouple = true;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(1));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(1100);
+        prestationsFamiliales.setAllocationsFamiliales(0);
         prestationsFamiliales.setAllocationSoutienFamilial(0);
         prestationsFamiliales.setComplementFamilial(0);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
@@ -123,9 +125,9 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);  
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        PrestationsCPAM allocationsCPAMConjoint = new PrestationsCPAM();
-        allocationsCPAMConjoint.setPensionInvalidite(200f);
-        ressourcesFinancieresConjoint.setPrestationsCPAM(allocationsCPAMConjoint);
+        PrestationsCPAM prestationsCPAMConjoint = new PrestationsCPAM();
+        prestationsCPAMConjoint.setPensionInvalidite(200f);
+        ressourcesFinancieresConjoint.setPrestationsCPAM(prestationsCPAMConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
 
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
@@ -140,16 +142,17 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 01/2021 est de 0 euros (résultat simulateur CAF : 533€)
+        //TODO Montant
+        //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : ??)
         assertThat(montantPrimeActivite).isEqualTo(0);
     }
     
     @Test
     void calculerPrimeActivitePensionInvaliditeTest7() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, en couple, conjoint salaire 1000 euros et 200 pension invalidite, 
+        //Si DE France Métropolitaine, en couple, conjoint salaire 1000€ et 200€ pension invalidite, 
         //ASS de 16.89€ journalière
-        //futur contrat CDI avec salaire net 800 euros/mois
+        //futur contrat CDI 35h avec salaire net 800€/mois brut 1038€/mois
         boolean isEnCouple = true;
         int nbEnfant = 0;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -159,23 +162,16 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(1100);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(0);
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
-        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(150));
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);  
+        
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
         salaireConjoint.setMontantNet(1000);
         salaireConjoint.setMontantBrut(1291);
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
-        PrestationsCPAM allocationsCPAMConjoint = new PrestationsCPAM();
-        allocationsCPAMConjoint.setPensionInvalidite(200f);
-        ressourcesFinancieresConjoint.setPrestationsCPAM(allocationsCPAMConjoint);
+        PrestationsCPAM prestationsCPAMConjoint = new PrestationsCPAM();
+        prestationsCPAMConjoint.setPensionInvalidite(200f);
+        ressourcesFinancieresConjoint.setPrestationsCPAM(prestationsCPAMConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
 
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
@@ -190,29 +186,31 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 01/2021 est de 0 euros (résultat simulateur CAF : TODO ldetre : 83€)
+        //TODO montant
+        //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : ??)
         assertThat(montantPrimeActivite).isEqualTo(0);
     }
     
     @Test
     void calculerPrimeActivitePensionInvaliditeTest8() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, en couple, conjoint salaire 1000 euros et 200 pension invalidite,
-        // 1 enfant de 1 an,
-        //futur contrat CDI avec salaire net 800 euros/mois
+        //Si DE France Métropolitaine, en couple, 1 enfant de 4 ans, conjoint salaire 1000€ et 200€ pension invalidite,
+        // ASS de 16.89€ journalière
+        //futur contrat CDI avec salaire net 800€/mois
         boolean isEnCouple = true;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("08-01-1979"));
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(1));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(1100);
+        prestationsFamiliales.setAllocationsFamiliales(0);
         prestationsFamiliales.setAllocationSoutienFamilial(0);
         prestationsFamiliales.setComplementFamilial(0);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
@@ -224,9 +222,9 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         salaireConjoint.setMontantNet(1000);
         salaireConjoint.setMontantBrut(1291);
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
-        PrestationsCPAM allocationsCPAMConjoint = new PrestationsCPAM();
-        allocationsCPAMConjoint.setPensionInvalidite(200f);
-        ressourcesFinancieresConjoint.setPrestationsCPAM(allocationsCPAMConjoint);
+        PrestationsCPAM prestationsCPAMConjoint = new PrestationsCPAM();
+        prestationsCPAMConjoint.setPensionInvalidite(200f);
+        ressourcesFinancieresConjoint.setPrestationsCPAM(prestationsCPAMConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
         
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
@@ -241,7 +239,8 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 01/2021 est de 0 euros (résultat simulateur CAF : 274€)
+        //TODO montant
+        //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : 274€)
         assertThat(montantPrimeActivite).isEqualTo(0);
     }
 }

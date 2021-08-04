@@ -55,7 +55,7 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
     @Test
     void calculerMontantTest1() throws ParseException {
         
-        //Si DE avec montant ASS journalier net = 16,89 euros
+        //Si DE avec montant ASS journalier net = 16,89€
         //Mois simulé novembre 2021 (30 jours) 
         //Date derniere ouverture droit 14/04/2020 soit date fin droit 14/10/2020 (avant 3ème mois simulé)
         
@@ -76,7 +76,7 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
         Optional<AideSociale> ass = allocationSolidariteSpecifiqueUtile.calculer(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors 
-        //le montant de l'ASS sur le mois de novembre 2021 est de 506 euros
+        //le montant de l'ASS sur le mois de novembre 2021 est de 506€
         assertThat(ass.get().getMontant()).isEqualTo(506);
         //le message d'alerte sur le renouvellement de l'aide est présent
         assertThat(ass.get().getMessageAlerte()).isEqualTo(MessagesAlertesAideSociale.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
@@ -85,7 +85,7 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
     @Test
     void calculerMontantTest2() throws ParseException {
         
-        //Si DE avec montant ASS journalier net = 16,89 euros
+        //Si DE avec montant ASS journalier net = 16,89€
         //Mois simulé décembre 2021 (31 jours) 
         //Date derniere ouverture droit 14/04/2020 soit date fin droit 14/10/2020 (avant 3ème mois simulé)
         
@@ -105,7 +105,7 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
         //Lorsque je calcul le montant de l'ASS sur le mois total 
         Optional<AideSociale> ass = allocationSolidariteSpecifiqueUtile.calculer(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
-        //alors le montant de l'ASS sur le mois de décembre 2021 est de 523 euros
+        //alors le montant de l'ASS sur le mois de décembre 2021 est de 523€
         assertThat(ass.get().getMontant()).isEqualTo(523);
         //le message d'alerte sur le renouvellement de l'aide est présent
         assertThat(ass.get().getMessageAlerte()).isEqualTo(MessagesAlertesAideSociale.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
@@ -114,7 +114,7 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
     @Test
     void calculerMontantTest3() throws ParseException {
         
-        //Si DE avec montant ASS journalier net = 16,89 euros 
+        //Si DE avec montant ASS journalier net = 16,89€ 
         //Mois simulé janvier 2021 (31 jours) 
         //Date derniere ouverture droit 14/09/2020 soit date fin droit 14/03/2021 (après 3ème mois simulé)
         
@@ -135,7 +135,7 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
          Optional<AideSociale> ass = allocationSolidariteSpecifiqueUtile.calculer(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors 
-        //le montant de l'ASS sur le mois de janvier 2021 est de 523 euros
+        //le montant de l'ASS sur le mois de janvier 2021 est de 523€
         assertThat(ass.get().getMontant()).isEqualTo(523);
         //le message d'alerte sur le renouvellement de l'aide n'est pas présent
         assertThat(ass.get().getMessageAlerte()).isNull();
@@ -144,7 +144,7 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
     @Test
     void calculerMontantTest4() throws ParseException {
         
-        //Si DE avec montant ASS journalier net = 16,89 euros
+        //Si DE avec montant ASS journalier net = 16,89€
         //Mois simulé février 2021 (28 jours) 
         //Date derniere ouverture droit 14/09/2020 soit date fin droit 14/03/2021 (après 3ème mois simulé)
         
@@ -165,7 +165,7 @@ class AllocationSolidariteSpecifiqueTestsPart2 {
         Optional<AideSociale> ass = allocationSolidariteSpecifiqueUtile.calculer(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors 
-        //le montant de l'ASS sur le mois de février 2021 est de 472 euros
+        //le montant de l'ASS sur le mois de février 2021 est de 472€
         assertThat(ass.get().getMontant()).isEqualTo(472);
         //le message d'alerte sur le renouvellement de l'aide n'est pas présent
         assertThat(ass.get().getMessageAlerte()).isNull();;

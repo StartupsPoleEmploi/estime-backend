@@ -57,8 +57,8 @@ public class AllocationAdultesHandicapes {
     
     /**
      * Méthode permettant de calculer le montant réduit de l'AAH
-     * si le salaire brut est inférieur à 466,38 euros, alors montant AAH moins 20% du salaire brut 
-     * si le salaire brut est supérieur à 466,38 euros, alors montant AAH moins 60% du salaire brut 
+     * si le salaire brut est inférieur à 466,38€, alors montant AAH moins 20% du salaire brut 
+     * si le salaire brut est supérieur à 466,38€, alors montant AAH moins 60% du salaire brut 
      * @return montant AAH réduit
      */
     private float calculerMontantReduit(DemandeurEmploi demandeurEmploi) {

@@ -252,9 +252,9 @@ class OpenFiscaMappeurTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsCPAM allocationsCPAM = new PrestationsCPAM();
-        allocationsCPAM.setPensionInvalidite(200f);
-        ressourcesFinancieres.setPrestationsCPAM(allocationsCPAM);
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setPensionInvalidite(200f);
+        ressourcesFinancieres.setPrestationsCPAM(prestationsCPAM);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
@@ -287,10 +287,10 @@ class OpenFiscaMappeurTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsCPAM allocationsCPAM = new PrestationsCPAM();
-        allocationsCPAM.setPensionInvalidite(200f);
-        allocationsCPAM.setAllocationSupplementaireInvalidite(200f);
-        ressourcesFinancieres.setPrestationsCPAM(allocationsCPAM);
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setPensionInvalidite(200f);
+        prestationsCPAM.setAllocationSupplementaireInvalidite(200f);
+        ressourcesFinancieres.setPrestationsCPAM(prestationsCPAM);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");

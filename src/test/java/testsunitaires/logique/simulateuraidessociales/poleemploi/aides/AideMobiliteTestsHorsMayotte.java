@@ -50,7 +50,7 @@ class AideMobiliteTestsHorsMayotte {
     @Test
     void isEligibleTest1() {
         
-        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 31kms  et allocation journalière net = 29.38 euros
+        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 31kms  et allocation journalière net = 29.38€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurContratTravail = new FuturTravail();
@@ -87,7 +87,7 @@ class AideMobiliteTestsHorsMayotte {
     @Test
     void isEligibleTest2() {
         
-        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 31kms et allocation journalière net = 14.38 euros
+        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 31kms et allocation journalière net = 14.38€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurContratTravail = new FuturTravail();
@@ -124,7 +124,7 @@ class AideMobiliteTestsHorsMayotte {
     @Test
     void isEligibleTest3() throws ParseException {
         
-        //Si DE France Métropolitaine, futur contrat CDD de 3 mois, kilométrage domicile -> taf = 31kms et allocation journalière net = 29.38 euros
+        //Si DE France Métropolitaine, futur contrat CDD de 3 mois, kilométrage domicile -> taf = 31kms et allocation journalière net = 29.38€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurContratTravail = new FuturTravail();
@@ -162,7 +162,7 @@ class AideMobiliteTestsHorsMayotte {
     @Test
     void isEligibleTest4() throws ParseException {
         
-        //Si DE France Métropolitaine, futur contrat CDD de 4 mois, kilométrage domicile -> taf = 31kms et allocation journalière net = 29.38 euros
+        //Si DE France Métropolitaine, futur contrat CDD de 4 mois, kilométrage domicile -> taf = 31kms et allocation journalière net = 29.38€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurContratTravail = new FuturTravail();
@@ -316,7 +316,7 @@ class AideMobiliteTestsHorsMayotte {
     @Test
     void isNotEligibleTest1() {
         
-        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 30kms et allocation journalière net = 14.38 euros
+        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 30kms et allocation journalière net = 14.38€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurContratTravail = new FuturTravail();
@@ -350,7 +350,7 @@ class AideMobiliteTestsHorsMayotte {
     @Test
     void isNotEligibleTest2() {
         
-        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 25kms et allocation journalière net = 14.38 euros
+        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 25kms et allocation journalière net = 14.38€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurContratTravail = new FuturTravail();
@@ -384,7 +384,7 @@ class AideMobiliteTestsHorsMayotte {
     @Test
     void isNotEligibleTest3() {
         
-        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 31kms et allocation journalière net = 30.28 euros 
+        //Si DE France Métropolitaine, futur contrat CDI, kilométrage domicile -> taf = 31kms et allocation journalière net = 30.28€ 
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurContratTravail = new FuturTravail();
@@ -418,7 +418,7 @@ class AideMobiliteTestsHorsMayotte {
     @Test
     void isNotEligibleTest4() throws ParseException {
         
-        //Si DE France Métropolitaine, futur contrat CDD de 2 mois, kilométrage domicile -> taf = 31kms et allocation journalière net = 14.28 euros
+        //Si DE France Métropolitaine, futur contrat CDD de 2 mois, kilométrage domicile -> taf = 31kms et allocation journalière net = 14.28€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurContratTravail = new FuturTravail();
@@ -485,7 +485,7 @@ class AideMobiliteTestsHorsMayotte {
         //Lorsque l'on calcul le montant de l'aide à la mobilité
         AideSociale aideMobilite = aideMobiliteUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 286 euros
+        //alors le montant retourné est de 286€
         assertThat(aideMobilite.getMontant()).isEqualTo(286f);
     }
     
@@ -520,7 +520,7 @@ class AideMobiliteTestsHorsMayotte {
         //Lorsque l'on calcul le montant de l'aide à la mobilité
         AideSociale aideMobilite = aideMobiliteUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 30 euros
+        //alors le montant retourné est de 30€
         assertThat(aideMobilite.getMontant()).isEqualTo(30f);
     }
 }

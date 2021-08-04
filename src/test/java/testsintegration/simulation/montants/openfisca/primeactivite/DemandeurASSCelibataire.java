@@ -51,7 +51,7 @@ class DemandeurASSCelibataire extends CommunTests {
     void calculerPrimeActiviteTest1() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
         //Si DE France Métropolitaine, célibataire, 0 enfant, 
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros, 
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€, 
         //futur contrat CDI, salaire net 900€
         boolean isEnCouple = false;
         int nbEnfant = 0;
@@ -75,7 +75,7 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 93 euros (résultat simulateur CAF : 93 euros)
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 93€ (résultat simulateur CAF : 93€)
         assertThat(montantPrimeActivite).isEqualTo(95);
     }
 
@@ -83,8 +83,8 @@ class DemandeurASSCelibataire extends CommunTests {
     void calculerPrimeActiviteTest2() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
         //Si DE France Métropolitaine, célibataire, 0 enfant, 
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros, 
-        //futur contrat CDI avec salaire net 1900 euros/mois
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€, 
+        //futur contrat CDI avec salaire net 1900€/mois
         boolean isEnCouple = false;
         int nbEnfant = 0;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -107,15 +107,15 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");        
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 0 euros (résultat simulateur CAF : pas droit à cette préstation)
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 0€ (résultat simulateur CAF : pas droit à cette préstation)
         assertThat(montantPrimeActivite).isEqualTo(0);
     }
 
     @Test
     void calculerPrimeActiviteTest3() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, célibataire, 1 enfant à charge de 6ans, af = 110 euros, 
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros,
+        //Si DE France Métropolitaine, célibataire, 1 enfant à charge de 6ans, asf 110€, 
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€,
         //futur contrat CDI, salaire net 900€
         boolean isEnCouple = false;
         int nbEnfant = 1;
@@ -127,6 +127,7 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
         prestationsFamiliales.setAllocationsFamiliales(0);
@@ -147,15 +148,15 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020"); 
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 156 euros (résultat simulateur CAF : 148 euros)
-        assertThat(montantPrimeActivite).isEqualTo(156);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 158€ (résultat simulateur CAF : 148€)
+        assertThat(montantPrimeActivite).isEqualTo(158);
     }
 
     @Test
     void calculerPrimeActiviteTest4() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, célibataire, 1 enfant à charge de 6ans, af = 110 euros, apl = 380, 
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros, 
+        //Si DE France Métropolitaine, célibataire, 1 enfant à charge de 6ans, asf 110€, apl 380€, 
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€, 
         //Futur contrat, CDI, salaire 900€ net
         boolean isEnCouple = false;
         int nbEnfant = 1;
@@ -167,6 +168,7 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
         prestationsFamiliales.setAllocationsFamiliales(0);
@@ -188,16 +190,16 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020"); 
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 112 euros (résultat simulateur CAF : 104 euros)
-        assertThat(montantPrimeActivite).isEqualTo(112);
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 114€ (résultat simulateur CAF : 104€)
+        assertThat(montantPrimeActivite).isEqualTo(114);
     }
 
     @Test
     void calculerPrimeActiviteTest5() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, célibataire, 2 enfants à charge de 6ans et 8ans, af = 362 euros, 
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros, 
-        //futur contrat CDI avec salaire net 900 euros/mois
+        //Si DE France Métropolitaine, célibataire, 2 enfants à charge de 6ans et 8ans, asf 233€, af 133€, 
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€, 
+        //futur contrat CDI avec salaire net 900€/mois
         boolean isEnCouple = false;
         int nbEnfant = 2;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -209,10 +211,11 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(362);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setAllocationsFamiliales(133);
+        prestationsFamiliales.setAllocationSoutienFamilial(233);
         prestationsFamiliales.setComplementFamilial(0);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
         demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
@@ -229,16 +232,16 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020"); 
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 136 euros (résultat simulateur CAF : 119 euros)
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 136€ (résultat simulateur CAF : 119€)
         assertThat(montantPrimeActivite).isEqualTo(136);
     }
 
     @Test
     void calculerPrimeActiviteTest6() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, célibataire, 2 enfants à charge de 6ans et 8ans, af = 362 euros, apl = 380 euros, 
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros, 
-        //futur contrat CDI avec salaire net 900 euros/mois
+        //Si DE France Métropolitaine, célibataire, 2 enfants à charge de 6ans et 8ans, asf 233€, af 133€, apl 380€, 
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€, 
+        //futur contrat CDI avec salaire net 900€/mois
         boolean isEnCouple = false;
         int nbEnfant = 2;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -250,10 +253,11 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(362);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setAllocationsFamiliales(133);
+        prestationsFamiliales.setAllocationSoutienFamilial(233);
         prestationsFamiliales.setComplementFamilial(0);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
         prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(380));
@@ -271,16 +275,16 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 81 euros (résultat simulateur CAF : 65 euros)
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 81€ (résultat simulateur CAF : 65€)
         assertThat(montantPrimeActivite).isEqualTo(81);
     }
 
     @Test
     void calculerPrimeActiviteTest7() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, célibataire, 3 enfants à charge de 4ans, 6ans et 8ans, af = 899 euros
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros, 
-        //futur contrat CDI avec salaire net 900 euros/mois
+        //Si DE France Métropolitaine, célibataire, 3 enfants à charge de 4ans, 6ans et 8ans, asf 350€, af 303€, cf 259€
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€, 
+        //futur contrat CDI avec salaire net 900€/mois
         boolean isEnCouple = false;
         int nbEnfant = 3;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -293,11 +297,12 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+       
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(899);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(0);
+        prestationsFamiliales.setAllocationsFamiliales(303);
+        prestationsFamiliales.setAllocationSoutienFamilial(350);
+        prestationsFamiliales.setComplementFamilial(259);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
         demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
                 
@@ -313,16 +318,17 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 65 euros (résultat simulateur CAF : 15 euros - 100 euros sans compter CF)
+        //TODO montant : écart important avec CAF
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 65€ (résultat simulateur CAF : 0€)
         assertThat(montantPrimeActivite).isEqualTo(65);
     }
 
     @Test
     void calculerPrimeActiviteTest8() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, célibataire, 3 enfants à charge de 4ans, 6ans et 8ans, af = 899 euros, apl = 450 euros, 
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros, 
-        //futur contrat CDI avec salaire net 900 euros/mois
+        //Si DE France Métropolitaine, célibataire, 3 enfants à charge de 4ans, 6ans et 8ans, asf 350€, af 303€, cf 259€, apl 450€, 
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€, 
+        //futur contrat CDI avec salaire net 900€/mois
         boolean isEnCouple = false;
         int nbEnfant = 3;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -335,11 +341,12 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(899);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(0);
+        prestationsFamiliales.setAllocationsFamiliales(303);
+        prestationsFamiliales.setAllocationSoutienFamilial(350);
+        prestationsFamiliales.setComplementFamilial(259);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
         prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(450));
         demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
@@ -356,16 +363,16 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 0 euros (résultat simulateur CAF : pas droit à cette prestation)
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 0€ (résultat simulateur CAF : 0€)
         assertThat(montantPrimeActivite).isEqualTo(0);
     }
     
     @Test
     void calculerPrimeActiviteTest9() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, célibataire, 4 enfants à charge de 4ans, 6ans, 8ans et 12 ans, af = 1189 euros
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros, 
-        //futur contrat CDI avec salaire net 900 euros/mois
+        //Si DE France Métropolitaine, célibataire, 4 enfants à charge de 4ans, 6ans, 8ans et 12 ans, asf 466€, af = 472€, cf 259€
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€, 
+        //futur contrat CDI avec salaire net 900€/mois
         boolean isEnCouple = false;
         int nbEnfant = 4;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -379,11 +386,12 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(1189);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(0);
+        prestationsFamiliales.setAllocationsFamiliales(472);
+        prestationsFamiliales.setAllocationSoutienFamilial(466);
+        prestationsFamiliales.setComplementFamilial(259);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
         demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);        
         
@@ -399,7 +407,8 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 51 euros (résultat simulateur CAF : pas droit à cette prestation euros)
+        //TODO montant : écart important avec CAF
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 51€ (résultat simulateur CAF : 0€)
         assertThat(montantPrimeActivite).isEqualTo(51);
     }
 
@@ -407,9 +416,9 @@ class DemandeurASSCelibataire extends CommunTests {
     void calculerPrimeActiviteTest10() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
         //Si DE France Métropolitaine, célibataire, 4 enfants à charge de 4ans, 6ans, 8ans et 12 ans, 
-        //af = 1189 euros, apl = 520 euros, 
-        //ass M1(07/2020)= 506,7 euros M2(08/2020) = 523,6 euros | M3(09/2020) = 523,6 euros | M4(10/2020) = 0 euros, 
-        //futur contrat CDI avec salaire net 900 euros/mois
+        //asf 466€, af 472€, cf 259€, apl 520€, 
+        //ass M1(07/2020)= 506,7€ M2(08/2020) = 523,6€ | M3(09/2020) = 523,6€ | M4(10/2020) = 0€, 
+        //futur contrat CDI avec salaire net 900€/mois
         boolean isEnCouple = false;
         int nbEnfant = 4;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -423,11 +432,12 @@ class DemandeurASSCelibataire extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(1189);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(0);
+        prestationsFamiliales.setAllocationsFamiliales(472);
+        prestationsFamiliales.setAllocationSoutienFamilial(466);
+        prestationsFamiliales.setComplementFamilial(259);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);        
         prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(520));
         demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);         
@@ -444,7 +454,8 @@ class DemandeurASSCelibataire extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 11/2020 est de 0 euros (résultat simulateur CAF :  pas droit à cette prestation)
+        //TODO montant
+        //Alors le montant de la prime d'activité pour le 11/2020 est de 0€ (résultat simulateur CAF : 0€)
         assertThat(montantPrimeActivite).isEqualTo(0);
     } 
 }

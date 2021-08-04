@@ -42,10 +42,10 @@ class DemandeurAahAss0MoisTravailleAvantSimulation extends CommunTests {
     void simulerPopulationAahNonTravailleAvantSimulation() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
 	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
-	// enfant à charge de 9ans, af = 90 euros
-	// Montant net journalier ASS = 16,89 euros, 0 mois cumulé ASS + salaire sur 3 derniers mois
-	// AAH = 900 euros, 0 mois travaillé avant simulation
-	// futur contrat CDI, salaire 1200 euros brut par mois soit 940 euros net par mois, 35h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
+	// enfant à charge de 9ans, af = 90€
+	// Montant net journalier ASS = 16,89€, 0 mois cumulé ASS + salaire sur 3 derniers mois
+	// AAH = 900€, 0 mois travaillé avant simulation
+	// futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par mois, 35h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
 
@@ -54,8 +54,8 @@ class DemandeurAahAss0MoisTravailleAvantSimulation extends CommunTests {
 	SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
 	// Alors les aides du premier mois 11/2020 sont :
-	// AGEPI : 400 euros, Aide mobilité : 450 euros, AAH : 900 euros, ASS : 506
-	// euros
+	// AGEPI : 400€, Aide mobilité : 450€, AAH : 900€, ASS : 506
+	//€
 	SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -77,7 +77,7 @@ class DemandeurAahAss0MoisTravailleAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du second mois 12/2020 sont :
-	// AAH : 900 euros
+	// AAH : 900€
 	// ASS : 523
 	// Pas de PPA car c'est la temporalité ASS qui prend le pas sur la temporalité
 	// AAH
@@ -96,7 +96,7 @@ class DemandeurAahAss0MoisTravailleAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du troisième mois 01/2021 sont :
-	// AAH : 900 euros
+	// AAH : 900€
 	// ASS : 523
 	// Pas de PPA car c'est la temporalité ASS qui prend le pas sur la temporalité
 	// AAH
@@ -115,7 +115,7 @@ class DemandeurAahAss0MoisTravailleAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du quatrième mois 02/2021 sont :
-	// AAH : 900 euros
+	// AAH : 900€
 	// Pas de PPA car c'est la temporalité ASS qui prend le pas sur la temporalité
 	// AAH
 	SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
@@ -130,8 +130,8 @@ class DemandeurAahAss0MoisTravailleAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du cinquième mois 03/2021 sont :
-	// Prime d'activité : 64 euros (simulateur CAF : ? euros)
-	// AAH : 900 euros
+	// Prime d'activité : 64€ (simulateur CAF : ?€)
+	// AAH : 900€
 	SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -147,8 +147,8 @@ class DemandeurAahAss0MoisTravailleAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du sixième mois 04/2021 sont :
-	// Prime d'activité : 64 euros (simulateur CAF : ? euros)
-	// AAH : 900 euros
+	// Prime d'activité : 64€ (simulateur CAF : ?€)
+	// AAH : 900€
 	SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {

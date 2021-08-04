@@ -81,7 +81,7 @@ class RessourcesFinancieresControleurTests extends CommunTests {
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
             individuService.simulerAidesSociales(demandeurEmploi);
-        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "allocationsPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
+        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "prestationsPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
     }
     
     @Test

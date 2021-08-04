@@ -190,7 +190,7 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
     void mapDemandeurPersonneAChargePensionInvaliditeToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         //Si DE France Métropolitaine, en couple, conjoint 200 pension invalidite, 
         //1 enfant de 1an
-        //futur contrat CDI avec salaire net 800 euros/mois
+        //futur contrat CDI avec salaire net 800€/mois
         String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsPersonnesACharge/demandeur-avec-enfant-pension-invalidite.json");
 
         DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
@@ -210,9 +210,9 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
         List<Personne> personnesACharge = new ArrayList<Personne>();
         createPersonne(personnesACharge, testUtile.getDate("09-09-2000"));
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsCPAM allocationsCPAM = new PrestationsCPAM();
-        allocationsCPAM.setPensionInvalidite(200f);
-        ressourcesFinancieres.setPrestationsCPAM(allocationsCPAM);
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setPensionInvalidite(200f);
+        ressourcesFinancieres.setPrestationsCPAM(prestationsCPAM);
         personnesACharge.get(0).setRessourcesFinancieres(ressourcesFinancieres);
         situationFamiliale.setPersonnesACharge(personnesACharge);
         situationFamiliale.setIsEnCouple(false);

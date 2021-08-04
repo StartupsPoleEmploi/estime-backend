@@ -45,9 +45,9 @@ class DemandeurAss3MoisCumulSalaireAvantSimulation extends CommunTests {
     @Test
     void simulerPopulationAssCumulSalaire3Mois() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-        //Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, af = 90 euros
-        //Montant net journalier ASS = 16,89 euros, 3 mois cumulé ASS + salaire sur 3 derniers mois
-        //futur contrat CDI, 1245 euros par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
+        //Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, af = 90€
+        //Montant net journalier ASS = 16,89€, 3 mois cumulé ASS + salaire sur 3 derniers mois
+        //futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
@@ -79,7 +79,7 @@ class DemandeurAss3MoisCumulSalaireAvantSimulation extends CommunTests {
         SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
         //Alors les aides du premier mois 11/2020 sont :
-        // AGEPI : 400 euros, Aide mobilité : 258 euros
+        // AGEPI : 400€, Aide mobilité : 258€
         SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
         assertThat(simulationMois1).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -95,7 +95,7 @@ class DemandeurAss3MoisCumulSalaireAvantSimulation extends CommunTests {
             });
         }); 
         //Alors les aides du second mois 12/2020 sont :
-        //Prime d'activité : 142 euros (simulateur CAF : 137 euros)
+        //Prime d'activité : 142€ (simulateur CAF : 137€)
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -108,7 +108,7 @@ class DemandeurAss3MoisCumulSalaireAvantSimulation extends CommunTests {
             });
         });
         //Alors les aides du troisième mois 01/2021 sont :
-        //Prime d'activité : 142 euros (simulateur CAF : 137 euros)
+        //Prime d'activité : 142€ (simulateur CAF : 137€)
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -121,7 +121,7 @@ class DemandeurAss3MoisCumulSalaireAvantSimulation extends CommunTests {
             });
         });
         //Alors les aides du quatrième mois 02/2021 sont :
-        //Prime d'activité : 142 euros (simulateur CAF : 137 euros)
+        //Prime d'activité : 142€ (simulateur CAF : 137€)
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -134,7 +134,7 @@ class DemandeurAss3MoisCumulSalaireAvantSimulation extends CommunTests {
             });
         });
         //Alors les aides du cinquième mois 03/2021 sont :
-        //Prime d'activité : 423 euros (Simulateur CAF : ? euros)
+        //Prime d'activité : 423€ (Simulateur CAF : ?€)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -147,7 +147,7 @@ class DemandeurAss3MoisCumulSalaireAvantSimulation extends CommunTests {
             });
         });
         //Alors les aides du sixième mois 04/2021 sont :
-        //Prime d'activité : 423 euros (Simulateur CAF : 413 euros)
+        //Prime d'activité : 423€ (Simulateur CAF : 413€)
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {

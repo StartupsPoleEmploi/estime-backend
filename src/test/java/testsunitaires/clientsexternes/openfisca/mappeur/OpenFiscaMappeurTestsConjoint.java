@@ -200,9 +200,9 @@ class OpenFiscaMappeurTestsConjoint {
         situationFamiliale.setIsEnCouple(true);
         Personne conjoint = new Personne();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsCPAM allocationsCPAM = new PrestationsCPAM();
-        allocationsCPAM.setPensionInvalidite(200f);
-        ressourcesFinancieres.setPrestationsCPAM(allocationsCPAM);
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setPensionInvalidite(200f);
+        ressourcesFinancieres.setPrestationsCPAM(prestationsCPAM);
         conjoint.setRessourcesFinancieres(ressourcesFinancieres);
         situationFamiliale.setConjoint(conjoint);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);

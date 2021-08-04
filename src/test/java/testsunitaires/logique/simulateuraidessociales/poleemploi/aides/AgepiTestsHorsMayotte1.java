@@ -45,7 +45,7 @@ class AgepiTestsHorsMayotte1 {
     @Test
     void isEligibleTest1() {
         
-        //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38 euros (= seuil max.)
+        //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -64,7 +64,7 @@ class AgepiTestsHorsMayotte1 {
     @Test
     void isEligibleTest2() {
         
-        //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38 euros (< seuil max.)
+        //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38€ (< seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -83,7 +83,7 @@ class AgepiTestsHorsMayotte1 {
     @Test
     void isEligibleTest3() throws ParseException {
         
-        //Si DE France Métropolitaine, futur contrat CDD de 3 mois ( = minimum exigé) , pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38 euros (= seuil max.)
+        //Si DE France Métropolitaine, futur contrat CDD de 3 mois ( = minimum exigé) , pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -103,7 +103,7 @@ class AgepiTestsHorsMayotte1 {
     @Test
     void isEligibleTest4() throws ParseException {
         
-        //Si DE France Métropolitaine, futur contrat CDD de 4 mois ( > minimum exigé), pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38 euros (= seuil max.)
+        //Si DE France Métropolitaine, futur contrat CDD de 4 mois ( > minimum exigé), pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);

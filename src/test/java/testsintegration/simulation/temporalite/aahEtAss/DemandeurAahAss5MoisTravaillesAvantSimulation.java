@@ -45,9 +45,9 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
     void simulerPopulationAah5MoisSur6Ass2MoisSur3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
 	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
-	// enfant à charge de 9ans, af = 90 euros
-	// Montant net journalier ASS = 16,89 euros, 2 mois cumulé ASS + salaire sur 3 derniers mois
-	// AAH = 900 euros, 5 mois travaillé avant simulation futur contrat CDI, salaire 1200 euros brut par mois soit 940 euros net par mois, 35h/semaine,
+	// enfant à charge de 9ans, af = 90€
+	// Montant net journalier ASS = 16,89€, 2 mois cumulé ASS + salaire sur 3 derniers mois
+	// AAH = 900€, 5 mois travaillé avant simulation futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par mois, 35h/semaine,
 	// kilométrage domicile -> taf = 80kms + 20 trajets
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
@@ -81,7 +81,7 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
 	// Alors les aides du premier mois 11/2020 sont :
-	// AGEPI : 400 euros, Aide mobilité : 450 euros, AAH : 900 euros
+	// AGEPI : 400€, Aide mobilité : 450€, AAH : 900€
 	SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -103,7 +103,7 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du second mois 12/2020 sont :
-	// AAH : 180 euros (dégressivité : 900 - 60% * 1200 = 180)
+	// AAH : 180€ (dégressivité : 900 - 60% * 1200 = 180)
 	SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
 	assertThat(simulationMois2).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -116,8 +116,8 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du troisième mois 01/2021 sont :
-	// AAH : 180 euros (report AAH dégressif)
-	// Prime d'activité : 147 euros (Simulateur CAF : ? euros)
+	// AAH : 180€ (report AAH dégressif)
+	// Prime d'activité : 147€ (Simulateur CAF : ?€)
 	SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -133,8 +133,8 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du quatrième mois 02/2021 sont :
-	// AAH : 180 euros (report AAH dégressif)
-	// Prime d'activité : 147 euros (Simulateur CAF : ? euros)
+	// AAH : 180€ (report AAH dégressif)
+	// Prime d'activité : 147€ (Simulateur CAF : ?€)
 	SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -150,8 +150,8 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du cinquième mois 03/2021 sont :
-	// AAH : 180 euros (report AAH dégressif)
-	// Prime d'activité : 147 euros (Simulateur CAF : ? euros)
+	// AAH : 180€ (report AAH dégressif)
+	// Prime d'activité : 147€ (Simulateur CAF : ?€)
 	SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -167,8 +167,8 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du sixième mois 04/2021 sont :
-	// AAH : 180 euros (report AAH dégressif)
-	// Prime d'activité : 437 euros (Simulateur CAF : ? euros)
+	// AAH : 180€ (report AAH dégressif)
+	// Prime d'activité : 437€ (Simulateur CAF : ?€)
 	SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -189,9 +189,9 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
     void simulerPopulationAah5MoisSur6Ass3MoisSur3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
 	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
-	// enfant à charge de 9ans, af = 90 euros
-	// Montant net journalier ASS = 16,89 euros, 3 mois cumulé ASS + salaire sur 3 derniers mois
-	// AAH = 900 euros, 5 mois travaillé avant simulation futur contrat CDI, salaire 1200 euros brut par mois soit 940 euros net par mois, 35h/semaine,
+	// enfant à charge de 9ans, af = 90€
+	// Montant net journalier ASS = 16,89€, 3 mois cumulé ASS + salaire sur 3 derniers mois
+	// AAH = 900€, 5 mois travaillé avant simulation futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par mois, 35h/semaine,
 	// kilométrage domicile -> taf = 80kms + 20 trajets
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
@@ -225,7 +225,7 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
 	// Alors les aides du premier mois 11/2020 sont :
-	// AGEPI : 400 euros, Aide mobilité : 450 euros, AAH : 900 euros
+	// AGEPI : 400€, Aide mobilité : 450€, AAH : 900€
 	SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -244,8 +244,8 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du second mois 12/2020 sont :
-	// AAH : 180 euros (dégressivité : 900 - 60% * 1200 = 180)
-	// Prime d'activité : 64 euros (Simulateur CAF : ? euros)
+	// AAH : 180€ (dégressivité : 900 - 60% * 1200 = 180)
+	// Prime d'activité : 64€ (Simulateur CAF : ?€)
 	SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
 	assertThat(simulationMois2).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -261,8 +261,8 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du troisième mois 01/2021 sont :
-	// AAH : 180 euros (report AAH dégressif)
-	// Prime d'activité : 64 euros (Simulateur CAF : ? euros)
+	// AAH : 180€ (report AAH dégressif)
+	// Prime d'activité : 64€ (Simulateur CAF : ?€)
 	SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -278,8 +278,8 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du quatrième mois 02/2021 sont :
-	// AAH : 180 euros (report AAH dégressif)
-	// Prime d'activité : 64 euros (Simulateur CAF : ? euros)
+	// AAH : 180€ (report AAH dégressif)
+	// Prime d'activité : 64€ (Simulateur CAF : ?€)
 	SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -295,8 +295,8 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du cinquième mois 03/2021 sont :
-	// AAH : 180 euros (report AAH dégressif)
-	// Prime d'activité : 438 euros (Simulateur CAF : ? euros)
+	// AAH : 180€ (report AAH dégressif)
+	// Prime d'activité : 438€ (Simulateur CAF : ?€)
 	SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -312,8 +312,8 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	    });
 	});
 	// Alors les aides du sixième mois 04/2021 sont :
-	// AAH : 180 euros (report AAH dégressif)
-	// Prime d'activité : 438 euros (Simulateur CAF : ? euros)
+	// AAH : 180€ (report AAH dégressif)
+	// Prime d'activité : 438€ (Simulateur CAF : ?€)
 	SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {

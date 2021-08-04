@@ -46,7 +46,7 @@ class AgepiTestsMayotte2 {
     @Test
     void isNotEligibleMayotteTest1() {
         
-        //Si DE Mayotte, futur contrat CDI, pas en couple, 1 enfant 10 ans à charge et allocation journalière net = 14.38 euros (< seuil max.)
+        //Si DE Mayotte, futur contrat CDI, pas en couple, 1 enfant 10 ans à charge et allocation journalière net = 14.38€ (< seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -65,7 +65,7 @@ class AgepiTestsMayotte2 {
     @Test
     void isNotEligibleMayotteTest2() {
         
-        //Si DE Mayotte, futur contrat CDI, en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.68 euros (< seuil max.) 
+        //Si DE Mayotte, futur contrat CDI, en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.68€ (< seuil max.) 
         boolean isEnCouple = true;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -86,7 +86,7 @@ class AgepiTestsMayotte2 {
     @Test
     void isNotEligibleMayotteTest3() {
         
-        //Si DE Mayotte, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 30.28 euros (> seuil max.)
+        //Si DE Mayotte, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 30.28€ (> seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -105,7 +105,7 @@ class AgepiTestsMayotte2 {
     @Test
     void isNotEligibleMayotteTest4() throws ParseException {
         
-        //Si DE Mayotte, futur contrat CDD de 2 mois ( < minimum exigé), pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 30.28 euros (> seuil max.)
+        //Si DE Mayotte, futur contrat CDD de 2 mois ( < minimum exigé), pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 30.28€ (> seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
@@ -140,7 +140,7 @@ class AgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 85 euros
+        //alors le montant retourné est de 85€
         assertThat(agepi.getMontant()).isEqualTo(85);
     }
     
@@ -162,7 +162,7 @@ class AgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 97 euros
+        //alors le montant retourné est de 97€
         assertThat(agepi.getMontant()).isEqualTo(97);
     }
     
@@ -184,7 +184,7 @@ class AgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 110 euros
+        //alors le montant retourné est de 110€
         assertThat(agepi.getMontant()).isEqualTo(110);
     }
     
@@ -207,7 +207,7 @@ class AgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 110 euros
+        //alors le montant retourné est de 110€
         assertThat(agepi.getMontant()).isEqualTo(110);
     }
     
@@ -227,7 +227,7 @@ class AgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 0 euros
+        //alors le montant retourné est de 0€
         assertThat(agepi.getMontant()).isEqualTo(0);
     }
     
@@ -249,7 +249,7 @@ class AgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 200 euros
+        //alors le montant retourné est de 200€
         assertThat(agepi.getMontant()).isEqualTo(200);
     }
     
@@ -271,7 +271,7 @@ class AgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 230 euros
+        //alors le montant retourné est de 230€
         assertThat(agepi.getMontant()).isEqualTo(230);
     }
     
@@ -293,7 +293,7 @@ class AgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 260 euros
+        //alors le montant retourné est de 260€
         assertThat(agepi.getMontant()).isEqualTo(260);
     }
     
@@ -316,7 +316,7 @@ class AgepiTestsMayotte2 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 260 euros
+        //alors le montant retourné est de 260€
         assertThat(agepi.getMontant()).isEqualTo(260);
     }
 }

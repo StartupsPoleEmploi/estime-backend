@@ -79,7 +79,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
         //Alors les aides du premier mois 11/2020 sont :
-        //RSA : 500 euros
+        //RSA : 500€
         SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
         assertThat(simulationMois1).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -92,7 +92,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         }); 
         //Alors les aides du second mois 12/2020 sont :
-        //RSA : 500 euros
+        //RSA : 500€
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -105,7 +105,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du troisième mois 01/2021 sont :
-        //PA : 118 (simulateur CAF : 111 euros)
+        //PA : 118 (simulateur CAF : 111€)
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -118,7 +118,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du quatrième mois 02/2021 sont :
-        //PA : 118 (simulateur CAF : 111 euros)
+        //PA : 118 (simulateur CAF : 111€)
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -131,7 +131,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du cinquième mois 03/2021 sont :
-        //PA : 118 euros (simulateur CAF : 111 euros)
+        //PA : 118€ (simulateur CAF : 111€)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -144,7 +144,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du sixième mois 04/2021 sont :
-        //PA : 174 euros (simulateur CAF : 167 euros)
+        //PA : 174€ (simulateur CAF : 167€)
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -232,7 +232,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du troisième mois 01/2021 sont :
-        //RSA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312 euros)
+        //RSA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312€)
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -248,7 +248,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du quatrième mois 02/2021 sont :
-        //PA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312 euros)
+        //PA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312€)
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -264,7 +264,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du cinquième mois 03/2021 sont :
-        //PA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312 euros)
+        //PA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312€)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -327,7 +327,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
         //Alors les aides du premier mois 08/2021 sont :
-        //RSA : 380 euros
+        //RSA : 380€
         SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
         assertThat(simulationMois1).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -340,7 +340,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         }); 
         //Alors les aides du second mois 09/2021 sont :
-        //RSA : 380 euros
+        //RSA : 380€
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -353,7 +353,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du troisième mois 10/2021 sont :
-        //RSA : 54 (simulateur CAF : 38 euros), PA : 270 (simulateur CAF : 271 euros)
+        //RSA : 54 (simulateur CAF : 38€), PA : 270 (simulateur CAF : 271€)
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -369,7 +369,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du quatrième mois 11/2021 sont :
-        //RSA : 54 (simulateur CAF : 38 euros), PA : 270 (simulateur CAF : 271 euros)
+        //RSA : 54 (simulateur CAF : 38€), PA : 270 (simulateur CAF : 271€)
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -385,7 +385,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du cinquième mois 12/2021 sont :
-        //RSA : 54 (simulateur CAF : 38 euros), PA : 270 (simulateur CAF : 271 euros)
+        //RSA : 54 (simulateur CAF : 38€), PA : 270 (simulateur CAF : 271€)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -401,7 +401,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du sixième mois 01/2022 sont :
-        //RSA : 16 (simulateur CAF : 0 euros), PA : 294 (simulateur CAF : 291 euros)
+        //RSA : 16 (simulateur CAF : 0€), PA : 294 (simulateur CAF : 291€)
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -451,7 +451,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
         //Alors les aides du premier mois 08/2021 sont :
-        //RSA : 500 euros
+        //RSA : 500€
         SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
         assertThat(simulationMois1).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -464,7 +464,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         }); 
         //Alors les aides du second mois 09/2021 sont :
-        //RSA : 500 euros
+        //RSA : 500€
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -477,7 +477,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du troisième mois 10/2021 sont :
-        //RSA : 176 (simulateur CAF : 180 euros), PA : 196 (simulateur CAF : 200 euros)
+        //RSA : 176 (simulateur CAF : 180€), PA : 196 (simulateur CAF : 200€)
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -493,7 +493,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du quatrième mois 11/2021 sont :
-        //RSA : 176 (simulateur CAF : 180 euros), PA : 196 (simulateur CAF : 200 euros)
+        //RSA : 176 (simulateur CAF : 180€), PA : 196 (simulateur CAF : 200€)
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -509,7 +509,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du cinquième mois 12/2021 sont :
-        //RSA : 176 (simulateur CAF : 180 euros), PA : 196 (simulateur CAF : 200 euros)
+        //RSA : 176 (simulateur CAF : 180€), PA : 196 (simulateur CAF : 200€)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -525,7 +525,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
         });
         //Alors les aides du sixième mois 01/2022 sont :
-        //RSA : 16 (simulateur CAF : 20 euros), PA : 294 (simulateur CAF : 290 euros)
+        //RSA : 16 (simulateur CAF : 20€), PA : 294 (simulateur CAF : 290€)
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {

@@ -56,7 +56,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 0 euros
+        //alors le montant retourné est de 0€
         assertThat(agepi.getMontant()).isEqualTo(0);
     }
     
@@ -78,7 +78,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 400 euros
+        //alors le montant retourné est de 400€
         assertThat(agepi.getMontant()).isEqualTo(400);
     }
     
@@ -100,7 +100,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 460 euros
+        //alors le montant retourné est de 460€
         assertThat(agepi.getMontant()).isEqualTo(460);
     }
     
@@ -122,7 +122,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 520 euros
+        //alors le montant retourné est de 520€
         assertThat(agepi.getMontant()).isEqualTo(520);
     }
     
@@ -145,7 +145,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 520 euros
+        //alors le montant retourné est de 520€
         assertThat(agepi.getMontant()).isEqualTo(520);
     }
     
@@ -165,7 +165,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 0 euros
+        //alors le montant retourné est de 0€
         assertThat(agepi.getMontant()).isEqualTo(0);
     }
     
@@ -187,7 +187,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 400 euros
+        //alors le montant retourné est de 400€
         assertThat(agepi.getMontant()).isEqualTo(400);
     }
     
@@ -209,7 +209,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 460 euros
+        //alors le montant retourné est de 460€
         assertThat(agepi.getMontant()).isEqualTo(460);
     }
     
@@ -231,7 +231,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 520 euros
+        //alors le montant retourné est de 520€
         assertThat(agepi.getMontant()).isEqualTo(520);
     }
     
@@ -254,7 +254,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 520 euros
+        //alors le montant retourné est de 520€
         assertThat(agepi.getMontant()).isEqualTo(520);
     }
     
@@ -274,7 +274,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 0 euros
+        //alors le montant retourné est de 0€
         assertThat(agepi.getMontant()).isEqualTo(0);
     }
     
@@ -296,7 +296,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 400 euros
+        //alors le montant retourné est de 400€
         assertThat(agepi.getMontant()).isEqualTo(400);
     }
     
@@ -317,7 +317,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 460 euros
+        //alors le montant retourné est de 460€
         assertThat(agepi.getMontant()).isEqualTo(460);
     }
     
@@ -340,7 +340,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 520 euros
+        //alors le montant retourné est de 520€
         assertThat(agepi.getMontant()).isEqualTo(520);
     }
 
@@ -363,7 +363,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 520 euros
+        //alors le montant retourné est de 520€
         assertThat(agepi.getMontant()).isEqualTo(520);
     }
     
@@ -383,7 +383,7 @@ class AgepiTestsHorsMayotte3 {
         //Lorsque l'on calcul le montant de l'agepi
         AideSociale agepi = agepiUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 0 euros
+        //alors le montant retourné est de 0€
         assertThat(agepi.getMontant()).isEqualTo(0);
     }
 }

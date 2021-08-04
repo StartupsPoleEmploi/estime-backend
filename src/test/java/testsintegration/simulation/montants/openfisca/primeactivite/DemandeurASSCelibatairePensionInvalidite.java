@@ -56,7 +56,7 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         //Si DE France Métropolitaine, célibataire, 0 enfant à charge, 
         //ASS de 16.89€ journalière
         //pension d'invalidité 200€ par mois, 
-        //futur contrat CDI avec salaire net 800 euros/mois
+        //futur contrat CDI avec salaire net 800€/mois
         boolean isEnCouple = false;
         int nbEnfant = 0;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -66,9 +66,10 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
-        PrestationsCPAM allocationsCPAM = new PrestationsCPAM();
-        allocationsCPAM.setPensionInvalidite(200f);
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCPAM(allocationsCPAM);
+        
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setPensionInvalidite(200f);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCPAM(prestationsCPAM);
 
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
@@ -82,30 +83,40 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 06/2021 est de 32 euros (résultat simulateur CAF : TODO ldetre retrouver valeur CAF)
+        //Alors le montant de la prime d'activité pour le 06/2021 est de 32€ (résultat simulateur CAF : 30€)
         assertThat(montantPrimeActivite).isEqualTo(32);
     }
     
     @Test
     void calculerPrimeActivitePensionInvaliditeTest2() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, célibataire, 1 enfant à charge de 1ans 
+        //Si DE France Métropolitaine, célibataire, 1 enfant à charge de 4ans 
         //ASS de 16.89€ journalière
         //pension d'invalidité 200€ par mois, 
-        //futur contrat CDI avec salaire net 800 euros/mois
+        //futur contrat CDI avec salaire net 800€/mois
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(1));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
-        PrestationsCPAM allocationsCPAM = new PrestationsCPAM();
-        allocationsCPAM.setPensionInvalidite(200f);
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCPAM(allocationsCPAM);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);  
+        
+        PrestationsCAF prestationsCAF = new PrestationsCAF();
+        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
+        prestationsFamiliales.setAllocationsFamiliales(0);
+        prestationsFamiliales.setAllocationSoutienFamilial(117);
+        prestationsFamiliales.setComplementFamilial(0);
+        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);  
+        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(150));
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setPensionInvalidite(200f);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCPAM(prestationsCPAM);
         
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
@@ -119,35 +130,38 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //Alors le montant de la prime d'activité pour le 06/2021 est de 74 euros (résultat simulateur CAF : 368€)
-        assertThat(montantPrimeActivite).isEqualTo(74);
+        //TODO montant : écart important avec CAF
+        //Alors le montant de la prime d'activité pour le 06/2021 est de 49€ (résultat simulateur CAF : 83€)
+        assertThat(montantPrimeActivite).isEqualTo(49);
     }
     
     @Test
     void calculerPrimeActivitePensionInvaliditeTest3() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, célibataire, 2 enfants à charge de 1 ans et 1 ans, 
+        //Si DE France Métropolitaine, célibataire, 2 enfants à charge de 4 ans et 5 ans, 
         //ASS de 16.89€ journalière
-        //af = 1100 euros, apl = 150 euros, pension invalidité 200 euros
-        //futur contrat CDI avec salaire net 800 euros/mois
+        //asf 233€, af 133€, apl 150€, pension invalidité 200€
+        //futur contrat CDI avec salaire net 800€/mois
         boolean isEnCouple = false;
         int nbEnfant = 2;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(1));
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(1));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(5));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
-        PrestationsCPAM allocationsCPAM = new PrestationsCPAM();
-        allocationsCPAM.setPensionInvalidite(200f);
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCPAM(allocationsCPAM);
+        
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setPensionInvalidite(200f);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCPAM(prestationsCPAM);
+        
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(1100);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
+        prestationsFamiliales.setAllocationsFamiliales(134);
+        prestationsFamiliales.setAllocationSoutienFamilial(233);
         prestationsFamiliales.setComplementFamilial(0);
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);  
         prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(150));
@@ -164,9 +178,10 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
-
-        //Alors le montant de la prime d'activité pour le 06/2021 est de 86 euros (résultat simulateur CAF : pas le droit à cette prestation)
-        assertThat(montantPrimeActivite).isEqualTo(86);
+        
+        //TODO montant : écart moyen avec CAF
+        //Alors le montant de la prime d'activité pour le 06/2021 est de 23€ (résultat simulateur CAF : 0€)
+        assertThat(montantPrimeActivite).isEqualTo(23);
     }
     
     @Test
@@ -175,7 +190,7 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         //Si DE France Métropolitaine, célibataire, 0 enfant à charge, 
         //ASS de 16.89€ journalière
         //pension d'invalidité 200€ par mois, asi 200€ par mois
-        //futur contrat CDI avec salaire net 800 euros/mois
+        //futur contrat CDI avec salaire net 800€/mois
         boolean isEnCouple = false;
         int nbEnfant = 0;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -185,19 +200,12 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
-        PrestationsCPAM allocationsCPAM = new PrestationsCPAM();
-        allocationsCPAM.setPensionInvalidite(200f);
-        allocationsCPAM.setAllocationSupplementaireInvalidite(200f);
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCPAM(allocationsCPAM);
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(1100);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(0);
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);  
-        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(150));
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);       
-
+        
+        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
+        prestationsCPAM.setPensionInvalidite(200f);
+        prestationsCPAM.setAllocationSupplementaireInvalidite(200f);
+        demandeurEmploi.getRessourcesFinancieres().setPrestationsCPAM(prestationsCPAM);
+        
         SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
@@ -209,8 +217,9 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
-
-        //Alors le montant de la prime d'activité pour le 06/2021 est de 0 euros (résultat simulateur CAF : TODO ldetre retrouver valeur CAF)
+        
+        //TODO Montant KO
+        //Alors le montant de la prime d'activité pour le 06/2021 est de 0€ (résultat simulateur CAF : 0€)
         assertThat(montantPrimeActivite).isEqualTo(0);
     }
 }

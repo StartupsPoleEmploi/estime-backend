@@ -51,7 +51,7 @@ class AideMobiliteTestsMayotte {
     @Test
     void isEligibleMayotteTest1() {
         
-        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 11kms  et allocation journalière net = 14.68 euros
+        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 11kms  et allocation journalière net = 14.68€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
@@ -85,7 +85,7 @@ class AideMobiliteTestsMayotte {
     @Test
     void isEligibleMayotteTest2() {
         
-        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 11kms et allocation journalière net = 14.38 euros
+        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 11kms et allocation journalière net = 14.38€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
@@ -119,7 +119,7 @@ class AideMobiliteTestsMayotte {
     @Test
     void isEligibleMayotteTest3() throws ParseException {
         
-        //Si DE Mayotte, futur contrat CDD de 3 mois, kilométrage domicile -> taf = 11kms et allocation journalière net = 14.68 euros
+        //Si DE Mayotte, futur contrat CDD de 3 mois, kilométrage domicile -> taf = 11kms et allocation journalière net = 14.68€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
@@ -154,7 +154,7 @@ class AideMobiliteTestsMayotte {
     @Test
     void isEligibleMayotteTest4() throws ParseException {
         
-        //Si DE Mayotte, futur contrat CDD de 4 mois, kilométrage domicile -> taf = 11kms et allocation journalière net = 14.68 euros
+        //Si DE Mayotte, futur contrat CDD de 4 mois, kilométrage domicile -> taf = 11kms et allocation journalière net = 14.68€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
@@ -305,7 +305,7 @@ class AideMobiliteTestsMayotte {
     @Test
     void isNotEligibleMayotteTest1() {
         
-        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 10kms et allocation journalière net = 12.68 euros
+        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 10kms et allocation journalière net = 12.68€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
@@ -339,7 +339,7 @@ class AideMobiliteTestsMayotte {
     @Test
     void isNotEligibleMayotteTest2() {
         
-        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 7kms et allocation journalière net = 12.68 euros
+        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 7kms et allocation journalière net = 12.68€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
@@ -373,7 +373,7 @@ class AideMobiliteTestsMayotte {
     @Test
     void isNotEligibleMayotteTest3() {
         
-        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 11kms et allocation journalière net = 30.28 euros
+        //Si DE Mayotte, futur contrat CDI, kilométrage domicile -> taf = 11kms et allocation journalière net = 30.28€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
@@ -407,7 +407,7 @@ class AideMobiliteTestsMayotte {
     @Test
     void isNotEligibleMayotteTest4() throws ParseException {
         
-        //Si DE Mayotte, futur contrat CDD de 2 mois, kilométrage domicile -> taf = 11kms et allocation journalière net = 12.68 euros
+        //Si DE Mayotte, futur contrat CDD de 2 mois, kilométrage domicile -> taf = 11kms et allocation journalière net = 12.68€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         
         FuturTravail futurTravail = new FuturTravail();
@@ -475,7 +475,7 @@ class AideMobiliteTestsMayotte {
         //Lorsque l'on calcul le montant de l'aide à la mobilité
         AideSociale aideMobilite = aideMobiliteUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 286 euros
+        //alors le montant retourné est de 286€
         assertThat(aideMobilite.getMontant()).isEqualTo(286f);
     }
     
@@ -510,7 +510,7 @@ class AideMobiliteTestsMayotte {
         //Lorsque l'on calcul le montant de l'aide à la mobilité
         AideSociale aideMobilite = aideMobiliteUtile.calculer(demandeurEmploi);
         
-        //alors le montant retourné est de 30 euros
+        //alors le montant retourné est de 30€
         assertThat(aideMobilite.getMontant()).isEqualTo(30f);
     }
 }
