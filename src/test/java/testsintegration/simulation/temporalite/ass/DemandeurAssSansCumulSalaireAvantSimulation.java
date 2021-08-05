@@ -41,7 +41,7 @@ class DemandeurAssSansCumulSalaireAvantSimulation extends CommunTests {
     @Test
     void simulerPopulationAssSansCumulSalaire() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-        //Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, af = 90€
+        //Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, asf = 117€
         //Montant net journalier ASS = 16,89€, 0 mois cumulé ASS + salaire sur 3 derniers mois
         //futur contrat CDI, salaire brut 1600€, soit 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
@@ -107,7 +107,7 @@ class DemandeurAssSansCumulSalaireAvantSimulation extends CommunTests {
             assertThat(simulation.getMesAides().size()).isEqualTo(0);
         });
         //Alors les aides du cinquième mois 03/2021 sont :
-        //Prime d'activité : 141€ (simulateur CAF : ?€)
+        //Prime d'activité : 140€ (simulateur CAF : 129€)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -116,11 +116,11 @@ class DemandeurAssSansCumulSalaireAvantSimulation extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(141);
+                assertThat(ppa.getMontant()).isEqualTo(140);
             });
         });
         //Alors les aides du sixième mois 04/2021 sont :
-        //Prime d'activité : 141€ (simulateur CAF : ?€)
+        //Prime d'activité : 140€
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> { 
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -129,7 +129,7 @@ class DemandeurAssSansCumulSalaireAvantSimulation extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(141);
+                assertThat(ppa.getMontant()).isEqualTo(140);
             });
         });
     }    

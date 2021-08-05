@@ -133,7 +133,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
         float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //TODO écart de 127€ avec CAF
+        //TODO montant : écart de 127€ avec CAF
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : 127€)
         assertThat(montantPrimeActivite).isEqualTo(0);
     }

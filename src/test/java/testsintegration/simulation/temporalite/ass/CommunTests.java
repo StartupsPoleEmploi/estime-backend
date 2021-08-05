@@ -28,7 +28,7 @@ import utile.tests.UtileTests;
 public class CommunTests {
     
     @Autowired
-    private UtileTests utileTests;
+    protected UtileTests utileTests;
 
     @SpyBean
     private EmploiStoreDevClient detailIndemnisationPoleEmploiClient;
@@ -58,7 +58,7 @@ public class CommunTests {
         PrestationsCAF prestationsCAF = new PrestationsCAF();
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
         prestationsFamiliales.setAllocationsFamiliales(0);
-        prestationsFamiliales.setAllocationSoutienFamilial(90);
+        prestationsFamiliales.setAllocationSoutienFamilial(117);
         prestationsFamiliales.setComplementFamilial(0); 
         prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
         demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);

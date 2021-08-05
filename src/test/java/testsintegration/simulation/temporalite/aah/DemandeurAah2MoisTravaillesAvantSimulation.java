@@ -160,9 +160,10 @@ class DemandeurAah2MoisTravaillesAvantSimulation extends CommunTests {
                     });
         });
         
+        //TODO montant : écart de 37€ avec CAF
         // Alors les aides du sixième mois 04/2021 sont :
         // AAH : 180€
-        // Prime d'activité : 193€ (simulateur CAF : 182€)
+        // Prime d'activité : 193€ (simulateur CAF : 156€)
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {

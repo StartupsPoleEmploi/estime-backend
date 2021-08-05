@@ -24,14 +24,13 @@ import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
 import utile.tests.UtileTests;
 
 public class CommunTests {
 
     @Autowired
-    private UtileTests utileTests;
+    protected UtileTests utileTests;
 
     @SpyBean
     protected DateUtile dateUtile;
@@ -46,29 +45,31 @@ public class CommunTests {
 
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH_ASS.getLibelle(),
-                isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH_ASS.getLibelle(), isEnCouple, nbEnfant);
+        
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles()
-                .setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+       
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationMensuelleNetAAH(900f);
-        PrestationsCAF prestationsCAF= new PrestationsCAF();
+   
         PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
         prestationsFamiliales.setAllocationsFamiliales(0);
-        prestationsFamiliales.setAllocationSoutienFamilial(90);
+        prestationsFamiliales.setAllocationSoutienFamilial(117);
         prestationsFamiliales.setComplementFamilial(0);   
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setPrestationsFamiliales(prestationsFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setAllocationMensuelleNetAAH(900f);
+        
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroitASS(utileTests.getDate("14-04-2020"));
 

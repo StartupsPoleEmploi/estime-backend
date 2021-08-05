@@ -21,8 +21,6 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -52,36 +50,23 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(5);
-	SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-	SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
-	Salaire salaireMoisDemande = new Salaire();
-	salaireMoisDemande.setMontantNet(850);
-	salaireMoisDemande.setMontantBrut(1101);
-	salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-	salaireAvantPeriodeSimulationMoisDemande.setSansSalaire(false);
-	salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-	SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
-	Salaire salaireMoisMoins1Mois = new Salaire();
-	salaireMoisMoins1Mois.setMontantNet(1000);
-	salaireMoisMoins1Mois.setMontantBrut(1200);
-	salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-	salaireAvantPeriodeSimulationMoisMoins1Mois.setSansSalaire(false);
-	salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-	SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new SalaireAvantPeriodeSimulation();
-	Salaire salaireMoisMoins2Mois = new Salaire();
-	salaireMoisMoins2Mois.setMontantNet(0);
-	salaireMoisMoins2Mois.setMontantBrut(0);
-	salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-	salaireAvantPeriodeSimulationMoisMoins2Mois.setSansSalaire(true);
-	salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-	demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+	
+	SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();       
+    salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1101, 850));
+    salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1200, 1000));
+    salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(0, 0));        
+    demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+
 
 	// Lorsque je simule mes aides le 20/10/2020
 	initMocks(demandeurEmploi);
 	SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
 	// Alors les aides du premier mois 11/2020 sont :
-	// AGEPI : 400€, Aide mobilité : 450€, AAH : 900€
+	// AGEPI : 400€
+	// Aide mobilité : 450€
+	// AAH : 900€
+	// ASS : 506€
 	SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -102,6 +87,7 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ass.getMontant()).isEqualTo(506f);
 	    });
 	});
+	
 	// Alors les aides du second mois 12/2020 sont :
 	// AAH : 180€ (dégressivité : 900 - 60% * 1200 = 180)
 	SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
@@ -115,9 +101,10 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ass.getMontant()).isEqualTo(180);
 	    });
 	});
+	
 	// Alors les aides du troisième mois 01/2021 sont :
 	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 147€ (Simulateur CAF : ?€)
+	// Prime d'activité : 146€ (Simulateur CAF : 135€)
 	SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -129,12 +116,13 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ass.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(147);
+		assertThat(ppa.getMontant()).isEqualTo(146);
 	    });
 	});
+	
 	// Alors les aides du quatrième mois 02/2021 sont :
 	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 147€ (Simulateur CAF : ?€)
+	// Prime d'activité : 146€
 	SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -146,12 +134,13 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ass.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(147);
+		assertThat(ppa.getMontant()).isEqualTo(146);
 	    });
 	});
+	
 	// Alors les aides du cinquième mois 03/2021 sont :
 	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 147€ (Simulateur CAF : ?€)
+	// Prime d'activité : 146€
 	SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -163,12 +152,13 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ass.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(147);
+		assertThat(ppa.getMontant()).isEqualTo(146);
 	    });
 	});
+	
 	// Alors les aides du sixième mois 04/2021 sont :
 	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 437€ (Simulateur CAF : ?€)
+	// Prime d'activité : 437€ (Simulateur CAF : 407€)
 	SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -196,36 +186,21 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(5);
-	SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-	SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
-	Salaire salaireMoisDemande = new Salaire();
-	salaireMoisDemande.setMontantNet(850);
-	salaireMoisDemande.setMontantBrut(1101);
-	salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-	salaireAvantPeriodeSimulationMoisDemande.setSansSalaire(false);
-	salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-	SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
-	Salaire salaireMoisMoins1Mois = new Salaire();
-	salaireMoisMoins1Mois.setMontantNet(1000);
-	salaireMoisMoins1Mois.setMontantBrut(1200);
-	salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-	salaireAvantPeriodeSimulationMoisMoins1Mois.setSansSalaire(false);
-	salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-	SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new SalaireAvantPeriodeSimulation();
-	Salaire salaireMoisMoins2Mois = new Salaire();
-	salaireMoisMoins2Mois.setMontantNet(1000);
-	salaireMoisMoins2Mois.setMontantBrut(1200);
-	salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-	salaireAvantPeriodeSimulationMoisMoins2Mois.setSansSalaire(false);
-	salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-	demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+	
+	SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();       
+    salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1101, 850));
+    salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1200, 1000));
+    salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1200, 1000));        
+    demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
 
 	// Lorsque je simule mes aides le 20/10/2020
 	initMocks(demandeurEmploi);
 	SimulationAidesSociales simulationAidesSociales = individuService.simulerAidesSociales(demandeurEmploi);
 
 	// Alors les aides du premier mois 11/2020 sont :
-	// AGEPI : 400€, Aide mobilité : 450€, AAH : 900€
+	// AGEPI : 400€
+	// Aide mobilité : 450€
+	// AAH : 900€
 	SimulationMensuelle simulationMois1 = simulationAidesSociales.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -243,9 +218,10 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ass.getMontant()).isEqualTo(900);
 	    });
 	});
+	
 	// Alors les aides du second mois 12/2020 sont :
 	// AAH : 180€ (dégressivité : 900 - 60% * 1200 = 180)
-	// Prime d'activité : 64€ (Simulateur CAF : ?€)
+	// Prime d'activité : 64€ (Simulateur CAF : 52€)
 	SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
 	assertThat(simulationMois2).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -260,9 +236,10 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ppa.getMontant()).isEqualTo(64);
 	    });
 	});
+	
 	// Alors les aides du troisième mois 01/2021 sont :
 	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 64€ (Simulateur CAF : ?€)
+	// Prime d'activité : 64€
 	SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -277,9 +254,10 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ppa.getMontant()).isEqualTo(64);
 	    });
 	});
+	
 	// Alors les aides du quatrième mois 02/2021 sont :
 	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 64€ (Simulateur CAF : ?€)
+	// Prime d'activité : 64€
 	SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -294,9 +272,10 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ppa.getMontant()).isEqualTo(64);
 	    });
 	});
+	
 	// Alors les aides du cinquième mois 03/2021 sont :
 	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 438€ (Simulateur CAF : ?€)
+	// Prime d'activité : 437€ (Simulateur CAF : 407€)
 	SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -308,12 +287,13 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ass.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(438);
+		assertThat(ppa.getMontant()).isEqualTo(437);
 	    });
 	});
+	
 	// Alors les aides du sixième mois 04/2021 sont :
 	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 438€ (Simulateur CAF : ?€)
+	// Prime d'activité : 437€ 
 	SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -325,7 +305,7 @@ class DemandeurAahAss5MoisTravaillesAvantSimulation extends CommunTests {
 		assertThat(ass.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(438);
+		assertThat(ppa.getMontant()).isEqualTo(437);
 	    });
 	});
     }

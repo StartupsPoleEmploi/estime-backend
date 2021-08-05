@@ -92,9 +92,11 @@ class DemandeurAah3MoisTravaillesAvantSimulation extends CommunTests {
                         assertThat(ass.getMontant()).isEqualTo(900);
                     });
         });
+        
+        //TODO montant : écart de 36€ avec CAF
         // Alors les aides du second mois 12/2020 sont :
         // AAH : 900€
-        // Prime d'activité : 222€ (simulateur CAF : 211€)
+        // Prime d'activité : 222€ (simulateur CAF : 186€)
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -110,9 +112,10 @@ class DemandeurAah3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(222);
             });
         });
+        
         // Alors les aides du troisième mois 01/2021 sont :
         // AAH : 900€
-        // Prime d'activité : 222€ (simulateur CAF : 211€)
+        // Prime d'activité : 222€
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -128,9 +131,10 @@ class DemandeurAah3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(222);
             });
         });
+        
         // Alors les aides du quatrième mois 02/2021 sont :
         // AAH : 180€
-        // Prime d'activité : 222€ (simulateur CAF : 211€)
+        // Prime d'activité : 222€
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -146,9 +150,11 @@ class DemandeurAah3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(222);
             });
         });
+        
+        //TODO montant : écart de 34€ avec CAF
         // Alors les aides du cinquième mois 03/2021 sont :
         // AAH : 180€
-        // Prime d'activité : 274€ (simulateur CAF : 265€)
+        // Prime d'activité : 274€ (simulateur CAF : 240€)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -164,9 +170,10 @@ class DemandeurAah3MoisTravaillesAvantSimulation extends CommunTests {
                         assertThat(ass.getMontant()).isEqualTo(180);
                     });
         });
+        
         // Alors les aides du sixième mois 04/2021 sont :
         // AAH : 180€
-        // Prime d'activité : 274€ (simulateur CAF : 265€)
+        // Prime d'activité : 274€
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {

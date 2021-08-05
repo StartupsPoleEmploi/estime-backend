@@ -79,20 +79,13 @@ public class PrimeActivite {
     }
     
     private boolean isPrimeActiviteACalculer(Optional<AideSociale> primeActiviteMoisPrecedent, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        if(primeActiviteMoisPrecedent.isEmpty()) {
-            if(beneficiaireAidesSocialesUtile.isBeneficiaireASS(demandeurEmploi) && beneficiaireAidesSocialesUtile.isBeneficiaireAAH(demandeurEmploi)) {
-                if(ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMois(demandeurEmploi)) {
-                    return isMoisPourCalculPrimeActiviteASS(numeroMoisSimule, demandeurEmploi);                    
-                } else  {
-                    return isPrimeActiviteACalculerDemandeurAAH(numeroMoisSimule);
-                }
-            } else {                
-                if(beneficiaireAidesSocialesUtile.isBeneficiaireAAH(demandeurEmploi)) {
-                    return isPrimeActiviteACalculerDemandeurAAH(numeroMoisSimule);
-                }
-                if(beneficiaireAidesSocialesUtile.isBeneficiaireASS(demandeurEmploi)) {
-                    return isPrimeActiviteACalculerDemandeurASS(demandeurEmploi, numeroMoisSimule);
-                }
+        if(primeActiviteMoisPrecedent.isEmpty()) {    
+            
+            //Si le demandeur est bénéficiare de l'ASS et de l'AAH, c'est la temporatlité de l'ASS qui est appliquée
+            if(beneficiaireAidesSocialesUtile.isBeneficiaireASS(demandeurEmploi) || (beneficiaireAidesSocialesUtile.isBeneficiaireASS(demandeurEmploi) && beneficiaireAidesSocialesUtile.isBeneficiaireAAH(demandeurEmploi))) {
+                return isPrimeActiviteACalculerDemandeurASS(demandeurEmploi, numeroMoisSimule);
+            } else if(beneficiaireAidesSocialesUtile.isBeneficiaireAAH(demandeurEmploi)) {
+                return isPrimeActiviteACalculerDemandeurAAH(numeroMoisSimule);
             }
         }     
         return false;

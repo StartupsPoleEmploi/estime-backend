@@ -171,6 +171,11 @@ public class UtileTests {
         Salaire salaire = new Salaire();
         salaire.setMontantNet(montantNet);
         salaire.setMontantBrut(montantBrut);
+        if(montantNet > 0) {
+            salaireAvantPeriodeSimulationMoisDemande.setSansSalaire(false);
+        } else {
+            salaireAvantPeriodeSimulationMoisDemande.setSansSalaire(true);
+        }
         salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaire);
         return salaireAvantPeriodeSimulationMoisDemande;
     }

@@ -92,9 +92,11 @@ class DemandeurAah6MoisTravaillesAvantSimulation extends CommunTests {
                         assertThat(ass.getMontant()).isEqualTo(180);
                     });
         });
+        
+        //TODO montant : écart de 35€ avec CAF
         // Alors les aides du second mois 12/2020 sont :
         // AAH : 180€
-        // Prime d'activité : 304€ (simulateur CAF : 295€)
+        // Prime d'activité : 304€ (simulateur CAF : 269€)
         SimulationMensuelle simulationMois2 = simulationAidesSociales.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -110,9 +112,10 @@ class DemandeurAah6MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(304);
             });
         });
+        
         // Alors les aides du troisième mois 01/2021 sont :
         // AAH : 180€
-        // Prime d'activité : 304€ (simulateur CAF : 295€)
+        // Prime d'activité : 304€
         SimulationMensuelle simulationMois3 = simulationAidesSociales.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -128,9 +131,10 @@ class DemandeurAah6MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(304);
             });
         });
+        
         // Alors les aides du quatrième mois 02/2021 sont :
         // AAH : 180€
-        // Prime d'activité : 304€ (simulateur CAF : 295€)
+        // Prime d'activité : 304€
         SimulationMensuelle simulationMois4 = simulationAidesSociales.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -146,9 +150,11 @@ class DemandeurAah6MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(304);
             });
         });
+        
+        //TODO montant : écart de 30€ avec CAF
         // Alors les aides du cinquième mois 03/2021 sont :
         // AAH : 180€
-        // Prime d'activité : 438€ (simulateur CAF : 435€)
+        // Prime d'activité : 437€ (simulateur CAF : 407€)
         SimulationMensuelle simulationMois5 = simulationAidesSociales.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -157,16 +163,17 @@ class DemandeurAah6MoisTravaillesAvantSimulation extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(438);
+                assertThat(ppa.getMontant()).isEqualTo(437);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode()))
                     .satisfies(ass -> {
                         assertThat(ass.getMontant()).isEqualTo(180);
                     });
         });
+        
         // Alors les aides du sixième mois 04/2021 sont :
         // AAH : 180€
-        // Prime d'activité : 438€ (simulateur CAF : 435€)
+        // Prime d'activité : 437€
         SimulationMensuelle simulationMois6 = simulationAidesSociales.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -175,7 +182,7 @@ class DemandeurAah6MoisTravaillesAvantSimulation extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(AidesSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(438);
+                assertThat(ppa.getMontant()).isEqualTo(437);
             });
             assertThat(simulation.getMesAides().get(AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode()))
                     .satisfies(ass -> {
