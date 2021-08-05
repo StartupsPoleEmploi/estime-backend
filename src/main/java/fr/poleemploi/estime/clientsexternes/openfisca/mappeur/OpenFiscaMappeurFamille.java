@@ -73,12 +73,7 @@ public class OpenFiscaMappeurFamille {
                 famille.put(RSA, openFiscaMappeurRSA.creerRSAJson(dateDebutSimulation, numeroMoisSimule));
                 famille.put(RSA_ISOLEMENT_RECENT, openFiscaPeriodeMappeur.creerPeriodes(!situationFamilialeUtile.isSeulPlusDe18Mois(demandeurEmploi), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
             }
-        } else {
-            float montantRsaFamille = situationFamilialeUtile.calculerMontantRsaFamille(demandeurEmploi);
-            if(montantRsaFamille > 0) {
-               famille.put(RSA, openFiscaPeriodeMappeur.creerPeriodes(montantRsaFamille, dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-            }
-        }
+        } 
         famille.put(PPA, openFiscaMappeurPrimeActivite.creerPrimeActiviteJSON(dateDebutSimulation, numeroMoisSimule));
         return famille;
     }

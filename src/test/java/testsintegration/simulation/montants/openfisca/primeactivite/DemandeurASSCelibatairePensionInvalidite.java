@@ -22,6 +22,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
+import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -81,10 +82,10 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 06/2021 est de 32€ (résultat simulateur CAF : 30€)
-        assertThat(montantPrimeActivite).isEqualTo(32);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(32);
     }
     
     @Test
@@ -128,11 +129,11 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart important avec CAF
         //Alors le montant de la prime d'activité pour le 06/2021 est de 49€ (résultat simulateur CAF : 83€)
-        assertThat(montantPrimeActivite).isEqualTo(49);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(49);
     }
     
     @Test
@@ -177,11 +178,11 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
         
         //TODO montant : écart moyen avec CAF
         //Alors le montant de la prime d'activité pour le 06/2021 est de 23€ (résultat simulateur CAF : 0€)
-        assertThat(montantPrimeActivite).isEqualTo(23);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(23);
     }
     
     @Test
@@ -216,10 +217,10 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
         
         //TODO Montant KO
         //Alors le montant de la prime d'activité pour le 06/2021 est de 0€ (résultat simulateur CAF : 0€)
-        assertThat(montantPrimeActivite).isEqualTo(0);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
     }
 }

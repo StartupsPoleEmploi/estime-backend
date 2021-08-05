@@ -1,7 +1,5 @@
 package fr.poleemploi.estime.commun.utile.demandeuremploi;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,39 +48,8 @@ public class SituationFamilialeUtile {
         return Optional.empty();
     }
     
-    public float calculerMontantRsaFamille(DemandeurEmploi demandeurEmploi) {
-        BigDecimal montantRSA = BigDecimal.ZERO;
-        if(isEnCouple(demandeurEmploi)) {
-            montantRSA = montantRSA.add(BigDecimal.valueOf(getMontantRsaConjoint(demandeurEmploi)));
-        }
-        if(hasPersonnesACharge(demandeurEmploi)) {
-            List<Personne> personnesACharge = demandeurEmploi.getSituationFamiliale().getPersonnesACharge();
-            montantRSA = montantRSA.add(getMontantTotalRSADesPersonnesCharge(personnesACharge));
-        }
-        return montantRSA.setScale(0, RoundingMode.DOWN).floatValue();
-    }
-    
     public boolean isSeulPlusDe18Mois(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getSituationFamiliale().getIsSeulPlusDe18Mois() != null 
                 &&  demandeurEmploi.getSituationFamiliale().getIsSeulPlusDe18Mois().booleanValue();
-    }
-    
-    private float getMontantRsaConjoint(DemandeurEmploi demandeurEmploi) {
-        Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
-        if(personneUtile.hasAllocationRSA(conjoint)) {
-            return conjoint.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA();
-        }
-        return 0;
-    }
-    
-    private BigDecimal getMontantTotalRSADesPersonnesCharge(List<Personne> personnesACharge) {
-        BigDecimal montantRSA = BigDecimal.ZERO;
-        for (Personne personneACharge : personnesACharge) {
-            if(personneUtile.hasAllocationRSA(personneACharge)) {
-                float allocationMensuelleNetRSA = personneACharge.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA();
-                montantRSA = montantRSA.add(BigDecimal.valueOf(allocationMensuelleNetRSA));
-            }
-        }
-        return montantRSA;
-    }    
+    }  
 }

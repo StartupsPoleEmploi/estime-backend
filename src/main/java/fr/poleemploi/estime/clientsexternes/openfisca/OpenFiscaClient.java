@@ -45,14 +45,19 @@ public class OpenFiscaClient {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaClient.class);
 
-    public float calculerMontantPrimeActivite(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerPrimeActivite(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
         String jsonResponse = callApiCalculate(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-        return openFiscaResponseMappeurPrimeActivite.getMontantPrimeActivite(jsonResponse, dateDebutSimulation, numeroMoisSimule);
+        openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaResponseMappeurPrimeActivite.getMontantPrimeActivite(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        return openFiscaRetourSimulation;
     }
     
-    public float calculerMontantRSA(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerRsaAvecPrimeActivite(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
         String jsonResponse = callApiCalculate(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-        return openFiscaResponseMappeurRSA.getMontantRSA(jsonResponse, dateDebutSimulation, numeroMoisSimule);
+        openFiscaRetourSimulation.setMontantRSA(openFiscaResponseMappeurRSA.getMontantRSA(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaResponseMappeurPrimeActivite.getMontantPrimeActivite(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        return openFiscaRetourSimulation;
     }
     
     private String callApiCalculate(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {

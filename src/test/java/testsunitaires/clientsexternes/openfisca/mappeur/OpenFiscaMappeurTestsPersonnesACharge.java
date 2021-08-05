@@ -225,47 +225,6 @@ class OpenFiscaMappeurTestsPersonnesACharge extends CommunTests {
         assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
     }
     
-    @Test
-    void mapDemandeurPersonneAChargeRSAToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
-        
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsPersonnesACharge/demandeur-avec-enfant-rsa.json");
-
-        DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
-        
-        FuturTravail futurTravail = new FuturTravail();
-        Salaire salaire = new Salaire();
-        salaire.setMontantNet(900);
-        salaire.setMontantBrut(1165);
-        futurTravail.setSalaire(salaire);
-        demandeurEmploi.setFuturTravail(futurTravail);
-        
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-        
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        List<Personne> personnesACharge = new ArrayList<Personne>();
-        Personne personneACharge = createPersonne(testUtile.getDate("05-07-2000"));
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireRSA(true);
-        personneACharge.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
-        RessourcesFinancieres ressourcesFinancieresPersonneACharge = new RessourcesFinancieres();
-        PrestationsCAF prestationsCAFPersonneACharge = new PrestationsCAF();
-        prestationsCAFPersonneACharge.setAllocationMensuelleNetRSA(900f);
-        ressourcesFinancieresPersonneACharge.setPrestationsCAF(prestationsCAFPersonneACharge);
-        personneACharge.setRessourcesFinancieres(ressourcesFinancieresPersonneACharge);
-        personnesACharge.add(personneACharge);
-        situationFamiliale.setPersonnesACharge(personnesACharge);
-        situationFamiliale.setIsEnCouple(false);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
-        
-        
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
-        
-        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
-        
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
-    }
     
     @Test
     void mapDemandeurPersonneAChargeSalaireToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {

@@ -22,6 +22,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
+import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -82,11 +83,11 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 30€ avec CAF 
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : 30€ )
-        assertThat(montantPrimeActivite).isEqualTo(0);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
     }
     
     @Test
@@ -131,11 +132,11 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 127€ avec CAF
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : 127€)
-        assertThat(montantPrimeActivite).isEqualTo(0);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
     }
     
     @Test
@@ -175,10 +176,10 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : 26€)
-        assertThat(montantPrimeActivite).isEqualTo(0);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
     }
     
     @Test
@@ -227,10 +228,10 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 32€ avec CAF
         //Alors le montant de la prime d'activité pour le 01/2021 est de 0€ (résultat simulateur CAF : 32€)
-        assertThat(montantPrimeActivite).isEqualTo(0);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
     }
 }

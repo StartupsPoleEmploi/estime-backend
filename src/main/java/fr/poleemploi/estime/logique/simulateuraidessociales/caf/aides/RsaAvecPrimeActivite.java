@@ -1,6 +1,7 @@
 package fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
+import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.services.ressources.AideSociale;
@@ -17,21 +19,24 @@ import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 @Component
-public class RSA {
+public class RsaAvecPrimeActivite {
     //le montant calculé au mois N est reporté au mois N+1 et N+2, la validité du montant s'étale donc sur 3 mois
     public static final int NBR_MOIS_VALIDITE_MONTANT = 3;
 
     @Autowired
     private OpenFiscaClient openFiscaClient;
+    
+    @Autowired
+    private PrimeActivite primeActivite;
 
 
-    public void simulerRSA(SimulationAidesSociales simulationAidesSociales, Map<String, AideSociale>  aidesEligiblesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simulerRsaAvecPrimeActivite(SimulationAidesSociales simulationAidesSociales, Map<String, AideSociale>  aidesEligiblesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         List<SimulationMensuelle> simulationsMensuelles = simulationAidesSociales.getSimulationsMensuelles();
         int prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getProchaineDeclarationRSA();
         if(isRSAACalculer(numeroMoisSimule, prochaineDeclarationRSA)) {
-            Optional<AideSociale> aideRsaOptional = calculer(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-            if(aideRsaOptional.isPresent()) {
-                aidesEligiblesPourCeMois.put(AidesSociales.RSA.getCode(), aideRsaOptional.get());
+            HashMap<String, AideSociale> aidesSociales = calculer(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+            if(!aidesSociales.isEmpty()) {
+                aidesEligiblesPourCeMois.putAll(aidesSociales);
             }
         } else {
             Optional<AideSociale> rsaMoisPrecedent = getRSASimuleeMoisPrecedent(simulationsMensuelles, numeroMoisSimule);
@@ -39,6 +44,10 @@ public class RSA {
                 aidesEligiblesPourCeMois.put(AidesSociales.RSA.getCode(), rsaMoisPrecedent.get());
             } else if(isEligiblePourReportRSA(prochaineDeclarationRSA, numeroMoisSimule)) {
                 aidesEligiblesPourCeMois.put(AidesSociales.RSA.getCode(), getRSADeclare(demandeurEmploi));
+            }
+            Optional<AideSociale> primeActiviteMoisPrecedent = primeActivite.getPrimeActiviteMoisPrecedent(simulationsMensuelles, numeroMoisSimule);
+            if (primeActiviteMoisPrecedent.isPresent()) {
+                aidesEligiblesPourCeMois.put(AidesSociales.PRIME_ACTIVITE.getCode(), primeActiviteMoisPrecedent.get());       
             }
         }
     }
@@ -48,13 +57,22 @@ public class RSA {
                 || (numeroMoisSimule == 2 && (prochaineDeclarationRSA == 0 || prochaineDeclarationRSA == 3)) ;
     }
 
-    private Optional<AideSociale> calculer(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        float montantRSA = openFiscaClient.calculerMontantRSA(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-        if(montantRSA > 0) {
-            AideSociale aideSocialeRSA = creerAideSocialeRSA(montantRSA, false);
-            return Optional.of(aideSocialeRSA);
+    private HashMap<String, AideSociale> calculer(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+        
+        HashMap<String, AideSociale> aideSociales = new HashMap<>();
+        
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerRsaAvecPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+        
+        if(openFiscaRetourSimulation.getMontantRSA() > 0) {
+            AideSociale aideSocialeRSA = creerAideSocialeRSA(openFiscaRetourSimulation.getMontantRSA(), false);
+            aideSociales.put(aideSocialeRSA.getCode(), aideSocialeRSA);
         }
-        return Optional.empty();
+        if(openFiscaRetourSimulation.getMontantPrimeActivite() > 0) {
+            AideSociale aideSocialePrimeActivite = primeActivite.creerAidesSocialePrimeActivite(openFiscaRetourSimulation.getMontantPrimeActivite(), false);
+            aideSociales.put(aideSocialePrimeActivite.getCode(), aideSocialePrimeActivite);
+        }
+        
+        return aideSociales;
     }
     
     private AideSociale creerAideSocialeRSA(float montantRSA, boolean isAideReportee) {

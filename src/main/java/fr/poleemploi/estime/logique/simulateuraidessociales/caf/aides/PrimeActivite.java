@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
+import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.AidesSociales;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
@@ -27,10 +28,10 @@ public class PrimeActivite {
 
     @Autowired
     private OpenFiscaClient openFiscaClient;
-
+    
     @Autowired
     private AideSocialeUtile aideSocialeUtile;
-
+    
     @Autowired
     private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
     
@@ -41,9 +42,16 @@ public class PrimeActivite {
     public void simulerPrimeActivite(SimulationAidesSociales simulationAidesSociales, Map<String, AideSociale>  aidesEligiblesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         List<SimulationMensuelle> simulationsMensuelles = simulationAidesSociales.getSimulationsMensuelles();
 
-        Optional<AideSociale> primeActiviteMoisPrecedent = getPrimeActiviteSimuleeMoisPrecedent(simulationsMensuelles, numeroMoisSimule);     
+        Optional<AideSociale> primeActiviteMoisPrecedent = getPrimeActiviteMoisPrecedent(simulationsMensuelles, numeroMoisSimule);     
 
-        if(primeActiviteMoisPrecedent.isPresent()){
+        if(isPrimeActiviteACalculer(primeActiviteMoisPrecedent, numeroMoisSimule, demandeurEmploi)) {
+            Optional<AideSociale> aidePrimeActiviteOptional = calculer(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+            if(aidePrimeActiviteOptional.isPresent()) {
+                AideSociale aideSocialeMoisPrecedent = aidePrimeActiviteOptional.get();
+
+                aidesEligiblesPourCeMois.put(AidesSociales.PRIME_ACTIVITE.getCode(), aideSocialeMoisPrecedent);
+            }
+        } else if(primeActiviteMoisPrecedent.isPresent()){
             int moisMoinsPeriodeValiditeMontant = numeroMoisSimule - NBR_MOIS_VALIDITE_MONTANT; 
             Optional<AideSociale> primeActiviteDebutPeriodeValiditeMontant = getPrimeActiviteSimuleePourNumeroMois(simulationsMensuelles, moisMoinsPeriodeValiditeMontant);
 
@@ -57,25 +65,30 @@ public class PrimeActivite {
                 }
                 //sinon on reporte le montant de la prime d'activité de N-1
             } else  {
-                AideSociale primeActiviteMoisSimule = creerAideAvecMontantPrimeActiviteMoisPrecedent(primeActiviteMoisPrecedent.get());
+                AideSociale primeActiviteMoisPRecedent = primeActiviteMoisPrecedent.get();
+                AideSociale primeActiviteMoisSimule = creerAidesSocialePrimeActivite(primeActiviteMoisPRecedent.getMontant(),true); 
                 aidesEligiblesPourCeMois.put(AidesSociales.PRIME_ACTIVITE.getCode(), primeActiviteMoisSimule);                    
-            }
-        } else if(isPrimeActiviteACalculerEnFonctionDuRSA(primeActiviteMoisPrecedent, numeroMoisSimule, demandeurEmploi)) {
-            Optional<AideSociale> aidePrimeActiviteOptional = calculer(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-            if(aidePrimeActiviteOptional.isPresent()) {
-                AideSociale aideSocialeMoisPrecedent = aidePrimeActiviteOptional.get();
-
-                aidesEligiblesPourCeMois.put(AidesSociales.PRIME_ACTIVITE.getCode(), aideSocialeMoisPrecedent);
             }
         } 
     }
-
-    private boolean isPrimeActiviteACalculerEnFonctionDuRSA(Optional<AideSociale> primeActiviteMoisPrecedent, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
-            Integer prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getProchaineDeclarationRSA();
-            return isRSAACalculer(numeroMoisSimule, prochaineDeclarationRSA);
-        } 
-        return isPrimeActiviteACalculer(primeActiviteMoisPrecedent, numeroMoisSimule, demandeurEmploi);
+    
+    public AideSociale creerAidesSocialePrimeActivite(float montantPrimeActivite, boolean isAideReportee) {
+        AideSociale aidePrimeActivite = new AideSociale();
+        aidePrimeActivite.setCode(AidesSociales.PRIME_ACTIVITE.getCode());
+        Optional<String> detailAideOptional = aideSocialeUtile.getDescription(AidesSociales.PRIME_ACTIVITE.getNomFichierDetail());
+        if(detailAideOptional.isPresent()) {
+            aidePrimeActivite.setDetail(detailAideOptional.get());            
+        }
+        aidePrimeActivite.setMontant(montantPrimeActivite); 
+        aidePrimeActivite.setNom(AidesSociales.PRIME_ACTIVITE.getNom());
+        aidePrimeActivite.setOrganisme(Organismes.CAF.getNomCourt());
+        aidePrimeActivite.setReportee(isAideReportee);
+        return aidePrimeActivite;
+    }
+    
+    public Optional<AideSociale> getPrimeActiviteMoisPrecedent(List<SimulationMensuelle> simulationsMensuelles, int numeroMoisSimule) {
+        int moisNMoins1 = numeroMoisSimule - 1; 
+        return getPrimeActiviteSimuleePourNumeroMois(simulationsMensuelles, moisNMoins1);
     }
     
     private boolean isPrimeActiviteACalculer(Optional<AideSociale> primeActiviteMoisPrecedent, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
@@ -98,12 +111,7 @@ public class PrimeActivite {
     
     private boolean isPrimeActiviteACalculerDemandeurAAH(int numeroMoisSimule) {
         return numeroMoisSimule == 2 || numeroMoisSimule == 5;
-    }
-
-    private Optional<AideSociale> getPrimeActiviteSimuleeMoisPrecedent(List<SimulationMensuelle> simulationsMensuelles, int numeroMoisSimule) {
-        int moisNMoins1 = numeroMoisSimule - 1; 
-        return getPrimeActiviteSimuleePourNumeroMois(simulationsMensuelles, moisNMoins1);
-    }
+    }    
 
     private Optional<AideSociale> getPrimeActiviteSimuleePourNumeroMois(List<SimulationMensuelle> simulationsMensuelles, int numeroMois) {
         int indexMoisPrecedent = numeroMois - 1;
@@ -120,40 +128,13 @@ public class PrimeActivite {
     }
 
     private Optional<AideSociale> calculer(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-        if(montantPrimeActivite > 0) {
-            AideSociale aidePrimeActivite = new AideSociale();
-            aidePrimeActivite.setCode(AidesSociales.PRIME_ACTIVITE.getCode());
-            Optional<String> detailAideOptional = aideSocialeUtile.getDescription(AidesSociales.PRIME_ACTIVITE.getNomFichierDetail());
-            if(detailAideOptional.isPresent()) {
-                aidePrimeActivite.setDetail(detailAideOptional.get());            
-            }
-            aidePrimeActivite.setMontant(montantPrimeActivite); 
-            aidePrimeActivite.setNom(AidesSociales.PRIME_ACTIVITE.getNom());
-            aidePrimeActivite.setOrganisme(Organismes.CAF.getNomCourt());
-            aidePrimeActivite.setReportee(false);
-            return Optional.of(aidePrimeActivite);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+        if(openFiscaRetourSimulation.getMontantPrimeActivite() > 0) {
+            return Optional.of(creerAidesSocialePrimeActivite(openFiscaRetourSimulation.getMontantPrimeActivite(), false));
         }
         return Optional.empty();
     }
    
-    private AideSociale creerAideAvecMontantPrimeActiviteMoisPrecedent(AideSociale aidePrimeActiviteMoisPrecedent) {
-        AideSociale aidePrimeActivite = new AideSociale();
-        aidePrimeActivite.setCode(aidePrimeActiviteMoisPrecedent.getCode());
-        aidePrimeActivite.setDetail(aidePrimeActiviteMoisPrecedent.getDetail());            
-        aidePrimeActivite.setMontant(aidePrimeActiviteMoisPrecedent.getMontant()); 
-        aidePrimeActivite.setNom(aidePrimeActiviteMoisPrecedent.getNom());
-        aidePrimeActivite.setOrganisme(Organismes.CAF.getNomCourt());
-        aidePrimeActivite.setReportee(true);
-        return aidePrimeActivite;
-    }
-    
-    private boolean isRSAACalculer(int numeroMoisSimule, int prochaineDeclarationRSA) {
-        return ((prochaineDeclarationRSA == numeroMoisSimule)
-                || (prochaineDeclarationRSA == numeroMoisSimule-3)
-                || (prochaineDeclarationRSA == numeroMoisSimule-6));       
-    }
-    
     private boolean isMoisPourCalculPrimeActiviteASS(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         int nombreMoisTravaillesDerniersMois = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi, false);
         return nombreMoisTravaillesDerniersMois == 1 && numeroMoisSimule == 4 

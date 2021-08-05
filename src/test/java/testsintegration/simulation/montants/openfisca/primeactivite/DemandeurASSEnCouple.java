@@ -22,6 +22,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
+import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -83,10 +84,10 @@ class DemandeurASSEnCouple extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 85€ (résultat simulateur CAF : 81€)
-        assertThat(montantPrimeActivite).isEqualTo(85);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(85);
     }
 
     @Test
@@ -121,10 +122,10 @@ class DemandeurASSEnCouple extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité avec salaires 07/2020 = 1900, 08/2020 = 1900, 09/2020 = 1900 
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");        
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 0€ (résultat simulateur CAF : 0€)
-        assertThat(montantPrimeActivite).isEqualTo(0);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
     }
 
     @Test
@@ -160,10 +161,10 @@ class DemandeurASSEnCouple extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 140€ (résultat simulateur CAF : 136€)
-        assertThat(montantPrimeActivite).isEqualTo(140);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(140);
     }
 
     @Test
@@ -210,10 +211,10 @@ class DemandeurASSEnCouple extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 152€ (résultat simulateur CAF : 147€)
-        assertThat(montantPrimeActivite).isEqualTo(152);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(152);
     }
 
     @Test
@@ -261,10 +262,10 @@ class DemandeurASSEnCouple extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 145€ (résultat simulateur CAF : 141€)
-        assertThat(montantPrimeActivite).isEqualTo(145);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(145);
     }
 
     @Test
@@ -312,11 +313,11 @@ class DemandeurASSEnCouple extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 34€ avec CAF
         //Alors le montant de la prime d'activité pour le 11/2020 est de 111€ (résultat simulateur CAF : 77€)
-        assertThat(montantPrimeActivite).isEqualTo(111);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(111);
     }
 
     @Test
@@ -365,11 +366,11 @@ class DemandeurASSEnCouple extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 34€ avec CAF
         //Alors le montant de la prime d'activité pour le 11/2020 est de 64€ (résultat simulateur CAF : 30€)
-        assertThat(montantPrimeActivite).isEqualTo(64);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(64);
     }
     
     @Test
@@ -418,11 +419,11 @@ class DemandeurASSEnCouple extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 34€ avec CAF
         //Alors le montant de la prime d'activité pour le 11/2020 est de 128€ (résultat simulateur CAF : 94€)
-        assertThat(montantPrimeActivite).isEqualTo(128);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(128);
     }
 
     @Test
@@ -472,10 +473,10 @@ class DemandeurASSEnCouple extends CommunTests {
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        float montantPrimeActivite = openFiscaClient.calculerMontantPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAidesSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 34€ avec CAF
         //Alors le montant de la prime d'activité pour le 11/2020 est de 74€ (résultat simulateur CAF : 40€ )
-        assertThat(montantPrimeActivite).isEqualTo(74);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(74);
     }
 }

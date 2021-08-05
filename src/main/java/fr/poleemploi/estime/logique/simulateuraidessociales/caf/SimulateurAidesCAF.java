@@ -10,7 +10,7 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocial
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.AllocationAdultesHandicapes;
 import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.PrimeActivite;
-import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.RSA;
+import fr.poleemploi.estime.logique.simulateuraidessociales.caf.aides.RsaAvecPrimeActivite;
 import fr.poleemploi.estime.services.ressources.AideSociale;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
@@ -34,7 +34,7 @@ public class SimulateurAidesCAF {
     private PrimeActivite primeActivite;
     
     @Autowired
-    private RSA rsa;
+    private RsaAvecPrimeActivite rsaAvecPrimeActivite;
     
     public void simulerAidesCAF(SimulationAidesSociales simulationAidesSociales, Map<String, AideSociale>  aidesEligiblesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         if(isEligibleAidesCAF(demandeurEmploi)) {
@@ -43,13 +43,13 @@ public class SimulateurAidesCAF {
                 allocationAdultesHandicapes.simulerAAH(aidesEligiblesPourCeMois, numeroMoisSimule, demandeurEmploi);
             }
             
-            primeActivite.simulerPrimeActivite(simulationAidesSociales, aidesEligiblesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
             
             if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
-                rsa.simulerRSA(simulationAidesSociales, aidesEligiblesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+                rsaAvecPrimeActivite.simulerRsaAvecPrimeActivite(simulationAidesSociales, aidesEligiblesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+            } else {
+                primeActivite.simulerPrimeActivite(simulationAidesSociales, aidesEligiblesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);                
             }
-        }   
-        
+        }           
     }
     
     private boolean isEligibleAidesCAF(DemandeurEmploi demandeurEmploi) {
