@@ -131,7 +131,7 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        //TODO montant : écart important avec CAF
+        //TODO montant : écart de 34€ avec CAF
         //Alors le montant de la prime d'activité pour le 06/2021 est de 49€ (résultat simulateur CAF : 83€)
         assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(49);
     }
@@ -180,7 +180,7 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
         
-        //TODO montant : écart moyen avec CAF
+        //TODO montant : écart de 23€ avec CAF
         //Alors le montant de la prime d'activité pour le 06/2021 est de 23€ (résultat simulateur CAF : 0€)
         assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(23);
     }
@@ -219,7 +219,6 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");  
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
         
-        //TODO Montant KO
         //Alors le montant de la prime d'activité pour le 06/2021 est de 0€ (résultat simulateur CAF : 0€)
         assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
     }
