@@ -22,7 +22,7 @@ import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
+import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
@@ -324,9 +324,9 @@ class OpenFiscaMappeurTests {
         situationFamiliale.setIsSeulPlusDe18Mois(true);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
         
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireRSA(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireRSA(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         PrestationsCAF prestationsCAF = new PrestationsCAF();

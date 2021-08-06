@@ -2,11 +2,11 @@
 
 :gb: [English version](https://github.com/StartupsPoleEmploi/estime-backend/blob/333fd0f4cbbc5484f8814d685ea8e919eb6389ba/README_EN.md)
 
-# [Startups Pôle emploi] Estime - simulateur d'aides à la reprise d'emploi
+# [Startups Pôle emploi] Estime - simulateur d'prestations à la reprise d'emploi
 
 Ce projet est développé dans le cadre de la réalisation de l'application [Estime](https://github.com/StartupsPoleEmploi/estime-frontend).
 
-Ce projet est une application REST exposant des services permettant de simuler des aides Pôle emploi (ASS, AGEPI, etc...) et des aides CAF (Prime d'activité) sur une période de 6 mois dans le cadre d'une reprise d'emploi pour un demandeur d'emploi.
+Ce projet est une application REST exposant des services permettant de simuler des prestations Pôle emploi (ASS, AGEPI, etc...) et des prestations CAF (Prime d'activité) sur une période de 6 mois dans le cadre d'une reprise d'emploi pour un demandeur d'emploi.
 
 :closed_lock_with_key: L'accès aux services est **sécurisé par une authentification avec [Pôle emploi Connect](https://www.emploi-store-dev.fr/portail-developpeur/detailapicatalogue/-se-connecter-avec-p-le-emploi-v1?id=58d00957243a5f7809e17698).**
 

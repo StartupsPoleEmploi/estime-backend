@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.logique.simulateuraidessociales.poleemploi.aides.AllocationSolidariteSpecifique;
+import fr.poleemploi.estime.logique.simulateur.prestationssociales.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
@@ -22,25 +22,25 @@ public class RessourcesFinancieresUtile {
     DateUtile dateUtile;
 
     @Autowired
-    private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
+    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
 
     @Autowired
-    private AllocationSolidariteSpecifique allocationSolidariteSpecifique;
+    private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifique;
 
     public float calculerMontantRessourcesFinancieresMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {
         BigDecimal montantTotal = BigDecimal.ZERO;
         LocalDate moisAvantSimulation = dateUtile.enleverMoisALocalDate(dateUtile.getDateJour(), 1);
-        if(beneficiaireAidesSocialesUtile.isBeneficiaireASS(demandeurEmploi)) {
+        if(beneficiairePrestationsSocialesUtile.isBeneficiaireASS(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(allocationSolidariteSpecifique.calculerMontant(demandeurEmploi, moisAvantSimulation)));
         }
-        if(beneficiaireAidesSocialesUtile.isBeneficiaireAAH(demandeurEmploi)) {
+        if(beneficiairePrestationsSocialesUtile.isBeneficiaireAAH(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetAAH()));
         }
-        if(beneficiaireAidesSocialesUtile.isBeneficiairePensionInvalidite(demandeurEmploi)) {
+        if(beneficiairePrestationsSocialesUtile.isBeneficiairePensionInvalidite(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCPAM().getPensionInvalidite()));
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCPAM().getAllocationSupplementaireInvalidite()));
         }
-        if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
+        if(beneficiairePrestationsSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA()));
         }
         if(hasRevenusImmobilier(demandeurEmploi)) {

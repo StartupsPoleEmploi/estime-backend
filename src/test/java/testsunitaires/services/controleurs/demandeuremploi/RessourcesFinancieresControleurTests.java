@@ -23,7 +23,7 @@ import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
-import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
+import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
@@ -52,16 +52,16 @@ class RessourcesFinancieresControleurTests extends CommunTests {
     void controlerDonneeesEntreeRessourcesFinancieresDemandeurASSTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireASS(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "ressourcesFinancieres dans DemandeurEmploi"));
     }
     
@@ -69,9 +69,9 @@ class RessourcesFinancieresControleurTests extends CommunTests {
     void controlerDonneeesEntreeRessourcesFinancieresDemandeurASSTest2() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireASS(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
@@ -80,7 +80,7 @@ class RessourcesFinancieresControleurTests extends CommunTests {
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "prestationsPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
     }
     
@@ -88,9 +88,9 @@ class RessourcesFinancieresControleurTests extends CommunTests {
     void controlerDonneeesEntreeRessourcesFinancieresDemandeurASSTest3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireASS(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
@@ -105,7 +105,7 @@ class RessourcesFinancieresControleurTests extends CommunTests {
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationJournaliereNetASS"));
     }
     
@@ -113,9 +113,9 @@ class RessourcesFinancieresControleurTests extends CommunTests {
     void controlerDonneeesEntreeRessourcesFinancieresDemandeurASSTest4() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireASS(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
@@ -130,7 +130,7 @@ class RessourcesFinancieresControleurTests extends CommunTests {
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "dateDerniereOuvertureDroitASS dans AllocationsPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
     }
     
@@ -139,9 +139,9 @@ class RessourcesFinancieresControleurTests extends CommunTests {
     void controlerDonneeesEntreeRessourcesFinancieresDemandeurASSTest5() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireASS(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
@@ -157,7 +157,7 @@ class RessourcesFinancieresControleurTests extends CommunTests {
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "hasTravailleAuCoursDerniersMois dans RessourcesFinancieres"));
     }
     
@@ -165,16 +165,16 @@ class RessourcesFinancieresControleurTests extends CommunTests {
     void controlerDonneeesEntreeRessourcesFinancieresDemandeurAAHTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireAAH(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireAAH(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "ressourcesFinancieres dans DemandeurEmploi"));
     }
     
@@ -182,9 +182,9 @@ class RessourcesFinancieresControleurTests extends CommunTests {
     void controlerDonneeesEntreeRessourcesFinancieresDemandeurAAHTest2() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireAAH(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireAAH(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
@@ -193,7 +193,7 @@ class RessourcesFinancieresControleurTests extends CommunTests {
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "allocationsCAF dans RessourcesFinancieres de DemandeurEmploi"));
     }
     
@@ -201,9 +201,9 @@ class RessourcesFinancieresControleurTests extends CommunTests {
     void controlerDonneeesEntreeRessourcesFinancieresDemandeurAAHTest3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireAAH(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireAAH(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
@@ -216,7 +216,7 @@ class RessourcesFinancieresControleurTests extends CommunTests {
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationMensuelleNetAAH"));
     }
     
@@ -224,9 +224,9 @@ class RessourcesFinancieresControleurTests extends CommunTests {
     void controlerDonneeesEntreeRessourcesFinancieresDemandeurAAHTest4() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireAAH(true);
-        demandeurEmploi.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireAAH(true);
+        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
@@ -240,7 +240,7 @@ class RessourcesFinancieresControleurTests extends CommunTests {
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nombreMoisTravaillesDerniersMois dans RessourcesFinancieres"));
     }
 }

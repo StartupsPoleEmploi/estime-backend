@@ -12,7 +12,7 @@ import fr.poleemploi.estime.services.ressources.Personne;
 public class PersonneUtile {
 
     @Autowired
-    private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
+    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
     
     public int calculerAge(Personne personne) {
         return Period.between(personne.getInformationsPersonnelles().getDateNaissance(), LocalDate.now()).getYears();
@@ -26,7 +26,7 @@ public class PersonneUtile {
     }
     
     public boolean hasAllocationARE(Personne personne) {
-        return beneficiaireAidesSocialesUtile.isBeneficiaireARE(personne)
+        return beneficiairePrestationsSocialesUtile.isBeneficiaireARE(personne)
                && personne.getRessourcesFinancieres() != null 
                && personne.getRessourcesFinancieres().getPrestationsPoleEmploi()!= null 
                && personne.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE() != null
@@ -35,7 +35,7 @@ public class PersonneUtile {
     }
     
     public boolean hasAllocationASS(Personne personne) {
-        return beneficiaireAidesSocialesUtile.isBeneficiaireASS(personne)
+        return beneficiairePrestationsSocialesUtile.isBeneficiaireASS(personne)
                && personne.getRessourcesFinancieres() != null 
                && personne.getRessourcesFinancieres().getPrestationsPoleEmploi() != null 
                && personne.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS() != null

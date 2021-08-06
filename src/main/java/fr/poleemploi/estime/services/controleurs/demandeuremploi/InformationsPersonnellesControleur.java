@@ -10,7 +10,7 @@ import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.NationalitesUtile;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
-import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
+import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 
 @Component
@@ -19,7 +19,7 @@ public class InformationsPersonnellesControleur {
     @Autowired
     private NationalitesUtile nationalitesUtile;
 
-    public void controlerDonnees(InformationsPersonnelles informationsPersonnelles, BeneficiaireAidesSociales beneficiaireAidesSociales) {
+    public void controlerDonnees(InformationsPersonnelles informationsPersonnelles, BeneficiairePrestationsSociales beneficiairePrestationsSociales) {
         if(informationsPersonnelles == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "informationsPersonnelles"));
         }  else {
@@ -35,7 +35,7 @@ public class InformationsPersonnellesControleur {
                 controleNationalite(informationsPersonnelles);                
             }  
 
-            if(beneficiaireAidesSociales.isBeneficiaireRSA() && informationsPersonnelles.getIsProprietaireSansPretOuLogeGratuit() == null) {
+            if(beneficiairePrestationsSociales.isBeneficiaireRSA() && informationsPersonnelles.getIsProprietaireSansPretOuLogeGratuit() == null) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "isProprietaireSansPretOuLogeGratuit de informationsPersonnelles"));
 
             }            

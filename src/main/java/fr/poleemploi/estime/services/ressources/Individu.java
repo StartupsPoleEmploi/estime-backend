@@ -3,7 +3,7 @@ package fr.poleemploi.estime.services.ressources;
 public class Individu {
 
     private String idPoleEmploi;
-    private BeneficiaireAidesSociales beneficiaireAidesSociales;
+    private BeneficiairePrestationsSociales beneficiairePrestationsSociales;
     private boolean isPopulationAutorisee;
     private PeConnectAuthorization peConnectAuthorization;
     private RessourcesFinancieres ressourcesFinancieres;
@@ -26,11 +26,11 @@ public class Individu {
     public void setPopulationAutorisee(boolean isPopulationAutorisee) {
         this.isPopulationAutorisee = isPopulationAutorisee;
     }
-    public BeneficiaireAidesSociales getBeneficiaireAidesSociales() {
-        return beneficiaireAidesSociales;
+    public BeneficiairePrestationsSociales getBeneficiairePrestationsSociales() {
+        return beneficiairePrestationsSociales;
     }
-    public void setBeneficiaireAidesSociales(BeneficiaireAidesSociales beneficiaireAidesSociales) {
-        this.beneficiaireAidesSociales = beneficiaireAidesSociales;
+    public void setBeneficiairePrestationsSociales(BeneficiairePrestationsSociales beneficiairePrestationsSociales) {
+        this.beneficiairePrestationsSociales = beneficiairePrestationsSociales;
     }
     public RessourcesFinancieres getRessourcesFinancieres() {
         return ressourcesFinancieres;
@@ -40,7 +40,7 @@ public class Individu {
     }
     @Override
     public String toString() {
-        return "Individu [idPoleEmploi=" + idPoleEmploi + ", beneficiaireAidesSociales=" + beneficiaireAidesSociales
+        return "Individu [idPoleEmploi=" + idPoleEmploi + ", beneficiairePrestationsSociales=" + beneficiairePrestationsSociales
                 + ", isPopulationAutorisee=" + isPopulationAutorisee + ", peConnectAuthorization="
                 + peConnectAuthorization + ", ressourcesFinancieres=" + ressourcesFinancieres + "]";
     } 

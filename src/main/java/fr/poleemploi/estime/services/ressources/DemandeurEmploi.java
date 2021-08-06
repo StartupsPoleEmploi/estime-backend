@@ -3,7 +3,7 @@ package fr.poleemploi.estime.services.ressources;
 public class DemandeurEmploi {
 
     private String idPoleEmploi;
-    private BeneficiaireAidesSociales beneficiaireAidesSociales;
+    private BeneficiairePrestationsSociales beneficiairePrestationsSociales;
     private FuturTravail futurTravail;
     private InformationsPersonnelles informationsPersonnelles;
     private RessourcesFinancieres ressourcesFinancieres;
@@ -18,11 +18,11 @@ public class DemandeurEmploi {
     public void setRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres) {
         this.ressourcesFinancieres = ressourcesFinancieres;
     }
-    public BeneficiaireAidesSociales getBeneficiaireAidesSociales() {
-        return beneficiaireAidesSociales;
+    public BeneficiairePrestationsSociales getBeneficiairePrestationsSociales() {
+        return beneficiairePrestationsSociales;
     }
-    public void setBeneficiaireAidesSociales(BeneficiaireAidesSociales beneficiaireAidesSociales) {
-        this.beneficiaireAidesSociales = beneficiaireAidesSociales;
+    public void setBeneficiairePrestationsSociales(BeneficiairePrestationsSociales beneficiairePrestationsSociales) {
+        this.beneficiairePrestationsSociales = beneficiairePrestationsSociales;
     }
     public SituationFamiliale getSituationFamiliale() {
         return situationFamiliale;
@@ -47,8 +47,8 @@ public class DemandeurEmploi {
     }
     @Override
     public String toString() {
-        return "DemandeurEmploi [idPoleEmploi=" + idPoleEmploi + ", beneficiaireAidesSociales="
-                + beneficiaireAidesSociales + ", futurTravail=" + futurTravail + ", informationsPersonnelles="
+        return "DemandeurEmploi [idPoleEmploi=" + idPoleEmploi + ", beneficiairePrestationsSociales="
+                + beneficiairePrestationsSociales + ", futurTravail=" + futurTravail + ", informationsPersonnelles="
                 + informationsPersonnelles + ", ressourcesFinancieres=" + ressourcesFinancieres
                 + ", situationFamiliale=" + situationFamiliale + "]";
     }

@@ -2,13 +2,13 @@ package fr.poleemploi.estime.commun.utile;
 
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.commun.enumerations.AidesSociales;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
+import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.PrestationsCPAM;
@@ -19,7 +19,7 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 public class IndividuUtile {
 
     /**
-     * Population autorisée ASS, RSA ou AAH, et pouvant cumuler ces 3 aides.
+     * Population autorisée ASS, RSA ou AAH, et pouvant cumuler ces 3 prestations.
      */
     public boolean isPopulationAutorisee(DetailIndemnisationESD detailIndemnisationESD) {
         return !isBeneficiaireARE(detailIndemnisationESD) && 
@@ -29,21 +29,21 @@ public class IndividuUtile {
     }
 
     public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD) {
-        addInformationsBeneficiaireAidesSociales(individu, detailIndemnisationESD);
+        addInformationsBeneficiairePrestationsSociales(individu, detailIndemnisationESD);
         addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
     }
 
-    private void addInformationsBeneficiaireAidesSociales(Individu individu, DetailIndemnisationESD detailIndemnisation) {
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireAAH(detailIndemnisation.isBeneficiaireAAH());
-        beneficiaireAidesSociales.setBeneficiaireARE(isBeneficiaireARE(detailIndemnisation));
-        beneficiaireAidesSociales.setBeneficiaireASS(isBeneficiaireASS(detailIndemnisation));
-        beneficiaireAidesSociales.setBeneficiaireRSA(detailIndemnisation.isBeneficiaireRSA());
-        beneficiaireAidesSociales.setTopAAHRecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiaireAAH());
-        beneficiaireAidesSociales.setTopARERecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiaireAssuranceChomage());
-        beneficiaireAidesSociales.setTopASSRecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiairePrestationSolidarite());
-        beneficiaireAidesSociales.setTopRSARecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiaireRSA());
-        individu.setBeneficiaireAidesSociales(beneficiaireAidesSociales);
+    private void addInformationsBeneficiairePrestationsSociales(Individu individu, DetailIndemnisationESD detailIndemnisation) {
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireAAH(detailIndemnisation.isBeneficiaireAAH());
+        beneficiairePrestationsSociales.setBeneficiaireARE(isBeneficiaireARE(detailIndemnisation));
+        beneficiairePrestationsSociales.setBeneficiaireASS(isBeneficiaireASS(detailIndemnisation));
+        beneficiairePrestationsSociales.setBeneficiaireRSA(detailIndemnisation.isBeneficiaireRSA());
+        beneficiairePrestationsSociales.setTopAAHRecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiaireAAH());
+        beneficiairePrestationsSociales.setTopARERecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiaireAssuranceChomage());
+        beneficiairePrestationsSociales.setTopASSRecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiairePrestationSolidarite());
+        beneficiairePrestationsSociales.setTopRSARecupererViaApiPoleEmploi(detailIndemnisation.isBeneficiaireRSA());
+        individu.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
     }
 
     private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisation) {
@@ -61,12 +61,12 @@ public class IndividuUtile {
 
     private PrestationsPoleEmploi creerPrestationPoleEmploi(DetailIndemnisationESD detailIndemnisation) {
         PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
-        if(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
+        if(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
             AllocationASS allocationASS = new AllocationASS();
             allocationASS.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());  
             prestationsPoleEmploi.setAllocationASS(allocationASS);
         }
-        if(AidesSociales.ALLOCATION_RETOUR_EMPLOI.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
+        if(PrestationsSociales.ALLOCATION_RETOUR_EMPLOI.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
             AllocationARE allocationARE = new AllocationARE();
             allocationARE.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());  
             prestationsPoleEmploi.setAllocationARE(allocationARE);

@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.emploistoredev.EmploiStoreDevClient;
-import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.CoordonneesESD;
-import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DateNaissanceESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DateNaissanceESD;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
@@ -17,7 +17,7 @@ import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 public class DemandeurEmploiUtile {
 
     @Autowired
-    private EmploiStoreDevClient emploiStoreDevClient;
+    private PoleEmploiIODevClient emploiStoreDevClient;
     
     @Autowired
     private DateUtile dateUtile;    

@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiairePrestationsSocialesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
-import fr.poleemploi.estime.logique.simulateuraidessociales.utile.AideSocialeUtile;
+import fr.poleemploi.estime.logique.simulateur.prestationssociales.utile.PrestationSocialeUtile;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
+import fr.poleemploi.estime.services.ressources.SimulationPrestationsSociales;
 
 @Component
 public class OpenFiscaMappeurPeriode {
@@ -32,10 +32,10 @@ public class OpenFiscaMappeurPeriode {
     private DateUtile dateUtile;
 
     @Autowired
-    private AideSocialeUtile aideSocialeUtile;
+    private PrestationSocialeUtile prestationSocialeeUtile;
 
     @Autowired
-    private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
+    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
 
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
@@ -105,17 +105,17 @@ public class OpenFiscaMappeurPeriode {
         demandeurJSON.put(SALAIRE_IMPOSABLE, periodeSalaireImposable);
     }    
 
-    public JSONObject creerPeriodesAideSociale(DemandeurEmploi demandeurEmploi, SimulationAidesSociales simulationAidesSociales, String codeAideSociale, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public JSONObject creerPeriodesPrestationSocialee(DemandeurEmploi demandeurEmploi, SimulationPrestationsSociales simulationPrestationsSociales, String codePrestationSociale, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject periode = new JSONObject();
         int numeroMoisMontantARecuperer = numeroMoisSimule - (OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA - 1);
         for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode++) { 
-            float montantAideSociale = 0;
+            float montantPrestationSocialee = 0;
             if(isNumeroMoisMontantARecupererDansPeriodeSimulation(numeroMoisMontantARecuperer)) {
-                montantAideSociale = aideSocialeUtile.getMontantAideSocialPourCeMoisSimule(simulationAidesSociales, codeAideSociale, numeroMoisMontantARecuperer); 
+                montantPrestationSocialee = prestationSocialeeUtile.getMontantPrestationSocialePourCeMoisSimule(simulationPrestationsSociales, codePrestationSociale, numeroMoisMontantARecuperer); 
             } else {
-                montantAideSociale = aideSocialeUtile.getMontantAideSocialeAvantSimulation(numeroMoisMontantARecuperer, demandeurEmploi, codeAideSociale, dateDebutSimulation);
+                montantPrestationSocialee = prestationSocialeeUtile.getMontantPrestationSocialeeAvantSimulation(numeroMoisMontantARecuperer, demandeurEmploi, codePrestationSociale, dateDebutSimulation);
             }
-            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisPeriode, numeroMoisSimule), montantAideSociale);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisPeriode, numeroMoisSimule), montantPrestationSocialee);
             numeroMoisMontantARecuperer++;
         }
         return periode;
@@ -136,14 +136,14 @@ public class OpenFiscaMappeurPeriode {
     }
 
     public String getPeriodeFormateeRessourceFinanciere(LocalDate dateDebutSimulation, int numeroMoisSimule, int numeroPeriodeOpenfisca) {
-        LocalDate datePeriodeOpenfiscaCalculAides = dateDebutSimulation.plusMonths((long)numeroMoisSimule);
-        LocalDate dateDebutPeriodeOpenfisca = datePeriodeOpenfiscaCalculAides.minusMonths(NOMBRE_MOIS_PERIODE_OPENFISCA - ((long)numeroPeriodeOpenfisca));   
+        LocalDate dateDeclenchementCalculPrestation = dateDebutSimulation.plusMonths((long)numeroMoisSimule);
+        LocalDate dateDebutPeriodeOpenfisca = dateDeclenchementCalculPrestation.minusMonths(NOMBRE_MOIS_PERIODE_OPENFISCA - ((long)numeroPeriodeOpenfisca));   
         return getPeriodeFormatee(dateDebutPeriodeOpenfisca);
     }
 
-    public String getPeriodeOpenfiscaCalculAides(LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        LocalDate datePeriodeOpenfiscaCalculAides = dateDebutSimulation.plusMonths((long)numeroMoisSimule - 1);
-        return getPeriodeFormatee(datePeriodeOpenfiscaCalculAides);
+    public String getPeriodeOpenfiscaCalculPrestation(LocalDate dateDebutSimulation, int numeroMoisSimule) {
+        LocalDate dateDeclenchementCalculPrestation = dateDebutSimulation.plusMonths((long)numeroMoisSimule - 1);
+        return getPeriodeFormatee(dateDeclenchementCalculPrestation);
     }
 
     private Salaire getSalairePourSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, int numeroMoisPeriodeOpenfisca) {       
@@ -158,13 +158,13 @@ public class OpenFiscaMappeurPeriode {
     }
 
     private Optional<Salaire> getSalaireAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
-        if(beneficiaireAidesSocialesUtile.isBeneficiaireASS(demandeurEmploi)) {
+        if(beneficiairePrestationsSocialesUtile.isBeneficiaireASS(demandeurEmploi)) {
             return getSalaireAvantPeriodeSimulationDemandeurASS(demandeurEmploi, numeroMoisPeriodeOpenfisca);
         } 
-        if(beneficiaireAidesSocialesUtile.isBeneficiaireAAH(demandeurEmploi)) {
+        if(beneficiairePrestationsSocialesUtile.isBeneficiaireAAH(demandeurEmploi)) {
             return getSalaireAvantPeriodeSimulationDemandeurAAH(demandeurEmploi, numeroMoisPeriodeOpenfisca);
         }  
-        if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
+        if(beneficiairePrestationsSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
             return getSalaireAvantPeriodeSimulationDemandeurRSA(demandeurEmploi, numeroMoisPeriodeOpenfisca);
         }  
         return Optional.empty();

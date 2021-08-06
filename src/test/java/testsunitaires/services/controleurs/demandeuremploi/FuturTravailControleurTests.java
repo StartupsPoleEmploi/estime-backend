@@ -24,7 +24,7 @@ import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.TypeContratUtile;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
-import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
+import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.Salaire;
@@ -51,13 +51,13 @@ class FuturTravailControleurTests extends CommunTests {
     void controlerDonneeesEntreeFuturTravailTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setFuturTravail(null);
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "futurTravail"));
     }
     
@@ -65,7 +65,7 @@ class FuturTravailControleurTests extends CommunTests {
     void controlerDonneeesEntreeFuturTravailTest2() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
@@ -74,7 +74,7 @@ class FuturTravailControleurTests extends CommunTests {
         demandeurEmploi.setFuturTravail(futurTravail);
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "typeContrat de futurTravail")));
     }
     
@@ -82,7 +82,7 @@ class FuturTravailControleurTests extends CommunTests {
     void controlerDonneeesEntreeFuturTravailTest3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
@@ -91,7 +91,7 @@ class FuturTravailControleurTests extends CommunTests {
         demandeurEmploi.setFuturTravail(futurTravail);
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.TYPE_CONTRAT_INCORRECT.getMessage(), typeContratUtile.getListeFormateeTypesContratPossibles()));
     }
     
@@ -99,7 +99,7 @@ class FuturTravailControleurTests extends CommunTests {
     void controlerDonneeesEntreeFuturTravailTest4() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
@@ -109,7 +109,7 @@ class FuturTravailControleurTests extends CommunTests {
         demandeurEmploi.setFuturTravail(futurTravail);
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nombreMoisContratCDD de futurTravail"));
     }
     
@@ -117,7 +117,7 @@ class FuturTravailControleurTests extends CommunTests {
     void controlerDonneeesEntreeFuturTravailTest5() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
@@ -126,7 +126,7 @@ class FuturTravailControleurTests extends CommunTests {
         demandeurEmploi.setFuturTravail(futurTravail);
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(BadRequestMessages.NOMBRE_HEURE_TRAVAILLEES_ZERO.getMessage());
     }
     
@@ -134,7 +134,7 @@ class FuturTravailControleurTests extends CommunTests {
     void controlerDonneeesEntreeFuturTravailTest6() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
@@ -146,7 +146,7 @@ class FuturTravailControleurTests extends CommunTests {
         demandeurEmploi.setFuturTravail(futurTravail);
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(BadRequestMessages.SALAIRE_MENSUEL_NET_ZERO.getMessage());
     }
     
@@ -154,7 +154,7 @@ class FuturTravailControleurTests extends CommunTests {
     void controlerDonneeesEntreeFuturTravailTest7() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
@@ -166,7 +166,7 @@ class FuturTravailControleurTests extends CommunTests {
         demandeurEmploi.setFuturTravail(futurTravail);
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(BadRequestMessages.SALAIRE_MENSUEL_NET_ZERO.getMessage());
     }
 }

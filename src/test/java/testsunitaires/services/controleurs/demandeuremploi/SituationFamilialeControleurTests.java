@@ -22,7 +22,7 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
-import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
+import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 
@@ -44,14 +44,14 @@ class SituationFamilialeControleurTests extends CommunTests {
     void controlerDonneeesEntreeSituationFamilialeTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         
         demandeurEmploi.setSituationFamiliale(null);
 
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "situationFamiliale"));
     }
     
@@ -59,7 +59,7 @@ class SituationFamilialeControleurTests extends CommunTests {
     void controlerDonneeesEntreeSituationFamilialeTest2() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         
@@ -68,7 +68,7 @@ class SituationFamilialeControleurTests extends CommunTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "enCouple de situationFamiliale"));
     }
     
@@ -76,7 +76,7 @@ class SituationFamilialeControleurTests extends CommunTests {
     void controlerDonneeesEntreeSituationFamilialeTest3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAidesSociales(new BeneficiaireAidesSociales());
+        demandeurEmploi.setBeneficiairePrestationsSociales(new BeneficiairePrestationsSociales());
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         
@@ -85,7 +85,7 @@ class SituationFamilialeControleurTests extends CommunTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAidesSociales(demandeurEmploi);
+            individuService.simulerPrestationsSociales(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "conjoint de situationFamiliale"));
     }
 }

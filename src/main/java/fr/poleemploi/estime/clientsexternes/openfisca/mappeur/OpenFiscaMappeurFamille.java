@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 import com.github.tsohr.JSONArray;
 import com.github.tsohr.JSONObject;
 
-import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiairePrestationsSocialesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -50,7 +50,7 @@ public class OpenFiscaMappeurFamille {
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
     @Autowired
-    private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
+    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
         
     
     public JSONObject creerFamilleJSON(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeInferieur25ansOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
@@ -67,7 +67,7 @@ public class OpenFiscaMappeurFamille {
             famille.put(CF, openFiscaPeriodeMappeur.creerPeriodes(prestationsFamiliales.getComplementFamilial(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
             famille.put(PRESTATION_ACCUEIL_JEUNE_ENFANT, openFiscaPeriodeMappeur.creerPeriodes(prestationsFamiliales.getPrestationAccueilJeuneEnfant(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
         }
-        if(beneficiaireAidesSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
+        if(beneficiairePrestationsSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
             float montantRsaDemandeur = ressourcesFinancieresUtile.getAllocationsRSANet(demandeurEmploi);
             if(montantRsaDemandeur > 0) {
                 famille.put(RSA, openFiscaMappeurRSA.creerRSAJson(dateDebutSimulation, numeroMoisSimule));

@@ -15,8 +15,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.emploistoredev.EmploiStoreDevClient;
-import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
@@ -39,7 +39,7 @@ public class CommunTests {
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
 
     @SpyBean
-    private EmploiStoreDevClient detailIndemnisationPoleEmploiClient;
+    private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
 
     protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
 
@@ -80,7 +80,7 @@ public class CommunTests {
             JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         // mock tracer parcours utilisateur
         doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(),
-                ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAidesSociales());
+                ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiairePrestationsSociales());
 
         // mock création date de demande de simulation
         doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();

@@ -14,8 +14,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.emploistoredev.EmploiStoreDevClient;
-import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import utile.tests.UtileTests;
@@ -26,7 +26,7 @@ public class CommunTests {
     protected UtileTests utileTests;
 
     @SpyBean
-    private EmploiStoreDevClient detailIndemnisationPoleEmploiClient;
+    private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
 
     @SpyBean
     protected DateUtile dateUtile;    

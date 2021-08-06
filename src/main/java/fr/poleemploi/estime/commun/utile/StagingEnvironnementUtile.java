@@ -3,12 +3,12 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.UserInfoESD;
-import fr.poleemploi.estime.commun.enumerations.AidesSociales;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
 import fr.poleemploi.estime.commun.enumerations.Environnements;
+import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
+import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.PrestationsCAF;
 import fr.poleemploi.estime.services.ressources.PrestationsCPAM;
@@ -37,35 +37,35 @@ public class StagingEnvironnementUtile {
 
         switch (population) {
         case "AAH":
-            individu.setBeneficiaireAidesSociales(creerBouchonBeneficiaireAidesSociales(true, false, false, false));            
+            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(true, false, false, false));            
             break;
         case "ARE":
-            individu.setBeneficiaireAidesSociales(creerBouchonBeneficiaireAidesSociales(false, true, false, false));
+            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(false, true, false, false));
             break;
         case "ASS":
-            individu.setBeneficiaireAidesSociales(creerBouchonBeneficiaireAidesSociales(false, false, true, false));
+            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(false, false, true, false));
             individu.setRessourcesFinancieres(creerBouchonRessourcesFinancieresASS());
             break;
         case "RSA":
-            individu.setBeneficiaireAidesSociales(creerBouchonBeneficiaireAidesSociales(false, false, false, true));
+            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(false, false, false, true));
             break;
         default:
-            individu.setBeneficiaireAidesSociales(creerBouchonBeneficiaireAidesSociales(false, false, false, false)); 
+            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(false, false, false, false)); 
             break;
         }
     }
 
-    private BeneficiaireAidesSociales creerBouchonBeneficiaireAidesSociales(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireAAH(beneficiaireAAH);
-        beneficiaireAidesSociales.setBeneficiaireASS(beneficiaireASS);
-        beneficiaireAidesSociales.setBeneficiaireARE(beneficiaireARE);
-        beneficiaireAidesSociales.setBeneficiaireRSA(beneficiaireRSA);
-        beneficiaireAidesSociales.setTopAAHRecupererViaApiPoleEmploi(beneficiaireAAH);
-        beneficiaireAidesSociales.setTopARERecupererViaApiPoleEmploi(beneficiaireARE);
-        beneficiaireAidesSociales.setTopASSRecupererViaApiPoleEmploi(beneficiaireASS);
-        beneficiaireAidesSociales.setTopRSARecupererViaApiPoleEmploi(beneficiaireRSA);
-        return beneficiaireAidesSociales;
+    private BeneficiairePrestationsSociales creerBouchonBeneficiairePrestationsSociales(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
+        BeneficiairePrestationsSociales beneficiaire = new BeneficiairePrestationsSociales();
+        beneficiaire.setBeneficiaireAAH(beneficiaireAAH);
+        beneficiaire.setBeneficiaireASS(beneficiaireASS);
+        beneficiaire.setBeneficiaireARE(beneficiaireARE);
+        beneficiaire.setBeneficiaireRSA(beneficiaireRSA);
+        beneficiaire.setTopAAHRecupererViaApiPoleEmploi(beneficiaireAAH);
+        beneficiaire.setTopARERecupererViaApiPoleEmploi(beneficiaireARE);
+        beneficiaire.setTopASSRecupererViaApiPoleEmploi(beneficiaireASS);
+        beneficiaire.setTopRSARecupererViaApiPoleEmploi(beneficiaireRSA);
+        return beneficiaire;
     }
 
     private RessourcesFinancieres creerBouchonRessourcesFinancieresASS() {
@@ -111,8 +111,8 @@ public class StagingEnvironnementUtile {
     }
     
     private boolean isPopulationAutorisee(UserInfoESD userInfoESD) {
-        return userInfoESD.getGivenName().endsWith(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()) 
-                || userInfoESD.getGivenName().endsWith(AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode()) 
-                || userInfoESD.getGivenName().endsWith(AidesSociales.RSA.getCode());
+        return userInfoESD.getGivenName().endsWith(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()) 
+                || userInfoESD.getGivenName().endsWith(PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode()) 
+                || userInfoESD.getGivenName().endsWith(PrestationsSociales.RSA.getCode());
     }
 }

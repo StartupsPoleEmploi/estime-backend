@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
-import fr.poleemploi.estime.services.controleurs.demandeuremploi.BeneficiaireAidesSocialesControleur;
+import fr.poleemploi.estime.services.controleurs.demandeuremploi.BeneficiairePrestationsSocialesControleur;
 import fr.poleemploi.estime.services.controleurs.demandeuremploi.FuturTravailControleur;
 import fr.poleemploi.estime.services.controleurs.demandeuremploi.InformationsPersonnellesControleur;
 import fr.poleemploi.estime.services.controleurs.demandeuremploi.SituationFamilialeControleur;
@@ -21,7 +21,7 @@ public class IndividuServiceControleur {
     private FuturTravailControleur futurTravailControleur;
     
     @Autowired
-    private BeneficiaireAidesSocialesControleur beneficiaireAidesSocialesControleur;
+    private BeneficiairePrestationsSocialesControleur beneficiairePrestationsSocialesControleur;
     
     @Autowired
     private InformationsPersonnellesControleur informationsPersonnellesControleur;
@@ -57,14 +57,14 @@ public class IndividuServiceControleur {
         }   
     }
     
-    public void controlerDonneesEntreeServiceSimulerMesAidesSociales(DemandeurEmploi demandeurEmploi) {
+    public void controlerDonneesEntreeServiceSimulerMesPrestationsSociales(DemandeurEmploi demandeurEmploi) {
         if (demandeurEmploi == null) {
             throw new BadRequestException(BadRequestMessages.DEMANDEUR_EMPLOI_OBLIGATOIRE.getMessage());
         } else {
             futurTravailControleur.controlerDonnees(demandeurEmploi.getFuturTravail());
-            beneficiaireAidesSocialesControleur.controlerDonnees(demandeurEmploi);
-            informationsPersonnellesControleur.controlerDonnees(demandeurEmploi.getInformationsPersonnelles(), demandeurEmploi.getBeneficiaireAidesSociales());
-            situationFamilialeControleur.controlerDonnees(demandeurEmploi.getSituationFamiliale(), demandeurEmploi.getBeneficiaireAidesSociales());            
+            beneficiairePrestationsSocialesControleur.controlerDonnees(demandeurEmploi);
+            informationsPersonnellesControleur.controlerDonnees(demandeurEmploi.getInformationsPersonnelles(), demandeurEmploi.getBeneficiairePrestationsSociales());
+            situationFamilialeControleur.controlerDonnees(demandeurEmploi.getSituationFamiliale(), demandeurEmploi.getBeneficiairePrestationsSociales());            
         }
     }
 

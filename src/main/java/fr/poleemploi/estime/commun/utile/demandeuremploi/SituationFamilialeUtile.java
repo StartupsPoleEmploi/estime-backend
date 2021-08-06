@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.logique.simulateuraidessociales.caf.SimulateurAidesCAF;
+import fr.poleemploi.estime.logique.simulateur.prestationssociales.caf.SimulateurPrestationsCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
 
@@ -29,7 +29,7 @@ public class SituationFamilialeUtile {
     }
     
     public boolean hasPersonnesAChargeEligiblesPourPriseEnComptePrimeActivite(DemandeurEmploi demandeurEmploi) {
-        return getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA) > 0;
+        return getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, SimulateurPrestationsCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA) > 0;
     }
     
     public int getNombrePersonnesAChargeAgeInferieureAgeLimite(DemandeurEmploi demandeurEmploi, int ageLimite) {

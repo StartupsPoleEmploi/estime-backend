@@ -21,13 +21,13 @@ import org.springframework.stereotype.Component;
 
 import com.github.tsohr.JSONObject;
 
-import fr.poleemploi.estime.commun.enumerations.AidesSociales;
+import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
 import fr.poleemploi.estime.commun.enumerations.StatutsMarital;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
+import fr.poleemploi.estime.services.ressources.SimulationPrestationsSociales;
 
 @Component
 public class OpenFiscaMappeurIndividu {
@@ -50,12 +50,12 @@ public class OpenFiscaMappeurIndividu {
         return conjointJSON;
     }
     
-    public JSONObject creerDemandeurJSON(SimulationAidesSociales simulationAidesSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public JSONObject creerDemandeurJSON(SimulationPrestationsSociales simulationPrestationsSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject demandeurJSON = new JSONObject();
         demandeurJSON.put(DATE_NAISSANCE, openFiscaMappeurPeriode.creerPeriodes(getDateNaissance(demandeurEmploi), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));            
         demandeurJSON.put(STATUT_MARITAL, openFiscaMappeurPeriode.creerPeriodes(getStatutMarital(demandeurEmploi), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-        addRessourcesFinancieresDemandeur(demandeurJSON, demandeurEmploi, simulationAidesSociales, numeroMoisSimule, dateDebutSimulation);
+        addRessourcesFinancieresDemandeur(demandeurJSON, demandeurEmploi, simulationPrestationsSociales, numeroMoisSimule, dateDebutSimulation);
         return demandeurJSON;
     }
     
@@ -66,14 +66,14 @@ public class OpenFiscaMappeurIndividu {
         }
     }
     
-    private void addRessourcesFinancieresDemandeur(JSONObject demandeurJSON, DemandeurEmploi demandeurEmploi, SimulationAidesSociales simulationAidesSociales, int numeroMoisSimule, LocalDate dateDebutSimulation) {
+    private void addRessourcesFinancieresDemandeur(JSONObject demandeurJSON, DemandeurEmploi demandeurEmploi, SimulationPrestationsSociales simulationPrestationsSociales, int numeroMoisSimule, LocalDate dateDebutSimulation) {
         if(ressourcesFinancieresUtile.hasAllocationAdultesHandicapes(demandeurEmploi)) {
-            String codeAideAAH = AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
-            demandeurJSON.put(AAH, openFiscaMappeurPeriode.creerPeriodesAideSociale(demandeurEmploi, simulationAidesSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule));            
+            String codeAideAAH = PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
+            demandeurJSON.put(AAH, openFiscaMappeurPeriode.creerPeriodesPrestationSocialee(demandeurEmploi, simulationPrestationsSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule));            
         }
         if(ressourcesFinancieresUtile.hasAllocationSolidariteSpecifique(demandeurEmploi.getRessourcesFinancieres())) {
-            String codeAideASS = AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
-            demandeurJSON.put(ASS, openFiscaMappeurPeriode.creerPeriodesAideSociale(demandeurEmploi, simulationAidesSociales, codeAideASS, dateDebutSimulation, numeroMoisSimule));
+            String codeAideASS = PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
+            demandeurJSON.put(ASS, openFiscaMappeurPeriode.creerPeriodesPrestationSocialee(demandeurEmploi, simulationPrestationsSociales, codeAideASS, dateDebutSimulation, numeroMoisSimule));
         }
         if(ressourcesFinancieresUtile.hasRevenusImmobilier(demandeurEmploi)) {
             float revenusImmobilierSur1Mois = ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres());

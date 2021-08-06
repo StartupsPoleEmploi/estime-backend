@@ -22,12 +22,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.emploistoredev.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.commun.enumerations.AidesSociales;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.BeneficiaireAidesSociales;
+import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
@@ -83,7 +83,7 @@ public class UtileTests {
         informationsPersonnelles.setPrenom("DANIEL");
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-        demandeurEmploi.setBeneficiaireAidesSociales(creerBeneficiaireAidesSociales(population));
+        demandeurEmploi.setBeneficiairePrestationsSociales(creerBeneficiaireAidesSociales(population));
 
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         intiSituationFamiliale(isEnCouple, nbEnfant, situationFamiliale);
@@ -101,7 +101,7 @@ public class UtileTests {
         return demandeurEmploi;
     }
 
-    public BeneficiaireAidesSociales creerBeneficiaireAidesSociales(String population) {
+    public BeneficiairePrestationsSociales creerBeneficiaireAidesSociales(String population) {
         switch (population) {
         case "AAH":
             return creerBeneficiaireAidesSociales(true, false, false, false);    
@@ -199,7 +199,7 @@ public class UtileTests {
             break;
         case "AAH_ASS":
             ressourcesFinancieres.setPrestationsCAF(new PrestationsCAF());
-            ressourcesFinancieres.setPrestationsPoleEmploi(creerPrestationPoleEmploi(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));            
+            ressourcesFinancieres.setPrestationsPoleEmploi(creerPrestationPoleEmploi(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));            
         default:
             break;
         }        
@@ -223,13 +223,13 @@ public class UtileTests {
         }
     }
 
-    private BeneficiaireAidesSociales creerBeneficiaireAidesSociales(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
-        BeneficiaireAidesSociales beneficiaireAidesSociales = new BeneficiaireAidesSociales();
-        beneficiaireAidesSociales.setBeneficiaireAAH(beneficiaireAAH);
-        beneficiaireAidesSociales.setBeneficiaireASS(beneficiaireASS);
-        beneficiaireAidesSociales.setBeneficiaireARE(beneficiaireARE);
-        beneficiaireAidesSociales.setBeneficiaireRSA(beneficiaireRSA);
-        return beneficiaireAidesSociales;
+    private BeneficiairePrestationsSociales creerBeneficiaireAidesSociales(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
+        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
+        beneficiairePrestationsSociales.setBeneficiaireAAH(beneficiaireAAH);
+        beneficiairePrestationsSociales.setBeneficiaireASS(beneficiaireASS);
+        beneficiairePrestationsSociales.setBeneficiaireARE(beneficiaireARE);
+        beneficiairePrestationsSociales.setBeneficiaireRSA(beneficiaireRSA);
+        return beneficiairePrestationsSociales;
     }
 
     private DetailIndemnisationESD creerDetailIndemnisationESD(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
@@ -243,11 +243,11 @@ public class UtileTests {
 
     private PrestationsPoleEmploi creerPrestationPoleEmploi(String population) {
         PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
-        if(AidesSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(population)) {
+        if(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(population)) {
             AllocationASS allocationASS = new AllocationASS();
             prestationsPoleEmploi.setAllocationASS(allocationASS);
         }
-        if(AidesSociales.ALLOCATION_RETOUR_EMPLOI.getCode().equals(population)) {
+        if(PrestationsSociales.ALLOCATION_RETOUR_EMPLOI.getCode().equals(population)) {
             AllocationARE allocationARE = new AllocationARE();
             prestationsPoleEmploi.setAllocationARE(allocationARE);
         }

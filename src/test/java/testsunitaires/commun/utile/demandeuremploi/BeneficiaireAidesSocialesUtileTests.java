@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesSocialesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiairePrestationsSocialesUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.UtileTests;
 
@@ -27,7 +27,7 @@ class BeneficiaireAidesSocialesUtileTests {
     public static final String CODE_POSTAL_METROPOLITAIN = "72300";
     
     @Autowired
-    private BeneficiaireAidesSocialesUtile beneficiaireAidesSocialesUtile;
+    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
     
     @Autowired
     private UtileTests utileTests;
@@ -47,7 +47,7 @@ class BeneficiaireAidesSocialesUtileTests {
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
 
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiaireAidesSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isTrue();
@@ -62,7 +62,7 @@ class BeneficiaireAidesSocialesUtileTests {
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(18.38f);
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiaireAidesSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isTrue();
@@ -77,7 +77,7 @@ class BeneficiaireAidesSocialesUtileTests {
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);      
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiaireAidesSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isTrue();
@@ -92,7 +92,7 @@ class BeneficiaireAidesSocialesUtileTests {
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(12.68f);  
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiaireAidesSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isTrue();
@@ -107,7 +107,7 @@ class BeneficiaireAidesSocialesUtileTests {
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(39.38f);        
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiaireAidesSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isFalse();
@@ -122,7 +122,7 @@ class BeneficiaireAidesSocialesUtileTests {
         demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(16.68f);   
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiaireAidesSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isFalse();

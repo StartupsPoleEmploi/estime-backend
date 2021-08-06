@@ -30,15 +30,15 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPeriode;
-import fr.poleemploi.estime.commun.enumerations.AidesSociales;
+import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.services.ressources.AideSociale;
+import fr.poleemploi.estime.services.ressources.PrestationSociale;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
-import fr.poleemploi.estime.services.ressources.SimulationAidesSociales;
+import fr.poleemploi.estime.services.ressources.SimulationPrestationsSociales;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 import utile.tests.UtileTests;
 
@@ -67,101 +67,101 @@ class OpenFiscaMappeurPeriodeTestsAAH extends CommunTests {
     }
 
     /********************
-     * TESTS SUR creerPeriodesAideSociale
+     * TESTS SUR creerPeriodesPrestationSocialee
      ************************************************/
 
     @Test
-    void creerPeriodeAideSocialeAAHTest1() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+    void creerPeriodePrestationSocialeeAAHTest1() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-non-travaille-6-derniers-mois-numero-mois-2.json");
 
-	String codeAideAAH = AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
+	String codeAideAAH = PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
 	int numeroMoisSimule = 2;
 
 	float montantAAH = 900;
-	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideSocialeTests(montantAAH);
+	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodePrestationSocialeeTests(montantAAH);
 
-	SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
+	SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-11-2020"), codeAideAAH, montantAAH));
-	simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);
-	simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);
+	simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
+	simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideSocialeAAH = openFiscaMappeurPeriode.creerPeriodesAideSociale(demandeurEmploi, simulationAidesSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodePrestationSocialeeAAH = openFiscaMappeurPeriode.creerPeriodesPrestationSocialee(demandeurEmploi, simulationPrestationsSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
-	assertThat(periodeAideSocialeAAH.toString()).isEqualTo(openFiscaPayloadExpected);
+	assertThat(periodePrestationSocialeeAAH.toString()).isEqualTo(openFiscaPayloadExpected);
     }
 
     @Test
-    void creerPeriodeAideSocialeAAHTest2() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+    void creerPeriodePrestationSocialeeAAHTest2() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-non-travaille-6-derniers-mois-numero-mois-5.json");
 
-	String codeAideAAH = AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
+	String codeAideAAH = PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
 	int numeroMoisSimule = 5;
 
 	float montantAAH = 900;
-	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideSocialeTests(montantAAH);
+	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodePrestationSocialeeTests(montantAAH);
 
-	SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
+	SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-11-2020"), codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-12-2020"), codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-01-2021"), codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-02-2021"), codeAideAAH, montantAAH));
-	simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);
+	simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideSocialeAAH = openFiscaMappeurPeriode.creerPeriodesAideSociale(demandeurEmploi, simulationAidesSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodePrestationSocialeeAAH = openFiscaMappeurPeriode.creerPeriodesPrestationSocialee(demandeurEmploi, simulationPrestationsSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
-	assertThat(periodeAideSocialeAAH.toString()).isEqualTo(openFiscaPayloadExpected);
+	assertThat(periodePrestationSocialeeAAH.toString()).isEqualTo(openFiscaPayloadExpected);
     }
 
     @Test
-    void creerPeriodeAideSocialeAAHTest3() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+    void creerPeriodePrestationSocialeeAAHTest3() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-6-mois-travaille-6-derniers-mois-numero-mois-2.json");
 
-	String codeAideAAH = AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
+	String codeAideAAH = PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
 	int numeroMoisSimule = 2;
 
 	float montantAAH = 900;
-	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideSocialeTests(montantAAH);
+	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodePrestationSocialeeTests(montantAAH);
 
-	SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
+	SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	float montantAAHReduit = 180;
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideAAH, montantAAHReduit));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-11-2020"), codeAideAAH, montantAAHReduit));
-	simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);
-	simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);
+	simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
+	simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideSocialeAAH = openFiscaMappeurPeriode.creerPeriodesAideSociale(demandeurEmploi, simulationAidesSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodePrestationSocialeeAAH = openFiscaMappeurPeriode.creerPeriodesPrestationSocialee(demandeurEmploi, simulationPrestationsSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
-	assertThat(periodeAideSocialeAAH.toString()).isEqualTo(openFiscaPayloadExpected);
+	assertThat(periodePrestationSocialeeAAH.toString()).isEqualTo(openFiscaPayloadExpected);
     }
 
     @Test
-    void creerPeriodeAideSocialeAAHTest4() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+    void creerPeriodePrestationSocialeeAAHTest4() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-6-mois-travaille-6-derniers-mois-numero-mois-5.json");
 
-	String codeAideAAH = AidesSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
+	String codeAideAAH = PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
 	int numeroMoisSimule = 5;
 
 	float montantAAH = 900;
-	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideSocialeTests(montantAAH);
+	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodePrestationSocialeeTests(montantAAH);
 
-	SimulationAidesSociales simulationAidesSociales = new SimulationAidesSociales();
+	SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	float montantAAHReduit = 180;
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideAAH, montantAAHReduit));
@@ -169,11 +169,11 @@ class OpenFiscaMappeurPeriodeTestsAAH extends CommunTests {
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-12-2020"), codeAideAAH, montantAAHReduit));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-01-2021"), codeAideAAH, montantAAHReduit));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-02-2021"), codeAideAAH, montantAAHReduit));
-	simulationAidesSociales.setSimulationsMensuelles(simulationsMensuelles);
+	simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideSocialeAAH = openFiscaMappeurPeriode.creerPeriodesAideSociale(demandeurEmploi, simulationAidesSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodePrestationSocialeeAAH = openFiscaMappeurPeriode.creerPeriodesPrestationSocialee(demandeurEmploi, simulationPrestationsSociales, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
-	assertThat(periodeAideSocialeAAH.toString()).isEqualTo(openFiscaPayloadExpected);
+	assertThat(periodePrestationSocialeeAAH.toString()).isEqualTo(openFiscaPayloadExpected);
     }
 
     /************** *****************/
@@ -875,7 +875,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends CommunTests {
 
     /***************** METHODES UTILES POUR TESTS ********/
 
-    private DemandeurEmploi creerDemandeurEmploiPeriodeAideSocialeTests(float montantAAH) throws ParseException {
+    private DemandeurEmploi creerDemandeurEmploiPeriodePrestationSocialeeTests(float montantAAH) throws ParseException {
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
@@ -886,10 +886,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends CommunTests {
     private SimulationMensuelle creerSimulationMensuelle(LocalDate dateDebutSimulation, String codeAideAAH, float montantAAH) {
 	SimulationMensuelle simulationMensuelleMois = new SimulationMensuelle();
 	simulationMensuelleMois.setDatePremierJourMoisSimule(dateDebutSimulation);
-	HashMap<String, AideSociale> aidesEligiblesPourMois1 = new HashMap<>();
-	AideSociale aideSocialeAAHMois1 = getAideSocialeAAH(montantAAH);
-	aidesEligiblesPourMois1.put(codeAideAAH, aideSocialeAAHMois1);
-	simulationMensuelleMois.setMesAides(aidesEligiblesPourMois1);
+	HashMap<String, PrestationSociale> prestationsEligiblesPourMois1 = new HashMap<>();
+	PrestationSociale allocationAAHMois1 = getPrestationSocialeeAAH(montantAAH);
+	prestationsEligiblesPourMois1.put(codeAideAAH, allocationAAHMois1);
+	simulationMensuelleMois.setMesPrestationsSociales(prestationsEligiblesPourMois1);
 	return simulationMensuelleMois;
     }
 
