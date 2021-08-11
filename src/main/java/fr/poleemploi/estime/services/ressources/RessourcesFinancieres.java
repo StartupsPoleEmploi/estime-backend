@@ -2,9 +2,9 @@ package fr.poleemploi.estime.services.ressources;
 
 public class RessourcesFinancieres {
 
-    private PrestationsCAF prestationsCAF;
-    private PrestationsPoleEmploi prestationsPoleEmploi;
-    private PrestationsCPAM prestationsCPAM;
+    private AidesCAF aidesCAF;
+    private AidesPoleEmploi aidesPoleEmploi;
+    private AidesCPAM aidesCPAM;
     private Boolean hasTravailleAuCoursDerniersMois;
     private Integer nombreMoisTravaillesDerniersMois;
     private Float beneficesTravailleurIndependantDernierExercice;
@@ -13,23 +13,23 @@ public class RessourcesFinancieres {
     private Salaire salaire;
     private SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation;
     
-    public PrestationsCAF getPrestationsCAF() {
-        return prestationsCAF;
+    public AidesCAF getAidesCAF() {
+        return aidesCAF;
     }
-    public void setPrestationsCAF(PrestationsCAF prestationsCAF) {
-        this.prestationsCAF = prestationsCAF;
+    public void setAidesCAF(AidesCAF aidesCAF) {
+        this.aidesCAF = aidesCAF;
     }
-    public PrestationsPoleEmploi getPrestationsPoleEmploi() {
-        return prestationsPoleEmploi;
+    public AidesPoleEmploi getAidesPoleEmploi() {
+        return aidesPoleEmploi;
     }
-    public void setPrestationsPoleEmploi(PrestationsPoleEmploi prestationsPoleEmploi) {
-        this.prestationsPoleEmploi = prestationsPoleEmploi;
+    public void setAidesPoleEmploi(AidesPoleEmploi aidesPoleEmploi) {
+        this.aidesPoleEmploi = aidesPoleEmploi;
     }
-    public PrestationsCPAM getPrestationsCPAM() {
-        return prestationsCPAM;
+    public AidesCPAM getAidesCPAM() {
+        return aidesCPAM;
     }
-    public void setPrestationsCPAM(PrestationsCPAM prestationsCPAM) {
-        this.prestationsCPAM = prestationsCPAM;
+    public void setAidesCPAM(AidesCPAM aidesCPAM) {
+        this.aidesCPAM = aidesCPAM;
     }
     public Boolean getHasTravailleAuCoursDerniersMois() {
         return hasTravailleAuCoursDerniersMois;
@@ -76,8 +76,8 @@ public class RessourcesFinancieres {
     
     @Override
     public String toString() {
-        return "RessourcesFinancieres [prestationsCAF=" + prestationsCAF + ", prestationsPoleEmploi="
-                + prestationsPoleEmploi + ", prestationsCPAM=" + prestationsCPAM + ", hasTravailleAuCoursDerniersMois="
+        return "RessourcesFinancieres [aidesCAF=" + aidesCAF + ", aidesPoleEmploi="
+                + aidesPoleEmploi + ", aidesCPAM=" + aidesCPAM + ", hasTravailleAuCoursDerniersMois="
                 + hasTravailleAuCoursDerniersMois + ", nombreMoisTravaillesDerniersMois="
                 + nombreMoisTravaillesDerniersMois + ", beneficesTravailleurIndependantDernierExercice="
                 + beneficesTravailleurIndependantDernierExercice + ", revenusMicroEntreprise3DerniersMois="

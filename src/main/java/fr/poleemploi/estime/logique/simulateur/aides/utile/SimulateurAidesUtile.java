@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.logique.simulateur.prestationssociales.utile;
+package fr.poleemploi.estime.logique.simulateur.aides.utile;
 
 import java.time.LocalDate;
 
@@ -10,7 +10,7 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @Component
-public class SimulateurPrestationsSocialesUtile {
+public class SimulateurAidesUtile {
     
     public static final int NOMBRE_MOIS_MAX_A_SIMULER = 6;
     

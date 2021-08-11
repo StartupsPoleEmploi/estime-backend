@@ -2,7 +2,7 @@ package fr.poleemploi.estime.services.ressources;
 
 import java.util.List;
 
-public class SimulationPrestationsSociales {
+public class SimulationAides {
 
     private float montantRessourcesFinancieresMoisAvantSimulation;
     private List<SimulationMensuelle> simulationsMensuelles;
@@ -19,10 +19,10 @@ public class SimulationPrestationsSociales {
     public void setMontantRessourcesFinancieresMoisAvantSimulation(float montantRessourcesFinancieresMoisAvantSimulation) {
         this.montantRessourcesFinancieresMoisAvantSimulation = montantRessourcesFinancieresMoisAvantSimulation;
     }
-
+    
     @Override
     public String toString() {
-        return "SimulationPrestationsSociales [montantRessourcesFinancieresMoisAvantSimulation="
+        return "SimulationAides [montantRessourcesFinancieresMoisAvantSimulation="
                 + montantRessourcesFinancieresMoisAvantSimulation + ", simulationsMensuelles=" + simulationsMensuelles
                 + "]";
     }

@@ -2,15 +2,15 @@ package fr.poleemploi.estime.services.ressources;
 
 public class Personne {
 
-    private BeneficiairePrestationsSociales beneficiairePrestationsSociales;
+    private BeneficiaireAides beneficiaireAides;
     private InformationsPersonnelles informationsPersonnelles;
     private RessourcesFinancieres ressourcesFinancieres;
 
-    public BeneficiairePrestationsSociales getBeneficiairePrestationsSociales() {
-        return beneficiairePrestationsSociales;
+    public BeneficiaireAides getBeneficiaireAides() {
+        return beneficiaireAides;
     }
-    public void setBeneficiairePrestationsSociales(BeneficiairePrestationsSociales beneficiairePrestationsSociales) {
-        this.beneficiairePrestationsSociales = beneficiairePrestationsSociales;
+    public void setBeneficiaireAides(BeneficiaireAides beneficiaireAides) {
+        this.beneficiaireAides = beneficiaireAides;
     }
     public InformationsPersonnelles getInformationsPersonnelles() {
         return informationsPersonnelles;
@@ -26,7 +26,7 @@ public class Personne {
     }
     @Override
     public String toString() {
-        return "Personne [beneficiairePrestationsSociales=" + beneficiairePrestationsSociales + ", informationsPersonnelles="
+        return "Personne [beneficiaireAides=" + beneficiaireAides + ", informationsPersonnelles="
                 + informationsPersonnelles + ", ressourcesFinancieres=" + ressourcesFinancieres + "]";
     }
 }

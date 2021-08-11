@@ -9,7 +9,7 @@ import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.donnees.entities.SuiviParcoursUtilisateurEntity;
 import fr.poleemploi.estime.donnees.managers.SuiviParcoursUtilisateurManager;
-import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
+import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
 
 /**
@@ -27,24 +27,24 @@ public class SuiviUtilisateurUtile {
     @Autowired
     private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
     
-    public void tracerParcoursUtilisateur(UserInfoESD userInfoESD, String parcours, BeneficiairePrestationsSociales beneficiairePrestationsSociales, DetailIndemnisationESD detailIndemnisationESD) {
+    public void tracerParcoursUtilisateur(UserInfoESD userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, DetailIndemnisationESD detailIndemnisationESD) {
 
         SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(
                 userInfoESD, 
                 parcours, 
-                getTypePopulation(beneficiairePrestationsSociales), 
+                getTypePopulation(beneficiaireAides), 
                 detailIndemnisationESD);
 
         suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity); 
     }
 
 
-    public void tracerParcoursUtilisateur(String idPoleEmploi, String parcours, BeneficiairePrestationsSociales beneficiairePrestationsSociales) {
+    public void tracerParcoursUtilisateur(String idPoleEmploi, String parcours, BeneficiaireAides beneficiaireAides) {
 
         SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(
                 idPoleEmploi,
                 parcours, 
-                getTypePopulation(beneficiairePrestationsSociales));
+                getTypePopulation(beneficiaireAides));
 
         suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity); 
     }
@@ -62,12 +62,12 @@ public class SuiviUtilisateurUtile {
         return ParcoursUtilisateur.CONNEXION_REFUSEE.getParcours();        
     }
 
-    private String getTypePopulation(BeneficiairePrestationsSociales beneficiairePrestationsSociales) {
+    private String getTypePopulation(BeneficiaireAides beneficiaireAides) {
         return getTypePopulation(
-                beneficiairePrestationsSociales.isBeneficiaireARE(),
-                beneficiairePrestationsSociales.isBeneficiaireASS(),
-                beneficiairePrestationsSociales.isBeneficiaireRSA(),
-                beneficiairePrestationsSociales.isBeneficiaireAAH());  
+                beneficiaireAides.isBeneficiaireARE(),
+                beneficiaireAides.isBeneficiaireASS(),
+                beneficiaireAides.isBeneficiaireRSA(),
+                beneficiaireAides.isBeneficiaireAAH());  
     }    
 
     private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoESD userInfoESD, String parcours, String typePopulation, DetailIndemnisationESD detailIndemnisationESD) {

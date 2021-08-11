@@ -16,11 +16,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
-import fr.poleemploi.estime.services.ressources.PrestationSociale;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import utile.tests.UtileTests;
 
@@ -61,19 +61,19 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        allocationASS.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-04-2020"));
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-04-2020"));
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-11-2021";
         LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
         
         //Lorsque je calcul le montant de l'ASS sur le mois total 
-        Optional<PrestationSociale> ass = allocationSolidariteSpecifiqueUtile.simulerPrestationSociale(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
+        Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors 
         //le montant de l'ASS sur le mois de novembre 2021 est de 506€
@@ -91,19 +91,19 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        allocationASS.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-04-2020"));
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-04-2020"));
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-12-2021";
         LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
         
         //Lorsque je calcul le montant de l'ASS sur le mois total 
-        Optional<PrestationSociale> ass = allocationSolidariteSpecifiqueUtile.simulerPrestationSociale(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
+        Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors le montant de l'ASS sur le mois de décembre 2021 est de 523€
         assertThat(ass.get().getMontant()).isEqualTo(523);
@@ -120,19 +120,19 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        allocationASS.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-09-2020"));
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-09-2020"));
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-01-2021";
         LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
 
         //Lorsque je calcul le montant de l'ASS sur le mois total 
-         Optional<PrestationSociale> ass = allocationSolidariteSpecifiqueUtile.simulerPrestationSociale(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
+         Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors 
         //le montant de l'ASS sur le mois de janvier 2021 est de 523€
@@ -150,19 +150,19 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        allocationASS.setDateDerniereOuvertureDroitASS(testUtile.getDate("14-09-2020"));
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-09-2020"));
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-02-2021";
         LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
         
         //Lorsque je calcul le montant de l'ASS sur le mois total 
-        Optional<PrestationSociale> ass = allocationSolidariteSpecifiqueUtile.simulerPrestationSociale(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
+        Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
 
         //alors 
         //le montant de l'ASS sur le mois de février 2021 est de 472€

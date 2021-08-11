@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiairePrestationsSocialesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.UtileTests;
 
@@ -21,13 +21,13 @@ import utile.tests.UtileTests;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class BeneficiaireAidesSocialesUtileTests {
+class BeneficiaireAidesUtileTests {
     
     public static final String CODE_POSTAL_MAYOTTE = "97600";
     public static final String CODE_POSTAL_METROPOLITAIN = "72300";
     
     @Autowired
-    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
+    private BeneficiaireAidesUtile beneficiaireAidesUtile;
     
     @Autowired
     private UtileTests utileTests;
@@ -44,10 +44,10 @@ class BeneficiaireAidesSocialesUtileTests {
         //si DE France Metropolitaine et montant journalier = 29,38€ (= seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
 
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isTrue();
@@ -59,10 +59,10 @@ class BeneficiaireAidesSocialesUtileTests {
         //si DE France Metropolitaine et montant journalier = 18,38€ (< seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(18.38f);
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(18.38f);
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isTrue();
@@ -74,10 +74,10 @@ class BeneficiaireAidesSocialesUtileTests {
         //si DE Mayotte et montant journalier = 14.68€ (= seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);      
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);      
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isTrue();
@@ -89,10 +89,10 @@ class BeneficiaireAidesSocialesUtileTests {
         //si DE Mayotte et montant journalier = 12.68€ (< seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(12.68f);  
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(12.68f);  
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isTrue();
@@ -104,10 +104,10 @@ class BeneficiaireAidesSocialesUtileTests {
         //si DE Mayotte et montant journalier = 39,38€ (> seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(39.38f);        
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(39.38f);        
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isFalse();
@@ -119,10 +119,10 @@ class BeneficiaireAidesSocialesUtileTests {
         //si DE Mayotte et montant journalier = 16.68€ (> seuil max.)
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().setAllocationJournaliereNet(16.68f);   
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(16.68f);   
         
         //lorsque l'on appelle isBeneficiaireAidePEouCAF
-        boolean beneficiaire = beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
+        boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
         
         //alors le résultat est DE beneficiaire
         assertThat(beneficiaire).isFalse();

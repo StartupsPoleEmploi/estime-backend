@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.services.ressources;
 
-public class AllocationsLogementMensuellesNetFoyer {
+public class AllocationsLogement {
 
     private float moisN;
     private float moisNMoins1;
@@ -33,7 +33,7 @@ public class AllocationsLogementMensuellesNetFoyer {
     }
     @Override
     public String toString() {
-        return "AllocationsLogementMensuellesNetFoyer [moisN=" + moisN + ", moisNMoins1=" + moisNMoins1
+        return "allocationsLogement [moisN=" + moisN + ", moisNMoins1=" + moisNMoins1
                 + ", moisNMoins2=" + moisNMoins2 + ", moisNMoins3=" + moisNMoins3 + "]";
     }
 }

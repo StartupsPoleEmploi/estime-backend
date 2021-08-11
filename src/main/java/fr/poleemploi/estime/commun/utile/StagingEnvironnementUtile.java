@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Environnements;
-import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
+import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.AidesCPAM;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
-import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
+import fr.poleemploi.estime.services.ressources.AllocationsLogement;
+import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
-import fr.poleemploi.estime.services.ressources.PrestationsCAF;
-import fr.poleemploi.estime.services.ressources.PrestationsCPAM;
-import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
@@ -37,49 +37,45 @@ public class StagingEnvironnementUtile {
 
         switch (population) {
         case "AAH":
-            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(true, false, false, false));            
+            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(true, false, false, false));            
             break;
         case "ARE":
-            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(false, true, false, false));
+            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, true, false, false));
             break;
         case "ASS":
-            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(false, false, true, false));
+            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, true, false));
             individu.setRessourcesFinancieres(creerBouchonRessourcesFinancieresASS());
             break;
         case "RSA":
-            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(false, false, false, true));
+            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, true));
             break;
         default:
-            individu.setBeneficiairePrestationsSociales(creerBouchonBeneficiairePrestationsSociales(false, false, false, false)); 
+            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, false)); 
             break;
         }
     }
 
-    private BeneficiairePrestationsSociales creerBouchonBeneficiairePrestationsSociales(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
-        BeneficiairePrestationsSociales beneficiaire = new BeneficiairePrestationsSociales();
+    private BeneficiaireAides creerBouchonBeneficiaireAides(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
+        BeneficiaireAides beneficiaire = new BeneficiaireAides();
         beneficiaire.setBeneficiaireAAH(beneficiaireAAH);
         beneficiaire.setBeneficiaireASS(beneficiaireASS);
         beneficiaire.setBeneficiaireARE(beneficiaireARE);
         beneficiaire.setBeneficiaireRSA(beneficiaireRSA);
-        beneficiaire.setTopAAHRecupererViaApiPoleEmploi(beneficiaireAAH);
-        beneficiaire.setTopARERecupererViaApiPoleEmploi(beneficiaireARE);
-        beneficiaire.setTopASSRecupererViaApiPoleEmploi(beneficiaireASS);
-        beneficiaire.setTopRSARecupererViaApiPoleEmploi(beneficiaireRSA);
         return beneficiaire;
     }
 
     private RessourcesFinancieres creerBouchonRessourcesFinancieresASS() {
         RessourcesFinancieres ressourcesFinancieres = creerBouchonRessourcesFinancieres();
-        ressourcesFinancieres.setPrestationsPoleEmploi(creerBouchonPrestationsPoleEmploiAvecASS(16.89f));
+        ressourcesFinancieres.setAidesPoleEmploi(creerBouchonAidesPoleEmploiAvecASS(16.89f));
         return ressourcesFinancieres;
     }
 
-    private PrestationsPoleEmploi creerBouchonPrestationsPoleEmploiAvecASS(float montant) {
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+    private AidesPoleEmploi creerBouchonAidesPoleEmploiAvecASS(float montant) {
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(montant);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        return prestationsPoleEmploi;
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        return aidesPoleEmploi;
     }
 
     private RessourcesFinancieres creerBouchonRessourcesFinancieres() {
@@ -91,28 +87,28 @@ public class StagingEnvironnementUtile {
     }
 
     private void creerBouchonAllocationCAF(RessourcesFinancieres ressourcesFinancieres) {
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(creerBouchonAllocationsLogement());
-        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        aidesCAF.setAllocationsLogement(creerBouchonAllocationsLogement());
+        ressourcesFinancieres.setAidesCAF(aidesCAF);
     }
 
-    private AllocationsLogementMensuellesNetFoyer creerBouchonAllocationsLogement() {
-        AllocationsLogementMensuellesNetFoyer allocationsLogementMensuellesNetFoyer = new AllocationsLogementMensuellesNetFoyer();
-        allocationsLogementMensuellesNetFoyer.setMoisNMoins1(0);
-        allocationsLogementMensuellesNetFoyer.setMoisNMoins2(0);
-        allocationsLogementMensuellesNetFoyer.setMoisNMoins3(0);
-        return allocationsLogementMensuellesNetFoyer;
+    private AllocationsLogement creerBouchonAllocationsLogement() {
+        AllocationsLogement allocationsLogement = new AllocationsLogement();
+        allocationsLogement.setMoisNMoins1(0);
+        allocationsLogement.setMoisNMoins2(0);
+        allocationsLogement.setMoisNMoins3(0);
+        return allocationsLogement;
     }
     
     private void creerBouchonAllocationCPAM(RessourcesFinancieres ressourcesFinancieres) {
-        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
-        prestationsCPAM.setAllocationSupplementaireInvalidite(0f);
-        ressourcesFinancieres.setPrestationsCPAM(prestationsCPAM);
+        AidesCPAM aidesCPAM = new AidesCPAM();
+        aidesCPAM.setAllocationSupplementaireInvalidite(0f);
+        ressourcesFinancieres.setAidesCPAM(aidesCPAM);
     }
     
     private boolean isPopulationAutorisee(UserInfoESD userInfoESD) {
-        return userInfoESD.getGivenName().endsWith(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()) 
-                || userInfoESD.getGivenName().endsWith(PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode()) 
-                || userInfoESD.getGivenName().endsWith(PrestationsSociales.RSA.getCode());
+        return userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()) 
+                || userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()) 
+                || userInfoESD.getGivenName().endsWith(Aides.RSA.getCode());
     }
 }

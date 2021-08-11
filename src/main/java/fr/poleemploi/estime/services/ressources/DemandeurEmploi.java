@@ -3,7 +3,7 @@ package fr.poleemploi.estime.services.ressources;
 public class DemandeurEmploi {
 
     private String idPoleEmploi;
-    private BeneficiairePrestationsSociales beneficiairePrestationsSociales;
+    private BeneficiaireAides beneficiaireAides;
     private FuturTravail futurTravail;
     private InformationsPersonnelles informationsPersonnelles;
     private RessourcesFinancieres ressourcesFinancieres;
@@ -18,11 +18,11 @@ public class DemandeurEmploi {
     public void setRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres) {
         this.ressourcesFinancieres = ressourcesFinancieres;
     }
-    public BeneficiairePrestationsSociales getBeneficiairePrestationsSociales() {
-        return beneficiairePrestationsSociales;
+    public BeneficiaireAides getBeneficiaireAides() {
+        return beneficiaireAides;
     }
-    public void setBeneficiairePrestationsSociales(BeneficiairePrestationsSociales beneficiairePrestationsSociales) {
-        this.beneficiairePrestationsSociales = beneficiairePrestationsSociales;
+    public void setBeneficiaireAides(BeneficiaireAides beneficiaireAides) {
+        this.beneficiaireAides = beneficiaireAides;
     }
     public SituationFamiliale getSituationFamiliale() {
         return situationFamiliale;
@@ -47,8 +47,8 @@ public class DemandeurEmploi {
     }
     @Override
     public String toString() {
-        return "DemandeurEmploi [idPoleEmploi=" + idPoleEmploi + ", beneficiairePrestationsSociales="
-                + beneficiairePrestationsSociales + ", futurTravail=" + futurTravail + ", informationsPersonnelles="
+        return "DemandeurEmploi [idPoleEmploi=" + idPoleEmploi + ", beneficiaireAides="
+                + beneficiaireAides + ", futurTravail=" + futurTravail + ", informationsPersonnelles="
                 + informationsPersonnelles + ", ressourcesFinancieres=" + ressourcesFinancieres
                 + ", situationFamiliale=" + situationFamiliale + "]";
     }

@@ -18,11 +18,11 @@ import org.springframework.test.context.TestPropertySource;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
+import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
-import fr.poleemploi.estime.services.ressources.SimulationPrestationsSociales;
+import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 @SpringBootTest
@@ -61,88 +61,88 @@ class DemandeurAss1MoisCumulSalaireAvantSimulation extends CommunTests {
         
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks();
-        SimulationPrestationsSociales simulationPrestationsSociales = individuService.simulerPrestationsSociales(demandeurEmploi);
+        SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
         // AGEPI : 400€, Aide mobilité : 258€, ASS : 506€
-        SimulationMensuelle simulationMois1 = simulationPrestationsSociales.getSimulationsMensuelles().get(0);
+        SimulationMensuelle simulationMois1 = simulationAides.getSimulationsMensuelles().get(0);
         assertThat(simulationMois1).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
             });
-            assertThat(simulation.getMesPrestationsSociales().size()).isEqualTo(3);
-            assertThat(simulation.getMesPrestationsSociales().get(PrestationsSociales.AGEPI.getCode())).satisfies(agepi -> {
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
+            assertThat(simulation.getMesAides().get(Aides.AGEPI.getCode())).satisfies(agepi -> {
                 assertThat(agepi.getMontant()).isEqualTo(400);
             });
-            assertThat(simulation.getMesPrestationsSociales().get(PrestationsSociales.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
+            assertThat(simulation.getMesAides().get(Aides.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
                 assertThat(aideMobilite.getMontant()).isEqualTo(450);
             });
-            assertThat(simulation.getMesPrestationsSociales().get(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()))
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()))
             .satisfies(ass -> {
                 assertThat(ass.getMontant()).isEqualTo(506f);
             });
         });
         // Alors les prestations du second mois 12/2020 sont :
         // ASS : 523€
-        SimulationMensuelle simulationMois2 = simulationPrestationsSociales.getSimulationsMensuelles().get(1);
+        SimulationMensuelle simulationMois2 = simulationAides.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
             });
-            assertThat(simulation.getMesPrestationsSociales().size()).isEqualTo(1);
-            assertThat(simulation.getMesPrestationsSociales().get(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()))
+            assertThat(simulation.getMesAides().size()).isEqualTo(1);
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()))
             .satisfies(ass -> {
                 assertThat(ass.getMontant()).isEqualTo(523f);
             });
         });
         // Alors les prestations du troisième mois 01/2021 sont :
         // aucune aide
-        SimulationMensuelle simulationMois3 = simulationPrestationsSociales.getSimulationsMensuelles().get(2);
+        SimulationMensuelle simulationMois3 = simulationAides.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesPrestationsSociales().size()).isEqualTo(0);
+            assertThat(simulation.getMesAides().size()).isEqualTo(0);
         });
         // Alors les prestations du quatrième mois 02/2021 sont :
         // Prime d'activité : 140€ (simulateur CAF : 129€)
-        SimulationMensuelle simulationMois4 = simulationPrestationsSociales.getSimulationsMensuelles().get(3);
+        SimulationMensuelle simulationMois4 = simulationAides.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesPrestationsSociales().size()).isEqualTo(1);
-            assertThat(simulation.getMesPrestationsSociales().get(PrestationsSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+            assertThat(simulation.getMesAides().size()).isEqualTo(1);
+            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(140);
             });
         });
         // Alors les prestations du cinquième mois 03/2021 sont :
         // Prime d'activité : 140€ 
-        SimulationMensuelle simulationMois5 = simulationPrestationsSociales.getSimulationsMensuelles().get(4);
+        SimulationMensuelle simulationMois5 = simulationAides.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesPrestationsSociales().size()).isEqualTo(1);
-            assertThat(simulation.getMesPrestationsSociales().get(PrestationsSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+            assertThat(simulation.getMesAides().size()).isEqualTo(1);
+            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(140);
             });
         });
         // Alors les prestations du sixième mois 04/2021 sont :
         // Prime d'activité : 140€
-        SimulationMensuelle simulationMois6 = simulationPrestationsSociales.getSimulationsMensuelles().get(5);
+        SimulationMensuelle simulationMois6 = simulationAides.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesPrestationsSociales().size()).isEqualTo(1);
-            assertThat(simulation.getMesPrestationsSociales().get(PrestationsSociales.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+            assertThat(simulation.getMesAides().size()).isEqualTo(1);
+            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(140);
             });
         });

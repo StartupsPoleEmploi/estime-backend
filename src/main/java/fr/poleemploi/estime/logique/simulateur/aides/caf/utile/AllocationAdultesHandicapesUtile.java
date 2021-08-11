@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.logique.simulateur.prestationssociales.caf.utile;
+package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -8,13 +8,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.utile.PrestationSocialeUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.utile.SimulateurPrestationsSocialesUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PrestationSociale;
 
 @Component
 public class AllocationAdultesHandicapesUtile {
@@ -24,7 +24,7 @@ public class AllocationAdultesHandicapesUtile {
     public static final float POURCENTAGE_SALAIRE_PALIER_2 = 0.6f;
     
     @Autowired
-    private PrestationSocialeUtile prestationSocialeeUtile;
+    private AideUtile aideeUtile;
 
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
@@ -40,18 +40,18 @@ public class AllocationAdultesHandicapesUtile {
      * si déjà travaillé 1 mois, AAH + salaire en M1 M2 M3 M4 M5 puis AAH réduite cumulée avec salaire en  M6
      *
      */
-    public void simulerPrestationSociale(Map<String, PrestationSociale>  prestationsSocialesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simulerAide(Map<String, Aide>  aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         int nombreMoisTravaillesDerniersMois = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi, true); 
-        int diffNbrMoisSimulationEtNbrMoisTravailles = SimulateurPrestationsSocialesUtile.NOMBRE_MOIS_MAX_A_SIMULER - nombreMoisTravaillesDerniersMois;
+        int diffNbrMoisSimulationEtNbrMoisTravailles = SimulateurAidesUtile.NOMBRE_MOIS_MAX_A_SIMULER - nombreMoisTravaillesDerniersMois;
         if(numeroMoisSimule > diffNbrMoisSimulationEtNbrMoisTravailles) {
             float montantAllocationAAHReduit = calculerMontantReduit(demandeurEmploi);
             if(montantAllocationAAHReduit > 0) {
-                ajouterPrestationSocialeeAAH(prestationsSocialesPourCeMois, montantAllocationAAHReduit);             
+                ajouterAideeAAH(aidesPourCeMois, montantAllocationAAHReduit);             
             }
         } else {
             //le demandeur cumule son AAH avant la simulation
-            float montantAllocationAAHAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetAAH();
-            ajouterPrestationSocialeeAAH(prestationsSocialesPourCeMois, montantAllocationAAHAvantSimulation);
+            float montantAllocationAAHAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH();
+            ajouterAideeAAH(aidesPourCeMois, montantAllocationAAHAvantSimulation);
         }
     }
     
@@ -62,7 +62,7 @@ public class AllocationAdultesHandicapesUtile {
      * @return montant AAH réduit
      */
     private float calculerMontantReduit(DemandeurEmploi demandeurEmploi) {
-        BigDecimal montantAllocationAAHAvantSimulation = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetAAH());
+        BigDecimal montantAllocationAAHAvantSimulation = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH());
         
         BigDecimal partSalaireADeduire = calculerPartSalairePourDeduction(demandeurEmploi);
         float montantReduitAllocationAAH = montantAllocationAAHAvantSimulation.subtract(partSalaireADeduire).setScale(0, RoundingMode.DOWN).floatValue();
@@ -87,17 +87,17 @@ public class AllocationAdultesHandicapesUtile {
         return salaireBrut.compareTo(BigDecimal.valueOf(MONTANT_SALAIRE_BRUT_PALIER)) <= 0;
     }
     
-    private void ajouterPrestationSocialeeAAH(Map<String, PrestationSociale>  prestationsSocialesPourCeMois, float montant) {
-        PrestationSociale allocationAAH = new PrestationSociale();
-        allocationAAH.setCode(PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode());
-        Optional<String> detailAideOptional = prestationSocialeeUtile.getDescription(PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getNomFichierDetail());
+    private void ajouterAideeAAH(Map<String, Aide>  aidesPourCeMois, float montant) {
+        Aide allocationAAH = new Aide();
+        allocationAAH.setCode(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode());
+        Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.ALLOCATION_ADULTES_HANDICAPES.getNomFichierDetail());
         if(detailAideOptional.isPresent()) {
             allocationAAH.setDetail(detailAideOptional.get());            
         }
         allocationAAH.setMontant(montant);
-        allocationAAH.setNom(PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getNom());
+        allocationAAH.setNom(Aides.ALLOCATION_ADULTES_HANDICAPES.getNom());
         allocationAAH.setOrganisme(Organismes.CAF.getNom());
         allocationAAH.setReportee(false);
-        prestationsSocialesPourCeMois.put(PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode(), allocationAAH);
+        aidesPourCeMois.put(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode(), allocationAAH);
     }
 }

@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum PrestationsSociales {
+public enum Aides {
 
     AGEPI("AGEPI", "Aide à la Garde d'Enfants pour Parent Isolé", "agepi.html"),
     AIDE_MOBILITE("AM", "Aide à la mobilité", "aide-mobilite.html"),
@@ -15,7 +15,7 @@ public enum PrestationsSociales {
     private String nom;
     private String nomFichierDetail;
     
-    PrestationsSociales(String code, String nom, String nomFichierDetail) {
+    Aides(String code, String nom, String nomFichierDetail) {
         this.code = code;
         this.nom = nom;
         this.nomFichierDetail = nomFichierDetail;

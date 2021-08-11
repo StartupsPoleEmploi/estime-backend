@@ -14,7 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.poleemploi.utile.AgepiUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.UtileTests;
 

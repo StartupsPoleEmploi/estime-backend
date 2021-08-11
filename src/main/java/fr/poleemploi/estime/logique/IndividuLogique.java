@@ -20,11 +20,11 @@ import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeConnectUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.SimulateurPrestationsSociales;
+import fr.poleemploi.estime.logique.simulateur.aides.SimulateurAides;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
-import fr.poleemploi.estime.services.ressources.SimulationPrestationsSociales;
+import fr.poleemploi.estime.services.ressources.SimulationAides;
 
 @Component
 public class IndividuLogique {
@@ -45,7 +45,7 @@ public class IndividuLogique {
     private PeConnectUtile peConnectUtile;
 
     @Autowired
-    private SimulateurPrestationsSociales simulateurPrestationsSociales;
+    private SimulateurAides simulateurAides;
 
     @Autowired
     private StagingEnvironnementUtile stagingEnvironnementUtile;
@@ -80,7 +80,7 @@ public class IndividuLogique {
             suiviUtilisateurUtile.tracerParcoursUtilisateur(
                     userInfoESD, 
                     suiviUtilisateurUtile.getParcoursAccesService(individu), 
-                    individu.getBeneficiairePrestationsSociales(), 
+                    individu.getBeneficiaireAides(), 
                     detailIndemnisationESD);       
           
 
@@ -104,30 +104,32 @@ public class IndividuLogique {
         demandeurEmploiUtile.addCodeDepartement(demandeurEmploi, bearerToken);
         demandeurEmploiUtile.addDateNaissance(demandeurEmploi, bearerToken);
 
-        demandeurEmploi.setBeneficiairePrestationsSociales(individu.getBeneficiairePrestationsSociales());
-        demandeurEmploi.setRessourcesFinancieres(individu.getRessourcesFinancieres());         
+        demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
+        demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);      
 
         suiviUtilisateurUtile.tracerParcoursUtilisateur(
                 demandeurEmploi.getIdPoleEmploi(), 
                 ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(), 
-                individu.getBeneficiairePrestationsSociales());         
+                individu.getBeneficiaireAides());         
 
         return demandeurEmploi;
     } 
 
-    public SimulationPrestationsSociales simulerMesPrestationsSociales(DemandeurEmploi demandeurEmploi) { 
-        SimulationPrestationsSociales simulationPrestationsSociales = simulateurPrestationsSociales.simuler(demandeurEmploi);
+    public SimulationAides simulerMesAides(DemandeurEmploi demandeurEmploi) { 
+        SimulationAides simulationAides = simulateurAides.simuler(demandeurEmploi);
         
         suiviUtilisateurUtile.tracerParcoursUtilisateur(
                 demandeurEmploi.getIdPoleEmploi(), 
                 ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), 
-                demandeurEmploi.getBeneficiairePrestationsSociales());  
+                demandeurEmploi.getBeneficiaireAides());  
 
 
-        return simulationPrestationsSociales;
+        return simulationAides;
     }
 
     public void supprimerSuiviParcoursUtilisateur(String idPoleEmploi) {
         suiviUtilisateurUtile.supprimerTracesParcoursUtilisateur(idPoleEmploi);        
     }
+    
+   
 }

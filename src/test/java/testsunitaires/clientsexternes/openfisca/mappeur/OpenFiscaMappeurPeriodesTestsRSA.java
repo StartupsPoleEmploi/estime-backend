@@ -77,7 +77,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(0);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(0);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);  
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
@@ -106,7 +106,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(1);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(1);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
@@ -135,7 +135,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(1);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(1);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);  
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
@@ -164,7 +164,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(2);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(2);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
@@ -193,7 +193,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(2);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(2);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
@@ -224,7 +224,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(3);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(3);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        
@@ -254,7 +254,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().setProchaineDeclarationRSA(3);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(3);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
        

@@ -9,7 +9,7 @@ public class SimulationMensuelle {
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datePremierJourMoisSimule;
-    private Map<String, PrestationSociale> mesPrestationsSociales;
+    private Map<String, Aide> mesAides;
     
     public LocalDate getDatePremierJourMoisSimule() {
         return datePremierJourMoisSimule;
@@ -17,16 +17,16 @@ public class SimulationMensuelle {
     public void setDatePremierJourMoisSimule(LocalDate datePremierJourMoisSimule) {
         this.datePremierJourMoisSimule = datePremierJourMoisSimule;
     }
-    public Map<String, PrestationSociale> getMesPrestationsSociales() {
-        return mesPrestationsSociales;
+    public Map<String, Aide> getMesAides() {
+        return mesAides;
     }
-    public void setMesPrestationsSociales(Map<String, PrestationSociale> mesPrestationsSociales) {
-        this.mesPrestationsSociales = mesPrestationsSociales;
+    public void setMesAides(Map<String, Aide> mesAides) {
+        this.mesAides = mesAides;
     }
     
     @Override
     public String toString() {
-        return "SimulationMensuelle [datePremierJourMoisSimule=" + datePremierJourMoisSimule
-                + ", mesPrestationsSociales=" + mesPrestationsSociales + "]";
-    }
+        return "SimulationMensuelle [datePremierJourMoisSimule=" + datePremierJourMoisSimule + ", mesAides=" + mesAides
+                + "]";
+    }   
 }

@@ -34,7 +34,7 @@ public class OpenFiscaMappeurPrimeActivite {
             JsonObject famillesJsonObject = jsonObject.get(FAMILLES).getAsJsonObject();
             JsonObject famille1JsonObject = famillesJsonObject.get(FAMILLE1).getAsJsonObject();
             JsonObject primeActiviteJsonObject = famille1JsonObject.get(PPA).getAsJsonObject();
-            String periodeFormateePrimeActivite = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculPrestation(dateDebutSimulation, numeroMoisSimule);
+            String periodeFormateePrimeActivite = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
             return  primeActiviteJsonObject.get(periodeFormateePrimeActivite).getAsBigDecimal().setScale(0, RoundingMode.HALF_UP).floatValue();            
         } catch (NullPointerException e) {
             LOGGER.error( String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
@@ -44,7 +44,7 @@ public class OpenFiscaMappeurPrimeActivite {
     
     public JSONObject creerPrimeActiviteJSON(LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject periode = new JSONObject();
-        periode.put(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculPrestation(dateDebutSimulation, numeroMoisSimule), JSONObject.NULL);
+        periode.put(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule), JSONObject.NULL);
         return periode;
     }
 }

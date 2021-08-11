@@ -16,7 +16,7 @@ import fr.poleemploi.estime.services.controleurs.IndividuServiceControleur;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.PeConnectPayload;
-import fr.poleemploi.estime.services.ressources.SimulationPrestationsSociales;
+import fr.poleemploi.estime.services.ressources.SimulationAides;
 
 @RestController
 @RequestMapping("/individus")
@@ -43,10 +43,10 @@ public class IndividuService {
         return individuLogique.creerDemandeurEmploi(individu);
     }
 
-    @PostMapping(value = "/demandeur_emploi/simulation_prestations_sociales", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public SimulationPrestationsSociales simulerPrestationsSociales(@RequestBody DemandeurEmploi demandeurEmploi) {
-        individuServiceControleur.controlerDonneesEntreeServiceSimulerMesPrestationsSociales(demandeurEmploi);
-        return individuLogique.simulerMesPrestationsSociales(demandeurEmploi);
+    @PostMapping(value = "/demandeur_emploi/simulation_aides", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public SimulationAides simulerAides(@RequestBody DemandeurEmploi demandeurEmploi) {
+        individuServiceControleur.controlerDonneesEntreeServiceSimulerMesAides(demandeurEmploi);
+        return individuLogique.simulerMesAides(demandeurEmploi);
     }
     
     @DeleteMapping(value = "/demandeur_emploi/suivi_parcours", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

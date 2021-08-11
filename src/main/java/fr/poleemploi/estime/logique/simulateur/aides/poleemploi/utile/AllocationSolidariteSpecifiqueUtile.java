@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.logique.simulateur.prestationssociales.poleemploi.utile;
+package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -8,15 +8,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.utile.PrestationSocialeUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PrestationSociale;
 
 @Component
 public class AllocationSolidariteSpecifiqueUtile {
@@ -24,7 +24,7 @@ public class AllocationSolidariteSpecifiqueUtile {
     private static final int NOMBRE_MOIS_MAX_ASS_ELIGIBLE = 3;
     
     @Autowired
-    private PrestationSocialeUtile prestationSocialeeUtile;
+    private AideUtile aideeUtile;
 
     @Autowired
     private DateUtile dateUtile;
@@ -35,10 +35,10 @@ public class AllocationSolidariteSpecifiqueUtile {
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
     
-    public Optional<PrestationSociale> simulerPrestationSociale(DemandeurEmploi demandeurEmploi, LocalDate moisSimule, LocalDate dateDebutSimulation) {
+    public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi, LocalDate moisSimule, LocalDate dateDebutSimulation) {
         float montantASS = calculerMontant(demandeurEmploi, moisSimule);
         if(montantASS > 0) {
-            PrestationSociale aideAllocationSolidariteSpecifique = creerPrestationSociale(demandeurEmploi, dateDebutSimulation, montantASS);
+            Aide aideAllocationSolidariteSpecifique = creerAide(demandeurEmploi, dateDebutSimulation, montantASS);
             return Optional.of(aideAllocationSolidariteSpecifique);
         }
         return Optional.empty();
@@ -47,10 +47,10 @@ public class AllocationSolidariteSpecifiqueUtile {
     public float calculerMontant(DemandeurEmploi demandeurEmploi, LocalDate mois) {
         int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);    
         if(demandeurEmploi.getRessourcesFinancieres() != null 
-           && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi() != null 
-           && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS() != null
-           && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null) {
-            float montantJournalierNetSolidariteSpecifique = demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().getAllocationJournaliereNet();
+           && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null 
+           && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS() != null
+           && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null) {
+            float montantJournalierNetSolidariteSpecifique = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet();
             return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();            
         }
         return 0;
@@ -61,7 +61,7 @@ public class AllocationSolidariteSpecifiqueUtile {
     }
 
     public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi) {
-        if(demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi() != null) {        
+        if(demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null) {        
             int nombreMoisCumulesASSPercueEtSalaire = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi, false);
             if(futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
                 return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
@@ -72,10 +72,10 @@ public class AllocationSolidariteSpecifiqueUtile {
         return 0;
     }
     
-    private PrestationSociale creerPrestationSociale(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, float montantPrestation) {
-        PrestationSociale ass = new PrestationSociale();
-        ass.setCode(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
-        Optional<String> detailAideOptional = prestationSocialeeUtile.getDescription(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNomFichierDetail());
+    private Aide creerAide(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, float montantAide) {
+        Aide ass = new Aide();
+        ass.setCode(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
+        Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNomFichierDetail());
         if(detailAideOptional.isPresent()) {
             ass.setDetail(detailAideOptional.get());            
         }
@@ -83,8 +83,8 @@ public class AllocationSolidariteSpecifiqueUtile {
         if(messageAlerteOptional.isPresent()) {
             ass.setMessageAlerte(messageAlerteOptional.get());                
         }
-        ass.setMontant(montantPrestation);
-        ass.setNom(PrestationsSociales.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
+        ass.setMontant(montantAide);
+        ass.setNom(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
         ass.setOrganisme(Organismes.PE.getNom());
         ass.setReportee(false);
         return ass;
@@ -100,7 +100,7 @@ public class AllocationSolidariteSpecifiqueUtile {
      * @return message d'alerte sinon vide
      */
     private  Optional<String> getMessageAlerte(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-        LocalDate dateDerniereOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroitASS();
+        LocalDate dateDerniereOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroit();
         LocalDate dateFinDroitASS = dateUtile.ajouterMoisALocalDate(dateDerniereOuvertureDroitASS, 6);
         LocalDate date3emeMoisSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, 3);
         if(dateUtile.isDateAvant(dateFinDroitASS, date3emeMoisSimulation)) {

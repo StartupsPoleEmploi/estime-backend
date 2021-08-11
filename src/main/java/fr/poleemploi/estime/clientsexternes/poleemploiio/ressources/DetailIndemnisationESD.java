@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class DetailIndemnisationESD {
     
-    private boolean beneficiairePrestationSolidarite;
+    private boolean beneficiaireAideSolidarite;
     private boolean beneficiaireAssuranceChomage;
     private float indemnisationJournalierNet;
     private int dureeReliquat;
@@ -29,11 +29,11 @@ public class DetailIndemnisationESD {
     public void setDureeReliquat(int dureeReliquat) {
         this.dureeReliquat = dureeReliquat;
     }
-    public boolean isBeneficiairePrestationSolidarite() {
-        return beneficiairePrestationSolidarite;
+    public boolean isBeneficiaireAideSolidarite() {
+        return beneficiaireAideSolidarite;
     }
-    public void setBeneficiairePrestationSolidarite(boolean beneficiairePrestationSolidarite) {
-        this.beneficiairePrestationSolidarite = beneficiairePrestationSolidarite;
+    public void setBeneficiaireAideSolidarite(boolean beneficiaireAideSolidarite) {
+        this.beneficiaireAideSolidarite = beneficiaireAideSolidarite;
     }
     public Date getDateReliquat() {
         return dateReliquat;
@@ -64,7 +64,7 @@ public class DetailIndemnisationESD {
     }
     @Override
     public String toString() {
-        return "DetailIndemnisationESD [beneficiairePrestationSolidarite=" + beneficiairePrestationSolidarite
+        return "DetailIndemnisationESD [beneficiaireAideSolidarite=" + beneficiaireAideSolidarite
                 + ", beneficiaireAssuranceChomage=" + beneficiaireAssuranceChomage + ", indemnisationJournalierNet="
                 + indemnisationJournalierNet + ", dureeReliquat=" + dureeReliquat + ", dateReliquat=" + dateReliquat
                 + ", codeIndemnisation=" + codeIndemnisation + ", beneficiaireRSA=" + beneficiaireRSA

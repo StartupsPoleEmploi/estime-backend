@@ -26,11 +26,11 @@ import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PrestationsCAF;
-import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
+import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SimulationPrestationsSociales;
+import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 
@@ -66,7 +66,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
         salaireConjoint.setMontantNet(1200);
@@ -74,17 +74,17 @@ class DemandeurASSEnCouple extends CommunTests {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint);        
         
-        SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
+        SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
+        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 85€ (résultat simulateur CAF : 81€)
         assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(85);
@@ -104,7 +104,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(2428);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
         salaireConjoint.setMontantNet(1200);
@@ -112,17 +112,17 @@ class DemandeurASSEnCouple extends CommunTests {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint);  
         
-        SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
+        SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
+        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
         //Lorsque je calcul le montant de la prime d'activité avec salaires 07/2020 = 1900, 08/2020 = 1900, 09/2020 = 1900 
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");        
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 0€ (résultat simulateur CAF : 0€)
         assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
@@ -143,7 +143,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);        
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
         salaireConjoint.setMontantNet(1200);
@@ -151,17 +151,17 @@ class DemandeurASSEnCouple extends CommunTests {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
             
-        SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
+        SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
+        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 140€ (résultat simulateur CAF : 136€)
         assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(140);
@@ -184,15 +184,15 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
         
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(132);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(0);
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);  
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationsFamiliales(132);
+        aidesFamiliales.setAllocationSoutienFamilial(0);
+        aidesFamiliales.setComplementFamilial(0);
+        aidesCAF.setAidesFamiliales(aidesFamiliales);  
+        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -201,17 +201,17 @@ class DemandeurASSEnCouple extends CommunTests {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
 
-        SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
+        SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
+        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 152€ (résultat simulateur CAF : 147€)
         assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(152);
@@ -234,16 +234,16 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
         
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(132);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(0);
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
-        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(20));
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationsFamiliales(132);
+        aidesFamiliales.setAllocationSoutienFamilial(0);
+        aidesFamiliales.setComplementFamilial(0);
+        aidesCAF.setAidesFamiliales(aidesFamiliales); 
+        aidesCAF.setAllocationsLogement(utileTests.creerallocationsLogement(20));
+        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -252,17 +252,17 @@ class DemandeurASSEnCouple extends CommunTests {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
 
-        SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
+        SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
+        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //Alors le montant de la prime d'activité pour le 11/2020 est de 145€ (résultat simulateur CAF : 141€)
         assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(145);
@@ -286,15 +286,15 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
       
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(303);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(259);
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationsFamiliales(303);
+        aidesFamiliales.setAllocationSoutienFamilial(0);
+        aidesFamiliales.setComplementFamilial(259);
+        aidesCAF.setAidesFamiliales(aidesFamiliales); 
+        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -303,17 +303,17 @@ class DemandeurASSEnCouple extends CommunTests {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
     
-        SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
+        SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
+        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 34€ avec CAF
         //Alors le montant de la prime d'activité pour le 11/2020 est de 111€ (résultat simulateur CAF : 77€)
@@ -338,16 +338,16 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
         
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(303);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(259);
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
-        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(140));
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationsFamiliales(303);
+        aidesFamiliales.setAllocationSoutienFamilial(0);
+        aidesFamiliales.setComplementFamilial(259);
+        aidesCAF.setAidesFamiliales(aidesFamiliales); 
+        aidesCAF.setAllocationsLogement(utileTests.creerallocationsLogement(140));
+        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres(    );
         Salaire salaireConjoint = new Salaire();
@@ -356,17 +356,17 @@ class DemandeurASSEnCouple extends CommunTests {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
         
-        SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
+        SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);        
+        simulationAides.setSimulationsMensuelles(simulationsMensuelles);        
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 34€ avec CAF
         //Alors le montant de la prime d'activité pour le 11/2020 est de 64€ (résultat simulateur CAF : 30€)
@@ -392,15 +392,15 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
         
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(472);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(259);
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationsFamiliales(472);
+        aidesFamiliales.setAllocationSoutienFamilial(0);
+        aidesFamiliales.setComplementFamilial(259);
+        aidesCAF.setAidesFamiliales(aidesFamiliales); 
+        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -409,17 +409,17 @@ class DemandeurASSEnCouple extends CommunTests {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
 
-        SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
+        SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);
+        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 34€ avec CAF
         //Alors le montant de la prime d'activité pour le 11/2020 est de 128€ (résultat simulateur CAF : 94€)
@@ -445,16 +445,16 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);    
         
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(472);
-        prestationsFamiliales.setAllocationSoutienFamilial(0);
-        prestationsFamiliales.setComplementFamilial(259);
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales); 
-        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(utileTests.creerAllocationsLogementMensuellesNetFoyer(230));
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationsFamiliales(472);
+        aidesFamiliales.setAllocationSoutienFamilial(0);
+        aidesFamiliales.setComplementFamilial(259);
+        aidesCAF.setAidesFamiliales(aidesFamiliales); 
+        aidesCAF.setAllocationsLogement(utileTests.creerallocationsLogement(230));
+        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         Salaire salaireConjoint = new Salaire();
@@ -463,17 +463,17 @@ class DemandeurASSEnCouple extends CommunTests {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint); 
         
-        SimulationPrestationsSociales simulationPrestationsSociales = new SimulationPrestationsSociales();
+        SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
         simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationPrestationsSociales.setSimulationsMensuelles(simulationsMensuelles);        
+        simulationAides.setSimulationsMensuelles(simulationsMensuelles);        
 
         //Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");  
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationPrestationsSociales, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         //TODO montant : écart de 34€ avec CAF
         //Alors le montant de la prime d'activité pour le 11/2020 est de 74€ (résultat simulateur CAF : 40€ )

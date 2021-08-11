@@ -22,7 +22,7 @@ import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessage
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SimulationPrestationsSociales;
+import fr.poleemploi.estime.services.ressources.SimulationAides;
 
 @Component
 public class OpenFiscaClient {
@@ -45,24 +45,24 @@ public class OpenFiscaClient {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaClient.class);
 
-    public OpenFiscaRetourSimulation calculerPrimeActivite(SimulationPrestationsSociales simulationPrestationsSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerPrimeActivite(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-        String jsonResponse = callApiCalculate(simulationPrestationsSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+        String jsonResponse = callApiCalculate(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
         openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaResponseMappeurPrimeActivite.getMontantPrimeActivite(jsonResponse, dateDebutSimulation, numeroMoisSimule));
         return openFiscaRetourSimulation;
     }
     
-    public OpenFiscaRetourSimulation calculerRsaAvecPrimeActivite(SimulationPrestationsSociales simulationPrestationsSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerRsaAvecPrimeActivite(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-        String jsonResponse = callApiCalculate(simulationPrestationsSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+        String jsonResponse = callApiCalculate(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
         openFiscaRetourSimulation.setMontantRSA(openFiscaResponseMappeurRSA.getMontantRSA(jsonResponse, dateDebutSimulation, numeroMoisSimule));
         openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaResponseMappeurPrimeActivite.getMontantPrimeActivite(jsonResponse, dateDebutSimulation, numeroMoisSimule));
         return openFiscaRetourSimulation;
     }
     
-    private String callApiCalculate(SimulationPrestationsSociales simulationPrestationsSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    private String callApiCalculate(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         try {
-            JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(simulationPrestationsSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);            
+            JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);            
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 

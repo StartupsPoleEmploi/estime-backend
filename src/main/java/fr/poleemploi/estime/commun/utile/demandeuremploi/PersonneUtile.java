@@ -12,7 +12,7 @@ import fr.poleemploi.estime.services.ressources.Personne;
 public class PersonneUtile {
 
     @Autowired
-    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
+    private BeneficiaireAidesUtile beneficiaireAidesUtile;
     
     public int calculerAge(Personne personne) {
         return Period.between(personne.getInformationsPersonnelles().getDateNaissance(), LocalDate.now()).getYears();
@@ -20,26 +20,26 @@ public class PersonneUtile {
 
     public boolean hasAllocationRSA(Personne personne) {
         return personne.getRessourcesFinancieres() != null 
-                && personne.getRessourcesFinancieres().getPrestationsCAF() != null 
-                && personne.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA() != null
-                && personne.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA() > 0;
+                && personne.getRessourcesFinancieres().getAidesCAF() != null 
+                && personne.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() != null
+                && personne.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() > 0;
     }
     
     public boolean hasAllocationARE(Personne personne) {
-        return beneficiairePrestationsSocialesUtile.isBeneficiaireARE(personne)
+        return beneficiaireAidesUtile.isBeneficiaireARE(personne)
                && personne.getRessourcesFinancieres() != null 
-               && personne.getRessourcesFinancieres().getPrestationsPoleEmploi()!= null 
-               && personne.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE() != null
-               && personne.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().getAllocationMensuelleNet() != null 
-               && personne.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationARE().getAllocationMensuelleNet() > 0;
+               && personne.getRessourcesFinancieres().getAidesPoleEmploi()!= null 
+               && personne.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null
+               && personne.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getAllocationMensuelleNet() != null 
+               && personne.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getAllocationMensuelleNet() > 0;
     }
     
     public boolean hasAllocationASS(Personne personne) {
-        return beneficiairePrestationsSocialesUtile.isBeneficiaireASS(personne)
+        return beneficiaireAidesUtile.isBeneficiaireASS(personne)
                && personne.getRessourcesFinancieres() != null 
-               && personne.getRessourcesFinancieres().getPrestationsPoleEmploi() != null 
-               && personne.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS() != null
-               && personne.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().getAllocationMensuelleNet() != null 
-               && personne.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().getAllocationMensuelleNet() > 0;
+               && personne.getRessourcesFinancieres().getAidesPoleEmploi() != null 
+               && personne.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS() != null
+               && personne.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().getAllocationMensuelleNet() != null 
+               && personne.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().getAllocationMensuelleNet() > 0;
     }
 }

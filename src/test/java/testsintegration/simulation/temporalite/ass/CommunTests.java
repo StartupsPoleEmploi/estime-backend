@@ -21,8 +21,8 @@ import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PrestationsCAF;
-import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
+import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import utile.tests.UtileTests;
 
 public class CommunTests {
@@ -52,16 +52,16 @@ public class CommunTests {
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);   
-        demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroitASS(utileTests.getDate("14-04-2020"));
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);   
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));
         
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationsFamiliales(0);
-        prestationsFamiliales.setAllocationSoutienFamilial(117);
-        prestationsFamiliales.setComplementFamilial(0); 
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
-        demandeurEmploi.getRessourcesFinancieres().setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationsFamiliales(0);
+        aidesFamiliales.setAllocationSoutienFamilial(117);
+        aidesFamiliales.setComplementFamilial(0); 
+        aidesCAF.setAidesFamiliales(aidesFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
 
         return demandeurEmploi;
     }

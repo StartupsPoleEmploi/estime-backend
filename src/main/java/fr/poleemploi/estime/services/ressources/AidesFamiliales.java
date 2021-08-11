@@ -5,7 +5,7 @@ package fr.poleemploi.estime.services.ressources;
  * @author ijla5100
  *
  */
-public class PrestationsFamiliales {
+public class AidesFamiliales {
     
     private float allocationsFamiliales;
     private float allocationSoutienFamilial;
@@ -37,16 +37,16 @@ public class PrestationsFamiliales {
     public void setComplementFamilial(float complementFamilial) {
         this.complementFamilial = complementFamilial;
     }
-    public float getPrestationAccueilJeuneEnfant() {
+    public float getAideAccueilJeuneEnfant() {
         return prestationAccueilJeuneEnfant;
     }
-    public void setPrestationAccueilJeuneEnfant(float prestationAccueilJeuneEnfant) {
+    public void setAideAccueilJeuneEnfant(float prestationAccueilJeuneEnfant) {
         this.prestationAccueilJeuneEnfant = prestationAccueilJeuneEnfant;
     }
     
     @Override
     public String toString() {
-        return "PrestationsFamiliales [allocationsFamiliales=" + allocationsFamiliales + ", allocationSoutienFamilial="
+        return "AidesFamiliales [allocationsFamiliales=" + allocationsFamiliales + ", allocationSoutienFamilial="
                 + allocationSoutienFamilial + ", complementFamilial=" + complementFamilial
                 + ", prestationAccueilJeuneEnfant=" + prestationAccueilJeuneEnfant + ", pensionsAlimentairesFoyer="
                 + pensionsAlimentairesFoyer + "]";

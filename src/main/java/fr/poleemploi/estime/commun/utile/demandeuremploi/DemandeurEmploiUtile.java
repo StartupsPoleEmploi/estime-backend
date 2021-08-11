@@ -10,7 +10,10 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DateNaissanceESD;
 import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 
 @Component
@@ -55,5 +58,21 @@ public class DemandeurEmploiUtile {
 
     public boolean isSansRessourcesFinancieres(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getRessourcesFinancieres() == null;
-    }   
+    }
+
+    public void addRessourcesFinancieres(DemandeurEmploi demandeurEmploi, Individu individu) {
+        demandeurEmploi.setRessourcesFinancieres(individu.getRessourcesFinancieres());
+        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(creerAidesCAF());   
+        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+    }
+    
+    private AidesCAF creerAidesCAF() {
+        AidesCAF aidesCAF = new AidesCAF();            
+        AllocationsLogement allocationsLogement = new AllocationsLogement();
+        allocationsLogement.setMoisNMoins1(0);
+        allocationsLogement.setMoisNMoins2(0);
+        allocationsLogement.setMoisNMoins3(0);
+        aidesCAF.setAllocationsLogement(allocationsLogement);        
+        return aidesCAF;
+    }
 }

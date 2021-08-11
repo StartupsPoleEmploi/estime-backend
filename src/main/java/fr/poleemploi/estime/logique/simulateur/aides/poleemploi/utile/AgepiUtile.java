@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.logique.simulateur.prestationssociales.poleemploi.utile;
+package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -7,18 +7,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiairePrestationsSocialesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.utile.PrestationSocialeUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.utile.SimulateurPrestationsSocialesUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PrestationSociale;
 
 /**
  * Classe permettant de calculer le montant de l'AGEPI (Aide à la garde d'enfants pour parent isolé).
@@ -37,7 +37,7 @@ public class AgepiUtile {
     public static final int NBR_HEURE_PALIER_INTERMEDIAIRE = 15;
 
     @Autowired
-    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
+    private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
     @Autowired
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
@@ -52,10 +52,10 @@ public class AgepiUtile {
     private SituationFamilialeUtile situationFamilialeUtile;
     
     @Autowired
-    private PrestationSocialeUtile prestationSocialeeUtile;
+    private AideUtile aideeUtile;
     
     @Autowired
-    private SimulateurPrestationsSocialesUtile simulateurPrestationsSocialesUtile;
+    private SimulateurAidesUtile simulateurAidesUtile;
 
 
     /** Qui peut percevoir l'Agepi ?
@@ -67,15 +67,15 @@ public class AgepiUtile {
      * @param numeroMoisSimule 
      */
     public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        return  simulateurPrestationsSocialesUtile.isPremierMois(numeroMoisSimule) &&
+        return  simulateurAidesUtile.isPremierMois(numeroMoisSimule) &&
                 isSituationFamilialeEligibleAgepi(demandeurEmploi) &&
                 futurTravailUtile.isFuturContratTravailEligible(demandeurEmploi.getFuturTravail()) &&
-                (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
+                (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
     }
 
-    public PrestationSociale simulerPrestationSociale(DemandeurEmploi demandeurEmploi) {
+    public Aide simulerAide(DemandeurEmploi demandeurEmploi) {
         float montantAgepi = calculerMontantAgepi(demandeurEmploi);
-        return creerPrestationSociale(montantAgepi);   
+        return creerAide(montantAgepi);   
     }
 
     private float calculerMontantAgepi(DemandeurEmploi demandeurEmploi) {
@@ -103,16 +103,16 @@ public class AgepiUtile {
         return 0;
     }
     
-    private PrestationSociale creerPrestationSociale(float montantPrestation) {
-        PrestationSociale agepi = new PrestationSociale();
-        agepi.setCode(PrestationsSociales.AGEPI.getCode());
-        Optional<String> detailAideOptional = prestationSocialeeUtile.getDescription(PrestationsSociales.AGEPI.getNomFichierDetail());
+    private Aide creerAide(float montantAide) {
+        Aide agepi = new Aide();
+        agepi.setCode(Aides.AGEPI.getCode());
+        Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.AGEPI.getNomFichierDetail());
         if(detailAideOptional.isPresent()) {
             agepi.setDetail(detailAideOptional.get());            
         }
-        agepi.setNom(PrestationsSociales.AGEPI.getNom());
+        agepi.setNom(Aides.AGEPI.getNom());
         agepi.setOrganisme(Organismes.PE.getNom());
-        agepi.setMontant(montantPrestation);
+        agepi.setMontant(montantAide);
         agepi.setReportee(false);
         return agepi;
     }

@@ -1,7 +1,7 @@
 package fr.poleemploi.estime.services.ressources;
 
 
-public class PrestationSociale {
+public class Aide {
 
     private String code;
     private String detail;
@@ -58,7 +58,7 @@ public class PrestationSociale {
     }
     @Override
     public String toString() {
-        return "PrestationSocialee [code=" + code + ", detail=" + detail + ", montant=" + montant + ", nom=" + nom
+        return "Aidee [code=" + code + ", detail=" + detail + ", montant=" + montant + ", nom=" + nom
                 + ", organisme=" + organisme + ", isReportee=" + isReportee + "]";
     }
 }

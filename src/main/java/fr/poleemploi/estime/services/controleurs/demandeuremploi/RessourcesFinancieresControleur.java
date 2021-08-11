@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
+import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PrestationsCAF;
-import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
@@ -19,15 +19,15 @@ public class RessourcesFinancieresControleur {
         if(ressourcesFinancieres == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), MESSAGE_RESSOURCES_FINANCIERE_OBLIGATOIRE));
         }
-        PrestationsPoleEmploi prestationsPoleEmploi = ressourcesFinancieres.getPrestationsPoleEmploi();
-        if(prestationsPoleEmploi == null) {
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "prestationsPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
+        AidesPoleEmploi aidesPoleEmploi = ressourcesFinancieres.getAidesPoleEmploi();
+        if(aidesPoleEmploi == null) {
+            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "aidesPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
         }
-        if(prestationsPoleEmploi.getAllocationASS() != null) {
-            if(prestationsPoleEmploi.getAllocationASS().getAllocationJournaliereNet() <= 0) {
+        if(aidesPoleEmploi.getAllocationASS() != null) {
+            if(aidesPoleEmploi.getAllocationASS().getAllocationJournaliereNet() <= 0) {
                 throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationJournaliereNetASS"));
             }
-            if(prestationsPoleEmploi.getAllocationASS().getDateDerniereOuvertureDroitASS() == null) {
+            if(aidesPoleEmploi.getAllocationASS().getDateDerniereOuvertureDroit() == null) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "dateDerniereOuvertureDroitASS dans AllocationsPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
             }
         }
@@ -43,11 +43,11 @@ public class RessourcesFinancieresControleur {
         if(ressourcesFinancieres == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), MESSAGE_RESSOURCES_FINANCIERE_OBLIGATOIRE));
         }
-        PrestationsCAF prestationsCAF = ressourcesFinancieres.getPrestationsCAF();
-        if(prestationsCAF == null) {
+        AidesCAF aidesCAF = ressourcesFinancieres.getAidesCAF();
+        if(aidesCAF == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "allocationsCAF dans RessourcesFinancieres de DemandeurEmploi"));
         }
-        if(prestationsCAF.getAllocationMensuelleNetAAH() != null && prestationsCAF.getAllocationMensuelleNetAAH() <= 0) {
+        if(aidesCAF.getAllocationAAH() != null && aidesCAF.getAllocationAAH() <= 0) {
             throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationMensuelleNetAAH"));
         }        
         if(ressourcesFinancieres.getNombreMoisTravaillesDerniersMois() == null) { 
@@ -63,18 +63,18 @@ public class RessourcesFinancieresControleur {
         if(ressourcesFinancieres == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), MESSAGE_RESSOURCES_FINANCIERE_OBLIGATOIRE));
         }
-        PrestationsCAF prestationsCAF = ressourcesFinancieres.getPrestationsCAF();
-        if(prestationsCAF == null) {
+        AidesCAF aidesCAF = ressourcesFinancieres.getAidesCAF();
+        if(aidesCAF == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "allocationsCAF dans RessourcesFinancieres de DemandeurEmploi"));
         }
-        if(prestationsCAF.getAllocationMensuelleNetRSA() <= 0) {
+        if(aidesCAF.getAllocationRSA() <= 0) {
             throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationMensuelleNetRSA"));
         }
-        if(prestationsCAF.getProchaineDeclarationRSA() == null) {
+        if(aidesCAF.getProchaineDeclarationRSA() == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "prochaineDeclarationRSA dans allocationsCAF de RessourcesFinancieres de DemandeurEmploi"));
         }
-        if(prestationsCAF.getProchaineDeclarationRSA() < 0 || prestationsCAF.getProchaineDeclarationRSA() >= 4) { 
-            throw new BadRequestException(String.format(BadRequestMessages.VALEUR_INCORRECT_PROCHAINE_DECLARATION_RSA.getMessage(), prestationsCAF.getProchaineDeclarationRSA()));
+        if(aidesCAF.getProchaineDeclarationRSA() < 0 || aidesCAF.getProchaineDeclarationRSA() >= 4) { 
+            throw new BadRequestException(String.format(BadRequestMessages.VALEUR_INCORRECT_PROCHAINE_DECLARATION_RSA.getMessage(), aidesCAF.getProchaineDeclarationRSA()));
         }
     }
 

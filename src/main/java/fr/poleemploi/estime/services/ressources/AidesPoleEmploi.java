@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.services.ressources;
 
-public class PrestationsPoleEmploi {
+public class AidesPoleEmploi {
     
     private AllocationARE allocationARE;
     private AllocationASS allocationASS;

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
@@ -22,7 +22,7 @@ public class RessourcesFinancieresUtile {
     DateUtile dateUtile;
 
     @Autowired
-    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
+    private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
     @Autowired
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifique;
@@ -30,18 +30,18 @@ public class RessourcesFinancieresUtile {
     public float calculerMontantRessourcesFinancieresMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {
         BigDecimal montantTotal = BigDecimal.ZERO;
         LocalDate moisAvantSimulation = dateUtile.enleverMoisALocalDate(dateUtile.getDateJour(), 1);
-        if(beneficiairePrestationsSocialesUtile.isBeneficiaireASS(demandeurEmploi)) {
+        if(beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(allocationSolidariteSpecifique.calculerMontant(demandeurEmploi, moisAvantSimulation)));
         }
-        if(beneficiairePrestationsSocialesUtile.isBeneficiaireAAH(demandeurEmploi)) {
-            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetAAH()));
+        if(beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH()));
         }
-        if(beneficiairePrestationsSocialesUtile.isBeneficiairePensionInvalidite(demandeurEmploi)) {
-            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCPAM().getPensionInvalidite()));
-            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCPAM().getAllocationSupplementaireInvalidite()));
+        if(beneficiaireAidesUtile.isBeneficiairePensionInvalidite(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getPensionInvalidite()));
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getAllocationSupplementaireInvalidite()));
         }
-        if(beneficiairePrestationsSocialesUtile.isBeneficiaireRSA(demandeurEmploi)) {
-            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA()));
+        if(beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA()));
         }
         if(hasRevenusImmobilier(demandeurEmploi)) {
             float revenusImmobilierSur1Mois = getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres());
@@ -60,35 +60,35 @@ public class RessourcesFinancieresUtile {
 
 
     public boolean hasAllocationsPoleEmploi(DemandeurEmploi demandeurEmploi) {
-        return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getPrestationsPoleEmploi() != null;
+        return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null;
     }
 
     public boolean hasAllocationAdultesHandicapes(DemandeurEmploi demandeurEmploi) {
-        return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetAAH() != null
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetAAH() > 0;
+        return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null 
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH() != null
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH() > 0;
     }
 
     public boolean hasAllocationLogement(DemandeurEmploi demandeurEmploi) {
-        return demandeurEmploi.getRessourcesFinancieres()!= null && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF() != null && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationsLogementMensuellesNetFoyer() != null 
+        return demandeurEmploi.getRessourcesFinancieres()!= null && demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationsLogement() != null 
                 && (
-                        demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationsLogementMensuellesNetFoyer().getMoisNMoins1() > 0 
-                        || demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationsLogementMensuellesNetFoyer().getMoisNMoins2() > 0 
-                        || demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationsLogementMensuellesNetFoyer().getMoisNMoins3() > 0 
+                        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationsLogement().getMoisNMoins1() > 0 
+                        || demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationsLogement().getMoisNMoins2() > 0 
+                        || demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationsLogement().getMoisNMoins3() > 0 
                         );
     }
 
-    public boolean hasPrestationsFamiliales(DemandeurEmploi demandeurEmploi) {
+    public boolean hasAidesFamiliales(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getRessourcesFinancieres() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getPrestationsFamiliales() != null;
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null 
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales() != null;
     }
 
     public boolean hasPensionsAlimentaires(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getRessourcesFinancieres() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getPrestationsFamiliales() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getPrestationsFamiliales().getPensionsAlimentairesFoyer() > 0;
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null 
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales() != null 
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer() > 0;
     }
 
     public boolean hasRevenusImmobilier(DemandeurEmploi demandeurEmploi) {
@@ -111,17 +111,17 @@ public class RessourcesFinancieresUtile {
 
     public boolean hasAllocationSolidariteSpecifique(RessourcesFinancieres ressourcesFinancieres) {
         return ressourcesFinancieres != null
-                && ressourcesFinancieres.getPrestationsPoleEmploi() != null
-                && ressourcesFinancieres.getPrestationsPoleEmploi().getAllocationASS() != null
-                && ressourcesFinancieres.getPrestationsPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null
-                && ressourcesFinancieres.getPrestationsPoleEmploi().getAllocationASS().getAllocationJournaliereNet() > 0;
+                && ressourcesFinancieres.getAidesPoleEmploi() != null
+                && ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS() != null
+                && ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null
+                && ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() > 0;
     }
 
     public boolean hasPensionInvalidite(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getRessourcesFinancieres() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCPAM() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCPAM().getPensionInvalidite() != null
-                && demandeurEmploi.getRessourcesFinancieres().getPrestationsCPAM().getPensionInvalidite() > 0;
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCPAM() != null 
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getPensionInvalidite() != null
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getPensionInvalidite() > 0;
     }
 
     public float getRevenusImmobilierSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
@@ -137,12 +137,12 @@ public class RessourcesFinancieresUtile {
     }
 
     public boolean hasAllocationsCAF(DemandeurEmploi demandeurEmploi) {
-        return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF() != null;
+        return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null;
     }
 
     public boolean hasAllocationsRSA(DemandeurEmploi demandeurEmploi) {
         if(hasAllocationsCAF(demandeurEmploi)) {
-            return demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA() != null && demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA() != 0;
+            return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() != null && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() != 0;
         }
         return false;
     }
@@ -150,7 +150,7 @@ public class RessourcesFinancieresUtile {
 
     public float getAllocationsRSANet(DemandeurEmploi demandeurEmploi) {
         if(hasAllocationsRSA(demandeurEmploi)) {
-            return demandeurEmploi.getRessourcesFinancieres().getPrestationsCAF().getAllocationMensuelleNetRSA();
+            return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA();
         }
         return 0;
     }

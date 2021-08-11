@@ -21,13 +21,13 @@ import org.springframework.stereotype.Component;
 import com.github.tsohr.JSONArray;
 import com.github.tsohr.JSONObject;
 
-import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiairePrestationsSocialesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.caf.SimulateurPrestationsCAF;
+import fr.poleemploi.estime.logique.simulateur.aides.caf.SimulateurAidesCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.SimulationPrestationsSociales;
+import fr.poleemploi.estime.services.ressources.SimulationAides;
 
 
 @Component
@@ -40,7 +40,7 @@ public class OpenFiscaMappeur {
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
     
     @Autowired
-    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
+    private BeneficiaireAidesUtile beneficiaireAidesUtile;
     
     @Autowired
     private OpenFiscaMappeurFamille openFiscaMappeurFamilles;
@@ -51,20 +51,20 @@ public class OpenFiscaMappeur {
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
     
-    public JSONObject mapDemandeurEmploiToOpenFiscaPayload(SimulationPrestationsSociales simulationPrestationsSociales, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public JSONObject mapDemandeurEmploiToOpenFiscaPayload(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject payloadOpenFisca = new JSONObject();
-        Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, SimulateurPrestationsCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA);
-        payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulationPrestationsSociales, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
+        Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA);
+        payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulationAides, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
         payloadOpenFisca.put(FAMILLES, creerFamillesJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
-        if(beneficiairePrestationsSocialesUtile.isBeneficiaireRSA(demandeurEmploi) ) {
+        if(beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi) ) {
             payloadOpenFisca.put(MENAGES, creerMenagesJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
         }
         return payloadOpenFisca;
     }
     
-    private JSONObject creerIndividusJSON(SimulationPrestationsSociales simulationPrestationsSociales, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    private JSONObject creerIndividusJSON(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject individu = new JSONObject();
-        individu.put(DEMANDEUR, openFiscaMappeurIndividus.creerDemandeurJSON(simulationPrestationsSociales, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+        individu.put(DEMANDEUR, openFiscaMappeurIndividus.creerDemandeurJSON(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
         if(personneAChargeAgeInferieureAgeLimiteOptional.isPresent()) {
             openFiscaMappeurIndividus.ajouterPersonneACharge(individu, personneAChargeAgeInferieureAgeLimiteOptional.get(), dateDebutSimulation, numeroMoisSimule);
         }

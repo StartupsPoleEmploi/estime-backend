@@ -21,14 +21,14 @@ import com.github.tsohr.JSONException;
 import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
-import fr.poleemploi.estime.services.ressources.AllocationsLogementMensuellesNetFoyer;
-import fr.poleemploi.estime.services.ressources.BeneficiairePrestationsSociales;
+import fr.poleemploi.estime.services.ressources.AllocationsLogement;
+import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
-import fr.poleemploi.estime.services.ressources.PrestationsCAF;
-import fr.poleemploi.estime.services.ressources.PrestationsCPAM;
-import fr.poleemploi.estime.services.ressources.PrestationsFamiliales;
+import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.AidesCPAM;
+import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
@@ -78,20 +78,20 @@ class OpenFiscaMappeurTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        PrestationsFamiliales prestationsFamiliales = new PrestationsFamiliales();
-        prestationsFamiliales.setAllocationSoutienFamilial(110);
-        prestationsFamiliales.setAllocationsFamiliales(0);
-        prestationsFamiliales.setComplementFamilial(0);
-        prestationsFamiliales.setPrestationAccueilJeuneEnfant(170f);
-        prestationsCAF.setPrestationsFamiliales(prestationsFamiliales);
-        AllocationsLogementMensuellesNetFoyer allocationsLogementMensuellesNetFoyer = new AllocationsLogementMensuellesNetFoyer();
-        allocationsLogementMensuellesNetFoyer.setMoisN(385);
-        allocationsLogementMensuellesNetFoyer.setMoisNMoins1(380);
-        allocationsLogementMensuellesNetFoyer.setMoisNMoins2(360);
-        allocationsLogementMensuellesNetFoyer.setMoisNMoins3(357);
-        prestationsCAF.setAllocationsLogementMensuellesNetFoyer(allocationsLogementMensuellesNetFoyer);
-        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationSoutienFamilial(110);
+        aidesFamiliales.setAllocationsFamiliales(0);
+        aidesFamiliales.setComplementFamilial(0);
+        aidesFamiliales.setAideAccueilJeuneEnfant(170f);
+        aidesCAF.setAidesFamiliales(aidesFamiliales);
+        AllocationsLogement allocationsLogement = new AllocationsLogement();
+        allocationsLogement.setMoisN(385);
+        allocationsLogement.setMoisNMoins1(380);
+        allocationsLogement.setMoisNMoins2(360);
+        allocationsLogement.setMoisNMoins3(357);
+        aidesCAF.setAllocationsLogement(allocationsLogement);
+        ressourcesFinancieres.setAidesCAF(aidesCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
@@ -252,9 +252,9 @@ class OpenFiscaMappeurTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
-        prestationsCPAM.setPensionInvalidite(200f);
-        ressourcesFinancieres.setPrestationsCPAM(prestationsCPAM);
+        AidesCPAM aidesCPAM = new AidesCPAM();
+        aidesCPAM.setPensionInvalidite(200f);
+        ressourcesFinancieres.setAidesCPAM(aidesCPAM);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
@@ -287,10 +287,10 @@ class OpenFiscaMappeurTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsCPAM prestationsCPAM = new PrestationsCPAM();
-        prestationsCPAM.setPensionInvalidite(200f);
-        prestationsCPAM.setAllocationSupplementaireInvalidite(200f);
-        ressourcesFinancieres.setPrestationsCPAM(prestationsCPAM);
+        AidesCPAM aidesCPAM = new AidesCPAM();
+        aidesCPAM.setPensionInvalidite(200f);
+        aidesCPAM.setAllocationSupplementaireInvalidite(200f);
+        ressourcesFinancieres.setAidesCPAM(aidesCPAM);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
@@ -324,15 +324,15 @@ class OpenFiscaMappeurTests {
         situationFamiliale.setIsSeulPlusDe18Mois(true);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
         
-        BeneficiairePrestationsSociales beneficiairePrestationsSociales = new BeneficiairePrestationsSociales();
-        beneficiairePrestationsSociales.setBeneficiaireRSA(true);
-        demandeurEmploi.setBeneficiairePrestationsSociales(beneficiairePrestationsSociales);
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireRSA(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        prestationsCAF.setAllocationMensuelleNetRSA(400f);
-        prestationsCAF.setProchaineDeclarationRSA(3);
-        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        aidesCAF.setAllocationRSA(400f);
+        aidesCAF.setProchaineDeclarationRSA(3);
+        ressourcesFinancieres.setAidesCAF(aidesCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");

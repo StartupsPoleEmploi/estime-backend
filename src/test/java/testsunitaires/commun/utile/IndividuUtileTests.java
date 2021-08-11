@@ -18,7 +18,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(true);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(false);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(true);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
         detailIndemnisationESD.setBeneficiaireRSA(false);
         detailIndemnisationESD.setCodeIndemnisation(null);
 
@@ -36,7 +36,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(false);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(false);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
         detailIndemnisationESD.setBeneficiaireRSA(false);
         detailIndemnisationESD.setCodeIndemnisation("ASS");
 
@@ -54,7 +54,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(false);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(false);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(true);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
         detailIndemnisationESD.setBeneficiaireRSA(true);
         detailIndemnisationESD.setCodeIndemnisation(null);
 
@@ -72,7 +72,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(true);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(false);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
         detailIndemnisationESD.setBeneficiaireRSA(false);
         detailIndemnisationESD.setCodeIndemnisation("ASS");
 
@@ -90,7 +90,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(true);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(false);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(false);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
         detailIndemnisationESD.setBeneficiaireRSA(true);
         detailIndemnisationESD.setCodeIndemnisation(null);
 
@@ -108,7 +108,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(false);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(false);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
         detailIndemnisationESD.setBeneficiaireRSA(true);
         detailIndemnisationESD.setCodeIndemnisation("ASS");
 
@@ -126,7 +126,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(true);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(false);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
         detailIndemnisationESD.setBeneficiaireRSA(true);
         detailIndemnisationESD.setCodeIndemnisation("ASS");
 
@@ -144,7 +144,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(false);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(false);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
         detailIndemnisationESD.setBeneficiaireRSA(false);
         detailIndemnisationESD.setCodeIndemnisation("ARE");
 
@@ -162,7 +162,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(true);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(true);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
         detailIndemnisationESD.setBeneficiaireRSA(false);
         detailIndemnisationESD.setCodeIndemnisation("ARE");
 
@@ -180,7 +180,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(false);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(true);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
         detailIndemnisationESD.setBeneficiaireRSA(true);
         detailIndemnisationESD.setCodeIndemnisation("ARE");
 
@@ -198,7 +198,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(true);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(true);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
         detailIndemnisationESD.setBeneficiaireRSA(true);
         detailIndemnisationESD.setCodeIndemnisation("ARE");
 
@@ -216,7 +216,7 @@ class IndividuUtileTests {
         DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
         detailIndemnisationESD.setBeneficiaireAAH(false);
         detailIndemnisationESD.setBeneficiaireAssuranceChomage(false);
-        detailIndemnisationESD.setBeneficiairePrestationSolidarite(false);
+        detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
         detailIndemnisationESD.setBeneficiaireRSA(false);
         detailIndemnisationESD.setCodeIndemnisation(null);
 

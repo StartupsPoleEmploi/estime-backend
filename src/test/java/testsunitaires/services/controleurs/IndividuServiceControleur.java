@@ -41,7 +41,7 @@ class IndividuServiceControleur {
     @Test
     void controlerDonneeesEntreeDemandeurEmploiTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerPrestationsSociales(null);
+            individuService.simulerAides(null);
         }).getMessage()).isEqualTo(BadRequestMessages.DEMANDEUR_EMPLOI_OBLIGATOIRE.getMessage());
     }
     

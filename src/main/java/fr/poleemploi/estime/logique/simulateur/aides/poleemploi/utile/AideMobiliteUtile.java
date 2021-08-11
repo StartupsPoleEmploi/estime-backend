@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.logique.simulateur.prestationssociales.poleemploi.utile;
+package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -7,17 +7,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.NombresJoursIndemnises;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiairePrestationsSocialesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.utile.PrestationSocialeUtile;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.utile.SimulateurPrestationsSocialesUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PrestationSociale;
 
 /**
  * 
@@ -43,10 +43,10 @@ public class AideMobiliteUtile {
 
 
     @Autowired
-    private PrestationSocialeUtile prestationSocialeeUtile;
+    private AideUtile aideeUtile;
 
     @Autowired
-    private BeneficiairePrestationsSocialesUtile beneficiairePrestationsSocialesUtile;
+    private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
     @Autowired
     private DemandeurEmploiUtile demandeurEmploiUtile;
@@ -58,19 +58,19 @@ public class AideMobiliteUtile {
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
     @Autowired
-    private SimulateurPrestationsSocialesUtile simulateurPrestationsSocialesUtile;
+    private SimulateurAidesUtile simulateurAidesUtile;
 
 
-    public PrestationSociale simulerPrestationSociale(DemandeurEmploi demandeurEmploi) {
+    public Aide simulerAide(DemandeurEmploi demandeurEmploi) {
         float montantAideMobilite = calculerMontantAideMobilite(demandeurEmploi);
-        return creerPrestationSociale(montantAideMobilite);
+        return creerAide(montantAideMobilite);
     }
 
     public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        return simulateurPrestationsSocialesUtile.isPremierMois(numeroMoisSimule) &&
+        return simulateurAidesUtile.isPremierMois(numeroMoisSimule) &&
                 futurTravailUtile.isFuturContratTravailEligible(demandeurEmploi.getFuturTravail()) &&
                 isDistanceAllerRetourDomicileFuturTavailEligible(demandeurEmploi) &&
-                (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiairePrestationsSocialesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
+                (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
     }
 
     private float calculerMontantAideMobilite(DemandeurEmploi demandeurEmploi) {
@@ -104,15 +104,15 @@ public class AideMobiliteUtile {
         return BigDecimal.ZERO;
     }
     
-    private PrestationSociale creerPrestationSociale(float montantPrestation) {
-        PrestationSociale aideMobilite = new PrestationSociale();
-        aideMobilite.setCode(PrestationsSociales.AIDE_MOBILITE.getCode());
-        Optional<String> detailAideOptional = prestationSocialeeUtile.getDescription(PrestationsSociales.AIDE_MOBILITE.getNomFichierDetail());
+    private Aide creerAide(float montantAide) {
+        Aide aideMobilite = new Aide();
+        aideMobilite.setCode(Aides.AIDE_MOBILITE.getCode());
+        Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.AIDE_MOBILITE.getNomFichierDetail());
         if(detailAideOptional.isPresent()) {
             aideMobilite.setDetail(detailAideOptional.get());            
         }
-        aideMobilite.setMontant(montantPrestation);
-        aideMobilite.setNom(PrestationsSociales.AIDE_MOBILITE.getNom());
+        aideMobilite.setMontant(montantAide);
+        aideMobilite.setNom(Aides.AIDE_MOBILITE.getNom());
         aideMobilite.setOrganisme(Organismes.PE.getNom());
         aideMobilite.setReportee(false);
         return aideMobilite;

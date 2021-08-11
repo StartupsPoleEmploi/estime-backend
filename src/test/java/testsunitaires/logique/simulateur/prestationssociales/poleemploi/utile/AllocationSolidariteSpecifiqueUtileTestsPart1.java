@@ -13,11 +13,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
-import fr.poleemploi.estime.services.ressources.PrestationsPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
@@ -47,11 +47,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);        
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);        
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -94,11 +94,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -141,11 +141,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -190,11 +190,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -218,11 +218,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -265,11 +265,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -312,11 +312,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -360,11 +360,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -388,11 +388,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -435,11 +435,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -482,11 +482,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -530,11 +530,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -558,11 +558,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -605,11 +605,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -652,11 +652,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -700,11 +700,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        PrestationsPoleEmploi prestationsPoleEmploi = new PrestationsPoleEmploi();
+        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        prestationsPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setPrestationsPoleEmploi(prestationsPoleEmploi);
+        aidesPoleEmploi.setAllocationASS(allocationASS);
+        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();

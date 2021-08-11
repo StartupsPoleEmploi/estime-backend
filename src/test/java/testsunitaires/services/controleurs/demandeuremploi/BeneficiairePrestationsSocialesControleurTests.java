@@ -28,7 +28,7 @@ import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class BeneficiaireAidesSocialesControleurTests extends CommunTests {
+class BeneficiaireAidesControleurTests extends CommunTests {
     
     @Autowired
     private IndividuService individuService;
@@ -40,16 +40,16 @@ class BeneficiaireAidesSocialesControleurTests extends CommunTests {
     }
     
     @Test
-    void controlerDonneeesEntreeBeneficiaireAidesSocialesTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+    void controlerDonneeesEntreeBeneficiaireAidesTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiairePrestationsSociales(null);
+        demandeurEmploi.setBeneficiaireAides(null);
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
                
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerPrestationsSociales(demandeurEmploi);
-        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "beneficiairePrestationsSociales"));
+            individuService.simulerAides(demandeurEmploi);
+        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "beneficiaireAides"));
     }    
 }

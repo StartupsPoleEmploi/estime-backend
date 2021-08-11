@@ -13,12 +13,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
-import fr.poleemploi.estime.commun.enumerations.PrestationsSociales;
-import fr.poleemploi.estime.logique.simulateur.prestationssociales.caf.utile.AllocationAdultesHandicapesUtile;
-import fr.poleemploi.estime.services.ressources.PrestationSociale;
+import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AllocationAdultesHandicapesUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
-import fr.poleemploi.estime.services.ressources.PrestationsCAF;
+import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 
@@ -53,20 +53,20 @@ class AllocationAdultesHandicapesUtileTests {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        prestationsCAF.setAllocationMensuelleNetAAH(450f);
-        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        aidesCAF.setAllocationAAH(450f);
+        ressourcesFinancieres.setAidesCAF(aidesCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         // Lorsque l'on appel simulerAAH
-        Map<String, PrestationSociale> prestationsSocialesPourCeMois = new HashMap<>();
+        Map<String, Aide> aidesPourCeMois = new HashMap<>();
         int numeroMoisSimule = 1;
-        allocationAdultesHandicapesUtile.simulerPrestationSociale(prestationsSocialesPourCeMois, numeroMoisSimule, demandeurEmploi);
+        allocationAdultesHandicapesUtile.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
 
         // Alors l'AAH n'apparait pas dans les prestations du mois
         // 60% du salaire = 600
         // AAH - 60% du salaire = 450 - 600 = -150 donc AAH = 0€
-        assertThat(prestationsSocialesPourCeMois.size()).isEqualTo(0);
+        assertThat(aidesPourCeMois.size()).isEqualTo(0);
     }
 
     @Test
@@ -85,20 +85,20 @@ class AllocationAdultesHandicapesUtileTests {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        prestationsCAF.setAllocationMensuelleNetAAH(450f);
-        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        aidesCAF.setAllocationAAH(450f);
+        ressourcesFinancieres.setAidesCAF(aidesCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         // Lorsque l'on appel simulerAAH
-        Map<String, PrestationSociale> prestationsSocialesPourCeMois = new HashMap<>();
+        Map<String, Aide> aidesPourCeMois = new HashMap<>();
         int numeroMoisSimule = 1;
-        allocationAdultesHandicapesUtile.simulerPrestationSociale(prestationsSocialesPourCeMois, numeroMoisSimule, demandeurEmploi);
+        allocationAdultesHandicapesUtile.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
 
         // Alors le montant de l'AAH est de 370€
         // 20% du salaire = 80
         // AAH - 60% du salaire = 450 - 80 = 370€
-        assertThat(prestationsSocialesPourCeMois.get(PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode()))
+        assertThat(aidesPourCeMois.get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()))
                 .satisfies(aideAAH -> {
                     assertThat(aideAAH.getMontant()).isEqualTo(370);
                 });
@@ -120,20 +120,20 @@ class AllocationAdultesHandicapesUtileTests {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
-        PrestationsCAF prestationsCAF = new PrestationsCAF();
-        prestationsCAF.setAllocationMensuelleNetAAH(450f);
-        ressourcesFinancieres.setPrestationsCAF(prestationsCAF);
+        AidesCAF aidesCAF = new AidesCAF();
+        aidesCAF.setAllocationAAH(450f);
+        ressourcesFinancieres.setAidesCAF(aidesCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         // Lorsque l'on appel simulerAAH
-        Map<String, PrestationSociale> prestationsSocialesPourCeMois = new HashMap<>();
+        Map<String, Aide> aidesPourCeMois = new HashMap<>();
         int numeroMoisSimule = 1;
-        allocationAdultesHandicapesUtile.simulerPrestationSociale(prestationsSocialesPourCeMois, numeroMoisSimule, demandeurEmploi);
+        allocationAdultesHandicapesUtile.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
 
         // Alors le montant de l'AAH est de 150€
         // 60% du salaire = 300
         // AAH - 60% du salaire = 450 - 300 = 150€
-        assertThat(prestationsSocialesPourCeMois.get(PrestationsSociales.ALLOCATION_ADULTES_HANDICAPES.getCode()))
+        assertThat(aidesPourCeMois.get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()))
                 .satisfies(aideAAH -> {
                     assertThat(aideAAH.getMontant()).isEqualTo(150);
                 });

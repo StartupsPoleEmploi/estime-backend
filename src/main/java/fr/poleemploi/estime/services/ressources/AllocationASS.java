@@ -9,7 +9,7 @@ public class AllocationASS {
     private Float allocationJournaliereNet;
     private Float allocationMensuelleNet;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate dateDerniereOuvertureDroitASS;
+    private LocalDate dateDerniereOuvertureDroit;
     
     public Float getAllocationJournaliereNet() {
         return allocationJournaliereNet;
@@ -23,16 +23,16 @@ public class AllocationASS {
     public void setAllocationMensuelleNet(Float allocationMensuelleNet) {
         this.allocationMensuelleNet = allocationMensuelleNet;
     }
-    public LocalDate getDateDerniereOuvertureDroitASS() {
-        return dateDerniereOuvertureDroitASS;
+    public LocalDate getDateDerniereOuvertureDroit() {
+        return dateDerniereOuvertureDroit;
     }
-    public void setDateDerniereOuvertureDroitASS(LocalDate dateDerniereOuvertureDroitASS) {
-        this.dateDerniereOuvertureDroitASS = dateDerniereOuvertureDroitASS;
+    public void setDateDerniereOuvertureDroit(LocalDate dateDerniereOuvertureDroit) {
+        this.dateDerniereOuvertureDroit = dateDerniereOuvertureDroit;
     }
     
     @Override
     public String toString() {
         return "AllocationASS [allocationJournaliereNet=" + allocationJournaliereNet + ", allocationMensuelleNet="
-                + allocationMensuelleNet + ", dateDerniereOuvertureDroitASS=" + dateDerniereOuvertureDroitASS + "]";
+                + allocationMensuelleNet + ", dateDerniereOuvertureDroit=" + dateDerniereOuvertureDroit + "]";
     }
 }
