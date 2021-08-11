@@ -11,7 +11,7 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
 public class RessourcesFinancieresControleur {
-    
+
     private static final String MESSAGE_RESSOURCES_FINANCIERE_OBLIGATOIRE =  "ressourcesFinancieres dans DemandeurEmploi";
 
 
@@ -34,8 +34,11 @@ public class RessourcesFinancieresControleur {
         if(ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "hasTravailleAuCoursDerniersMois dans RessourcesFinancieres"));
         }
-        if(ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() != null && ressourcesFinancieres.getHasTravailleAuCoursDerniersMois().booleanValue()) {
-            controlerNombreMoisCumulesAssEtSalaire(ressourcesFinancieres);            
+        if(ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() != null 
+                && ressourcesFinancieres.getHasTravailleAuCoursDerniersMois().booleanValue()
+                && ressourcesFinancieres.getSalairesAvantPeriodeSimulation() == null) {
+
+            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "salairesAvantPeriodeSimulation dans RessourcesFinancieres de DemandeurEmploi"));            
         }
     }
 
@@ -57,7 +60,7 @@ public class RessourcesFinancieresControleur {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "salairesAvantPeriodeSimulation dans RessourcesFinancieres de DemandeurEmploi"));    
         }
     }
-    
+
     public void controlerDemandeurEmploiAllocationsCafRSA(DemandeurEmploi demandeurEmploi) {
         RessourcesFinancieres ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieres();
         if(ressourcesFinancieres == null) {
@@ -76,20 +79,11 @@ public class RessourcesFinancieresControleur {
         if(aidesCAF.getProchaineDeclarationRSA() < 0 || aidesCAF.getProchaineDeclarationRSA() >= 4) { 
             throw new BadRequestException(String.format(BadRequestMessages.VALEUR_INCORRECT_PROCHAINE_DECLARATION_RSA.getMessage(), aidesCAF.getProchaineDeclarationRSA()));
         }
-    }
+        if(ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() != null 
+                && ressourcesFinancieres.getHasTravailleAuCoursDerniersMois().booleanValue()
+                && ressourcesFinancieres.getSalairesAvantPeriodeSimulation() == null) {
 
-    private void controlerNombreMoisCumulesAssEtSalaire(RessourcesFinancieres ressourcesFinancieres) {
-        if(ressourcesFinancieres.getNombreMoisTravaillesDerniersMois() == null) { 
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nombreMoisTravaillesDerniersMois dans RessourcesFinancieres de DemandeurEmploi"));
-        }
-        if(ressourcesFinancieres.getNombreMoisTravaillesDerniersMois() == 2 || ressourcesFinancieres.getNombreMoisTravaillesDerniersMois() == 3) {
-            controlerSalairesAvantPeriodeSimulationPopulationASS(ressourcesFinancieres);
-        }
-    }
-    
-    private void controlerSalairesAvantPeriodeSimulationPopulationASS(RessourcesFinancieres ressourcesFinancieres) {
-        if(ressourcesFinancieres.getSalairesAvantPeriodeSimulation() == null) {
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "salairesAvantPeriodeSimulation dans RessourcesFinancieres de DemandeurEmploi"));
+            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "salairesAvantPeriodeSimulation dans RessourcesFinancieres de DemandeurEmploi"));            
         }
     }
 }

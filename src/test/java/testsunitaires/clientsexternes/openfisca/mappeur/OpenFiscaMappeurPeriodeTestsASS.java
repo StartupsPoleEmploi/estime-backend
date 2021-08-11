@@ -36,7 +36,7 @@ import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
+import fr.poleemploi.estime.services.ressources.MoisTravailleAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -312,26 +312,26 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
         Salaire salaireMoisDemande = new Salaire();
         salaireMoisDemande.setMontantNet(1200);
         salaireMoisDemande.setMontantBrut(1544);
         salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
+        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
         Salaire salaireMoisMoins1Mois = new Salaire();
         salaireMoisMoins1Mois.setMontantNet(1200);
         salaireMoisMoins1Mois.setMontantBrut(1544);
         salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
         salairesAvantPeriodeSimulation
-                .setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new SalaireAvantPeriodeSimulation();
+                .setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
         Salaire salaireMoisMoins2Mois = new Salaire();
         salaireMoisMoins2Mois.setMontantNet(0);
         salaireMoisMoins2Mois.setMontantBrut(0);
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation
-                .setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
+                .setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
 
         JSONObject demandeurJSON = new JSONObject();
@@ -400,29 +400,13 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(1200);
-        salaireMoisDemande.setMontantBrut(1544);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(1150);
-        salaireMoisMoins1Mois.setMontantBrut(1480);
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation
-                .setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new SalaireAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(0);
-        salaireMoisMoins2Mois.setMontantBrut(0);
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation
-                .setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
+       
+        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();       
+        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1544, 1200));
+        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1480, 1150));
+        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1280, 991));        
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+              
 
         JSONObject demandeurJSON = new JSONObject();
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation,
@@ -458,26 +442,26 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
         Salaire salaireMoisDemande = new Salaire();
         salaireMoisDemande.setMontantNet(1200);
         salaireMoisDemande.setMontantBrut(1544);
         salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
+        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
         Salaire salaireMoisMoins1Mois = new Salaire();
         salaireMoisMoins1Mois.setMontantNet(0);
         salaireMoisMoins1Mois.setMontantBrut(0);
         salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
         salairesAvantPeriodeSimulation
-                .setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new SalaireAvantPeriodeSimulation();
+                .setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
         Salaire salaireMoisMoins2Mois = new Salaire();
         salaireMoisMoins2Mois.setMontantNet(0);
         salaireMoisMoins2Mois.setMontantBrut(0);
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
         salairesAvantPeriodeSimulation
-                .setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
+                .setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
 
         JSONObject demandeurJSON = new JSONObject();

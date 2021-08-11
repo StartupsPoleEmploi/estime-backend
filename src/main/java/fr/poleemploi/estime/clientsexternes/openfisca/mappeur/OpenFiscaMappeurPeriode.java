@@ -4,7 +4,6 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -148,16 +147,12 @@ public class OpenFiscaMappeurPeriode {
 
     private Salaire getSalairePourSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, int numeroMoisPeriodeOpenfisca) {       
         if(isMoisPeriodeOpenFiscaAvantPeriodeSimulation(numeroMoisSimule, numeroMoisPeriodeOpenfisca)) {
-            Optional<Salaire> salaireAvantPeriodeSimulation = getSalaireAvantPeriodeSimulation(demandeurEmploi, numeroMoisPeriodeOpenfisca);
-            if(salaireAvantPeriodeSimulation.isPresent()) {
-                return salaireAvantPeriodeSimulation.get();
-            }
-            return getSalaireMontantZero();                
+            return getSalaireAvantPeriodeSimulation(demandeurEmploi, numeroMoisPeriodeOpenfisca);                     
         }
         return demandeurEmploi.getFuturTravail().getSalaire();
     }
 
-    private Optional<Salaire> getSalaireAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
+    private Salaire getSalaireAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
         if(beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)) {
             return getSalaireAvantPeriodeSimulationDemandeurASS(demandeurEmploi, numeroMoisPeriodeOpenfisca);
         } 
@@ -167,7 +162,7 @@ public class OpenFiscaMappeurPeriode {
         if(beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
             return getSalaireAvantPeriodeSimulationDemandeurRSA(demandeurEmploi, numeroMoisPeriodeOpenfisca);
         }  
-        return Optional.empty();
+        return getSalaireMontantZero();
     }
 
     /**
@@ -182,55 +177,54 @@ public class OpenFiscaMappeurPeriode {
         return numeroMoisSimule <= NOMBRE_MOIS_PERIODE_OPENFISCA && numeroMoisPeriodeOpenfisca < numeroMoisPeriodeOpenfiscaPlusEloigneAvantDebutPeriodeSimulee;
     }
 
-    private Optional<Salaire> getSalaireAvantPeriodeSimulationDemandeurAAH(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
+    private Salaire getSalaireAvantPeriodeSimulationDemandeurAAH(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
         int nombreMoisTravaillesDerniersMois = demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois();
         if(nombreMoisTravaillesDerniersMois > 0) {
             if(numeroMoisPeriodeOpenfisca == 0) {
-                return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisMoins1MoisDemandeSimulation().getSalaire());            
+                return demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getMoisMoins1MoisDemandeSimulation().getSalaire();            
             }
             if(numeroMoisPeriodeOpenfisca == 1) {
-                return Optional.of(demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getSalaireMoisDemandeSimulation().getSalaire());            
+                return demandeurEmploi.getRessourcesFinancieres().getSalairesAvantPeriodeSimulation().getMoisDemandeSimulation().getSalaire();            
             }
         }
-        return Optional.empty();
+        return getSalaireMontantZero();
     }
 
-    private Optional<Salaire> getSalaireAvantPeriodeSimulationDemandeurASS(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
-        Integer nombreMoisCumulesAssEtSalaire = demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois();
-        if(nombreMoisCumulesAssEtSalaire != null ) {
-            return getMontantSalaireAvantPeriodeSimulation(demandeurEmploi, nombreMoisCumulesAssEtSalaire, numeroMoisPeriodeOpenfisca);
-        }
-        return Optional.empty();
+    private Salaire getSalaireAvantPeriodeSimulationDemandeurASS(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
+        int nombreMoisCumulesAssEtSalaire = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi);
+        return getMontantSalaireAvantPeriodeSimulation(demandeurEmploi, nombreMoisCumulesAssEtSalaire, numeroMoisPeriodeOpenfisca);
     }
 
-    private Optional<Salaire> getSalaireAvantPeriodeSimulationDemandeurRSA(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
+    private Salaire getSalaireAvantPeriodeSimulationDemandeurRSA(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
         Integer prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationRSA();
-        if((prochaineDeclarationRSA == 3 || prochaineDeclarationRSA == 0) && numeroMoisPeriodeOpenfisca == 0) {
-            return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 0);            
-        }        
-        if(prochaineDeclarationRSA == 1) {
-            if(numeroMoisPeriodeOpenfisca == 0) {
-                return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 2);                            
-            }            
-            if(numeroMoisPeriodeOpenfisca == 1) {
-                return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 1);            
-            }            
-            if(numeroMoisPeriodeOpenfisca == 2) {
+        if(ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMois(demandeurEmploi)) {
+            if((prochaineDeclarationRSA == 3 || prochaineDeclarationRSA == 0) && numeroMoisPeriodeOpenfisca == 0) {
                 return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 0);            
+            }        
+            if(prochaineDeclarationRSA == 1) {
+                if(numeroMoisPeriodeOpenfisca == 0) {
+                    return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 2);                            
+                }            
+                if(numeroMoisPeriodeOpenfisca == 1) {
+                    return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 1);            
+                }            
+                if(numeroMoisPeriodeOpenfisca == 2) {
+                    return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 0);            
+                }
+            }
+            if(prochaineDeclarationRSA == 2) {
+                if(numeroMoisPeriodeOpenfisca == 0) {
+                    return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 1);                            
+                }            
+                if(numeroMoisPeriodeOpenfisca == 1) {
+                    return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 0);            
+                }    
             }
         }
-        if(prochaineDeclarationRSA == 2) {
-            if(numeroMoisPeriodeOpenfisca == 0) {
-                return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 1);                            
-            }            
-            if(numeroMoisPeriodeOpenfisca == 1) {
-                return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 0);            
-            }    
-        }
-        return Optional.empty();
+        return getSalaireMontantZero();
     }
 
-    private Optional<Salaire> getMontantSalaireAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int nombreMoisCumulesAssEtSalaire, int numeroMoisPeriodeOpenfisca) {
+    private Salaire getMontantSalaireAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int nombreMoisCumulesAssEtSalaire, int numeroMoisPeriodeOpenfisca) {
         if(nombreMoisCumulesAssEtSalaire == 2 && numeroMoisPeriodeOpenfisca == 0) {
             return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 0);
         }
@@ -253,7 +247,7 @@ public class OpenFiscaMappeurPeriode {
                 return ressourcesFinancieresUtile.getSalaireAvantSimulation(demandeurEmploi, 0);
             }
         }
-        return Optional.empty();
+        return getSalaireMontantZero();
     }
 
 
@@ -284,7 +278,7 @@ public class OpenFiscaMappeurPeriode {
     private boolean isNumeroMoisMontantARecupererDansPeriodeSimulation(int numeroMoisMontantARecuperer) {
         return numeroMoisMontantARecuperer > NUMERO_MOIS_PERIODE;
     }
-
+    
     private Salaire getSalaireMontantZero() {
         Salaire salaire = new Salaire();
         salaire.setMontantBrut(0);

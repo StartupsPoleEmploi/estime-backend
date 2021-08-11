@@ -2,40 +2,33 @@ package fr.poleemploi.estime.services.ressources;
 
 public class SalairesAvantPeriodeSimulation {
 
-    private SalaireAvantPeriodeSimulation salaireMoisDemandeSimulation;
-    private SalaireAvantPeriodeSimulation salaireMoisMoins1MoisDemandeSimulation;
-    private SalaireAvantPeriodeSimulation salaireMoisMoins2MoisDemandeSimulation;
-
-    public SalaireAvantPeriodeSimulation getSalaireMoisDemandeSimulation() {
-        return salaireMoisDemandeSimulation;
+    private MoisTravailleAvantPeriodeSimulation moisDemandeSimulation;
+    private MoisTravailleAvantPeriodeSimulation moisMoins1MoisDemandeSimulation;
+    private MoisTravailleAvantPeriodeSimulation moisMoins2MoisDemandeSimulation;
+    
+    public MoisTravailleAvantPeriodeSimulation getMoisDemandeSimulation() {
+        return moisDemandeSimulation;
     }
-
-    public void setSalaireMoisDemandeSimulation(SalaireAvantPeriodeSimulation salaireMoisDemandeSimulation) {
-        this.salaireMoisDemandeSimulation = salaireMoisDemandeSimulation;
+    public void setMoisDemandeSimulation(MoisTravailleAvantPeriodeSimulation moisDemandeSimulation) {
+        this.moisDemandeSimulation = moisDemandeSimulation;
     }
-
-    public SalaireAvantPeriodeSimulation getSalaireMoisMoins1MoisDemandeSimulation() {
-        return salaireMoisMoins1MoisDemandeSimulation;
+    public MoisTravailleAvantPeriodeSimulation getMoisMoins1MoisDemandeSimulation() {
+        return moisMoins1MoisDemandeSimulation;
     }
-
-    public void setSalaireMoisMoins1MoisDemandeSimulation(
-            SalaireAvantPeriodeSimulation salaireMoisMoins1MoisDemandeSimulation) {
-        this.salaireMoisMoins1MoisDemandeSimulation = salaireMoisMoins1MoisDemandeSimulation;
+    public void setMoisMoins1MoisDemandeSimulation(MoisTravailleAvantPeriodeSimulation moisMoins1MoisDemandeSimulation) {
+        this.moisMoins1MoisDemandeSimulation = moisMoins1MoisDemandeSimulation;
     }
-
-    public SalaireAvantPeriodeSimulation getSalaireMoisMoins2MoisDemandeSimulation() {
-        return salaireMoisMoins2MoisDemandeSimulation;
+    public MoisTravailleAvantPeriodeSimulation getMoisMoins2MoisDemandeSimulation() {
+        return moisMoins2MoisDemandeSimulation;
     }
-
-    public void setSalaireMoisMoins2MoisDemandeSimulation(
-            SalaireAvantPeriodeSimulation salaireMoisMoins2MoisDemandeSimulation) {
-        this.salaireMoisMoins2MoisDemandeSimulation = salaireMoisMoins2MoisDemandeSimulation;
+    public void setMoisMoins2MoisDemandeSimulation(MoisTravailleAvantPeriodeSimulation moisMoins2MoisDemandeSimulation) {
+        this.moisMoins2MoisDemandeSimulation = moisMoins2MoisDemandeSimulation;
     }
-
+    
     @Override
     public String toString() {
-        return "SalairesAvantPeriodeSimulation [salaireMoisDemandeSimulation=" + salaireMoisDemandeSimulation
-                + ", salaireMoisMoins1MoisDemandeSimulation=" + salaireMoisMoins1MoisDemandeSimulation
-                + ", salaireMoisMoins2MoisDemandeSimulation=" + salaireMoisMoins2MoisDemandeSimulation + "]";
+        return "SalairesAvantPeriodeSimulation [moisDemandeSimulation=" + moisDemandeSimulation
+                + ", moisMoins1MoisDemandeSimulation=" + moisMoins1MoisDemandeSimulation
+                + ", moisMoins2MoisDemandeSimulation=" + moisMoins2MoisDemandeSimulation + "]";
     }
 }

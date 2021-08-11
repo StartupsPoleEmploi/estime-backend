@@ -36,7 +36,7 @@ import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SalaireAvantPeriodeSimulation;
+import fr.poleemploi.estime.services.ressources.MoisTravailleAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 
@@ -151,23 +151,23 @@ public class UtileTests {
             float salaireNetMoisMoins2, float salaireBrutMoisMoins2) {
 
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new SalaireAvantPeriodeSimulation();
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new SalaireAvantPeriodeSimulation();
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
 
         salaireAvantPeriodeSimulationMoisDemande.setSalaire(creerSalaire(salaireNetMoisM0, salaireBrutMoisM0));
         salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(creerSalaire(salaireNetMoisMoins1, salaireBrutMoisMoins1));
         salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(creerSalaire(salaireNetMoisMoins2, salaireBrutMoisMoins2));
 
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
+        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
+        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
+        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
 
         return salairesAvantPeriodeSimulation;
     }
     
-    public SalaireAvantPeriodeSimulation creerSalaireAvantPeriodeSimulation(float montantBrut, float montantNet) {
-        SalaireAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new SalaireAvantPeriodeSimulation();
+    public MoisTravailleAvantPeriodeSimulation creerSalaireAvantPeriodeSimulation(float montantBrut, float montantNet) {
+        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
         Salaire salaire = new Salaire();
         salaire.setMontantNet(montantNet);
         salaire.setMontantBrut(montantBrut);

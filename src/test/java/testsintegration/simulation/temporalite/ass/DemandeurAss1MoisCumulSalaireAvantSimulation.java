@@ -51,12 +51,11 @@ class DemandeurAss1MoisCumulSalaireAvantSimulation extends CommunTests {
         // taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(1);
         
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();       
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1101, 850));
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(0, 0));
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(0, 0));        
+        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1101, 850));
+        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(0, 0));
+        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(0, 0));        
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
         
         // Lorsque je simule mes prestations le 20/10/2020

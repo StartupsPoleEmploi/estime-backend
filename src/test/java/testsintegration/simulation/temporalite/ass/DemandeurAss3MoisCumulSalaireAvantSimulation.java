@@ -48,12 +48,11 @@ class DemandeurAss3MoisCumulSalaireAvantSimulation extends CommunTests {
         //futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
         
         SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();       
-        salairesAvantPeriodeSimulation.setSalaireMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1101, 850));
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1038, 800));
-        salairesAvantPeriodeSimulation.setSalaireMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1038, 800));        
+        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1101, 850));
+        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1038, 800));
+        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1038, 800));        
         demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
 
         //Lorsque je simule mes prestations le 20/10/2020

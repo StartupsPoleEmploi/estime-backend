@@ -19,6 +19,7 @@ import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 
@@ -48,6 +49,10 @@ class AllocationAdultesHandicapesUtileTests {
         salaire.setMontantNet(770);
         salaire.setMontantBrut(1000);
         futurTravail.setSalaire(salaire);
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireAAH(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
         demandeurEmploi.setFuturTravail(futurTravail);
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
@@ -76,15 +81,22 @@ class AllocationAdultesHandicapesUtileTests {
         // futur travail avec salaire brut = 400€
         // AAH = 450€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireAAH(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         FuturTravail futurTravail = new FuturTravail();
         Salaire salaire = new Salaire();
         salaire.setMontantNet(295);
         salaire.setMontantBrut(400);
         futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
+       
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
+        
         AidesCAF aidesCAF = new AidesCAF();
         aidesCAF.setAllocationAAH(450f);
         ressourcesFinancieres.setAidesCAF(aidesCAF);
@@ -111,15 +123,22 @@ class AllocationAdultesHandicapesUtileTests {
         // futur travail avec salaire brut = 500€
         // AAH = 450€
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireAAH(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         FuturTravail futurTravail = new FuturTravail();
         Salaire salaire = new Salaire();
         salaire.setMontantNet(374);
         salaire.setMontantBrut(500);
         futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(6);
+        
         AidesCAF aidesCAF = new AidesCAF();
         aidesCAF.setAllocationAAH(450f);
         ressourcesFinancieres.setAidesCAF(aidesCAF);

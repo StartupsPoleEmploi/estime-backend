@@ -15,6 +15,7 @@ import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
 public class DemandeurEmploiUtile {
@@ -61,7 +62,11 @@ public class DemandeurEmploiUtile {
     }
 
     public void addRessourcesFinancieres(DemandeurEmploi demandeurEmploi, Individu individu) {
-        demandeurEmploi.setRessourcesFinancieres(individu.getRessourcesFinancieres());
+        if(individu.getRessourcesFinancieres() != null) {            
+           demandeurEmploi.setRessourcesFinancieres(individu.getRessourcesFinancieres());
+        } else {
+           demandeurEmploi.setRessourcesFinancieres(new RessourcesFinancieres());
+        }
         demandeurEmploi.getRessourcesFinancieres().setAidesCAF(creerAidesCAF());   
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
     }

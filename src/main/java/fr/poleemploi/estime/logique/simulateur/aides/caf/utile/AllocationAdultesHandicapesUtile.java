@@ -41,7 +41,7 @@ public class AllocationAdultesHandicapesUtile {
      *
      */
     public void simulerAide(Map<String, Aide>  aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        int nombreMoisTravaillesDerniersMois = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi, true); 
+        int nombreMoisTravaillesDerniersMois = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi); 
         int diffNbrMoisSimulationEtNbrMoisTravailles = SimulateurAidesUtile.NOMBRE_MOIS_MAX_A_SIMULER - nombreMoisTravaillesDerniersMois;
         if(numeroMoisSimule > diffNbrMoisSimulationEtNbrMoisTravailles) {
             float montantAllocationAAHReduit = calculerMontantReduit(demandeurEmploi);

@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.services.ressources;
 
-public class SalaireAvantPeriodeSimulation {
+public class MoisTravailleAvantPeriodeSimulation {
 
     private Salaire salaire;
     private boolean isSansSalaire;
@@ -23,6 +23,6 @@ public class SalaireAvantPeriodeSimulation {
 
     @Override
     public String toString() {
-        return "SalaireAvantPeriodeSimulation [salaire=" + salaire + ", isSansSalaire=" + isSansSalaire + "]";
+        return "MoisTravailleAvantPeriodeSimulation [salaire=" + salaire + ", isSansSalaire=" + isSansSalaire + "]";
     }
 }
