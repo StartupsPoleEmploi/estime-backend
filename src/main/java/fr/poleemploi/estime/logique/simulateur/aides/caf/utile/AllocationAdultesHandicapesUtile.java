@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -26,8 +25,6 @@ public class AllocationAdultesHandicapesUtile {
     @Autowired
     private AideUtile aideeUtile;
 
-    @Autowired
-    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
     /**
      * Méthode permettant de calculer le montant de l'AAH sur la période de simulation de N mois
      * Voici la règle sur 6 mois :
@@ -41,7 +38,7 @@ public class AllocationAdultesHandicapesUtile {
      *
      */
     public void simulerAide(Map<String, Aide>  aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        int nombreMoisTravaillesDerniersMois = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi); 
+        int nombreMoisTravaillesDerniersMois = demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois(); 
         int diffNbrMoisSimulationEtNbrMoisTravailles = SimulateurAidesUtile.NOMBRE_MOIS_MAX_A_SIMULER - nombreMoisTravaillesDerniersMois;
         if(numeroMoisSimule > diffNbrMoisSimulationEtNbrMoisTravailles) {
             float montantAllocationAAHReduit = calculerMontantReduit(demandeurEmploi);

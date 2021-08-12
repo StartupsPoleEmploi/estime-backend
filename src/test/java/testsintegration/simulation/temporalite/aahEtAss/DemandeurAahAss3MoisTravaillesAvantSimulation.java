@@ -44,8 +44,8 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
 
         // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
         // enfant à charge de 9ans, af = 90€
+        // AAH : 900€, 3 mois travaillés sur 6 derniers mois
         // Montant net journalier ASS = 16,89€, 1 mois cumulé ASS + salaire sur 3 derniers mois
-        // AAH : 900€, 3 mois cumulé AAH + salaire sur 6 derniers mois
         // futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
@@ -62,7 +62,7 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
         SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
-        // AGEPI : 400€, Aide mobilité : 258€, AAH : 900€
+        // AGEPI 400€, Aide mobilité 258€, AAH 900€, ASS 506€
         SimulationMensuelle simulationMois1 = simulationAides.getSimulationsMensuelles().get(0);
         assertThat(simulationMois1).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -86,8 +86,8 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
         });
         
         // Alors les prestations du second mois 12/2020 sont :
-        // AAH : 900€
-        // ASS : 523
+        // AAH 900€
+        // ASS 523
         SimulationMensuelle simulationMois2 = simulationAides.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -105,7 +105,7 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
         });
         
         // Alors les prestations du troisième mois 01/2021 sont :
-        // AAH : 900€
+        // AAH 900€
         SimulationMensuelle simulationMois3 = simulationAides.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -117,9 +117,10 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ass.getMontant()).isEqualTo(900);
             });
         });
+        
         // Alors les prestations du quatrième mois 02/2021 sont :
-        // AAH : 180€ (dégressivité : 900 - 60% * 1200 = 180)
-        // Prime d'activité : 64€ (Simulateur CAF : 52€)
+        // AAH 180€ (dégressivité : 900 - 60% * 1200 = 180)
+        // Prime d'activité 64€ (Simulateur CAF : 52€)
         SimulationMensuelle simulationMois4 = simulationAides.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -137,7 +138,7 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
         
         // Alors les prestations du cinquième mois 03/2021 sont :
         // AAH : 180€ (report AAH dégressif)
-        // Prime d'activité : 64€
+        // Prime d'activité 64€
         SimulationMensuelle simulationMois5 = simulationAides.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -154,7 +155,7 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
         });
         // Alors les prestations du sixième mois 04/2021 sont :
         // AAH : 180€ (report AAH dégressif)
-        // Prime d'activité : 64€
+        // Prime d'activité 64€
         SimulationMensuelle simulationMois6 = simulationAides.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {

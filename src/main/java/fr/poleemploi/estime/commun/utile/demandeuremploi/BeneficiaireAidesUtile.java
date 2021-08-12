@@ -29,7 +29,7 @@ public class BeneficiaireAidesUtile {
     }
     
     public boolean isBeneficiaireASS(DemandeurEmploi demandeurEmploi) {
-        return isBeneficiaireAidePEouCAF(demandeurEmploi) && demandeurEmploi.getBeneficiaireAides().isBeneficiaireASS();
+        return demandeurEmploi.getBeneficiaireAides() != null  && demandeurEmploi.getBeneficiaireAides().isBeneficiaireASS();
     }
     
     public boolean isBeneficiaireASS(Personne personne) {
@@ -37,7 +37,15 @@ public class BeneficiaireAidesUtile {
     }
       
     public boolean isBeneficiaireAAH(DemandeurEmploi demandeurEmploi) {
-        return isBeneficiaireAidePEouCAF(demandeurEmploi) && demandeurEmploi.getBeneficiaireAides().isBeneficiaireAAH();
+        return demandeurEmploi.getBeneficiaireAides() != null && demandeurEmploi.getBeneficiaireAides().isBeneficiaireAAH();
+    }
+    
+    public boolean isUniquementBeneficiaireAAH(DemandeurEmploi demandeurEmploi) {
+        return demandeurEmploi.getBeneficiaireAides() != null 
+                && demandeurEmploi.getBeneficiaireAides().isBeneficiaireAAH()
+                && !demandeurEmploi.getBeneficiaireAides().isBeneficiaireASS()
+                && !demandeurEmploi.getBeneficiaireAides().isBeneficiaireRSA()
+                && !demandeurEmploi.getBeneficiaireAides().isBeneficiaireARE();
     }
     
     public boolean isBeneficiairePensionInvalidite(DemandeurEmploi demandeurEmploi) {

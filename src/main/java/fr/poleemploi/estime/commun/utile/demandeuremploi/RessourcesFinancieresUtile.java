@@ -163,7 +163,7 @@ public class RessourcesFinancieresUtile {
      */
     public int getNombreMoisTravaillesDerniersMois(DemandeurEmploi demandeurEmploi) {
         int nombreMoisTravaillesDerniersMois = 0;
-        if(beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
+        if(beneficiaireAidesUtile.isUniquementBeneficiaireAAH(demandeurEmploi)) {
             nombreMoisTravaillesDerniersMois = demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois();
         } else {            
             for (int moisAvantSimulation = 0; moisAvantSimulation <= 2 ; moisAvantSimulation++) {
