@@ -23,8 +23,8 @@ import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
-import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.UtileTests;
 
 public class CommunTests {
@@ -59,8 +59,6 @@ public class CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
-        
-        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         
         AidesFamiliales aidesFamiliales = new AidesFamiliales();
         aidesFamiliales.setAllocationsFamiliales(0);

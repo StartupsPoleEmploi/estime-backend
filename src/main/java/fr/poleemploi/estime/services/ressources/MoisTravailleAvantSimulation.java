@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.services.ressources;
 
-public class MoisTravailleAvantPeriodeSimulation {
+public class MoisTravailleAvantSimulation {
 
     private Salaire salaire;
     private boolean isSansSalaire;

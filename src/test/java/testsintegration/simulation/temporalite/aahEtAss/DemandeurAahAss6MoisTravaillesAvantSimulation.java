@@ -21,7 +21,6 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
@@ -51,12 +50,7 @@ class DemandeurAahAss6MoisTravaillesAvantSimulation extends CommunTests {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(6);
-	
-	SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();       
-    salairesAvantPeriodeSimulation.setMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1101, 850));
-    salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1200, 1000));
-    salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1200, 1000));        
-    demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1200, 1000, 1200, 1000));
     
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks(demandeurEmploi);

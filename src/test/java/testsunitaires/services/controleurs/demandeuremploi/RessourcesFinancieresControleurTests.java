@@ -22,11 +22,11 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
+import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.AidesCAF;
-import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import utile.tests.UtileTests;
@@ -235,12 +235,13 @@ class RessourcesFinancieresControleurTests extends CommunTests {
         AidesCAF aidesCAF = new AidesCAF();
         aidesCAF.setAllocationAAH(900f);
         ressourcesFinancieres.setAidesCAF(aidesCAF);
+        ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(null);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
             individuService.simulerAides(demandeurEmploi);
-        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nombreMoisTravaillesDerniersMois dans RessourcesFinancieres"));
+        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "periodeTravailleeAvantSimulation dans RessourcesFinancieres de DemandeurEmploi"));
     }
 }

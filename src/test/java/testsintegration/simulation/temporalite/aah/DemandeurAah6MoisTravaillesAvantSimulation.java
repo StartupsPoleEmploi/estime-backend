@@ -21,9 +21,6 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.MoisTravailleAvantPeriodeSimulation;
-import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
@@ -47,26 +44,14 @@ class DemandeurAah6MoisTravaillesAvantSimulation extends CommunTests {
 
         // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
         // enfant à charge de 9ans, af = 90€
-        // AAH = 900€, 6 mois travaillé avant simulation
+        // AAH = 900€
+        // travaillé 6 mois avant simulation dont 3 mois dans les 3 derniers mois avant la simulation
         // futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par
         // mois, 35h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(6);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038);
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation
-                .setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 980, 754));
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks(demandeurEmploi);

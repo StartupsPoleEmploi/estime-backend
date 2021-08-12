@@ -189,7 +189,7 @@ class DemandeurRsaProchaineDeclarationMois2 extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);       
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(0, 0, 500, 659, 0, 0));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(0, 0, 659, 500, 0, 0));
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationsLogement(utileTests.creerallocationsLogement(310f));
         
         //Lorsque je simule mes prestations le 23/07/2021

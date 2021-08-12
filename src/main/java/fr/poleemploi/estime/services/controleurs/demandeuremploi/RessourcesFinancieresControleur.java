@@ -31,15 +31,7 @@ public class RessourcesFinancieresControleur {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "dateDerniereOuvertureDroitASS dans AllocationsPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
             }
         }
-        if(ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() == null) {
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "hasTravailleAuCoursDerniersMois dans RessourcesFinancieres"));
-        }
-        if(ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() != null 
-                && ressourcesFinancieres.getHasTravailleAuCoursDerniersMois().booleanValue()
-                && ressourcesFinancieres.getSalairesAvantPeriodeSimulation() == null) {
-
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "salairesAvantPeriodeSimulation dans RessourcesFinancieres de DemandeurEmploi"));            
-        }
+        controlerHasTravailleAvantSimulation(ressourcesFinancieres);
     }
 
     public void controlerDemandeurEmploiAllocationsCafAAH(RessourcesFinancieres ressourcesFinancieres) {
@@ -52,12 +44,10 @@ public class RessourcesFinancieresControleur {
         }
         if(aidesCAF.getAllocationAAH() != null && aidesCAF.getAllocationAAH() <= 0) {
             throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationMensuelleNetAAH"));
-        }        
-        if(ressourcesFinancieres.getNombreMoisTravaillesDerniersMois() == null) { 
+        }                
+        controlerHasTravailleAvantSimulation(ressourcesFinancieres);        
+        if(ressourcesFinancieres.getHasTravailleAuCoursDerniersMois().booleanValue() && ressourcesFinancieres.getNombreMoisTravaillesDerniersMois() == null) { 
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nombreMoisTravaillesDerniersMois dans RessourcesFinancieres"));
-        }
-        if(ressourcesFinancieres.getNombreMoisTravaillesDerniersMois() > 0 && ressourcesFinancieres.getSalairesAvantPeriodeSimulation() == null) {
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "salairesAvantPeriodeSimulation dans RessourcesFinancieres de DemandeurEmploi"));    
         }
     }
 
@@ -79,11 +69,19 @@ public class RessourcesFinancieresControleur {
         if(aidesCAF.getProchaineDeclarationRSA() < 0 || aidesCAF.getProchaineDeclarationRSA() >= 4) { 
             throw new BadRequestException(String.format(BadRequestMessages.VALEUR_INCORRECT_PROCHAINE_DECLARATION_RSA.getMessage(), aidesCAF.getProchaineDeclarationRSA()));
         }
+        controlerHasTravailleAvantSimulation(ressourcesFinancieres);        
+    }
+    
+    private void controlerHasTravailleAvantSimulation(RessourcesFinancieres ressourcesFinancieres) {
+        if(ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() == null) {
+            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "hasTravailleAuCoursDerniersMois dans RessourcesFinancieres"));
+        }
+        
         if(ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() != null 
                 && ressourcesFinancieres.getHasTravailleAuCoursDerniersMois().booleanValue()
-                && ressourcesFinancieres.getSalairesAvantPeriodeSimulation() == null) {
+                && ressourcesFinancieres.getPeriodeTravailleeAvantSimulation() == null) {
 
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "salairesAvantPeriodeSimulation dans RessourcesFinancieres de DemandeurEmploi"));            
+            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "periodeTravailleeAvantSimulation dans RessourcesFinancieres de DemandeurEmploi"));            
         }
     }
 }

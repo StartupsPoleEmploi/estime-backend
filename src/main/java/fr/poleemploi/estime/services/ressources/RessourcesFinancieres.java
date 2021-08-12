@@ -11,7 +11,7 @@ public class RessourcesFinancieres {
     private Float revenusMicroEntreprise3DerniersMois;
     private Float revenusImmobilier3DerniersMois;
     private Salaire salaire;
-    private SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation;
+    private PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation;
     
     public AidesCAF getAidesCAF() {
         return aidesCAF;
@@ -66,23 +66,22 @@ public class RessourcesFinancieres {
     }
     public void setSalaire(Salaire salaire) {
         this.salaire = salaire;
+    }        
+    public PeriodeTravailleeAvantSimulation getPeriodeTravailleeAvantSimulation() {
+        return periodeTravailleeAvantSimulation;
     }
-    public SalairesAvantPeriodeSimulation getSalairesAvantPeriodeSimulation() {
-        return salairesAvantPeriodeSimulation;
-    }
-    public void setSalairesAvantPeriodeSimulation(SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation) {
-        this.salairesAvantPeriodeSimulation = salairesAvantPeriodeSimulation;
+    public void setPeriodeTravailleeAvantSimulation(PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation) {
+        this.periodeTravailleeAvantSimulation = periodeTravailleeAvantSimulation;
     }
     
     @Override
     public String toString() {
-        return "RessourcesFinancieres [aidesCAF=" + aidesCAF + ", aidesPoleEmploi="
-                + aidesPoleEmploi + ", aidesCPAM=" + aidesCPAM + ", hasTravailleAuCoursDerniersMois="
-                + hasTravailleAuCoursDerniersMois + ", nombreMoisTravaillesDerniersMois="
-                + nombreMoisTravaillesDerniersMois + ", beneficesTravailleurIndependantDernierExercice="
-                + beneficesTravailleurIndependantDernierExercice + ", revenusMicroEntreprise3DerniersMois="
-                + revenusMicroEntreprise3DerniersMois + ", revenusImmobilier3DerniersMois="
-                + revenusImmobilier3DerniersMois + ", salaire=" + salaire + ", salairesAvantPeriodeSimulation="
-                + salairesAvantPeriodeSimulation + "]";
-    }
+        return "RessourcesFinancieres [aidesCAF=" + aidesCAF + ", aidesPoleEmploi=" + aidesPoleEmploi + ", aidesCPAM="
+                + aidesCPAM + ", hasTravailleAuCoursDerniersMois=" + hasTravailleAuCoursDerniersMois
+                + ", nombreMoisTravaillesDerniersMois=" + nombreMoisTravaillesDerniersMois
+                + ", beneficesTravailleurIndependantDernierExercice=" + beneficesTravailleurIndependantDernierExercice
+                + ", revenusMicroEntreprise3DerniersMois=" + revenusMicroEntreprise3DerniersMois
+                + ", revenusImmobilier3DerniersMois=" + revenusImmobilier3DerniersMois + ", salaire=" + salaire
+                + ", periodeTravailleeAvantSimulation=" + periodeTravailleeAvantSimulation + "]";
+    }    
 }

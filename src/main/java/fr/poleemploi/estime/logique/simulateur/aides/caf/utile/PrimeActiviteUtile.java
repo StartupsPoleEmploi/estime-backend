@@ -12,6 +12,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -33,21 +34,20 @@ public class PrimeActiviteUtile {
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
     
     @Autowired
+    private PeriodeTravailleeAvantSimulationUtile periodeTravailleeAvantSimulationUtile;
+    
+    @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
 
-    public void simulerAide(SimulationAides simulationAides, Map<String, Aide>  aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        
-        Optional<Aide> primeActiviteMoisPrecedent = getPrimeActiviteMoisPrecedent(simulationAides,  numeroMoisSimule);     
-        
+    public void simulerAide(SimulationAides simulationAides, Map<String, Aide>  aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {        
+        Optional<Aide> primeActiviteMoisPrecedent = getPrimeActiviteMoisPrecedent(simulationAides,  numeroMoisSimule);             
         if(primeActiviteMoisPrecedent.isPresent()) {
             reporterPrimeActiviteMoisPrecedent(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi, primeActiviteMoisPrecedent);            
         } else if(isPrimeActiviteACalculer(primeActiviteMoisPrecedent, numeroMoisSimule, demandeurEmploi)) {
             calculerPrimeActivite(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);            
         }
-    }
-
-    
+    }    
 
     public Aide creerAidePrimeActivite(float montantPrimeActivite, boolean isAideReportee) {
         Aide aidePrimeActivite = new Aide();
@@ -67,9 +67,7 @@ public class PrimeActiviteUtile {
         int moisNMoins1 = numeroMoisSimule - 1; 
         return aideeUtile.getAidePourCeMoisSimule(simulationAides, Aides.PRIME_ACTIVITE.getCode(), moisNMoins1);
     }
-    
-
-    
+        
     private void calculerPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
         if(openFiscaRetourSimulation.getMontantPrimeActivite() > 0) {
@@ -91,8 +89,8 @@ public class PrimeActiviteUtile {
     }
     
     private boolean isPrimeActiviteACalculerDemandeurASS(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
-        return !ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMois(demandeurEmploi) && numeroMoisSimule == 5
-                || (ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMois(demandeurEmploi) && isMoisPourCalculPrimeActiviteASS(numeroMoisSimule, demandeurEmploi));
+        return !ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMoisAvantSimulation(demandeurEmploi) && numeroMoisSimule == 5
+                || (ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMoisAvantSimulation(demandeurEmploi) && isMoisPourCalculPrimeActiviteASS(numeroMoisSimule, demandeurEmploi));
     }
     
     private boolean isPrimeActiviteACalculerDemandeurAAH(int numeroMoisSimule) {
@@ -100,21 +98,31 @@ public class PrimeActiviteUtile {
     }    
 
     private boolean isMoisPourCalculPrimeActiviteASS(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        int nombreMoisTravaillesDerniersMois = ressourcesFinancieresUtile.getNombreMoisTravaillesDerniersMois(demandeurEmploi);
+        int nombreMoisTravaillesDerniersMois = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
         return nombreMoisTravaillesDerniersMois == 1 && numeroMoisSimule == 4 
            || (nombreMoisTravaillesDerniersMois == 2 && (numeroMoisSimule == 3 || numeroMoisSimule == 6)) 
            || (nombreMoisTravaillesDerniersMois == 3 && (numeroMoisSimule == 2 || numeroMoisSimule == 5));
     }
     
-  //TODO JLA :  revoir les explications
+    /**
+     * Méthode permettant de reporter le montant de la prime d'activité ou de recalculer son montant.
+     * Le montant de la prime d'activité calculée à mois N est reporté sur les 2 prochains mois N+1 N+2, et doit être recalculé après les 2 mois de report.
+     * 
+     * Exemple :
+     * 
+     * |     mois 1      |     mois 2      |     mois 3      |     mois 4      |
+     * | montant calculé | montant reporté | montant reporté | montant calculé |
+     * 
+     */
     private void reporterPrimeActiviteMoisPrecedent(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi, Optional<Aide> primeActiviteMoisPrecedentOptional) {
       
-        //le montant calculé au mois N est reporté au mois N+1 et N+2, la validité du montant s'étale donc sur 3 mois       
-        int moisMoinsPeriodeValiditeMontant = numeroMoisSimule - 3; 
+        //le montant calculé au mois N est reporté au mois N+1 et N+2, la validité du montant s'étale donc sur 3 mois
+        int moisMoinsPeriodeValiditeMontant = numeroMoisSimule - 3;
+        
         Optional<Aide> primeActiviteDebutPeriodeValiditeMontant = aideeUtile.getAidePourCeMoisSimule(simulationAides, Aides.PRIME_ACTIVITE.getCode(), moisMoinsPeriodeValiditeMontant);   
 
-        //si prime d'activité en N - NBR_MOIS_VALIDITE_MONTANT et que l'aide n'a pas été reportée
-        //alors on recalcule la prime d'activité
+        //si montant prime d'activité en N - NBR_MOIS_VALIDITE_MONTANT  n'a pas été reporté alors on recalcule le montant
+        //sinon on reporte le montant de la prime d'activité précédente si prime d'activité il y a eu.
         if(primeActiviteDebutPeriodeValiditeMontant.isPresent() && !primeActiviteDebutPeriodeValiditeMontant.get().isReportee()) {
             calculerPrimeActivite(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
         } else if(primeActiviteMoisPrecedentOptional.isPresent()) {

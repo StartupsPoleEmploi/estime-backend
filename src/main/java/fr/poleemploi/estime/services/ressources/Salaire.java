@@ -17,6 +17,7 @@ public class Salaire {
     public void setMontantNet(float montantNet) {
         this.montantNet = montantNet;
     }
+    
     @Override
     public String toString() {
         return "Salaire [montantBrut=" + montantBrut + ", montantNet=" + montantNet + "]";

@@ -21,9 +21,6 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.MoisTravailleAvantPeriodeSimulation;
-import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
@@ -45,28 +42,16 @@ class DemandeurAah4MoisTravaillesAvantSimulation extends CommunTests {
     void simulerPopulationAahTravaille4MoisAvantSimulation() throws ParseException, JsonIOException,
             JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-        // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
-        // enfant à charge de 9ans, af = 90€
-        // AAH = 900€, 4 mois travaillé avant simulation
+        // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 
+        // 1 enfant à charge de 9ans, af = 90€
+        // AAH = 900€
+        // travaillé 4 mois avant simulation dont 2 mois dans les 3 derniers mois avant la simulation
         // futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par
         // mois, 35h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(4);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038);
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation
-                .setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks(demandeurEmploi);
@@ -131,6 +116,7 @@ class DemandeurAah4MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(222);
             });
         });
+        
         // Alors les prestations du quatrième mois 02/2021 sont :
         // AAH : 180€
         // Prime d'activité : 222€ (simulateur CAF : 211€)
@@ -169,6 +155,7 @@ class DemandeurAah4MoisTravaillesAvantSimulation extends CommunTests {
                         assertThat(ass.getMontant()).isEqualTo(180);
                     });
         });
+        
         // Alors les prestations du sixième mois 04/2021 sont :
         // AAH : 180€
         // Prime d'activité : 355€

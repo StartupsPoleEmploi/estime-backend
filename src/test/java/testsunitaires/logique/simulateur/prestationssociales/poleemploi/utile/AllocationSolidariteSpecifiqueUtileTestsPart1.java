@@ -14,14 +14,13 @@ import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
+import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
-import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
-import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.MoisTravailleAvantPeriodeSimulation;
-import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
+import utile.tests.UtileTests;
 
 
 @ContextConfiguration
@@ -31,6 +30,9 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 
     @Autowired
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifiqueUtile;
+    
+    @Autowired
+    private UtileTests utileTests;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -45,13 +47,20 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 1 mois et cumulé ASS+Salaire 0 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
+        
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);        
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -71,34 +80,21 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 1 mois et cumulé ASS+Salaire 1 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(1);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(0);
-        salaireMoisMoins1Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(0);
-        salaireMoisMoins2Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
+
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -118,34 +114,21 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 1 mois et cumulé ASS+Salaire 2 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(2);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(0);
-        salaireMoisMoins2Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+        
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -166,35 +149,21 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 1 mois et cumulé ASS+Salaire 3 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(3);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(800);
-        salaireMoisMoins2Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 1038, 800));
+
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -216,13 +185,20 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 2 mois et cumulé ASS+Salaire 0 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
+        
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -242,34 +218,21 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 2 mois et cumulé ASS+Salaire 1 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(1);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(0);
-        salaireMoisMoins1Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(0);
-        salaireMoisMoins2Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
+    
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -289,34 +252,22 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 2 mois et cumulé ASS+Salaire 2 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(2);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(0);
-        salaireMoisMoins2Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+        
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -337,34 +288,14 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 2 mois et cumulé ASS+Salaire 3 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(3);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(800);
-        salaireMoisMoins2Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-        AllocationASS allocationASS = new AllocationASS();
-        allocationASS.setAllocationJournaliereNet(16.89f);
-        aidesPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 1038, 800));
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -386,13 +317,20 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 3 mois et cumulé ASS+Salaire 0 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
+        
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -412,34 +350,14 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 3 mois et cumulé ASS+Salaire 1 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(1);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(0);
-        salaireMoisMoins1Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(0);
-        salaireMoisMoins2Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-        AllocationASS allocationASS = new AllocationASS();
-        allocationASS.setAllocationJournaliereNet(16.89f);
-        aidesPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -459,34 +377,14 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 3 mois et cumulé ASS+Salaire 2 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(2);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(0);
-        salaireMoisMoins2Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-        AllocationASS allocationASS = new AllocationASS();
-        allocationASS.setAllocationJournaliereNet(16.89f);
-        aidesPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -507,29 +405,15 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 3 mois et cumulé ASS+Salaire 3 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(3);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(800);
-        salaireMoisMoins2Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 1038, 800));
+        
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
@@ -556,13 +440,20 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 4 mois et cumulé ASS+Salaire 0 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
+        
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -582,34 +473,21 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 4 mois et cumulé ASS+Salaire 1 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(1);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(0);
-        salaireMoisMoins1Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(0);
-        salaireMoisMoins2Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
+                
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -629,34 +507,21 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 4 mois et cumulé ASS+Salaire 2 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(2);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(0);
-        salaireMoisMoins2Mois.setMontantBrut(0); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+               
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
@@ -677,34 +542,21 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         
         //Si DE, futur contrat CDD 4 mois et cumulé ASS+Salaire 3 mois sur les 3 derniers mois
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        
+        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+        beneficiaireAides.setBeneficiaireASS(true);
+        demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+        
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(3);
-        SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisDemande = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisDemande = new Salaire();
-        salaireMoisDemande.setMontantNet(850);
-        salaireMoisDemande.setMontantBrut(1101);
-        salaireAvantPeriodeSimulationMoisDemande.setSalaire(salaireMoisDemande);
-        salairesAvantPeriodeSimulation.setMoisDemandeSimulation(salaireAvantPeriodeSimulationMoisDemande);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins1Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins1Mois = new Salaire();
-        salaireMoisMoins1Mois.setMontantNet(800);
-        salaireMoisMoins1Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins1Mois.setSalaire(salaireMoisMoins1Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins1Mois);
-        MoisTravailleAvantPeriodeSimulation salaireAvantPeriodeSimulationMoisMoins2Mois = new MoisTravailleAvantPeriodeSimulation();
-        Salaire salaireMoisMoins2Mois = new Salaire();
-        salaireMoisMoins2Mois.setMontantNet(800);
-        salaireMoisMoins2Mois.setMontantBrut(1038); 
-        salaireAvantPeriodeSimulationMoisMoins2Mois.setSalaire(salaireMoisMoins2Mois);
-        salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(salaireAvantPeriodeSimulationMoisMoins2Mois);
-        ressourcesFinancieres.setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
+        ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 1038, 800));
+        
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();

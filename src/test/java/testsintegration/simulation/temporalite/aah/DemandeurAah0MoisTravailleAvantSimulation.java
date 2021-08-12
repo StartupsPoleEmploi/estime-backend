@@ -37,9 +37,11 @@ class DemandeurAah0MoisTravailleAvantSimulation extends CommunTests {
     void simulerPopulationAahNonTravailleAvantSimulation() throws Exception {
 
         //Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, asf = 117€
-        //AAH = 900€, 0 mois travaillé avant simulation
+        //AAH = 900€
+        //0 mois travaillé avant simulation
         //futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par mois, 35h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
 
         

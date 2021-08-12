@@ -79,7 +79,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(0);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);  
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -108,7 +108,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(1);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -137,7 +137,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(1);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);  
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -166,7 +166,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(2);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -195,7 +195,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(2);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -226,7 +226,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(3);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -256,7 +256,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(3);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(utileTests.creerSalairesAvantPeriodeSimulation(380, 508, 450, 596, 610, 798));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);

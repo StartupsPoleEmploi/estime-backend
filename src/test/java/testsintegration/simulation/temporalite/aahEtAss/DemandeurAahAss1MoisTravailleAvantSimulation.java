@@ -21,7 +21,6 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SalairesAvantPeriodeSimulation;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
@@ -43,19 +42,14 @@ class DemandeurAahAss1MoisTravailleAvantSimulation extends CommunTests {
     void simulerPopulationAah1MoisSur6Ass1MoisSur3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
 	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, af = 90€
-	// Montant net journalier ASS = 16,89€, 1 mois cumulé ASS + salaire sur 3 derniers mois
-	// AAH = 900€, 4 mois travaillé avant simulation
+    // AAH = 900€
+    // 1 mois travaillé avant simulation dont 1 mois dans les 3 derniers mois avant la simulation
+	// Montant net journalier ASS = 16,89€
 	// futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(1);
-	
-	SalairesAvantPeriodeSimulation salairesAvantPeriodeSimulation = new SalairesAvantPeriodeSimulation();       
-    salairesAvantPeriodeSimulation.setMoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(1101, 850));
-    salairesAvantPeriodeSimulation.setMoisMoins1MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(0, 0));
-    salairesAvantPeriodeSimulation.setMoisMoins2MoisDemandeSimulation(utileTests.creerSalaireAvantPeriodeSimulation(0, 0));        
-    demandeurEmploi.getRessourcesFinancieres().setSalairesAvantPeriodeSimulation(salairesAvantPeriodeSimulation);
-
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks(demandeurEmploi);
