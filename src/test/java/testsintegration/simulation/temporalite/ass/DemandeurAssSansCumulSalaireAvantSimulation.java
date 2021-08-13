@@ -43,7 +43,7 @@ class DemandeurAssSansCumulSalaireAvantSimulation extends CommunTests {
 
         //Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, asf = 117€
         //Montant net journalier ASS = 16,89€, 0 mois cumulé ASS + salaire sur 3 derniers mois
-        //futur contrat CDI, salaire brut 1600€, soit 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
+        //futur contrat CDI, salaire brut 1600€, soit 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         
 

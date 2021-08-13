@@ -43,12 +43,12 @@ class DemandeurAss2MoisCumulSalaireAvantSimulation extends CommunTests {
             FileNotFoundException, URISyntaxException, JSONException {
 
         // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
-        // enfant à charge de 9ans, af = 90€
+        // enfant à charge de 9ans, asf 117€
         // Salaire m-1 par rapport au début de la simulation : 1200€
         // Montant net journalier ASS = 16,89€, 2 mois cumulé ASS + salaire sur 3
         // derniers mois
         // futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile ->
-        // taf = 80kms + 20 trajets
+        // taf = 80kms + 12 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1200, 1000, 0, 0));
