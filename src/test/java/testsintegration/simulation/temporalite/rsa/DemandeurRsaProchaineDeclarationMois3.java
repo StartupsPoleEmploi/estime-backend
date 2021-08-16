@@ -162,11 +162,11 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
     void simulerMesRessourcesFinancieresTest2() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
         //Si DE Français, date naissance 5/07/1986, code postal 44200, en couple, non propriétaire
-        //Futur contrat CDI 15h, salaire net 1231€ brut 1583€,kilométrage domicile -> taf = 10kms + 20 trajets
+        //Futur contrat CDI 15h, salaire net 500€ brut 659€,kilométrage domicile -> taf = 10kms + 20 trajets
         //RSA 350€, déclaration trimetrielle en M3, non travaillé au cours des 3 derniers mois
         //APL 490€, AF 130€, PAGE 170€
         //conjoint salaire 700€
-        //enfant 3 ans (09/09/2019), enfant 4 ans (05/03/2017)
+        //enfant 2 ans, enfant 4 ans
         boolean isEnCouple = true;
         int nbEnfant = 2;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);        
@@ -423,7 +423,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
 
         //Si DE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
         //Futur contrat CDI 15h, salaire net 500€ brut 659€,kilométrage domicile -> taf = 10kms + 20 trajets
-        //RSA 500€, déclaration trimetrielle en M, travaillé au cours des 3 derniers mois avec salaire 380 juillet,  salaire 380 juin, salaire 0 mai
+        //RSA 500€, déclaration trimetrielle en M, travaillé au cours des 3 derniers mois avec salaire 0€ juillet, salaire 380€ net juin, salaire 500€ net mai
         //APL 310€
         boolean isEnCouple = false;
         int nbEnfant = 0;

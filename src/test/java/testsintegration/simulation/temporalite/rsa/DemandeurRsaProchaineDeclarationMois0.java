@@ -269,7 +269,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
     void simulerMesRessourcesFinancieresTest3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
         //Si DE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
-        //Futur contrat CDI 15h, salaire net 500€ brut 659€,kilométrage domicile -> taf = 10kms + 20 trajets
+        //Futur contrat CDI 15h, salaire net 500€ 659€ brut ,kilométrage domicile -> taf = 10kms + 20 trajets
         //RSA 500€, déclaration trimetrielle en M, travaillé au cours des 3 derniers mois avec salaire 0 juillet,  salaire 380 juin, salaire 0 mai
         //APL 310€
         boolean isEnCouple = false;

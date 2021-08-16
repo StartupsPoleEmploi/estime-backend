@@ -169,7 +169,7 @@ class DemandeurRsaProchaineDeclarationMois2 extends CommunTests {
 
         //Si DE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
         //Futur contrat CDI 15h, salaire net 500€ brut 659€,kilométrage domicile -> taf = 10kms + 20 trajets
-        //RSA 500€, déclaration trimetrielle en M, travaillé au cours des 3 derniers mois avec salaire 380 juillet,  salaire 380 juin, salaire 0 mai
+        //RSA 500€, déclaration trimetrielle en M2, travaillé au cours des 3 derniers mois avec salaire 0€ juillet,  salaire 500€ juin, salaire 0 mai
         //APL 310€
         boolean isEnCouple = false;
         int nbEnfant = 0;
