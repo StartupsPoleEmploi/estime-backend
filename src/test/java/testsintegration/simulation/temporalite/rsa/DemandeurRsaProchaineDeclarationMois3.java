@@ -165,7 +165,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         //Futur contrat CDI 15h, salaire net 500€ brut 659€,kilométrage domicile -> taf = 10kms + 20 trajets
         //RSA 350€, déclaration trimetrielle en M3, non travaillé au cours des 3 derniers mois
         //APL 490€, AF 130€, PAGE 170€
-        //conjoint salaire 700€
+        //conjoint salaire 380€
         //enfant 2 ans, enfant 4 ans
         boolean isEnCouple = true;
         int nbEnfant = 2;
@@ -188,7 +188,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         aidesFamiliales.setAllocationSoutienFamilial(0);
         aidesFamiliales.setAllocationsFamiliales(130f);
         aidesFamiliales.setComplementFamilial(0);
-        aidesFamiliales.setAideAccueilJeuneEnfant(170f);
+        aidesFamiliales.setPrestationAccueilJeuneEnfant(170f);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();

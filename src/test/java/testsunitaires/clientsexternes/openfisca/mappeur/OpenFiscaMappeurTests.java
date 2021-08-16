@@ -83,7 +83,7 @@ class OpenFiscaMappeurTests {
         aidesFamiliales.setAllocationSoutienFamilial(110);
         aidesFamiliales.setAllocationsFamiliales(0);
         aidesFamiliales.setComplementFamilial(0);
-        aidesFamiliales.setAideAccueilJeuneEnfant(170f);
+        aidesFamiliales.setPrestationAccueilJeuneEnfant(170f);
         aidesCAF.setAidesFamiliales(aidesFamiliales);
         AllocationsLogement allocationsLogement = new AllocationsLogement();
         allocationsLogement.setMoisN(385);

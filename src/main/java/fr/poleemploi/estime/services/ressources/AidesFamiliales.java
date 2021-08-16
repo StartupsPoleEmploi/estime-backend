@@ -13,12 +13,6 @@ public class AidesFamiliales {
     private float prestationAccueilJeuneEnfant;
     private float pensionsAlimentairesFoyer;
     
-    public float getPensionsAlimentairesFoyer() {
-        return pensionsAlimentairesFoyer;
-    }
-    public void setPensionsAlimentairesFoyer(float pensionsAlimentairesFoyer) {
-        this.pensionsAlimentairesFoyer = pensionsAlimentairesFoyer;
-    }
     public float getAllocationsFamiliales() {
         return allocationsFamiliales;
     }
@@ -37,13 +31,19 @@ public class AidesFamiliales {
     public void setComplementFamilial(float complementFamilial) {
         this.complementFamilial = complementFamilial;
     }
-    public float getAideAccueilJeuneEnfant() {
+    public float getPrestationAccueilJeuneEnfant() {
         return prestationAccueilJeuneEnfant;
     }
-    public void setAideAccueilJeuneEnfant(float prestationAccueilJeuneEnfant) {
+    public void setPrestationAccueilJeuneEnfant(float prestationAccueilJeuneEnfant) {
         this.prestationAccueilJeuneEnfant = prestationAccueilJeuneEnfant;
     }
-    
+    public float getPensionsAlimentairesFoyer() {
+        return pensionsAlimentairesFoyer;
+    }
+    public void setPensionsAlimentairesFoyer(float pensionsAlimentairesFoyer) {
+        this.pensionsAlimentairesFoyer = pensionsAlimentairesFoyer;
+    }
+
     @Override
     public String toString() {
         return "AidesFamiliales [allocationsFamiliales=" + allocationsFamiliales + ", allocationSoutienFamilial="
