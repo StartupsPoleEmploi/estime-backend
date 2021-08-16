@@ -93,9 +93,12 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
     @Test
     void calculerPrimeActivitePensionInvaliditeTest2() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-        //Si DE France Métropolitaine, en couple, 1 enfant de 4 ans, conjoint 200€ pension invalidite, 
+        //Si DE France Métropolitaine, en couple
+        //1 enfant de 4 ans
+        //conjoint 200€ pension invalidite, 
         //ASS de 16.89€ journalière
-        //futur contrat CDI avec salaire net 800€/mois
+        //CDI 35h, salaire 800€ net
+        //APL 150€
         boolean isEnCouple = true;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);

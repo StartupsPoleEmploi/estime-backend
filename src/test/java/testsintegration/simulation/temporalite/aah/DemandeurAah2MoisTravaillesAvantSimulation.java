@@ -42,11 +42,12 @@ class DemandeurAah2MoisTravaillesAvantSimulation extends CommunTests {
     void simulerPopulationAahTravaille2MoisAvantSimulation() throws ParseException, JsonIOException,
             JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-        // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
-        // enfant à charge de 9ans, af = 117€
+        // Si DE Français, France métropolitaine, né le 5/07/1986, célibataire, 
+        // 1 enfant 9ans
+        // af = 117€
         // AAH = 900€
         // travaillé 2 mois avant simulation dont 2 mois dans les 3 derniers mois avant la simulation
-        // futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par
+        // CDI, salaire 940€ net 1200€  brut
         // mois, 35h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
@@ -155,10 +156,9 @@ class DemandeurAah2MoisTravaillesAvantSimulation extends CommunTests {
                     });
         });
         
-        //TODO montant : écart de 37€ avec CAF
         // Alors les prestations du sixième mois 04/2021 sont :
         // AAH : 180€
-        // Prime d'activité : 193€ (simulateur CAF : 156€)
+        // Prime d'activité : 193€ 
         SimulationMensuelle simulationMois6 = simulationAides.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
