@@ -313,7 +313,7 @@ foo@bar:~$ docker stats
 
 ## Connaître la version du composant déployé
 
-Accéder à la version via [https://estime.pole-emploi.fr/estime/v1/actuator/info](https://estime.pole-emploi.fr/estime/v1/actuator/info )
+Accéder à la version via [https://estime.pole-emploi.fr/estime/v1/actuator/info](https://estime.pole-emploi.fr/estime/v1/actuator/info)
 
 # [OpenFisca France] Appeler l'api OpenFisca en local
 
@@ -345,3 +345,36 @@ Seuls les 2 endpoints suivants sont accessibles (voir SecurityConfig.java) :
 
 - https://estime.pole-emploi.fr/estime/v1/actuator/health
 - https://estime.pole-emploi.fr/estime/v1/actuator/info
+
+# [Livraison] Livrer une nouvelle version en production
+
+Une image Docker OpenJDK contenant le code source de l'application Spring Boot est livrée sur les différents environnements (recette, production). Cette image est versionnée en **release-candidate pour la recette** et en **release pour la production**.
+
+## Procédure de build et de livraison d'une version release en production
+
+Après s'être assuré du bon fonctionnement de l'application sur l'environnement de recette, voici les étapes à suivre pour livrer la version de l'application de recette en production.
+
+### La veille de la mise en prodction
+
+* mettre à jour la version du fichier ***pom.xml***. 
+  
+  ```
+   <artifactId>estime-backend</artifactId>
+    <version>1.4.0</version>
+  ```
+  
+  Possibilité de vérifier la version actuelle en production via [https://estime.pole-emploi.fr/estime/v1/actuator/info](https://estime.pole-emploi.fr/estime/v1/actuator/info)
+
+* commit les changements et livrer en recette (exemple message commit : "création version production v1.5.0").
+
+* une fois la livraison en recette effectuée, lancer dans le pipeline GitLab CI, les jobs **build-docker-image-production** et **generate-docker-stack-production**
+
+* poser un tag via GitLab dans **Repository => Tags** (exemple nommage du tag : v1.5.0-version-mise-en-prod)
+
+### Mise en production le lendemain
+
+* lancer le job **deploy_application_production**
+
+* se connecter sur la machine pour vérifier que tout se passe bien, voir section [Suivi opérationnel](#suivi-opérationnel-comment-dépanner-lapplication-sur-un-serveur-docker-swarm-)
+
+*  envoyer une notification à l'équipe
