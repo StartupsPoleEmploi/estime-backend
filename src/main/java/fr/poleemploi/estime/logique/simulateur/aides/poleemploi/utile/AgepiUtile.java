@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
@@ -110,6 +111,7 @@ public class AgepiUtile {
         if(detailAideOptional.isPresent()) {
             agepi.setDetail(detailAideOptional.get());            
         }
+	agepi.setMessageAlerte(MessagesInformatifs.AGEPI_IDF.getMessage());
         agepi.setNom(Aides.AGEPI.getNom());
         agepi.setOrganisme(Organismes.PE.getNom());
         agepi.setMontant(montantAide);
