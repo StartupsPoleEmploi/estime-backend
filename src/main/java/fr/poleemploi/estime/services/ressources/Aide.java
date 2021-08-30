@@ -12,6 +12,7 @@ public class Aide {
     private Float montant;
     private String nom;
     private String organisme;
+    private String lienExterne;
    
     
     public String getMessageAlerte() {
@@ -61,4 +62,10 @@ public class Aide {
         return "Aidee [code=" + code + ", detail=" + detail + ", montant=" + montant + ", nom=" + nom
                 + ", organisme=" + organisme + ", isReportee=" + isReportee + "]";
     }
+	public String getLienExterne() {
+		return lienExterne;
+	}
+	public void setLienExterne(String lienExterne) {
+		this.lienExterne = lienExterne;
+	}
 }

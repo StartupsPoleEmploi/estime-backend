@@ -29,18 +29,23 @@ public class AidesService {
 		if (Aides.ALLOCATION_ADULTES_HANDICAPES.getCode().equals(codeAide)) {
 			aide.setCode(codeAide);
 			aide.setDetail(aideeUtile.getDescription(Aides.ALLOCATION_ADULTES_HANDICAPES.getNomFichierDetail()).get());
+			aide.setLienExterne("https://www.wikipedia.com");
 		}else if(Aides.AIDE_MOBILITE.getCode().equals(codeAide)) {
 			aide.setCode(codeAide);
 			aide.setDetail(aideeUtile.getDescription(Aides.AIDE_MOBILITE.getNomFichierDetail()).get());
+			aide.setLienExterne("https://www.wikipedia.com");
 		}else if(Aides.AGEPI.getCode().equals(codeAide)) {
 			aide.setCode(codeAide);
 			aide.setDetail(aideeUtile.getDescription(Aides.AGEPI.getNomFichierDetail()).get());
+			aide.setLienExterne("https://www.wikipedia.com");
 		}else if(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(codeAide)) {
 			aide.setCode(codeAide);
 			aide.setDetail(aideeUtile.getDescription(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNomFichierDetail()).get());
+			aide.setLienExterne("https://www.wikipedia.com");
 		}else if(Aides.PRIME_ACTIVITE.getCode().equals(codeAide)) {
 			aide.setCode(codeAide);
 			aide.setDetail(aideeUtile.getDescription(Aides.PRIME_ACTIVITE.getNomFichierDetail()).get());
+			aide.setLienExterne("https://www.wikipedia.com");
 		}
 		return aide;
 	}
