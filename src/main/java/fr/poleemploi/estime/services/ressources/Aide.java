@@ -13,6 +13,8 @@ public class Aide {
     private String nom;
     private String organisme;
     private String lienExterne;
+    private String iconeAide;
+    private String couleurAide;
    
     
     public String getMessageAlerte() {
@@ -67,5 +69,17 @@ public class Aide {
 	}
 	public void setLienExterne(String lienExterne) {
 		this.lienExterne = lienExterne;
+	}
+	public String getIconeAide() {
+		return iconeAide;
+	}
+	public void setIconeAide(String iconeAide) {
+		this.iconeAide = iconeAide;
+	}
+	public String getCouleurAide() {
+		return couleurAide;
+	}
+	public void setCouleurAide(String couleurAide) {
+		this.couleurAide = couleurAide;
 	}
 }
