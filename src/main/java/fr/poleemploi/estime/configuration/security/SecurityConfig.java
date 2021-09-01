@@ -28,7 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/individus/authentifier");
         web.ignoring().antMatchers("/actuator/info");
-        web.ignoring().antMatchers("/actuator/health");        
+        web.ignoring().antMatchers("/actuator/health"); 
+        web.ignoring().antMatchers("/aides/**");
     }
     
     @Override  

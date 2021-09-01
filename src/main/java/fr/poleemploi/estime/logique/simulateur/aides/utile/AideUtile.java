@@ -29,7 +29,7 @@ public class AideUtile {
     @Autowired
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifique;
     
-    private static final String PATH_DIR_DETAIL_PRESTATION = "details-prestations/";
+    public static final String PATH_DIR_DETAIL_PRESTATION = "details-prestations/";
     
     private static final Logger LOGGER = LoggerFactory.getLogger(AideUtile.class);
 
