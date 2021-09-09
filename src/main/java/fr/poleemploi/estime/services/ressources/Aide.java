@@ -13,8 +13,6 @@ public class Aide {
     private String nom;
     private String organisme;
     private String lienExterne;
-    private String iconeAide;
-    private String couleurAide;
    
     
     public String getMessageAlerte() {
@@ -59,27 +57,16 @@ public class Aide {
     public void setMontant(Float montant) {
         this.montant = montant;
     }
+    public String getLienExterne() {
+	return lienExterne;
+    }
+    public void setLienExterne(String lienExterne) {
+	this.lienExterne = lienExterne;
+    }
+
     @Override
     public String toString() {
-        return "Aidee [code=" + code + ", detail=" + detail + ", montant=" + montant + ", nom=" + nom
-                + ", organisme=" + organisme + ", isReportee=" + isReportee + "]";
+	return "Aide [code=" + code + ", detail=" + detail + ", isReportee=" + isReportee + ", messageAlerte=" + messageAlerte + ", montant=" + montant + ", nom=" + nom + ", organisme=" + organisme
+		+ ", lienExterne=" + lienExterne + "]";
     }
-	public String getLienExterne() {
-		return lienExterne;
-	}
-	public void setLienExterne(String lienExterne) {
-		this.lienExterne = lienExterne;
-	}
-	public String getIconeAide() {
-		return iconeAide;
-	}
-	public void setIconeAide(String iconeAide) {
-		this.iconeAide = iconeAide;
-	}
-	public String getCouleurAide() {
-		return couleurAide;
-	}
-	public void setCouleurAide(String couleurAide) {
-		this.couleurAide = couleurAide;
-	}
 }

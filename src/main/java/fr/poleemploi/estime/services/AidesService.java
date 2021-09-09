@@ -27,36 +27,26 @@ public class AidesService {
 	    aide.setNom(Aides.ALLOCATION_ADULTES_HANDICAPES.getNom());
 	    aide.setDetail(this.getDescription(Aides.ALLOCATION_ADULTES_HANDICAPES.getNomFichierDetail()));
 	    aide.setLienExterne("");
-	    aide.setIconeAide("AahIcon.svg");
-	    aide.setCouleurAide("background: #C7F0BD;");
 	} else if (Aides.AIDE_MOBILITE.getCode().equals(codeAide)) {
 	    aide.setCode(codeAide);
 	    aide.setNom(Aides.AIDE_MOBILITE.getNom());
 	    aide.setDetail(this.getDescription(Aides.AIDE_MOBILITE.getNomFichierDetail()));
 	    aide.setLienExterne("https://candidat.pole-emploi.fr/candidat/aides/mobilite/tableaudebord\\r\\n");
-	    aide.setIconeAide("AmIcon.svg");
-	    aide.setCouleurAide("background: #F1A378;");
 	} else if (Aides.AGEPI.getCode().equals(codeAide)) {
 	    aide.setCode(codeAide);
 	    aide.setNom(Aides.AGEPI.getNom());
 	    aide.setDetail(this.getDescription(Aides.AGEPI.getNomFichierDetail()));
 	    aide.setLienExterne("https://candidat.pole-emploi.fr/candidat/aides/mobilite/tableaudebord\r\n");
-	    aide.setIconeAide("AgepiIcon.svg");
-	    aide.setCouleurAide("background: #FFC6FF;");
 	} else if (Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(codeAide)) {
 	    aide.setCode(codeAide);
 	    aide.setNom(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
 	    aide.setDetail(this.getDescription(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNomFichierDetail()));
 	    aide.setLienExterne("");
-	    aide.setIconeAide("AssIcon.svg");
-	    aide.setCouleurAide("background: #f8cf8d;");
 	} else if (Aides.PRIME_ACTIVITE.getCode().equals(codeAide)) {
 	    aide.setCode(codeAide);
 	    aide.setNom(Aides.PRIME_ACTIVITE.getNom());
 	    aide.setDetail(this.getDescription(Aides.PRIME_ACTIVITE.getNomFichierDetail()));
 	    aide.setLienExterne("https://www.caf.fr/allocataires/mes-services-en-ligne/faire-une-demande-de-prestation");
-	    aide.setIconeAide("PaIcon.svg");
-	    aide.setCouleurAide("background: #BDB2FF;");
 	}
 	return aide;
     }
