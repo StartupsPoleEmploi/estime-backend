@@ -2,11 +2,16 @@ package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.clientsexternes.openfisca.AgepiApiClient;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
@@ -20,6 +25,7 @@ import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.Personne;
 
 /**
  * Classe permettant de calculer le montant de l'AGEPI (Aide à la garde d'enfants pour parent isolé).
@@ -57,6 +63,8 @@ public class AgepiUtile {
     
     @Autowired
     private SimulateurAidesUtile simulateurAidesUtile;
+
+    private AgepiApiClient agepiApiClient;
 
 
     /** Qui peut percevoir l'Agepi ?
@@ -119,8 +127,22 @@ public class AgepiUtile {
         return agepi;
     }
 
-    private float determinerMontantAgepi(MontantsParPalierAgepi montantPalierIntermediaire, MontantsParPalierAgepi montantPalierMax, DemandeurEmploi demandeurEmploi) {
+    private float determinerMontantAgepiApiExterne(MontantsParPalierAgepi montantPalierIntermediaire, MontantsParPalierAgepi montantPalierMax, DemandeurEmploi demandeurEmploi) throws JSONException {
+    	agepiApiClient = new AgepiApiClient();
+    	agepiApiClient.envoyerDonneesDemandeurEmploi(demandeurEmploi);
+    	return 0;
+    }
+    
+    private float determinerMontantAgepi(MontantsParPalierAgepi montantPalierIntermediaire, MontantsParPalierAgepi montantPalierMax, DemandeurEmploi demandeurEmploi){
         float nombreHeuresTravailleesSemaine = demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine();
+        try {
+        	this.agepiApiClient = new AgepiApiClient();
+        	System.out.println("======================");
+            System.out.println(this.agepiApiClient.creerJsonDemandeur(demandeurEmploi).toString());
+        		
+        } catch (JSONException e) {
+			e.printStackTrace();
+		}       
         if(nombreHeuresTravailleesSemaine < NBR_HEURE_PALIER_INTERMEDIAIRE) {
             int montantHorsMayotte = montantPalierIntermediaire.getMontant();
             return informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) ? calculerMontantMayotte(montantHorsMayotte) : montantHorsMayotte;
@@ -128,6 +150,7 @@ public class AgepiUtile {
             int montantHorsMayotte = montantPalierMax.getMontant();
             return informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) ? calculerMontantMayotte(montantHorsMayotte) : montantHorsMayotte;
         }
+                
     }
 
     /**

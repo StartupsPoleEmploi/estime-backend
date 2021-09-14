@@ -52,3 +52,6 @@ emploi-store-dev:
   
 #open fisca
 openfisca-api-uri: "http://openfisca-france:5000/calculate"
+
+#agepi api externe
+agepi-api-uri: "http://ex054-vipa-a1rmex.sii24.pole-emploi.intra/exp-aides/demande-agepi/simuler"
