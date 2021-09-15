@@ -57,7 +57,7 @@ public class PrimeActiviteUtile {
         if(detailAideOptional.isPresent()) {
             aidePrimeActivite.setDetail(detailAideOptional.get());            
         }
-	aidePrimeActivite.setMessageAlerte(MessagesInformatifs.PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA.getMessage());
+        aidePrimeActivite.setMessageAlerte(MessagesInformatifs.PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA.getMessage());
         aidePrimeActivite.setMontant(montantPrimeActivite); 
         aidePrimeActivite.setNom(Aides.PRIME_ACTIVITE.getNom());
         aidePrimeActivite.setOrganisme(Organismes.CAF.getNomCourt());
