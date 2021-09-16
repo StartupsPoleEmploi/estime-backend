@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
+import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
@@ -52,6 +53,15 @@ public class RessourcesFinancieresUtile {
             float revenusTravailleurIndependant1Mois = getBeneficesTravailleurIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres());
             montantTotal = montantTotal.add(BigDecimal.valueOf(revenusTravailleurIndependant1Mois));
         }
+        if(hasAllocationsFamiliales(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales()));
+        }
+        if(hasComplementFamilial(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getComplementFamilial()));
+        }
+        if(hasAllocationSoutienFamilial(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial()));
+        }
         return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
     }  
     
@@ -72,6 +82,13 @@ public class RessourcesFinancieresUtile {
 
     public float getBeneficesTravailleurIndependantSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
         return BigDecimal.valueOf(ressourcesFinancieres.getBeneficesTravailleurIndependantDernierExercice()).divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_UP).floatValue();        
+    }
+
+    public AidesFamiliales getAidesFamiliales(DemandeurEmploi demandeurEmploi) {
+	if (demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null) {
+	    return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales();
+	}
+	return null;
     }
 
     public boolean hasAllocationsCAF(DemandeurEmploi demandeurEmploi) {
@@ -156,6 +173,18 @@ public class RessourcesFinancieresUtile {
     
     public boolean hasTravailleAuCoursDerniersMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getHasTravailleAuCoursDerniersMois() != null && demandeurEmploi.getRessourcesFinancieres().getHasTravailleAuCoursDerniersMois().booleanValue();
+    }
+
+    public boolean hasAllocationsFamiliales(DemandeurEmploi demandeurEmploi) {
+	return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales() != 0;
+    }
+
+    public boolean hasComplementFamilial(DemandeurEmploi demandeurEmploi) {
+	return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getComplementFamilial() != 0;
+    }
+
+    public boolean hasAllocationSoutienFamilial(DemandeurEmploi demandeurEmploi) {
+	return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial() != 0;
     }
 
 }
