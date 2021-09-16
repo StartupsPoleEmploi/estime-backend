@@ -62,6 +62,9 @@ public class RessourcesFinancieresUtile {
         if(hasAllocationSoutienFamilial(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial()));
         }
+        if(hasPrestationAccueilJeuneEnfant(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant()));
+        }
         return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
     }  
     

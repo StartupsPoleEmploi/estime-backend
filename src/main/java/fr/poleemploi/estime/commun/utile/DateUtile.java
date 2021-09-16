@@ -18,9 +18,13 @@ public class DateUtile {
     public static final ZoneId ZONE_ID_FRANCE = ZoneId.of("Europe/Paris");
     public static final String DATE_FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
     public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
-    
+
     public int getNbrMoisEntreDeuxDates(Date dateDebut, Date dateFin) {
         return (int) ChronoUnit.MONTHS.between(dateDebut.toInstant().atZone(ZONE_ID_FRANCE).toLocalDate(), dateFin.toInstant().atZone(ZONE_ID_FRANCE).toLocalDate());
+    }
+    
+    public int getNbrMoisEntreDeuxLocalDates(LocalDate dateDebut, LocalDate dateFin) {
+        return (int) ChronoUnit.MONTHS.between(dateDebut, dateFin);
     }
     
     public LocalDate getDatePremierJourDuMois(LocalDate dateCourante) {

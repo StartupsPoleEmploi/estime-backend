@@ -10,6 +10,7 @@ import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AidesFamilialesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AllocationAdultesHandicapesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.PrimeActiviteUtile;
@@ -48,6 +49,9 @@ public class SimulateurAidesCAF {
     @Autowired
     private RsaAvecPrimeActiviteUtile rsaAvecPrimeActivite;
     
+    @Autowired
+    private SituationFamilialeUtile situationFamilialeUtile;
+    
     public void simuler(SimulationAides simulationAides, Map<String, Aide>  aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         if(isEligibleAidesCAF(demandeurEmploi)) {            
             if(beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
@@ -69,7 +73,7 @@ public class SimulateurAidesCAF {
             aidesFamilialesUtile.simulerComplementFamilial(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
         }
         if (isEligiblePrestationAccueilJeuneEnfant(demandeurEmploi, numeroMoisSimule)) {
-            aidesFamilialesUtile.simulerComplementFamilial(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+            aidesFamilialesUtile.simulerPrestationAccueilJeuneEnfant(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
         }
     }
     
@@ -93,6 +97,7 @@ public class SimulateurAidesCAF {
     }
     
     private boolean isEligiblePrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
-        return ressourcesFinancieresUtile.hasPrestationAccueilJeuneEnfant(demandeurEmploi);
+        return ressourcesFinancieresUtile.hasPrestationAccueilJeuneEnfant(demandeurEmploi)
+                && situationFamilialeUtile.hasEnfantMoinsDe3AnsPourMoisSimule(demandeurEmploi, numeroMoisSimule);
     }
 }
