@@ -18,21 +18,22 @@ import fr.poleemploi.estime.services.ressources.SimulationAides;
 
 @Component
 public class RsaAvecPrimeActiviteUtile {
-    
+
     @Autowired
     private OpenFiscaClient openFiscaClient;
-    
+
     @Autowired
     private AideUtile aideUtile;
-    
+
     @Autowired
     private PrimeActiviteUtile primeActiviteUtile;
 
-
-    public void simulerAides(SimulationAides simulationAides, Map<String, Aide>  aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simulerAides(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         int prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationRSA();
-        if(isRSAACalculer(numeroMoisSimule, prochaineDeclarationRSA)) {
-            calculerRsaEtPrimeActivite(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+        if (isRSAACalculer(numeroMoisSimule, prochaineDeclarationRSA)) {
+            reporterRsaEtPrimeActivite(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationRSA);
+        } else if (isRSAAVerser(numeroMoisSimule, prochaineDeclarationRSA)) {
+            calculerRsaEtPrimeActivite(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
         } else {
             reporterRsaEtPrimeActivite(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationRSA);
         }
@@ -42,55 +43,78 @@ public class RsaAvecPrimeActiviteUtile {
         Optional<Aide> rsaMoisPrecedent = getRSASimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
         if (rsaMoisPrecedent.isPresent()) {
             aidesPourCeMois.put(Aides.RSA.getCode(), rsaMoisPrecedent.get());
-        } else if(isEligiblePourReportRSA(prochaineDeclarationRSA, numeroMoisSimule)) {
+        } else if (isEligiblePourReportRSADeclare(prochaineDeclarationRSA, numeroMoisSimule)) {
             aidesPourCeMois.put(Aides.RSA.getCode(), getRSADeclare(demandeurEmploi));
         }
         Optional<Aide> primeActiviteMoisPrecedent = primeActiviteUtile.getPrimeActiviteMoisPrecedent(simulationAides, numeroMoisSimule);
         if (primeActiviteMoisPrecedent.isPresent()) {
-            aidesPourCeMois.put(Aides.PRIME_ACTIVITE.getCode(), primeActiviteMoisPrecedent.get());       
+            aidesPourCeMois.put(Aides.PRIME_ACTIVITE.getCode(), primeActiviteMoisPrecedent.get());
         }
     }
-    
+
     private void calculerRsaEtPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerRsaAvecPrimeActivite(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-        if(openFiscaRetourSimulation.getMontantRSA() > 0) {
+
+        if (openFiscaRetourSimulation.getMontantRSA() > 0) {
             Aide rsa = creerAideeRSA(openFiscaRetourSimulation.getMontantRSA(), false);
             aidesPourCeMois.put(rsa.getCode(), rsa);
         }
-        if(openFiscaRetourSimulation.getMontantPrimeActivite() > 0) {
+        if (openFiscaRetourSimulation.getMontantPrimeActivite() > 0) {
             Aide primeActivite = primeActiviteUtile.creerAidePrimeActivite(openFiscaRetourSimulation.getMontantPrimeActivite(), false);
             aidesPourCeMois.put(primeActivite.getCode(), primeActivite);
-        }        
+        }
     }
-    
+
     private Aide creerAideeRSA(float montantRSA, boolean isAideReportee) {
         Aide aideRSA = new Aide();
         aideRSA.setCode(Aides.RSA.getCode());
-        aideRSA.setMontant(montantRSA); 
+        aideRSA.setMontant(montantRSA);
         aideRSA.setNom(Aides.RSA.getNom());
         aideRSA.setOrganisme(Organismes.CAF.getNomCourt());
         aideRSA.setReportee(isAideReportee);
         return aideRSA;
     }
-    
-    private Aide getRSADeclare(DemandeurEmploi demandeurEmploi) {        
+
+    private Aide getRSADeclare(DemandeurEmploi demandeurEmploi) {
         float montantDeclare = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA();
-        return creerAideeRSA(montantDeclare, true);        
+        return creerAideeRSA(montantDeclare, true);
     }
-    
+
     private Optional<Aide> getRSASimuleeMoisPrecedent(SimulationAides simulationAides, int numeroMoisSimule) {
         int moisNMoins1 = numeroMoisSimule - 1;
         return aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.RSA.getCode(), moisNMoins1);
     }
-    
-    private boolean isEligiblePourReportRSA(int prochaineDeclarationRSA, int numeroMoisSimule) {
-        return (numeroMoisSimule == 1 && (prochaineDeclarationRSA == 0 || prochaineDeclarationRSA == 2 || prochaineDeclarationRSA == 3)) 
-                || (numeroMoisSimule == 2 && (prochaineDeclarationRSA == 0 || prochaineDeclarationRSA == 3)) ;
+
+    private boolean isEligiblePourReportRSADeclare(int prochaineDeclarationRSA, int numeroMoisSimule) {
+        boolean eligible = false;
+        if (prochaineDeclarationRSA == 0 || prochaineDeclarationRSA == 3)
+            eligible = numeroMoisSimule <= 1;
+        else if (prochaineDeclarationRSA == 1)
+            eligible = numeroMoisSimule <= 2;
+        else eligible = numeroMoisSimule >= 3;
+        
+        return eligible;
     }
-    
+
+    /**
+     * Fonction permettant de déterminer si le RSA doit être calculé ce mois-ci
+     * 
+     * @param numeroMoisSimule
+     * @param prochaineDeclarationRSA
+     * @return
+     */
     private boolean isRSAACalculer(int numeroMoisSimule, int prochaineDeclarationRSA) {
-        return ((prochaineDeclarationRSA == numeroMoisSimule)
-                || (prochaineDeclarationRSA == numeroMoisSimule-3)
-                || (prochaineDeclarationRSA == numeroMoisSimule-6));       
+        return ((prochaineDeclarationRSA == numeroMoisSimule) || (prochaineDeclarationRSA == numeroMoisSimule - 3) || (prochaineDeclarationRSA == numeroMoisSimule - 6));
+    }
+
+    /**
+     * Fonction permettant de déterminer si on a calculé le montant du RSA le mois précédent et s'il doit être versé ce mois-ci
+     * 
+     * @param numeroMoisSimule
+     * @param prochaineDeclarationRSA
+     * @return
+     */
+    private boolean isRSAAVerser(int numeroMoisSimule, int prochaineDeclarationRSA) {
+        return ((prochaineDeclarationRSA == numeroMoisSimule - 1) || (prochaineDeclarationRSA == numeroMoisSimule - 4));
     }
 }
