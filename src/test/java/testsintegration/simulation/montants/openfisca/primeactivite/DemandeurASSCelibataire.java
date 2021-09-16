@@ -321,7 +321,7 @@ class DemandeurASSCelibataire extends CommunTests {
 
         //TODO montant : écart de 65€ avec CAF
         //Alors le montant de la prime d'activité pour le 11/2020 est de 65€ (résultat simulateur CAF : 0€)
-        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(65);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(80);
     }
 
     @Test

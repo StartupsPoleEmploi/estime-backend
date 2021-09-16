@@ -64,7 +64,7 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(4);
+            assertThat(simulation.getMesAides().size()).isEqualTo(5);
             assertThat(simulation.getMesAides().get(Aides.AGEPI.getCode())).satisfies(agepi -> {
                 assertThat(agepi.getMontant()).isEqualTo(400);
             });
@@ -78,8 +78,11 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ass).isNotNull();
                 assertThat(ass.getMontant()).isEqualTo(506);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
+
         // Alors les prestations du second mois 12/2020 sont :
         // AAH 900€
         // ASS 523
@@ -89,7 +92,7 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(900);
             });
@@ -97,8 +100,11 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ass).isNotNull();
                 assertThat(ass.getMontant()).isEqualTo(523);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
+
         // Alors les prestations du troisième mois 01/2021 sont :
         // AAH 900€
         SimulationMensuelle simulationMois3 = simulationAides.getSimulationsMensuelles().get(2);
@@ -107,12 +113,15 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(1);
+            assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(ass -> {
                 assertThat(ass.getMontant()).isEqualTo(900);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
+
         // Alors les prestations du quatrième mois 02/2021 sont :
         // AAH 180€ (dégressivité : 900 - 60% * 1200 = 180)
         // Prime d'activité 64€ (Simulateur CAF : 52€)
@@ -122,15 +131,18 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(64);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
+
         // Alors les prestations du cinquième mois 03/2021 sont :
         // AAH : 180€ (report AAH dégressif)
         // Prime d'activité 64€
@@ -140,12 +152,15 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(64);
+            });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
             });
         });
         // Alors les prestations du sixième mois 04/2021 sont :
@@ -157,12 +172,15 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(64);
+            });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
             });
         });
     }
@@ -196,7 +214,7 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(4);
+            assertThat(simulation.getMesAides().size()).isEqualTo(5);
             assertThat(simulation.getMesAides().get(Aides.AGEPI.getCode())).satisfies(agepi -> {
                 assertThat(agepi.getMontant()).isEqualTo(400);
             });
@@ -210,8 +228,11 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(ass).isNotNull();
                 assertThat(ass.getMontant()).isEqualTo(506);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
+
         // Alors les prestations du second mois 12/2020 sont :
         // AAH : 900€
         SimulationMensuelle simulationMois2 = simulationAides.getSimulationsMensuelles().get(1);
@@ -220,12 +241,15 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(1);
+            assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(900);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
+
         // Alors les prestations du troisième mois 01/2021 sont :
         // AAH : 900€
         // Prime d'activité : 64€ (Simulateur CAF : 52€)
@@ -235,15 +259,18 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(ass -> {
                 assertThat(ass.getMontant()).isEqualTo(900);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(64);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
+
         // Alors les prestations du quatrième mois 02/2021 sont :
         // AAH : 180€ (dégressivité : 900 - 60% * 1200 = 180)
         // Prime d'activité : 64€
@@ -253,15 +280,18 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(64);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
+
         // Alors les prestations du cinquième mois 03/2021 sont :
         // AAH : 180€ (report AAH dégressif)
         // Prime d'activité : 64€
@@ -271,16 +301,19 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(64);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
-        //TODO montant : écart de 32€ avec CAF
+
+        // TODO montant : écart de 32€ avec CAF
         // Alors les prestations du sixième mois 04/2021 sont :
         // AAH : 180€ (report AAH dégressif)
         // Prime d'activité : 355€ (Simulateur CAF : 323€)
@@ -290,19 +323,21 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(355);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
     }
 
     @Test
-    void simulerPopulationAah3MoisSur6Ass3MoisSur3() throws ParseException, JsonIOException, JsonSyntaxException,
-    FileNotFoundException, URISyntaxException, JSONException {
+    void simulerPopulationAah3MoisSur6Ass3MoisSur3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
         // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
         // enfant à charge de 9ans, af = 90€
@@ -314,7 +349,7 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 1038, 800));
-        
+
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks(demandeurEmploi);
         SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
@@ -329,19 +364,21 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(3);
+            assertThat(simulation.getMesAides().size()).isEqualTo(4);
             assertThat(simulation.getMesAides().get(Aides.AGEPI.getCode())).satisfies(agepi -> {
                 assertThat(agepi.getMontant()).isEqualTo(400);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
                 assertThat(aideMobilite.getMontant()).isEqualTo(504);
             });
-            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()))
-            .satisfies(aah -> {
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(900);
             });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
+            });
         });
-        
+
         // Alors les prestations du second mois 12/2020 sont :
         // AAH : 900€
         // Prime d'activité : 64€ (Simulateur CAF : 52€)
@@ -351,13 +388,15 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
-            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()))
-            .satisfies(aah -> {
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(900);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(64);
+            });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
             });
         });
         // Alors les prestations du troisième mois 01/2021 sont :
@@ -369,13 +408,15 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
-            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()))
-            .satisfies(ass -> {
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(ass -> {
                 assertThat(ass.getMontant()).isEqualTo(900);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(64);
+            });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
             });
         });
         // Alors les prestations du quatrième mois 02/2021 sont :
@@ -387,13 +428,15 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
-            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()))
-            .satisfies(aah -> {
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(64);
+            });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
             });
         });
         // Alors les prestations du cinquième mois 03/2021 sont :
@@ -405,13 +448,15 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
-            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()))
-            .satisfies(aah -> {
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(274);
+            });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
             });
         });
         // Alors les prestations du sixième mois 04/2021 sont :
@@ -423,13 +468,15 @@ class DemandeurAahAss3MoisTravaillesAvantSimulation extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
-            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()))
-            .satisfies(aah -> {
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
             });
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
                 assertThat(ppa.getMontant()).isEqualTo(274);
+            });
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+                assertThat(asf.getMontant()).isEqualTo(117);
             });
         });
     }
