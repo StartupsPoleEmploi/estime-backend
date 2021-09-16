@@ -89,11 +89,11 @@ public class SimulateurAidesCAF {
     }
 
     private boolean isEligibleAllocationSoutienFamilial(DemandeurEmploi demandeurEmploi) {
-        return ressourcesFinancieresUtile.hasComplementFamilial(demandeurEmploi);
+        return ressourcesFinancieresUtile.hasAllocationSoutienFamilial(demandeurEmploi);
     }
 
     private boolean isEligibleComplementFamilial(DemandeurEmploi demandeurEmploi) {
-        return ressourcesFinancieresUtile.hasAllocationSoutienFamilial(demandeurEmploi);
+        return ressourcesFinancieresUtile.hasComplementFamilial(demandeurEmploi);
     }
     
     private boolean isEligiblePrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {

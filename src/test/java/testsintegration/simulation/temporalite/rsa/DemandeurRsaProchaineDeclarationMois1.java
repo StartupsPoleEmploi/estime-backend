@@ -80,7 +80,7 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
         //Alors les prestations du premier mois 11/2020 sont :
         //RSA : 497€ (simulateur CAF : 497€)
         SimulationMensuelle simulationMois1 = simulationAides.getSimulationsMensuelles().get(0);
-        assertThat(simulationMois1).satisfies(simulation -> { 
+        assertThat(simulationMois1).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
@@ -201,7 +201,7 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
         //Alors les prestations du premier mois 11/2020 sont :
         //RSA : 175€ (simulateur CAF : 149€), PA : 431 (simulateur CAF : 452€)
         SimulationMensuelle simulationMois1 = simulationAides.getSimulationsMensuelles().get(0);
-        assertThat(simulationMois1).satisfies(simulation -> { 
+        assertThat(simulationMois1).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
