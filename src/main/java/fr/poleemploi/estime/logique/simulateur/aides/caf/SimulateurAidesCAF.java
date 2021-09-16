@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
@@ -33,6 +34,9 @@ public class SimulateurAidesCAF {
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
     
     @Autowired
+    private DateUtile dateUtile;
+    
+    @Autowired
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
     
     @Autowired
@@ -55,15 +59,18 @@ public class SimulateurAidesCAF {
                 primeActivite.simulerAide(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);                
             }
         }
-	if (isEligibleAllocationsFamiliales(demandeurEmploi)) {
-	    aidesFamilialesUtile.simulerAllocationsFamiliales(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
-	}
-	if (isEligibleAllocationSoutienFamilial(demandeurEmploi)) {
-	    aidesFamilialesUtile.simulerAllocationSoutienFamilial(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
-	}
-	if (isEligibleComplementFamilial(demandeurEmploi)) {
-	    aidesFamilialesUtile.simulerComplementFamilial(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
-	}
+    	if (isEligibleAllocationsFamiliales(demandeurEmploi)) {
+    	    aidesFamilialesUtile.simulerAllocationsFamiliales(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    	}
+    	if (isEligibleAllocationSoutienFamilial(demandeurEmploi)) {
+    	    aidesFamilialesUtile.simulerAllocationSoutienFamilial(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    	}
+        if (isEligibleComplementFamilial(demandeurEmploi)) {
+            aidesFamilialesUtile.simulerComplementFamilial(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+        }
+        if (isEligiblePrestationAccueilJeuneEnfant(demandeurEmploi, numeroMoisSimule)) {
+            aidesFamilialesUtile.simulerComplementFamilial(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+        }
     }
     
     private boolean isEligibleAidesCAF(DemandeurEmploi demandeurEmploi) {
@@ -74,14 +81,18 @@ public class SimulateurAidesCAF {
     }
 
     private boolean isEligibleAllocationsFamiliales(DemandeurEmploi demandeurEmploi) {
-	return ressourcesFinancieresUtile.hasAllocationsFamiliales(demandeurEmploi);
+        return ressourcesFinancieresUtile.hasAllocationsFamiliales(demandeurEmploi);
     }
 
     private boolean isEligibleAllocationSoutienFamilial(DemandeurEmploi demandeurEmploi) {
-	return ressourcesFinancieresUtile.hasComplementFamilial(demandeurEmploi);
+        return ressourcesFinancieresUtile.hasComplementFamilial(demandeurEmploi);
     }
 
     private boolean isEligibleComplementFamilial(DemandeurEmploi demandeurEmploi) {
-	return ressourcesFinancieresUtile.hasAllocationSoutienFamilial(demandeurEmploi);
+        return ressourcesFinancieresUtile.hasAllocationSoutienFamilial(demandeurEmploi);
+    }
+    
+    private boolean isEligiblePrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+        return ressourcesFinancieresUtile.hasPrestationAccueilJeuneEnfant(demandeurEmploi);
     }
 }

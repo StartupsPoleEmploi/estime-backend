@@ -176,15 +176,19 @@ public class RessourcesFinancieresUtile {
     }
 
     public boolean hasAllocationsFamiliales(DemandeurEmploi demandeurEmploi) {
-	return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales() != 0;
+        return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales() != 0;
     }
 
     public boolean hasComplementFamilial(DemandeurEmploi demandeurEmploi) {
-	return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getComplementFamilial() != 0;
+        return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getComplementFamilial() != 0;
     }
 
     public boolean hasAllocationSoutienFamilial(DemandeurEmploi demandeurEmploi) {
-	return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial() != 0;
+        return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial() != 0;
+    }
+    
+    public boolean hasPrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi) {
+        return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant() != 0;
     }
 
 }
