@@ -13,22 +13,22 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 @Component
 public class AidesFamilialesUtile {
 
-    public void simulerAllocationSoutienFamilial(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simulerAllocationSoutienFamilial(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
         float montantAllocationSoutienFamilial= demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial();
         ajouterAllocationSoutienFamilial(aidesPourCeMois, montantAllocationSoutienFamilial);
     }
     
-    public void simulerAllocationsFamiliales(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simulerAllocationsFamiliales(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
         float montantAllocationsFamiliales = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales();
         ajouterAllocationsFamiliales(aidesPourCeMois, montantAllocationsFamiliales);
     }
     
-    public void simulerComplementFamilial(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simulerComplementFamilial(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
         float montantComplementFamilial = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getComplementFamilial();
         ajouterComplementFamilial(aidesPourCeMois, montantComplementFamilial);
     }
 
-    public void simulerPrestationAccueilJeuneEnfant(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simulerPrestationAccueilJeuneEnfant(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
         float montantPrestationAccueilJeuneEnfant = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant();
         ajouterPrestationAccueilJeuneEnfant(aidesPourCeMois, montantPrestationAccueilJeuneEnfant);
     }

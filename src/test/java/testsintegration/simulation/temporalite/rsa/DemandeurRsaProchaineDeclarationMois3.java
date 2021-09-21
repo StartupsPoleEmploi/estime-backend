@@ -112,8 +112,8 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
-            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(118);
+            assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+                assertThat(rsa.getMontant()).isEqualTo(500);
             });
         });
         // Alors les prestations du quatrième mois 02/2021 sont :
@@ -152,7 +152,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(174);
+                assertThat(ppa.getMontant()).isEqualTo(118);
             });
         });
     }
@@ -251,12 +251,9 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(4);
+            assertThat(simulation.getMesAides().size()).isEqualTo(3);
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(32);
-            });
-            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(319);
+                assertThat(rsa.getMontant()).isEqualTo(350);
             });
             assertThat(simulation.getMesAides().get(Aides.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
                 assertThat(af.getMontant()).isEqualTo(130);
@@ -317,9 +314,12 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(3);
-            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(367);
+            assertThat(simulation.getMesAides().size()).isEqualTo(4);
+            assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+                assertThat(rsa.getMontant()).isEqualTo(32);
+            });
+            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
+                assertThat(rsa.getMontant()).isEqualTo(319);
             });
             assertThat(simulation.getMesAides().get(Aides.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
                 assertThat(af.getMontant()).isEqualTo(130);
@@ -396,12 +396,9 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("10");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
-            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(270);
-            });
+            assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(54);
+                assertThat(rsa.getMontant()).isEqualTo(380);
             });
         });
         // Alors les prestations du quatrième mois 11/2021 sont :
@@ -446,10 +443,10 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(294);
+                assertThat(ppa.getMontant()).isEqualTo(270);
             });
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(16);
+                assertThat(rsa.getMontant()).isEqualTo(54);
             });
         });
     }
@@ -521,12 +518,9 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("10");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
             });
-            assertThat(simulation.getMesAides().size()).isEqualTo(2);
-            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(196);
-            });
+            assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(176);
+                assertThat(rsa.getMontant()).isEqualTo(500);
             });
         });
         // Alors les prestations du quatrième mois 11/2021 sont :
@@ -571,10 +565,10 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(294);
+                assertThat(ppa.getMontant()).isEqualTo(196);
             });
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(16);
+                assertThat(rsa.getMontant()).isEqualTo(176);
             });
         });
     }

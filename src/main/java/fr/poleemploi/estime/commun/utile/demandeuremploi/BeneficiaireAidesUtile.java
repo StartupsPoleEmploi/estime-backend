@@ -76,4 +76,16 @@ public class BeneficiaireAidesUtile {
     public boolean isBeneficiaireRSA(DemandeurEmploi demandeurEmploi) {
         return isBeneficiaireAidePEouCAF(demandeurEmploi) && demandeurEmploi.getBeneficiaireAides().isBeneficiaireRSA();
     }
+    
+    public boolean isBeneficiaireAidesFamiliales(DemandeurEmploi demandeurEmploi) {
+        return demandeurEmploi.getRessourcesFinancieres() != null 
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null 
+                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales() != null
+                && (
+                        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales() > 0
+                        || demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial() > 0
+                        || demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getComplementFamilial() > 0
+                        || demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant() > 0
+                    );
+    }
 }

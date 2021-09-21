@@ -91,8 +91,9 @@ public class RsaAvecPrimeActiviteUtile {
             eligible = numeroMoisSimule <= 1;
         else if (prochaineDeclarationRSA == 1)
             eligible = numeroMoisSimule <= 2;
-        else eligible = numeroMoisSimule >= 3;
-        
+        else
+            eligible = numeroMoisSimule <= 3;
+
         return eligible;
     }
 
