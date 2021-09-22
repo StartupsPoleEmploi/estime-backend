@@ -35,6 +35,7 @@ public class RsaAvecPrimeActiviteUtile {
         } else if (isRSAAVerser(numeroMoisSimule, prochaineDeclarationRSA)) {
             calculerRsaEtPrimeActivite(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
         } else {
+            System.out.println(numeroMoisSimule);
             reporterRsaEtPrimeActivite(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationRSA);
         }
     }
@@ -54,7 +55,7 @@ public class RsaAvecPrimeActiviteUtile {
 
     private void calculerRsaEtPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerRsaAvecPrimeActivite(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-
+        
         if (openFiscaRetourSimulation.getMontantRSA() > 0) {
             Aide rsa = creerAideeRSA(openFiscaRetourSimulation.getMontantRSA(), false);
             aidesPourCeMois.put(rsa.getCode(), rsa);
@@ -86,15 +87,7 @@ public class RsaAvecPrimeActiviteUtile {
     }
 
     private boolean isEligiblePourReportRSADeclare(int prochaineDeclarationRSA, int numeroMoisSimule) {
-        boolean eligible = false;
-        if (prochaineDeclarationRSA == 0 || prochaineDeclarationRSA == 3)
-            eligible = numeroMoisSimule <= 1;
-        else if (prochaineDeclarationRSA == 1)
-            eligible = numeroMoisSimule <= 2;
-        else
-            eligible = numeroMoisSimule <= 3;
-
-        return eligible;
+        return numeroMoisSimule <= prochaineDeclarationRSA;
     }
 
     /**
@@ -116,6 +109,9 @@ public class RsaAvecPrimeActiviteUtile {
      * @return
      */
     private boolean isRSAAVerser(int numeroMoisSimule, int prochaineDeclarationRSA) {
-        return ((prochaineDeclarationRSA == numeroMoisSimule - 1) || (prochaineDeclarationRSA == numeroMoisSimule - 4));
+        return (((prochaineDeclarationRSA == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
+                || ((prochaineDeclarationRSA == 1) && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
+                || ((prochaineDeclarationRSA == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
+                || ((prochaineDeclarationRSA == 3) && (numeroMoisSimule == 4)));
     }
 }
