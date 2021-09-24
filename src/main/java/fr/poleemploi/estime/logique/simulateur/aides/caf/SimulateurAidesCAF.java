@@ -12,8 +12,9 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUt
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AidesFamilialesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AllocationAdultesHandicapesUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.PrimeActiviteAvecAidesFamilialesUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.PrimeActiviteUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.PrimeActiviteAAHUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.PrimeActiviteAidesFamilialesUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.PrimeActiviteASSUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.RsaAvecPrimeActiviteUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -38,11 +39,14 @@ public class SimulateurAidesCAF {
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
     @Autowired
-    private PrimeActiviteUtile primeActivite;
+    private PrimeActiviteASSUtile primeActiviteASS;
+
+    @Autowired
+    private PrimeActiviteAAHUtile primeActiviteAAH;
     
     @Autowired
-    private PrimeActiviteAvecAidesFamilialesUtile primeActiviteAvecAidesFamiliales;
-
+    private PrimeActiviteAidesFamilialesUtile primeActiviteAidesFamiliales;
+    
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
@@ -57,12 +61,13 @@ public class SimulateurAidesCAF {
             if (beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
                 allocationAdultesHandicapes.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
             }
+            if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi) ) {
+                primeActiviteASS.simulerAide(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+            } else if (beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
+                primeActiviteAAH.simulerAide(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+            }
             if (beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
                 rsaAvecPrimeActivite.simulerAides(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
-            } else if (beneficiaireAidesUtile.isBeneficiaireAidesFamiliales(demandeurEmploi)) {
-                primeActiviteAvecAidesFamiliales.simulerAide(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
-            } else {
-                primeActivite.simulerAide(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
             }
             if (isEligibleAllocationsFamiliales(demandeurEmploi)) {
                 aidesFamilialesUtile.simulerAllocationsFamiliales(aidesPourCeMois, demandeurEmploi);

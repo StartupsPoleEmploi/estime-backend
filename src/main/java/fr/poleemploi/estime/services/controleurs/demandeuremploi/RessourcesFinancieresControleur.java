@@ -63,11 +63,11 @@ public class RessourcesFinancieresControleur {
         if(aidesCAF.getAllocationRSA() <= 0) {
             throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationMensuelleNetRSA"));
         }
-        if(aidesCAF.getProchaineDeclarationRSA() == null) {
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "prochaineDeclarationRSA dans allocationsCAF de RessourcesFinancieres de DemandeurEmploi"));
+        if(aidesCAF.getProchaineDeclarationTrimestrielle() == null) {
+            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "prochaineDeclarationTrimestrielle dans allocationsCAF de RessourcesFinancieres de DemandeurEmploi"));
         }
-        if(aidesCAF.getProchaineDeclarationRSA() < 0 || aidesCAF.getProchaineDeclarationRSA() >= 4) { 
-            throw new BadRequestException(String.format(BadRequestMessages.VALEUR_INCORRECT_PROCHAINE_DECLARATION_RSA.getMessage(), aidesCAF.getProchaineDeclarationRSA()));
+        if(aidesCAF.getProchaineDeclarationTrimestrielle() < 0 || aidesCAF.getProchaineDeclarationTrimestrielle() >= 4) { 
+            throw new BadRequestException(String.format(BadRequestMessages.VALEUR_INCORRECT_PROCHAINE_DECLARATION_TRIMESTRIELLE.getMessage(), aidesCAF.getProchaineDeclarationTrimestrielle()));
         }
         controlerHasTravailleAvantSimulation(ressourcesFinancieres);        
     }

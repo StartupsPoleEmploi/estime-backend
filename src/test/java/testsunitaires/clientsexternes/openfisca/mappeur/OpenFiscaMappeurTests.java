@@ -331,7 +331,7 @@ class OpenFiscaMappeurTests {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         AidesCAF aidesCAF = new AidesCAF();
         aidesCAF.setAllocationRSA(400f);
-        aidesCAF.setProchaineDeclarationRSA(3);
+        aidesCAF.setProchaineDeclarationTrimestrielle(3);
         ressourcesFinancieres.setAidesCAF(aidesCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         

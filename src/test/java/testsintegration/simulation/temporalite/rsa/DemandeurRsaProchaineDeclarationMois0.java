@@ -35,7 +35,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
     @Autowired
     private IndividuService individuService;
 
-    private static int PROCHAINE_DECLARATION_RSA = 0;
+    private static int PROCHAINE_DECLARATION_TRIMESTRIELLE = 0;
 
     @Configuration
     @ComponentScan({ "utile.tests", "fr.poleemploi.estime" })
@@ -66,7 +66,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationsLogement(utileTests.creerallocationsLogement(310f));
 
@@ -176,7 +176,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(710f);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationsLogement(utileTests.creerallocationsLogement(370f));
 
@@ -287,7 +287,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(0, 0, 508, 380, 0, 0));
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationsLogement(utileTests.creerallocationsLogement(310f));
@@ -408,7 +408,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationRSA(PROCHAINE_DECLARATION_RSA);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 508, 380, 508, 380));
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationsLogement(utileTests.creerallocationsLogement(310f));

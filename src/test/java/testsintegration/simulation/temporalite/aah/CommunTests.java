@@ -41,7 +41,7 @@ public class CommunTests {
     @SpyBean
     private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
     
-    protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
+    protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
         
         boolean isEnCouple = false;
         int nbEnfant = 1;
@@ -66,7 +66,7 @@ public class CommunTests {
         aidesFamiliales.setComplementFamilial(0);   
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
-        
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
 
         return demandeurEmploi;
     }

@@ -41,6 +41,8 @@ public class CommunTests {
     @SpyBean
     private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
 
+    private static int PROCHAINE_DECLARATION_TRIMESTRIELLE = 0;
+    
     protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
 
         boolean isEnCouple = false;
@@ -69,6 +71,8 @@ public class CommunTests {
         aidesFamiliales.setComplementFamilial(0);   
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
+
         
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));

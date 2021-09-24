@@ -70,14 +70,14 @@ public class PeriodeTravailleeAvantSimulationUtile {
     }
 
     public Salaire getSalaireAvantPeriodeSimulationDemandeurRSA(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
-        Integer prochaineDeclarationRSA = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationRSA();
-        if((prochaineDeclarationRSA == 3 || prochaineDeclarationRSA == 0) && numeroMoisPeriodeOpenfisca == 0) {
+        Integer prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+        if((prochaineDeclarationTrimestrielle == 3 || prochaineDeclarationTrimestrielle == 0) && numeroMoisPeriodeOpenfisca == 0) {
             return getSalaireAvantSimulation(demandeurEmploi, 1);            
         }        
-        if(prochaineDeclarationRSA == 1) {                
+        if(prochaineDeclarationTrimestrielle == 1) {                
             return getSalaireDemandeurRsaProchaineDeclaration2MoisApresSimulation(demandeurEmploi,numeroMoisPeriodeOpenfisca);
         }
-        if(prochaineDeclarationRSA == 2) {
+        if(prochaineDeclarationTrimestrielle == 2) {
             return getSalaireDemandeurRsaProchaineDeclaration3MoisApresSimulation(demandeurEmploi,numeroMoisPeriodeOpenfisca);               
         }
         return salaireUtile.getSalaireMontantZero();

@@ -12,7 +12,7 @@ public enum BadRequestMessages {
 	SALAIRE_MENSUEL_BRUT_ZERO("Le salaire mensuel brut ne peut pas être égale à 0"),
 	SALAIRE_MENSUEL_NET_ZERO("Le salaire mensuel net ne peut pas être égale à 0"),
     TYPE_CONTRAT_INCORRECT("Le type de contrat du futur travail du demandeur d'emploi doit avoir pour valeur : %s"),
-    VALEUR_INCORRECT_PROCHAINE_DECLARATION_RSA("La valeur de prochaine déclaration RSA est incorrect (inférieure à 0 ou supérieur à 3) : %s");
+    VALEUR_INCORRECT_PROCHAINE_DECLARATION_TRIMESTRIELLE("La valeur de prochaine déclaration trimestrielle est incorrect (inférieure à 0 ou supérieur à 3) : %s");
     
 	private String message;
 	
