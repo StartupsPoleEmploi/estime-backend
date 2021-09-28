@@ -65,6 +65,9 @@ public class RessourcesFinancieresUtile {
         if(hasPrestationAccueilJeuneEnfant(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant()));
         }
+        if(hasPensionsAlimentaires(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer()));
+        }
         return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
     }  
     
@@ -143,13 +146,6 @@ public class RessourcesFinancieresUtile {
                 && ressourcesFinancieres.getBeneficesTravailleurIndependantDernierExercice() != null
                 && ressourcesFinancieres.getBeneficesTravailleurIndependantDernierExercice() > 0;
     }
-
-    public boolean hasPensionsAlimentaires(DemandeurEmploi demandeurEmploi) {
-        return demandeurEmploi.getRessourcesFinancieres() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales() != null 
-                && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer() > 0;
-    }
     
     public boolean hasPensionInvalidite(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getRessourcesFinancieres() != null 
@@ -189,9 +185,13 @@ public class RessourcesFinancieresUtile {
     public boolean hasAllocationSoutienFamilial(DemandeurEmploi demandeurEmploi) {
         return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial() != 0;
     }
-    
+
     public boolean hasPrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi) {
         return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant() != 0;
+    }
+    
+    public boolean hasPensionsAlimentaires(DemandeurEmploi demandeurEmploi) {
+        return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer() != 0;
     }
 
 }

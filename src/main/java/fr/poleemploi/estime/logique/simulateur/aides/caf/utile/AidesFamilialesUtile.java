@@ -33,6 +33,11 @@ public class AidesFamilialesUtile {
         ajouterPrestationAccueilJeuneEnfant(aidesPourCeMois, montantPrestationAccueilJeuneEnfant);
     }
 
+    public void simulerPensionsAlimentaires(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
+        float montantPensionsAlimentaires = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer();
+        ajouterPensionsAlimentaires(aidesPourCeMois, montantPensionsAlimentaires);
+    }
+
     private void ajouterAllocationSoutienFamilial(Map<String, Aide> aidesPourCeMois, float montant) {
         Aide allocationSoutienFamilial = new Aide();
         allocationSoutienFamilial.setCode(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode());
@@ -75,5 +80,16 @@ public class AidesFamilialesUtile {
         prestationAccueilJeuneEnfant.setOrganisme(Organismes.CAF.getNom());
         prestationAccueilJeuneEnfant.setReportee(true);
         aidesPourCeMois.put(Aides.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode(), prestationAccueilJeuneEnfant);
+    }
+    
+    private void ajouterPensionsAlimentaires(Map<String, Aide> aidesPourCeMois, float montant) {
+        Aide pensionsAlimentaires = new Aide();
+        pensionsAlimentaires.setCode(Aides.PENSIONS_ALIMENTAIRES.getCode());
+        pensionsAlimentaires.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+        pensionsAlimentaires.setMontant(montant);
+        pensionsAlimentaires.setNom(Aides.PENSIONS_ALIMENTAIRES.getNom());
+        pensionsAlimentaires.setOrganisme(Organismes.CAF.getNom());
+        pensionsAlimentaires.setReportee(true);
+        aidesPourCeMois.put(Aides.PENSIONS_ALIMENTAIRES.getCode(), pensionsAlimentaires);
     }
 }

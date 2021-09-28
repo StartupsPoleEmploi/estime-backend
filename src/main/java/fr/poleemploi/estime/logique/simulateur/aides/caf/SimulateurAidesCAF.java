@@ -81,6 +81,9 @@ public class SimulateurAidesCAF {
             if (isEligiblePrestationAccueilJeuneEnfant(demandeurEmploi, numeroMoisSimule)) {
                 aidesFamilialesUtile.simulerPrestationAccueilJeuneEnfant(aidesPourCeMois, demandeurEmploi);
             } 
+            if (isEligiblePensionAlimentaire(demandeurEmploi)) {
+                aidesFamilialesUtile.simulerPensionsAlimentaires(aidesPourCeMois, demandeurEmploi);
+            } 
         }
     }
 
@@ -105,5 +108,9 @@ public class SimulateurAidesCAF {
 
     private boolean isEligiblePrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
         return ressourcesFinancieresUtile.hasPrestationAccueilJeuneEnfant(demandeurEmploi) && situationFamilialeUtile.hasEnfantMoinsDe3AnsPourMoisSimule(demandeurEmploi, numeroMoisSimule);
+    }
+    
+    private boolean isEligiblePensionAlimentaire(DemandeurEmploi demandeurEmploi) {
+        return ressourcesFinancieresUtile.hasPensionsAlimentaires(demandeurEmploi);
     }
 }

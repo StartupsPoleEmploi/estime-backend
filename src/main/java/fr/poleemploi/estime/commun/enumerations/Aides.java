@@ -12,6 +12,7 @@ public enum Aides {
     COMPLEMENT_FAMILIAL("CF", "Complément Familial", ""),
     PRIME_ACTIVITE("PA", "Prime d'Activité", "prime-activite.html"),
     PENSION_INVALIDITE("PI", "Pension d'Invalidité",""),
+    PENSIONS_ALIMENTAIRES("PAF", "Pensions Alimentaires du Foyer",""),
     PRESTATION_ACCUEIL_JEUNE_ENFANT("PAJE", "Prestation d'Accueil du Jeune Enfant",""),
     RSA("RSA", "Revenu de Solidarité Active","");
     
