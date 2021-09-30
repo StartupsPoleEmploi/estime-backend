@@ -24,6 +24,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
+import fr.poleemploi.estime.services.ressources.AidesLogement;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -85,12 +86,62 @@ class OpenFiscaMappeurTests {
         aidesFamiliales.setComplementFamilial(0);
         aidesFamiliales.setPrestationAccueilJeuneEnfant(170f);
         aidesCAF.setAidesFamiliales(aidesFamiliales);
-        AllocationsLogement allocationsLogement = new AllocationsLogement();
-        allocationsLogement.setMoisN(385);
-        allocationsLogement.setMoisNMoins1(380);
-        allocationsLogement.setMoisNMoins2(360);
-        allocationsLogement.setMoisNMoins3(357);
-        aidesCAF.setAllocationsLogement(allocationsLogement);
+        AidesLogement aidesLogement = new AidesLogement();
+        AllocationsLogement aidePersonnaliseeLogement = new AllocationsLogement();        
+        aidePersonnaliseeLogement.setMoisN(385);
+        aidePersonnaliseeLogement.setMoisNMoins1(380);
+        aidePersonnaliseeLogement.setMoisNMoins2(360);
+        aidePersonnaliseeLogement.setMoisNMoins3(357);
+        aidesLogement.setAidePersonnaliseeLogement(aidePersonnaliseeLogement);
+        aidesCAF.setAidesLogement(aidesLogement);
+        ressourcesFinancieres.setAidesCAF(aidesCAF);
+        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+        
+        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        
+        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+    }
+
+    @Test
+    void mapDemandeurAlfToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+        
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTests/demandeur-avec-alf.json");
+
+        DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
+        
+        FuturTravail futurTravail = new FuturTravail();
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
+        demandeurEmploi.setFuturTravail(futurTravail);
+        
+        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+        
+        SituationFamiliale situationFamiliale = new SituationFamiliale();
+        situationFamiliale.setIsEnCouple(false);
+        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        
+        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationSoutienFamilial(110);
+        aidesFamiliales.setAllocationsFamiliales(0);
+        aidesFamiliales.setComplementFamilial(0);
+        aidesFamiliales.setPrestationAccueilJeuneEnfant(170f);
+        aidesCAF.setAidesFamiliales(aidesFamiliales);
+        AidesLogement aidesLogement = new AidesLogement();
+        AllocationsLogement allocationLogementFamiliale = new AllocationsLogement();        
+        allocationLogementFamiliale.setMoisN(385);
+        allocationLogementFamiliale.setMoisNMoins1(380);
+        allocationLogementFamiliale.setMoisNMoins2(360);
+        allocationLogementFamiliale.setMoisNMoins3(357);
+        aidesLogement.setAllocationLogementFamiliale(allocationLogementFamiliale);
+        aidesCAF.setAidesLogement(aidesLogement);
         ressourcesFinancieres.setAidesCAF(aidesCAF);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
@@ -101,6 +152,54 @@ class OpenFiscaMappeurTests {
         assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
     }
     
+
+    @Test
+    void mapDemandeurAlsToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+        
+        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTests/demandeur-avec-als.json");
+
+        DemandeurEmploi demandeurEmploi =  new DemandeurEmploi();
+        
+        FuturTravail futurTravail = new FuturTravail();
+        Salaire salaire = new Salaire();
+        salaire.setMontantNet(900);
+        salaire.setMontantBrut(1165);
+        futurTravail.setSalaire(salaire);
+        demandeurEmploi.setFuturTravail(futurTravail);
+        
+        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+        
+        SituationFamiliale situationFamiliale = new SituationFamiliale();
+        situationFamiliale.setIsEnCouple(false);
+        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+        
+        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        AidesCAF aidesCAF = new AidesCAF();
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationSoutienFamilial(110);
+        aidesFamiliales.setAllocationsFamiliales(0);
+        aidesFamiliales.setComplementFamilial(0);
+        aidesFamiliales.setPrestationAccueilJeuneEnfant(170f);
+        aidesCAF.setAidesFamiliales(aidesFamiliales);
+        AidesLogement aidesLogement = new AidesLogement();
+        AllocationsLogement allocationLogementSociale = new AllocationsLogement();        
+        allocationLogementSociale.setMoisN(385);
+        allocationLogementSociale.setMoisNMoins1(380);
+        allocationLogementSociale.setMoisNMoins2(360);
+        allocationLogementSociale.setMoisNMoins3(357);
+        aidesLogement.setAllocationLogementSociale(allocationLogementSociale);
+        aidesCAF.setAidesLogement(aidesLogement);
+        ressourcesFinancieres.setAidesCAF(aidesCAF);
+        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        
+        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+        
+        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+        
+        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+    }
     @Test
     void mapDemandeurSansFamilleToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         

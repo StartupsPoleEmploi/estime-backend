@@ -25,6 +25,7 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.AidesLogement;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
@@ -136,13 +137,22 @@ public class UtileTests {
         }
     }
 
-    public AllocationsLogement creerallocationsLogement(float montant) {
-        AllocationsLogement apl = new AllocationsLogement();
-        apl.setMoisN(montant);
-        apl.setMoisNMoins1(montant);
-        apl.setMoisNMoins2(montant);
-        apl.setMoisNMoins3(montant);
-        return apl;
+    public AidesLogement creerAidePersonnaliseeLogement(float montant) {
+        AidesLogement aidesLogement = creerAidesLogement();
+        AllocationsLogement aidePersonnaliseeLogement = new AllocationsLogement();
+        aidePersonnaliseeLogement.setMoisNMoins1(montant);
+        aidePersonnaliseeLogement.setMoisNMoins2(montant);
+        aidePersonnaliseeLogement.setMoisNMoins3(montant);
+        aidesLogement.setAidePersonnaliseeLogement(aidePersonnaliseeLogement);
+        return aidesLogement;
+    }
+    
+    public AidesLogement creerAidesLogement() {
+        AidesLogement aidesLogement = new AidesLogement();
+        aidesLogement.setAidePersonnaliseeLogement(new AllocationsLogement());
+        aidesLogement.setAllocationLogementFamiliale(new AllocationsLogement());
+        aidesLogement.setAllocationLogementSociale(new AllocationsLogement());
+        return aidesLogement;
     }
 
     public PeriodeTravailleeAvantSimulation creerPeriodeTravailleeAvantSimulation(

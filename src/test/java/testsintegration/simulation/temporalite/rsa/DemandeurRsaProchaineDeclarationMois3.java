@@ -71,7 +71,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationsLogement(utileTests.creerallocationsLogement(310f));
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(310f));
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks("20-10-2020");
@@ -182,7 +182,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(350f);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationsLogement(utileTests.creerallocationsLogement(490f));
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(490f));
         AidesFamiliales aidesFamiliales = new AidesFamiliales();
         aidesFamiliales.setAllocationSoutienFamilial(0);
         aidesFamiliales.setAllocationsFamiliales(130f);
@@ -356,8 +356,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 508, 380, 0, 0));
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationsLogement(utileTests.creerallocationsLogement(310f));
-
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(310f));
         // Lorsque je simule mes prestations le 23/07/2021
         initMocks("23-07-2021");
         SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
@@ -478,8 +477,7 @@ class DemandeurRsaProchaineDeclarationMois3 extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(0, 0, 508, 380, 659, 500));
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationsLogement(utileTests.creerallocationsLogement(310f));
-
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(310f));
         // Lorsque je simule mes prestations le 23/07/2021
         initMocks("23-07-2021");
         SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);

@@ -8,6 +8,7 @@ import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Environnements;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
+import fr.poleemploi.estime.services.ressources.AidesLogement;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
@@ -88,8 +89,16 @@ public class StagingEnvironnementUtile {
 
     private void creerBouchonAllocationCAF(RessourcesFinancieres ressourcesFinancieres) {
         AidesCAF aidesCAF = new AidesCAF();
-        aidesCAF.setAllocationsLogement(creerBouchonAllocationsLogement());
+        aidesCAF.setAidesLogement(creerBouconAidesLogement());
         ressourcesFinancieres.setAidesCAF(aidesCAF);
+    }
+    
+    private AidesLogement creerBouconAidesLogement() {
+        AidesLogement aidesLogement = new AidesLogement();
+        aidesLogement.setAidePersonnaliseeLogement(creerBouchonAllocationsLogement());
+        aidesLogement.setAllocationLogementFamiliale(creerBouchonAllocationsLogement());
+        aidesLogement.setAllocationLogementSociale(creerBouchonAllocationsLogement());
+        return aidesLogement;
     }
 
     private AllocationsLogement creerBouchonAllocationsLogement() {
