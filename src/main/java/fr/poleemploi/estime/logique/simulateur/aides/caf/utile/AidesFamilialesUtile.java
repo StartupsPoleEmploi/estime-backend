@@ -2,16 +2,32 @@ package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @Component
 public class AidesFamilialesUtile {
+
+    @Autowired
+    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
+    
+    @Autowired
+    private SituationFamilialeUtile situationFamilialeUtile;
+    
+    public void simulerAidesFamiliales(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+        if(isEligibleAllocationsFamiliales(demandeurEmploi)) simulerAllocationsFamiliales(aidesPourCeMois, demandeurEmploi);
+        if(isEligibleAllocationSoutienFamilial(demandeurEmploi)) simulerAllocationSoutienFamilial(aidesPourCeMois, demandeurEmploi);
+        if(isEligibleComplementFamilial(demandeurEmploi)) simulerComplementFamilial(aidesPourCeMois, demandeurEmploi);
+        if(isEligiblePrestationAccueilJeuneEnfant(demandeurEmploi, numeroMoisSimule)) simulerPrestationAccueilJeuneEnfant(aidesPourCeMois, demandeurEmploi);
+    }
 
     public void simulerAllocationSoutienFamilial(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
         float montantAllocationSoutienFamilial= demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial();
@@ -75,5 +91,21 @@ public class AidesFamilialesUtile {
         prestationAccueilJeuneEnfant.setOrganisme(Organismes.CAF.getNom());
         prestationAccueilJeuneEnfant.setReportee(true);
         aidesPourCeMois.put(Aides.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode(), prestationAccueilJeuneEnfant);
+    }
+    
+    public boolean isEligibleAllocationsFamiliales(DemandeurEmploi demandeurEmploi) {
+        return ressourcesFinancieresUtile.hasAllocationsFamiliales(demandeurEmploi);
+    }
+
+    public boolean isEligibleAllocationSoutienFamilial(DemandeurEmploi demandeurEmploi) {
+        return ressourcesFinancieresUtile.hasAllocationSoutienFamilial(demandeurEmploi);
+    }
+
+    public boolean isEligibleComplementFamilial(DemandeurEmploi demandeurEmploi) {
+        return ressourcesFinancieresUtile.hasComplementFamilial(demandeurEmploi);
+    }
+
+    public boolean isEligiblePrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+        return ressourcesFinancieresUtile.hasPrestationAccueilJeuneEnfant(demandeurEmploi) && situationFamilialeUtile.hasEnfantMoinsDe3AnsPourMoisSimule(demandeurEmploi, numeroMoisSimule);
     }
 }
