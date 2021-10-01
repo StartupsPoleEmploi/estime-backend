@@ -26,7 +26,7 @@ public class RsaAvecPrimeActiviteUtile {
     private AideUtile aideUtile;
 
     @Autowired
-    private PrimeActiviteASSUtile primeActiviteUtile;
+    private PrimeActiviteUtile primeActiviteUtile;
 
     public void simulerAides(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
