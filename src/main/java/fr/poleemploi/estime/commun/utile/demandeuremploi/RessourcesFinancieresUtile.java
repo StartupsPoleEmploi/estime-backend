@@ -46,8 +46,8 @@ public class RessourcesFinancieresUtile {
             montantTotal = montantTotal.add(BigDecimal.valueOf(revenusImmobilierSur1Mois));
         }
         if (hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
-            float revenusTravailleurIndependant1Mois = getRevenusMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres());
-            montantTotal = montantTotal.add(BigDecimal.valueOf(revenusTravailleurIndependant1Mois));
+            float revenusMicroEntreprise1Mois = getRevenusMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres());
+            montantTotal = montantTotal.add(BigDecimal.valueOf(revenusMicroEntreprise1Mois));
         }
         if (hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
             float revenusTravailleurIndependant1Mois = getBeneficesTravailleurIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres());
