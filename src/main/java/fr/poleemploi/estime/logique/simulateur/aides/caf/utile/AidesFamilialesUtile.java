@@ -18,27 +18,33 @@ public class AidesFamilialesUtile {
 
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
-    
+
     @Autowired
     private SituationFamilialeUtile situationFamilialeUtile;
-    
+
     public void simulerAidesFamiliales(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
-        if(isEligibleAllocationsFamiliales(demandeurEmploi)) simulerAllocationsFamiliales(aidesPourCeMois, demandeurEmploi);
-        if(isEligibleAllocationSoutienFamilial(demandeurEmploi)) simulerAllocationSoutienFamilial(aidesPourCeMois, demandeurEmploi);
-        if(isEligibleComplementFamilial(demandeurEmploi)) simulerComplementFamilial(aidesPourCeMois, demandeurEmploi);
-        if(isEligiblePrestationAccueilJeuneEnfant(demandeurEmploi, numeroMoisSimule)) simulerPrestationAccueilJeuneEnfant(aidesPourCeMois, demandeurEmploi);
+        if (isEligibleAllocationsFamiliales(demandeurEmploi))
+            simulerAllocationsFamiliales(aidesPourCeMois, demandeurEmploi);
+        if (isEligibleAllocationSoutienFamilial(demandeurEmploi))
+            simulerAllocationSoutienFamilial(aidesPourCeMois, demandeurEmploi);
+        if (isEligibleComplementFamilial(demandeurEmploi))
+            simulerComplementFamilial(aidesPourCeMois, demandeurEmploi);
+        if (isEligiblePrestationAccueilJeuneEnfant(demandeurEmploi, numeroMoisSimule))
+            simulerPrestationAccueilJeuneEnfant(aidesPourCeMois, demandeurEmploi);
+        if (isEligiblePensionsAlimentaires(demandeurEmploi))
+            simulerPensionsAlimentaires(aidesPourCeMois, demandeurEmploi);
     }
 
     public void simulerAllocationSoutienFamilial(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-        float montantAllocationSoutienFamilial= demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial();
+        float montantAllocationSoutienFamilial = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial();
         ajouterAllocationSoutienFamilial(aidesPourCeMois, montantAllocationSoutienFamilial);
     }
-    
+
     public void simulerAllocationsFamiliales(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
         float montantAllocationsFamiliales = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales();
         ajouterAllocationsFamiliales(aidesPourCeMois, montantAllocationsFamiliales);
     }
-    
+
     public void simulerComplementFamilial(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
         float montantComplementFamilial = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getComplementFamilial();
         ajouterComplementFamilial(aidesPourCeMois, montantComplementFamilial);
@@ -47,6 +53,11 @@ public class AidesFamilialesUtile {
     public void simulerPrestationAccueilJeuneEnfant(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
         float montantPrestationAccueilJeuneEnfant = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant();
         ajouterPrestationAccueilJeuneEnfant(aidesPourCeMois, montantPrestationAccueilJeuneEnfant);
+    }
+
+    public void simulerPensionsAlimentaires(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
+        float montantPensionsAlimentaires = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer();
+        ajouterPensionsAlimentaires(aidesPourCeMois, montantPensionsAlimentaires);
     }
 
     private void ajouterAllocationSoutienFamilial(Map<String, Aide> aidesPourCeMois, float montant) {
@@ -81,7 +92,7 @@ public class AidesFamilialesUtile {
         complementFamilial.setReportee(true);
         aidesPourCeMois.put(Aides.COMPLEMENT_FAMILIAL.getCode(), complementFamilial);
     }
-    
+
     private void ajouterPrestationAccueilJeuneEnfant(Map<String, Aide> aidesPourCeMois, float montant) {
         Aide prestationAccueilJeuneEnfant = new Aide();
         prestationAccueilJeuneEnfant.setCode(Aides.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode());
@@ -92,7 +103,18 @@ public class AidesFamilialesUtile {
         prestationAccueilJeuneEnfant.setReportee(true);
         aidesPourCeMois.put(Aides.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode(), prestationAccueilJeuneEnfant);
     }
-    
+
+    private void ajouterPensionsAlimentaires(Map<String, Aide> aidesPourCeMois, float montant) {
+        Aide pensionsAlimentaires = new Aide();
+        pensionsAlimentaires.setCode(Aides.PENSIONS_ALIMENTAIRES.getCode());
+        pensionsAlimentaires.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+        pensionsAlimentaires.setMontant(montant);
+        pensionsAlimentaires.setNom(Aides.PENSIONS_ALIMENTAIRES.getNom());
+        pensionsAlimentaires.setOrganisme(Organismes.CAF.getNom());
+        pensionsAlimentaires.setReportee(true);
+        aidesPourCeMois.put(Aides.PENSIONS_ALIMENTAIRES.getCode(), pensionsAlimentaires);
+    }
+
     public boolean isEligibleAllocationsFamiliales(DemandeurEmploi demandeurEmploi) {
         return ressourcesFinancieresUtile.hasAllocationsFamiliales(demandeurEmploi);
     }
@@ -107,5 +129,9 @@ public class AidesFamilialesUtile {
 
     public boolean isEligiblePrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
         return ressourcesFinancieresUtile.hasPrestationAccueilJeuneEnfant(demandeurEmploi) && situationFamilialeUtile.hasEnfantMoinsDe3AnsPourMoisSimule(demandeurEmploi, numeroMoisSimule);
+    }
+
+    public boolean isEligiblePensionsAlimentaires(DemandeurEmploi demandeurEmploi) {
+        return ressourcesFinancieresUtile.hasPensionsAlimentaires(demandeurEmploi);
     }
 }

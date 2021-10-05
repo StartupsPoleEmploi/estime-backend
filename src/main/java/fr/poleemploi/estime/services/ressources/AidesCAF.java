@@ -4,7 +4,7 @@ public class AidesCAF {
     
     private Float allocationAAH;
     private Float allocationRSA; 
-    private AllocationsLogement allocationsLogement;   
+    private AidesLogement aidesLogement;   
     private AidesFamiliales aidesFamiliales;
     private Integer prochaineDeclarationTrimestrielle;
     
@@ -33,17 +33,16 @@ public class AidesCAF {
     public void setAllocationRSA(Float allocationRSA) {
         this.allocationRSA = allocationRSA;
     }
-    public AllocationsLogement getAllocationsLogement() {
-        return allocationsLogement;
+    public AidesLogement getAidesLogement() {
+        return aidesLogement;
     }
-    public void setAllocationsLogement(AllocationsLogement allocationsLogement) {
-        this.allocationsLogement = allocationsLogement;
+    public void setAidesLogement(AidesLogement aidesLogement) {
+        this.aidesLogement = aidesLogement;
     }
     
     @Override
     public String toString() {
-        return "AidesCAF [allocationAAH=" + allocationAAH + ", allocationRSA=" + allocationRSA
-                + ", allocationsLogement=" + allocationsLogement + ", aidesFamiliales=" + aidesFamiliales
+        return "AidesCAF [allocationAAH=" + allocationAAH + ", allocationRSA=" + allocationRSA + ", aidesLogement=" + aidesLogement + ", aidesFamiliales=" + aidesFamiliales
                 + ", prochaineDeclarationTrimestrielle=" + prochaineDeclarationTrimestrielle + "]";
     }
 }
