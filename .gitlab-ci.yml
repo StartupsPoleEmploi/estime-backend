@@ -34,7 +34,7 @@ sonar_quality_analyse :
   stage: build-application
   image: registry.beta.pole-emploi.fr/customize-docker-images/maven
   script:
-    - mvn clean verify -P analyse-sonar sonar:sonar -Dsonar.host.url=https://sonarqube.beta.pole-emploi.fr/  -Dsonar.login=085940cf6314da1f63d110d63e78e9081f20c800
+    - mvn clean verify -P analyse-sonar sonar:sonar -Dsonar.host.url=$SONAR_URL  -Dsonar.login=$SONAR_TOKEN
   cache:
     <<: *global_cache
     policy: pull
