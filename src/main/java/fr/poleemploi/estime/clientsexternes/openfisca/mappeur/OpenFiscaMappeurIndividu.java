@@ -3,6 +3,8 @@ package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AAH;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DATE_NAISSANCE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT_A_CHARGE;
@@ -10,9 +12,6 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.REVENUS_LOCATIFS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_MARITAL;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TNS_AUTRES_REVENUS;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -80,10 +79,10 @@ public class OpenFiscaMappeurIndividu {
             demandeurJSON.put(REVENUS_LOCATIFS, openFiscaMappeurPeriode.creerPeriodesRevenusImmobilier(revenusImmobilierSur1Mois, dateDebutSimulation));
         } 
         if(ressourcesFinancieresUtile.hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
-            demandeurJSON.put(TNS_AUTRES_REVENUS, openFiscaMappeurPeriode.creerPeriodesAnnees(demandeurEmploi.getRessourcesFinancieres().getBeneficesTravailleurIndependantDernierExercice(), dateDebutSimulation));
+            demandeurJSON.put(CHIFFRE_AFFAIRES_INDEPENDANT, openFiscaMappeurPeriode.creerPeriodesAnnees(demandeurEmploi.getRessourcesFinancieres().getChiffreAffairesIndependantDernierExercice(), dateDebutSimulation));
         } 
         if(ressourcesFinancieresUtile.hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
-            demandeurJSON.put(TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES, openFiscaMappeurPeriode.creerPeriodes(this.ressourcesFinancieresUtile.getRevenusMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres()), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA_TNS_AUTO_ENTREPRENEUR_CHIFFRE_AFFAIRES));
+            demandeurJSON.put(BENEFICES_MICRO_ENTREPRISE, openFiscaMappeurPeriode.creerPeriodesAnnees(demandeurEmploi.getRessourcesFinancieres().getBeneficesMicroEntrepriseDernierExercice(), dateDebutSimulation));
         }
         if(ressourcesFinancieresUtile.hasPensionsAlimentaires(demandeurEmploi)) {
             demandeurJSON.put(PENSIONS_ALIMENTAIRES_PERCUES, openFiscaMappeurPeriode.creerPeriodes(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
