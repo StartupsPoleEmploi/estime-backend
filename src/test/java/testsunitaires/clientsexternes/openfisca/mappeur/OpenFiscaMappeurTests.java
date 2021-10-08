@@ -284,7 +284,7 @@ class OpenFiscaMappeurTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        ressourcesFinancieres.setBeneficesTravailleurIndependantDernierExercice(1000f);
+        ressourcesFinancieres.setChiffreAffairesIndependantDernierExercice(1000f);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
@@ -318,7 +318,7 @@ class OpenFiscaMappeurTests {
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
         
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        ressourcesFinancieres.setRevenusMicroEntreprise3DerniersMois(600f);
+        ressourcesFinancieres.setBeneficesMicroEntrepriseDernierExercice(600f);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");

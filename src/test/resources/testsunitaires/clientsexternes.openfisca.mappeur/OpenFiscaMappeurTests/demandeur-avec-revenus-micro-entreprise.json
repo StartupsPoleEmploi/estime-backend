@@ -25,10 +25,9 @@
         "2020-10": 1040,
         "2020-11": 1040
       },
-      "tns_auto_entrepreneur_chiffre_affaires": {
-        "2020-08": 200,
-        "2020-09": 200,
-        "2020-10": 200
+      "rpns_micro_entreprise_benefice": {
+        "2019": 600,
+        "2018": 600
       }
     }
   },
