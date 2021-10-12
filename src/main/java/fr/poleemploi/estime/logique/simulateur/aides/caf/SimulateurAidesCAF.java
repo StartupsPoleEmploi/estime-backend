@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AidesFamilialesUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AidesLogementUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AllocationAdultesHandicapesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.PrimeActiviteAAHUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.PrimeActiviteASSUtile;
@@ -28,6 +29,9 @@ public class SimulateurAidesCAF {
 
     @Autowired
     private AidesFamilialesUtile aidesFamilialesUtile;
+
+    @Autowired
+    private AidesLogementUtile aidesLogementUtile;
 
     @Autowired
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
@@ -60,6 +64,9 @@ public class SimulateurAidesCAF {
             if (isEligibleAidesFamiliales(demandeurEmploi, numeroMoisSimule)) {
                 aidesFamilialesUtile.simulerAidesFamiliales(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
             }
+            if (isEligibleAidesLogement(demandeurEmploi, numeroMoisSimule)) {
+                aidesLogementUtile.simulerAidesLogement(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
+            }
         }
     }
 
@@ -74,5 +81,9 @@ public class SimulateurAidesCAF {
         return aidesFamilialesUtile.isEligibleAllocationsFamiliales(demandeurEmploi) || aidesFamilialesUtile.isEligibleAllocationSoutienFamilial(demandeurEmploi)
                 || aidesFamilialesUtile.isEligibleComplementFamilial(demandeurEmploi) || aidesFamilialesUtile.isEligiblePrestationAccueilJeuneEnfant(demandeurEmploi, numeroMoisSimule)
                 || aidesFamilialesUtile.isEligiblePensionsAlimentaires(demandeurEmploi);
+    }
+
+    private boolean isEligibleAidesLogement(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+        return aidesLogementUtile.isEligibleAPL(demandeurEmploi) || aidesLogementUtile.isEligibleALS(demandeurEmploi) || aidesLogementUtile.isEligibleALF(demandeurEmploi);
     }
 }

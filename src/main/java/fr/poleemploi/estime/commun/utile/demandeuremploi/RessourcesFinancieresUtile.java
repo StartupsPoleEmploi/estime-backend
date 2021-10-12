@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
+import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
@@ -76,6 +77,13 @@ public class RessourcesFinancieresUtile {
             return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA();
         }
         return 0;
+    }
+
+    public float getAllocationsLogementSur1Mois(AllocationsLogement allocationsLogement) {
+        return BigDecimal.valueOf(allocationsLogement.getMoisNMoins1())
+                .add(BigDecimal.valueOf(allocationsLogement.getMoisNMoins2()))
+                .add(BigDecimal.valueOf(allocationsLogement.getMoisNMoins3()))
+                .divide(BigDecimal.valueOf(3), 0, RoundingMode.HALF_UP).floatValue();
     }
 
     public float getRevenusImmobilierSur1Mois(RessourcesFinancieres ressourcesFinancieres) {

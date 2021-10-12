@@ -4,7 +4,10 @@ public enum Aides {
 
     AGEPI("AGEPI", "Aide à la Garde d'Enfants pour Parent Isolé", "agepi.html"),
     AIDE_MOBILITE("AM", "Aide à la mobilité", "aide-mobilite.html"),
+    AIDE_PERSONNALISEE_LOGEMENT("APL", "Aide Personnalisée au Logement", ""),
     ALLOCATION_ADULTES_HANDICAPES("AAH", "Allocation aux Adultes Handicapés", "aah.html"),
+    ALLOCATION_LOGEMENT_FAMILIALE("ALF", "Allocation de Logement Familiale", ""),
+    ALLOCATION_LOGEMENT_SOCIALE("ALS", "Allocation de Logement Sociale", ""),
     ALLOCATION_RETOUR_EMPLOI("ARE", "Allocation de Retour à l'Emploi", "are.html"),
     ALLOCATION_SOLIDARITE_SPECIFIQUE("ASS", "Allocation de Solidarité Spécifique", "ass.html"),
     ALLOCATIONS_FAMILIALES("AF", "Allocations Familiales", ""),
