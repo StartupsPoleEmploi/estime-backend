@@ -42,17 +42,11 @@ public class RessourcesFinancieresUtile {
         if (beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA()));
         }
-        if (hasRevenusImmobilier(demandeurEmploi)) {
-            float revenusImmobilierSur1Mois = getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres());
-            montantTotal = montantTotal.add(BigDecimal.valueOf(revenusImmobilierSur1Mois));
-        }
         if (hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
-            float beneficesMicroEntreprise1Mois = getBeneficesMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres());
-            montantTotal = montantTotal.add(BigDecimal.valueOf(beneficesMicroEntreprise1Mois));
+            montantTotal = montantTotal.add(BigDecimal.valueOf(getBeneficesMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
         }
         if (hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
-            float chiffreAffairesIndependant1Mois = getChiffreAffairesIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres());
-            montantTotal = montantTotal.add(BigDecimal.valueOf(chiffreAffairesIndependant1Mois));
+            montantTotal = montantTotal.add(BigDecimal.valueOf(getChiffreAffairesIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
         }
         if (hasAllocationsFamiliales(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales()));
@@ -68,6 +62,18 @@ public class RessourcesFinancieresUtile {
         }
         if (hasPensionsAlimentaires(demandeurEmploi)) {
             montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer()));
+        }
+        if (hasRevenusImmobilier(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
+        }
+        if (hasAidePersonnaliseeLogement(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement())));
+        }
+        if (hasAllocationLogementFamiliale(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale())));
+        }
+        if (hasAllocationLogementSociale(demandeurEmploi)) {
+            montantTotal = montantTotal.add(BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale())));
         }
         return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
     }
