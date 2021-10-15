@@ -15,7 +15,6 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantS
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SalaireUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
-import fr.poleemploi.estime.services.ressources.AidesLogement;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Salaire;

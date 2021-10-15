@@ -9,7 +9,6 @@ import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
@@ -19,7 +18,7 @@ public class AidesLogementUtile {
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
-    public void simulerAidesLogement(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+    public void simulerAidesLogement(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
         if (isEligibleAPL(demandeurEmploi))
             simulerAidePersonnaliseeLogement(aidesPourCeMois, demandeurEmploi);
         if (isEligibleALS(demandeurEmploi))
