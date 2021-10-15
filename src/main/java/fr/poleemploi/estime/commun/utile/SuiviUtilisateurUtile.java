@@ -3,8 +3,8 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.donnees.entities.SuiviParcoursUtilisateurEntity;
@@ -27,7 +27,7 @@ public class SuiviUtilisateurUtile {
     @Autowired
     private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
     
-    public void tracerParcoursUtilisateur(UserInfoESD userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, DetailIndemnisationESD detailIndemnisationESD) {
+    public void tracerParcoursUtilisateur(UserInfoPEIO userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, DetailIndemnisationPEIO detailIndemnisationESD) {
 
         SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(
                 userInfoESD, 
@@ -70,7 +70,7 @@ public class SuiviUtilisateurUtile {
                 beneficiaireAides.isBeneficiaireAAH());  
     }    
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoESD userInfoESD, String parcours, String typePopulation, DetailIndemnisationESD detailIndemnisationESD) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoPEIO userInfoESD, String parcours, String typePopulation, DetailIndemnisationPEIO detailIndemnisationESD) {
         
         SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
         suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());

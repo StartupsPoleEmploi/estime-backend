@@ -14,8 +14,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import utile.tests.UtileTests;
@@ -26,7 +26,7 @@ public class CommunTests {
     protected UtileTests utileTests;
 
     @SpyBean
-    private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
+    private PoleEmploiIOClient detailIndemnisationPoleEmploiClient;
 
     @SpyBean
     protected DateUtile dateUtile;    
@@ -37,7 +37,7 @@ public class CommunTests {
         doReturn(utileTests.getDate(dateSimulation)).when(dateUtile).getDateJour();
 
         //mock retour appel détail indemnisation de l'ESD 
-        DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.RSA.getLibelle());        
+        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.RSA.getLibelle());        
         doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
     }
 }

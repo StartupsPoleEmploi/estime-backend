@@ -3,7 +3,7 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Environnements;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -22,7 +22,7 @@ public class StagingEnvironnementUtile {
     @Value("${spring.profiles.active}")
     private String environment;
 
-    public void gererAccesAvecBouchon(Individu individu, UserInfoESD userInfo) {
+    public void gererAccesAvecBouchon(Individu individu, UserInfoPEIO userInfo) {
             individu.setIdPoleEmploi(userInfo.getSub());
             individu.setPopulationAutorisee(isPopulationAutorisee(userInfo));
             String population = userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
@@ -115,7 +115,7 @@ public class StagingEnvironnementUtile {
         ressourcesFinancieres.setAidesCPAM(aidesCPAM);
     }
     
-    private boolean isPopulationAutorisee(UserInfoESD userInfoESD) {
+    private boolean isPopulationAutorisee(UserInfoPEIO userInfoESD) {
         return userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()) 
                 || userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()) 
                 || userInfoESD.getGivenName().endsWith(Aides.RSA.getCode());

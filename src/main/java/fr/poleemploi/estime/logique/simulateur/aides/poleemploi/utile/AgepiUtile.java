@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.AgepiApiClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
@@ -64,6 +68,9 @@ public class AgepiUtile {
     @Autowired
     private SimulateurAidesUtile simulateurAidesUtile;
 
+	@Autowired
+    private PoleEmploiIOClient emploiStoreDevClient;
+	
     private AgepiApiClient agepiApiClient;
 
 
@@ -83,11 +90,46 @@ public class AgepiUtile {
     }
 
     public Aide simulerAide(DemandeurEmploi demandeurEmploi) {
-        float montantAgepi = calculerMontantAgepi(demandeurEmploi);
+        //float montantAgepi = calculerMontantAgepi(demandeurEmploi);
+        AgepiPEIOIn agepiIn = new AgepiPEIOIn();
+        agepiIn = remplirAgepiIn(demandeurEmploi);
+		AgepiPEIOOut agepiOut = emploiStoreDevClient.callAgepiEndPoint(agepiIn);
+		float montantAgepi = agepiOut.getMontant();
         return creerAide(montantAgepi);   
     }
 
-    private float calculerMontantAgepi(DemandeurEmploi demandeurEmploi) {
+    private AgepiPEIOIn remplirAgepiIn(DemandeurEmploi demandeurEmploi) {
+    	AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
+    	agepiPEIOIn.setContexte("Reprise");
+    	agepiPEIOIn.setDateActionReclassement(LocalDate.now().with(TemporalAdjusters.firstDayOfNextMonth()).toString());
+    	agepiPEIOIn.setDateDepot(LocalDate.now().withDayOfMonth(1).toString());
+    	agepiPEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
+    	agepiPEIOIn.setEleveSeulEnfants(!demandeurEmploi.getSituationFamiliale().getIsEnCouple());
+    	agepiPEIOIn.setIntensite((int) Math.round(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine()));
+    	agepiPEIOIn.setLieuFormationOuEmploi("France");
+    	agepiPEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
+    	
+        int nombreEnfants = 0;
+        int nombreEnfantsMoinsDixAns = 0;
+        for(Personne personneACharge:demandeurEmploi.getSituationFamiliale().getPersonnesACharge()) {
+        	LocalDate today = LocalDate.now();
+        	int agePersonneACharge = Period.between(personneACharge.getInformationsPersonnelles().getDateNaissance(), today).getYears();
+        	if(agePersonneACharge < 10) {
+        		++nombreEnfants;
+        		++nombreEnfantsMoinsDixAns;
+        	}else if(agePersonneACharge < 18) {
+        		++nombreEnfants;
+        	}
+        }
+    	
+    	agepiPEIOIn.setNombreEnfants(nombreEnfants);
+    	agepiPEIOIn.setNombreEnfantsMoins10Ans(nombreEnfantsMoinsDixAns);
+    	agepiPEIOIn.setOrigine("W");
+    	agepiPEIOIn.setTypeIntensite("Hebdomadaire");
+		return agepiPEIOIn;
+	}
+
+	private float calculerMontantAgepi(DemandeurEmploi demandeurEmploi) {
         int nombreEnfantACharge = situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, AGE_MAX_ENFANT);
         if(nombreEnfantACharge > 0) {
             switch (nombreEnfantACharge) {

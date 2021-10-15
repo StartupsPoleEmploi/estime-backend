@@ -17,29 +17,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
+
 @RestController
-@RequestMapping("/apiam")
+@RequestMapping("/apiAgepi")
 public class ApiAGEPIService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private String uri = "http://ex054-vipa-a1rmex.sii24.pole-emploi.intra/exp-aides/demande-agepi/simuler";
+	private String uri = "https://api.emploi-store.fr/partenaire/peconnect-simulateurs-aides/v1/demande-agepi/simuler";
 
-//	@RequestMapping("/origine")
-//	public String getOrigine()
-//	{
-//	    RestTemplate restTemplate = new RestTemplate();
-//	    String result = restTemplate.getForObject(this.uri, String.class);	    
-//	    return result;
-//	}
+	@Autowired
+    private PoleEmploiIOClient emploiStoreDevClient;
 	
-	@PostMapping(value = "/origine", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String postOrigine(@RequestBody String origine) {
-		HttpHeaders httpHeaders= new HttpHeaders();
-		httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<String> origineEntity = new HttpEntity<String>(origine, httpHeaders);
+	@PostMapping(value = "/montantAGEPI", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public float getMontantAgepi(@RequestBody String valeursAgepi) {
+		AgepiPEIOIn agepiIn = new AgepiPEIOIn();
+		//TODO creer agepiIn a pertir de valeursAgepi a partir d'un parseur?
+		AgepiPEIOOut agepiOut = emploiStoreDevClient.callAgepiEndPoint(agepiIn);
 		
-		return restTemplate.exchange(this.uri+"/origine", HttpMethod.POST, origineEntity, String.class).getBody();
+		return agepiOut.getMontant();
+		
+		
+//		HttpHeaders httpHeaders= new HttpHeaders();
+//		httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//		HttpEntity<String> origineEntity = new HttpEntity<String>(origine, httpHeaders);
+//		
+//		return restTemplate.exchange(this.uri+"/origine", HttpMethod.POST, origineEntity, String.class).getBody();
 	}
 }

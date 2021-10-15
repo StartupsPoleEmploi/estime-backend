@@ -15,8 +15,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
@@ -39,7 +39,7 @@ public class CommunTests {
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
     
     @SpyBean
-    private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
+    private PoleEmploiIOClient detailIndemnisationPoleEmploiClient;
     
     protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
         
@@ -84,7 +84,7 @@ public class CommunTests {
         doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
 
         //mock retour appel détail indemnisation de l'ESD 
-        DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.AAH.getLibelle());        
+        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.AAH.getLibelle());        
         doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
     }    
 }

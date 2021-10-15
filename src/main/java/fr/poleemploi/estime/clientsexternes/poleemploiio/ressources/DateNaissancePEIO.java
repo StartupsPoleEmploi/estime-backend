@@ -2,7 +2,7 @@ package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
 import java.util.Date;
 
-public class DateNaissanceESD {
+public class DateNaissancePEIO {
 
     private String codeCivilite;
     private String libelleCivilite;

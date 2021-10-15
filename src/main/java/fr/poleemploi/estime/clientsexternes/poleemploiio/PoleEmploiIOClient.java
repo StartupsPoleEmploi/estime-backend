@@ -15,11 +15,15 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DateNaissanceESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DateNaissancePEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.UnauthorizedMessages;
@@ -27,7 +31,7 @@ import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.exceptions.UnauthorizedException;
 
 @Component
-public class PoleEmploiIODevClient {
+public class PoleEmploiIOClient {
     
     @Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.token-uri}")
     private String accessTokenURI;
@@ -45,20 +49,24 @@ public class PoleEmploiIODevClient {
     private String userInfoURI;
     
     @Autowired
-    private PoleEmploiIODevUtile emploiStoreDevUtile;
+    private PoleEmploiIOUtile emploiStoreUtile;
+    
+    private String uriAgepi = "https://api.emploi-store.fr/partenaire/peconnect-simulateurs-aides/v1/demande-agepi/simuler";
+    private String uriAideMobilite = "https://api.emploi-store.fr/partenaire/peconnect-simulateurs-aides/v1/demande-aidemobilite/simuler";
     
     @Autowired
     private RestTemplate restTemplate;
+
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(PoleEmploiIODevClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PoleEmploiIOClient.class);
     
     
-    public PeConnectAuthorizationESD callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
-        HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreDevUtile.getAccesTokenRequeteHTTP(code, redirectURI);
+    public PeConnectAuthorizationPEIO callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
+        HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreUtile.getAccesTokenRequeteHTTP(code, redirectURI);
         try {
-            ResponseEntity<PeConnectAuthorizationESD> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP , PeConnectAuthorizationESD.class);
+            ResponseEntity<PeConnectAuthorizationPEIO> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP , PeConnectAuthorizationPEIO.class);
             if(reponse.getStatusCode().equals(HttpStatus.OK)) {
-                PeConnectAuthorizationESD informationsAccessTokenESD = reponse.getBody();
+                PeConnectAuthorizationPEIO informationsAccessTokenESD = reponse.getBody();
                 if(informationsAccessTokenESD.getNonce().compareTo(nonce) != 0) {
                     LOGGER.info(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
                     throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
@@ -75,9 +83,31 @@ public class PoleEmploiIODevClient {
         }        
     }
     
-   public Optional<UserInfoESD> callUserInfoEndPoint(String bearerToken) {
-        HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-        ResponseEntity<UserInfoESD> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoESD.class);
+   public AgepiPEIOOut callAgepiEndPoint(AgepiPEIOIn agepiIn) { 
+	   HttpEntity<MultiValueMap<String, Object>> requeteHTTP = emploiStoreUtile.getAgepiRequeteHTTP(agepiIn);
+	   try {
+		   ResponseEntity<AgepiPEIOOut> reponse = restTemplate.postForEntity(this.uriAgepi, requeteHTTP , AgepiPEIOOut.class);
+		   return reponse.getBody();
+	   } catch (HttpClientErrorException e) {
+		   LOGGER.info(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
+           throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+	   }
+   }
+   
+   public AideMobilitePEIOOut callAideMobiliteEndPoint(AideMobilitePEIOIn aideMobiliteIn) {
+	   HttpEntity<MultiValueMap<String, Object>> requeteHTTP = emploiStoreUtile.getAideMobiliteRequeteHTTP(aideMobiliteIn);
+	   try {
+		   ResponseEntity<AideMobilitePEIOOut> reponse = restTemplate.postForEntity(this.uriAideMobilite, requeteHTTP , AideMobilitePEIOOut.class);
+		   return reponse.getBody();
+	   } catch (HttpClientErrorException e) {
+		   LOGGER.info(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
+           throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+	   }
+   }
+    
+   public Optional<UserInfoPEIO> callUserInfoEndPoint(String bearerToken) {
+        HttpEntity<String> requeteHTTP = emploiStoreUtile.getRequeteHTTP(bearerToken);
+        ResponseEntity<UserInfoPEIO> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoPEIO.class);
         if(reponse.getStatusCode().equals(HttpStatus.OK)) {
             return Optional.of(reponse.getBody());            
         } else {
@@ -87,9 +117,9 @@ public class PoleEmploiIODevClient {
         return Optional.empty();
     }
     
-    public DetailIndemnisationESD callDetailIndemnisationEndPoint(String bearerToken) {
-        HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-        ResponseEntity<DetailIndemnisationESD> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationESD.class);
+    public DetailIndemnisationPEIO callDetailIndemnisationEndPoint(String bearerToken) {
+        HttpEntity<String> requeteHTTP = emploiStoreUtile.getRequeteHTTP(bearerToken);
+        ResponseEntity<DetailIndemnisationPEIO> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationPEIO.class);
         if(reponse.getStatusCode().equals(HttpStatus.OK)) {
             return reponse.getBody();
         } else {
@@ -99,10 +129,10 @@ public class PoleEmploiIODevClient {
         }
     }
     
-    public Optional<CoordonneesESD> callCoordonneesAPI(String bearerToken) {
+    public Optional<CoordonneesPEIO> callCoordonneesAPI(String bearerToken) {
         try {
-            HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-            ResponseEntity<CoordonneesESD> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesESD.class);
+            HttpEntity<String> requeteHTTP = emploiStoreUtile.getRequeteHTTP(bearerToken);
+            ResponseEntity<CoordonneesPEIO> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesPEIO.class);
             if(reponse.getStatusCode().equals(HttpStatus.OK)) {
                 return Optional.of(reponse.getBody());            
             } else {
@@ -117,10 +147,10 @@ public class PoleEmploiIODevClient {
         return Optional.empty();
     }
     
-    public Optional<DateNaissanceESD> callDateNaissanceEndPoint(String bearerToken) {
+    public Optional<DateNaissancePEIO> callDateNaissanceEndPoint(String bearerToken) {
         try {
-            HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-            ResponseEntity<DateNaissanceESD> reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissanceESD.class);
+            HttpEntity<String> requeteHTTP = emploiStoreUtile.getRequeteHTTP(bearerToken);
+            ResponseEntity<DateNaissancePEIO> reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissancePEIO.class);
             if(reponse.getStatusCode().equals(HttpStatus.OK)) {
                 return Optional.of(reponse.getBody());            
             } else {
