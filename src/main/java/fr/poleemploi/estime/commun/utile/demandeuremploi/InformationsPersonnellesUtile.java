@@ -7,6 +7,8 @@ import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.StatutsOccupationLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.Logement;
+import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
 public class InformationsPersonnellesUtile {
@@ -48,15 +50,17 @@ public class InformationsPersonnellesUtile {
         return false;
     }
     
-    public String getStatutOccupationLogement(DemandeurEmploi demandeurEmploi) {
-        Boolean isProprietaireSansPretOuLogeGratuit = demandeurEmploi.getInformationsPersonnelles().getIsProprietaireSansPretOuLogeGratuit();
-        return isProprietaireSansPretOuLogeGratuit != null 
-                && isProprietaireSansPretOuLogeGratuit.booleanValue() ? 
-                        StatutsOccupationLogement.LOGE_GRATUITEMENT.getLibelle() : 
-                            StatutsOccupationLogement.LOCATAIRE_VIDE.getLibelle();
-    }
-    
     public boolean hasCodePostal(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getInformationsPersonnelles().getCodePostal() != null;
+    }
+    
+    public String getStatutOccupationLogement(Logement logement) {
+        StatutOccupationLogement statutOccupationLogement = logement.getStatutOccupationLogement();
+        if(statutOccupationLogement.isLogeGratuitement()) return StatutsOccupationLogement.LOGE_GRATUITEMENT.getLibelle();
+        else if(statutOccupationLogement.isLocataireHLM()) return StatutsOccupationLogement.LOCATAIRE_HLM.getLibelle();
+        else if(statutOccupationLogement.isLocataireMeuble()) return StatutsOccupationLogement.LOCATAIRE_MEUBLE.getLibelle();
+        else if(statutOccupationLogement.isLocataireNonMeuble()) return StatutsOccupationLogement.LOCATAIRE_NON_MEUBLE.getLibelle();
+        else if(statutOccupationLogement.isProprietaire()) return StatutsOccupationLogement.PROPRIETAIRE.getLibelle();
+        return StatutsOccupationLogement.PROPRIETAIRE_AVEC_EMPRUNT.getLibelle();
     }
 }

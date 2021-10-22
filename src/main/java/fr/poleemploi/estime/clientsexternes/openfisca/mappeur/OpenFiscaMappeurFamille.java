@@ -1,6 +1,7 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AF;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AIDE_LOGEMENT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALF;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.APL;
@@ -38,6 +39,9 @@ public class OpenFiscaMappeurFamille {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
+
+    @Autowired
+    private OpenFiscaMappeurAidesLogement openFiscaMappeurAidesLogement;
 
     @Autowired
     private OpenFiscaMappeurPrimeActivite openFiscaMappeurPrimeActivite;
@@ -85,6 +89,7 @@ public class OpenFiscaMappeurFamille {
             }
         }
         famille.put(PPA, openFiscaMappeurPrimeActivite.creerPrimeActiviteJSON(dateDebutSimulation, numeroMoisSimule));
+        famille.put(AIDE_LOGEMENT, openFiscaMappeurAidesLogement.creerAideLogementJSON(dateDebutSimulation, numeroMoisSimule));
         return famille;
     }
 
