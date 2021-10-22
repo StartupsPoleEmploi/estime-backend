@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
@@ -64,23 +65,26 @@ public class IndividuLogique {
         String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
 
         DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
+        Optional<CoordonneesESD> coordonneesESDOption = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
         Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
 
-        if(userInfoOption.isPresent()) {
+        if(userInfoOption.isPresent() && coordonneesESDOption.isPresent()) {
             UserInfoESD userInfoESD = userInfoOption.get();
+            CoordonneesESD coordonneesESD = coordonneesESDOption.get();
             if(stagingEnvironnementUtile.isStagingEnvironnement()) {  
                 stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
             } else {            
                 individu.setIdPoleEmploi(userInfoESD.getSub());
                 individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
-                individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);                 
+                individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD, coordonneesESD);                 
             } 
 
             //@TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
             suiviUtilisateurUtile.tracerParcoursUtilisateur(
                     userInfoESD, 
                     suiviUtilisateurUtile.getParcoursAccesService(individu), 
-                    individu.getBeneficiaireAides(), 
+                    individu.getBeneficiaireAides(),
+                    individu.getInformationsPersonnelles(),
                     detailIndemnisationESD);       
           
 
@@ -110,7 +114,8 @@ public class IndividuLogique {
         suiviUtilisateurUtile.tracerParcoursUtilisateur(
                 demandeurEmploi.getIdPoleEmploi(), 
                 ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(), 
-                individu.getBeneficiaireAides());         
+                individu.getBeneficiaireAides(),
+                individu.getInformationsPersonnelles());         
 
         return demandeurEmploi;
     } 
@@ -121,7 +126,8 @@ public class IndividuLogique {
         suiviUtilisateurUtile.tracerParcoursUtilisateur(
                 demandeurEmploi.getIdPoleEmploi(), 
                 ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), 
-                demandeurEmploi.getBeneficiaireAides());  
+                demandeurEmploi.getBeneficiaireAides(),
+                demandeurEmploi.getInformationsPersonnelles());  
 
 
         return simulationAides;
