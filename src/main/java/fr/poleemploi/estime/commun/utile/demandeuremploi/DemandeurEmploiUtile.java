@@ -16,7 +16,9 @@ import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
 public class DemandeurEmploiUtile {
@@ -36,7 +38,7 @@ public class DemandeurEmploiUtile {
                 if (demandeurEmploi.getInformationsPersonnelles() != null) {
                     demandeurEmploi.getInformationsPersonnelles().setDateNaissance(dateNaissanceLocalDate);
                 } else {
-                    InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+                    InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
                     informationsPersonnelles.setDateNaissance(dateNaissanceLocalDate);
                     demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
                 }
@@ -51,11 +53,46 @@ public class DemandeurEmploiUtile {
             if (demandeurEmploi.getInformationsPersonnelles() != null) {
                 demandeurEmploi.getInformationsPersonnelles().setCodePostal(coordonneesESD.getCodePostal());
             } else {
-                InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+                InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
                 informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
                 demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
             }
         }
+    }
+
+    public InformationsPersonnelles creerInformationsPersonnelles() {
+        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+        Logement logement = creerLogement();
+        StatutOccupationLogement statutOccupationLogement = creerStatutOccupationLogement();
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
+
+        return informationsPersonnelles;
+    }
+    
+    public Logement creerLogement() {
+        Logement logement = new Logement();
+        logement.setChambre(false);
+        logement.setCodeInsee(null);
+        logement.setConventionne(false);
+        logement.setColloc(false);
+        logement.setCrous(false);
+        logement.setDeMayotte(false);
+        logement.setMontantCharges(0);
+        logement.setMontantLoyer(0);
+        logement.setStatutOccupationLogement(null);
+        return logement;
+    }
+    
+    public StatutOccupationLogement creerStatutOccupationLogement() {
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireHLM(false);
+        statutOccupationLogement.setLocataireMeuble(false);
+        statutOccupationLogement.setLocataireNonMeuble(false);
+        statutOccupationLogement.setLogeGratuitement(false);
+        statutOccupationLogement.setProprietaire(false);
+        statutOccupationLogement.setProprietaireAvecEmprunt(false);
+        return statutOccupationLogement;
     }
 
     public boolean isSansRessourcesFinancieres(DemandeurEmploi demandeurEmploi) {
