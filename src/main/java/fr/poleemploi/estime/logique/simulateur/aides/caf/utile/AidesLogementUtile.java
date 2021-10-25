@@ -18,28 +18,44 @@ public class AidesLogementUtile {
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
-    public void simulerAidesLogement(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
+    public void simulerAidesLogement(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
         if (isEligibleAPL(demandeurEmploi))
-            simulerAidePersonnaliseeLogement(aidesPourCeMois, demandeurEmploi);
+            simulerAidePersonnaliseeLogement(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
         if (isEligibleALS(demandeurEmploi))
-            simulerAllocationLogementSociale(aidesPourCeMois, demandeurEmploi);
+            simulerAllocationLogementSociale(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
         if (isEligibleALF(demandeurEmploi))
-            simulerAllocationLogementFamiliale(aidesPourCeMois, demandeurEmploi);
+            simulerAllocationLogementFamiliale(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
     }
 
-    public void simulerAidePersonnaliseeLogement(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-        float montantAidePersonnaliseeLogement = ressourcesFinancieresUtile.getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement());
+    public void simulerAidePersonnaliseeLogement(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+        float montantAidePersonnaliseeLogement = 0;
+        if (isMoisAReporter(demandeurEmploi, numeroMoisSimule)) montantAidePersonnaliseeLogement = ressourcesFinancieresUtile.getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement());
         ajouterAidePersonnaliseeLogement(aidesPourCeMois, montantAidePersonnaliseeLogement);
     }
     
-    public void simulerAllocationLogementFamiliale(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-        float montantAllocationLogementFamiliale = ressourcesFinancieresUtile.getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale());
+    public void simulerAllocationLogementFamiliale(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+        float montantAllocationLogementFamiliale = 0;
+        if (isMoisAReporter(demandeurEmploi, numeroMoisSimule)) montantAllocationLogementFamiliale = ressourcesFinancieresUtile.getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale());
         ajouterAllocationLogementFamiliale(aidesPourCeMois, montantAllocationLogementFamiliale);
     }
 
-    public void simulerAllocationLogementSociale(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-        float montantAllocationLogementSociale = ressourcesFinancieresUtile.getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale());
+    public void simulerAllocationLogementSociale(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+        float montantAllocationLogementSociale = 0;
+        if (isMoisAReporter(demandeurEmploi, numeroMoisSimule)) montantAllocationLogementSociale = ressourcesFinancieresUtile.getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale());
         ajouterAllocationLogementSociale(aidesPourCeMois, montantAllocationLogementSociale);
+    }
+    
+    public boolean isMoisAReporter(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+        boolean isMoisAReporter = false;
+        if(demandeurEmploi.getRessourcesFinancieres() != null
+            && demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null 
+            && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle() != null) {
+            int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+            isMoisAReporter = prochaineDeclarationTrimestrielle != 0 && prochaineDeclarationTrimestrielle != 3 && numeroMoisSimule == 1;
+        } else {
+            isMoisAReporter = numeroMoisSimule == 1;
+        }
+        return isMoisAReporter;        
     }
 
     private void ajouterAidePersonnaliseeLogement(Map<String, Aide> aidesPourCeMois, float montant) {
