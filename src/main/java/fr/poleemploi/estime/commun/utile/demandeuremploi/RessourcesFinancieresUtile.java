@@ -86,10 +86,7 @@ public class RessourcesFinancieresUtile {
     }
 
     public float getAllocationsLogementSur1Mois(AllocationsLogement allocationsLogement) {
-        return BigDecimal.valueOf(allocationsLogement.getMoisNMoins1())
-                .add(BigDecimal.valueOf(allocationsLogement.getMoisNMoins2()))
-                .add(BigDecimal.valueOf(allocationsLogement.getMoisNMoins3()))
-                .divide(BigDecimal.valueOf(3), 0, RoundingMode.HALF_UP).floatValue();
+        return BigDecimal.valueOf(allocationsLogement.getMoisNMoins1()).floatValue();
     }
 
     public float getRevenusImmobilierSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
