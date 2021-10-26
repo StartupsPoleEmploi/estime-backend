@@ -65,7 +65,7 @@ public class SimulateurAidesCAF {
                 aidesFamilialesUtile.simulerAidesFamiliales(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
             }
             if (isEligibleAidesLogement(demandeurEmploi)) {
-                aidesLogementUtile.simulerAidesLogement(aidesPourCeMois, demandeurEmploi);
+                aidesLogementUtile.simulerAidesLogement(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
             }
         }
     }
