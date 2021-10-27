@@ -25,12 +25,12 @@ import fr.poleemploi.estime.services.ressources.Personne;
 public class AgepiApiClient {
 
     @Value("${agepi-api-uri}")
-    private String AgepiApiURI;
+    private String agepiApiURI;
     
     @Autowired
     private RestTemplate restTemplate;
     
-	private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaClient.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AgepiApiClient.class);
 
 	public String envoyerDonneesDemandeurEmploi(DemandeurEmploi demandeurEmploi) {
 		return callAgepiApi(demandeurEmploi);
@@ -44,7 +44,7 @@ public class AgepiApiClient {
             this.restTemplate = new RestTemplate();
 
             HttpEntity<String> request = new HttpEntity<>(utilisateurAgepi.toString(), headers);
-            return restTemplate.postForObject(AgepiApiURI, request, String.class);
+            return restTemplate.postForObject(agepiApiURI, request, String.class);
 		} catch (JSONException e) {
 			LOGGER.error( String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
             throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
