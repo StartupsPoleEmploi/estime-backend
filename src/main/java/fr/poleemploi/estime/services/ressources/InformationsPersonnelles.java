@@ -19,7 +19,6 @@ public class InformationsPersonnelles {
     private String nom;
     private String prenom;
     private Boolean titreSejourEnFranceValide;
-    private Boolean isProprietaireSansPretOuLogeGratuit;
     private Logement logement;
 
     public String getCodePostal() {
@@ -118,14 +117,6 @@ public class InformationsPersonnelles {
         this.titreSejourEnFranceValide = titreSejourEnFranceValide;
     }
 
-    public Boolean getIsProprietaireSansPretOuLogeGratuit() {
-        return isProprietaireSansPretOuLogeGratuit;
-    }
-
-    public void setIsProprietaireSansPretOuLogeGratuit(Boolean isProprietaireSansPretOuLogeGratuit) {
-        this.isProprietaireSansPretOuLogeGratuit = isProprietaireSansPretOuLogeGratuit;
-    }
-
     public Logement getLogement() {
         return logement;
     }
@@ -138,11 +129,6 @@ public class InformationsPersonnelles {
     public String toString() {
         return "InformationsPersonnelles [codePostal=" + codePostal + ", dateNaissance=" + dateNaissance + ", email=" + email + ", hasRevenusImmobilier=" + hasRevenusImmobilier
                 + ", travailleurIndependant=" + travailleurIndependant + ", microEntrepreneur=" + microEntrepreneur + ", isSalarie=" + isSalarie + ", isSansRessource=" + isSansRessource
-                + ", nationalite=" + nationalite + ", nom=" + nom + ", prenom=" + prenom + ", titreSejourEnFranceValide=" + titreSejourEnFranceValide + ", isProprietaireSansPretOuLogeGratuit="
-                + isProprietaireSansPretOuLogeGratuit + ", logement=" + logement + ", getCodePostal()=" + getCodePostal() + ", getDateNaissance()=" + getDateNaissance() + ", getEmail()=" + getEmail()
-                + ", isHasRevenusImmobilier()=" + isHasRevenusImmobilier() + ", isTravailleurIndependant()=" + isTravailleurIndependant() + ", isMicroEntrepreneur()=" + isMicroEntrepreneur()
-                + ", isSalarie()=" + isSalarie() + ", isSansRessource()=" + isSansRessource() + ", getNationalite()=" + getNationalite() + ", getNom()=" + getNom() + ", getPrenom()=" + getPrenom()
-                + ", getTitreSejourEnFranceValide()=" + getTitreSejourEnFranceValide() + ", getIsProprietaireSansPretOuLogeGratuit()=" + getIsProprietaireSansPretOuLogeGratuit() + ", getLogement()="
-                + getLogement() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+                + ", nationalite=" + nationalite + ", nom=" + nom + ", prenom=" + prenom + ", titreSejourEnFranceValide=" + titreSejourEnFranceValide + ", logement=" + logement + "]";
     }
 }

@@ -64,8 +64,8 @@ public class SimulateurAidesCAF {
             if (isEligibleAidesFamiliales(demandeurEmploi, numeroMoisSimule)) {
                 aidesFamilialesUtile.simulerAidesFamiliales(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
             }
-            if (isEligibleAidesLogement(demandeurEmploi)) {
-                aidesLogementUtile.simulerAidesLogement(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
+            if (aidesLogementUtile.isEligibleAidesLogement(demandeurEmploi)) {
+                aidesLogementUtile.simulerAidesLogement(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
             }
         }
     }
@@ -83,7 +83,5 @@ public class SimulateurAidesCAF {
                 || aidesFamilialesUtile.isEligiblePensionsAlimentaires(demandeurEmploi);
     }
 
-    private boolean isEligibleAidesLogement(DemandeurEmploi demandeurEmploi) {
-        return aidesLogementUtile.isEligibleAPL(demandeurEmploi) || aidesLogementUtile.isEligibleALS(demandeurEmploi) || aidesLogementUtile.isEligibleALF(demandeurEmploi);
-    }
+    
 }

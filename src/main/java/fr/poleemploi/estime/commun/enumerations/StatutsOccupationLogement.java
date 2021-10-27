@@ -6,7 +6,8 @@ public enum StatutsOccupationLogement {
     LOCATAIRE_NON_MEUBLE("locataire_vide"),
     LOGE_GRATUITEMENT("loge_gratuitement"),
     PROPRIETAIRE("proprietaire"),
-    PROPRIETAIRE_AVEC_EMPRUNT("proprietaire");
+    PROPRIETAIRE_AVEC_EMPRUNT("proprietaire"),
+    NON_RENSEIGNE("non_renseigne");
     
     private String libelle;
     

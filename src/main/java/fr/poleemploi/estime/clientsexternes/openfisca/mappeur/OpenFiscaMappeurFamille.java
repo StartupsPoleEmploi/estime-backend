@@ -90,6 +90,9 @@ public class OpenFiscaMappeurFamille {
         }
         famille.put(PPA, openFiscaMappeurPrimeActivite.creerPrimeActiviteJSON(dateDebutSimulation, numeroMoisSimule));
         famille.put(AIDE_LOGEMENT, openFiscaMappeurAidesLogement.creerAideLogementJSON(dateDebutSimulation, numeroMoisSimule));
+        famille.put(APL, openFiscaMappeurAidesLogement.creerAideLogementJSON(dateDebutSimulation, numeroMoisSimule));
+        famille.put(ALF, openFiscaMappeurAidesLogement.creerAideLogementJSON(dateDebutSimulation, numeroMoisSimule));
+        famille.put(ALS, openFiscaMappeurAidesLogement.creerAideLogementJSON(dateDebutSimulation, numeroMoisSimule));
         return famille;
     }
 

@@ -1,60 +1,124 @@
 {
-  "individus": {
-    "demandeur": {
-      "date_naissance": {
-        "2021-03": "1979-01-08",
-        "2021-04": "1979-01-08",
-        "2021-05": "1979-01-08",
-        "2021-06": "1979-01-08"
-      },
-      "statut_marital": {
-        "2021-03": "celibataire",
-        "2021-04": "celibataire",
-        "2021-05": "celibataire",
-        "2021-06": "celibataire"
-      },
-      "salaire_de_base": {
-        "2021-03": 1165,
-        "2021-04": 1165,
-        "2021-05": 1165,
-        "2021-06": 1165
-      },
-      "salaire_imposable": {
-        "2021-03": 900,
-        "2021-04": 900,
-        "2021-05": 900,
-        "2021-06": 900
-      }
+    "individus": {
+        "demandeur": {
+            "date_naissance": {
+                "2021-03": "1979-01-08",
+                "2021-04": "1979-01-08",
+                "2021-05": "1979-01-08",
+                "2021-06": "1979-01-08"
+            },
+            "statut_marital": {
+                "2021-03": "celibataire",
+                "2021-04": "celibataire",
+                "2021-05": "celibataire",
+                "2021-06": "celibataire"
+            },
+            "salaire_de_base": {
+                "2021-03": 1165,
+                "2021-04": 1165,
+                "2021-05": 1165,
+                "2021-06": 1165
+            },
+            "salaire_imposable": {
+                "2021-03": 900,
+                "2021-04": 900,
+                "2021-05": 900,
+                "2021-06": 900
+            }
+        },
+        "enfant1": {
+            "date_naissance": {
+                "2021-03": "2000-09-09",
+                "2021-04": "2000-09-09",
+                "2021-05": "2000-09-09",
+                "2021-06": "2000-09-09"
+            },
+            "enfant_a_charge": {
+                "2021": true
+            },
+            "pensions_invalidite": {
+                "2021-03": 200,
+                "2021-04": 200,
+                "2021-05": 200,
+                "2021-06": 200
+            }
+        }
     },
-    "enfant1": {
-      "date_naissance": {
-        "2021-03": "2000-09-09",
-        "2021-04": "2000-09-09",
-        "2021-05": "2000-09-09",
-        "2021-06": "2000-09-09"
-      },
-      "enfant_a_charge": {
-        "2021": true
-      },
-      "pensions_invalidite": {
-        "2021-03": 200,
-        "2021-04": 200,
-        "2021-05": 200,
-        "2021-06": 200
-      }
+    "familles": {
+        "famille1": {
+            "parents": [
+                "demandeur"
+            ],
+            "enfants": [
+                "enfant1"
+            ],
+            "ppa": {
+                "2021-06": null
+            },
+            "aide_logement": {
+                "2021-06": null
+            }
+        }
+    },
+    "menages": {
+        "menage1": {
+            "personne_de_reference": [
+                "demandeur"
+            ],
+            "statut_occupation_logement": {
+                "2021-03": "locataire_vide",
+                "2021-04": "locataire_vide",
+                "2021-05": "locataire_vide",
+                "2021-06": "locataire_vide"
+            },
+            "residence_mayotte": {
+                "2021-03": false,
+                "2021-04": false,
+                "2021-05": false,
+                "2021-06": false
+            },
+            "loyer": {
+                "2021-03": 500,
+                "2021-04": 500,
+                "2021-05": 500,
+                "2021-06": 500
+            },
+            "charges_locatives": {
+                "2021-03": 50,
+                "2021-04": 50,
+                "2021-05": 50,
+                "2021-06": 50
+            },
+            "logement_crous": {
+                "2021-03": false,
+                "2021-04": false,
+                "2021-05": false,
+                "2021-06": false
+            },
+            "logement_conventionne": {
+                "2021-03": false,
+                "2021-04": false,
+                "2021-05": false,
+                "2021-06": false
+            },
+            "depcom": {
+                "2021-03": "44109",
+                "2021-04": "44109",
+                "2021-05": "44109",
+                "2021-06": "44109"
+            },
+            "coloc": {
+                "2021-03": false,
+                "2021-04": false,
+                "2021-05": false,
+                "2021-06": false
+            },
+            "logement_chambre": {
+                "2021-03": false,
+                "2021-04": false,
+                "2021-05": false,
+                "2021-06": false
+            }
+        }
     }
-  },
-  "familles": {
-    "famille1": {
-      "parents": [
-        "demandeur"
-      ],
-      "enfants": [
-        "enfant1"
-      ],
-      "ppa": {
-        "2021-06": null
-      }
-    }
-  }
 }

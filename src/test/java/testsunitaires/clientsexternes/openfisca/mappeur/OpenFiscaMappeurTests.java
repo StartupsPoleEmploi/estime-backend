@@ -30,9 +30,11 @@ import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
+import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.UtileTests;
 
 
@@ -72,6 +74,15 @@ class OpenFiscaMappeurTests {
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -120,6 +131,15 @@ class OpenFiscaMappeurTests {
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -169,6 +189,15 @@ class OpenFiscaMappeurTests {
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -215,6 +244,15 @@ class OpenFiscaMappeurTests {
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -244,6 +282,15 @@ class OpenFiscaMappeurTests {
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -277,6 +324,15 @@ class OpenFiscaMappeurTests {
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -312,7 +368,15 @@ class OpenFiscaMappeurTests {
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-        
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);        
         SituationFamiliale situationFamiliale = new SituationFamiliale();
         situationFamiliale.setIsEnCouple(false);
         demandeurEmploi.setSituationFamiliale(situationFamiliale);
@@ -344,6 +408,15 @@ class OpenFiscaMappeurTests {
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("08-01-1979"));
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -379,6 +452,15 @@ class OpenFiscaMappeurTests {
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("08-01-1979"));
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();
@@ -415,7 +497,15 @@ class OpenFiscaMappeurTests {
         
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
-        informationsPersonnelles.setIsProprietaireSansPretOuLogeGratuit(false);
+        Logement logement = new Logement();
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
         
         SituationFamiliale situationFamiliale = new SituationFamiliale();

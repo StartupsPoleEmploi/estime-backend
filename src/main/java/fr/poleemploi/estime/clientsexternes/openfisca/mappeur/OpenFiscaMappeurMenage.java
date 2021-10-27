@@ -8,6 +8,7 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CROUS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOYER;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PERSONNE_DE_REFERENCE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.RESIDENCE_MAYOTTE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_OCCUPATION_LOGEMENT;
 
 import java.time.LocalDate;
@@ -37,14 +38,17 @@ public class OpenFiscaMappeurMenage {
         Logement logement = demandeurEmploi.getInformationsPersonnelles().getLogement();
         personneReferenceJSON.put("demandeur");
         menage.put(PERSONNE_DE_REFERENCE, personneReferenceJSON);
-        menage.put(CHARGES_LOCATIVES, openFiscaPeriodeMappeur.creerPeriodes(logement.getMontantCharges(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-        menage.put(LOYER, openFiscaPeriodeMappeur.creerPeriodes(logement.getMontantLoyer(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
         menage.put(STATUT_OCCUPATION_LOGEMENT, openFiscaPeriodeMappeur.creerPeriodes(informationsPersonnellesUtile.getStatutOccupationLogement(logement), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-        menage.put(LOGEMENT_CHAMBRE, openFiscaPeriodeMappeur.creerPeriodes(logement.isChambre(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-        menage.put(LOGEMENT_CONVENTIONNE, openFiscaPeriodeMappeur.creerPeriodes(logement.isConventionne(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-        menage.put(LOGEMENT_CROUS, openFiscaPeriodeMappeur.creerPeriodes(logement.isCrous(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-        menage.put(COLOC, openFiscaPeriodeMappeur.creerPeriodes(logement.isColloc(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-        menage.put(DEPCOM, openFiscaPeriodeMappeur.creerPeriodes(logement.getCodeInsee(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+        if(logement != null) {
+            menage.put(RESIDENCE_MAYOTTE, openFiscaPeriodeMappeur.creerPeriodes(logement.isDeMayotte(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            menage.put(LOYER, openFiscaPeriodeMappeur.creerPeriodes(logement.getMontantLoyer(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            menage.put(CHARGES_LOCATIVES, openFiscaPeriodeMappeur.creerPeriodes(logement.getMontantCharges(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            menage.put(LOGEMENT_CROUS, openFiscaPeriodeMappeur.creerPeriodes(logement.isCrous(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            menage.put(LOGEMENT_CONVENTIONNE, openFiscaPeriodeMappeur.creerPeriodes(logement.isConventionne(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            menage.put(DEPCOM, openFiscaPeriodeMappeur.creerPeriodes(logement.getCodeInsee(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            menage.put(COLOC, openFiscaPeriodeMappeur.creerPeriodes(logement.isColloc(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+            menage.put(LOGEMENT_CHAMBRE, openFiscaPeriodeMappeur.creerPeriodes(logement.isChambre(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+        }
         return menage;
     }
 }

@@ -34,12 +34,14 @@ import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.MoisTravailleAvantSimulation;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
+import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 
 @Component
@@ -82,6 +84,10 @@ public class UtileTests {
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setNom("DUPONT");
         informationsPersonnelles.setPrenom("DANIEL");
+        Logement logement = new Logement();
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+//        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
         demandeurEmploi.setBeneficiaireAides(creerBeneficiaireAides(population));

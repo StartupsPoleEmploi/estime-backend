@@ -18,6 +18,8 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.services.ressources.Logement;
+import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.UtileTests;
 
 public class CommunTests {
@@ -39,5 +41,17 @@ public class CommunTests {
         //mock retour appel détail indemnisation de l'ESD 
         DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.RSA.getLibelle());        
         doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
+    }
+
+    protected Logement initLogement() {
+        Logement logement = new Logement();
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        logement.setMontantCharges(50f);
+        logement.setMontantLoyer(500f);
+        logement.setCodeInsee("44109");
+        logement.setDeMayotte(false);
+        return logement;
     }
 }

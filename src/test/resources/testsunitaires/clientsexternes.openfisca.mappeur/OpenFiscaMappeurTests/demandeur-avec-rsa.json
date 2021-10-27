@@ -1,63 +1,114 @@
 {
-  "individus": {
-    "demandeur": {
-      "date_naissance": {
-        "2020-08": "1986-07-05",
-        "2020-09": "1986-07-05",
-        "2020-10": "1986-07-05",
-        "2020-11": "1986-07-05"
-      },
-      "statut_marital": {
-        "2020-08": "celibataire",
-        "2020-09": "celibataire",
-        "2020-10": "celibataire",
-        "2020-11": "celibataire" 
-      },
-      "salaire_de_base": {
-        "2020-08": 1165,
-        "2020-09": 1165,
-        "2020-10": 1165,
-        "2020-11": 1165
-      },
-      "salaire_imposable": {
-        "2020-08": 900,
-        "2020-09": 900,
-        "2020-10": 900,
-        "2020-11": 900
-      }
-    }
-  },
-  "familles": {
-    "famille1": {
-      "parents": [
-        "demandeur"
-      ],
-      "enfants": [],
-      "rsa": {
-        "2020-11": null
-      },
-      "rsa_isolement_recent": {
-        "2020-08": false,
-        "2020-09": false,
-        "2020-10": false,
-        "2020-11": false
-      },
-      "ppa": {
-        "2020-11": null
-      }
-    }
-  },
-  "menages": {
-    "menage1": {
-        "personne_de_reference": [
-            "demandeur"
-        ],
-        "statut_occupation_logement" : {
-        "2020-08": "locataire_vide",
-        "2020-09": "locataire_vide",
-        "2020-10": "locataire_vide",
-        "2020-11": "locataire_vide"            
+    "individus": {
+        "demandeur": {
+            "date_naissance": {
+                "2020-08": "1986-07-05",
+                "2020-09": "1986-07-05",
+                "2020-10": "1986-07-05",
+                "2020-11": "1986-07-05"
+            },
+            "statut_marital": {
+                "2020-08": "celibataire",
+                "2020-09": "celibataire",
+                "2020-10": "celibataire",
+                "2020-11": "celibataire"
+            },
+            "salaire_de_base": {
+                "2020-08": 1165,
+                "2020-09": 1165,
+                "2020-10": 1165,
+                "2020-11": 1165
+            },
+            "salaire_imposable": {
+                "2020-08": 900,
+                "2020-09": 900,
+                "2020-10": 900,
+                "2020-11": 900
+            }
         }
-      }
-   }
+    },
+    "familles": {
+        "famille1": {
+            "parents": [
+                "demandeur"
+            ],
+            "enfants": [],
+            "rsa": {
+                "2020-11": null
+            },
+            "rsa_isolement_recent": {
+                "2020-08": false,
+                "2020-09": false,
+                "2020-10": false,
+                "2020-11": false
+            },
+            "ppa": {
+                "2020-11": null
+            },
+            "aide_logement": {
+                "2020-11": null
+            }
+        }
+    },
+    "menages": {
+        "menage1": {
+            "personne_de_reference": [
+                "demandeur"
+            ],
+            "statut_occupation_logement": {
+                "2020-08": "locataire_vide",
+                "2020-09": "locataire_vide",
+                "2020-10": "locataire_vide",
+                "2020-11": "locataire_vide"
+            },
+            "residence_mayotte": {
+                "2020-08": false,
+                "2020-09": false,
+                "2020-10": false,
+                "2020-11": false
+            },
+            "loyer": {
+                "2020-08": 500,
+                "2020-09": 500,
+                "2020-10": 500,
+                "2020-11": 500
+            },
+            "charges_locatives": {
+                "2020-08": 50,
+                "2020-09": 50,
+                "2020-10": 50,
+                "2020-11": 50
+            },
+            "logement_crous": {
+                "2020-08": false,
+                "2020-09": false,
+                "2020-10": false,
+                "2020-11": false
+            },
+            "logement_conventionne": {
+                "2020-08": false,
+                "2020-09": false,
+                "2020-10": false,
+                "2020-11": false
+            },
+            "depcom": {
+                "2020-08": "44109",
+                "2020-09": "44109",
+                "2020-10": "44109",
+                "2020-11": "44109"
+            },
+            "coloc": {
+                "2020-08": false,
+                "2020-09": false,
+                "2020-10": false,
+                "2020-11": false
+            },
+            "logement_chambre": {
+                "2020-08": false,
+                "2020-09": false,
+                "2020-10": false,
+                "2020-11": false
+            }
+        }
+    }
 }
