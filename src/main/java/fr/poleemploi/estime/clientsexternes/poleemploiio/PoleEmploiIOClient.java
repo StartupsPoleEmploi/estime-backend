@@ -19,6 +19,8 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DateNaissancePEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
@@ -57,6 +59,9 @@ public class PoleEmploiIOClient {
     @Value("${emploi-store-dev.aide-mobilite-api-uri}")
     private String uriAideMobilite;
     
+    @Value("${emploi-store-dev.are-api-uri}")
+    private String uriAre;
+    
     @Autowired
     private RestTemplate restTemplate;
 
@@ -85,6 +90,17 @@ public class PoleEmploiIOClient {
             throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
         }        
     }
+    
+   public ArePEIOOut callAreEndPoint(ArePEIOIn areIn) {
+	   HttpEntity<MultiValueMap<String, Object>> requeteHTTP = emploiStoreUtile.getAreRequeteHTTP(areIn);
+	   try {
+		   ResponseEntity<ArePEIOOut> reponse = restTemplate.postForEntity(this.uriAre, requeteHTTP , ArePEIOOut.class);
+		   return reponse.getBody();
+	   } catch (HttpClientErrorException e) {
+		   LOGGER.info(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
+           throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+	   }
+   }
     
    public AgepiPEIOOut callAgepiEndPoint(AgepiPEIOIn agepiIn) { 
 	   HttpEntity<MultiValueMap<String, Object>> requeteHTTP = emploiStoreUtile.getAgepiRequeteHTTP(agepiIn);

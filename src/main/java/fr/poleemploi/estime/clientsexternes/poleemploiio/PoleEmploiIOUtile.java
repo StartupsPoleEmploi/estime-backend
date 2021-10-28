@@ -10,6 +10,7 @@ import org.springframework.util.MultiValueMap;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOIn;
 
 @Component
 public class PoleEmploiIOUtile {
@@ -85,6 +86,17 @@ public class PoleEmploiIOUtile {
         map.add("nombreRepas", aideMobiliteIn.getNombreRepas());
         map.add("nombreNuitees", aideMobiliteIn.getNombreNuitees());
                 
+        return new HttpEntity<>(map, headers);
+	}
+
+	public HttpEntity<MultiValueMap<String, Object>> getAreRequeteHTTP(ArePEIOIn areIn) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+        map.add("salaireBrutJournalier", areIn.getAllocationBruteJournaliere());
+        map.add("allocationBruteJournaliere", areIn.getGainBrut());
+        map.add("gainBrut", areIn.getSalaireBrutJournalier());
+
         return new HttpEntity<>(map, headers);
 	}
 }
