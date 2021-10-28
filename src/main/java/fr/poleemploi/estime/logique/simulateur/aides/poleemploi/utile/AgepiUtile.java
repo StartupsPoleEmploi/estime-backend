@@ -12,7 +12,6 @@ import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.openfisca.AgepiApiClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
@@ -70,9 +69,6 @@ public class AgepiUtile {
 
 	@Autowired
     private PoleEmploiIOClient emploiStoreDevClient;
-	
-    private AgepiApiClient agepiApiClient;
-
 
     /** Qui peut percevoir l'Agepi ?
      *   Vous pouvez percevoir l'Agepi si vous remplissez toutes les conditions suivantes :
@@ -169,22 +165,22 @@ public class AgepiUtile {
         return agepi;
     }
 
-    private float determinerMontantAgepiApiExterne(MontantsParPalierAgepi montantPalierIntermediaire, MontantsParPalierAgepi montantPalierMax, DemandeurEmploi demandeurEmploi) throws JSONException {
-    	agepiApiClient = new AgepiApiClient();
-    	agepiApiClient.envoyerDonneesDemandeurEmploi(demandeurEmploi);
-    	return 0;
-    }
-    
+//    private float determinerMontantAgepiApiExterne(MontantsParPalierAgepi montantPalierIntermediaire, MontantsParPalierAgepi montantPalierMax, DemandeurEmploi demandeurEmploi) throws JSONException {
+//    	agepiApiClient = new AgepiApiClient();
+//    	agepiApiClient.envoyerDonneesDemandeurEmploi(demandeurEmploi);
+//    	return 0;
+//    }
+//    
     private float determinerMontantAgepi(MontantsParPalierAgepi montantPalierIntermediaire, MontantsParPalierAgepi montantPalierMax, DemandeurEmploi demandeurEmploi){
         float nombreHeuresTravailleesSemaine = demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine();
-        try {
-        	this.agepiApiClient = new AgepiApiClient();
-        	System.out.println("======================");
-            System.out.println(this.agepiApiClient.creerJsonDemandeur(demandeurEmploi).toString());
-        		
-        } catch (JSONException e) {
-			e.printStackTrace();
-		}       
+//        try {
+//        	this.agepiApiClient = new AgepiApiClient();
+//        	System.out.println("======================");
+//            System.out.println(this.agepiApiClient.creerJsonDemandeur(demandeurEmploi).toString());
+//        		
+//        } catch (JSONException e) {
+//			e.printStackTrace();
+//		}       
         if(nombreHeuresTravailleesSemaine < NBR_HEURE_PALIER_INTERMEDIAIRE) {
             int montantHorsMayotte = montantPalierIntermediaire.getMontant();
             return informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) ? calculerMontantMayotte(montantHorsMayotte) : montantHorsMayotte;

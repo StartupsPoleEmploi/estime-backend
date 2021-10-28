@@ -51,8 +51,11 @@ public class PoleEmploiIOClient {
     @Autowired
     private PoleEmploiIOUtile emploiStoreUtile;
     
-    private String uriAgepi = "https://api.emploi-store.fr/partenaire/peconnect-simulateurs-aides/v1/demande-agepi/simuler";
-    private String uriAideMobilite = "https://api.emploi-store.fr/partenaire/peconnect-simulateurs-aides/v1/demande-aidemobilite/simuler";
+    @Value("${emploi-store-dev.agepi-api-uri}")
+    private String uriAgepi;
+    
+    @Value("${emploi-store-dev.aide-mobilite-api-uri}")
+    private String uriAideMobilite;
     
     @Autowired
     private RestTemplate restTemplate;

@@ -15,9 +15,20 @@
     "description": "A description for 'emploi-store-dev.detail-indemnisation-api-uri'"
   },
   {
+    "name": "emploi-store-dev.agepi-api-uri",
+    "type": "java.lang.String",
+    "description": "A description for 'emploi-store-dev.agepi-api-uri'"
+  },
+    {
+    "name": "emploi-store-dev.aide-mobilite-api-uri",
+    "type": "java.lang.String",
+    "description": "A description for 'emploi-store-dev.aide-mobilite-api-uri'"
+  },
+  {
     "name": "openfisca-api-uri",
     "type": "java.lang.String",
     "description": "A description for 'open-fisca-api-uri'"
-  }
+  },
+  
   
 ]}
