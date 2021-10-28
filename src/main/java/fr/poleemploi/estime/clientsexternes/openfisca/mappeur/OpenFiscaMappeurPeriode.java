@@ -90,7 +90,7 @@ public class OpenFiscaMappeurPeriode {
         periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), allocationsLogement.getMoisNMoins3());
         periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), allocationsLogement.getMoisNMoins2());
         periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), allocationsLogement.getMoisNMoins1());
-        periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), allocationsLogement.getMoisNMoins1());
+        periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
         return periode;
     }
 

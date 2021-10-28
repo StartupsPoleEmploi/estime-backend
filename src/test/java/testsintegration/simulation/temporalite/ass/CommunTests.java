@@ -26,7 +26,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.UtileTests;
 
 public class CommunTests {
-    
+
     @Autowired
     protected UtileTests utileTests;
 
@@ -34,8 +34,7 @@ public class CommunTests {
     private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
 
     @SpyBean
-    protected DateUtile dateUtile;  
-   
+    protected DateUtile dateUtile;
 
     protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
         boolean isEnCouple = false;
@@ -52,26 +51,19 @@ public class CommunTests {
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);   
+        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));
-        
-        AidesCAF aidesCAF = new AidesCAF();
-        AidesFamiliales aidesFamiliales = new AidesFamiliales();
-        aidesFamiliales.setAllocationsFamiliales(0);
-        aidesFamiliales.setAllocationSoutienFamilial(117);
-        aidesFamiliales.setComplementFamilial(0); 
-        aidesCAF.setAidesFamiliales(aidesFamiliales);
-        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117f);
 
         return demandeurEmploi;
     }
 
     protected void initMocks() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        //mock création date de demande de simulation
+        // mock création date de demande de simulation
         doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
 
-        //mock retour appel détail indemnisation de l'ESD 
-        DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.ASS.getLibelle());         
-        doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
+        // mock retour appel détail indemnisation de l'ESD
+        DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.ASS.getLibelle());
+        doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
     }
 }

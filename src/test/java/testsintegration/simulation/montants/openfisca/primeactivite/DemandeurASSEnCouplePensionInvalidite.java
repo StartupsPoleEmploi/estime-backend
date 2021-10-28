@@ -58,27 +58,16 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         // futur contrat CDI avec salaire net 800€/mois
         boolean isEnCouple = true;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
-        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-
+        
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        AidesCPAM aidesCPAMConjoint = new AidesCPAM();
-        aidesCPAMConjoint.setPensionInvalidite(200f);
-        ressourcesFinancieresConjoint.setAidesCPAM(aidesCPAMConjoint);
+        ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint);
 
-        SimulationAides simulationAides = new SimulationAides();
-        List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
-        simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
+        SimulationAides simulationAides = createSimulationAides();
 
         // Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");
@@ -100,37 +89,17 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         // APL 150€
         boolean isEnCouple = true;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
-        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-
-        AidesCAF aidesCAF = new AidesCAF();
-        AidesFamiliales aidesFamiliales = new AidesFamiliales();
-        aidesFamiliales.setAllocationsFamiliales(0);
-        aidesFamiliales.setAllocationSoutienFamilial(0);
-        aidesFamiliales.setComplementFamilial(0);
-        aidesCAF.setAidesFamiliales(aidesFamiliales);
-        aidesCAF.setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
-        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
-
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
+        
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        AidesCPAM aidesCPAMConjoint = new AidesCPAM();
-        aidesCPAMConjoint.setPensionInvalidite(200f);
-        ressourcesFinancieresConjoint.setAidesCPAM(aidesCPAMConjoint);
+        ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint);
 
-        SimulationAides simulationAides = new SimulationAides();
-        List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
-        simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
+        SimulationAides simulationAides = createSimulationAides();
 
         // Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");
@@ -149,31 +118,19 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         // futur contrat CDI 35h avec salaire net 800€/mois brut 1038€/mois
         boolean isEnCouple = true;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("08-01-1979"));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+        DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
-        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        Salaire salaireConjoint = new Salaire();
+        Salaire salaireConjoint = createSalaireConjoint();
         salaireConjoint.setMontantNet(1000);
         salaireConjoint.setMontantBrut(1291);
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
-        AidesCPAM aidesCPAMConjoint = new AidesCPAM();
-        aidesCPAMConjoint.setPensionInvalidite(200f);
-        ressourcesFinancieresConjoint.setAidesCPAM(aidesCPAMConjoint);
+        ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint);
-
-        SimulationAides simulationAides = new SimulationAides();
-        List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
-        simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
+        
+        SimulationAides simulationAides = createSimulationAides();
 
         // Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");
@@ -191,41 +148,21 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         // futur contrat CDI avec salaire net 800€/mois
         boolean isEnCouple = true;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("08-01-1979"));
+        DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
-        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-
-        AidesCAF aidesCAF = new AidesCAF();
-        AidesFamiliales aidesFamiliales = new AidesFamiliales();
-        aidesFamiliales.setAllocationsFamiliales(0);
-        aidesFamiliales.setAllocationSoutienFamilial(0);
-        aidesFamiliales.setComplementFamilial(0);
-        aidesCAF.setAidesFamiliales(aidesFamiliales);
-        aidesCAF.setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
-        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(aidesCAF);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
 
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        Salaire salaireConjoint = new Salaire();
+        Salaire salaireConjoint = createSalaireConjoint();
         salaireConjoint.setMontantNet(1000);
         salaireConjoint.setMontantBrut(1291);
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
-        AidesCPAM aidesCPAMConjoint = new AidesCPAM();
-        aidesCPAMConjoint.setPensionInvalidite(200f);
-        ressourcesFinancieresConjoint.setAidesCPAM(aidesCPAMConjoint);
+        ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint);
 
-        SimulationAides simulationAides = new SimulationAides();
-        List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
-        simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
-        simulationsMensuelles.add(createSimulationMensuelleASS(0));
-        simulationAides.setSimulationsMensuelles(simulationsMensuelles);
+        SimulationAides simulationAides = createSimulationAides();
 
         // Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2020");

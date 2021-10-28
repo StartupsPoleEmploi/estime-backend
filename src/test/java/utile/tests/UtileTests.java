@@ -25,6 +25,7 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
+import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
@@ -42,7 +43,6 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
-
 
 @Component
 public class UtileTests {
@@ -73,9 +73,9 @@ public class UtileTests {
     }
 
     public LocalDate getDate(String dateString) throws ParseException {
-        DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return  LocalDate.parse(dateString, formatter);
-    }   
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return LocalDate.parse(dateString, formatter);
+    }
 
     public DemandeurEmploi creerBaseDemandeurEmploi(String population, boolean isEnCouple, int nbEnfant) {
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
@@ -103,7 +103,7 @@ public class UtileTests {
 
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
         initRessourcesFinancieres(ressourcesFinancieres, population);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);                 
+        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
         return demandeurEmploi;
     }
@@ -111,7 +111,7 @@ public class UtileTests {
     public BeneficiaireAides creerBeneficiaireAides(String population) {
         switch (population) {
         case "AAH":
-            return creerBeneficiaireAides(true, false, false, false);    
+            return creerBeneficiaireAides(true, false, false, false);
         case "ARE":
             return creerBeneficiaireAides(false, true, false, false);
         case "ASS":
@@ -125,11 +125,10 @@ public class UtileTests {
         }
     }
 
-
     public DetailIndemnisationESD creerDetailIndemnisationESD(String population) {
         switch (population) {
         case "AAH":
-            return creerDetailIndemnisationESD(true, false, false, false);    
+            return creerDetailIndemnisationESD(true, false, false, false);
         case "ARE":
             return creerDetailIndemnisationESD(false, true, false, false);
         case "ASS":
@@ -152,7 +151,7 @@ public class UtileTests {
         aidesLogement.setAidePersonnaliseeLogement(aidePersonnaliseeLogement);
         return aidesLogement;
     }
-    
+
     public AidesLogement creerAidesLogement() {
         AidesLogement aidesLogement = new AidesLogement();
         aidesLogement.setAidePersonnaliseeLogement(new AllocationsLogement());
@@ -161,9 +160,7 @@ public class UtileTests {
         return aidesLogement;
     }
 
-    public PeriodeTravailleeAvantSimulation creerPeriodeTravailleeAvantSimulation(
-            float salaireBrutMoisMois1, float salaireNetMoisMois1,
-            float salaireBrutMoisMois2, float salaireNetMoisMois2,
+    public PeriodeTravailleeAvantSimulation creerPeriodeTravailleeAvantSimulation(float salaireBrutMoisMois1, float salaireNetMoisMois1, float salaireBrutMoisMois2, float salaireNetMoisMois2,
             float salaireBrutMoisMois3, float salaireNetMoisMois3) {
 
         PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
@@ -173,13 +170,13 @@ public class UtileTests {
 
         return periodeTravailleeAvantSimulation;
     }
-    
+
     private MoisTravailleAvantSimulation creerMoisTravailleAvantSimulation(float montantBrut, float montantNet) {
         MoisTravailleAvantSimulation moisTravailleAvantSimulation = new MoisTravailleAvantSimulation();
         Salaire salaire = new Salaire();
         salaire.setMontantNet(montantNet);
         salaire.setMontantBrut(montantBrut);
-        if(montantNet > 0) {
+        if (montantNet > 0) {
             moisTravailleAvantSimulation.setSansSalaire(false);
         } else {
             moisTravailleAvantSimulation.setSansSalaire(true);
@@ -190,31 +187,38 @@ public class UtileTests {
 
     private void initRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres, String population) {
         switch (population) {
-        case "AAH" :
+        case "AAH":
         case "RSA":
-            ressourcesFinancieres.setAidesCAF(new AidesCAF());
-            break;
         case "ARE":
         case "ASS":
             ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population));
             break;
         case "AAH_ASS":
-            ressourcesFinancieres.setAidesCAF(new AidesCAF());
-            ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));            
+            ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));
         default:
             break;
-        }        
+        }
+        AllocationsLogement allocationsLogement = new AllocationsLogement();
+        AidesLogement aidesLogement = new AidesLogement();
+        aidesLogement.setAidePersonnaliseeLogement(allocationsLogement);
+        aidesLogement.setAllocationLogementFamiliale(allocationsLogement);
+        aidesLogement.setAllocationLogementSociale(allocationsLogement);
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        AidesCAF aidesCAF = new AidesCAF();
+        aidesCAF.setAidesLogement(aidesLogement);
+        aidesCAF.setAidesFamiliales(aidesFamiliales);
+        ressourcesFinancieres.setAidesCAF(aidesCAF);
     }
 
     private void intiSituationFamiliale(boolean isEnCouple, int nbEnfant, SituationFamiliale situationFamiliale) {
         situationFamiliale.setIsEnCouple(isEnCouple);
-        if(isEnCouple) {
+        if (isEnCouple) {
             Personne conjoint = new Personne();
             situationFamiliale.setConjoint(conjoint);
         }
-        if(nbEnfant > 0) {
+        if (nbEnfant > 0) {
             List<Personne> personnesACharge = new ArrayList<>();
-            for (int i = 0; i < nbEnfant; i++) {  
+            for (int i = 0; i < nbEnfant; i++) {
                 Personne personneACharge = new Personne();
                 InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
                 personneACharge.setInformationsPersonnelles(informationsPersonnelles);
@@ -244,11 +248,11 @@ public class UtileTests {
 
     private AidesPoleEmploi creerAidePoleEmploi(String population) {
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-        if(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(population)) {
+        if (Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(population)) {
             AllocationASS allocationASS = new AllocationASS();
             aidesPoleEmploi.setAllocationASS(allocationASS);
         }
-        if(Aides.ALLOCATION_RETOUR_EMPLOI.getCode().equals(population)) {
+        if (Aides.ALLOCATION_RETOUR_EMPLOI.getCode().equals(population)) {
             AllocationARE allocationARE = new AllocationARE();
             aidesPoleEmploi.setAllocationARE(allocationARE);
         }

@@ -221,7 +221,7 @@ public class RessourcesFinancieresUtile {
     public boolean hasPensionsAlimentaires(DemandeurEmploi demandeurEmploi) {
         return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer() != 0;
     }
-    
+
 //    public Aide getAideLogementDeclare(DemandeurEmploi demandeurEmploi) {
 //        if (hasAidePersonnaliseeLogement(demandeurEmploi))
 //            return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement();
@@ -254,15 +254,7 @@ public class RessourcesFinancieresUtile {
         return typeAideLogement;
     }
 
-    public String getTypeAideLogement(DemandeurEmploi demandeurEmploi) {
-        String typeAideLogement = "";
-        if (hasAidePersonnaliseeLogement(demandeurEmploi))
-            typeAideLogement = Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode();
-        else if (hasAllocationLogementFamiliale(demandeurEmploi))
-            typeAideLogement = Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode();
-        else if (hasAllocationLogementSociale(demandeurEmploi))
-            typeAideLogement = Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode();
-        return typeAideLogement;
+    public boolean isAllocationLogementNotEmpty(AllocationsLogement allocationsLogement) {
+        return (allocationsLogement != null && (allocationsLogement.getMoisNMoins1() > 0 || allocationsLogement.getMoisNMoins2() > 0 || allocationsLogement.getMoisNMoins3() > 0));
     }
-
 }
