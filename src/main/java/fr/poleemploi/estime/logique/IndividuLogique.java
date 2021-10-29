@@ -15,6 +15,7 @@ import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
+import fr.poleemploi.estime.commun.utile.DemandeurDemoUtile;
 import fr.poleemploi.estime.commun.utile.IndividuUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
@@ -31,6 +32,9 @@ public class IndividuLogique {
 
     @Autowired
     private AccesTokenUtile accesTokenUtile;
+    
+    @Autowired
+    private DemandeurDemoUtile demandeurDemoUtile;
 
     @Autowired
     private DemandeurEmploiUtile demandeurEmploiUtile;
@@ -72,8 +76,13 @@ public class IndividuLogique {
                 stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
             } else {            
                 individu.setIdPoleEmploi(userInfoESD.getSub());
-                individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
-                individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);                 
+                if(demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
+                    individu.setPopulationAutorisee(true);   
+                    demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
+                } else {
+                    individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));                    
+                    individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);                 
+                }
             } 
 
             //@TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
