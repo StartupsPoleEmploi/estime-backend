@@ -42,8 +42,7 @@ public class DemandeurDemoUtile {
     
     private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationESD detailIndemnisation) {
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-        AllocationASS allocationASS = new AllocationASS();
-        allocationASS.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());  
+        AllocationASS allocationASS = new AllocationASS();  
         aidesPoleEmploi.setAllocationASS(allocationASS);
         return aidesPoleEmploi;
     }
