@@ -97,7 +97,7 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(497);
+                assertThat(rsa.getMontant()).isEqualTo(565);
             });
         });
         // Alors les prestations du troisième mois 01/2021 sont :
@@ -110,7 +110,7 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(497);
+                assertThat(rsa.getMontant()).isEqualTo(565);
             });
         });
         // Alors les prestations du quatrième mois 02/2021 sont :
@@ -123,11 +123,11 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(497);
+                assertThat(rsa.getMontant()).isEqualTo(565);
             });
         });
         // Alors les prestations du cinquième mois 03/2021 sont :
-        // PA : 176€ (simulateur CAF : 167€)
+        // PA : 242€ (simulateur CAF : 233€, pnds : 240€)
         SimulationMensuelle simulationMois5 = simulationAides.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -136,11 +136,11 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(176);
+                assertThat(ppa.getMontant()).isEqualTo(242);
             });
         });
         // Alors les prestations du sixième mois 04/2021 sont :
-        // PA : 176€ (simulateur CAF : 167€)
+        // PA : 242€ (simulateur CAF : 233€, pnds : 240€)
         SimulationMensuelle simulationMois6 = simulationAides.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -149,7 +149,7 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(176);
+                assertThat(ppa.getMontant()).isEqualTo(242);
             });
         });
     }
@@ -206,7 +206,8 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
             });
         });
         // Alors les prestations du second mois 12/2020 sont :
-        // RSA : 175€ (simulateur CAF : 149€), PA : 431 (simulateur CAF : 452€)
+        // PA : 431€ (simulateur CAF : 441€, pnds : 430€)
+        // RSA : 343 (simulateur CAF : ?€)
         SimulationMensuelle simulationMois2 = simulationAides.getSimulationsMensuelles().get(1);
         assertThat(simulationMois2).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -218,11 +219,12 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(431);
             });
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(175);
+                assertThat(rsa.getMontant()).isEqualTo(343);
             });
         });
         // Alors les prestations du troisième mois 01/2021 sont :
-        // RSA : 175€ (simulateur CAF : 149€), PA : 431 (simulateur CAF : 452€)
+        // PA : 431€ (simulateur CAF : 441€, pnds : 430€)
+        // RSA : 343 (simulateur CAF : ?€)
         SimulationMensuelle simulationMois3 = simulationAides.getSimulationsMensuelles().get(2);
         assertThat(simulationMois3).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -234,11 +236,12 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(431);
             });
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(175);
+                assertThat(rsa.getMontant()).isEqualTo(343);
             });
         });
         // Alors les prestations du quatrième mois 02/2021 sont :
-        // PA : 277 (simulateur CAF : 263€)
+        // PA : 431€ (simulateur CAF : 441€, pnds : 430€)
+        // RSA : 343 (simulateur CAF : ?€)
         SimulationMensuelle simulationMois4 = simulationAides.getSimulationsMensuelles().get(3);
         assertThat(simulationMois4).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -250,11 +253,11 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(431);
             });
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
-                assertThat(rsa.getMontant()).isEqualTo(175);
+                assertThat(rsa.getMontant()).isEqualTo(343);
             });
         });
         // Alors les prestations du cinquième mois 03/2021 sont :
-        // PA : 277€ (simulateur CAF : 263€)
+        // PA : 441€ (simulateur CAF : 427€, pnds : 440€)
         SimulationMensuelle simulationMois5 = simulationAides.getSimulationsMensuelles().get(4);
         assertThat(simulationMois5).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -263,11 +266,11 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(277);
+                assertThat(ppa.getMontant()).isEqualTo(441);
             });
         });
         // Alors les prestations du sixième mois 04/2021 sont :
-        // PA : 277€ (simulateur CAF : 263€)
+        // PA : 441€ (simulateur CAF : 427€, pnds : 440€)
         SimulationMensuelle simulationMois6 = simulationAides.getSimulationsMensuelles().get(5);
         assertThat(simulationMois6).satisfies(simulation -> {
             assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -276,7 +279,7 @@ class DemandeurRsaProchaineDeclarationMois1 extends CommunTests {
             });
             assertThat(simulation.getMesAides().size()).isEqualTo(1);
             assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-                assertThat(ppa.getMontant()).isEqualTo(277);
+                assertThat(ppa.getMontant()).isEqualTo(441);
             });
         });
     }

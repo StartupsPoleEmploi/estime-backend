@@ -93,6 +93,7 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
+        demandeurEmploi.getInformationsPersonnelles().setLogement(createLogement());
 
         AidesCPAM aidesCPAM = new AidesCPAM();
         aidesCPAM.setPensionInvalidite(200f);
@@ -126,6 +127,7 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(233);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().setAllocationsFamiliales(134);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
+        demandeurEmploi.getInformationsPersonnelles().setLogement(createLogement());
 
         AidesCPAM aidesCPAM = new AidesCPAM();
         aidesCPAM.setPensionInvalidite(200f);
@@ -137,9 +139,8 @@ class DemandeurASSCelibatairePensionInvalidite extends CommunTests {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        // TODO montant : écart de 23€ avec CAF
-        // Alors le montant de la prime d'activité pour le 06/2021 est de 23€ (résultat simulateur CAF : 0€)
-        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(23);
+        // Alors le montant de la prime d'activité pour le 06/2021 est de 18€ (résultat simulateur CAF : 0€)
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(18);
     }
 
     @Test

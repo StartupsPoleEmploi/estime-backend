@@ -15,10 +15,11 @@ import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
+import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.UtileTests;
 
 public class CommunTests {
@@ -80,5 +81,16 @@ public class CommunTests {
         AidesCPAM aidesCPAMConjoint = new AidesCPAM();
         aidesCPAMConjoint.setPensionInvalidite(200f);
         return aidesCPAMConjoint;
+    }
+    
+    protected Logement createLogement() {
+        Logement logement = new Logement();
+        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+        statutOccupationLogement.setLocataireNonMeuble(true);
+        logement.setStatutOccupationLogement(statutOccupationLogement);
+        logement.setMontantLoyer(500f);
+        logement.setMontantCharges(50f);
+        logement.setCodeInsee("44109");        
+        return logement;
     }
 }

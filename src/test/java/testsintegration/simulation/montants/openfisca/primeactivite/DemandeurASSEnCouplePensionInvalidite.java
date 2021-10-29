@@ -94,6 +94,7 @@ class DemandeurASSEnCouplePensionInvalidite extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
+        demandeurEmploi.getInformationsPersonnelles().setLogement(createLogement());
         
         RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
         ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());

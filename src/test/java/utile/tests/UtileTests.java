@@ -87,7 +87,7 @@ public class UtileTests {
         Logement logement = new Logement();
         StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
         logement.setStatutOccupationLogement(statutOccupationLogement);
-//        informationsPersonnelles.setLogement(logement);
+        informationsPersonnelles.setLogement(logement);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
         demandeurEmploi.setBeneficiaireAides(creerBeneficiaireAides(population));
