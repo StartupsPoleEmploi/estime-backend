@@ -29,7 +29,7 @@ public class DemandeurDemoUtile {
         BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
         beneficiaireAides.setBeneficiaireAAH(false);
         beneficiaireAides.setBeneficiaireARE(false);
-        beneficiaireAides.setBeneficiaireASS(false);
+        beneficiaireAides.setBeneficiaireASS(true);
         beneficiaireAides.setBeneficiaireRSA(false);
         individu.setBeneficiaireAides(beneficiaireAides);
     }
