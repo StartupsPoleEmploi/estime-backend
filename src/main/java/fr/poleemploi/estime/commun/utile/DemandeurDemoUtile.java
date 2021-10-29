@@ -16,7 +16,7 @@ public class DemandeurDemoUtile {
     private static String nomDemandeurDemo = "estimedemo";
     
     public boolean isDemandeurDemo(UserInfoESD userInfoESD) {
-        return nomDemandeurDemo.equalsIgnoreCase(userInfoESD.getFamilyName());
+        return userInfoESD.getFamilyName() != null && userInfoESD.getFamilyName().contains(nomDemandeurDemo);
     }
 
     public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD) {
