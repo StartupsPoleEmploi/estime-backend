@@ -87,23 +87,34 @@ public class OpenFiscaMappeurPeriode {
 
     public JSONObject creerPeriodesAllocationsLogement(AllocationsLogement allocationsLogement, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject periode = new JSONObject();
-        periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), allocationsLogement.getMoisNMoins3());
-        periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), allocationsLogement.getMoisNMoins2());
-        periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), allocationsLogement.getMoisNMoins1());
-        periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
-        return periode;
-    }
-
-    public JSONObject creerPeriodesAidesLogement(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        JSONObject periode = new JSONObject();
-        if (ressourcesFinancieresUtile.hasAidePersonnaliseeLogement(demandeurEmploi)) {
-            periode = creerPeriodesAllocationsLogement(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement(), dateDebutSimulation, numeroMoisSimule);
+        float moisNMoins3 = 0;
+        float moisNMoins2 = 0;
+        float moisNMoins1 = 0;
+        if (allocationsLogement != null) {
+            moisNMoins3 = allocationsLogement.getMoisNMoins3();
+            moisNMoins2 = allocationsLogement.getMoisNMoins2();
+            moisNMoins1 = allocationsLogement.getMoisNMoins1();
         }
-        if (ressourcesFinancieresUtile.hasAllocationLogementFamiliale(demandeurEmploi)) {
-            periode = creerPeriodesAllocationsLogement(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale(), dateDebutSimulation, numeroMoisSimule);
-        }
-        if (ressourcesFinancieresUtile.hasAllocationLogementSociale(demandeurEmploi)) {
-            periode = creerPeriodesAllocationsLogement(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale(), dateDebutSimulation, numeroMoisSimule);
+        if (numeroMoisSimule == 1) {
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), moisNMoins3);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), moisNMoins2);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), moisNMoins1);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
+        } else if (numeroMoisSimule == 2) {
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), moisNMoins2);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), moisNMoins1);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), JSONObject.NULL);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
+        } else if (numeroMoisSimule == 3) {
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), moisNMoins1);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), JSONObject.NULL);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), JSONObject.NULL);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
+        } else {
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), JSONObject.NULL);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), JSONObject.NULL);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), JSONObject.NULL);
+            periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
         }
         return periode;
     }

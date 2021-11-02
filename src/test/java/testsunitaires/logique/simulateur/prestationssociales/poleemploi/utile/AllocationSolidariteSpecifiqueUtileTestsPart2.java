@@ -22,7 +22,7 @@ import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 
 @ContextConfiguration
@@ -34,7 +34,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifiqueUtile;
 
     @Autowired
-    private UtileTests testUtile;
+    private Utile testUtile;
     
     private LocalDate dateDebutSimulation;
     

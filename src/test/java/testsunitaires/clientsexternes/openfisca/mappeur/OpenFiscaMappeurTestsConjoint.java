@@ -36,12 +36,12 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class OpenFiscaMappeurTestsConjoint extends CommunTests {
+class OpenFiscaMappeurTestsConjoint extends Commun {
 
     private static final int NUMERA_MOIS_SIMULE_PPA = 5;
 
@@ -49,7 +49,7 @@ class OpenFiscaMappeurTestsConjoint extends CommunTests {
     private OpenFiscaMappeur openFiscaMappeur;
 
     @Autowired
-    UtileTests testUtile;
+    Utile testUtile;
 
     @Configuration
     @ComponentScan({ "utile.tests", "fr.poleemploi.estime" })

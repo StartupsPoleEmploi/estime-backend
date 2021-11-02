@@ -23,12 +23,12 @@ import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 public class CommunTests {
 
     @Autowired
-    protected UtileTests utileTests;
+    protected Utile utileTests;
 
     @SpyBean
     private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;

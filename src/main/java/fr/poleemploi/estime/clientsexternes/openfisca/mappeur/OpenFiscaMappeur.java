@@ -7,8 +7,6 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.INDIVIDUS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.MENAGE1;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.MENAGES;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PERSONNE_DE_REFERENCE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_OCCUPATION_LOGEMENT;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,11 +15,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.tsohr.JSONArray;
 import com.github.tsohr.JSONObject;
 
-import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.SimulateurAidesCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -35,12 +30,6 @@ public class OpenFiscaMappeur {
     private SituationFamilialeUtile situationFamilialeUtile;
 
     @Autowired
-    private InformationsPersonnellesUtile informationsPersonnellesUtile;
-
-    @Autowired
-    private BeneficiaireAidesUtile beneficiaireAidesUtile;
-
-    @Autowired
     private OpenFiscaMappeurFamille openFiscaMappeurFamille;
 
     @Autowired
@@ -48,9 +37,6 @@ public class OpenFiscaMappeur {
 
     @Autowired
     private OpenFiscaMappeurIndividu openFiscaMappeurIndividu;
-
-    @Autowired
-    private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
 
     public JSONObject mapDemandeurEmploiToOpenFiscaPayload(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         JSONObject payloadOpenFisca = new JSONObject();

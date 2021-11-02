@@ -49,7 +49,7 @@ public class AidesLogementUtile {
      * @return
      */
     private boolean isAideLogementACalculer(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
-        return (numeroMoisSimule == 1 || (prochaineDeclarationTrimestrielle == numeroMoisSimule) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
+        return ((numeroMoisSimule == 1 && prochaineDeclarationTrimestrielle != 0) || (prochaineDeclarationTrimestrielle == numeroMoisSimule) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
                 || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
     }
 
@@ -61,19 +61,17 @@ public class AidesLogementUtile {
      * @return
      */
     private boolean isAideLogementAVerser(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
-        return (numeroMoisSimule == 2 
-                || ((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
+        return (numeroMoisSimule == 2 || ((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
                 || ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
-                || ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6)) 
-                || ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
+                || ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6)) || ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
     }
 
     private void reporterAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi,
             int prochaineDeclarationTrimestrielle) {
-        Optional<Aide> aideLogementMoisPrecedent = getAideLogementSimuleeMoisPrecedent(simulationAides, demandeurEmploi, numeroMoisSimule);
+        Optional<Aide> aideLogementMoisPrecedent = getAideLogementSimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
         if (aideLogementMoisPrecedent.isPresent()) {
             aidesPourCeMois.put(aideLogementMoisPrecedent.get().getCode(), aideLogementMoisPrecedent.get());
-        } else if (isEligiblePourReportAideLogementDeclare(prochaineDeclarationTrimestrielle, numeroMoisSimule)) {
+        } else if (isEligiblePourReportAideLogementDeclare(demandeurEmploi, prochaineDeclarationTrimestrielle, numeroMoisSimule)) {
             Aide aideLogement = getAideLogementDeclare(demandeurEmploi);
             aidesPourCeMois.put(aideLogement.getCode(), aideLogement);
         }
@@ -81,7 +79,7 @@ public class AidesLogementUtile {
 
     private void calculerAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogement(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-
+        
         if (openFiscaRetourSimulation.getMontantAideLogement() > 0) {
             Aide aideLogement = creerAideLogement(openFiscaRetourSimulation.getMontantAideLogement(), openFiscaRetourSimulation.getTypeAideLogement(), false);
             aidesPourCeMois.put(aideLogement.getCode(), aideLogement);
@@ -94,7 +92,7 @@ public class AidesLogementUtile {
         return creerAideLogement(montantDeclare, typeAideLogement, true);
     }
 
-    private Optional<Aide> getAideLogementSimuleeMoisPrecedent(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+    private Optional<Aide> getAideLogementSimuleeMoisPrecedent(SimulationAides simulationAides, int numeroMoisSimule) {
         int moisNMoins1 = numeroMoisSimule - 1;
         Optional<Aide> aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode(), moisNMoins1);
         if (aidePourCeMois.isEmpty())
@@ -104,8 +102,8 @@ public class AidesLogementUtile {
         return aidePourCeMois;
     }
 
-    private boolean isEligiblePourReportAideLogementDeclare(int prochaineDeclarationTrimestrielle, int numeroMoisSimule) {
-        return numeroMoisSimule == 1 || numeroMoisSimule <= prochaineDeclarationTrimestrielle;
+    private boolean isEligiblePourReportAideLogementDeclare(DemandeurEmploi demandeurEmploi, int prochaineDeclarationTrimestrielle, int numeroMoisSimule) {
+        return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi) && numeroMoisSimule == 1 || numeroMoisSimule <= prochaineDeclarationTrimestrielle;
     }
 
     private Aide creerAideLogement(float montantAideLogement, String typeAide, boolean isAideReportee) {

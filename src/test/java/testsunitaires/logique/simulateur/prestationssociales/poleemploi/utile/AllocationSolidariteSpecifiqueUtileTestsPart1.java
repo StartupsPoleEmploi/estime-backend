@@ -20,7 +20,7 @@ import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 
 @ContextConfiguration
@@ -32,7 +32,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifiqueUtile;
     
     @Autowired
-    private UtileTests utileTests;
+    private Utile utileTests;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})

@@ -23,18 +23,18 @@ import com.github.tsohr.JSONObject;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurIndividu;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class OpenFiscaMappeurIndividuTests extends CommunTests {
+class OpenFiscaMappeurIndividuTests extends Commun {
 
     @Autowired
     private OpenFiscaMappeurIndividu openFiscaMappeurIndividu;
 
     @Autowired
-    UtileTests utileTests;
+    Utile utileTests;
 
     private static final int NUMERA_MOIS_SIMULE_PPA = 5;
 

@@ -22,7 +22,6 @@ import com.google.gson.JsonParser;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 
@@ -31,9 +30,6 @@ public class OpenFiscaMappeurAidesLogement {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
-
-    @Autowired
-    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaMappeurAidesLogement.class);
 
@@ -78,32 +74,7 @@ public class OpenFiscaMappeurAidesLogement {
     }
 
     public JSONObject creerAllocationLogementJSON(AllocationsLogement allocationsLogement, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        JSONObject periode = new JSONObject();
-        if(numeroMoisSimule ==  1) {
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), allocationsLogement.getMoisNMoins3());
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), allocationsLogement.getMoisNMoins2());
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), allocationsLogement.getMoisNMoins1());
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);            
-        }
-        else if(numeroMoisSimule ==  2) {
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), allocationsLogement.getMoisNMoins2());
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), allocationsLogement.getMoisNMoins1());
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), JSONObject.NULL);            
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);            
-        }
-        else if(numeroMoisSimule ==  3) {
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), allocationsLogement.getMoisNMoins1());
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), JSONObject.NULL);            
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), JSONObject.NULL);            
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);            
-        }
-        else {
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), JSONObject.NULL);            
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), JSONObject.NULL);            
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), JSONObject.NULL);            
-            periode.put(openFiscaPeriodeMappeur.getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);            
-        }
-        return periode;
+        return openFiscaPeriodeMappeur.creerPeriodesAllocationsLogement(allocationsLogement, dateDebutSimulation, numeroMoisSimule);
     }
     
     public JSONObject creerAideLogementJSON(LocalDate dateDebutSimulation, int numeroMoisSimule) {

@@ -16,7 +16,7 @@ import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 
 @ContextConfiguration
@@ -28,7 +28,7 @@ class SituationFamilialeUtileTests {
     private SituationFamilialeUtile situationFamilialeUtile;
     
     @Autowired
-    private UtileTests utileTests;
+    private Utile utileTests;
 
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})

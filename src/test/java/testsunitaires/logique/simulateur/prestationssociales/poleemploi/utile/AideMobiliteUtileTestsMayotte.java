@@ -22,7 +22,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 
 @ContextConfiguration
@@ -38,7 +38,7 @@ class AideMobiliteUtileTestsMayotte {
     private AideMobiliteUtile aideMobiliteUtile;
     
     @Autowired
-    UtileTests testUtile;
+    Utile testUtile;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})

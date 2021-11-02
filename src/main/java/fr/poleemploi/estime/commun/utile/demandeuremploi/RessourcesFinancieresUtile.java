@@ -222,16 +222,6 @@ public class RessourcesFinancieresUtile {
         return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer() != 0;
     }
 
-//    public Aide getAideLogementDeclare(DemandeurEmploi demandeurEmploi) {
-//        if (hasAidePersonnaliseeLogement(demandeurEmploi))
-//            return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement();
-//        else if (hasAllocationLogementFamiliale(demandeurEmploi))
-//            return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale();
-//        else
-//            return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale();
-//        
-//    }
-
     public float getMontantAideLogementDeclare(DemandeurEmploi demandeurEmploi) {
         float montant = 0;
         if (hasAidePersonnaliseeLogement(demandeurEmploi))
