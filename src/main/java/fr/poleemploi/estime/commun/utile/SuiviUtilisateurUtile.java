@@ -14,12 +14,13 @@ import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 
 /**
- * Classe offrant de méthodes pour tracer le parcours de l'utilisateur et povoir le recontacter par la suite.
- * TODO : traitement à supprimer après la phase de croissance
+ * Classe offrant de méthodes pour tracer le parcours de l'utilisateur et povoir le recontacter par la suite. TODO : traitement à supprimer après la
+ * phase de croissance
+ * 
  * @author ijla5100
  *
  */
-@Component 
+@Component
 public class SuiviUtilisateurUtile {
 
     @Autowired
@@ -27,58 +28,46 @@ public class SuiviUtilisateurUtile {
 
     @Autowired
     private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
-    
-    public void tracerParcoursUtilisateur(UserInfoESD userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles, DetailIndemnisationESD detailIndemnisationESD) {
 
-        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(
-                userInfoESD, 
-                parcours, 
-                getTypePopulation(beneficiaireAides),
-                getCodePostal(informationsPersonnelles),
-                detailIndemnisationESD);
+    public void tracerParcoursUtilisateur(UserInfoESD userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles,
+            DetailIndemnisationESD detailIndemnisationESD) {
 
-        suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity); 
+        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(userInfoESD, parcours, getTypePopulation(beneficiaireAides),
+                getCodePostal(informationsPersonnelles), detailIndemnisationESD);
+
+        suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
-
 
     public void tracerParcoursUtilisateur(String idPoleEmploi, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles) {
 
-        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(
-                idPoleEmploi,
-                parcours, 
-                getTypePopulation(beneficiaireAides),
+        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(idPoleEmploi, parcours, getTypePopulation(beneficiaireAides),
                 getCodePostal(informationsPersonnelles));
 
-        suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity); 
+        suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
 
-    
-
-    public void supprimerTracesParcoursUtilisateur(String idPoleEmploi) {        
+    public void supprimerTracesParcoursUtilisateur(String idPoleEmploi) {
         suiviParcoursUtilisateurManager.supprimerSuiviParcoursUtilisateurParIdPoleEmploi(idPoleEmploi);
     }
 
     public String getParcoursAccesService(Individu individu) {
-        if(individu.isPopulationAutorisee()) {
+        if (individu.isPopulationAutorisee()) {
             return ParcoursUtilisateur.CONNEXION_REUSSIE.getParcours();
         }
-        return ParcoursUtilisateur.CONNEXION_REFUSEE.getParcours();        
+        return ParcoursUtilisateur.CONNEXION_REFUSEE.getParcours();
     }
 
     private String getTypePopulation(BeneficiaireAides beneficiaireAides) {
-        return getTypePopulation(
-                beneficiaireAides.isBeneficiaireARE(),
-                beneficiaireAides.isBeneficiaireASS(),
-                beneficiaireAides.isBeneficiaireRSA(),
-                beneficiaireAides.isBeneficiaireAAH());  
+        return getTypePopulation(beneficiaireAides.isBeneficiaireARE(), beneficiaireAides.isBeneficiaireASS(), beneficiaireAides.isBeneficiaireRSA(), beneficiaireAides.isBeneficiaireAAH());
     }
 
     private String getCodePostal(InformationsPersonnelles informationsPersonnelles) {
-        return informationsPersonnelles.getCodePostal(); 
-    }  
+        return informationsPersonnelles.getCodePostal();
+    }
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoESD userInfoESD, String parcours, String typePopulation, String codePostal, DetailIndemnisationESD detailIndemnisationESD) {
-        
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoESD userInfoESD, String parcours, String typePopulation, String codePostal,
+            DetailIndemnisationESD detailIndemnisationESD) {
+
         SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
         suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
         suiviParcoursUtilisateurEntity.setIdPoleEmploi(userInfoESD.getSub());
@@ -88,30 +77,29 @@ public class SuiviUtilisateurUtile {
         suiviParcoursUtilisateurEntity.setNom(userInfoESD.getFamilyName());
         suiviParcoursUtilisateurEntity.setPrenom(userInfoESD.getGivenName());
         suiviParcoursUtilisateurEntity.setCodePostal(codePostal);
-        
-        if(detailIndemnisationESD.getCodeIndemnisation() != null) {
-            suiviParcoursUtilisateurEntity.setEsdCodeIndemnisation(detailIndemnisationESD.getCodeIndemnisation());            
+
+        if (detailIndemnisationESD.getCodeIndemnisation() != null) {
+            suiviParcoursUtilisateurEntity.setEsdCodeIndemnisation(detailIndemnisationESD.getCodeIndemnisation());
         }
         suiviParcoursUtilisateurEntity.setEsdBeneficiaireAssuranceChomage(detailIndemnisationESD.isBeneficiaireAssuranceChomage());
-        return suiviParcoursUtilisateurEntity;       
+        return suiviParcoursUtilisateurEntity;
     }
-    
+
     private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(String idPoleEmploi, String parcours, String typePopulation, String codePostal) {
-        
+
         SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
         suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
         suiviParcoursUtilisateurEntity.setIdPoleEmploi(idPoleEmploi);
         suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
         suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
         suiviParcoursUtilisateurEntity.setCodePostal(codePostal);
-        return suiviParcoursUtilisateurEntity;       
+        return suiviParcoursUtilisateurEntity;
     }
-
 
     private String getTypePopulation(boolean isBeneficiaireARE, boolean isBeneficiaireASS, boolean isBeneficiaireRSA, boolean isBeneficiaireAAH) {
         StringBuilder typePopulationBuilder = new StringBuilder("");
 
-        if(isNonBeneficaireAllocations(isBeneficiaireARE, isBeneficiaireASS, isBeneficiaireRSA, isBeneficiaireAAH)) {
+        if (isNonBeneficaireAllocations(isBeneficiaireARE, isBeneficiaireASS, isBeneficiaireRSA, isBeneficiaireAAH)) {
             typePopulationBuilder.append(TypePopulation.NON_BENEFICIAIRE.getLibelle());
         } else {
             StringBuilder beneficiaireBuilder = new StringBuilder("");
@@ -121,14 +109,14 @@ public class SuiviUtilisateurUtile {
             appendTypePopulation(beneficiaireBuilder, isBeneficiaireAAH, TypePopulation.AAH.getLibelle());
             typePopulationBuilder.append(beneficiaireBuilder.toString());
         }
-        return typePopulationBuilder.toString();        
+        return typePopulationBuilder.toString();
     }
 
     private void appendTypePopulation(StringBuilder beneficiaireBuilder, boolean isBeneficiaire, String libelleBeneficaire) {
-        if(isBeneficiaire) {
-            if(!beneficiaireBuilder.toString().isEmpty()) {
+        if (isBeneficiaire) {
+            if (!beneficiaireBuilder.toString().isEmpty()) {
                 beneficiaireBuilder.append(", ");
-            } 
+            }
             beneficiaireBuilder.append(libelleBeneficaire);
         }
     }
