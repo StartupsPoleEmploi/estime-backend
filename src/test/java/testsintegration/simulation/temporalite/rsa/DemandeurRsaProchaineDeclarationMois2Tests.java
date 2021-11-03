@@ -340,8 +340,8 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
                 assertThat(rsa.getMontant()).isEqualTo(500);
             });
-            assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
+                assertThat(als.getMontant()).isEqualTo(271f);
             });
         });
         // Alors les prestations du troisième mois 01/2021 sont :

@@ -32,13 +32,26 @@ public class AidesLogementUtile {
 
     public void simulerAidesLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
-        if (isAideLogementACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
+        if (isAideLogementSeulementACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
             reporterAideLogement(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
         } else if (isAideLogementAVerser(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
-            calculerAideLogement(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
+            verserAideLogement(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
         } else {
             reporterAideLogement(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
         }
+    }
+    
+
+    /**
+     * Fonction permettant de déterminer si le montant des aides au logement doit être calculé et versé le même mois
+     * On veut déterminer si lors d'un mois en particulier on veut verser l'aide N et calculer l'aide N+1
+     * 
+     * @param numeroMoisSimule
+     * @param prochaineDeclarationTrimestrielle
+     * @return
+     */
+    private boolean isAideLogementSeulementACalculer(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
+        return isAideLogementACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle) && !isAideLogementAVerser(numeroMoisSimule, prochaineDeclarationTrimestrielle); 
     }
 
     /**
@@ -47,9 +60,20 @@ public class AidesLogementUtile {
      * @param numeroMoisSimule
      * @param prochaineDeclarationTrimestrielle
      * @return
+     *       ___________________________________________________________________________________________
+     *      |                                                                                           |
+     *      | Mois décla    M0            M1          M2         M3         M4          M5        M6    |
+     *      |                                                                                           |  
+     *      |  -  M0     (C1)/R0        (C2)/V1       V2       (C3)/R2      V3          R3     (C4)/R3  |              
+     *      |  -  M1        R0          (C1)/R0       V1         R1      (C2)/R1        V2        R2    |          
+     *      |  -  M2        R0          (C1)/R0    (C2)/V1       V2         R2       (C3)/R2      V3    |          
+     *      |  -  M3        R0          (C1)/R0       V1       (C2)/R1      V2          R2     (C3)/R2  |  
+     *      |___________________________________________________________________________________________|    
      */
     private boolean isAideLogementACalculer(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
-        return ((numeroMoisSimule == 1 && prochaineDeclarationTrimestrielle != 0) || (prochaineDeclarationTrimestrielle == numeroMoisSimule) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
+        return ((numeroMoisSimule == 1)
+                || (prochaineDeclarationTrimestrielle == numeroMoisSimule) 
+                || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
                 || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
     }
 
@@ -59,11 +83,22 @@ public class AidesLogementUtile {
      * @param numeroMoisSimule
      * @param prochaineDeclarationTrimestrielle
      * @return
+     *       __________________________________________________________________________________________
+     *      |                                                                                          |
+     *      | Mois décla    M0           M1          M2         M3         M4          M5        M6    |
+     *      |                                                                                          |  
+     *      |  -  M0       C1/R0       C2/(V1)      (V2)       C3/R2      (V3)         R3       C4/R3  |              
+     *      |  -  M1        R0          C1/R0       (V1)        R1        C2/R1       (V2)       R2    |          
+     *      |  -  M2        R0          C1/R0      C2/(V1)      V2         R2        C3/R2      (V3)   |          
+     *      |  -  M3        R0          C1/R0       (V1)       C2/R1      (V2)         R2       C3/R2  |  
+     *      |__________________________________________________________________________________________|  
      */
     private boolean isAideLogementAVerser(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
-        return (numeroMoisSimule == 2 || ((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
-                || ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
-                || ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6)) || ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
+        return (numeroMoisSimule == 2 || 
+                ((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
+                || ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 5))
+                || ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6)) 
+                || ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
     }
 
     private void reporterAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi,
@@ -77,7 +112,7 @@ public class AidesLogementUtile {
         }
     }
 
-    private void calculerAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    private void verserAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogement(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
         
         if (openFiscaRetourSimulation.getMontantAideLogement() > 0) {

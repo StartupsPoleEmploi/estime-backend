@@ -554,8 +554,8 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
                 assertThat(rsa.getMontant()).isEqualTo(497);
             });
-            assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+            assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
+                assertThat(als.getMontant()).isEqualTo(271f);
             });
         });
         // Alors les prestations du second mois 12/2020 sont :
