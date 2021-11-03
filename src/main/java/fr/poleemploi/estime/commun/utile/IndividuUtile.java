@@ -2,6 +2,7 @@ package fr.poleemploi.estime.commun.utile;
 
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
@@ -10,6 +11,7 @@ import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
+import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
@@ -25,9 +27,10 @@ public class IndividuUtile {
                  detailIndemnisationESD.isBeneficiaireRSA());
     }
 
-    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD) {
+    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD, CoordonneesESD coordonneesESD) {
         addInformationsBeneficiaireAides(individu, detailIndemnisationESD);
         addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
+        addInformationsPersonnellesPoleEmploi(individu, coordonneesESD);
     }
 
     private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationESD detailIndemnisation) {
@@ -45,6 +48,14 @@ public class IndividuUtile {
             ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisation));
         }
         individu.setRessourcesFinancieres(ressourcesFinancieres);
+    }
+
+    private void addInformationsPersonnellesPoleEmploi(Individu individu, CoordonneesESD coordonneesESD) {
+        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();       
+        if(coordonneesESD.getCodePostal() != null) {
+            informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
+        }
+        individu.setInformationsPersonnelles(informationsPersonnelles);
     }
 
     private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationESD detailIndemnisation) {

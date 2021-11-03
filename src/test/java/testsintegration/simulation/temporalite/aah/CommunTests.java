@@ -78,7 +78,8 @@ public class CommunTests {
         doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateur(
                 demandeurEmploi.getIdPoleEmploi(), 
                 ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(),
-                demandeurEmploi.getBeneficiaireAides());
+                demandeurEmploi.getBeneficiaireAides(),
+                demandeurEmploi.getInformationsPersonnelles());
         
         //mock création date de demande de simulation
         doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
