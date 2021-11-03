@@ -75,12 +75,12 @@ public class IndividuLogique {
             UserInfoESD userInfoESD = userInfoOption.get();
             CoordonneesESD coordonneesESD = coordonneesESDOption.get();
             if (stagingEnvironnementUtile.isStagingEnvironnement()) {
-                stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
+                stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD, coordonneesESD);
             } else {
                 individu.setIdPoleEmploi(userInfoESD.getSub());
                 if (demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
                     individu.setPopulationAutorisee(true);
-                    demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
+                    demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD, coordonneesESD);
                 } else {
                     individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
                     individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD, coordonneesESD);
