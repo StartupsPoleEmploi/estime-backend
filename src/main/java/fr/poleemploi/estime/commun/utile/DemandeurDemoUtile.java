@@ -2,12 +2,14 @@ package fr.poleemploi.estime.commun.utile;
 
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
+import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
@@ -19,10 +21,10 @@ public class DemandeurDemoUtile {
         return userInfoESD.getFamilyName() != null && userInfoESD.getFamilyName().contains(nomDemandeurDemo);
     }
 
-    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD) {
+    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD, CoordonneesESD coordonneesESD) {
         addInformationsBeneficiaireAides(individu, detailIndemnisationESD);
         addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
-        
+        addInformationsPersonnelles(individu, coordonneesESD);        
     }
     
     private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationESD detailIndemnisation) {
@@ -45,6 +47,16 @@ public class DemandeurDemoUtile {
         AllocationASS allocationASS = new AllocationASS();  
         aidesPoleEmploi.setAllocationASS(allocationASS);
         return aidesPoleEmploi;
+    }
+
+    private void addInformationsPersonnelles(Individu individu, CoordonneesESD coordonneesESD) {
+        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();       
+        if(coordonneesESD.getCodePostal() != null) {
+            informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
+        } else {
+            informationsPersonnelles.setCodePostal("44000");
+        }
+        individu.setInformationsPersonnelles(informationsPersonnelles);
     }
 
 }

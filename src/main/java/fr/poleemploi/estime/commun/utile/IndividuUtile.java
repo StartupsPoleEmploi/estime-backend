@@ -30,7 +30,7 @@ public class IndividuUtile {
     public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD, CoordonneesESD coordonneesESD) {
         addInformationsBeneficiaireAides(individu, detailIndemnisationESD);
         addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
-        addInformationsPersonnellesPoleEmploi(individu, coordonneesESD);
+        addInformationsPersonnelles(individu, coordonneesESD);
     }
 
     private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationESD detailIndemnisation) {
@@ -50,7 +50,7 @@ public class IndividuUtile {
         individu.setRessourcesFinancieres(ressourcesFinancieres);
     }
 
-    private void addInformationsPersonnellesPoleEmploi(Individu individu, CoordonneesESD coordonneesESD) {
+    private void addInformationsPersonnelles(Individu individu, CoordonneesESD coordonneesESD) {
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();       
         if(coordonneesESD.getCodePostal() != null) {
             informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
