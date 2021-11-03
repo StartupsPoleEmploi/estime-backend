@@ -108,11 +108,10 @@ public class IndividuLogique {
 
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
-        demandeurEmploiUtile.addCodeDepartement(demandeurEmploi, bearerToken);
-        demandeurEmploiUtile.addDateNaissance(demandeurEmploi, bearerToken);
 
         demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
         demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
+        demandeurEmploiUtile.addInformationsPersonnelles(demandeurEmploi, individu, bearerToken);
 
         suiviUtilisateurUtile.tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(), individu.getBeneficiaireAides(),
                 individu.getInformationsPersonnelles());
