@@ -1,33 +1,33 @@
 {"properties": [
   {
-    "name": "emploi-store-dev.coordonnees-api-uri",
+    "name": "emploi-store-io.coordonnees-api-uri",
     "type": "java.lang.String",
-    "description": "A description for 'emploi-store-dev.coordonnees-api-uri'"
+    "description": "A description for 'emploi-store-io.coordonnees-api-uri'"
   },
   {
-    "name": "emploi-store-dev.date-naissance-api-uri",
+    "name": "emploi-store-io.date-naissance-api-uri",
     "type": "java.lang.String",
-    "description": "A description for 'emploi-store-dev.date-naissance-api-uri'"
+    "description": "A description for 'emploi-store-io.date-naissance-api-uri'"
   },
   {
-    "name": "emploi-store-dev.detail-indemnisation-api-uri",
+    "name": "emploi-store-io.detail-indemnisation-api-uri",
     "type": "java.lang.String",
-    "description": "A description for 'emploi-store-dev.detail-indemnisation-api-uri'"
+    "description": "A description for 'emploi-store-io.detail-indemnisation-api-uri'"
   },
   {
-    "name": "emploi-store-dev.agepi-api-uri",
+    "name": "emploi-store-io.agepi-api-uri",
     "type": "java.lang.String",
-    "description": "A description for 'emploi-store-dev.agepi-api-uri'"
+    "description": "A description for 'emploi-store-io.agepi-api-uri'"
   },
   {
-    "name": "emploi-store-dev.aide-mobilite-api-uri",
+    "name": "emploi-store-io.aide-mobilite-api-uri",
     "type": "java.lang.String",
-    "description": "A description for 'emploi-store-dev.aide-mobilite-api-uri'"
+    "description": "A description for 'emploi-store-io.aide-mobilite-api-uri'"
   },
   {
-    "name": "emploi-store-dev.are-api-uri",
+    "name": "emploi-store-io.are-api-uri",
     "type": "java.lang.String",
-    "description": "A description for 'emploi-store-dev.are-api-uri'"
+    "description": "A description for 'emploi-store-io.are-api-uri'"
   },
   {
     "name": "openfisca-api-uri",
