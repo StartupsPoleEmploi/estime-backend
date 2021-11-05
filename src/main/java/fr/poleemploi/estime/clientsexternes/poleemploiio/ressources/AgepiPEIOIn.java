@@ -107,7 +107,7 @@ public class AgepiPEIOIn {
 	}
 
 	public void setEleveSeulEnfants(boolean eleveSeulEnfants) {
-		eleveSeulEnfants = eleveSeulEnfants;
+		this.eleveSeulEnfants = eleveSeulEnfants;
 	}
 
 	

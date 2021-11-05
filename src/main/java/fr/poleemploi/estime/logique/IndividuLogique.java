@@ -63,33 +63,39 @@ public class IndividuLogique {
         PeConnectAuthorizationPEIO peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce); 
         String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
 
-        DetailIndemnisationPEIO detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
-        Optional<UserInfoPEIO> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
-
-        if(userInfoOption.isPresent()) {
-            UserInfoPEIO userInfoESD = userInfoOption.get();
-            if(stagingEnvironnementUtile.isStagingEnvironnement()) {  
-                stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
-            } else {            
-                individu.setIdPoleEmploi(userInfoESD.getSub());
-                individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
-                individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);                 
-            } 
-
-            //@TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
-            suiviUtilisateurUtile.tracerParcoursUtilisateur(
-                    userInfoESD, 
-                    suiviUtilisateurUtile.getParcoursAccesService(individu), 
-                    individu.getBeneficiaireAides(), 
-                    detailIndemnisationESD);       
-          
-
-            individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
-
-        } else {
-            LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
-            throw new InternalServerException(InternalServerMessages.IDENTIFICATION_IMPOSSIBLE.getMessage());
-        }        
+        Optional<DetailIndemnisationPEIO> optionalDetailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
+        if(optionalDetailIndemnisationESD.isPresent()) { 
+        	DetailIndemnisationPEIO detailIndemnisationESD = optionalDetailIndemnisationESD.get();
+        	Optional<UserInfoPEIO> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
+        	
+        	if(userInfoOption.isPresent()) {
+        		UserInfoPEIO userInfoESD = userInfoOption.get();
+        		if(stagingEnvironnementUtile.isStagingEnvironnement()) {  
+        			stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
+        		} else {            
+        			individu.setIdPoleEmploi(userInfoESD.getSub());
+        			individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
+        			individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);                 
+        		} 
+        		
+        		//@TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
+        		suiviUtilisateurUtile.tracerParcoursUtilisateur(
+        				userInfoESD, 
+        				suiviUtilisateurUtile.getParcoursAccesService(individu), 
+        				individu.getBeneficiaireAides(), 
+        				detailIndemnisationESD);       
+        		
+        		
+        		individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
+        		
+        	} else {
+        		LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
+        		throw new InternalServerException(InternalServerMessages.IDENTIFICATION_IMPOSSIBLE.getMessage());
+        	}        
+        }else {
+        	LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
+    		throw new InternalServerException(InternalServerMessages.IDENTIFICATION_IMPOSSIBLE.getMessage());
+        }
 
         return individu;
     }

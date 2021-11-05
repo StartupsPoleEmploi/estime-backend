@@ -44,9 +44,10 @@ public class PoleEmploiIOUtile {
         return new HttpEntity<>(headers);
     }
 
-	public HttpEntity<MultiValueMap<String, Object>> getAgepiRequeteHTTP(AgepiPEIOIn agepiIn) {
+	public HttpEntity<MultiValueMap<String, Object>> getAgepiRequeteHTTP(AgepiPEIOIn agepiIn, String bearerToken) {
 		HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", bearerToken);
         
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         map.add("origine", agepiIn.getOrigine());
@@ -66,9 +67,10 @@ public class PoleEmploiIOUtile {
         return new HttpEntity<>(map, headers);
 	}
 
-	public HttpEntity<MultiValueMap<String, Object>> getAideMobiliteRequeteHTTP(AideMobilitePEIOIn aideMobiliteIn) {
+	public HttpEntity<MultiValueMap<String, Object>> getAideMobiliteRequeteHTTP(AideMobilitePEIOIn aideMobiliteIn, String bearerToken) {
 		HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add("Authorization", bearerToken);
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         map.add("origine", aideMobiliteIn.getOrigine());
         map.add("dateDepot", aideMobiliteIn.getDateDepot());
@@ -89,8 +91,9 @@ public class PoleEmploiIOUtile {
         return new HttpEntity<>(map, headers);
 	}
 
-	public HttpEntity<MultiValueMap<String, Object>> getAreRequeteHTTP(ArePEIOIn areIn) {
+	public HttpEntity<MultiValueMap<String, Object>> getAreRequeteHTTP(ArePEIOIn areIn, String bearerToken) {
 		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", bearerToken);
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         map.add("salaireBrutJournalier", areIn.getAllocationBruteJournaliere());

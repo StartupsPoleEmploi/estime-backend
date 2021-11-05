@@ -7,6 +7,8 @@ import java.time.Period;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,15 +17,20 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationPEIO;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.NombresJoursIndemnises;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
+import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
+import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
+import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
@@ -49,7 +56,10 @@ public class AideMobiliteUtile {
     public static final int TRAJET_KM_ALLER_RETOUR_MINIMUM  = 60;
     public static final int TRAJET_KM_ALLER_RETOUR_MINIMUM_DOM = 20;
     private static final int NOMBRE_MAX_JOURS_INDEMNISES = 20;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AideMobiliteUtile.class);
 
+    @Autowired
+    private AccesTokenUtile accesTokenUtile;
 
     @Autowired
     private AideUtile aideeUtile;
@@ -74,11 +84,20 @@ public class AideMobiliteUtile {
 
 
     public Aide simulerAide(DemandeurEmploi demandeurEmploi) {
-        AideMobilitePEIOIn aideMobiliteIn = new AideMobilitePEIOIn();
+//    	PeConnectAuthorizationPEIO peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce); 
+//    	String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
+    	String bearerToken = "PLACEHOLDER";
+    	AideMobilitePEIOIn aideMobiliteIn;
         aideMobiliteIn = remplirAideMobiliteIn(demandeurEmploi);
-        AideMobilitePEIOOut aideMobiliteOut = emploiStoreDevClient.callAideMobiliteEndPoint(aideMobiliteIn);
-		float montantAideMobilite = aideMobiliteOut.getMontant();
-        return creerAide(montantAideMobilite);
+        Optional<AideMobilitePEIOOut> optionalAideMobiliteOut = emploiStoreDevClient.callAideMobiliteEndPoint(aideMobiliteIn, bearerToken);
+        if(optionalAideMobiliteOut.isPresent()) { 
+        	AideMobilitePEIOOut aideMobiliteOut = optionalAideMobiliteOut.get();
+        	float montantAideMobilite = aideMobiliteOut.getMontant();
+        	return creerAide(montantAideMobilite);
+        }else {
+            LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
+            throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
+        } 
         //float montantAideMobilite = calculerMontantAideMobilite(demandeurEmploi);
     }
 
