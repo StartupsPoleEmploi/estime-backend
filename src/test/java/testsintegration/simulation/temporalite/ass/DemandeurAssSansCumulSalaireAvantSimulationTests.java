@@ -27,7 +27,7 @@ import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations = "classpath:application-test.properties")
-class DemandeurAssSansCumulSalaireAvantSimulationTests extends CommunTests {
+class DemandeurAssSansCumulSalaireAvantSimulationTests extends Commun {
 
     @Autowired
     private IndividuService individuService;

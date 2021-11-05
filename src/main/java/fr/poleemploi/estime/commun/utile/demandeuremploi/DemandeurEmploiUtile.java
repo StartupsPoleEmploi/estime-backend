@@ -117,21 +117,17 @@ public class DemandeurEmploiUtile {
 
     private AidesLogement creerAidesLogement() {
         AidesLogement aidesLogement = new AidesLogement();
-        AllocationsLogement apl = new AllocationsLogement();
-        apl.setMoisNMoins1(0);
-        apl.setMoisNMoins2(0);
-        apl.setMoisNMoins3(0);
-        aidesLogement.setAidePersonnaliseeLogement(apl);
-        AllocationsLogement alf = new AllocationsLogement();
-        alf.setMoisNMoins1(0);
-        alf.setMoisNMoins2(0);
-        alf.setMoisNMoins3(0);
-        aidesLogement.setAllocationLogementFamiliale(alf);
-        AllocationsLogement als = new AllocationsLogement();
-        als.setMoisNMoins1(0);
-        als.setMoisNMoins2(0);
-        als.setMoisNMoins3(0);
-        aidesLogement.setAllocationLogementSociale(als);
+        aidesLogement.setAidePersonnaliseeLogement(creerAllocationsLogement());
+        aidesLogement.setAllocationLogementFamiliale(creerAllocationsLogement());
+        aidesLogement.setAllocationLogementSociale(creerAllocationsLogement());
         return aidesLogement;
+    }
+
+    private AllocationsLogement creerAllocationsLogement() {
+        AllocationsLogement allocationsLogement = new AllocationsLogement();
+        allocationsLogement.setMoisNMoins1(0);
+        allocationsLogement.setMoisNMoins2(0);
+        allocationsLogement.setMoisNMoins3(0);
+        return allocationsLogement;
     }
 }

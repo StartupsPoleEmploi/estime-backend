@@ -19,14 +19,8 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.commun.enumerations.Aides;
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.IndividuService;
-import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
-import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
@@ -47,15 +41,15 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
     }
 
     @Test
-    void simulerAPLProchaineDeclarationMois0() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-
-        // Si DE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
-        // Futur contrat CDI 35h, salaire net 1231€ brut 1583€,kilométrage domicile -> taf = 10kms + 20 trajets
-        // RSA 500€, déclaration trimetrielle en M, non travaillé au cours des 3 derniers mois
-        // APL 310€
-        boolean isEnCouple = false;
-        int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = creerDemandeurEmploiAPL(PROCHAINE_DECLARATION_TRIMESTRIELLE);
+    void simulerAPLProchaineDeclarationMois3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+        // Si DE Français, date naissance 05/07/1986, code postal 44200, 
+        // en couple, 2 enfants 9 et 7 ans,
+        // locataire d'un logement non meublé, loyer 500€, charges 50€, codeInsee 44109
+        // APL 300€, RSA 500€, prochaine déclaration trimestrielle mois M+3
+        // Salaire CDI 35h/semaine 940€ net, kilométrage domicile -> taf = 12kms + 20 trajets
+        // Pas travaillé au cours des 3 derniers mois
+        
+       DemandeurEmploi demandeurEmploi = creerDemandeurEmploiAPL(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks("20-10-2020");
@@ -169,13 +163,14 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
     }
 
     @Test
-    void simulerALFProchaineDeclarationMois0() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-
-        // Si DE Français, date naissance 5/07/1986, code postal 44200, en couple, non propriétaire
-        // Futur contrat CDI 35h, salaire net 1231€ brut 1583€,kilométrage domicile -> taf = 10kms + 20 trajets
-        // RSA 710€, déclaration trimetrielle en M, non travaillé au cours des 3 derniers mois
-        // APL 370€
-        // conjoint sans ressources finançières
+    void simulerALFProchaineDeclarationMois3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+        // Si DE Français, date naissance 05/07/1986, code postal 44200, 
+        // en couple, 2 enfants 9 et 7 ans,
+        // locataire d'un logement non meublé, loyer 500€, charges 50€, codeInsee 44109
+        // APL 300€, RSA 500€, prochaine déclaration trimestrielle mois M+3
+        // Salaire CDI 35h/semaine 940€ net, kilométrage domicile -> taf = 12kms + 20 trajets
+        // Pas travaillé au cours des 3 derniers mois
+        
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiALF(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 
         // Lorsque je simule mes prestations le 20/10/2020
@@ -290,12 +285,14 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
     }
 
     @Test
-    void simulerALSProchaineDeclarationMois0() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-
-        // Si DE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
-        // Futur contrat CDI 15h, salaire net 500€ 659€ brut ,kilométrage domicile -> taf = 10kms + 20 trajets
-        // RSA 500€, déclaration trimetrielle en M, travaillé au cours des 3 derniers mois avec salaire 0 juillet, salaire 380 juin, salaire 0 mai
-        // APL 310€
+    void simulerALSProchaineDeclarationMois3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+        // Si DE Français, date naissance 05/07/1986, code postal 44200, 
+        // célibataire, pas d'enfant,
+        // locataire d'un logement non meublé, loyer 500€, charges 50€, codeInsee 44109
+        // APL 300€, RSA 500€, prochaine déclaration trimestrielle mois M+3
+        // Salaire CDI 35h/semaine 940€ net, kilométrage domicile -> taf = 12kms + 20 trajets
+        // Pas travaillé au cours des 3 derniers mois
+        
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiALS(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         
         // Lorsque je simule mes prestations le 23/07/2021

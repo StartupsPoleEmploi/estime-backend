@@ -20,12 +20,10 @@ import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.services.ressources.AidesCAF;
-import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.Utile;
 
-public class CommunTests {
+public class Commun {
 
     @Autowired
     protected Utile utileTests;

@@ -31,16 +31,15 @@ public class AidesLogementUtile {
     private AideUtile aideUtile;
 
     public void simulerAidesLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
-        if (isAideLogementSeulementACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
-            reporterAideLogement(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
-        } else if (isAideLogementAVerser(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
-            verserAideLogement(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
-        } else {
-            reporterAideLogement(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
-        }
+	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	if (isAideLogementSeulementACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
+	    reporterAideLogement(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
+	} else if (isAideLogementAVerser(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
+	    verserAideLogement(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
+	} else {
+	    reporterAideLogement(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
+	}
     }
-    
 
     /**
      * Fonction permettant de déterminer si le montant des aides au logement doit être calculé et versé le même mois
@@ -51,7 +50,8 @@ public class AidesLogementUtile {
      * @return
      */
     private boolean isAideLogementSeulementACalculer(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
-        return isAideLogementACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle) && !isAideLogementAVerser(numeroMoisSimule, prochaineDeclarationTrimestrielle); 
+	return isAideLogementACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle)
+		&& !isAideLogementAVerser(numeroMoisSimule, prochaineDeclarationTrimestrielle);
     }
 
     /**
@@ -59,22 +59,20 @@ public class AidesLogementUtile {
      * 
      * @param numeroMoisSimule
      * @param prochaineDeclarationTrimestrielle
-     * @return
-     *       ___________________________________________________________________________________________
-     *      |                                                                                           |
-     *      | Mois décla    M0            M1          M2         M3         M4          M5        M6    |
-     *      |                                                                                           |  
-     *      |  -  M0     (C1)/R0        (C2)/V1       V2       (C3)/R2      V3          R3     (C4)/R3  |              
-     *      |  -  M1        R0          (C1)/R0       V1         R1      (C2)/R1        V2        R2    |          
-     *      |  -  M2        R0          (C1)/R0    (C2)/V1       V2         R2       (C3)/R2      V3    |          
-     *      |  -  M3        R0          (C1)/R0       V1       (C2)/R1      V2          R2     (C3)/R2  |  
-     *      |___________________________________________________________________________________________|    
+     * @return  
+     *       _________________________________________________________________________________________
+     *      |            |          |          |          |          |          |          |          |
+     *      | Mois décla |    M0    |    M1    |    M2    |    M3    |    M4    |    M5    |    M6    |
+     *      |            |          |          |          |          |          |          |          |  
+     *      |  -  M0     | (C1)/R0  | (C2)/V1  |    V2    | (C3)/R2  |    V3    |    R3    | (C4)/R3  |              
+     *      |  -  M1     |    R0    | (C1)/R0  |    V1    |    R1    | (C2)/R1  |    V2    |    R2    |          
+     *      |  -  M2     |    R0    | (C1)/R0  | (C2)/V1  |    V2    |    R2    | (C3)/R2  |    V3    |          
+     *      |  -  M3     |    R0    | (C1)/R0  |    V1    | (C2)/R1  |    V2    |    R2    | (C3)/R2  |  
+     *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      */
     private boolean isAideLogementACalculer(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
-        return ((numeroMoisSimule == 1)
-                || (prochaineDeclarationTrimestrielle == numeroMoisSimule) 
-                || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
-                || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
+	return ((numeroMoisSimule == 1) || (prochaineDeclarationTrimestrielle == numeroMoisSimule)
+		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
     }
 
     /**
@@ -82,123 +80,125 @@ public class AidesLogementUtile {
      * 
      * @param numeroMoisSimule
      * @param prochaineDeclarationTrimestrielle
-     * @return
-     *       __________________________________________________________________________________________
-     *      |                                                                                          |
-     *      | Mois décla    M0           M1          M2         M3         M4          M5        M6    |
-     *      |                                                                                          |  
-     *      |  -  M0       C1/R0       C2/(V1)      (V2)       C3/R2      (V3)         R3       C4/R3  |              
-     *      |  -  M1        R0          C1/R0       (V1)        R1        C2/R1       (V2)       R2    |          
-     *      |  -  M2        R0          C1/R0      C2/(V1)      V2         R2        C3/R2      (V3)   |          
-     *      |  -  M3        R0          C1/R0       (V1)       C2/R1      (V2)         R2       C3/R2  |  
-     *      |__________________________________________________________________________________________|  
+     * @return  
+     *       _________________________________________________________________________________________
+     *      |            |          |          |          |          |          |          |          |
+     *      | Mois décla |    M0    |    M1    |    M2    |    M3    |    M4    |    M5    |    M6    |
+     *      |            |          |          |          |          |          |          |          |  
+     *      |  -  M0     |  C1/R0   |  C2/(V1) |   (V2)   |  C3/R2   |   (V3)   |    R3    |  C4/R3   |              
+     *      |  -  M1     |    R0    |  C1/R0   |   (V1)   |    R1    |  C2/R1   |   (V2)   |    R2    |          
+     *      |  -  M2     |    R0    |  C1/R0   |  C2/(V1) |   (V2)   |    R2    |  C3/R2   |   (V3)   |          
+     *      |  -  M3     |    R0    |  C1/R0   |   (V1)   |  C2/R1   |   (V2)   |    R2    |  C3/R2   |  
+     *      |____________|__________|__________|__________|__________|__________|__________|__________|  
+     *      
      */
     private boolean isAideLogementAVerser(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
-        return (numeroMoisSimule == 2 || 
-                ((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
-                || ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 5))
-                || ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6)) 
-                || ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
+	return (numeroMoisSimule == 2 || ((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
+		|| ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 5))
+		|| ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
+		|| ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
     }
 
-    private void reporterAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi,
-            int prochaineDeclarationTrimestrielle) {
-        Optional<Aide> aideLogementMoisPrecedent = getAideLogementSimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
-        if (aideLogementMoisPrecedent.isPresent()) {
-            aidesPourCeMois.put(aideLogementMoisPrecedent.get().getCode(), aideLogementMoisPrecedent.get());
-        } else if (isEligiblePourReportAideLogementDeclare(demandeurEmploi, prochaineDeclarationTrimestrielle, numeroMoisSimule)) {
-            Aide aideLogement = getAideLogementDeclare(demandeurEmploi);
-            aidesPourCeMois.put(aideLogement.getCode(), aideLogement);
-        }
+    private void reporterAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi, int prochaineDeclarationTrimestrielle) {
+	Optional<Aide> aideLogementMoisPrecedent = getAideLogementSimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
+	if (aideLogementMoisPrecedent.isPresent()) {
+	    aidesPourCeMois.put(aideLogementMoisPrecedent.get().getCode(), aideLogementMoisPrecedent.get());
+	} else if (isEligiblePourReportAideLogementDeclare(demandeurEmploi, prochaineDeclarationTrimestrielle, numeroMoisSimule)) {
+	    Aide aideLogement = getAideLogementDeclare(demandeurEmploi);
+	    aidesPourCeMois.put(aideLogement.getCode(), aideLogement);
+	}
     }
 
     private void verserAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogement(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-        
-        if (openFiscaRetourSimulation.getMontantAideLogement() > 0) {
-            Aide aideLogement = creerAideLogement(openFiscaRetourSimulation.getMontantAideLogement(), openFiscaRetourSimulation.getTypeAideLogement(), false);
-            aidesPourCeMois.put(aideLogement.getCode(), aideLogement);
-        }
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogement(simulationAides, demandeurEmploi,
+		dateDebutSimulation, numeroMoisSimule);
+
+	if (openFiscaRetourSimulation.getMontantAideLogement() > 0) {
+	    Aide aideLogement = creerAideLogement(openFiscaRetourSimulation.getMontantAideLogement(), openFiscaRetourSimulation.getTypeAideLogement(),
+		    false);
+	    aidesPourCeMois.put(aideLogement.getCode(), aideLogement);
+	}
     }
 
     private Aide getAideLogementDeclare(DemandeurEmploi demandeurEmploi) {
-        float montantDeclare = ressourcesFinancieresUtile.getMontantAideLogementDeclare(demandeurEmploi);
-        String typeAideLogement = ressourcesFinancieresUtile.getTypeAideLogementDeclare(demandeurEmploi);
-        return creerAideLogement(montantDeclare, typeAideLogement, true);
+	float montantDeclare = ressourcesFinancieresUtile.getMontantAideLogementDeclare(demandeurEmploi);
+	String typeAideLogement = ressourcesFinancieresUtile.getTypeAideLogementDeclare(demandeurEmploi);
+	return creerAideLogement(montantDeclare, typeAideLogement, true);
     }
 
     private Optional<Aide> getAideLogementSimuleeMoisPrecedent(SimulationAides simulationAides, int numeroMoisSimule) {
-        int moisNMoins1 = numeroMoisSimule - 1;
-        Optional<Aide> aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode(), moisNMoins1);
-        if (aidePourCeMois.isEmpty())
-            aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode(), moisNMoins1);
-        if (aidePourCeMois.isEmpty())
-            aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode(), moisNMoins1);
-        return aidePourCeMois;
+	int moisNMoins1 = numeroMoisSimule - 1;
+	Optional<Aide> aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode(), moisNMoins1);
+	if (aidePourCeMois.isEmpty())
+	    aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode(), moisNMoins1);
+	if (aidePourCeMois.isEmpty())
+	    aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode(), moisNMoins1);
+	return aidePourCeMois;
     }
 
     private boolean isEligiblePourReportAideLogementDeclare(DemandeurEmploi demandeurEmploi, int prochaineDeclarationTrimestrielle, int numeroMoisSimule) {
-        return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi) && numeroMoisSimule == 1 || numeroMoisSimule <= prochaineDeclarationTrimestrielle;
+	return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi) && numeroMoisSimule == 1
+		|| numeroMoisSimule <= prochaineDeclarationTrimestrielle;
     }
 
     private Aide creerAideLogement(float montantAideLogement, String typeAide, boolean isAideReportee) {
-        Aide aideLogement = new Aide();
-        if (typeAide.equals(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())) {
-            aideLogement = ajouterAidePersonnaliseeLogement(montantAideLogement, isAideReportee);
-        }
-        if (typeAide.equals(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode())) {
-            aideLogement = ajouterAllocationLogementFamiliale(montantAideLogement, isAideReportee);
-        }
-        if (typeAide.equals(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())) {
-            aideLogement = ajouterAllocationLogementSociale(montantAideLogement, isAideReportee);
-        }
-        return aideLogement;
+	Aide aideLogement = new Aide();
+	if (typeAide.equals(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())) {
+	    aideLogement = ajouterAidePersonnaliseeLogement(montantAideLogement, isAideReportee);
+	}
+	if (typeAide.equals(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode())) {
+	    aideLogement = ajouterAllocationLogementFamiliale(montantAideLogement, isAideReportee);
+	}
+	if (typeAide.equals(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())) {
+	    aideLogement = ajouterAllocationLogementSociale(montantAideLogement, isAideReportee);
+	}
+	return aideLogement;
     }
 
     private Aide ajouterAidePersonnaliseeLogement(float montant, boolean isReportee) {
-        Aide aidePersonnaliseeLogement = new Aide();
-        aidePersonnaliseeLogement.setCode(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode());
-        aidePersonnaliseeLogement.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
-        aidePersonnaliseeLogement.setMontant(montant);
-        aidePersonnaliseeLogement.setNom(Aides.AIDE_PERSONNALISEE_LOGEMENT.getNom());
-        aidePersonnaliseeLogement.setOrganisme(Organismes.CAF.getNom());
-        aidePersonnaliseeLogement.setReportee(isReportee);
-        return aidePersonnaliseeLogement;
+	Aide aidePersonnaliseeLogement = new Aide();
+	aidePersonnaliseeLogement.setCode(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode());
+	aidePersonnaliseeLogement.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	aidePersonnaliseeLogement.setMontant(montant);
+	aidePersonnaliseeLogement.setNom(Aides.AIDE_PERSONNALISEE_LOGEMENT.getNom());
+	aidePersonnaliseeLogement.setOrganisme(Organismes.CAF.getNom());
+	aidePersonnaliseeLogement.setReportee(isReportee);
+	return aidePersonnaliseeLogement;
     }
 
     private Aide ajouterAllocationLogementFamiliale(float montant, boolean isReportee) {
-        Aide allocationLogementFamiliale = new Aide();
-        allocationLogementFamiliale.setCode(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode());
-        allocationLogementFamiliale.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
-        allocationLogementFamiliale.setMontant(montant);
-        allocationLogementFamiliale.setNom(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getNom());
-        allocationLogementFamiliale.setOrganisme(Organismes.CAF.getNom());
-        allocationLogementFamiliale.setReportee(isReportee);
-        return allocationLogementFamiliale;
+	Aide allocationLogementFamiliale = new Aide();
+	allocationLogementFamiliale.setCode(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode());
+	allocationLogementFamiliale.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	allocationLogementFamiliale.setMontant(montant);
+	allocationLogementFamiliale.setNom(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getNom());
+	allocationLogementFamiliale.setOrganisme(Organismes.CAF.getNom());
+	allocationLogementFamiliale.setReportee(isReportee);
+	return allocationLogementFamiliale;
     }
 
     private Aide ajouterAllocationLogementSociale(float montant, boolean isReportee) {
-        Aide allocationLogementSociale = new Aide();
-        allocationLogementSociale.setCode(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode());
-        allocationLogementSociale.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
-        allocationLogementSociale.setMontant(montant);
-        allocationLogementSociale.setNom(Aides.ALLOCATION_LOGEMENT_SOCIALE.getNom());
-        allocationLogementSociale.setOrganisme(Organismes.CAF.getNom());
-        allocationLogementSociale.setReportee(isReportee);
-        return allocationLogementSociale;
+	Aide allocationLogementSociale = new Aide();
+	allocationLogementSociale.setCode(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode());
+	allocationLogementSociale.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	allocationLogementSociale.setMontant(montant);
+	allocationLogementSociale.setNom(Aides.ALLOCATION_LOGEMENT_SOCIALE.getNom());
+	allocationLogementSociale.setOrganisme(Organismes.CAF.getNom());
+	allocationLogementSociale.setReportee(isReportee);
+	return allocationLogementSociale;
     }
 
     public boolean isEligibleAidesLogement(DemandeurEmploi demandeurEmploi) {
-        boolean isEligible = false;
-        if (demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().getLogement() != null
-                && demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement() != null
-                && (demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireHLM()
-                        || demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireMeuble()
-                        || demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireNonMeuble()
-                        || demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isProprietaireAvecEmprunt())) {
-            isEligible = true;
-        }
-        return isEligible;
+	boolean isEligible = false;
+	if (demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().getLogement() != null
+		&& demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement() != null
+		&& (demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireHLM()
+			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireMeuble()
+			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireNonMeuble()
+			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isProprietaireAvecEmprunt())) {
+	    isEligible = true;
+	}
+	return isEligible;
     }
 
 }
