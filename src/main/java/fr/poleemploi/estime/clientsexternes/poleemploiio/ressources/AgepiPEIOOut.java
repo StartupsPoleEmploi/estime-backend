@@ -18,18 +18,16 @@ public class AgepiPEIOOut {
 	private int tauxNetDroit;
 	private boolean allocationEnCours;
 	private int droitAREMinimal;
-	private String dateFaitGenerateurDerniereDemandeAGEPI;
-	private ConditionInscription conditionInscription;
-	private ConditionGardeEnfant conditionGardeEnfant;
-	private ConditionChampTerritorial conditionChampTerritorial;
-	private ConditionDuree conditionDuree;
-	private ConditionRessource conditionRessource;
-	private ConditionDateDepot conditionDateDepot;
-	private ConditionDateFaitGenerateur condtionDateFaitGenerateur;
-	private String nature;
-	private float montant;
-	private String libelleMotifRejet;
+	private String libelleDroit;
+	private ConditionAGEPIAPI conditionsAGEPIAPI;
+	private DecisionAGEPIAPI decisionAGEPIAPI;
 	
+	public DecisionAGEPIAPI getDecisionAGEPIAPI() {
+		return decisionAGEPIAPI;
+	}
+	public void setDecisionAGEPIAPI(DecisionAGEPIAPI decisionAGEPIAPI) {
+		this.decisionAGEPIAPI = decisionAGEPIAPI;
+	}
 	public String getOrigine() {
 		return origine;
 	}
@@ -100,7 +98,7 @@ public class AgepiPEIOOut {
 		return eleveSeulEnfants;
 	}
 	public void setEleveSeulEnfants(boolean eleveSeulEnfants) {
-		eleveSeulEnfants = eleveSeulEnfants;
+		this.eleveSeulEnfants  = eleveSeulEnfants;
 	}
 	public String getCodeTerritoire() {
 		return codeTerritoire;
@@ -132,127 +130,16 @@ public class AgepiPEIOOut {
 	public void setDroitAREMinimal(int droitAREMinimal) {
 		this.droitAREMinimal = droitAREMinimal;
 	}
-	public String getDateFaitGenerateurDerniereDemandeAGEPI() {
-		return dateFaitGenerateurDerniereDemandeAGEPI;
+	public String getLibelleDroit() {
+		return libelleDroit;
 	}
-	public void setDateFaitGenerateurDerniereDemandeAGEPI(String dateFaitGenerateurDerniereDemandeAGEPI) {
-		this.dateFaitGenerateurDerniereDemandeAGEPI = dateFaitGenerateurDerniereDemandeAGEPI;
+	public void setLibelleDroit(String libelleDroit) {
+		this.libelleDroit = libelleDroit;
 	}
-	public ConditionInscription getConditionInscription() {
-		return conditionInscription;
+	public ConditionAGEPIAPI getConditionsAGEPIAPI() {
+		return conditionsAGEPIAPI;
 	}
-	public void setConditionInscription(ConditionInscription conditionInscription) {
-		this.conditionInscription = conditionInscription;
-	}
-	
-	public boolean isConditionInscriptionRemplie() {
-		return this.conditionInscription.isRemplie();
-	}
-	
-	public String getConditionInscriptionJustification() {
-		return this.conditionInscription.getJustification();
-	}
-	
-	public ConditionGardeEnfant getConditionGardeEnfant() {
-		return conditionGardeEnfant;
-	}
-	public void setConditionGardeEnfant(ConditionGardeEnfant conditionGardeEnfant) {
-		this.conditionGardeEnfant = conditionGardeEnfant;
-	}
-	
-	public boolean isConditionGardeEnfantRemplie() {
-		return this.conditionGardeEnfant.isRemplie();
-	}
-	
-	public String getConditionGardeEnfantJustification() {
-		return this.conditionGardeEnfant.getJustification();
-	}
-	
-	public ConditionChampTerritorial getConditionChampTerritorial() {
-		return conditionChampTerritorial;
-	}
-	public void setConditionChampTerritorial(ConditionChampTerritorial conditionChampTerritorial) {
-		this.conditionChampTerritorial = conditionChampTerritorial;
-	}
-	public boolean isConditionChampTerritorialRemplie() {
-		return this.conditionChampTerritorial.isRemplie();
-	}
-	
-	public String getConditionChampTerritorialJustification() {
-		return this.conditionChampTerritorial.getJustification();
-	}
-	public ConditionDuree getConditionDuree() {
-		return conditionDuree;
-	}
-	public void setConditionDuree(ConditionDuree conditionDuree) {
-		this.conditionDuree = conditionDuree;
-	}
-	public boolean isConditionDureeRemplie() {
-		return this.conditionDuree.isRemplie();
-	}
-	
-	public String getConditionDureeJustification() {
-		return this.conditionDuree.getJustification();
-	}
-	
-	public ConditionRessource getConditionRessource() {
-		return conditionRessource;
-	}
-	public void setConditionRessource(ConditionRessource conditionRessource) {
-		this.conditionRessource = conditionRessource;
-	}
-	
-	public boolean isConditionRessourceRemplie() {
-		return this.conditionRessource.isRemplie();
-	}
-	
-	public String getConditionRessourceJustification() {
-		return this.conditionRessource.getJustification();
-	}
-	
-	public ConditionDateDepot getConditionDateDepot() {
-		return conditionDateDepot;
-	}
-	public void setConditionDateDepot(ConditionDateDepot conditionDateDepot) {
-		this.conditionDateDepot = conditionDateDepot;
-	}
-	public boolean isConditionDateDepotRemplie() {
-		return this.conditionDateDepot.isRemplie();
-	}
-	
-	public String getConditionDateDepotJustification() {
-		return this.conditionDateDepot.getJustification();
-	}
-	
-	public ConditionDateFaitGenerateur getCondtionDateFaitGenerateur() {
-		return condtionDateFaitGenerateur;
-	}
-	public void setCondtionDateFaitGenerateur(ConditionDateFaitGenerateur condtionDateFaitGenerateur) {
-		this.condtionDateFaitGenerateur = condtionDateFaitGenerateur;
-	}
-	public boolean isCondtionDateFaitGenerateurRemplie() {
-		return this.condtionDateFaitGenerateur.isRemplie();
-	}
-	
-	public String getCondtionDateFaitGenerateurJustification() {
-		return this.condtionDateFaitGenerateur.getJustification();
-	}
-	public String getNature() {
-		return nature;
-	}
-	public void setNature(String nature) {
-		this.nature = nature;
-	}
-	public float getMontant() {
-		return montant;
-	}
-	public void setMontant(float montant) {
-		this.montant = montant;
-	}
-	public String getLibelleMotifRejet() {
-		return libelleMotifRejet;
-	}
-	public void setLibelleMotifRejet(String libelleMotifRejet) {
-		this.libelleMotifRejet = libelleMotifRejet;
+	public void setConditionsAGEPIAPI(ConditionAGEPIAPI conditionsAGEPIAPI) {
+		this.conditionsAGEPIAPI = conditionsAGEPIAPI;
 	}
 }
