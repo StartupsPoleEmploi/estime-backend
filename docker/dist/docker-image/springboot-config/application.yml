@@ -2,6 +2,7 @@
 server:
   servlet:
     contextPath: "/estime/v1"
+  max-http-header-size: 1000KB
     
 # manage spring configuration
 spring:
