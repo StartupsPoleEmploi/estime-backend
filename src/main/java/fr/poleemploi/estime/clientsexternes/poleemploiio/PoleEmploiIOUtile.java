@@ -69,25 +69,30 @@ public class PoleEmploiIOUtile {
 
 	public HttpEntity<MultiValueMap<String, Object>> getAideMobiliteRequeteHTTP(AideMobilitePEIOIn aideMobiliteIn, String bearerToken) {
 		HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization", bearerToken);
+        
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         map.add("origine", aideMobiliteIn.getOrigine());
         map.add("dateDepot", aideMobiliteIn.getDateDepot());
         map.add("dateActionReclassement", aideMobiliteIn.getDateActionReclassement());
         map.add("contexte", aideMobiliteIn.getContexte());
         map.add("natureContratTravail", aideMobiliteIn.getNatureContratTravail());
-        map.add("lieuActionReclassement", aideMobiliteIn.getLieuActionReclassement());
-        map.add("codePostalActionReclassement", aideMobiliteIn.getCodePostalActionReclassement());
-        map.add("communeActionReclassement", aideMobiliteIn.getCommuneActionReclassement());
         map.add("dureePeriodeEmploiOuFormation", aideMobiliteIn.getDureePeriodeEmploiOuFormation());
         map.add("distanceDomicileActionReclassement", aideMobiliteIn.getDistanceDomicileActionReclassement());
         map.add("dureePeriodeEmploiOuFormation", aideMobiliteIn.getDureePeriodeEmploiOuFormation());
-        map.add("financementPEFormation", aideMobiliteIn.isFinancementPEFormation());
         map.add("nombreAllersRetours", aideMobiliteIn.getNombreAllersRetours());
         map.add("nombreRepas", aideMobiliteIn.getNombreRepas());
         map.add("nombreNuitees", aideMobiliteIn.getNombreNuitees());
-                
+        map.add("lieuFormationOuEmploi", aideMobiliteIn.getLieuFormationOuEmploi());
+        map.add("fraisPrisEnChargeParTiers", aideMobiliteIn.isFraisPrisEnChargeParTiers());
+        map.add("typeIntensite", aideMobiliteIn.getTypeIntensite());
+        map.add("intensite", aideMobiliteIn.getIntensite());
+        map.add("nombreEnfants", aideMobiliteIn.getNombreEnfants());
+        map.add("nombreEnfantsMoins10Ans", aideMobiliteIn.getNombreEnfantsMoins10Ans());
+        map.add("eleveSeulEnfants", aideMobiliteIn.isEleveSeulEnfants());
+        map.add("codeTerritoire", aideMobiliteIn.getCodeTerritoire());
+        
         return new HttpEntity<>(map, headers);
 	}
 

@@ -5,36 +5,27 @@ public class AideMobilitePEIOOut {
 	private String dateDepot;	
 	private String contexte;	
 	private String dateActionReclassement;
-	private String lieuActionReclassement;
-	private String codePostalActionReclassement;
-	private String communeActionReclassement;
+	private String lieuFormationOuEmploi;
+	private ConditionsAideMobiliteAPI conditionsAideMobiliteAPI;
 	private int distanceDomicileActionReclassement;
 	private int dureePeriodeEmploiOuFormation;
 	private String natureContratTravail;
-	private boolean financementPEFormation;
+	private DecisionAideMobiliteAPI decisionAideMobiliteAPI;
 	private boolean fraisPrisEnChargeParTiers;
+	private int totalMontantsAidesMobilitePrecedentes;
+	private int montantMaximalAttribuable;
 	private int nombreAllersRetours;
 	private int nombreRepas;
 	private int nombreNuitees;
 	private String codeTerritoire;
 	private String categorie;
 	private int tauxNetDroit;
+	private String dateDernierJourIndemnise;
 	private boolean allocationEnCours;
 	private int droitAREMinimal;
+	private String libelleDroit;
 	private String lieuResidenceDE;
-	private ConditionInscription conditionInscription;
-	private ConditionChampTerritorial conditionChampTerritorial;
-	private ConditionDuree conditionDuree;
-	private ConditionRessource conditionRessource;
-	private ConditionDateDepot conditionDateDepot;
-	private ConditionDistance conditionDistance;
-	private ConditionFinancementFormation conditionFinancementFormation;
-	private ConditionPriseEnCharge conditionPriseEnCharge;
-	private String nature;
-	private float montant;
-	private String libelleAttribution;
-	private String libelleMotifRejet;
-	
+
 	public String getOrigine() {
 		return origine;
 	}
@@ -59,24 +50,6 @@ public class AideMobilitePEIOOut {
 	public void setDateActionReclassement(String dateActionReclassement) {
 		this.dateActionReclassement = dateActionReclassement;
 	}
-	public String getLieuActionReclassement() {
-		return lieuActionReclassement;
-	}
-	public void setLieuActionReclassement(String lieuActionReclassement) {
-		this.lieuActionReclassement = lieuActionReclassement;
-	}
-	public String getCodePostalActionReclassement() {
-		return codePostalActionReclassement;
-	}
-	public void setCodePostalActionReclassement(String codePostalActionReclassement) {
-		this.codePostalActionReclassement = codePostalActionReclassement;
-	}
-	public String getCommuneActionReclassement() {
-		return communeActionReclassement;
-	}
-	public void setCommuneActionReclassement(String communeActionReclassement) {
-		this.communeActionReclassement = communeActionReclassement;
-	}
 	public int getDistanceDomicileActionReclassement() {
 		return distanceDomicileActionReclassement;
 	}
@@ -94,12 +67,6 @@ public class AideMobilitePEIOOut {
 	}
 	public void setNatureContratTravail(String natureContratTravail) {
 		this.natureContratTravail = natureContratTravail;
-	}
-	public boolean isFinancementPEFormation() {
-		return financementPEFormation;
-	}
-	public void setFinancementPEFormation(boolean financementPEFormation) {
-		this.financementPEFormation = financementPEFormation;
 	}
 	public boolean isFraisPrisEnChargeParTiers() {
 		return fraisPrisEnChargeParTiers;
@@ -161,141 +128,47 @@ public class AideMobilitePEIOOut {
 	public void setLieuResidenceDE(String lieuResidenceDE) {
 		this.lieuResidenceDE = lieuResidenceDE;
 	}
-	public ConditionInscription getConditionInscription() {
-		return conditionInscription;
+	public String getDateDernierJourIndemnise() {
+		return dateDernierJourIndemnise;
 	}
-	public void setConditionInscription(ConditionInscription conditionInscription) {
-		this.conditionInscription = conditionInscription;
+	public void setDateDernierJourIndemnise(String dateDernierJourIndemnise) {
+		this.dateDernierJourIndemnise = dateDernierJourIndemnise;
 	}
-	public ConditionChampTerritorial getConditionChampTerritorial() {
-		return conditionChampTerritorial;
+	public String getLibelleDroit() {
+		return libelleDroit;
 	}
-	public void setConditionChampTerritorial(ConditionChampTerritorial conditionChampTerritorial) {
-		this.conditionChampTerritorial = conditionChampTerritorial;
+	public void setLibelleDroit(String libelleDroit) {
+		this.libelleDroit = libelleDroit;
 	}
-	public ConditionDuree getConditionDuree() {
-		return conditionDuree;
+	public String getLieuFormationOuEmploi() {
+		return lieuFormationOuEmploi;
 	}
-	public void setConditionDuree(ConditionDuree conditionDuree) {
-		this.conditionDuree = conditionDuree;
+	public void setLieuFormationOuEmploi(String lieuFormationOuEmploi) {
+		this.lieuFormationOuEmploi = lieuFormationOuEmploi;
 	}
-	public ConditionRessource getConditionRessource() {
-		return conditionRessource;
+	public int getTotalMontantsAidesMobilitePrecedentes() {
+		return totalMontantsAidesMobilitePrecedentes;
 	}
-	public void setConditionRessource(ConditionRessource conditionRessource) {
-		this.conditionRessource = conditionRessource;
+	public void setTotalMontantsAidesMobilitePrecedentes(int totalMontantsAidesMobilitePrecedentes) {
+		this.totalMontantsAidesMobilitePrecedentes = totalMontantsAidesMobilitePrecedentes;
 	}
-	public ConditionDateDepot getConditionDateDepot() {
-		return conditionDateDepot;
+	public int getMontantMaximalAttribuable() {
+		return montantMaximalAttribuable;
 	}
-	public void setConditionDateDepot(ConditionDateDepot conditionDateDepot) {
-		this.conditionDateDepot = conditionDateDepot;
+	public void setMontantMaximalAttribuable(int montantMaximalAttribuable) {
+		this.montantMaximalAttribuable = montantMaximalAttribuable;
 	}
-	public ConditionDistance getConditionDistance() {
-		return conditionDistance;
+	public ConditionsAideMobiliteAPI getConditionsAideMobiliteAPI() {
+		return conditionsAideMobiliteAPI;
 	}
-	public void setConditionDistance(ConditionDistance conditionDistance) {
-		this.conditionDistance = conditionDistance;
+	public void setConditionsAideMobiliteAPI(ConditionsAideMobiliteAPI conditionsAideMobiliteAPI) {
+		this.conditionsAideMobiliteAPI = conditionsAideMobiliteAPI;
 	}
-	public ConditionFinancementFormation getConditionFinancementFormation() {
-		return conditionFinancementFormation;
+	public DecisionAideMobiliteAPI getDecisionAideMobiliteAPI() {
+		return decisionAideMobiliteAPI;
 	}
-	public void setConditionFinancementFormation(ConditionFinancementFormation conditionFinancementFormation) {
-		this.conditionFinancementFormation = conditionFinancementFormation;
+	public void setDecisionAideMobiliteAPI(DecisionAideMobiliteAPI decisionAideMobiliteAPI) {
+		this.decisionAideMobiliteAPI = decisionAideMobiliteAPI;
 	}
-	public ConditionPriseEnCharge getConditionPriseEnCharge() {
-		return conditionPriseEnCharge;
-	}
-	public void setConditionPriseEnCharge(ConditionPriseEnCharge conditionPriseEnCharge) {
-		this.conditionPriseEnCharge = conditionPriseEnCharge;
-	}
-	public String getNature() {
-		return nature;
-	}
-	public void setNature(String nature) {
-		this.nature = nature;
-	}
-	public float getMontant() {
-		return montant;
-	}
-	public void setMontant(float montant) {
-		this.montant = montant;
-	}
-	public String getLibelleAttribution() {
-		return libelleAttribution;
-	}
-	public void setLibelleAttribution(String libelleAttribution) {
-		this.libelleAttribution = libelleAttribution;
-	}
-	public String getLibelleMotifRejet() {
-		return libelleMotifRejet;
-	}
-	public void setLibelleMotifRejet(String libelleMotifRejet) {
-		this.libelleMotifRejet = libelleMotifRejet;
-	}
-	
-	public boolean isConditionChampTerritorialRemplie() {
-		return this.conditionChampTerritorial.isRemplie();
-	}
-	
-	public String getCondtionChampTerritorialJustification() {
-		return this.conditionChampTerritorial.getJustification();
-	}
-	
-	public boolean isConditionDateDepotRemplie() {
-		return this.conditionDateDepot.isRemplie();
-	}
-	
-	public String getCondtionDateDepotJustification() {
-		return this.conditionDateDepot.getJustification();
-	}
-	
-	public boolean isConditionDistance() {
-		return this.conditionDistance.isRemplie();
-	}
-	
-	public String getCondtionDistance() {
-		return this.conditionDistance.getJustification();
-	}
-	
-	public boolean isConditionDuree() {
-		return this.conditionDuree.isRemplie();
-	}
-	
-	public String getCondtionDuree() {
-		return this.conditionDuree.getJustification();
-	}
-	
-	public boolean isConditionFinancementFormation() {
-		return this.conditionFinancementFormation.isRemplie();
-	}
-	
-	public String getCondtionFinancementFormation() {
-		return this.conditionFinancementFormation.getJustification();
-	}
-	
-	public boolean isConditionInscription() {
-		return this.conditionInscription.isRemplie();
-	}
-	
-	public String getCondtionInscription() {
-		return this.conditionInscription.getJustification();
-	}
-	
-	public boolean isConditionPriseEnCharge() {
-		return this.conditionPriseEnCharge.isRemplie();
-	}
-	
-	public String getCondtionPriseEnCharge() {
-		return this.conditionPriseEnCharge.getJustification();
-	}
-	
-	public boolean isConditionRessource() {
-		return this.conditionRessource.isRemplie();
-	}
-	
-	public String getCondtionRessource() {
-		return this.conditionRessource.getJustification();
-	}
-	
+
 }

@@ -112,15 +112,10 @@ public class AideMobiliteUtile {
 		aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
 		aideMobilitePEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
 		aideMobilitePEIOIn.setOrigine("W");
-		aideMobilitePEIOIn.setCodePostalActionReclassement(demandeurEmploi.getInformationsPersonnelles().getCodePostal());
 		aideMobilitePEIOIn.setDistanceDomicileActionReclassement(Math.round(demandeurEmploi.getFuturTravail().getDistanceKmDomicileTravail()));
 		aideMobilitePEIOIn.setNombreAllersRetours(demandeurEmploi.getFuturTravail().getNombreTrajetsDomicileTravail());
 		aideMobilitePEIOIn.setNombreRepas(getNombreRepas(demandeurEmploi));
-		aideMobilitePEIOIn.setLieuActionReclassement("France");
 		aideMobilitePEIOIn.setNombreNuitees(getNombreNuitees(demandeurEmploi));
-
-		aideMobilitePEIOIn.setCommuneActionReclassement(null);
-		aideMobilitePEIOIn.setFinancementPEFormation(false);
 
 		return aideMobilitePEIOIn;
 	}

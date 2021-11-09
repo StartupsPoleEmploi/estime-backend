@@ -25,7 +25,7 @@ class InterfacageAPITest {
 	@Autowired
 	private PoleEmploiIOClient poleEmploiIOClient;
 	
-	private final String accessToken ="Bearer EnDH2mo82nNQBneADYkpK6cMN6s";
+	private final String accessToken ="Bearer YlCqVZVNUFhPrGWrLZPJ_GhsC8Q";
 	
 	 @Configuration
 	 @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -38,8 +38,8 @@ class InterfacageAPITest {
 		
 		AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
     	agepiPEIOIn.setContexte("Reprise");
-    	agepiPEIOIn.setDateActionReclassement("2021-11-04");
-    	agepiPEIOIn.setDateDepot("2021-11-04");
+    	agepiPEIOIn.setDateActionReclassement("2021-11-08");
+    	agepiPEIOIn.setDateDepot("2021-11-08");
     	agepiPEIOIn.setDureePeriodeEmploiOuFormation(90);
     	agepiPEIOIn.setEleveSeulEnfants(true);
     	agepiPEIOIn.setIntensite((int) Math.round(50));
@@ -80,47 +80,57 @@ class InterfacageAPITest {
     void testInterfacageApiAideMobValide(){		
 		AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
     	aideMobilitePEIOIn.setContexte("Reprise");
-    	aideMobilitePEIOIn.setDateActionReclassement("2021-10-27");
-    	aideMobilitePEIOIn.setDateDepot("2021-10-27");
+    	aideMobilitePEIOIn.setDateActionReclassement("2021-11-09");
+    	aideMobilitePEIOIn.setDateDepot("2021-11-09");
     	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
     	aideMobilitePEIOIn.setNatureContratTravail("CDI");
     	aideMobilitePEIOIn.setOrigine("c");
-    	aideMobilitePEIOIn.setCodePostalActionReclassement("28000");
-    	aideMobilitePEIOIn.setDistanceDomicileActionReclassement(25000);
+    	aideMobilitePEIOIn.setDistanceDomicileActionReclassement(65000);
     	aideMobilitePEIOIn.setNombreAllersRetours(15);
     	aideMobilitePEIOIn.setNombreRepas(0);
-    	aideMobilitePEIOIn.setLieuActionReclassement("France");
     	aideMobilitePEIOIn.setNombreNuitees(0);
-
-    	aideMobilitePEIOIn.setCommuneActionReclassement("Chartres");
-    	aideMobilitePEIOIn.setFinancementPEFormation(true);
+    	aideMobilitePEIOIn.setCodeTerritoire("001");
+    	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
+    	aideMobilitePEIOIn.setEleveSeulEnfants(true);
+    	aideMobilitePEIOIn.setFraisPrisEnChargeParTiers(false);
+    	aideMobilitePEIOIn.setIntensite(50);
+    	aideMobilitePEIOIn.setTypeIntensite("mensuelle");
+    	aideMobilitePEIOIn.setNombreEnfantsMoins10Ans(2);
+    	aideMobilitePEIOIn.setNombreEnfants(3);
+    	aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
+    	
 		AideMobilitePEIOOut aideMobiliteOut = new AideMobilitePEIOOut();
 		aideMobiliteOut = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, this.accessToken).get();
-
-        assertThat(aideMobiliteOut.getMontant()).isPositive();
+		float montant = aideMobiliteOut.getDecisionAideMobiliteAPI().getMontant();
+        assertThat(montant).isPositive();
     }
 	
 	@Test
     void testInterfacageApiAideMobInvalide(){		
 		AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
     	aideMobilitePEIOIn.setContexte("Reprise");
-    	aideMobilitePEIOIn.setDateActionReclassement("2021-10-27");
-    	aideMobilitePEIOIn.setDateDepot("2021-10-27");
-    	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(4);
+    	aideMobilitePEIOIn.setDateActionReclassement("2021-11-09");
+    	aideMobilitePEIOIn.setDateDepot("2021-11-09");
+    	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
     	aideMobilitePEIOIn.setNatureContratTravail("CDI");
     	aideMobilitePEIOIn.setOrigine("c");
-    	aideMobilitePEIOIn.setCodePostalActionReclassement("44000");
-    	aideMobilitePEIOIn.setDistanceDomicileActionReclassement(0);
-    	aideMobilitePEIOIn.setNombreAllersRetours(0);
+    	aideMobilitePEIOIn.setDistanceDomicileActionReclassement(25000);
+    	aideMobilitePEIOIn.setNombreAllersRetours(15);
     	aideMobilitePEIOIn.setNombreRepas(0);
-    	aideMobilitePEIOIn.setLieuActionReclassement("France");
     	aideMobilitePEIOIn.setNombreNuitees(0);
-
-    	aideMobilitePEIOIn.setCommuneActionReclassement("Nantes");
-    	aideMobilitePEIOIn.setFinancementPEFormation(false);
+    	aideMobilitePEIOIn.setCodeTerritoire("001");
+    	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
+    	aideMobilitePEIOIn.setEleveSeulEnfants(true);
+    	aideMobilitePEIOIn.setFraisPrisEnChargeParTiers(false);
+    	aideMobilitePEIOIn.setIntensite(50);
+    	aideMobilitePEIOIn.setTypeIntensite("mensuelle");
+    	aideMobilitePEIOIn.setNombreEnfantsMoins10Ans(2);
+    	aideMobilitePEIOIn.setNombreEnfants(3);
+    	aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
+    	
 		AideMobilitePEIOOut aideMobiliteOut = new AideMobilitePEIOOut();
 		aideMobiliteOut = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, this.accessToken).get();
-
-        assertThat(aideMobiliteOut.getMontant()).isZero();
+		float montant = aideMobiliteOut.getDecisionAideMobiliteAPI().getMontant();
+        assertThat(montant).isZero();
     }
 }
