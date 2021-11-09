@@ -1,6 +1,9 @@
 package testsintegration.simulation.poleemploiio;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.math.BigDecimal;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
 
 
 @SpringBootTest
@@ -25,7 +30,7 @@ class InterfacageAPITest {
 	@Autowired
 	private PoleEmploiIOClient poleEmploiIOClient;
 	
-	private final String accessToken ="Bearer YlCqVZVNUFhPrGWrLZPJ_GhsC8Q";
+	private final String accessToken ="Bearer o-WI0G1dy6A8gwp1_VNIUW86lcU";
 	
 	 @Configuration
 	 @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -99,8 +104,7 @@ class InterfacageAPITest {
     	aideMobilitePEIOIn.setNombreEnfants(3);
     	aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
     	
-		AideMobilitePEIOOut aideMobiliteOut = new AideMobilitePEIOOut();
-		aideMobiliteOut = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, this.accessToken).get();
+		AideMobilitePEIOOut aideMobiliteOut = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, this.accessToken).get();
 		float montant = aideMobiliteOut.getDecisionAideMobiliteAPI().getMontant();
         assertThat(montant).isPositive();
     }
@@ -128,9 +132,32 @@ class InterfacageAPITest {
     	aideMobilitePEIOIn.setNombreEnfants(3);
     	aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
     	
-		AideMobilitePEIOOut aideMobiliteOut = new AideMobilitePEIOOut();
-		aideMobiliteOut = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, this.accessToken).get();
+		AideMobilitePEIOOut aideMobiliteOut = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, this.accessToken).get();
 		float montant = aideMobiliteOut.getDecisionAideMobiliteAPI().getMontant();
         assertThat(montant).isZero();
     }
+	
+	@Test
+    void testInterfacageApiAreValide(){	
+		ArePEIOIn areIn = new ArePEIOIn();
+		areIn.setAllocationBruteJournaliere(new BigDecimal(45));
+		areIn.setGainBrut(new BigDecimal(27));
+		areIn.setSalaireBrutJournalier(new BigDecimal(375));
+		
+		ArePEIOOut areOut = poleEmploiIOClient.callAreEndPoint(areIn, this.accessToken).get();
+		float montant = areOut.getAllocationMensuelle().floatValue();
+		assertThat(montant).isPositive();
+	}
+	
+	@Test
+    void testInterfacageApiAreInValide(){	
+		ArePEIOIn areIn = new ArePEIOIn();
+		areIn.setAllocationBruteJournaliere(new BigDecimal(0));
+		areIn.setGainBrut(new BigDecimal(555555));
+		areIn.setSalaireBrutJournalier(new BigDecimal(7777));
+		
+		ArePEIOOut areOut = poleEmploiIOClient.callAreEndPoint(areIn, this.accessToken).get();
+		float montant = areOut.getAllocationMensuelle().floatValue();
+		assertThat(montant).isZero();
+	}
 }
