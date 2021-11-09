@@ -1,14 +1,11 @@
 package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
-import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
@@ -17,27 +14,13 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 
 @Component
-public class RsaAvecPrimeActiviteUtile {
-
-    @Autowired
-    private OpenFiscaClient openFiscaClient;
+public class PrimeActiviteRSAUtile {
 
     @Autowired
     private AideUtile aideUtile;
 
     @Autowired
     private PrimeActiviteUtile primeActiviteUtile;
-
-    public void simulerAides(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
-	if (isRSAACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
-	    reporterRsaEtPrimeActivite(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
-	} else if (isRSAAVerser(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
-	    calculerRsaEtPrimeActivite(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
-	} else {
-	    reporterRsaEtPrimeActivite(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
-	}
-    }
 
     /**
      * Fonction permettant de déterminer si le montant de la prime d'activité doit être calculé ce mois-ci
@@ -56,7 +39,8 @@ public class RsaAvecPrimeActiviteUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      *  
      */
-    private boolean isRSAACalculer(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
+    boolean isRSAACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
 	return ((prochaineDeclarationTrimestrielle == numeroMoisSimule) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
 		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
     }
@@ -78,18 +62,19 @@ public class RsaAvecPrimeActiviteUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|   
      *       
      */
-    private boolean isRSAAVerser(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
+    boolean isRSAAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
 	return (((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
 		|| ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
 		|| ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
 		|| ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
     }
 
-    private void reporterRsaEtPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi, int prochaineDeclarationTrimestrielle) {
+    void reporterRsaEtPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	Optional<Aide> rsaMoisPrecedent = getRSASimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
 	if (rsaMoisPrecedent.isPresent()) {
 	    aidesPourCeMois.put(Aides.RSA.getCode(), rsaMoisPrecedent.get());
-	} else if (isEligiblePourReportRSADeclare(prochaineDeclarationTrimestrielle, numeroMoisSimule)) {
+	} else if (isEligiblePourReportRSADeclare(numeroMoisSimule, demandeurEmploi)) {
 	    aidesPourCeMois.put(Aides.RSA.getCode(), getRSADeclare(demandeurEmploi));
 	}
 	Optional<Aide> primeActiviteMoisPrecedent = primeActiviteUtile.getPrimeActiviteMoisPrecedent(simulationAides, numeroMoisSimule);
@@ -98,21 +83,7 @@ public class RsaAvecPrimeActiviteUtile {
 	}
     }
 
-    private void calculerRsaEtPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerRsaAvecPrimeActivite(simulationAides, demandeurEmploi,
-		dateDebutSimulation, numeroMoisSimule);
-
-	if (openFiscaRetourSimulation.getMontantRSA() > 0) {
-	    Aide rsa = creerAideeRSA(openFiscaRetourSimulation.getMontantRSA(), false);
-	    aidesPourCeMois.put(rsa.getCode(), rsa);
-	}
-	if (openFiscaRetourSimulation.getMontantPrimeActivite() > 0) {
-	    Aide primeActivite = primeActiviteUtile.creerAidePrimeActivite(openFiscaRetourSimulation.getMontantPrimeActivite(), false);
-	    aidesPourCeMois.put(primeActivite.getCode(), primeActivite);
-	}
-    }
-
-    private Aide creerAideeRSA(float montantRSA, boolean isAideReportee) {
+    protected Aide creerAideRSA(float montantRSA, boolean isAideReportee) {
 	Aide aideRSA = new Aide();
 	aideRSA.setCode(Aides.RSA.getCode());
 	aideRSA.setMontant(montantRSA);
@@ -124,7 +95,7 @@ public class RsaAvecPrimeActiviteUtile {
 
     private Aide getRSADeclare(DemandeurEmploi demandeurEmploi) {
 	float montantDeclare = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA();
-	return creerAideeRSA(montantDeclare, true);
+	return creerAideRSA(montantDeclare, true);
     }
 
     private Optional<Aide> getRSASimuleeMoisPrecedent(SimulationAides simulationAides, int numeroMoisSimule) {
@@ -132,7 +103,14 @@ public class RsaAvecPrimeActiviteUtile {
 	return aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.RSA.getCode(), moisNMoins1);
     }
 
-    private boolean isEligiblePourReportRSADeclare(int prochaineDeclarationTrimestrielle, int numeroMoisSimule) {
-	return numeroMoisSimule <= prochaineDeclarationTrimestrielle;
+    private boolean isEligiblePourReportRSADeclare(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	boolean isEligiblePourReportRSADeclare = false;
+	if (demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null
+		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() != null
+		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() > 0) {
+	    isEligiblePourReportRSADeclare = numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieres().getAidesCAF()
+		    .getProchaineDeclarationTrimestrielle();
+	}
+	return isEligiblePourReportRSADeclare;
     }
 }

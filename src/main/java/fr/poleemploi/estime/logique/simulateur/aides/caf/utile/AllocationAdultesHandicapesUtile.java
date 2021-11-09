@@ -43,12 +43,12 @@ public class AllocationAdultesHandicapesUtile {
         if(numeroMoisSimule > diffNbrMoisSimulationEtNbrMoisTravailles) {
             float montantAllocationAAHReduit = calculerMontantReduit(demandeurEmploi);
             if(montantAllocationAAHReduit > 0) {
-                ajouterAideeAAH(aidesPourCeMois, montantAllocationAAHReduit);             
+                ajouterAideAAH(aidesPourCeMois, montantAllocationAAHReduit);             
             }
         } else {
             //le demandeur cumule son AAH avant la simulation
             float montantAllocationAAHAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH();
-            ajouterAideeAAH(aidesPourCeMois, montantAllocationAAHAvantSimulation);
+            ajouterAideAAH(aidesPourCeMois, montantAllocationAAHAvantSimulation);
         }
     }
     
@@ -84,7 +84,7 @@ public class AllocationAdultesHandicapesUtile {
         return salaireBrut.compareTo(BigDecimal.valueOf(MONTANT_SALAIRE_BRUT_PALIER)) <= 0;
     }
     
-    private void ajouterAideeAAH(Map<String, Aide>  aidesPourCeMois, float montant) {
+    private void ajouterAideAAH(Map<String, Aide>  aidesPourCeMois, float montant) {
         Aide allocationAAH = new Aide();
         allocationAAH.setCode(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode());
         Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.ALLOCATION_ADULTES_HANDICAPES.getNomFichierDetail());

@@ -71,6 +71,25 @@ public class OpenFiscaClient {
         return openFiscaRetourSimulation;
     }
 
+    public OpenFiscaRetourSimulation calculerAideLogementAvecPrimeActivite(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
+        String jsonResponse = callApiCalculate(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+        openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaResponseMappeurPrimeActivite.getMontantPrimeActivite(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        openFiscaRetourSimulation.setMontantAideLogement(openFiscaResponseMappeurAidesLogement.getMontantAideLogement(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        openFiscaRetourSimulation.setTypeAideLogement(openFiscaResponseMappeurAidesLogement.getTypeAideLogement(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        return openFiscaRetourSimulation;
+    }
+
+    public OpenFiscaRetourSimulation calculerAideLogementAvecPrimeActiviteEtRSA(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+        OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
+        String jsonResponse = callApiCalculate(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+        openFiscaRetourSimulation.setMontantRSA(openFiscaResponseMappeurRSA.getMontantRSA(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaResponseMappeurPrimeActivite.getMontantPrimeActivite(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        openFiscaRetourSimulation.setMontantAideLogement(openFiscaResponseMappeurAidesLogement.getMontantAideLogement(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        openFiscaRetourSimulation.setTypeAideLogement(openFiscaResponseMappeurAidesLogement.getTypeAideLogement(jsonResponse, dateDebutSimulation, numeroMoisSimule));
+        return openFiscaRetourSimulation;
+    }
+
     private String callApiCalculate(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
         try {
             JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);

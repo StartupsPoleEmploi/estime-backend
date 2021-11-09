@@ -390,9 +390,12 @@ class DemandeurAah6MoisTravaillesAvantSimulationTests extends Commun {
                 assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
                 assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
             });
-            assertThat(simulation.getMesAides()).hasSize(2);
+            assertThat(simulation.getMesAides()).hasSize(3);
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
                 assertThat(aah.getMontant()).isEqualTo(180);
+            });
+            assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+                assertThat(ppa.getMontant()).isEqualTo(304);
             });
             assertThat(simulation.getMesAides().get(Aides.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
                 assertThat(asf.getMontant()).isEqualTo(117);

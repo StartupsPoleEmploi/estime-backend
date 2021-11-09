@@ -1,14 +1,11 @@
 package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
-import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
@@ -21,38 +18,12 @@ import fr.poleemploi.estime.services.ressources.SimulationAides;
 @Component
 public class AidesLogementUtile {
 
-    @Autowired
-    private OpenFiscaClient openFiscaClient;
 
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
     @Autowired
     private AideUtile aideUtile;
-
-    public void simulerAidesLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
-	if (isAideLogementSeulementACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
-	    reporterAideLogement(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
-	} else if (isAideLogementAVerser(numeroMoisSimule, prochaineDeclarationTrimestrielle)) {
-	    verserAideLogement(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
-	} else {
-	    reporterAideLogement(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi, prochaineDeclarationTrimestrielle);
-	}
-    }
-
-    /**
-     * Fonction permettant de déterminer si le montant des aides au logement doit être calculé et versé le même mois
-     * On veut déterminer si lors d'un mois en particulier on veut verser l'aide N et calculer l'aide N+1
-     * 
-     * @param numeroMoisSimule
-     * @param prochaineDeclarationTrimestrielle
-     * @return
-     */
-    private boolean isAideLogementSeulementACalculer(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
-	return isAideLogementACalculer(numeroMoisSimule, prochaineDeclarationTrimestrielle)
-		&& !isAideLogementAVerser(numeroMoisSimule, prochaineDeclarationTrimestrielle);
-    }
 
     /**
      * Fonction permettant de déterminer si le montant des aides au logement doit être calculé ce mois-ci
@@ -70,7 +41,8 @@ public class AidesLogementUtile {
      *      |  -  M3     |    R0    | (C1)/R0  |    V1    | (C2)/R1  |    V2    |    R2    | (C3)/R2  |  
      *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      */
-    private boolean isAideLogementACalculer(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
+    boolean isAideLogementACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
 	return ((numeroMoisSimule == 1) || (prochaineDeclarationTrimestrielle == numeroMoisSimule)
 		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
     }
@@ -92,30 +64,20 @@ public class AidesLogementUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|  
      *      
      */
-    private boolean isAideLogementAVerser(int numeroMoisSimule, int prochaineDeclarationTrimestrielle) {
+    boolean isAideLogementAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
 	return (numeroMoisSimule == 2 || ((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
 		|| ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 5))
 		|| ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
 		|| ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
     }
 
-    private void reporterAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi, int prochaineDeclarationTrimestrielle) {
+    void reporterAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	Optional<Aide> aideLogementMoisPrecedent = getAideLogementSimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
 	if (aideLogementMoisPrecedent.isPresent()) {
 	    aidesPourCeMois.put(aideLogementMoisPrecedent.get().getCode(), aideLogementMoisPrecedent.get());
-	} else if (isEligiblePourReportAideLogementDeclare(demandeurEmploi, prochaineDeclarationTrimestrielle, numeroMoisSimule)) {
+	} else if (isEligiblePourReportAideLogementDeclare(demandeurEmploi, numeroMoisSimule)) {
 	    Aide aideLogement = getAideLogementDeclare(demandeurEmploi);
-	    aidesPourCeMois.put(aideLogement.getCode(), aideLogement);
-	}
-    }
-
-    private void verserAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogement(simulationAides, demandeurEmploi,
-		dateDebutSimulation, numeroMoisSimule);
-
-	if (openFiscaRetourSimulation.getMontantAideLogement() > 0) {
-	    Aide aideLogement = creerAideLogement(openFiscaRetourSimulation.getMontantAideLogement(), openFiscaRetourSimulation.getTypeAideLogement(),
-		    false);
 	    aidesPourCeMois.put(aideLogement.getCode(), aideLogement);
 	}
     }
@@ -136,12 +98,13 @@ public class AidesLogementUtile {
 	return aidePourCeMois;
     }
 
-    private boolean isEligiblePourReportAideLogementDeclare(DemandeurEmploi demandeurEmploi, int prochaineDeclarationTrimestrielle, int numeroMoisSimule) {
-	return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi) && numeroMoisSimule == 1
-		|| numeroMoisSimule <= prochaineDeclarationTrimestrielle;
+    private boolean isEligiblePourReportAideLogementDeclare(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+	return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi) 
+		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle() != null
+		&& (numeroMoisSimule == 1 || numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle());
     }
 
-    private Aide creerAideLogement(float montantAideLogement, String typeAide, boolean isAideReportee) {
+    protected Aide creerAideLogement(float montantAideLogement, String typeAide, boolean isAideReportee) {
 	Aide aideLogement = new Aide();
 	if (typeAide.equals(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())) {
 	    aideLogement = ajouterAidePersonnaliseeLogement(montantAideLogement, isAideReportee);
