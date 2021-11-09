@@ -1,5 +1,6 @@
 package fr.poleemploi.estime.commun.utile;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,9 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
 public class StagingEnvironnementUtile {
+
+    @Autowired
+    private IndividuUtile individuUtile;
 
     @Value("${spring.profiles.active}")
     private String environment;
@@ -122,7 +126,7 @@ public class StagingEnvironnementUtile {
     }
 
     private InformationsPersonnelles getInformationsPersonnelles(CoordonneesESD coordonneesESD) {
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+        InformationsPersonnelles informationsPersonnelles = individuUtile.creerInformationsPersonnelles();
         if (coordonneesESD.getCodePostal() != null) {
             informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
         } else {

@@ -40,18 +40,18 @@ import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class OpenFiscaMappeurPeriodeTestsAAH extends CommunTests {
+class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;
 
     @Autowired
-    private UtileTests testUtile;
+    private Utile testUtile;
 
     private LocalDate dateDebutSimulation;
 

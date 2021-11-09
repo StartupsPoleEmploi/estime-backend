@@ -11,23 +11,23 @@ import fr.poleemploi.estime.donnees.repositories.jpa.SuiviParcoursUtilisateurRep
 
 @Component
 public class SuiviParcoursUtilisateurManager {
-    
-	@Autowired
-	private SuiviParcoursUtilisateurRepository suiviParcoursUtilisateurRepository;
-	
-	 private static final Logger LOGGER = LoggerFactory.getLogger(SuiviParcoursUtilisateurManager.class);
-	
-	public void creerSuiviParcoursUtilisateur(SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity) {
-		try {            
-		    suiviParcoursUtilisateurRepository.save(suiviParcoursUtilisateurEntity);
-        } catch (Exception e) {
-            // L'échec d'un enregistrement du suivi du parcours utilisateur ne doit pas avoir d'impact sur le fonctionnement de l'application
-            String messageError = String.format(LoggerMessages.SUIVI_UTILISATEUR_ENREGISTREMENT_KO.getMessage(), e.getMessage());
-            LOGGER.error(messageError);
-        }
+
+    @Autowired
+    private SuiviParcoursUtilisateurRepository suiviParcoursUtilisateurRepository;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SuiviParcoursUtilisateurManager.class);
+
+    public void creerSuiviParcoursUtilisateur(SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity) {
+	try {
+	    suiviParcoursUtilisateurRepository.save(suiviParcoursUtilisateurEntity);
+	} catch (Exception e) {
+	    // L'échec d'un enregistrement du suivi du parcours utilisateur ne doit pas avoir d'impact sur le fonctionnement de l'application
+	    String messageError = String.format(LoggerMessages.SUIVI_UTILISATEUR_ENREGISTREMENT_KO.getMessage(), e.getMessage());
+	    LOGGER.error(messageError);
 	}
-	
-	public void supprimerSuiviParcoursUtilisateurParIdPoleEmploi(String email) {
-	    suiviParcoursUtilisateurRepository.deleteByIdPoleEmploi(email);
-	}
+    }
+
+    public void supprimerSuiviParcoursUtilisateurParIdPoleEmploi(String email) {
+	suiviParcoursUtilisateurRepository.deleteByIdPoleEmploi(email);
+    }
 }

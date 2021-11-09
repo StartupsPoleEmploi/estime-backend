@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
@@ -67,13 +68,16 @@ public class RessourcesFinancieresUtile {
             montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
         }
         if (hasAidePersonnaliseeLogement(demandeurEmploi)) {
-            montantTotal = montantTotal.add(BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement())));
+            montantTotal = montantTotal
+                    .add(BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement())));
         }
         if (hasAllocationLogementFamiliale(demandeurEmploi)) {
-            montantTotal = montantTotal.add(BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale())));
+            montantTotal = montantTotal
+                    .add(BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale())));
         }
         if (hasAllocationLogementSociale(demandeurEmploi)) {
-            montantTotal = montantTotal.add(BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale())));
+            montantTotal = montantTotal
+                    .add(BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale())));
         }
         return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
     }
@@ -218,4 +222,29 @@ public class RessourcesFinancieresUtile {
         return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer() != 0;
     }
 
+    public float getMontantAideLogementDeclare(DemandeurEmploi demandeurEmploi) {
+        float montant = 0;
+        if (hasAidePersonnaliseeLogement(demandeurEmploi))
+            montant = getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement());
+        else if (hasAllocationLogementFamiliale(demandeurEmploi))
+            montant = getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale());
+        else if (hasAllocationLogementSociale(demandeurEmploi))
+            montant = getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale());
+        return montant;
+    }
+
+    public String getTypeAideLogementDeclare(DemandeurEmploi demandeurEmploi) {
+        String typeAideLogement = "";
+        if (hasAidePersonnaliseeLogement(demandeurEmploi))
+            typeAideLogement = Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode();
+        else if (hasAllocationLogementFamiliale(demandeurEmploi))
+            typeAideLogement = Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode();
+        else if (hasAllocationLogementSociale(demandeurEmploi))
+            typeAideLogement = Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode();
+        return typeAideLogement;
+    }
+
+    public boolean isAllocationLogementNotEmpty(AllocationsLogement allocationsLogement) {
+        return (allocationsLogement != null && (allocationsLogement.getMoisNMoins1() > 0 || allocationsLogement.getMoisNMoins2() > 0 || allocationsLogement.getMoisNMoins3() > 0));
+    }
 }

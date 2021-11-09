@@ -1,5 +1,6 @@
 package fr.poleemploi.estime.commun.utile;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
@@ -14,6 +15,9 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
 public class DemandeurDemoUtile {
+
+    @Autowired
+    private IndividuUtile individuUtile;
 
     private static String nomDemandeurDemo = "estimedemo";
     
@@ -50,7 +54,7 @@ public class DemandeurDemoUtile {
     }
 
     private void addInformationsPersonnelles(Individu individu, CoordonneesESD coordonneesESD) {
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();       
+        InformationsPersonnelles informationsPersonnelles = individuUtile.creerInformationsPersonnelles();       
         if(coordonneesESD.getCodePostal() != null) {
             informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
         } else {

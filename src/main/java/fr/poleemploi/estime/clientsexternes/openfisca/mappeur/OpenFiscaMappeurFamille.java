@@ -1,6 +1,7 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AF;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AIDE_LOGEMENT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALF;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.APL;
@@ -40,6 +41,9 @@ public class OpenFiscaMappeurFamille {
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
 
     @Autowired
+    private OpenFiscaMappeurAidesLogement openFiscaMappeurAidesLogement;
+
+    @Autowired
     private OpenFiscaMappeurPrimeActivite openFiscaMappeurPrimeActivite;
 
     @Autowired
@@ -58,17 +62,6 @@ public class OpenFiscaMappeurFamille {
         JSONObject famille = new JSONObject();
         famille.put(PARENTS, creerParentsJSON(demandeurEmploi));
         famille.put(ENFANTS, creerPersonnesAChargeJSON(personneAChargeInferieur25ansOptional));
-        if (ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi)) {
-            if (ressourcesFinancieresUtile.hasAidePersonnaliseeLogement(demandeurEmploi)) {
-                famille.put(APL, openFiscaPeriodeMappeur.creerPeriodesAllocationsLogement(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement(), dateDebutSimulation, numeroMoisSimule));
-            }
-            if (ressourcesFinancieresUtile.hasAllocationLogementFamiliale(demandeurEmploi)) {
-                famille.put(ALF, openFiscaPeriodeMappeur.creerPeriodesAllocationsLogement(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale(), dateDebutSimulation, numeroMoisSimule));
-            }
-            if (ressourcesFinancieresUtile.hasAllocationLogementSociale(demandeurEmploi)) {
-                famille.put(ALS, openFiscaPeriodeMappeur.creerPeriodesAllocationsLogement(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale(), dateDebutSimulation, numeroMoisSimule));
-            }
-        }
         if (ressourcesFinancieresUtile.hasAidesFamiliales(demandeurEmploi)) {
             AidesFamiliales aidesFamiliales = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales();
             famille.put(ASF, openFiscaPeriodeMappeur.creerPeriodes(aidesFamiliales.getAllocationSoutienFamilial(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
@@ -85,6 +78,11 @@ public class OpenFiscaMappeurFamille {
             }
         }
         famille.put(PPA, openFiscaMappeurPrimeActivite.creerPrimeActiviteJSON(dateDebutSimulation, numeroMoisSimule));
+        
+        famille.put(APL, openFiscaMappeurAidesLogement.creerAllocationLogementJSON(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement(), dateDebutSimulation, numeroMoisSimule));
+        famille.put(ALF, openFiscaMappeurAidesLogement.creerAllocationLogementJSON(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale(), dateDebutSimulation, numeroMoisSimule));
+        famille.put(ALS, openFiscaMappeurAidesLogement.creerAllocationLogementJSON(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale(), dateDebutSimulation, numeroMoisSimule));
+        famille.put(AIDE_LOGEMENT, openFiscaMappeurAidesLogement.creerAideLogementJSON(dateDebutSimulation, numeroMoisSimule));
         return famille;
     }
 

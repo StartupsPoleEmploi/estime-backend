@@ -41,7 +41,7 @@ import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
+class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;

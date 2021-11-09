@@ -20,40 +20,34 @@ public class InformationsPersonnellesControleur {
     private NationalitesUtile nationalitesUtile;
 
     public void controlerDonnees(InformationsPersonnelles informationsPersonnelles, BeneficiaireAides beneficiaireAides) {
-        if(informationsPersonnelles == null) {
+        if (informationsPersonnelles == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "informationsPersonnelles"));
-        }  else {
-            if(ObjectUtils.isEmpty(informationsPersonnelles.getCodePostal())) {
+        } else {
+            if (ObjectUtils.isEmpty(informationsPersonnelles.getCodePostal())) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "codePostal de informationsPersonnelles"));
             }
-            if(informationsPersonnelles.getDateNaissance() == null) {
+            if (informationsPersonnelles.getDateNaissance() == null) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "dateNaissance de informationsPersonnelles"));
             }
             if (ObjectUtils.isEmpty(informationsPersonnelles.getNationalite())) {
                 throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nationalite de informationsPersonnelles"));
             } else {
-                controleNationalite(informationsPersonnelles);                
-            }  
-
-            if(beneficiaireAides.isBeneficiaireRSA() && informationsPersonnelles.getIsProprietaireSansPretOuLogeGratuit() == null) {
-                throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "isProprietaireSansPretOuLogeGratuit de informationsPersonnelles"));
-
-            }            
+                controleNationalite(informationsPersonnelles);
+            }
         }
     }
 
     private void controleNationalite(InformationsPersonnelles informationsPersonnelles) {
         isValeurNationnaliteCorrecte(informationsPersonnelles.getNationalite());
-        if(Nationalites.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite())
-                && informationsPersonnelles.getTitreSejourEnFranceValide() == null) {     
+        if (Nationalites.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite()) && informationsPersonnelles.getTitreSejourEnFranceValide() == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "titreSejourEnFranceValide de informationsPersonnelles"));
         }
     }
 
     private void isValeurNationnaliteCorrecte(String nationalite) {
         boolean nationaliteCorrecte = Arrays.asList(Nationalites.values()).stream().anyMatch(nationaliteEnum -> nationaliteEnum.getValeur().equalsIgnoreCase(nationalite));
-        if(!nationaliteCorrecte) {
-            throw new BadRequestException(String.format(BadRequestMessages.NATIONALITE_INCORRECTE.getMessage(), nationalitesUtile.getListeFormateeNationalitesPossibles()));            
+        if (!nationaliteCorrecte) {
+            throw new BadRequestException(String.format(BadRequestMessages.NATIONALITE_INCORRECTE.getMessage(), nationalitesUtile.getListeFormateeNationalitesPossibles()));
         }
     }
 }

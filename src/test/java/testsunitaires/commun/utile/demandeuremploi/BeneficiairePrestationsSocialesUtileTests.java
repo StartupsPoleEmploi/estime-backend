@@ -15,7 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 
 @SpringBootTest
@@ -30,7 +30,7 @@ class BeneficiaireAidesUtileTests {
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
     
     @Autowired
-    private UtileTests utileTests;
+    private Utile utileTests;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})

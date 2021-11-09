@@ -17,7 +17,7 @@ import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import utile.tests.UtileTests;
+import utile.tests.Utile;
 
 
 @ContextConfiguration
@@ -33,7 +33,7 @@ class AgepiUtileTestsHorsMayotte2 {
     private AgepiUtile agepiUtile;
     
     @Autowired
-    UtileTests utileTests;
+    Utile utileTests;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})

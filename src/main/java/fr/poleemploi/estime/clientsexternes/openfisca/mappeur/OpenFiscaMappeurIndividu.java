@@ -12,6 +12,7 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.REVENUS_LOCATIFS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_MARITAL;
+
 import java.time.LocalDate;
 import java.util.List;
 

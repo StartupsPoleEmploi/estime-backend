@@ -34,7 +34,7 @@ public class PrimeActiviteUtile {
         }
     }
     
-    public void reporterPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule) {
+    void reporterPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule) {
         Optional<Aide> primeActiviteMoisPrecedent = getPrimeActiviteMoisPrecedent(simulationAides, numeroMoisSimule);
         if (primeActiviteMoisPrecedent.isPresent()) {
             aidesPourCeMois.put(Aides.PRIME_ACTIVITE.getCode(), primeActiviteMoisPrecedent.get());
