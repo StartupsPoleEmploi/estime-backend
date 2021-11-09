@@ -10,7 +10,6 @@ import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.NationalitesUtile;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
-import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 
 @Component
@@ -19,7 +18,7 @@ public class InformationsPersonnellesControleur {
     @Autowired
     private NationalitesUtile nationalitesUtile;
 
-    public void controlerDonnees(InformationsPersonnelles informationsPersonnelles, BeneficiaireAides beneficiaireAides) {
+    public void controlerDonnees(InformationsPersonnelles informationsPersonnelles) {
         if (informationsPersonnelles == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "informationsPersonnelles"));
         } else {

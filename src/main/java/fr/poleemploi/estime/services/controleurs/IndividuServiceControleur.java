@@ -63,7 +63,7 @@ public class IndividuServiceControleur {
         } else {
             futurTravailControleur.controlerDonnees(demandeurEmploi.getFuturTravail());
             beneficiaireAidesControleur.controlerDonnees(demandeurEmploi);
-            informationsPersonnellesControleur.controlerDonnees(demandeurEmploi.getInformationsPersonnelles(), demandeurEmploi.getBeneficiaireAides());
+            informationsPersonnellesControleur.controlerDonnees(demandeurEmploi.getInformationsPersonnelles());
             situationFamilialeControleur.controlerDonnees(demandeurEmploi.getSituationFamiliale(), demandeurEmploi.getBeneficiaireAides());            
         }
     }
