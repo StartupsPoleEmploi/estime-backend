@@ -11,7 +11,7 @@
     </parent>
     <groupId>fr.poleemploi</groupId>
     <artifactId>estime-backend</artifactId>
-    <version>1.9.0</version>
+    <version>1.10.4</version>
     <name>estime-backend</name>
     <description>Estime Backend Project</description>
 

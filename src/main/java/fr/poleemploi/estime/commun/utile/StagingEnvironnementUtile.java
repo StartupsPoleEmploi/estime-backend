@@ -1,8 +1,10 @@
 package fr.poleemploi.estime.commun.utile;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Environnements;
@@ -14,31 +16,34 @@ import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
+import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
 public class StagingEnvironnementUtile {
 
+    @Autowired
+    private IndividuUtile individuUtile;
+
     @Value("${spring.profiles.active}")
     private String environment;
 
-    public void gererAccesAvecBouchon(Individu individu, UserInfoESD userInfo) {
-            individu.setIdPoleEmploi(userInfo.getSub());
-            individu.setPopulationAutorisee(isPopulationAutorisee(userInfo));
-            String population = userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
-            addInfosIndemnisation(individu, population);
+    public void gererAccesAvecBouchon(Individu individu, UserInfoESD userInfo, CoordonneesESD coordonneesESD) {
+        individu.setIdPoleEmploi(userInfo.getSub());
+        individu.setPopulationAutorisee(isPopulationAutorisee(userInfo));
+        individu.setInformationsPersonnelles(getInformationsPersonnelles(coordonneesESD));
+        String population = userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
+        addInfosIndemnisation(individu, population);
     }
 
     public boolean isStagingEnvironnement() {
-        return environment.equals(Environnements.LOCALHOST.getLibelle()) || 
-                environment.equals(Environnements.RECETTE.getLibelle());
+        return environment.equals(Environnements.LOCALHOST.getLibelle()) || environment.equals(Environnements.LOCALHOST_IP.getLibelle()) || environment.equals(Environnements.RECETTE.getLibelle());
     }
-    
-    private void addInfosIndemnisation(Individu individu, String population) {
 
+    private void addInfosIndemnisation(Individu individu, String population) {
         switch (population) {
         case "AAH":
-            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(true, false, false, false));            
+            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(true, false, false, false));
             break;
         case "ARE":
             individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, true, false, false));
@@ -51,7 +56,7 @@ public class StagingEnvironnementUtile {
             individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, true));
             break;
         default:
-            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, false)); 
+            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, false));
             break;
         }
     }
@@ -92,7 +97,7 @@ public class StagingEnvironnementUtile {
         aidesCAF.setAidesLogement(creerBouconAidesLogement());
         ressourcesFinancieres.setAidesCAF(aidesCAF);
     }
-    
+
     private AidesLogement creerBouconAidesLogement() {
         AidesLogement aidesLogement = new AidesLogement();
         aidesLogement.setAidePersonnaliseeLogement(creerBouchonAllocationsLogement());
@@ -108,16 +113,25 @@ public class StagingEnvironnementUtile {
         allocationsLogement.setMoisNMoins3(0);
         return allocationsLogement;
     }
-    
+
     private void creerBouchonAllocationCPAM(RessourcesFinancieres ressourcesFinancieres) {
         AidesCPAM aidesCPAM = new AidesCPAM();
         aidesCPAM.setAllocationSupplementaireInvalidite(0f);
         ressourcesFinancieres.setAidesCPAM(aidesCPAM);
     }
-    
+
     private boolean isPopulationAutorisee(UserInfoESD userInfoESD) {
-        return userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()) 
-                || userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()) 
+        return userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()) || userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())
                 || userInfoESD.getGivenName().endsWith(Aides.RSA.getCode());
+    }
+
+    private InformationsPersonnelles getInformationsPersonnelles(CoordonneesESD coordonneesESD) {
+        InformationsPersonnelles informationsPersonnelles = individuUtile.creerInformationsPersonnelles();
+        if (coordonneesESD.getCodePostal() != null) {
+            informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
+        } else {
+            informationsPersonnelles.setCodePostal("44000");
+        }
+        return informationsPersonnelles;
     }
 }

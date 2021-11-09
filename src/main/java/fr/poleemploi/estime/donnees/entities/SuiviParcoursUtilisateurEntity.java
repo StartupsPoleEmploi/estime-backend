@@ -30,6 +30,7 @@ public class SuiviParcoursUtilisateurEntity {
     private String prenom;
     private String suiviParcours;
     private String typePopulation;
+    private String codePostal;
 
     
     public boolean isEsdBeneficiaireAssuranceChomage() {
@@ -112,6 +113,14 @@ public class SuiviParcoursUtilisateurEntity {
         this.dateCreation = dateCreation;
     }
 
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -144,10 +153,8 @@ public class SuiviParcoursUtilisateurEntity {
 
     @Override
     public String toString() {
-        return "SuiviParcoursUtilisateurEntity [idSuiviParcoursUtilisateur=" + idSuiviParcoursUtilisateur
-                + ", dateCreation=" + dateCreation + ", idPoleEmploi=" + idPoleEmploi + ", nom=" + nom + ", email="
-                + email + ", esdBeneficiaireAssuranceChomage=" + esdBeneficiaireAssuranceChomage
-                + ", esdCodeIndemnisation=" + esdCodeIndemnisation + ", prenom=" + prenom + ", suiviParcours="
-                + suiviParcours + ", typePopulation=" + typePopulation + "]";
+        return "SuiviParcoursUtilisateurEntity [idSuiviParcoursUtilisateur=" + idSuiviParcoursUtilisateur + ", dateCreation=" + dateCreation + ", idPoleEmploi=" + idPoleEmploi + ", nom=" + nom
+                + ", email=" + email + ", esdBeneficiaireAssuranceChomage=" + esdBeneficiaireAssuranceChomage + ", esdCodeIndemnisation=" + esdCodeIndemnisation + ", prenom=" + prenom
+                + ", suiviParcours=" + suiviParcours + ", typePopulation=" + typePopulation + ", codePostal=" + codePostal + "]";
     }
 }
