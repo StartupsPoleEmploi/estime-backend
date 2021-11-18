@@ -8,6 +8,7 @@ public class DemandeurEmploi {
     private InformationsPersonnelles informationsPersonnelles;
     private RessourcesFinancieres ressourcesFinancieres;
     private SituationFamiliale situationFamiliale;
+    private PeConnectAuthorization peConnectAuthorization;
 
     public String getIdPoleEmploi() {
         return idPoleEmploi;
@@ -52,4 +53,10 @@ public class DemandeurEmploi {
                 + informationsPersonnelles + ", ressourcesFinancieres=" + ressourcesFinancieres
                 + ", situationFamiliale=" + situationFamiliale + "]";
     }
+	public PeConnectAuthorization getPeConnectAuthorization() {
+		return peConnectAuthorization;
+	}
+	public void setPeConnectAuthorization(PeConnectAuthorization peConnectAuthorization) {
+		this.peConnectAuthorization = peConnectAuthorization;
+	}
 }

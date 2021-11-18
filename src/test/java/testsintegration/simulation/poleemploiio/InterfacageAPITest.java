@@ -20,6 +20,8 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilite
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
+import fr.poleemploi.estime.services.IndividuService;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 
 @SpringBootTest
@@ -159,5 +161,13 @@ class InterfacageAPITest {
 		ArePEIOOut areOut = poleEmploiIOClient.callAreEndPoint(areIn, this.accessToken).get();
 		float montant = areOut.getAllocationMensuelle().floatValue();
 		assertThat(montant).isZero();
+	}
+	
+	@Test
+	void testAideAreValide() {
+		DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+		//TODO create demandeur emploi;
+		IndividuService individuService = new IndividuService();
+		assertThat(individuService.simulerAides(demandeurEmploi).getSimulationsMensuelles()).isNotEmpty();
 	}
 }
