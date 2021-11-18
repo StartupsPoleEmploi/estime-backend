@@ -65,9 +65,9 @@ public class PeriodeTravailleeAvantSimulationUtile {
     }    
 
     public Salaire getSalaireAvantPeriodeSimulationDemandeurASS(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
-        int nombreMoisCumulesAssEtSalaire = getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
-        return getMontantSalaireAvantPeriodeSimulationDemandeurASS(demandeurEmploi, nombreMoisCumulesAssEtSalaire, numeroMoisPeriodeOpenfisca);
-    }
+    	 int nombreMoisCumulesAssEtSalaire = demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois();
+     	return getMontantSalaireAvantPeriodeSimulationDemandeurASS(demandeurEmploi, nombreMoisCumulesAssEtSalaire, numeroMoisPeriodeOpenfisca);
+     }
 
     public Salaire getSalaireAvantPeriodeSimulationDemandeurRSA(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
         Integer prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
