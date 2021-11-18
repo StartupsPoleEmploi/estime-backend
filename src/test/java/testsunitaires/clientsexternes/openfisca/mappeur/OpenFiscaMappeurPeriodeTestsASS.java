@@ -314,6 +314,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1544, 1200, 1544, 1200, 0, 0));       
 
         JSONObject demandeurJSON = new JSONObject();
@@ -381,6 +382,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1544, 1200, 1480, 1150, 1280, 991));
 
         JSONObject demandeurJSON = new JSONObject();
@@ -415,6 +417,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends CommunTests {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(1);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1544, 1200, 0, 0, 0, 0));
 
         JSONObject demandeurJSON = new JSONObject();

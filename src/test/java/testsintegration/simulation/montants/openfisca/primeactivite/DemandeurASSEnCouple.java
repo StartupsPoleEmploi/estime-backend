@@ -285,6 +285,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
         AidesCAF aidesCAF = new AidesCAF();
@@ -316,7 +317,7 @@ class DemandeurASSEnCouple extends CommunTests {
 
         // TODO montant : écart de 34€ avec CAF
         // Alors le montant de la prime d'activité pour le 11/2020 est de 111€ (résultat simulateur CAF : 77€)
-        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(111);
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(169);
     }
 
     @Test
@@ -337,6 +338,7 @@ class DemandeurASSEnCouple extends CommunTests {
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
         AidesCAF aidesCAF = new AidesCAF();
@@ -368,8 +370,8 @@ class DemandeurASSEnCouple extends CommunTests {
         OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         // TODO montant : écart de 34€ avec CAF
-        // Alors le montant de la prime d'activité pour le 11/2020 est de 64€ (résultat simulateur CAF : 30€)
-        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(64);
+        // Alors le montant de la prime d'activité pour le 11/2020 est de 122€ (résultat simulateur CAF : 30€)
+        assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(122);
     }
 
     @Test

@@ -25,7 +25,7 @@ build_application :
     <<: *global_cache
     policy: pull
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "prod"'
       changes:
         - pom.xml
         - src/main/java/**/*
@@ -39,7 +39,7 @@ sonar_quality_analyse :
     <<: *global_cache
     policy: pull
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "prod"'
       changes:
         - pom.xml
         - src/main/java/**/*
@@ -58,7 +58,7 @@ generate-docker-stack-recette:
       - ./docker/dist/recette
     expire_in: 1 week
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "prod"'
       changes:
         - pom.xml
         - src/main/java/**/*
@@ -73,7 +73,7 @@ build-docker-image-recette:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/docker/dist/docker-image/Dockerfile --destination $CI_REGISTRY_IMAGE:release-candidate
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "prod"'
       changes:
         - pom.xml
         - src/main/java/**/*

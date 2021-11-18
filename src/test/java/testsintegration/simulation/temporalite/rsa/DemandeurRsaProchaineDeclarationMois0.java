@@ -87,7 +87,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(497);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du second mois 12/2020 sont :
@@ -101,6 +101,9 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
             assertThat(simulation.getMesAides().size()).isEqualTo(2);
             assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
                 assertThat(rsa.getMontant()).isEqualTo(497);
+            });
+            assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du troisième mois 01/2021 sont :
@@ -116,7 +119,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(497);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du quatrième mois 02/2021 sont :
@@ -132,7 +135,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(118);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du cinquième mois 03/2021 sont :
@@ -148,7 +151,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(118);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du sixième mois 04/2021 sont :
@@ -164,7 +167,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(118);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
     }
@@ -212,7 +215,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(712);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(370f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du second mois 12/2020 sont :
@@ -228,7 +231,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(712);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(370f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du troisième mois 01/2021 sont :
@@ -244,7 +247,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(712);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(370f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du quatrième mois 02/2021 sont :
@@ -260,7 +263,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(258);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(370f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du cinquième mois 03/2021 sont :
@@ -276,7 +279,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(258);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(370f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du sixième mois 04/2021 sont :
@@ -292,7 +295,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(ppa.getMontant()).isEqualTo(258);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(370f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
     }
@@ -341,7 +344,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(497);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du second mois 09/2021 sont :
@@ -357,7 +360,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(497);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du troisième mois 10/2021 sont :
@@ -373,7 +376,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(497);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du quatrième mois 11/2021 sont :
@@ -392,7 +395,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(177);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du cinquième mois 12/2021 sont :
@@ -411,7 +414,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(177);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du sixième mois 01/2022 sont :
@@ -430,7 +433,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(177);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
     }
@@ -482,7 +485,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(376);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du second mois 09/2021 sont :
@@ -501,7 +504,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(376);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du troisième mois 10/2021 sont :
@@ -520,7 +523,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(376);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du quatrième mois 11/2021 sont :
@@ -539,7 +542,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(55);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du cinquième mois 12/2021 sont :
@@ -558,7 +561,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(55);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
         // Alors les prestations du sixième mois 01/2022 sont :
@@ -577,7 +580,7 @@ class DemandeurRsaProchaineDeclarationMois0 extends CommunTests {
                 assertThat(rsa.getMontant()).isEqualTo(55);
             });
             assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-                assertThat(apl.getMontant()).isEqualTo(310f);
+                assertThat(apl.getMontant()).isEqualTo(0);
             });
         });
     }

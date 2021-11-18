@@ -52,6 +52,7 @@ public class CommunTests {
         demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
         demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
+        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);   
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));
         
