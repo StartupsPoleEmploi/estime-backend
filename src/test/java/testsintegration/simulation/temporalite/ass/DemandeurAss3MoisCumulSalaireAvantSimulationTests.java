@@ -46,6 +46,7 @@ class DemandeurAss3MoisCumulSalaireAvantSimulationTests extends Commun {
         // futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 1038, 800));
 
         // Lorsque je simule mes prestations le 20/10/2020

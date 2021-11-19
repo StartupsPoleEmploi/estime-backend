@@ -50,6 +50,7 @@ class DemandeurAss2MoisCumulSalaireAvantSimulationTests extends Commun {
         // taf = 80kms + 12 trajets
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1200, 1000, 0, 0));
 
         // Lorsque je simule mes prestations le 20/10/2020
