@@ -1,49 +1,48 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
-import java.math.BigDecimal;
 
 public class ArePEIOOut {
-	private BigDecimal allocationMensuelle;
-	private BigDecimal soldePrevisionnelReliquat;
-	private BigDecimal salaireRetenuActiviteReprise;
-	private BigDecimal montantCRC;
-	private BigDecimal montantCSG;
-	private BigDecimal montantCRDS;
+	private float allocationMensuelle;
+	private float soldePrevisionnelReliquat;
+	private float salaireRetenuActiviteReprise;
+	private float montantCRC;
+	private float montantCSG;
+	private float montantCRDS;
 	
-	public BigDecimal getAllocationMensuelle() {
+	public float getAllocationMensuelle() {
 		return allocationMensuelle;
 	}
-	public void setAllocationMensuelle(BigDecimal allocationMensuelle) {
+	public void setAllocationMensuelle(float allocationMensuelle) {
 		this.allocationMensuelle = allocationMensuelle;
 	}
-	public BigDecimal getSoldePrevisionnelReliquat() {
+	public float getSoldePrevisionnelReliquat() {
 		return soldePrevisionnelReliquat;
 	}
-	public void setSoldePrevisionnelReliquat(BigDecimal soldePrevisionnelReliquat) {
+	public void setSoldePrevisionnelReliquat(float soldePrevisionnelReliquat) {
 		this.soldePrevisionnelReliquat = soldePrevisionnelReliquat;
 	}
-	public BigDecimal getSalaireRetenuActiviteReprise() {
+	public float getSalaireRetenuActiviteReprise() {
 		return salaireRetenuActiviteReprise;
 	}
-	public void setSalaireRetenuActiviteReprise(BigDecimal salaireRetenuActiviteReprise) {
+	public void setSalaireRetenuActiviteReprise(float salaireRetenuActiviteReprise) {
 		this.salaireRetenuActiviteReprise = salaireRetenuActiviteReprise;
 	}
-	public BigDecimal getMontantCRC() {
+	public float getMontantCRC() {
 		return montantCRC;
 	}
-	public void setMontantCRC(BigDecimal montantCRC) {
+	public void setMontantCRC(float montantCRC) {
 		this.montantCRC = montantCRC;
 	}
-	public BigDecimal getMontantCSG() {
+	public float getMontantCSG() {
 		return montantCSG;
 	}
-	public void setMontantCSG(BigDecimal montantCSG) {
+	public void setMontantCSG(float montantCSG) {
 		this.montantCSG = montantCSG;
 	}
-	public BigDecimal getMontantCRDS() {
+	public float getMontantCRDS() {
 		return montantCRDS;
 	}
-	public void setMontantCRDS(BigDecimal montantCRDS) {
+	public void setMontantCRDS(float montantCRDS) {
 		this.montantCRDS = montantCRDS;
 	}
 }

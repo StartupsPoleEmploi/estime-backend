@@ -1,5 +1,8 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -96,14 +99,18 @@ public class PoleEmploiIOUtile {
         return new HttpEntity<>(map, headers);
 	}
 
-	public HttpEntity<MultiValueMap<String, Object>> getAreRequeteHTTP(ArePEIOIn areIn, String bearerToken) {
+	public HttpEntity<Map<String, Object>> getAreRequeteHTTP(ArePEIOIn areIn, String bearerToken) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", bearerToken);
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-        map.add("salaireBrutJournalier", areIn.getAllocationBruteJournaliere());
-        map.add("allocationBruteJournaliere", areIn.getGainBrut());
-        map.add("gainBrut", areIn.getSalaireBrutJournalier());
+		headers.setContentType(MediaType.APPLICATION_JSON);
+        Map<String, Object> map = new HashMap<String, Object>();
+        float allocationBruteJournaliere = areIn.getAllocationBruteJournaliere();
+        float gainBrut = areIn.getGainBrut();
+        float salaireBrutJournalier = areIn.getSalaireBrutJournalier();
+        
+        map.put("allocationBruteJournaliere", allocationBruteJournaliere);
+        map.put("gainBrut", gainBrut);
+        map.put("salaireBrutJournalier", salaireBrutJournalier);
 
         return new HttpEntity<>(map, headers);
 	}

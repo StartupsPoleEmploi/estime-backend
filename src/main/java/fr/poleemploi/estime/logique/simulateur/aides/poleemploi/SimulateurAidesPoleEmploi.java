@@ -48,8 +48,9 @@ public class SimulateurAidesPoleEmploi {
                 aidesPourCeMois.put(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());                
             }
         }
-        if(are.simulerAide(demandeurEmploi).isPresent()) {
-        	aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), are.simulerAide(demandeurEmploi).get());
+        Optional<Aide> areOptional = are.simulerAide(demandeurEmploi);
+        if(areOptional.isPresent()) {
+        	aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), areOptional.get());
         }
     }
 }

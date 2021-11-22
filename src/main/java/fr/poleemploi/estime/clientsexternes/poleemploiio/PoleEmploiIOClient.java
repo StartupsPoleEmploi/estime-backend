@@ -1,5 +1,6 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -92,7 +93,7 @@ public class PoleEmploiIOClient {
     }
     
    public Optional<ArePEIOOut> callAreEndPoint(ArePEIOIn areIn, String bearerToken) {
-	   HttpEntity<MultiValueMap<String, Object>> requeteHTTP = emploiStoreUtile.getAreRequeteHTTP(areIn, bearerToken);
+	   HttpEntity<Map<String, Object>> requeteHTTP = emploiStoreUtile.getAreRequeteHTTP(areIn, bearerToken);
 	   try {
 		   ResponseEntity<ArePEIOOut> reponse = restTemplate.postForEntity(apiAreURI, requeteHTTP , ArePEIOOut.class);
 		   return Optional.of(reponse.getBody());

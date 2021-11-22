@@ -1,28 +1,26 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
-import java.math.BigDecimal;
-
 public class ArePEIOIn {
-	private BigDecimal salaireBrutJournalier;
-	private BigDecimal allocationBruteJournaliere;
-	private BigDecimal gainBrut;
+	private float salaireBrutJournalier;
+	private float allocationBruteJournaliere;
+	private float gainBrut;
 	
-	public BigDecimal getSalaireBrutJournalier() {
+	public float getSalaireBrutJournalier() {
 		return salaireBrutJournalier;
 	}
-	public void setSalaireBrutJournalier(BigDecimal salaireBrutJournalier) {
+	public void setSalaireBrutJournalier(float salaireBrutJournalier) {
 		this.salaireBrutJournalier = salaireBrutJournalier;
 	}
-	public BigDecimal getAllocationBruteJournaliere() {
+	public float getAllocationBruteJournaliere() {
 		return allocationBruteJournaliere;
 	}
-	public void setAllocationBruteJournaliere(BigDecimal allocationBruteJournaliere) {
+	public void setAllocationBruteJournaliere(float allocationBruteJournaliere) {
 		this.allocationBruteJournaliere = allocationBruteJournaliere;
 	}
-	public BigDecimal getGainBrut() {
+	public float getGainBrut() {
 		return gainBrut;
 	}
-	public void setGainBrut(BigDecimal gainBrut) {
+	public void setGainBrut(float gainBrut) {
 		this.gainBrut = gainBrut;
 	}
 }

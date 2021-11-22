@@ -3,6 +3,9 @@ package testsintegration.simulation.poleemploiio;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -20,8 +23,25 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilite
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
+import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.Nationalites;
+import fr.poleemploi.estime.commun.enumerations.TypePopulation;
+import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.logique.IndividuLogique;
+import fr.poleemploi.estime.logique.simulateur.aides.SimulateurAides;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.SimulateurAidesPoleEmploi;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
 import fr.poleemploi.estime.services.IndividuService;
+import fr.poleemploi.estime.services.ressources.Aide;
+import fr.poleemploi.estime.services.ressources.AidesFamiliales;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
+import fr.poleemploi.estime.services.ressources.SimulationAides;
+import utile.tests.UtileTests;
 
 
 @SpringBootTest
@@ -32,7 +52,13 @@ class InterfacageAPITest {
 	@Autowired
 	private PoleEmploiIOClient poleEmploiIOClient;
 	
-	private final String accessToken ="Bearer o-WI0G1dy6A8gwp1_VNIUW86lcU";
+    @Autowired
+    protected UtileTests utileTests;
+	
+	@Autowired
+    private IndividuService individuService;
+	
+	private final String accessToken ="Bearer AdDRTTX4saBwb5Lihs1tGQMBMU0";
 	
 	 @Configuration
 	 @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -45,8 +71,8 @@ class InterfacageAPITest {
 		
 		AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
     	agepiPEIOIn.setContexte("Reprise");
-    	agepiPEIOIn.setDateActionReclassement("2021-11-08");
-    	agepiPEIOIn.setDateDepot("2021-11-08");
+    	agepiPEIOIn.setDateActionReclassement("2021-11-22");
+    	agepiPEIOIn.setDateDepot("2021-11-22");
     	agepiPEIOIn.setDureePeriodeEmploiOuFormation(90);
     	agepiPEIOIn.setEleveSeulEnfants(true);
     	agepiPEIOIn.setIntensite((int) Math.round(50));
@@ -142,32 +168,96 @@ class InterfacageAPITest {
 	@Test
     void testInterfacageApiAreValide(){	
 		ArePEIOIn areIn = new ArePEIOIn();
-		areIn.setAllocationBruteJournaliere(new BigDecimal(45));
-		areIn.setGainBrut(new BigDecimal(27));
-		areIn.setSalaireBrutJournalier(new BigDecimal(375));
+		areIn.setAllocationBruteJournaliere(new Float(45));
+		areIn.setGainBrut(new Float(27));
+		areIn.setSalaireBrutJournalier(new Float(375));
 		
 		ArePEIOOut areOut = poleEmploiIOClient.callAreEndPoint(areIn, this.accessToken).get();
-		float montant = areOut.getAllocationMensuelle().floatValue();
+		float montant = areOut.getAllocationMensuelle();
 		assertThat(montant).isPositive();
 	}
 	
 	@Test
     void testInterfacageApiAreInValide(){	
 		ArePEIOIn areIn = new ArePEIOIn();
-		areIn.setAllocationBruteJournaliere(new BigDecimal(0));
-		areIn.setGainBrut(new BigDecimal(555555));
-		areIn.setSalaireBrutJournalier(new BigDecimal(7777));
+		areIn.setAllocationBruteJournaliere(new Float(0));
+		areIn.setGainBrut(new Float(555555));
+		areIn.setSalaireBrutJournalier(new Float(7777));
 		
 		ArePEIOOut areOut = poleEmploiIOClient.callAreEndPoint(areIn, this.accessToken).get();
-		float montant = areOut.getAllocationMensuelle().floatValue();
+		float montant = areOut.getAllocationMensuelle();
 		assertThat(montant).isZero();
 	}
 	
-	@Test
-	void testAideAreValide() {
-		DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-		//TODO create demandeur emploi;
-		IndividuService individuService = new IndividuService();
-		assertThat(individuService.simulerAides(demandeurEmploi).getSimulationsMensuelles()).isNotEmpty();
-	}
+	
+protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
+        
+        boolean isEnCouple = false;
+        int nbEnfant = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+        
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
+        
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+        demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
+        demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+        demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
+        demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+        
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationsFamiliales(0);
+        aidesFamiliales.setAllocationSoutienFamilial(117);
+        aidesFamiliales.setComplementFamilial(0);   
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+
+        return demandeurEmploi;
+    }
+	
+	
+//	@SuppressWarnings("removal")
+//	@Test
+//	void testAideAreValide() {
+//		IndividuLogique individuLogique = new IndividuLogique();
+//		DemandeurEmploi demandeurEmploi = createDemandeurEmploi(0);
+//        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+//        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
+//        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+//
+//		PeConnectAuthorization peConnectAuthorization = new PeConnectAuthorization();
+//		RessourcesFinancieres ressourceFinancieres = new RessourcesFinancieres();
+//		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+//		AllocationARE allocationAre = new AllocationARE();
+//		Salaire salaire = new Salaire();
+//		SimulateurAides simulateurAides = new SimulateurAides();
+//		SimulateurAidesPoleEmploi simulateurAidesPoleEmploi;
+//		
+//		salaire.setMontantBrut(365);
+//		allocationAre.setMontantJournalierBrut(new Float(27));
+//		allocationAre.setSalaireJournalierReferenceBrut(new Float(45));
+//		aidesPoleEmploi.setAllocationARE(allocationAre);
+//		ressourceFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+//		ressourceFinancieres.setSalaire(salaire);
+//		
+//		peConnectAuthorization.setAccessToken(this.accessToken);
+//		demandeurEmploi.setPeConnectAuthorization(peConnectAuthorization);
+//		demandeurEmploi.setRessourcesFinancieres(ressourceFinancieres);
+//
+//		SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+//		
+////		AreUtile are = new AreUtile();
+////		Map<String, Aide>  aidesPourCeMois = new HashMap<String, Aide>();
+////		if(are.simulerAide(demandeurEmploi).isPresent()) {
+////        	aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), are.simulerAide(demandeurEmploi).get());
+////        }
+////		Aide areAide = are.simulerAide(demandeurEmploi).get();
+////		
+//		assertThat(simulationAides).isNotNull();
+//	}
 }
