@@ -71,12 +71,12 @@ public class CommunTests {
         demandeurEmploi.getRessourcesFinancieres().setSalaire(salaire);
         
         AllocationARE allocationARE = new AllocationARE();
-        allocationARE.setAllocationJournaliereNet(new Float(15));
-        allocationARE.setAllocationMensuelleNet(new Float(150));
+        allocationARE.setAllocationJournaliereNet(15f);
+        allocationARE.setAllocationMensuelleNet(150f);
         allocationARE.setConcerneDegressivite(false);
-        allocationARE.setNombreJoursRestants(new Float(15));
-        allocationARE.setMontantJournalierBrut(new Float(27));
-        allocationARE.setSalaireJournalierReferenceBrut(new Float(45));
+        allocationARE.setNombreJoursRestants(15f);
+        allocationARE.setMontantJournalierBrut(27f);
+        allocationARE.setSalaireJournalierReferenceBrut(45f);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().setAllocationARE(allocationARE);
     
         return demandeurEmploi;
