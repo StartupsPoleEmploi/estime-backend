@@ -27,7 +27,6 @@ import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.Param
 import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ParametresPEIO.SALAIRE_BRUT_JOURNALIER;
 import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ParametresPEIO.TYPE_INTENSITE;
 
-
 import java.util.HashMap;
 import java.util.Map;
 

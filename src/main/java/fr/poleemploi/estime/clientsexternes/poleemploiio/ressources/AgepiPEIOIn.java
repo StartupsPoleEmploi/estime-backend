@@ -1,114 +1,121 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
 public class AgepiPEIOIn {
-	private String origine;
-	private String dateDepot;	
-	private String dateActionReclassement;	
-	private String contexte;	
-	private String natureContratTravail;	
-	private String lieuFormationOuEmploi;	
-	private String typeIntensite;	
-	private int intensite;	
-	private int dureePeriodeEmploiOuFormation;	
-	private int nombreEnfants;	
-	private int nombreEnfantsMoins10Ans;	
-	private boolean eleveSeulEnfants;	
-	
-	public String getOrigine() {
-		return this.origine;
-	}
+    private String origine;
+    private String dateDepot;
+    private String dateActionReclassement;
+    private String contexte;
+    private String natureContratTravail;
+    private String lieuFormationOuEmploi;
+    private String typeIntensite;
+    private int intensite;
+    private int dureePeriodeEmploiOuFormation;
+    private int nombreEnfants;
+    private int nombreEnfantsMoins10Ans;
+    private boolean eleveSeulEnfants;
 
-	public String getDateDepot() {
-		return this.dateDepot;
-	}
+    public String getOrigine() {
+	return this.origine;
+    }
 
-	public String getDateActionReclassement() {
-		return this.dateActionReclassement;
-	}
+    public String getDateDepot() {
+	return this.dateDepot;
+    }
 
-	public String getContexte() {
-		return this.contexte;
-	}
+    public String getDateActionReclassement() {
+	return this.dateActionReclassement;
+    }
 
-	public String getNatureContratTravail() {
-		return this.natureContratTravail;
-	}
+    public String getContexte() {
+	return this.contexte;
+    }
 
-	public String getLieuFormationOuEmploi() {
-		return this.lieuFormationOuEmploi;
-	}
+    public String getNatureContratTravail() {
+	return this.natureContratTravail;
+    }
 
-	public String getTypeIntensite() {
-		return this.typeIntensite;
-	}
+    public String getLieuFormationOuEmploi() {
+	return this.lieuFormationOuEmploi;
+    }
 
-	public int getIntensite() {
-		return this.intensite;
-	}
+    public String getTypeIntensite() {
+	return this.typeIntensite;
+    }
 
-	public int getDureePeriodeEmploiOuFormation() {
-		return this.dureePeriodeEmploiOuFormation;
-	}
+    public int getIntensite() {
+	return this.intensite;
+    }
 
-	public int getNombreEnfants() {
-		return this.nombreEnfants;
-	}
+    public int getDureePeriodeEmploiOuFormation() {
+	return this.dureePeriodeEmploiOuFormation;
+    }
 
-	public int getNombreEnfantsMoins10Ans() {
-		return this.nombreEnfantsMoins10Ans;
-	}
+    public int getNombreEnfants() {
+	return this.nombreEnfants;
+    }
 
-	public boolean getEleveSeulEnfants() {
-		return this.eleveSeulEnfants;
-	}
+    public int getNombreEnfantsMoins10Ans() {
+	return this.nombreEnfantsMoins10Ans;
+    }
 
-	public void setOrigine(String origine) {
-		this.origine = origine;
-	}
+    public boolean getEleveSeulEnfants() {
+	return this.eleveSeulEnfants;
+    }
 
-	public void setDateDepot(String dateDepot) {
-		this.dateDepot = dateDepot;
-	}
+    public void setOrigine(String origine) {
+	this.origine = origine;
+    }
 
-	public void setDateActionReclassement(String dateActionReclassement) {
-		this.dateActionReclassement = dateActionReclassement;
-	}
+    public void setDateDepot(String dateDepot) {
+	this.dateDepot = dateDepot;
+    }
 
-	public void setContexte(String contexte) {
-		this.contexte = contexte;
-	}
+    public void setDateActionReclassement(String dateActionReclassement) {
+	this.dateActionReclassement = dateActionReclassement;
+    }
 
-	public void setNatureContratTravail(String natureContratTravail) {
-		this.natureContratTravail = natureContratTravail;
-	}
+    public void setContexte(String contexte) {
+	this.contexte = contexte;
+    }
 
-	public void setLieuFormationOuEmploi(String lieuFormationOuEmploi) {
-		this.lieuFormationOuEmploi = lieuFormationOuEmploi;
-	}
+    public void setNatureContratTravail(String natureContratTravail) {
+	this.natureContratTravail = natureContratTravail;
+    }
 
-	public void setTypeIntensite(String typeIntensite) {
-		this.typeIntensite = typeIntensite;
-	}
+    public void setLieuFormationOuEmploi(String lieuFormationOuEmploi) {
+	this.lieuFormationOuEmploi = lieuFormationOuEmploi;
+    }
 
-	public void setIntensite(int intensite) {
-		this.intensite = intensite;
-	}
+    public void setTypeIntensite(String typeIntensite) {
+	this.typeIntensite = typeIntensite;
+    }
 
-	public void setDureePeriodeEmploiOuFormation(int dureePeriodeEmploiOuFormation) {
-		this.dureePeriodeEmploiOuFormation = dureePeriodeEmploiOuFormation;
-	}
+    public void setIntensite(int intensite) {
+	this.intensite = intensite;
+    }
 
-	public void setNombreEnfants(int nombreEnfants) {
-		this.nombreEnfants = nombreEnfants;
-	}
+    public void setDureePeriodeEmploiOuFormation(int dureePeriodeEmploiOuFormation) {
+	this.dureePeriodeEmploiOuFormation = dureePeriodeEmploiOuFormation;
+    }
 
-	public void setNombreEnfantsMoins10Ans(int nombreEnfantsMoins10Ans) {
-		this.nombreEnfantsMoins10Ans = nombreEnfantsMoins10Ans;
-	}
+    public void setNombreEnfants(int nombreEnfants) {
+	this.nombreEnfants = nombreEnfants;
+    }
 
-	public void setEleveSeulEnfants(boolean eleveSeulEnfants) {
-		this.eleveSeulEnfants = eleveSeulEnfants;
-	}
+    public void setNombreEnfantsMoins10Ans(int nombreEnfantsMoins10Ans) {
+	this.nombreEnfantsMoins10Ans = nombreEnfantsMoins10Ans;
+    }
 
-	
+    public void setEleveSeulEnfants(boolean eleveSeulEnfants) {
+	this.eleveSeulEnfants = eleveSeulEnfants;
+    }
+
+    @Override
+    public String toString() {
+	return "AgepiPEIOIn [origine=" + origine + ", dateDepot=" + dateDepot + ", dateActionReclassement=" + dateActionReclassement + ", contexte=" + contexte
+		+ ", natureContratTravail=" + natureContratTravail + ", lieuFormationOuEmploi=" + lieuFormationOuEmploi + ", typeIntensite=" + typeIntensite + ", intensite="
+		+ intensite + ", dureePeriodeEmploiOuFormation=" + dureePeriodeEmploiOuFormation + ", nombreEnfants=" + nombreEnfants + ", nombreEnfantsMoins10Ans="
+		+ nombreEnfantsMoins10Ans + ", eleveSeulEnfants=" + eleveSeulEnfants + "]";
+    }
+
 }

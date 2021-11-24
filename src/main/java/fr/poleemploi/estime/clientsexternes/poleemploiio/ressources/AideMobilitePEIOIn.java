@@ -164,4 +164,14 @@ public class AideMobilitePEIOIn {
 	this.fraisPrisEnChargeParTiers = fraisPrisEnChargeParTiers;
     }
 
+    @Override
+    public String toString() {
+	return "AideMobilitePEIOIn [origine=" + origine + ", dateDepot=" + dateDepot + ", dateActionReclassement=" + dateActionReclassement + ", contexte=" + contexte
+		+ ", typeIntensite=" + typeIntensite + ", nombreEnfants=" + nombreEnfants + ", intensite=" + intensite + ", codeTerritoire=" + codeTerritoire
+		+ ", eleveSeulEnfants=" + eleveSeulEnfants + ", nombreEnfantsMoins10Ans=" + nombreEnfantsMoins10Ans + ", distanceDomicileActionReclassement="
+		+ distanceDomicileActionReclassement + ", dureePeriodeEmploiOuFormation=" + dureePeriodeEmploiOuFormation + ", natureContratTravail=" + natureContratTravail
+		+ ", nombreAllersRetours=" + nombreAllersRetours + ", nombreRepas=" + nombreRepas + ", nombreNuitees=" + nombreNuitees + ", fraisPrisEnChargeParTiers="
+		+ fraisPrisEnChargeParTiers + ", lieuFormationOuEmploi=" + lieuFormationOuEmploi + "]";
+    }
+
 }
