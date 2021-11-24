@@ -38,10 +38,13 @@ management:
         include: "*"
         
 #emploi store dev
-emploi-store-dev:
+emploi-store-io:
   coordonnees-api-uri : "--ESD_COORDONNEES_API_URI--"
   date-naissance-api-uri : "--ESD_DATE_NAISSANCE_API_URI--"
   detail-indemnisation-api-uri : "--ESD_DETAIL_INDEMNISATION_API_URI--"
+  agepi-api-uri: "--ESD_AGEPI_API_URI--"
+  aide-mobilite-api-uri: "--ESD_AIDE_MOBILITE_API_URI--"
+  are-api-uri: "--ESD_ARE_API_URI--"
   
 #open fisca
 openfisca-api-uri: "https://estime.beta.pole-emploi.fr/calculate"

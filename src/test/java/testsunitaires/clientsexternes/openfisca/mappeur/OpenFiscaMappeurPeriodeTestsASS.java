@@ -62,11 +62,11 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void creerPeriodeAideeASSTest1() throws JSONException, ParseException, JsonIOException, JsonSyntaxException,
             FileNotFoundException, URISyntaxException {
 
-        String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-3-mois-ass-salaire-simulation-mois-2.json");
 
         String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
-        LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
+        LocalDate dateDebutSimulation = utile.getDate("01-10-2020");
         int numeroMoisSimule = 2;
 
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
@@ -74,7 +74,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
         SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 0));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-11-2020"), codeAideASS, 0));
         simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
         JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi,
@@ -87,11 +87,11 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void creerPeriodeAideeASSTest2() throws JSONException, ParseException, JsonIOException, JsonSyntaxException,
             FileNotFoundException, URISyntaxException {
 
-        String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-2-mois-ass-salaire-simulation-mois-6.json");
 
         String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
-        LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
+        LocalDate dateDebutSimulation = utile.getDate("01-10-2020");
         int numeroMoisSimule = 6;
 
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
@@ -99,11 +99,11 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
         SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 524));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 0));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-12-2020"), codeAideASS, 0));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-01-2021"), codeAideASS, 0));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-02-2021"), codeAideASS, 0));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-03-2021"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-11-2020"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-12-2020"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-01-2021"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-02-2021"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-03-2021"), codeAideASS, 0));
         simulationAides.setSimulationsMensuelles(simulationsMensuelles);
         simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
@@ -117,11 +117,11 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void creerPeriodeAideeASSTest3() throws JSONException, ParseException, JsonIOException, JsonSyntaxException,
             FileNotFoundException, URISyntaxException {
 
-        String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-2-mois-ass-salaire-simulation-mois-3.json");
 
         String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
-        LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
+        LocalDate dateDebutSimulation = utile.getDate("01-10-2020");
         int numeroMoisSimule = 3;
 
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
@@ -129,8 +129,8 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
         SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 524));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 0));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-12-2020"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-11-2020"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-12-2020"), codeAideASS, 0));
         simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
         JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi,
@@ -143,11 +143,11 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void creerPeriodeAideeASSTest4() throws JSONException, ParseException, JsonIOException, JsonSyntaxException,
             FileNotFoundException, URISyntaxException {
 
-        String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-1-mois-ass-salaire-simulation-mois-4.json");
 
         String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
-        LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
+        LocalDate dateDebutSimulation = utile.getDate("01-10-2020");
         int numeroMoisSimule = 4;
 
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
@@ -155,9 +155,9 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
         SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 524));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 507));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-12-2020"), codeAideASS, 0));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-01-2021"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-11-2020"), codeAideASS, 507));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-12-2020"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-01-2021"), codeAideASS, 0));
         simulationAides.setSimulationsMensuelles(simulationsMensuelles);
         simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
@@ -171,11 +171,11 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void creerPeriodeAideeASSTest5() throws JSONException, ParseException, JsonIOException, JsonSyntaxException,
             FileNotFoundException, URISyntaxException {
 
-        String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-0-mois-ass-salaire-simulation-mois-5.json");
 
         String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
-        LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
+        LocalDate dateDebutSimulation = utile.getDate("01-10-2020");
         int numeroMoisSimule = 5;
 
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
@@ -183,10 +183,10 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
         SimulationAides simulationAides = new SimulationAides();
         List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
         simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 524));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 507));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-12-2020"), codeAideASS, 524));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-01-2021"), codeAideASS, 0));
-        simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-02-2021"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-11-2020"), codeAideASS, 507));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-12-2020"), codeAideASS, 524));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-01-2021"), codeAideASS, 0));
+        simulationsMensuelles.add(creerSimulationMensuelle(utile.getDate("01-02-2021"), codeAideASS, 0));
         simulationAides.setSimulationsMensuelles(simulationsMensuelles);
         simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
@@ -223,7 +223,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     
     @BeforeEach
     void initBeforeTest() throws ParseException {
-        dateDebutSimulation = utileTests.getDate("01-07-2020");
+        dateDebutSimulation = utile.getDate("01-07-2020");
     }
 
     /**
@@ -235,16 +235,16 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void mapPeriodeSalaireTest1() throws JSONException, JsonParseException, JsonMappingException, IOException,
             URISyntaxException, ParseException {
 
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-imposable-sans-cumul-ass-salaire-simulation-mois-5.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-base-sans-cumul-ass-salaire-simulation-mois-5.json");
 
         int numeroMoisSimulation = 5;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(),
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(),
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
@@ -268,21 +268,21 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void mapPeriodeSalaireTest2() throws JSONException, JsonParseException, JsonMappingException, IOException,
             URISyntaxException, ParseException {
 
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-imposable-cumul-1mois-ass-salaire-simulation-mois-4.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-base-cumul-1mois-ass-salaire-simulation-mois-4.json");
 
         int numeroMoisSimulation = 4;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1544, 1200, 0, 0, 0, 0));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1544, 1200, 0, 0, 0, 0));
 
         JSONObject demandeurJSON = new JSONObject();
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation,
@@ -300,21 +300,21 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     @Test
     void mapPeriodeSalaireTest3() throws Exception {
 
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-imposable-cumul-2mois-ass-salaire-simulation-mois-3.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-base-cumul-2mois-ass-salaire-simulation-mois-3.json");
 
         int numeroMoisSimulation = 3;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1544, 1200, 1544, 1200, 0, 0));       
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1544, 1200, 1544, 1200, 0, 0));       
 
         JSONObject demandeurJSON = new JSONObject();
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation,
@@ -333,21 +333,21 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void mapPeriodeSalaireTest4() throws JSONException, JsonParseException, JsonMappingException, IOException,
             URISyntaxException, ParseException {
 
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-imposable-cumul-2mois-ass-salaire-simulation-mois-6.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-base-cumul-2mois-ass-salaire-simulation-mois-6.json");
 
         int numeroMoisSimulation = 6;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1544, 1200, 1544, 1200, 0, 0));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1544, 1200, 1544, 1200, 0, 0));
 
         JSONObject demandeurJSON = new JSONObject();
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation,
@@ -366,22 +366,22 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void mapPeriodeSalaireTest5() throws JSONException, JsonParseException, JsonMappingException, IOException,
             URISyntaxException, ParseException {
 
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-imposable-cumul-3mois-ass-salaire-simulation-mois-2.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-base-cumul-3mois-ass-salaire-simulation-mois-2.json");
 
         int numeroMoisSimulation = 2;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(),
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(),
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1544, 1200, 1480, 1150, 1280, 991));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1544, 1200, 1480, 1150, 1280, 991));
 
         JSONObject demandeurJSON = new JSONObject();
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation,
@@ -400,22 +400,22 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
     void mapPeriodeSalaireTest6() throws JSONException, JsonParseException, JsonMappingException, IOException,
             URISyntaxException, ParseException {
 
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-imposable-cumul-3mois-ass-salaire-simulation-mois-5.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile(
                 "testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/salaire/salaire-base-cumul-3mois-ass-salaire-simulation-mois-5.json");
 
         int numeroMoisSimulation = 5;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(),
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(),
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1544, 1200, 0, 0, 0, 0));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1544, 1200, 0, 0, 0, 0));
 
         JSONObject demandeurJSON = new JSONObject();
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation,
@@ -431,7 +431,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(),
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(),
                 isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.toString());
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1228);

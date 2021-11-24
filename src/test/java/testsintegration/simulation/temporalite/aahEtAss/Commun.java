@@ -15,8 +15,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
@@ -30,7 +30,7 @@ import utile.tests.Utile;
 public class Commun {
 
     @Autowired
-    protected Utile utileTests;
+    protected Utile utile;
 
     @SpyBean
     protected DateUtile dateUtile;
@@ -39,7 +39,7 @@ public class Commun {
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
 
     @SpyBean
-    private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
+    private PoleEmploiIOClient poleEmploiIOClient;
 
     private static int PROCHAINE_DECLARATION_TRIMESTRIELLE = 0;
 
@@ -47,14 +47,14 @@ public class Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 1;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH_ASS.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH_ASS.getLibelle(), isEnCouple, nbEnfant);
 
-	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles()
-		.setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+		.setDateNaissance(utile.getDateNaissanceFromAge(9));
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
@@ -76,7 +76,7 @@ public class Commun {
 
 	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS()
-		.setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));
+		.setDateDerniereOuvertureDroit(utile.getDate("14-04-2020"));
 
 	return demandeurEmploi;
     }
@@ -89,10 +89,11 @@ public class Commun {
 		demandeurEmploi.getInformationsPersonnelles());
 
 	// mock création date de demande de simulation
-	doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
+	doReturn(utile.getDate("20-10-2020")).when(dateUtile).getDateJour();
 
-	// mock retour appel détail indemnisation de l'ESD
-	DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.AAH_ASS.getLibelle());
-	doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
+
+	//mock retour appel détail indemnisation de l'ESD 
+	DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.AAH_ASS.getLibelle());
+	doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
     }
 }

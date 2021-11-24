@@ -12,6 +12,7 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AideMobiliteUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
@@ -23,6 +24,9 @@ public class SimulateurAidesPoleEmploi {
     
     @Autowired
     private AideMobiliteUtile aideMobilite;
+    
+    @Autowired
+    private AreUtile are;
     
     @Autowired
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifique;
@@ -43,6 +47,12 @@ public class SimulateurAidesPoleEmploi {
             if(aideOptional.isPresent()) {
                 aidesPourCeMois.put(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());                
             }
+        }
+        if(beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
+            Optional<Aide> areOptional = are.simulerAide(demandeurEmploi);
+            if(areOptional.isPresent()) {
+            	aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), areOptional.get());
+            }            
         }
     }
 }

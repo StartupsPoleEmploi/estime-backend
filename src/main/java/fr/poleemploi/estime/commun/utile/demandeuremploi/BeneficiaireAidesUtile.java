@@ -30,6 +30,10 @@ public class BeneficiaireAidesUtile {
 	return personne.getBeneficiaireAides() != null && personne.getBeneficiaireAides().isBeneficiaireARE();
     }
 
+    public boolean isBeneficiaireARE(DemandeurEmploi demandeurEmploi) {
+	return demandeurEmploi.getBeneficiaireAides() != null && demandeurEmploi.getBeneficiaireAides().isBeneficiaireARE();
+    }
+
     public boolean isBeneficiaireASS(DemandeurEmploi demandeurEmploi) {
 	return demandeurEmploi.getBeneficiaireAides() != null && demandeurEmploi.getBeneficiaireAides().isBeneficiaireASS();
     }

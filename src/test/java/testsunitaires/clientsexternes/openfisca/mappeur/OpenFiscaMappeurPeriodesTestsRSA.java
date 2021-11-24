@@ -56,7 +56,7 @@ class OpenFiscaMappeurPeriodesTestsRSA extends Commun {
 
     @BeforeEach
     void initBeforeTest() throws ParseException {        
-        dateDebutSimulation = utileTests.getDate("01-07-2020");
+        dateDebutSimulation = utile.getDate("01-07-2020");
     }
     
     /**
@@ -67,19 +67,19 @@ class OpenFiscaMappeurPeriodesTestsRSA extends Commun {
     @Test
     void mapPeriodeSalaireTest1() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM0-travaille-2-mois-simulation-mois-3.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM0-travaille-2-mois-simulation-mois-3.json");
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM0-travaille-2-mois-simulation-mois-3.json");
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM0-travaille-2-mois-simulation-mois-3.json");
                 
         int numeroMoisSimulation = 3;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(0);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);  
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -96,19 +96,19 @@ class OpenFiscaMappeurPeriodesTestsRSA extends Commun {
     @Test
     void mapPeriodeSalaireTest2() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM1-travaille-2-mois-simulation-mois-1.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM1-travaille-2-mois-simulation-mois-1.json");
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM1-travaille-2-mois-simulation-mois-1.json");
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM1-travaille-2-mois-simulation-mois-1.json");
                 
         int numeroMoisSimulation = 1;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(1);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -125,19 +125,19 @@ class OpenFiscaMappeurPeriodesTestsRSA extends Commun {
     @Test
     void mapPeriodeSalaireTest3() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM1-travaille-2-mois-simulation-mois-4.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM1-travaille-2-mois-simulation-mois-4.json");
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM1-travaille-2-mois-simulation-mois-4.json");
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM1-travaille-2-mois-simulation-mois-4.json");
                 
         int numeroMoisSimulation = 4;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(1);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);  
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -154,19 +154,19 @@ class OpenFiscaMappeurPeriodesTestsRSA extends Commun {
     @Test
     void mapPeriodeSalaireTest4() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM2-travaille-2-mois-simulation-mois-2.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM2-travaille-2-mois-simulation-mois-2.json");
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM2-travaille-2-mois-simulation-mois-2.json");
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM2-travaille-2-mois-simulation-mois-2.json");
                 
         int numeroMoisSimulation = 2;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(2);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -183,19 +183,19 @@ class OpenFiscaMappeurPeriodesTestsRSA extends Commun {
     @Test
     void mapPeriodeSalaireTest5() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM2-travaille-2-mois-simulation-mois-5.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM2-travaille-2-mois-simulation-mois-5.json");
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM2-travaille-2-mois-simulation-mois-5.json");
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM2-travaille-2-mois-simulation-mois-5.json");
                 
         int numeroMoisSimulation = 5;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(2);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -214,19 +214,19 @@ class OpenFiscaMappeurPeriodesTestsRSA extends Commun {
     @Test
     void mapPeriodeSalaireTest6() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM3-travaille-2-mois-simulation-mois-3.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM3-travaille-2-mois-simulation-mois-3.json");
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM3-travaille-2-mois-simulation-mois-3.json");
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM3-travaille-2-mois-simulation-mois-3.json");
                 
         int numeroMoisSimulation = 3;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(3);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -244,19 +244,19 @@ class OpenFiscaMappeurPeriodesTestsRSA extends Commun {
     @Test
     void mapPeriodeSalaireTest7() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
         
-        String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM3-travaille-2-mois-simulation-mois-6.json");
-        String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM3-travaille-2-mois-simulation-mois-6.json");
+        String openFiscaPayloadSalaireImposableExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-imposable-declarationM3-travaille-2-mois-simulation-mois-6.json");
+        String openFiscaPayloadSalaireBaseExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsRSA/salaire/salaire-base-declarationM3-travaille-2-mois-simulation-mois-6.json");
                 
         int numeroMoisSimulation = 6;
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(3);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);   
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(508, 380, 596, 450, 798, 610));
        
         JSONObject demandeurJSON = new JSONObject();        
         openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);

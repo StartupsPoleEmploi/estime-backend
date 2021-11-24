@@ -3,8 +3,8 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.donnees.entities.SuiviParcoursUtilisateurEntity;
@@ -29,10 +29,10 @@ public class SuiviUtilisateurUtile {
     @Autowired
     private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
 
-    public void tracerParcoursUtilisateur(UserInfoESD userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles, DetailIndemnisationESD detailIndemnisationESD) {
+    public void tracerParcoursUtilisateur(UserInfoPEIO userInfoPEIO, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles, DetailIndemnisationPEIO detailIndemnisationPEIO) {
 
-	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(userInfoESD, parcours, getTypePopulation(beneficiaireAides),
-		getCodePostal(informationsPersonnelles), detailIndemnisationESD);
+	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(userInfoPEIO, parcours, getTypePopulation(beneficiaireAides),
+		getCodePostal(informationsPersonnelles), detailIndemnisationPEIO);
 
 	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
@@ -65,22 +65,22 @@ public class SuiviUtilisateurUtile {
 	return informationsPersonnelles.getCodePostal();
     }
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoESD userInfoESD, String parcours, String typePopulation, String codePostal, DetailIndemnisationESD detailIndemnisationESD) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoPEIO userInfoPEIO, String parcours, String typePopulation, String codePostal, DetailIndemnisationPEIO detailIndemnisationPEIO) {
 
 	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
 	suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
-	suiviParcoursUtilisateurEntity.setIdPoleEmploi(userInfoESD.getSub());
+	suiviParcoursUtilisateurEntity.setIdPoleEmploi(userInfoPEIO.getSub());
 	suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
 	suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
-	suiviParcoursUtilisateurEntity.setEmail(userInfoESD.getEmail());
-	suiviParcoursUtilisateurEntity.setNom(userInfoESD.getFamilyName());
-	suiviParcoursUtilisateurEntity.setPrenom(userInfoESD.getGivenName());
+	suiviParcoursUtilisateurEntity.setEmail(userInfoPEIO.getEmail());
+	suiviParcoursUtilisateurEntity.setNom(userInfoPEIO.getFamilyName());
+	suiviParcoursUtilisateurEntity.setPrenom(userInfoPEIO.getGivenName());
 	suiviParcoursUtilisateurEntity.setCodePostal(codePostal);
 
-	if (detailIndemnisationESD.getCodeIndemnisation() != null) {
-	    suiviParcoursUtilisateurEntity.setEsdCodeIndemnisation(detailIndemnisationESD.getCodeIndemnisation());
+	if (detailIndemnisationPEIO.getCodeIndemnisation() != null) {
+	    suiviParcoursUtilisateurEntity.setEsdCodeIndemnisation(detailIndemnisationPEIO.getCodeIndemnisation());
 	}
-	suiviParcoursUtilisateurEntity.setEsdBeneficiaireAssuranceChomage(detailIndemnisationESD.isBeneficiaireAssuranceChomage());
+	suiviParcoursUtilisateurEntity.setEsdBeneficiaireAssuranceChomage(detailIndemnisationPEIO.isBeneficiaireAssuranceChomage());
 
 	return suiviParcoursUtilisateurEntity;
     }

@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/actuator/info");
         web.ignoring().antMatchers("/actuator/health"); 
         web.ignoring().antMatchers("/aides/**");
+        web.ignoring().antMatchers("/apiam/**");
     }
     
     @Override  

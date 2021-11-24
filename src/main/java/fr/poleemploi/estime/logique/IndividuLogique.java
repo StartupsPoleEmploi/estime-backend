@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
@@ -41,7 +41,7 @@ public class IndividuLogique {
     private DemandeurEmploiUtile demandeurEmploiUtile;
 
     @Autowired
-    private PoleEmploiIODevClient emploiStoreDevClient;
+    private PoleEmploiIOClient emploiStoreDevClient;
 
     @Autowired
     private IndividuUtile individuUtile;
@@ -64,34 +64,35 @@ public class IndividuLogique {
 
         Individu individu = new Individu();
 
-        PeConnectAuthorizationESD peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
-        String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
+        PeConnectAuthorizationPEIO peConnectAuthorizationPEIO = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
 
-        DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
-        Optional<CoordonneesESD> coordonneesESDOption = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
-        Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
+        String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationPEIO.getAccessToken());
 
-        if (userInfoOption.isPresent() && coordonneesESDOption.isPresent()) {
-            UserInfoESD userInfoESD = userInfoOption.get();
-            CoordonneesESD coordonneesESD = coordonneesESDOption.get();
+        DetailIndemnisationPEIO detailIndemnisationPEIO = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
+        Optional<CoordonneesPEIO> optionalCoordonneesPEIO = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
+        Optional<UserInfoPEIO> optionalUserInfoPEIO = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
+
+        if (optionalUserInfoPEIO.isPresent() && optionalCoordonneesPEIO.isPresent()) {
+            UserInfoPEIO userInfoPEIO = optionalUserInfoPEIO.get();
+            CoordonneesPEIO coordonneesPEIO = optionalCoordonneesPEIO.get();
             if (stagingEnvironnementUtile.isStagingEnvironnement()) {
-                stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD, coordonneesESD);
+                stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoPEIO, coordonneesPEIO);
             } else {
-                individu.setIdPoleEmploi(userInfoESD.getSub());
-                if (demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
+                individu.setIdPoleEmploi(userInfoPEIO.getSub());
+                if (demandeurDemoUtile.isDemandeurDemo(userInfoPEIO)) {
                     individu.setPopulationAutorisee(true);
-                    demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD, coordonneesESD);
+                    demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationPEIO, coordonneesPEIO);
                 } else {
-                    individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
-                    individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD, coordonneesESD);
+                    individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationPEIO));
+                    individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationPEIO, coordonneesPEIO);
                 }
             }
 
             // @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
-            suiviUtilisateurUtile.tracerParcoursUtilisateur(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
-                    individu.getInformationsPersonnelles(), detailIndemnisationESD);
+            suiviUtilisateurUtile.tracerParcoursUtilisateur(userInfoPEIO, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
+                    individu.getInformationsPersonnelles(), detailIndemnisationPEIO);
 
-            individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
+            individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationPEIO));
 
         } else {
             LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());

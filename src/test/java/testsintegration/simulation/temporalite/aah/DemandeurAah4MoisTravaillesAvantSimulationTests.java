@@ -51,7 +51,7 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi(0);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(4);
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks(demandeurEmploi);
@@ -199,7 +199,7 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi(1);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(4);
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks(demandeurEmploi);
@@ -347,7 +347,7 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi(2);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(4);
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks(demandeurEmploi);
@@ -495,7 +495,7 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
         DemandeurEmploi demandeurEmploi = createDemandeurEmploi(3);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(4);
-        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+        demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks(demandeurEmploi);

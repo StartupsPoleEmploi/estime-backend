@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
-public class CoordonneesESD {
+public class CoordonneesPEIO {
 
     private String adresse1;
     private String adresse2;

@@ -32,7 +32,7 @@ class AgepiUtileTestsHorsMayotte1 {
     private AgepiUtile agepi;
     
     @Autowired
-    Utile utileTests;
+    Utile utile;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -48,11 +48,11 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
         
         //Lorsque l'on vérifie son éligibilité
         boolean isEligible = agepi.isEligible(PREMIER_MOIS_SIMULATION, demandeurEmploi);
@@ -67,11 +67,11 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38€ (< seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.38f);
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
         
         //Lorsque l'on vérifie son éligibilité
         boolean isEligible = agepi.isEligible(PREMIER_MOIS_SIMULATION, demandeurEmploi);
@@ -86,12 +86,12 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDD de 3 mois ( = minimum exigé) , pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDD.name());
         demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(3);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));        
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));        
         
         //Lorsque l'on vérifie son éligibilité
         boolean isEligible = agepi.isEligible(PREMIER_MOIS_SIMULATION, demandeurEmploi);
@@ -106,12 +106,12 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDD de 4 mois ( > minimum exigé), pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDD.name());
         demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
 
         //Lorsque l'on vérifie son éligibilité
         boolean isEligible = agepi.isEligible(PREMIER_MOIS_SIMULATION, demandeurEmploi);
@@ -126,10 +126,10 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et bénéficiaire du RSA
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
         
         //Lorsque l'on vérifie son éligibilité
         boolean isEligible = agepi.isEligible(PREMIER_MOIS_SIMULATION, demandeurEmploi);
@@ -144,10 +144,10 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et bénéficiaire de AAH
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));        
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));        
         
         //Lorsque l'on vérifie son éligibilité
         boolean isEligible = agepi.isEligible(PREMIER_MOIS_SIMULATION, demandeurEmploi);
@@ -162,10 +162,10 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et bénéficiaire de ASS
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));      
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));      
         
         //Lorsque l'on vérifie son éligibilité
         boolean isEligible = agepi.isEligible(PREMIER_MOIS_SIMULATION, demandeurEmploi);
@@ -180,10 +180,10 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et sans ressources
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi("NON BENEFICIAIRE", isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi("NON BENEFICIAIRE", isEnCouple, nbEnfant);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
         demandeurEmploi.setRessourcesFinancieres(null);
         
         //Lorsque l'on vérifie son éligibilité

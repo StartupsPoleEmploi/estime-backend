@@ -14,8 +14,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.Logement;
@@ -25,10 +25,10 @@ import utile.tests.Utile;
 public class Commun {
     
     @Autowired
-    protected Utile utileTests;
+    protected Utile utile;
 
     @SpyBean
-    private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
+    private PoleEmploiIOClient poleEmploiIOClient;
 
     @SpyBean
     protected DateUtile dateUtile;    
@@ -36,11 +36,11 @@ public class Commun {
     
     protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         //mock création date de demande de simulation
-        doReturn(utileTests.getDate(dateSimulation)).when(dateUtile).getDateJour();
+        doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
 
         //mock retour appel détail indemnisation de l'ESD 
-        DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.RSA.getLibelle());        
-        doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
+        DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.RSA.getLibelle());        
+        doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
     }
 
     protected Logement initLogement() {

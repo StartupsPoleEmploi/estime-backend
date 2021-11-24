@@ -206,7 +206,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
@@ -237,7 +237,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
@@ -267,7 +267,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
@@ -323,7 +323,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
@@ -378,7 +378,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
@@ -433,13 +433,13 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(5);	
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 	
 	FuturTravail futurTravail = new FuturTravail();
 	Salaire salaire = new Salaire();
@@ -472,13 +472,13 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(4);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -504,13 +504,13 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(4);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -536,13 +536,13 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -568,13 +568,13 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -600,13 +600,13 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -632,13 +632,13 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -664,13 +664,13 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(1);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -696,13 +696,13 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(1);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -716,7 +716,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     private DemandeurEmploi creerDemandeurEmploiPeriodeAideeTests(float montantAAH) throws ParseException {
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(montantAAH);
 	return demandeurEmploi;
     }

@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DateNaissanceESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DateNaissancePEIO;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.IndividuUtile;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -23,11 +23,11 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 public class DemandeurEmploiUtile {
 
     @Autowired
-    private PoleEmploiIODevClient emploiStoreDevClient;
+    private PoleEmploiIOClient emploiStoreDevClient;
 
     @Autowired
     private DateUtile dateUtile;
-
+    
     @Autowired
     private IndividuUtile individuUtile;
 
@@ -55,11 +55,11 @@ public class DemandeurEmploiUtile {
     }
 
     private void addDateNaissance(DemandeurEmploi demandeurEmploi, String bearerToken) {
-	Optional<DateNaissanceESD> dateNaissanceESDOptional = emploiStoreDevClient.callDateNaissanceEndPoint(bearerToken);
-	if (dateNaissanceESDOptional.isPresent()) {
-	    DateNaissanceESD dateNaissanceESD = dateNaissanceESDOptional.get();
-	    if (dateNaissanceESD.getDateDeNaissance() != null) {
-		LocalDate dateNaissanceLocalDate = dateUtile.convertDateToLocalDate(dateNaissanceESD.getDateDeNaissance());
+	Optional<DateNaissancePEIO> dateNaissancePEIOOptional = emploiStoreDevClient.callDateNaissanceEndPoint(bearerToken);
+	if (dateNaissancePEIOOptional.isPresent()) {
+	    DateNaissancePEIO dateNaissancePEIO = dateNaissancePEIOOptional.get();
+	    if (dateNaissancePEIO.getDateDeNaissance() != null) {
+		LocalDate dateNaissanceLocalDate = dateUtile.convertDateToLocalDate(dateNaissancePEIO.getDateDeNaissance());
 		if (demandeurEmploi.getInformationsPersonnelles() != null) {
 		    demandeurEmploi.getInformationsPersonnelles().setDateNaissance(dateNaissanceLocalDate);
 		} else {
@@ -72,14 +72,14 @@ public class DemandeurEmploiUtile {
     }
 
     public void addCodeDepartement(DemandeurEmploi demandeurEmploi, String bearerToken) {
-	Optional<CoordonneesESD> coordonneesESDOptional = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
-	if (coordonneesESDOptional.isPresent()) {
-	    CoordonneesESD coordonneesESD = coordonneesESDOptional.get();
+	Optional<CoordonneesPEIO> coordonneesPEIOOptional = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
+	if (coordonneesPEIOOptional.isPresent()) {
+	    CoordonneesPEIO coordonneesPEIO = coordonneesPEIOOptional.get();
 	    if (demandeurEmploi.getInformationsPersonnelles() != null) {
-		demandeurEmploi.getInformationsPersonnelles().setCodePostal(coordonneesESD.getCodePostal());
+		demandeurEmploi.getInformationsPersonnelles().setCodePostal(coordonneesPEIO.getCodePostal());
 	    } else {
 		InformationsPersonnelles informationsPersonnelles = individuUtile.creerInformationsPersonnelles();
-		informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
+		informationsPersonnelles.setCodePostal(coordonneesPEIO.getCodePostal());
 		demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 	    }
 	}

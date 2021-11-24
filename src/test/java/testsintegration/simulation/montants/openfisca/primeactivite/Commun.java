@@ -25,7 +25,7 @@ import utile.tests.Utile;
 public class Commun {
 
     @Autowired
-    protected Utile utileTests;
+    protected Utile utile;
 
     public SimulationMensuelle createSimulationMensuelleASS(float montantASS) {
         SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
@@ -44,8 +44,8 @@ public class Commun {
     }
 
     protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant) throws ParseException {
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
@@ -53,7 +53,7 @@ public class Commun {
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
 
         return demandeurEmploi;
     }

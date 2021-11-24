@@ -53,9 +53,9 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
         // RSA 500€, déclaration trimetrielle en M1, non travaillé au cours des 3 derniers mois
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");       
         demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
         demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
@@ -164,9 +164,9 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
         // enfant 4 ans (05/03/2017)
         boolean isEnCouple = true;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
@@ -185,7 +185,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
         ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
         demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieres(ressourcesFinancieresConjoint);
 
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-03-2017"));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDate("05-03-2017"));
         ;
 
         // Lorsque je simule mes prestations le 20/10/2020
@@ -293,9 +293,9 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
         // APL 310€
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement());     
         demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
@@ -309,7 +309,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(310f));
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utile.creerAidePersonnaliseeLogement(310f));
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks("20-10-2020");

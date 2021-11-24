@@ -14,8 +14,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
@@ -31,21 +31,21 @@ import utile.tests.Utile;
 public class Commun {
 
     @Autowired
-    protected Utile utileTests;
+    protected Utile utile;
 
     @SpyBean
-    private PoleEmploiIODevClient detailIndemnisationPoleEmploiClient;
+    private PoleEmploiIOClient poleEmploiIOClient;
 
     @SpyBean
     protected DateUtile dateUtile;
 
     protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         // mock création date de demande de simulation
-        doReturn(utileTests.getDate(dateSimulation)).when(dateUtile).getDateJour();
+        doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
 
-        // mock retour appel détail indemnisation de l'ESD
-        DetailIndemnisationESD detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.RSA.getLibelle());
-        doReturn(detailIndemnisationESD).when(detailIndemnisationPoleEmploiClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
+	//mock retour appel détail indemnisation de l'ESD 
+	DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.RSA.getLibelle());
+	doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
     }
 
     protected Logement initLogement(String codeInsee, boolean isLogementConventionne) {
@@ -64,14 +64,14 @@ public class Commun {
     protected DemandeurEmploi creerDemandeurEmploiAPL(int prochaineDeclarationTrimestrielle) throws ParseException {
         boolean isEnCouple = true;
         int nbEnfant = 2;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(7));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(7));
         
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", true));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
@@ -105,14 +105,14 @@ public class Commun {
     protected DemandeurEmploi creerDemandeurEmploiALF(int prochaineDeclarationTrimestrielle) throws ParseException  {
         boolean isEnCouple = true;
         int nbEnfant = 2;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(7));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(7));
         
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
@@ -146,9 +146,9 @@ public class Commun {
     protected DemandeurEmploi creerDemandeurEmploiALS(int prochaineDeclarationTrimestrielle) throws ParseException  {
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
         
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         
