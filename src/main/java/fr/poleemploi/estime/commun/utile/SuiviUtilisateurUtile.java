@@ -42,8 +42,6 @@ public class SuiviUtilisateurUtile {
 	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityCreationSimulation(idPoleEmploi, parcours,
 		getTypePopulation(beneficiaireAides), getCodePostal(informationsPersonnelles));
 
-	System.out.println(suiviParcoursUtilisateurEntity);
-
 	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
 
