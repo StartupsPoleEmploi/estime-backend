@@ -16,7 +16,6 @@ import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
-import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -31,48 +30,62 @@ public class AreUtile {
 
     @Autowired
     private PoleEmploiIOClient poleEmploiIOClient;
+    //
+    //    @Autowired
+    //    private DateUtile dateUtile;
 
-    @Autowired
-    private DateUtile dateUtile;
+    public static final float SOLDE_PREVISIONNEL_RELIQUAT = 10;
 
-    private float nouveauReliquat;
+    private float joursIndemnisables;
+    private float nombreJoursRestants;
+    private float montantComplementARE;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AreUtile.class);
 
     public void simulerAideEtGetReliquat(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate moisSimule) {
 
 	if (isMoisCalculARE(numeroMoisSimule)) {
-	    this.nouveauReliquat = calculerMontantComplementAREEtGetReliquat(aidesPourCeMois, demandeurEmploi);
+	    calculerMontantComplementARE(aidesPourCeMois, demandeurEmploi);
 	} else {
-	    this.nouveauReliquat = verserReliquatComplementAREEtGetReliquat(aidesPourCeMois, demandeurEmploi, moisSimule, this.nouveauReliquat);
+	    verserReliquatComplementARE(aidesPourCeMois);
 	}
-	System.out.println(this.nouveauReliquat);
     }
 
     private boolean isMoisCalculARE(int numeroMoisSimule) {
 	return numeroMoisSimule == 1;
     }
 
-    private float calculerMontantComplementAREEtGetReliquat(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
+    private void calculerMontantComplementARE(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
 	String bearerToken = accesTokenUtile.getBearerToken(demandeurEmploi.getPeConnectAuthorization().getAccessToken());
 	ArePEIOIn areIn = remplirAreIn(demandeurEmploi);
 	Optional<ArePEIOOut> optionalAreOut = poleEmploiIOClient.callAreEndPoint(areIn, bearerToken);
-
 	if (optionalAreOut.isPresent() && optionalAreOut.get().getAllocationMensuelle() > 0) {
-	    System.out.println(optionalAreOut.get().toString());
-	    Aide complementARE = creerComplementARE(optionalAreOut.get().getAllocationMensuelle());
+	    ArePEIOOut areOut = optionalAreOut.get();
+	    this.montantComplementARE = (float) Math.floor(areOut.getAllocationMensuelle() - (areOut.getMontantCRC() + areOut.getMontantCRDS() + areOut.getMontantCSG()));
+	    this.nombreJoursRestants = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants();
+	    float soldePrevisionnelReliquat = areOut.getSoldePrevisionnelReliquat();
+	    this.joursIndemnisables = this.nombreJoursRestants - soldePrevisionnelReliquat;
+	    this.nombreJoursRestants -= this.joursIndemnisables;
+	    Aide complementARE = creerComplementARE(montantComplementARE);
 	    aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
-	    return 100;
 	} else {
 	    LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
 	}
-	return 0;
     }
 
-    private float verserReliquatComplementAREEtGetReliquat(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, LocalDate moisSimule, float reliquatMoisPrecedent) {
-	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(moisSimule);
-
-	return reliquatMoisPrecedent - nombreJoursDansLeMois;
+    private void verserReliquatComplementARE(Map<String, Aide> aidesPourCeMois) {
+	this.nombreJoursRestants = getNombreJoursRestantsReliquat();
+	if (nombreJoursRestants > 0) {
+	    Aide complementARE = creerComplementARE(this.montantComplementARE);
+	    aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
+	} else {
+	    float nombreJoursRestantsAvantCeMois = getNombreJoursRestantsReliquatAvantCeMois();
+	    if (nombreJoursRestantsAvantCeMois > 0) {
+		float montantReliquatComplementARE = (float) Math.floor((this.montantComplementARE / this.joursIndemnisables) * nombreJoursRestantsAvantCeMois);
+		Aide complementARE = creerComplementARE(montantReliquatComplementARE);
+		aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
+	    }
+	}
     }
 
     private Aide creerComplementARE(float montantAide) {
@@ -89,11 +102,24 @@ public class AreUtile {
 	return are;
     }
 
+    private float getNombreJoursRestantsReliquat() {
+	return this.nombreJoursRestants - this.joursIndemnisables;
+    }
+
+    private float getNombreJoursRestantsReliquatAvantCeMois() {
+	return this.nombreJoursRestants + this.joursIndemnisables;
+    }
+
     private ArePEIOIn remplirAreIn(DemandeurEmploi demandeurEmploi) {
 	ArePEIOIn areIn = new ArePEIOIn();
-	areIn.setAllocationBruteJournaliere(demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut());
-	areIn.setSalaireBrutJournalier(demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut());
-	areIn.setGainBrut(demandeurEmploi.getFuturTravail().getSalaire().getMontantBrut());
+	if (demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
+		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null) {
+	    areIn.setAllocationBruteJournaliere(demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut());
+	    areIn.setSalaireBrutJournalier(demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut());
+	    areIn.setGainBrut(demandeurEmploi.getFuturTravail().getSalaire().getMontantBrut());
+	} else {
+	    LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
+	}
 	return areIn;
     }
 }
