@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
@@ -62,74 +61,73 @@ public class IndividuLogique {
 
     public Individu authentifier(String code, String redirectURI, String nonce) {
 
-        Individu individu = new Individu();
+	Individu individu = new Individu();
 
-        PeConnectAuthorizationESD peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
-        String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
+	PeConnectAuthorizationESD peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
+	String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
 
-        DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
-        Optional<CoordonneesESD> coordonneesESDOption = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
-        Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
+	DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
+	Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
 
-        if (userInfoOption.isPresent() && coordonneesESDOption.isPresent()) {
-            UserInfoESD userInfoESD = userInfoOption.get();
-            CoordonneesESD coordonneesESD = coordonneesESDOption.get();
-            if (stagingEnvironnementUtile.isStagingEnvironnement()) {
-                stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD, coordonneesESD);
-            } else {
-                individu.setIdPoleEmploi(userInfoESD.getSub());
-                if (demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
-                    individu.setPopulationAutorisee(true);
-                    demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD, coordonneesESD);
-                } else {
-                    individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
-                    individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD, coordonneesESD);
-                }
-            }
+	if (userInfoOption.isPresent()) {
+	    UserInfoESD userInfoESD = userInfoOption.get();
+	    if (stagingEnvironnementUtile.isStagingEnvironnement()) {
+		stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
+	    } else {
+		individu.setIdPoleEmploi(userInfoESD.getSub());
+		if (demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
+		    individu.setPopulationAutorisee(true);
+		    demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
+		} else {
+		    individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
+		    individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
+		}
+	    }
 
-            // @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
-            suiviUtilisateurUtile.tracerParcoursUtilisateur(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
-                    individu.getInformationsPersonnelles(), detailIndemnisationESD);
+	    // @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
+	    suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
+		    individu.getInformationsPersonnelles(), detailIndemnisationESD);
 
-            individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
+	    individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
 
-        } else {
-            LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
-            throw new InternalServerException(InternalServerMessages.IDENTIFICATION_IMPOSSIBLE.getMessage());
-        }
+	} else {
+	    LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
+	    throw new InternalServerException(InternalServerMessages.IDENTIFICATION_IMPOSSIBLE.getMessage());
+	}
 
-        return individu;
+	return individu;
     }
 
     public DemandeurEmploi creerDemandeurEmploi(Individu individu) {
 
-        String accessToken = individu.getPeConnectAuthorization().getAccessToken();
-        String bearerToken = accesTokenUtile.getBearerToken(accessToken);
+	String accessToken = individu.getPeConnectAuthorization().getAccessToken();
+	String bearerToken = accesTokenUtile.getBearerToken(accessToken);
 
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
+	demandeurEmploiUtile.addCodeDepartement(demandeurEmploi, bearerToken);
+	demandeurEmploiUtile.addDateNaissance(demandeurEmploi, bearerToken);
 
-        demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
-        demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
-        demandeurEmploiUtile.addInformationsPersonnelles(demandeurEmploi, individu, bearerToken);
+	demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
+	demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
 
-        suiviUtilisateurUtile.tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(), individu.getBeneficiaireAides(),
-                individu.getInformationsPersonnelles());
+	suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(),
+		individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 
-        return demandeurEmploi;
+	return demandeurEmploi;
     }
 
     public SimulationAides simulerMesAides(DemandeurEmploi demandeurEmploi) {
-        SimulationAides simulationAides = simulateurAides.simuler(demandeurEmploi);
+	SimulationAides simulationAides = simulateurAides.simuler(demandeurEmploi);
 
-        suiviUtilisateurUtile.tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(),
-                demandeurEmploi.getInformationsPersonnelles());
+	suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(),
+		demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 
-        return simulationAides;
+	return simulationAides;
     }
 
     public void supprimerSuiviParcoursUtilisateur(String idPoleEmploi) {
-        suiviUtilisateurUtile.supprimerTracesParcoursUtilisateur(idPoleEmploi);
+	suiviUtilisateurUtile.supprimerTracesParcoursUtilisateur(idPoleEmploi);
     }
 
 }

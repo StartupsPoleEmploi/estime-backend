@@ -29,100 +29,100 @@ public class SuiviUtilisateurUtile {
     @Autowired
     private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
 
-    public void tracerParcoursUtilisateur(UserInfoESD userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles,
-            DetailIndemnisationESD detailIndemnisationESD) {
+    public void tracerParcoursUtilisateurAuthentification(UserInfoESD userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles, DetailIndemnisationESD detailIndemnisationESD) {
 
-        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(userInfoESD, parcours, getTypePopulation(beneficiaireAides),
-                getCodePostal(informationsPersonnelles), detailIndemnisationESD);
+	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityAuthentification(userInfoESD, parcours,
+		getTypePopulation(beneficiaireAides), detailIndemnisationESD);
 
-        suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
+	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
 
-    public void tracerParcoursUtilisateur(String idPoleEmploi, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles) {
+    public void tracerParcoursUtilisateurCreationSimulation(String idPoleEmploi, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles) {
 
-        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(idPoleEmploi, parcours, getTypePopulation(beneficiaireAides),
-                getCodePostal(informationsPersonnelles));
+	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityCreationSimulation(idPoleEmploi, parcours,
+		getTypePopulation(beneficiaireAides), getCodePostal(informationsPersonnelles));
 
-        suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
+	System.out.println(suiviParcoursUtilisateurEntity);
+
+	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
 
     public void supprimerTracesParcoursUtilisateur(String idPoleEmploi) {
-        suiviParcoursUtilisateurManager.supprimerSuiviParcoursUtilisateurParIdPoleEmploi(idPoleEmploi);
+	suiviParcoursUtilisateurManager.supprimerSuiviParcoursUtilisateurParIdPoleEmploi(idPoleEmploi);
     }
 
     public String getParcoursAccesService(Individu individu) {
-        if (individu.isPopulationAutorisee()) {
-            return ParcoursUtilisateur.CONNEXION_REUSSIE.getParcours();
-        }
-        return ParcoursUtilisateur.CONNEXION_REFUSEE.getParcours();
+	if (individu.isPopulationAutorisee()) {
+	    return ParcoursUtilisateur.CONNEXION_REUSSIE.getParcours();
+	}
+	return ParcoursUtilisateur.CONNEXION_REFUSEE.getParcours();
     }
 
     private String getTypePopulation(BeneficiaireAides beneficiaireAides) {
-        return getTypePopulation(beneficiaireAides.isBeneficiaireARE(), beneficiaireAides.isBeneficiaireASS(), beneficiaireAides.isBeneficiaireRSA(), beneficiaireAides.isBeneficiaireAAH());
+	return getTypePopulation(beneficiaireAides.isBeneficiaireARE(), beneficiaireAides.isBeneficiaireASS(), beneficiaireAides.isBeneficiaireRSA(),
+		beneficiaireAides.isBeneficiaireAAH());
     }
 
     private String getCodePostal(InformationsPersonnelles informationsPersonnelles) {
-        return informationsPersonnelles.getCodePostal();
+	return informationsPersonnelles.getCodePostal();
     }
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoESD userInfoESD, String parcours, String typePopulation, String codePostal,
-            DetailIndemnisationESD detailIndemnisationESD) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityAuthentification(UserInfoESD userInfoESD, String parcours, String typePopulation, DetailIndemnisationESD detailIndemnisationESD) {
 
-        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
-        suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
-        suiviParcoursUtilisateurEntity.setIdPoleEmploi(userInfoESD.getSub());
-        suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
-        suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
-        suiviParcoursUtilisateurEntity.setEmail(userInfoESD.getEmail());
-        suiviParcoursUtilisateurEntity.setNom(userInfoESD.getFamilyName());
-        suiviParcoursUtilisateurEntity.setPrenom(userInfoESD.getGivenName());
-        suiviParcoursUtilisateurEntity.setCodePostal(codePostal);
+	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
+	suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
+	suiviParcoursUtilisateurEntity.setIdPoleEmploi(userInfoESD.getSub());
+	suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
+	suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
+	suiviParcoursUtilisateurEntity.setEmail(userInfoESD.getEmail());
+	suiviParcoursUtilisateurEntity.setNom(userInfoESD.getFamilyName());
+	suiviParcoursUtilisateurEntity.setPrenom(userInfoESD.getGivenName());
 
-        if (detailIndemnisationESD.getCodeIndemnisation() != null) {
-            suiviParcoursUtilisateurEntity.setEsdCodeIndemnisation(detailIndemnisationESD.getCodeIndemnisation());
-        }
-        suiviParcoursUtilisateurEntity.setEsdBeneficiaireAssuranceChomage(detailIndemnisationESD.isBeneficiaireAssuranceChomage());
-        return suiviParcoursUtilisateurEntity;
+	if (detailIndemnisationESD.getCodeIndemnisation() != null) {
+	    suiviParcoursUtilisateurEntity.setEsdCodeIndemnisation(detailIndemnisationESD.getCodeIndemnisation());
+	}
+	suiviParcoursUtilisateurEntity.setEsdBeneficiaireAssuranceChomage(detailIndemnisationESD.isBeneficiaireAssuranceChomage());
+	return suiviParcoursUtilisateurEntity;
     }
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(String idPoleEmploi, String parcours, String typePopulation, String codePostal) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityCreationSimulation(String idPoleEmploi, String parcours, String typePopulation, String codePostal) {
 
-        SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
-        suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
-        suiviParcoursUtilisateurEntity.setIdPoleEmploi(idPoleEmploi);
-        suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
-        suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
-        suiviParcoursUtilisateurEntity.setCodePostal(codePostal);
-        return suiviParcoursUtilisateurEntity;
+	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
+	suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
+	suiviParcoursUtilisateurEntity.setIdPoleEmploi(idPoleEmploi);
+	suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
+	suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
+	suiviParcoursUtilisateurEntity.setCodePostal(codePostal);
+	return suiviParcoursUtilisateurEntity;
     }
 
     private String getTypePopulation(boolean isBeneficiaireARE, boolean isBeneficiaireASS, boolean isBeneficiaireRSA, boolean isBeneficiaireAAH) {
-        StringBuilder typePopulationBuilder = new StringBuilder("");
+	StringBuilder typePopulationBuilder = new StringBuilder("");
 
-        if (isNonBeneficaireAllocations(isBeneficiaireARE, isBeneficiaireASS, isBeneficiaireRSA, isBeneficiaireAAH)) {
-            typePopulationBuilder.append(TypePopulation.NON_BENEFICIAIRE.getLibelle());
-        } else {
-            StringBuilder beneficiaireBuilder = new StringBuilder("");
-            appendTypePopulation(beneficiaireBuilder, isBeneficiaireARE, TypePopulation.ARE.getLibelle());
-            appendTypePopulation(beneficiaireBuilder, isBeneficiaireASS, TypePopulation.ASS.getLibelle());
-            appendTypePopulation(beneficiaireBuilder, isBeneficiaireRSA, TypePopulation.RSA.getLibelle());
-            appendTypePopulation(beneficiaireBuilder, isBeneficiaireAAH, TypePopulation.AAH.getLibelle());
-            typePopulationBuilder.append(beneficiaireBuilder.toString());
-        }
-        return typePopulationBuilder.toString();
+	if (isNonBeneficaireAllocations(isBeneficiaireARE, isBeneficiaireASS, isBeneficiaireRSA, isBeneficiaireAAH)) {
+	    typePopulationBuilder.append(TypePopulation.NON_BENEFICIAIRE.getLibelle());
+	} else {
+	    StringBuilder beneficiaireBuilder = new StringBuilder("");
+	    appendTypePopulation(beneficiaireBuilder, isBeneficiaireARE, TypePopulation.ARE.getLibelle());
+	    appendTypePopulation(beneficiaireBuilder, isBeneficiaireASS, TypePopulation.ASS.getLibelle());
+	    appendTypePopulation(beneficiaireBuilder, isBeneficiaireRSA, TypePopulation.RSA.getLibelle());
+	    appendTypePopulation(beneficiaireBuilder, isBeneficiaireAAH, TypePopulation.AAH.getLibelle());
+	    typePopulationBuilder.append(beneficiaireBuilder.toString());
+	}
+	return typePopulationBuilder.toString();
     }
 
     private void appendTypePopulation(StringBuilder beneficiaireBuilder, boolean isBeneficiaire, String libelleBeneficaire) {
-        if (isBeneficiaire) {
-            if (!beneficiaireBuilder.toString().isEmpty()) {
-                beneficiaireBuilder.append(", ");
-            }
-            beneficiaireBuilder.append(libelleBeneficaire);
-        }
+	if (isBeneficiaire) {
+	    if (!beneficiaireBuilder.toString().isEmpty()) {
+		beneficiaireBuilder.append(", ");
+	    }
+	    beneficiaireBuilder.append(libelleBeneficaire);
+	}
     }
 
     private boolean isNonBeneficaireAllocations(boolean isBeneficiaireARE, boolean isBeneficiaireASS, boolean isBeneficiaireRSA, boolean isBeneficiaireAAH) {
-        return !isBeneficiaireARE && !isBeneficiaireASS && !isBeneficiaireRSA && !isBeneficiaireAAH;
+	return !isBeneficiaireARE && !isBeneficiaireASS && !isBeneficiaireRSA && !isBeneficiaireAAH;
     }
 
 }
