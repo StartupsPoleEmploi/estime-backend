@@ -3,6 +3,7 @@ package testsunitaires.logique.simulateur.prestationssociales.poleemploi.utile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.ParseException;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import utile.tests.Utile;
 
@@ -470,13 +472,20 @@ class AideMobiliteUtileTestsMayotte {
         allocationARE.setAllocationJournaliereNet(19.38f);
         aidesPoleEmploi.setAllocationARE(allocationARE);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(3);
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
+        String accessToken ="Hu7UAt2b6yyYZd2Uafn8oLxsmBk";
+        PeConnectAuthorization peConnectAuthorization = new PeConnectAuthorization();
+    	peConnectAuthorization.setAccessToken(accessToken);
+        demandeurEmploi.setPeConnectAuthorization(peConnectAuthorization);
+        
         //Lorsque l'on calcul le montant de l'aide à la mobilité
-        Aide aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 286€
-        assertThat(aideMobilite.getMontant()).isEqualTo(286f);
+        assertThat(aideMobilite.isPresent());
+        assertThat(aideMobilite.get().getMontant()).isEqualTo(286f);
     }
     
     @Test
@@ -508,9 +517,10 @@ class AideMobiliteUtileTestsMayotte {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on calcul le montant de l'aide à la mobilité
-        Aide aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 30€
-        assertThat(aideMobilite.getMontant()).isEqualTo(30f);
+        assertThat(aideMobilite.isPresent());
+        assertThat(aideMobilite.get().getMontant()).isEqualTo(30f);
     }
 }

@@ -12,7 +12,8 @@ public class AgepiPEIOIn {
 	private int dureePeriodeEmploiOuFormation;	
 	private int nombreEnfants;	
 	private int nombreEnfantsMoins10Ans;	
-	private boolean eleveSeulEnfants;	
+	private boolean eleveSeulEnfants;
+	private String codeTerritoire;
 	
 	public String getOrigine() {
 		return this.origine;
@@ -108,6 +109,14 @@ public class AgepiPEIOIn {
 
 	public void setEleveSeulEnfants(boolean eleveSeulEnfants) {
 		this.eleveSeulEnfants = eleveSeulEnfants;
+	}
+
+	public String getCodeTerritoire() {
+		return codeTerritoire;
+	}
+
+	public void setCodeTerritoire(String codeTerritoire) {
+		this.codeTerritoire = codeTerritoire;
 	}
 
 	

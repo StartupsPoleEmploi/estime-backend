@@ -3,6 +3,7 @@ package testsunitaires.logique.simulateur.prestationssociales.poleemploi.utile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.ParseException;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -483,10 +484,11 @@ class AideMobiliteUtileTestsHorsMayotte {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         //Lorsque l'on calcul le montant de l'aide à la mobilité
-        Aide aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 286€
-        assertThat(aideMobilite.getMontant()).isEqualTo(286f);
+        assertThat(aideMobilite.isPresent());
+        assertThat(aideMobilite.get().getMontant()).isEqualTo(286f);
     }
     
     @Test
@@ -515,12 +517,13 @@ class AideMobiliteUtileTestsHorsMayotte {
         allocationARE.setAllocationJournaliereNet(34.38f);
         aidesPoleEmploi.setAllocationARE(allocationARE);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
-        
+        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(2);
+                
         //Lorsque l'on calcul le montant de l'aide à la mobilité
-        Aide aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 30€
-        assertThat(aideMobilite.getMontant()).isEqualTo(30f);
+        assertThat(aideMobilite.isPresent());
+        assertThat(aideMobilite.get().getMontant()).isEqualTo(30f);
     }
 }

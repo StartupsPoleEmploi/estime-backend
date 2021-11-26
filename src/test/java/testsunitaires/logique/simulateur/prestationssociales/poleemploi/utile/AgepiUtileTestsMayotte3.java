@@ -2,6 +2,8 @@ package testsunitaires.logique.simulateur.prestationssociales.poleemploi.utile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,10 +56,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(12)); 
        
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 0€
-        assertThat(agepi.getMontant()).isEqualTo(0);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(0);
     }
     
     /***  dureeTravailEnHeuresSemaine 20h ****/
@@ -76,10 +79,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9)); 
        
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 200€
-        assertThat(agepi.getMontant()).isEqualTo(200);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(200);
     }
     
     
@@ -98,10 +102,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(8));
        
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 230€
-        assertThat(agepi.getMontant()).isEqualTo(230);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(230);
     }
     
     @Test
@@ -120,10 +125,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(8));
                
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 260€
-        assertThat(agepi.getMontant()).isEqualTo(260);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(260);
     }
     
     @Test
@@ -143,10 +149,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(3).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(5));
              
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 260€
-        assertThat(agepi.getMontant()).isEqualTo(260);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(260);
     }
     
     @Test
@@ -163,10 +170,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(13));
          
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 0€
-        assertThat(agepi.getMontant()).isEqualTo(0);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isZero();
     }
     
  /***  dureeTravailEnHeuresSemaine = 35h ****/
@@ -185,10 +193,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
 
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 200€
-        assertThat(agepi.getMontant()).isEqualTo(200);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(200);
     }
     
     
@@ -207,10 +216,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(8));
         
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 230€
-        assertThat(agepi.getMontant()).isEqualTo(230);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(230);
     }
     
     @Test
@@ -229,10 +239,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(8));
         
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 260€
-        assertThat(agepi.getMontant()).isEqualTo(260);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(260);
     }
     
     @Test
@@ -252,10 +263,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(3).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(5));
                 
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 260€
-        assertThat(agepi.getMontant()).isEqualTo(260);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(260);
     }
     
     @Test
@@ -271,10 +283,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);      
                
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 0€
-        assertThat(agepi.getMontant()).isEqualTo(0);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(0);
     }
     
     /***  dureeTravailEnHeuresSemaine 40h ****/
@@ -293,10 +306,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
         
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 200€
-        assertThat(agepi.getMontant()).isEqualTo(200);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(200);
     }
     
     @Test
@@ -314,10 +328,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(8));
         
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 230€
-        assertThat(agepi.getMontant()).isEqualTo(230);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(230);
     }
     
     @Test
@@ -336,10 +351,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(8));
         
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 260€
-        assertThat(agepi.getMontant()).isEqualTo(260);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(260);
     }
     
     @Test
@@ -359,10 +375,11 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(3).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(5));
                
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 260€
-        assertThat(agepi.getMontant()).isEqualTo(260);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(260);
     }
     
     @Test
@@ -378,9 +395,10 @@ class AgepiUtileTestsMayotte3 {
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);              
         
         //Lorsque l'on calcul le montant de l'agepi
-        Aide agepi = agepiUtile.simulerAide(demandeurEmploi);
+        Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
         
         //alors le montant retourné est de 0€
-        assertThat(agepi.getMontant()).isEqualTo(0);
+        assertThat(agepi.isPresent());
+        assertThat(agepi.get().getMontant()).isEqualTo(0);
     }  
 }

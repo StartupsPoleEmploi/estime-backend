@@ -93,7 +93,7 @@ public class PoleEmploiIOUtile {
 	map.add(NOMBRE_ENFANTS, agepiIn.getNombreEnfants());
 	map.add(NOMBRE_ENFANTS_MOINS_10_ANS, agepiIn.getNombreEnfantsMoins10Ans());
 	map.add(ELEVE_SEUL_ENFANTS, agepiIn.getEleveSeulEnfants());
-
+	map.add(CODE_TERRITOIRE, agepiIn.getCodeTerritoire());
 	return new HttpEntity<>(map, headers);
     }
 

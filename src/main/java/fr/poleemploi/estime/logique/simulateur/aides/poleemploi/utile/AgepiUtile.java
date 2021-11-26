@@ -14,10 +14,14 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
@@ -89,25 +93,22 @@ public class AgepiUtile {
 				(demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
 	}
 
-	public Aide simulerAide(DemandeurEmploi demandeurEmploi) {
-		float montantAgepi = calculerMontantAgepi(demandeurEmploi);
-		return creerAide(montantAgepi);
-		//TODO: lier simuler aide avec l'interfacage AGEPI API
-		//float montantAgepi = calculerMontantAgepi(demandeurEmploi);
-		//    	PeConnectAuthorizationPEIO peConnectAuthorizationESD = poleEmploiIOClient.callAccessTokenEndPoint(code, redirectURI, nonce); 
-		//    	String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
-		//    	String bearerToken = "PLACEHOLDER";
-		//        AgepiPEIOIn agepiIn;
-		//        agepiIn = remplirAgepiIn(demandeurEmploi);
-		//        Optional<AgepiPEIOOut> optionalAgepiOut = poleEmploiIOClient.callAgepiEndPoint(agepiIn, bearerToken);
-		//        if(optionalAgepiOut.isPresent()) { 
-		//        	AgepiPEIOOut agepiOut = optionalAgepiOut.get();
-		//        	float montantAgepi = agepiOut.getDecisionAGEPIAPI().getMontant();
-		//        	return creerAide(montantAgepi);           	
-		//        }else {
-		//            LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
-		//            throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
-		//        }   
+	public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi) {
+		String bearerToken = accesTokenUtile.getBearerToken(demandeurEmploi.getPeConnectAuthorization().getAccessToken());
+		AgepiPEIOIn agepiIn = remplirAgepiIn(demandeurEmploi);
+		Optional<AgepiPEIOOut> optionalAgepiOut = poleEmploiIOClient.callAgepiEndPoint(agepiIn, bearerToken);
+		if(optionalAgepiOut.isPresent()) { 
+			AgepiPEIOOut agepiOut = optionalAgepiOut.get();
+			if(agepiOut.getDecisionAgepiAPI().getNature().equals("Demande attribuée")) {
+				float montantAide = agepiOut.getDecisionAgepiAPI().getMontant();
+				return Optional.of(creerAide(montantAide));           					
+			}else {
+				LOGGER.error(LoggerMessages.SIMULATION_IMPOSSIBLE_DEMANDE_REFUSEE.getMessage());
+			}
+		}else {
+			LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
+		} 
+		return Optional.empty();  
 	}
 
 	private AgepiPEIOIn remplirAgepiIn(DemandeurEmploi demandeurEmploi) {
@@ -138,6 +139,7 @@ public class AgepiUtile {
 		agepiPEIOIn.setNombreEnfantsMoins10Ans(nombreEnfantsMoinsDixAns);
 		agepiPEIOIn.setOrigine("W");
 		agepiPEIOIn.setTypeIntensite("Hebdomadaire");
+		agepiPEIOIn.setCodeTerritoire("001");
 		return agepiPEIOIn;
 	}
 

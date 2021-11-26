@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOIn;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.NombresJoursIndemnises;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
@@ -22,6 +23,7 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
+import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -73,33 +75,32 @@ public class AideMobiliteUtile {
 	@Autowired
 	private PoleEmploiIOClient poleEmploiIOClient;
 
-
-	public Aide simulerAide(DemandeurEmploi demandeurEmploi) {
-		float montantAideMobilite = calculerMontantAideMobilite(demandeurEmploi);
-		return creerAide(montantAideMobilite);
-		//TODO : lier simuler aide avec l'interfacage Aide Mobilite API
-		//    	PeConnectAuthorizationPEIO peConnectAuthorizationESD = poleEmploiIOClient.callAccessTokenEndPoint(code, redirectURI, nonce); 
-		//    	String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
-		//    	String bearerToken = "PLACEHOLDER";
-		//    	AideMobilitePEIOIn aideMobiliteIn;
-		//        aideMobiliteIn = remplirAideMobiliteIn(demandeurEmploi);
-		//        Optional<AideMobilitePEIOOut> optionalAideMobiliteOut = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobiliteIn, bearerToken);
-		//        if(optionalAideMobiliteOut.isPresent()) { 
-		//        	AideMobilitePEIOOut aideMobiliteOut = optionalAideMobiliteOut.get();
-		//        	float montantAideMobilite = aideMobiliteOut.getMontant();
-		//        	return creerAide(montantAideMobilite);
-		//        }else {
-		//            LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
-		//            throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
-		//        } 
-		//float montantAideMobilite = calculerMontantAideMobilite(demandeurEmploi);
+	public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi) {
+//		float montantAideMobilite = calculerMontantAideMobilite(demandeurEmploi);
+//		return creerAide(montantAideMobilite);		
+		String bearerToken = accesTokenUtile.getBearerToken(demandeurEmploi.getPeConnectAuthorization().getAccessToken());
+		AideMobilitePEIOIn aideMobiliteIn = remplirAideMobiliteIn(demandeurEmploi);
+		Optional<AideMobilitePEIOOut> optionalAideMobiliteOut = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobiliteIn, bearerToken);
+		if(optionalAideMobiliteOut.isPresent()) { 
+			AideMobilitePEIOOut aideMobiliteOut = optionalAideMobiliteOut.get();
+			if(aideMobiliteOut.getDecisionAideMobiliteAPI().getNature().equals("Demande attribuée")) {
+				float montantAide = aideMobiliteOut.getDecisionAideMobiliteAPI().getMontant();
+				return Optional.of(creerAide(montantAide));           					
+			}else {
+				LOGGER.error(LoggerMessages.SIMULATION_IMPOSSIBLE_DEMANDE_REFUSEE.getMessage());
+			}
+		}else {
+			LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
+		} 
+		return Optional.empty();
 	}
+
 
 	private AideMobilitePEIOIn remplirAideMobiliteIn(DemandeurEmploi demandeurEmploi) {
 		AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
 		aideMobilitePEIOIn.setContexte("Reprise");
 		aideMobilitePEIOIn.setDateActionReclassement(LocalDate.now().with(TemporalAdjusters.firstDayOfNextMonth()).toString());
-		aideMobilitePEIOIn.setDateDepot(LocalDate.now().withDayOfMonth(1).toString());
+		aideMobilitePEIOIn.setDateDepot(LocalDate.now().toString());
 		aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
 		aideMobilitePEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
 		aideMobilitePEIOIn.setOrigine("W");
@@ -107,6 +108,8 @@ public class AideMobiliteUtile {
 		aideMobilitePEIOIn.setNombreAllersRetours(demandeurEmploi.getFuturTravail().getNombreTrajetsDomicileTravail());
 		aideMobilitePEIOIn.setNombreRepas(getNombreRepas(demandeurEmploi));
 		aideMobilitePEIOIn.setNombreNuitees(getNombreNuitees(demandeurEmploi));
+		aideMobilitePEIOIn.setContexte("Reprise");
+		aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
 
 		return aideMobilitePEIOIn;
 	}
