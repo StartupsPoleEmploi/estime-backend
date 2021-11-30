@@ -34,7 +34,7 @@ import utile.tests.Utile;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class RessourcesFinancieresControleurTests extends CommunTests {
+class RessourcesFinancieresControleurTests extends Commun {
     
     @Autowired
     private IndividuService individuService;

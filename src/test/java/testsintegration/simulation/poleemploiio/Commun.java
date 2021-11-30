@@ -47,7 +47,6 @@ public class Commun {
     @SpyBean
     private PoleEmploiIOClient poleEmploiIOClient;
 
-
     protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant) throws ParseException {
 
 	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
@@ -88,8 +87,8 @@ public class Commun {
     protected void initMocks(DemandeurEmploi demandeurEmploi, boolean decisionAgepi, boolean decisionAideMobilite, boolean decisionAre)
 	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 	// mock tracer parcours utilisateur
-	doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(),
-		demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
+	doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(),
+		ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 
 	// mock création date de demande de simulation
 	doReturn(utile.getDate("20-10-2020")).when(dateUtile).getDateJour();

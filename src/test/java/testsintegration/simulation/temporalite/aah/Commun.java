@@ -51,8 +51,7 @@ public class Commun {
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
-	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles()
-		.setDateNaissance(utile.getDateNaissanceFromAge(9));
+	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
@@ -75,9 +74,8 @@ public class Commun {
     protected void initMocks(DemandeurEmploi demandeurEmploi)
 	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 	//mock tracer parcours utilisateur 
-	doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(),
-		ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(),
-		demandeurEmploi.getInformationsPersonnelles());
+	doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(),
+		ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 
 	//mock création date de demande de simulation
 	doReturn(utile.getDate("20-10-2020")).when(dateUtile).getDateJour();

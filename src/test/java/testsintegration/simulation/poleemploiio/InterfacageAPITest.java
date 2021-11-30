@@ -190,7 +190,7 @@ class InterfacageAPITest extends Commun {
     }
 
     @Test
-    void testInterfacageApiAreInValide() {
+    void testInterfacageApiAreInvalide() {
 	ArePEIOIn areIn = new ArePEIOIn();
 	areIn.setAllocationBruteJournaliere(0f);
 	areIn.setGainBrut(555555f);

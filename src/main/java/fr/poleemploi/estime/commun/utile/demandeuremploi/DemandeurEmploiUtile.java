@@ -27,7 +27,7 @@ public class DemandeurEmploiUtile {
 
     @Autowired
     private DateUtile dateUtile;
-    
+
     @Autowired
     private IndividuUtile individuUtile;
 
@@ -54,7 +54,7 @@ public class DemandeurEmploiUtile {
 	addDateNaissance(demandeurEmploi, bearerToken);
     }
 
-    private void addDateNaissance(DemandeurEmploi demandeurEmploi, String bearerToken) {
+    public void addDateNaissance(DemandeurEmploi demandeurEmploi, String bearerToken) {
 	Optional<DateNaissancePEIO> dateNaissancePEIOOptional = emploiStoreDevClient.callDateNaissanceEndPoint(bearerToken);
 	if (dateNaissancePEIOOptional.isPresent()) {
 	    DateNaissancePEIO dateNaissancePEIO = dateNaissancePEIOOptional.get();

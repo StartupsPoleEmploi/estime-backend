@@ -33,7 +33,7 @@ import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class FuturTravailControleurTests extends CommunTests {
+class FuturTravailControleurTests extends Commun {
 
     @Autowired
     private IndividuService individuService;

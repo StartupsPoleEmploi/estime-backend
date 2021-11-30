@@ -1,10 +1,8 @@
 package fr.poleemploi.estime.commun.utile;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Environnements;
@@ -16,22 +14,17 @@ import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
-import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
 public class StagingEnvironnementUtile {
 
-    @Autowired
-    private IndividuUtile individuUtile;
-
     @Value("${spring.profiles.active}")
     private String environment;
 
-    public void gererAccesAvecBouchon(Individu individu, UserInfoPEIO userInfoPEIO, CoordonneesPEIO coordonneesPEIO) {
+    public void gererAccesAvecBouchon(Individu individu, UserInfoPEIO userInfoPEIO) {
 	individu.setIdPoleEmploi(userInfoPEIO.getSub());
 	individu.setPopulationAutorisee(isPopulationAutorisee(userInfoPEIO));
-	individu.setInformationsPersonnelles(getInformationsPersonnelles(coordonneesPEIO));
 	String population = userInfoPEIO.getGivenName().substring(userInfoPEIO.getGivenName().length() - 3);
 	addInfosIndemnisation(individu, population);
     }
@@ -124,15 +117,5 @@ public class StagingEnvironnementUtile {
     private boolean isPopulationAutorisee(UserInfoPEIO userInfoPEIO) {
 	return userInfoPEIO.getGivenName().endsWith(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())
 		|| userInfoPEIO.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()) || userInfoPEIO.getGivenName().endsWith(Aides.RSA.getCode());
-    }
-
-    private InformationsPersonnelles getInformationsPersonnelles(CoordonneesPEIO coordonneesPEIO) {
-	InformationsPersonnelles informationsPersonnelles = individuUtile.creerInformationsPersonnelles();
-	if (coordonneesPEIO.getCodePostal() != null) {
-	    informationsPersonnelles.setCodePostal(coordonneesPEIO.getCodePostal());
-	} else {
-	    informationsPersonnelles.setCodePostal("44000");
-	}
-	return informationsPersonnelles;
     }
 }
