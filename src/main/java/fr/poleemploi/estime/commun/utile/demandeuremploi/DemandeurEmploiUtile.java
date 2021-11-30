@@ -54,7 +54,7 @@ public class DemandeurEmploiUtile {
 	addDateNaissance(demandeurEmploi, bearerToken);
     }
 
-    private void addDateNaissance(DemandeurEmploi demandeurEmploi, String bearerToken) {
+    public void addDateNaissance(DemandeurEmploi demandeurEmploi, String bearerToken) {
 	Optional<DateNaissanceESD> dateNaissanceESDOptional = emploiStoreDevClient.callDateNaissanceEndPoint(bearerToken);
 	if (dateNaissanceESDOptional.isPresent()) {
 	    DateNaissanceESD dateNaissanceESD = dateNaissanceESDOptional.get();

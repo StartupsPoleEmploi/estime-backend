@@ -28,7 +28,7 @@ import fr.poleemploi.estime.services.exceptions.UnauthorizedException;
 
 @Component
 public class PoleEmploiIODevClient {
-    
+
     @Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.token-uri}")
     private String accessTokenURI;
 
@@ -40,98 +40,97 @@ public class PoleEmploiIODevClient {
 
     @Value("${emploi-store-dev.detail-indemnisation-api-uri}")
     private String apiDetailIndemnisationURI;
-    
+
     @Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.user-info-uri}")
     private String userInfoURI;
-    
+
     @Autowired
     private PoleEmploiIODevUtile emploiStoreDevUtile;
-    
+
     @Autowired
     private RestTemplate restTemplate;
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PoleEmploiIODevClient.class);
-    
-    
+
     public PeConnectAuthorizationESD callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
-        HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreDevUtile.getAccesTokenRequeteHTTP(code, redirectURI);
-        try {
-            ResponseEntity<PeConnectAuthorizationESD> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP , PeConnectAuthorizationESD.class);
-            if(reponse.getStatusCode().equals(HttpStatus.OK)) {
-                PeConnectAuthorizationESD informationsAccessTokenESD = reponse.getBody();
-                if(informationsAccessTokenESD.getNonce().compareTo(nonce) != 0) {
-                    LOGGER.info(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
-                    throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
-                }
-                return informationsAccessTokenESD;
-            } else {
-                String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), accessTokenURI);
-                LOGGER.error(messageError);
-                throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage()); 
-            }
-        } catch (HttpClientErrorException e) {
-            LOGGER.info(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
-            throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
-        }        
+	HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreDevUtile.getAccesTokenRequeteHTTP(code, redirectURI);
+	try {
+	    ResponseEntity<PeConnectAuthorizationESD> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP, PeConnectAuthorizationESD.class);
+	    if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+		PeConnectAuthorizationESD informationsAccessTokenESD = reponse.getBody();
+		if (informationsAccessTokenESD.getNonce().compareTo(nonce) != 0) {
+		    LOGGER.error(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
+		    throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+		}
+		return informationsAccessTokenESD;
+	    } else {
+		String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), accessTokenURI);
+		LOGGER.error(messageError);
+		throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+	    }
+	} catch (HttpClientErrorException e) {
+	    LOGGER.error(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
+	    throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+	}
     }
-    
-   public Optional<UserInfoESD> callUserInfoEndPoint(String bearerToken) {
-        HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-        ResponseEntity<UserInfoESD> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoESD.class);
-        if(reponse.getStatusCode().equals(HttpStatus.OK)) {
-            return Optional.of(reponse.getBody());            
-        } else {
-            String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), userInfoURI);
-            LOGGER.error(messageError);
-        }
-        return Optional.empty();
+
+    public Optional<UserInfoESD> callUserInfoEndPoint(String bearerToken) {
+	HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
+	ResponseEntity<UserInfoESD> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoESD.class);
+	if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+	    return Optional.of(reponse.getBody());
+	} else {
+	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), userInfoURI);
+	    LOGGER.error(messageError);
+	}
+	return Optional.empty();
     }
-    
+
     public DetailIndemnisationESD callDetailIndemnisationEndPoint(String bearerToken) {
-        HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-        ResponseEntity<DetailIndemnisationESD> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationESD.class);
-        if(reponse.getStatusCode().equals(HttpStatus.OK)) {
-            return reponse.getBody();
-        } else {
-            String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDetailIndemnisationURI);
-            LOGGER.error(messageError);
-            throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage()); 
-        }
+	HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
+	ResponseEntity<DetailIndemnisationESD> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationESD.class);
+	if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+	    return reponse.getBody();
+	} else {
+	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDetailIndemnisationURI);
+	    LOGGER.error(messageError);
+	    throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+	}
     }
-    
+
     public Optional<CoordonneesESD> callCoordonneesAPI(String bearerToken) {
-        try {
-            HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-            ResponseEntity<CoordonneesESD> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesESD.class);
-            if(reponse.getStatusCode().equals(HttpStatus.OK)) {
-                return Optional.of(reponse.getBody());            
-            } else {
-                String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiCoordonneesURI);
-                LOGGER.error(messageError);
-            }
-        } catch (Exception e) {
-            String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiCoordonneesURI);
-            LOGGER.error(messageError);
-        }
-       
-        return Optional.empty();
+	try {
+	    HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
+	    ResponseEntity<CoordonneesESD> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesESD.class);
+	    if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+		return Optional.of(reponse.getBody());
+	    } else {
+		String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiCoordonneesURI);
+		LOGGER.error(messageError);
+	    }
+	} catch (Exception e) {
+	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiCoordonneesURI);
+	    LOGGER.error(messageError);
+	}
+
+	return Optional.empty();
     }
-    
+
     public Optional<DateNaissanceESD> callDateNaissanceEndPoint(String bearerToken) {
-        try {
-            HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-            ResponseEntity<DateNaissanceESD> reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissanceESD.class);
-            if(reponse.getStatusCode().equals(HttpStatus.OK)) {
-                return Optional.of(reponse.getBody());            
-            } else {
-                String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDateNaissanceURI);
-                LOGGER.error(messageError);
-            }
-        } catch (Exception e) {
-            String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiDateNaissanceURI);
-            LOGGER.error(messageError);
-        }
-        
-        return Optional.empty();
+	try {
+	    HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
+	    ResponseEntity<DateNaissanceESD> reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissanceESD.class);
+	    if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+		return Optional.of(reponse.getBody());
+	    } else {
+		String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDateNaissanceURI);
+		LOGGER.error(messageError);
+	    }
+	} catch (Exception e) {
+	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiDateNaissanceURI);
+	    LOGGER.error(messageError);
+	}
+
+	return Optional.empty();
     }
 }

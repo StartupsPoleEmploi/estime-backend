@@ -2,7 +2,6 @@ package fr.poleemploi.estime.commun.utile;
 
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
@@ -23,14 +22,13 @@ public class IndividuUtile {
      * Population autorisée ASS, RSA ou AAH, et pouvant cumuler ces 3 prestations.
      */
     public boolean isPopulationAutorisee(DetailIndemnisationESD detailIndemnisationESD) {
-	return !isBeneficiaireARE(detailIndemnisationESD) && (isBeneficiaireASS(detailIndemnisationESD) || detailIndemnisationESD.isBeneficiaireAAH()
-		|| detailIndemnisationESD.isBeneficiaireRSA());
+	return !isBeneficiaireARE(detailIndemnisationESD)
+		&& (isBeneficiaireASS(detailIndemnisationESD) || detailIndemnisationESD.isBeneficiaireAAH() || detailIndemnisationESD.isBeneficiaireRSA());
     }
 
-    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD, CoordonneesESD coordonneesESD) {
+    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD) {
 	addInformationsBeneficiaireAides(individu, detailIndemnisationESD);
 	addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
-	addInformationsPersonnelles(individu, coordonneesESD);
     }
 
     private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationESD detailIndemnisation) {
@@ -50,14 +48,6 @@ public class IndividuUtile {
 	individu.setRessourcesFinancieres(ressourcesFinancieres);
     }
 
-    private void addInformationsPersonnelles(Individu individu, CoordonneesESD coordonneesESD) {
-	InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
-	if (coordonneesESD.getCodePostal() != null) {
-	    informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
-	}
-	individu.setInformationsPersonnelles(informationsPersonnelles);
-    }
-
     private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationESD detailIndemnisation) {
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	if (Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
@@ -74,13 +64,11 @@ public class IndividuUtile {
     }
 
     private boolean isBeneficiaireARE(DetailIndemnisationESD detailIndemnisationESD) {
-	return detailIndemnisationESD.getCodeIndemnisation() != null
-		&& TypePopulation.ARE.getLibelle().equals(detailIndemnisationESD.getCodeIndemnisation());
+	return detailIndemnisationESD.getCodeIndemnisation() != null && TypePopulation.ARE.getLibelle().equals(detailIndemnisationESD.getCodeIndemnisation());
     }
 
     private boolean isBeneficiaireASS(DetailIndemnisationESD detailIndemnisationESD) {
-	return detailIndemnisationESD.getCodeIndemnisation() != null
-		&& TypePopulation.ASS.getLibelle().equals(detailIndemnisationESD.getCodeIndemnisation());
+	return detailIndemnisationESD.getCodeIndemnisation() != null && TypePopulation.ASS.getLibelle().equals(detailIndemnisationESD.getCodeIndemnisation());
     }
 
     public InformationsPersonnelles creerInformationsPersonnelles() {

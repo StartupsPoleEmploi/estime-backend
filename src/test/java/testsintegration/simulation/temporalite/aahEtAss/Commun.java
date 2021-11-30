@@ -53,8 +53,7 @@ public class Commun {
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
-	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles()
-		.setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
@@ -75,8 +74,7 @@ public class Commun {
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 
 	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS()
-		.setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));
+	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));
 
 	return demandeurEmploi;
     }
@@ -84,9 +82,8 @@ public class Commun {
     protected void initMocks(DemandeurEmploi demandeurEmploi)
 	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 	// mock tracer parcours utilisateur
-	doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(),
-		ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(),
-		demandeurEmploi.getInformationsPersonnelles());
+	doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(),
+		ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 
 	// mock création date de demande de simulation
 	doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
