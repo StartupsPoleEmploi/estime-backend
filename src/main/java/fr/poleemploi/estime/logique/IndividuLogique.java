@@ -72,7 +72,7 @@ public class IndividuLogique {
 
 	if (optionalUserInfoPEIO.isPresent()) {
 	    UserInfoPEIO userInfoPEIO = optionalUserInfoPEIO.get();
-	    if (stagingEnvironnementUtile.isStagingEnvironnement()) {
+	    if (!stagingEnvironnementUtile.isStagingEnvironnement()) {
 		stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoPEIO);
 	    } else {
 		individu.setIdPoleEmploi(userInfoPEIO.getSub());
@@ -112,8 +112,9 @@ public class IndividuLogique {
 
 	demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
 	demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
+
 	suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(),
-		individu.getBeneficiaireAides(), individu.getInformationsPersonnelles());
+		demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 
 	return demandeurEmploi;
     }

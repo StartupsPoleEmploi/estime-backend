@@ -2,7 +2,7 @@ package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
 public class ArePEIOOut {
     private float allocationMensuelle;
-    private float soldePrevisionnelReliquat;
+    private Float soldePrevisionnelReliquat;
     private float salaireRetenuActiviteReprise;
     private float montantCRC;
     private float montantCSG;
@@ -16,11 +16,11 @@ public class ArePEIOOut {
 	this.allocationMensuelle = allocationMensuelle;
     }
 
-    public float getSoldePrevisionnelReliquat() {
+    public Float getSoldePrevisionnelReliquat() {
 	return soldePrevisionnelReliquat;
     }
 
-    public void setSoldePrevisionnelReliquat(float soldePrevisionnelReliquat) {
+    public void setSoldePrevisionnelReliquat(Float soldePrevisionnelReliquat) {
 	this.soldePrevisionnelReliquat = soldePrevisionnelReliquat;
     }
 

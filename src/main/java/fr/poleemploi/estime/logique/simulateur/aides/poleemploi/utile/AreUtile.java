@@ -30,9 +30,6 @@ public class AreUtile {
 
     @Autowired
     private PoleEmploiIOClient poleEmploiIOClient;
-    //
-    //    @Autowired
-    //    private DateUtile dateUtile;
 
     public static final float SOLDE_PREVISIONNEL_RELIQUAT = 10;
 
@@ -63,8 +60,7 @@ public class AreUtile {
 	    ArePEIOOut areOut = optionalAreOut.get();
 	    this.montantComplementARE = (float) Math.floor(areOut.getAllocationMensuelle() - (areOut.getMontantCRC() + areOut.getMontantCRDS() + areOut.getMontantCSG()));
 	    this.nombreJoursRestants = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants();
-	    float soldePrevisionnelReliquat = areOut.getSoldePrevisionnelReliquat();
-	    this.joursIndemnisables = this.nombreJoursRestants - soldePrevisionnelReliquat;
+	    this.joursIndemnisables = getNombreJoursIndemnisables(areOut, demandeurEmploi);
 	    this.nombreJoursRestants -= this.joursIndemnisables;
 	    Aide complementARE = creerComplementARE(montantComplementARE);
 	    aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
@@ -102,12 +98,35 @@ public class AreUtile {
 	return are;
     }
 
+    private float getNombreJoursIndemnisables(ArePEIOOut areOut, DemandeurEmploi demandeurEmploi) {
+	float joursIndemnisablesMois = 0;
+	if (areOut.getSoldePrevisionnelReliquat() != null) {
+	    joursIndemnisablesMois = areOut.getSoldePrevisionnelReliquat().floatValue();
+	} else {
+	    float allocationJournaliereBrute = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut();
+	    joursIndemnisablesMois = getNombreJoursIndemnisablesCalcule(getMontantAllocationARE(areOut), allocationJournaliereBrute);
+	}
+	return joursIndemnisablesMois;
+    }
+
     private float getNombreJoursRestantsReliquat() {
 	return this.nombreJoursRestants - this.joursIndemnisables;
     }
 
     private float getNombreJoursRestantsReliquatAvantCeMois() {
 	return this.nombreJoursRestants + this.joursIndemnisables;
+    }
+
+    private int getNombreJoursIndemnisablesCalcule(float montantAllocationARE, float allocationJournaliereBrute) {
+	int nombreJoursIndemnisables = 0;
+	if (montantAllocationARE > 0 && allocationJournaliereBrute > 0) {
+	    nombreJoursIndemnisables = Math.round(montantAllocationARE / allocationJournaliereBrute);
+	}
+	return nombreJoursIndemnisables;
+    }
+
+    private float getMontantAllocationARE(ArePEIOOut areOut) {
+	return (float) Math.floor(areOut.getAllocationMensuelle() - (areOut.getMontantCRC() + areOut.getMontantCRDS() + areOut.getMontantCSG()));
     }
 
     private ArePEIOIn remplirAreIn(DemandeurEmploi demandeurEmploi) {

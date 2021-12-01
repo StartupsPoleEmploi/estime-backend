@@ -187,7 +187,7 @@ public class Utile {
 	    arePEIOOut.setMontantCRDS(0);
 	    arePEIOOut.setMontantCSG(0);
 	    arePEIOOut.setSalaireRetenuActiviteReprise(0);
-	    arePEIOOut.setSoldePrevisionnelReliquat(0);
+	    arePEIOOut.setSoldePrevisionnelReliquat(0f);
 
 	} else {
 	    arePEIOOut.setAllocationMensuelle(0f);
@@ -195,7 +195,7 @@ public class Utile {
 	    arePEIOOut.setMontantCRDS(0);
 	    arePEIOOut.setMontantCSG(0);
 	    arePEIOOut.setSalaireRetenuActiviteReprise(0);
-	    arePEIOOut.setSoldePrevisionnelReliquat(0);
+	    arePEIOOut.setSoldePrevisionnelReliquat(0f);
 	}
 	return arePEIOOut;
     }
