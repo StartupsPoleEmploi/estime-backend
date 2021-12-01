@@ -72,7 +72,7 @@ public class IndividuLogique {
 
 	if (optionalUserInfoPEIO.isPresent()) {
 	    UserInfoPEIO userInfoPEIO = optionalUserInfoPEIO.get();
-	    if (!stagingEnvironnementUtile.isStagingEnvironnement()) {
+	    if (stagingEnvironnementUtile.isStagingEnvironnement()) {
 		stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoPEIO);
 	    } else {
 		individu.setIdPoleEmploi(userInfoPEIO.getSub());
