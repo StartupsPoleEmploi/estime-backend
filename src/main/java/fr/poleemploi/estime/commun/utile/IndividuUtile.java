@@ -2,7 +2,6 @@ package fr.poleemploi.estime.commun.utile;
 
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
@@ -27,10 +26,9 @@ public class IndividuUtile {
 		|| detailIndemnisationPEIO.isBeneficiaireRSA();
     }
 
-    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO, CoordonneesPEIO coordonneesPEIO) {
+    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO) {
 	addInformationsBeneficiaireAides(individu, detailIndemnisationPEIO);
 	addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationPEIO);
-	addInformationsPersonnelles(individu, coordonneesPEIO);
     }
 
     private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO) {
@@ -48,14 +46,6 @@ public class IndividuUtile {
 	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisationPEIO));
 	}
 	individu.setRessourcesFinancieres(ressourcesFinancieres);
-    }
-
-    private void addInformationsPersonnelles(Individu individu, CoordonneesPEIO coordonneesPEIO) {
-	InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
-	if (coordonneesPEIO.getCodePostal() != null) {
-	    informationsPersonnelles.setCodePostal(coordonneesPEIO.getCodePostal());
-	}
-	individu.setInformationsPersonnelles(informationsPersonnelles);
     }
 
     private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIO detailIndemnisationPEIO) {

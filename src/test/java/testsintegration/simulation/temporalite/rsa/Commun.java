@@ -23,7 +23,7 @@ import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
 
 public class Commun {
-    
+
     @Autowired
     protected Utile utile;
 
@@ -31,27 +31,26 @@ public class Commun {
     private PoleEmploiIOClient poleEmploiIOClient;
 
     @SpyBean
-    protected DateUtile dateUtile;    
-    
-    
-    protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        //mock création date de demande de simulation
-        doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
+    protected DateUtile dateUtile;
 
-        //mock retour appel détail indemnisation de l'ESD 
-        DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.RSA.getLibelle());        
-        doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
+    protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+	//mock création date de demande de simulation
+	doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
+
+	//mock retour appel détail indemnisation de l'ESD 
+	DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.RSA.getLibelle());
+	doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
     }
 
     protected Logement initLogement() {
-        Logement logement = new Logement();
-        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-        statutOccupationLogement.setLocataireNonMeuble(true);
-        logement.setStatutOccupationLogement(statutOccupationLogement);
-        logement.setMontantCharges(50f);
-        logement.setMontantLoyer(500f);
-        logement.setCodeInsee("44109");
-        logement.setDeMayotte(false);
-        return logement;
+	Logement logement = new Logement();
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	logement.setMontantCharges(50f);
+	logement.setMontantLoyer(500f);
+	logement.setCodeInsee("44109");
+	logement.setDeMayotte(false);
+	return logement;
     }
 }

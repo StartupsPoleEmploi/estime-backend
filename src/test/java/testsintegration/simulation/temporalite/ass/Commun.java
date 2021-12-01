@@ -35,30 +35,30 @@ public class Commun {
     protected DateUtile dateUtile;
 
     protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
-        boolean isEnCouple = false;
-        int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-        demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
-        demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
-        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
-        demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1245);
-        demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1600);
-        demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
-        demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
-        demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-        demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utile.getDate("14-04-2020"));
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117f);
+	boolean isEnCouple = false;
+	int nbEnfant = 1;
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
+	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
+	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1245);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1600);
+	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
+	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
+	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utile.getDate("14-04-2020"));
+	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117f);
 
-        return demandeurEmploi;
+	return demandeurEmploi;
     }
 
     protected void initMocks() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        // mock création date de demande de simulation
-        doReturn(utile.getDate("20-10-2020")).when(dateUtile).getDateJour();
+	// mock création date de demande de simulation
+	doReturn(utile.getDate("20-10-2020")).when(dateUtile).getDateJour();
 
 	//mock retour appel détail indemnisation de l'ESD 
 	DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.ASS.getLibelle());

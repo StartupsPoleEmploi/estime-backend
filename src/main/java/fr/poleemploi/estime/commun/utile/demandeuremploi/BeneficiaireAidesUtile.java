@@ -15,12 +15,15 @@ public class BeneficiaireAidesUtile {
     @Autowired
     private SituationFamilialeUtile situationFamilialeUtile;
 
+    @Autowired
+    private InformationsPersonnellesUtile informationsPersonnellesUtile;
+
     public boolean isBeneficiaireAides(DemandeurEmploi demandeurEmploi) {
 	return demandeurEmploi.getBeneficiaireAides() != null;
     }
 
     public boolean isBeneficiaireAidePEouCAF(DemandeurEmploi demandeurEmploi) {
-	return isBeneficiaireAideMinimaSocial(demandeurEmploi);
+	return isBeneficiaireAideMinimaSocial(demandeurEmploi) || isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibilite(demandeurEmploi);
     }
 
     public boolean isBeneficiaireARE(Personne personne) {
@@ -55,19 +58,19 @@ public class BeneficiaireAidesUtile {
 
     public boolean isBeneficiaireAideMinimaSocial(DemandeurEmploi demandeurEmploi) {
 	return isBeneficiaireAides(demandeurEmploi) && (demandeurEmploi.getBeneficiaireAides().isBeneficiaireAAH() || demandeurEmploi.getBeneficiaireAides().isBeneficiaireASS()
-		|| demandeurEmploi.getBeneficiaireAides().isBeneficiaireARE() || demandeurEmploi.getBeneficiaireAides().isBeneficiaireRSA());
+		|| demandeurEmploi.getBeneficiaireAides().isBeneficiaireRSA());
     }
 
-//    private boolean isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibilite(DemandeurEmploi demandeurEmploi) {
-//
-//	if (isBeneficiaireAides(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
-//		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null) {
-//	    float indemnisationJournaliereNet = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereNet();
-//	    return (!informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && indemnisationJournaliereNet <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE)
-//		    || (informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && indemnisationJournaliereNet <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE_MAYOTTE);
-//	}
-//	return false;
-//    }
+    private boolean isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibilite(DemandeurEmploi demandeurEmploi) {
+
+	if (isBeneficiaireAides(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
+		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null) {
+	    float indemnisationJournaliereNet = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereNet();
+	    return (!informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && indemnisationJournaliereNet <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE)
+		    || (informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && indemnisationJournaliereNet <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE_MAYOTTE);
+	}
+	return false;
+    }
 
     public boolean isBeneficiaireRSA(DemandeurEmploi demandeurEmploi) {
 	return isBeneficiaireAidePEouCAF(demandeurEmploi) && isFoyerBeneficiaireRSA(demandeurEmploi);

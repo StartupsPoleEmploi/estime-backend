@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
@@ -69,27 +68,26 @@ public class IndividuLogique {
 	String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationPEIO.getAccessToken());
 
 	DetailIndemnisationPEIO detailIndemnisationPEIO = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
-	Optional<CoordonneesPEIO> optionalCoordonneesPEIO = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
 	Optional<UserInfoPEIO> optionalUserInfoPEIO = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
 
-	if (optionalUserInfoPEIO.isPresent() && optionalCoordonneesPEIO.isPresent()) {
+	if (optionalUserInfoPEIO.isPresent()) {
 	    UserInfoPEIO userInfoPEIO = optionalUserInfoPEIO.get();
-	    CoordonneesPEIO coordonneesPEIO = optionalCoordonneesPEIO.get();
-	    if (!stagingEnvironnementUtile.isStagingEnvironnement()) {
-		stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoPEIO, coordonneesPEIO);
+	    if (stagingEnvironnementUtile.isStagingEnvironnement()) {
+		stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoPEIO);
 	    } else {
 		individu.setIdPoleEmploi(userInfoPEIO.getSub());
 		if (demandeurDemoUtile.isDemandeurDemo(userInfoPEIO)) {
 		    individu.setPopulationAutorisee(true);
-		    demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationPEIO, coordonneesPEIO);
+		    demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu);
 		} else {
 		    individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationPEIO));
-		    individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationPEIO, coordonneesPEIO);
+		    individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationPEIO);
 		}
 	    }
 
 	    // @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
-	    suiviUtilisateurUtile.tracerParcoursUtilisateur(userInfoPEIO, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
+
+	    suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoPEIO, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
 		    individu.getInformationsPersonnelles(), detailIndemnisationPEIO);
 
 	    individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationPEIO));
@@ -109,21 +107,20 @@ public class IndividuLogique {
 
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 	demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
+	demandeurEmploiUtile.addCodeDepartement(demandeurEmploi, bearerToken);
+	demandeurEmploiUtile.addDateNaissance(demandeurEmploi, bearerToken);
 
 	demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
 	demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
-	demandeurEmploiUtile.addInformationsPersonnelles(demandeurEmploi, individu, bearerToken);
-
-	suiviUtilisateurUtile.tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(), individu.getBeneficiaireAides(),
-		individu.getInformationsPersonnelles());
+	suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(),
+		individu.getBeneficiaireAides(), individu.getInformationsPersonnelles());
 
 	return demandeurEmploi;
     }
 
     public SimulationAides simulerMesAides(DemandeurEmploi demandeurEmploi) {
 	SimulationAides simulationAides = simulateurAides.simuler(demandeurEmploi);
-
-	suiviUtilisateurUtile.tracerParcoursUtilisateur(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(),
+	suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(),
 		demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 
 	return simulationAides;

@@ -29,18 +29,17 @@ public class SuiviUtilisateurUtile {
     @Autowired
     private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
 
-    public void tracerParcoursUtilisateur(UserInfoPEIO userInfoPEIO, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles, DetailIndemnisationPEIO detailIndemnisationPEIO) {
-
-	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(userInfoPEIO, parcours, getTypePopulation(beneficiaireAides),
-		getCodePostal(informationsPersonnelles), detailIndemnisationPEIO);
+    public void tracerParcoursUtilisateurAuthentification(UserInfoPEIO userInfoPEIO, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles, DetailIndemnisationPEIO detailIndemnisationPEIO) {
+	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityAuthentification(userInfoPEIO, parcours,
+		getTypePopulation(beneficiaireAides), detailIndemnisationPEIO);
 
 	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
 
-    public void tracerParcoursUtilisateur(String idPoleEmploi, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles) {
+    public void tracerParcoursUtilisateurCreationSimulation(String idPoleEmploi, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles) {
 
-	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntity(idPoleEmploi, parcours, getTypePopulation(beneficiaireAides),
-		getCodePostal(informationsPersonnelles));
+	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityCreationSimulation(idPoleEmploi, parcours,
+		getTypePopulation(beneficiaireAides), getCodePostal(informationsPersonnelles));
 
 	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
@@ -65,7 +64,7 @@ public class SuiviUtilisateurUtile {
 	return informationsPersonnelles.getCodePostal();
     }
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(UserInfoPEIO userInfoPEIO, String parcours, String typePopulation, String codePostal, DetailIndemnisationPEIO detailIndemnisationPEIO) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityAuthentification(UserInfoPEIO userInfoPEIO, String parcours, String typePopulation, DetailIndemnisationPEIO detailIndemnisationPEIO) {
 
 	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
 	suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
@@ -75,7 +74,6 @@ public class SuiviUtilisateurUtile {
 	suiviParcoursUtilisateurEntity.setEmail(userInfoPEIO.getEmail());
 	suiviParcoursUtilisateurEntity.setNom(userInfoPEIO.getFamilyName());
 	suiviParcoursUtilisateurEntity.setPrenom(userInfoPEIO.getGivenName());
-	suiviParcoursUtilisateurEntity.setCodePostal(codePostal);
 
 	if (detailIndemnisationPEIO.getCodeIndemnisation() != null) {
 	    suiviParcoursUtilisateurEntity.setEsdCodeIndemnisation(detailIndemnisationPEIO.getCodeIndemnisation());
@@ -85,7 +83,7 @@ public class SuiviUtilisateurUtile {
 	return suiviParcoursUtilisateurEntity;
     }
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntity(String idPoleEmploi, String parcours, String typePopulation, String codePostal) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityCreationSimulation(String idPoleEmploi, String parcours, String typePopulation, String codePostal) {
 
 	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
 	suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());

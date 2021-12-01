@@ -11,7 +11,7 @@ public class ParametresPEIO {
     public static final String CLIENT_SECRET = "client_secret";
     public static final String CODE = "code";
     public static final String CODE_TERRITOIRE = "codeTerritoire";
-    public static final String CONTEXTE = "origine";
+    public static final String CONTEXTE = "contexte";
     public static final String DATE_ACTION_RECLASSEMENT = "dateActionReclassement";
     public static final String DATE_DEPOT = "dateDepot";
     public static final String DISTANCE_DOMICILE_ACTION_RECLASSEMENT = "distanceDomicileActionReclassement";

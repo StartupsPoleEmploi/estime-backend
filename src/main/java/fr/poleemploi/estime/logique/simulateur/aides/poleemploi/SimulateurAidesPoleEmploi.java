@@ -50,5 +50,30 @@ public class SimulateurAidesPoleEmploi {
 	if (beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
 	    are.simulerAideEtGetReliquat(aidesPourCeMois, demandeurEmploi, numeroMoisSimule, moisSimule);
 	}
+
+	//	if (agepi.isEligible(numeroMoisSimule, demandeurEmploi)) {
+	//	    Optional<Aide> agepiOptional = agepi.simulerAide(demandeurEmploi);
+	//	    if (agepiOptional.isPresent()) {
+	//		aidesPourCeMois.put(Aides.AGEPI.getCode(), agepiOptional.get());
+	//	    }
+	//	}
+	//	Optional<Aide> aideMobiliteOptional = aideMobilite.simulerAide(demandeurEmploi);
+	//	if (//aideMobilite.isEligible(numeroMoisSimule, demandeurEmploi) &&
+	//	aideMobiliteOptional.isPresent()) {
+	//	    aidesPourCeMois.put(Aides.AIDE_MOBILITE.getCode(), aideMobiliteOptional.get());
+	//
+	//	    if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi) && allocationSolidariteSpecifique.isEligible(numeroMoisSimule, demandeurEmploi)) {
+	//		Optional<Aide> aideOptional = allocationSolidariteSpecifique.simulerAide(demandeurEmploi, moisSimule, dateDebutSimulation);
+	//		if (aideOptional.isPresent()) {
+	//		    aidesPourCeMois.put(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());
+	//		}
+	//	    }
+	//	    if (beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
+	//		Optional<Aide> areOptional = are.simulerAide(demandeurEmploi);
+	//		if (areOptional.isPresent()) {
+	//		    aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), areOptional.get());
+	//		}
+	//	    }
+	//	}
     }
 }
