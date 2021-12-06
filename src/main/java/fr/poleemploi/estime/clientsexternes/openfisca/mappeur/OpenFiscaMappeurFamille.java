@@ -67,8 +67,9 @@ public class OpenFiscaMappeurFamille {
 		numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	famille.put(CF, openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getComplementFamilial(demandeurEmploi), dateDebutSimulation,
 		numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	famille.put(PRESTATION_ACCUEIL_JEUNE_ENFANT, openFiscaPeriodeMappeur.creerPeriodes(ressourcesFinancieresUtile.getPrestationAccueilJeuneEnfant(demandeurEmploi),
-		dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	famille.put(PRESTATION_ACCUEIL_JEUNE_ENFANT,
+		openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getPrestationAccueilJeuneEnfant(demandeurEmploi), dateDebutSimulation,
+			numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	if (beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
 	    float montantRsaDemandeur = ressourcesFinancieresUtile.getAllocationsRSANet(demandeurEmploi);
 	    if (montantRsaDemandeur > 0) {
