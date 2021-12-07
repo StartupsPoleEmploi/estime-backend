@@ -35,11 +35,13 @@ public class SimulateurAidesPoleEmploi {
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
     public void simuler(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, LocalDate moisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	if (agepi.isEligible(numeroMoisSimule, demandeurEmploi)) {
-	    aidesPourCeMois.put(Aides.AGEPI.getCode(), agepi.simulerAide(demandeurEmploi));
+	Optional<Aide> agepiOptional = agepi.simulerAide(demandeurEmploi);
+    if (agepiOptional.isPresent()) {
+	    aidesPourCeMois.put(Aides.AGEPI.getCode(), agepiOptional.get());
 	}
-	if (aideMobilite.isEligible(numeroMoisSimule, demandeurEmploi)) {
-	    aidesPourCeMois.put(Aides.AIDE_MOBILITE.getCode(), aideMobilite.simulerAide(demandeurEmploi));
+    Optional<Aide> aideMobiliteOptional = aideMobilite.simulerAide(demandeurEmploi);
+	if (aideMobiliteOptional.isPresent()) {
+	    aidesPourCeMois.put(Aides.AIDE_MOBILITE.getCode(), aideMobiliteOptional.get());
 	}
 	if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi) && allocationSolidariteSpecifique.isEligible(numeroMoisSimule, demandeurEmploi)) {
 	    Optional<Aide> aideOptional = allocationSolidariteSpecifique.simulerAide(demandeurEmploi, moisSimule, dateDebutSimulation);
