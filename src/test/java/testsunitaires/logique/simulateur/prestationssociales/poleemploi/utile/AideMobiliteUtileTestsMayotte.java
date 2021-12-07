@@ -440,76 +440,76 @@ class AideMobiliteUtileTestsMayotte {
 
     /******************************************* tests calculerMontantAideMobiliteTest1 *********************************************************************************************/
 
-    @Test
-    void calculerMontantAideMobiliteTest1() {
+//    @Test
+//    void calculerMontantAideMobiliteTest1() {
+//
+//	//Si kilométrage domicile -> taf = 32kms + 20 trajets
+//	//et nbr heures hebdo travaillées = 10h
+//	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+//
+//	FuturTravail futurTravail = new FuturTravail();
+//	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+//	futurTravail.setNombreHeuresTravailleesSemaine(10);
+//	futurTravail.setDistanceKmDomicileTravail(32);
+//	futurTravail.setNombreTrajetsDomicileTravail(20);
+//	demandeurEmploi.setFuturTravail(futurTravail);
+//
+//	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+//	informationsPersonnelles.setCodePostal(CODE_POSTAL_MAYOTTE);
+//	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+//
+//	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+//	beneficiaireAides.setBeneficiaireARE(true);
+//	demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+//
+//	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+//	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+//	AllocationARE allocationARE = new AllocationARE();
+//	allocationARE.setAllocationJournaliereNet(19.38f);
+//	aidesPoleEmploi.setAllocationARE(allocationARE);
+//	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+//	ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(3);
+//	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+//
+//	//Lorsque l'on calcul le montant de l'aide à la mobilité
+//	Aide aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
+//
+//	//alors le montant retourné est de 286€
+//	assertThat(aideMobilite.getMontant()).isEqualTo(286f);
+//    }
 
-	//Si kilométrage domicile -> taf = 32kms + 20 trajets
-	//et nbr heures hebdo travaillées = 10h
-	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-
-	FuturTravail futurTravail = new FuturTravail();
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
-	futurTravail.setNombreHeuresTravailleesSemaine(10);
-	futurTravail.setDistanceKmDomicileTravail(32);
-	futurTravail.setNombreTrajetsDomicileTravail(20);
-	demandeurEmploi.setFuturTravail(futurTravail);
-
-	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-	informationsPersonnelles.setCodePostal(CODE_POSTAL_MAYOTTE);
-	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
-	beneficiaireAides.setBeneficiaireARE(true);
-	demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
-
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setAllocationJournaliereNet(19.38f);
-	aidesPoleEmploi.setAllocationARE(allocationARE);
-	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-	ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(3);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
-
-	//Lorsque l'on calcul le montant de l'aide à la mobilité
-	Aide aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
-
-	//alors le montant retourné est de 286€
-	assertThat(aideMobilite.getMontant()).isEqualTo(286f);
-    }
-
-    @Test
-    void calculerMontantAideMobiliteTest2() {
-
-	//Si kilométrage domicile -> taf = 0kms + 0 trajet
-	//et nbr heures hebdo travaillées = 10h
-	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-
-	FuturTravail futurTravail = new FuturTravail();
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
-	futurTravail.setNombreHeuresTravailleesSemaine(10);
-	demandeurEmploi.setFuturTravail(futurTravail);
-
-	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-	informationsPersonnelles.setCodePostal(CODE_POSTAL_MAYOTTE);
-	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-
-	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
-	beneficiaireAides.setBeneficiaireARE(true);
-	demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
-
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setAllocationJournaliereNet(19.38f);
-	aidesPoleEmploi.setAllocationARE(allocationARE);
-	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
-
-	//Lorsque l'on calcul le montant de l'aide à la mobilité
-	Aide aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
-
-	//alors le montant retourné est de 30€
-	assertThat(aideMobilite.getMontant()).isEqualTo(30f);
-    }
+//    @Test
+//    void calculerMontantAideMobiliteTest2() {
+//
+//	//Si kilométrage domicile -> taf = 0kms + 0 trajet
+//	//et nbr heures hebdo travaillées = 10h
+//	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+//
+//	FuturTravail futurTravail = new FuturTravail();
+//	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+//	futurTravail.setNombreHeuresTravailleesSemaine(10);
+//	demandeurEmploi.setFuturTravail(futurTravail);
+//
+//	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+//	informationsPersonnelles.setCodePostal(CODE_POSTAL_MAYOTTE);
+//	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+//
+//	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+//	beneficiaireAides.setBeneficiaireARE(true);
+//	demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+//
+//	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+//	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+//	AllocationARE allocationARE = new AllocationARE();
+//	allocationARE.setAllocationJournaliereNet(19.38f);
+//	aidesPoleEmploi.setAllocationARE(allocationARE);
+//	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+//	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+//
+//	//Lorsque l'on calcul le montant de l'aide à la mobilité
+//	Aide aideMobilite = aideMobiliteUtile.simulerAide(demandeurEmploi);
+//
+//	//alors le montant retourné est de 30€
+//	assertThat(aideMobilite.getMontant()).isEqualTo(30f);
+//    }
 }
