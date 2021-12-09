@@ -1,5 +1,7 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AideMobilitePEIOOut {
 	private String origine;
 	private String dateDepot;	
@@ -10,6 +12,7 @@ public class AideMobilitePEIOOut {
 	private int distanceDomicileActionReclassement;
 	private int dureePeriodeEmploiOuFormation;
 	private String natureContratTravail;
+	@JsonProperty("decisionAideMobiliteAPI")
 	private DecisionAideMobiliteAPI decisionAideMobiliteAPI;
 	private boolean fraisPrisEnChargeParTiers;
 	private int totalMontantsAidesMobilitePrecedentes;

@@ -1,9 +1,10 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
-public class DecisionAgepiAPI {
+public class DecisionAGEPIAPI {
 	private String dateDecision;
 	private float montant;
 	private String nature;
+	private String libelleMotifRejet;
 	
 	
 	public String getDateDecision() {
@@ -13,7 +14,7 @@ public class DecisionAgepiAPI {
 		this.dateDecision = dateDecision;
 	}
 	public float getMontant() {
-		return montant;
+		return this.montant;
 	}
 	public void setMontant(float montant) {
 		this.montant = montant;
@@ -23,6 +24,12 @@ public class DecisionAgepiAPI {
 	}
 	public void setNature(String nature) {
 		this.nature = nature;
+	}
+	public String getLibelleMotifRejet() {
+		return libelleMotifRejet;
+	}
+	public void setLibelleMotifRejet(String libelleMotifRejet) {
+		this.libelleMotifRejet = libelleMotifRejet;
 	}
 	
 }

@@ -111,8 +111,8 @@ public class AgepiUtile {
 	private AgepiPEIOIn remplirAgepiIn(DemandeurEmploi demandeurEmploi) {
 		AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
 		agepiPEIOIn.setContexte("Reprise");
-		agepiPEIOIn.setDateActionReclassement(LocalDate.now().with(TemporalAdjusters.firstDayOfNextMonth()).toString());
-		agepiPEIOIn.setDateDepot(LocalDate.now().withDayOfMonth(1).toString());
+		agepiPEIOIn.setDateActionReclassement(LocalDate.now().toString());
+		agepiPEIOIn.setDateDepot(LocalDate.now().toString());
 		agepiPEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
 		agepiPEIOIn.setEleveSeulEnfants(!demandeurEmploi.getSituationFamiliale().getIsEnCouple());
 		agepiPEIOIn.setIntensite(Math.round(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine()));
@@ -134,8 +134,8 @@ public class AgepiUtile {
 
 		agepiPEIOIn.setNombreEnfants(nombreEnfants);
 		agepiPEIOIn.setNombreEnfantsMoins10Ans(nombreEnfantsMoinsDixAns);
-		agepiPEIOIn.setOrigine("W");
-		agepiPEIOIn.setTypeIntensite("Hebdomadaire");
+		agepiPEIOIn.setOrigine("c");
+		agepiPEIOIn.setTypeIntensite("Mensuelle");
 		agepiPEIOIn.setCodeTerritoire("001");
 		return agepiPEIOIn;
 	}

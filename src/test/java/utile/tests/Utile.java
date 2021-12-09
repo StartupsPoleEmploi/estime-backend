@@ -25,7 +25,7 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DecisionAgepiAPI;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DecisionAGEPIAPI;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DecisionAideMobiliteAPI;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.Aides;
@@ -149,9 +149,9 @@ public class Utile {
 
     public AgepiPEIOOut creerAgepiPEIOOut(boolean decisionAgepi) {
 	AgepiPEIOOut agepiPEIOOut = new AgepiPEIOOut();
-	DecisionAgepiAPI decisionAgepiAPI = new DecisionAgepiAPI();
+	DecisionAGEPIAPI decisionAgepiAPI = new DecisionAGEPIAPI();
 	if (decisionAgepi) {
-	    decisionAgepiAPI.setMontant(400f);
+	    decisionAgepiAPI.setMontant(400);
 	    decisionAgepiAPI.setDateDecision("20-10-2020");
 
 	} else {

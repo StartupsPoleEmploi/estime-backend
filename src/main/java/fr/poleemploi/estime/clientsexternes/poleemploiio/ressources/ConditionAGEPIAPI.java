@@ -1,5 +1,7 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ConditionAGEPIAPI {
 	private ConditionDureeEntreFaitsGenerateurs conditionDureeEntreFaitsGenerateurs;
 	private ConditionInscription conditionInscription;
@@ -8,6 +10,7 @@ public class ConditionAGEPIAPI {
 	private ConditionDuree conditionDuree;
 	private ConditionRessource conditionRessource;
 	private ConditionDateDepot conditionDateDepot;
+	
 	public ConditionDureeEntreFaitsGenerateurs getConditionDureeEntreFaitsGenerateurs() {
 		return conditionDureeEntreFaitsGenerateurs;
 	}

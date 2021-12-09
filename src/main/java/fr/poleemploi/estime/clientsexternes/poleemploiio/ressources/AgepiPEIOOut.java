@@ -1,5 +1,7 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AgepiPEIOOut {
 	private String origine;
 	private String dateDepot;	
@@ -8,6 +10,7 @@ public class AgepiPEIOOut {
 	private String natureContratTravail;	
 	private String lieuFormationOuEmploi;	
 	private String typeIntensite;	
+	private String dateDernierJourIndemnise;
 	private int intensite;	
 	private int dureePeriodeEmploiOuFormation;	
 	private int nombreEnfants;	
@@ -20,13 +23,14 @@ public class AgepiPEIOOut {
 	private int droitAREMinimal;
 	private String libelleDroit;
 	private ConditionAGEPIAPI conditionsAGEPIAPI;
-	private DecisionAgepiAPI decisionAgepiAPI;
+	@JsonProperty("decisionAGEPIAPI")
+	private DecisionAGEPIAPI decisionAGEPIAPI;
 	
-	public DecisionAgepiAPI getDecisionAgepiAPI() {
-		return decisionAgepiAPI;
+	public DecisionAGEPIAPI getDecisionAgepiAPI() {
+		return decisionAGEPIAPI;
 	}
-	public void setDecisionAgepiAPI(DecisionAgepiAPI decisionAgepiAPI) {
-		this.decisionAgepiAPI = decisionAgepiAPI;
+	public void setDecisionAgepiAPI(DecisionAGEPIAPI decisionAgepiAPI) {
+		this.decisionAGEPIAPI = decisionAgepiAPI;
 	}
 	public String getOrigine() {
 		return origine;
@@ -141,5 +145,11 @@ public class AgepiPEIOOut {
 	}
 	public void setConditionsAGEPIAPI(ConditionAGEPIAPI conditionsAGEPIAPI) {
 		this.conditionsAGEPIAPI = conditionsAGEPIAPI;
+	}
+	public String getDateDernierJourIndemnise() {
+		return dateDernierJourIndemnise;
+	}
+	public void setDateDernierJourIndemnise(String dateDernierJourIndemnise) {
+		this.dateDernierJourIndemnise = dateDernierJourIndemnise;
 	}
 }
