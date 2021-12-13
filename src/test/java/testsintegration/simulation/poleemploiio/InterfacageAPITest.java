@@ -29,8 +29,15 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 
 @SpringBootTest
 @ContextConfiguration
@@ -39,6 +46,14 @@ class InterfacageAPITest extends Commun {
 
 	@Autowired
 	private PoleEmploiIOClient poleEmploiIOClient;
+	
+    @Autowired
+    private AgepiUtile agepiUtile;
+    
+    public static final String CODE_POSTAL_MAYOTTE = "97600";
+    public static final String CODE_POSTAL_METROPOLITAIN = "72300";
+    public static final int PREMIER_MOIS_SIMULATION = 1;
+    public static final String ACCESS_TOKEN = "s0PnbrZXGdmj96IUg-NYJpl7F6I";
 
 	@Configuration
 	@ComponentScan({ "utile.tests", "fr.poleemploi.estime" })
@@ -205,6 +220,49 @@ class InterfacageAPITest extends Commun {
 		}
 	}
 
+	@Test
+	void testIntefacageAGEPI() {
+		boolean isEnCouple = false;
+		int nbEnfant = 3;
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
+		demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+		demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(30.28f);
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(8));
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(13));
+	
+		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(90);
+		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
+		
+		Salaire salaire = new Salaire();
+		salaire.setMontantBrut(400);
+		salaire.setMontantNet(350);
+		ressourcesFinancieres.setSalaire(salaire);
+		
+		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+		AllocationARE allocARE = new AllocationARE();
+		allocARE.setAllocationJournaliereNet(50f);
+		allocARE.setAllocationMensuelleNet(300f);
+		allocARE.setMontantJournalierBrut(60f);
+		aidesPoleEmploi.setAllocationARE(allocARE);
+		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+		
+		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		
+		PeConnectAuthorization peConnectAuth = new PeConnectAuthorization();
+		peConnectAuth.setAccessToken(ACCESS_TOKEN);
+		demandeurEmploi.setPeConnectAuthorization(peConnectAuth);
+		
+		//Lorsque l'on calcul le montant de l'agepi
+		Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
+	
+		//alors le montant retourné est de 520€
+		assertThat(agepi).isPresent();
+	}
+	
 	protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
 
 		boolean isEnCouple = false;
