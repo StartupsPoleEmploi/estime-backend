@@ -29,6 +29,7 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DecisionAGEP
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DecisionAideMobiliteAPI;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
@@ -69,6 +70,20 @@ public class Utile {
 
 	return jsonObject.toString();
     }
+    
+    /***
+     * Méthode permettant de créer une aide pour le mock de la temporalité sur la création de l'aide après appel peio.
+     * Seul le code de l'aide est nécessaire car nous ne testons pas le montant de l'aide 
+     * mais juste la présence de l'aide au bon mois dans la temporalité en fonction du profil du DE.
+     * Exemple : si DE célibataire avec 1 enfant, une aide avec code AGEPI doit être présente sur le 1er mois.
+     * @param codeAide
+     * @return
+     */
+    public Aide creerAidePourMock(String codeAide) {
+		Aide aide = new Aide();
+		aide.setCode(codeAide);
+		return aide;
+	}
 
     public LocalDate getDateNaissanceFromAge(int age) {
 	LocalDate dateJour = LocalDate.now();

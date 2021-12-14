@@ -5,11 +5,20 @@ import static org.mockito.Mockito.doReturn;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Optional;
 
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.web.accept.PathExtensionContentNegotiationStrategy;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -20,164 +29,209 @@ import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AideMobiliteUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Logement;
+import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
+import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
 
 public class Commun {
 
-    @Autowired
-    protected Utile utile;
+	@Autowired
+	protected Utile utile;
 
-    @SpyBean
-    private PoleEmploiIOClient poleEmploiIOClient;
+	@SpyBean
+	private PoleEmploiIOClient poleEmploiIOClient;
 
-    @SpyBean
-    protected DateUtile dateUtile;
+	@SpyBean
+	protected DateUtile dateUtile;
+	
+	@SpyBean
+	private AgepiUtile agepiUtile;
+	
+	@SpyBean
+	private AideMobiliteUtile aideMobUtile;
 
-    protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-	// mock création date de demande de simulation
-	doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
+	@SpyBean
+	private AreUtile areUtile;
 
-	//mock retour appel détail indemnisation de l'ESD 
-	DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.RSA.getLibelle());
-	doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
-    }
+	protected void initMocks(String dateSimulation, DemandeurEmploi demandeurEmploi, boolean decisionAgepi, boolean decisionAideMobilite, boolean decisionAre) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+		// mock création date de demande de simulation
+		doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
+		
+		// mock la creation du PeConnectAuth du demandeur d'emploi
+		PeConnectAuthorization peConnectAuthorization = new PeConnectAuthorization();
+		peConnectAuthorization.setAccessToken("");
+		peConnectAuthorization.setExpireIn(new Long(222));
+		peConnectAuthorization.setExpiryTime(new Date());
+		peConnectAuthorization.setIdToken("");
+		peConnectAuthorization.setRefreshToken("");
+		peConnectAuthorization.setScope("");
+		peConnectAuthorization.setTokenType("");
+		demandeurEmploi.setPeConnectAuthorization(peConnectAuthorization);
 
-    protected Logement initLogement(String codeInsee, boolean isLogementConventionne) {
-	Logement logement = new Logement();
-	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-	statutOccupationLogement.setLocataireNonMeuble(true);
-	logement.setStatutOccupationLogement(statutOccupationLogement);
-	logement.setMontantCharges(50f);
-	logement.setMontantLoyer(500f);
-	logement.setCodeInsee(codeInsee);
-	logement.setConventionne(isLogementConventionne);
-	logement.setDeMayotte(false);
-	return logement;
-    }
+		//mock retour appel détail indemnisation de l'ESD 
+		DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.RSA.getLibelle());
+		doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
 
-    protected DemandeurEmploi creerDemandeurEmploiAPL(int prochaineDeclarationTrimestrielle) throws ParseException {
-	boolean isEnCouple = true;
-	int nbEnfant = 2;
-	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+		//mock retour appel api aide mobilite
+		if(decisionAgepi) {
+			Optional<Aide> aideAgepi = Optional.of(utile.creerAidePourMock("AGEPI"));
+			doReturn(aideAgepi).when(agepiUtile).simulerAide(Mockito.any(DemandeurEmploi.class));		
+		}
 
-	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
-	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
+		//mock retour appel api aide mobilite
+		if(decisionAideMobilite) {
+			Optional<Aide> aideMobilite = Optional.of(utile.creerAidePourMock("AM"));
+			doReturn(aideMobilite).when(aideMobUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
+		}
 
-	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
-	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(7));
+		//mock retour appel api are
+		if(decisionAre) {
+			Optional<Aide> arePEIOOut = Optional.of(utile.creerAidePourMock("ARE"));
+			doReturn(arePEIOOut).when(areUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
+		}
+	}
 
-	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", true));
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
-	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
-	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+	protected Logement initLogement(String codeInsee, boolean isLogementConventionne) {
+		Logement logement = new Logement();
+		StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+		statutOccupationLogement.setLocataireNonMeuble(true);
+		logement.setStatutOccupationLogement(statutOccupationLogement);
+		logement.setMontantCharges(50f);
+		logement.setMontantLoyer(500f);
+		logement.setCodeInsee(codeInsee);
+		logement.setConventionne(isLogementConventionne);
+		logement.setDeMayotte(false);
+		return logement;
+	}
 
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	protected DemandeurEmploi creerDemandeurEmploiAPL(int prochaineDeclarationTrimestrielle) throws ParseException {
+		boolean isEnCouple = true;
+		int nbEnfant = 2;
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
 
-	AidesFamiliales aidesFamiliales = new AidesFamiliales();
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
+		demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+		demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
-	AidesLogement aidesLogement = new AidesLogement();
-	AllocationsLogement aidePersonnaliseeLogement = new AllocationsLogement();
-	aidePersonnaliseeLogement.setMoisN(300f);
-	aidePersonnaliseeLogement.setMoisNMoins1(300f);
-	aidePersonnaliseeLogement.setMoisNMoins2(300f);
-	aidePersonnaliseeLogement.setMoisNMoins3(300f);
-	aidesLogement.setAidePersonnaliseeLogement(aidePersonnaliseeLogement);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(aidesLogement);
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(7));
 
-	return demandeurEmploi;
-    }
+		demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", true));
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+		demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
+		demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
-    protected DemandeurEmploi creerDemandeurEmploiALF(int prochaineDeclarationTrimestrielle) throws ParseException {
-	boolean isEnCouple = true;
-	int nbEnfant = 2;
-	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+		demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
+		demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
 
-	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
-	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
+		AidesFamiliales aidesFamiliales = new AidesFamiliales();
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
 
-	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
-	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(7));
+		AidesLogement aidesLogement = new AidesLogement();
+		AllocationsLogement aidePersonnaliseeLogement = new AllocationsLogement();
+		aidePersonnaliseeLogement.setMoisN(300f);
+		aidePersonnaliseeLogement.setMoisNMoins1(300f);
+		aidePersonnaliseeLogement.setMoisNMoins2(300f);
+		aidePersonnaliseeLogement.setMoisNMoins3(300f);
+		aidesLogement.setAidePersonnaliseeLogement(aidePersonnaliseeLogement);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(aidesLogement);
 
-	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
-	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
-	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+		return demandeurEmploi;
+	}
 
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	protected DemandeurEmploi creerDemandeurEmploiALF(int prochaineDeclarationTrimestrielle) throws ParseException {
+		boolean isEnCouple = true;
+		int nbEnfant = 2;
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
 
-	AidesFamiliales aidesFamiliales = new AidesFamiliales();
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
+		demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+		demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
-	AidesLogement aidesLogement = new AidesLogement();
-	AllocationsLogement allocationLogementFamiliale = new AllocationsLogement();
-	allocationLogementFamiliale.setMoisN(300f);
-	allocationLogementFamiliale.setMoisNMoins1(300f);
-	allocationLogementFamiliale.setMoisNMoins2(300f);
-	allocationLogementFamiliale.setMoisNMoins3(300f);
-	aidesLogement.setAllocationLogementFamiliale(allocationLogementFamiliale);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(aidesLogement);
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(7));
 
-	return demandeurEmploi;
-    }
+		demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+		demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
+		demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
-    protected DemandeurEmploi creerDemandeurEmploiALS(int prochaineDeclarationTrimestrielle) throws ParseException {
-	boolean isEnCouple = false;
-	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+		demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
+		demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
 
-	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
-	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
+		AidesFamiliales aidesFamiliales = new AidesFamiliales();
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
 
-	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
+		AidesLogement aidesLogement = new AidesLogement();
+		AllocationsLogement allocationLogementFamiliale = new AllocationsLogement();
+		allocationLogementFamiliale.setMoisN(300f);
+		allocationLogementFamiliale.setMoisNMoins1(300f);
+		allocationLogementFamiliale.setMoisNMoins2(300f);
+		allocationLogementFamiliale.setMoisNMoins3(300f);
+		aidesLogement.setAllocationLogementFamiliale(allocationLogementFamiliale);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(aidesLogement);
 
-	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
-	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
-	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+		return demandeurEmploi;
+	}
 
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	protected DemandeurEmploi creerDemandeurEmploiALS(int prochaineDeclarationTrimestrielle) throws ParseException {
+		boolean isEnCouple = false;
+		int nbEnfant = 0;
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
 
-	AidesFamiliales aidesFamiliales = new AidesFamiliales();
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
+		demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+		demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
-	AidesLogement aidesLogement = new AidesLogement();
-	AllocationsLogement allocationLogementSociale = new AllocationsLogement();
-	allocationLogementSociale.setMoisN(300f);
-	allocationLogementSociale.setMoisNMoins1(300f);
-	allocationLogementSociale.setMoisNMoins2(300f);
-	allocationLogementSociale.setMoisNMoins3(300f);
-	aidesLogement.setAllocationLogementSociale(allocationLogementSociale);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(aidesLogement);
+		demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
+		demandeurEmploi.getSituationFamiliale().setPersonnesACharge(new ArrayList());
 
-	return demandeurEmploi;
-    }
+		demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+		demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
+		demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+
+		demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
+		demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+
+		AidesFamiliales aidesFamiliales = new AidesFamiliales();
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+
+		AidesLogement aidesLogement = new AidesLogement();
+		AllocationsLogement allocationLogementSociale = new AllocationsLogement();
+		allocationLogementSociale.setMoisN(300f);
+		allocationLogementSociale.setMoisNMoins1(300f);
+		allocationLogementSociale.setMoisNMoins2(300f);
+		allocationLogementSociale.setMoisNMoins3(300f);
+		aidesLogement.setAllocationLogementSociale(allocationLogementSociale);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(aidesLogement);
+
+		return demandeurEmploi;
+	}
 
 }

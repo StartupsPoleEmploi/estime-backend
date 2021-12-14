@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
         demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
+        demandeurEmploi.getSituationFamiliale().setPersonnesACharge(new ArrayList());
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
@@ -68,7 +70,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
 
         // Lorsque je simule mes prestations le 20/10/2020
-        initMocks("20-10-2020");
+        initMocks("20-10-2020", demandeurEmploi, false, false, false);
         SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
@@ -164,6 +166,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
+        demandeurEmploi.getSituationFamiliale().setPersonnesACharge(new ArrayList());
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
@@ -175,7 +178,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
 
         // Lorsque je simule mes prestations le 20/10/2020
-        initMocks("20-10-2020");
+        initMocks("20-10-2020", demandeurEmploi, false, false, false);
         SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
@@ -281,6 +284,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
         demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
+        demandeurEmploi.getSituationFamiliale().setPersonnesACharge(new ArrayList());
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
@@ -292,7 +296,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(0, 0, 508, 380, 0, 0));
         // Lorsque je simule mes prestations le 23/07/2021
-        initMocks("23-07-2021");
+        initMocks("23-07-2021", demandeurEmploi, false, false, false);
         SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 08/2021 sont :
@@ -387,6 +391,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
     @Test
     void simulerMesRessourcesFinancieresTest4() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
+    	System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         // Si DE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
         // Futur contrat CDI 15h, salaire net 500€ brut 659€,kilométrage domicile -> taf = 10kms + 20 trajets
         // RSA 500€, déclaration trimetrielle en M, travaillé au cours des 3 derniers mois avec salaire 380 juillet, salaire 380 juin, salaire 380 mai
@@ -399,6 +404,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
         demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
+        demandeurEmploi.getSituationFamiliale().setPersonnesACharge(new ArrayList());
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
@@ -410,7 +416,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
         demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(508, 380, 508, 380, 508, 380));
         // Lorsque je simule mes prestations le 23/07/2021
-        initMocks("23-07-2021");
+        initMocks("23-07-2021", demandeurEmploi, false, false, false);
         SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 08/2021 sont :
@@ -527,6 +533,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement());
         demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
         demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
+        demandeurEmploi.getSituationFamiliale().setPersonnesACharge(new ArrayList());
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
@@ -539,7 +546,7 @@ class DemandeurRsaProchaineDeclarationMois0Tests extends Commun {
         demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utile.creerAidePersonnaliseeLogement(310f));
 
         // Lorsque je simule mes prestations le 20/10/2020
-        initMocks("20-10-2020");
+        initMocks("20-10-2020", demandeurEmploi, false, false, false);
         SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
