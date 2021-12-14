@@ -29,19 +29,26 @@ public class SuiviUtilisateurUtile {
     @Autowired
     private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
 
-    public void tracerParcoursUtilisateurAuthentification(UserInfoPEIO userInfoPEIO, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles, DetailIndemnisationPEIO detailIndemnisationPEIO) {
-	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityAuthentification(userInfoPEIO, parcours,
-		getTypePopulation(beneficiaireAides), detailIndemnisationPEIO);
+    @Autowired
+    private StagingEnvironnementUtile stagingEnvironnementUtile;
 
-	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
+    public void tracerParcoursUtilisateurAuthentification(UserInfoPEIO userInfoPEIO, String parcours, BeneficiaireAides beneficiaireAides, DetailIndemnisationPEIO detailIndemnisationPEIO) {
+	// On ne suit pas les utilisateurs dans les environnements de développement
+	if (!stagingEnvironnementUtile.isStagingEnvironnement()) {
+	    SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityAuthentification(userInfoPEIO, parcours,
+		    getTypePopulation(beneficiaireAides), detailIndemnisationPEIO);
+
+	    suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
+	}
     }
 
     public void tracerParcoursUtilisateurCreationSimulation(String idPoleEmploi, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles) {
+	if (!stagingEnvironnementUtile.isStagingEnvironnement()) {
+	    SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityCreationSimulation(idPoleEmploi, parcours,
+		    getTypePopulation(beneficiaireAides), getCodePostal(informationsPersonnelles));
 
-	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityCreationSimulation(idPoleEmploi, parcours,
-		getTypePopulation(beneficiaireAides), getCodePostal(informationsPersonnelles));
-
-	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
+	    suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
+	}
     }
 
     public void supprimerTracesParcoursUtilisateur(String idPoleEmploi) {

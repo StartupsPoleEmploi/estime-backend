@@ -8,7 +8,7 @@ public enum Aides {
     ALLOCATION_ADULTES_HANDICAPES("AAH", "Allocation aux Adultes Handicapés", "aah.html"),
     ALLOCATION_LOGEMENT_FAMILIALE("ALF", "Allocation de Logement Familiale", ""),
     ALLOCATION_LOGEMENT_SOCIALE("ALS", "Allocation de Logement Sociale", ""),
-    ALLOCATION_RETOUR_EMPLOI("ARE", "Allocation de Retour à l'Emploi", "are.html"),
+    ALLOCATION_RETOUR_EMPLOI("ARE", "Allocation de Retour à l'Emploi", ""),
     ALLOCATION_SOLIDARITE_SPECIFIQUE("ASS", "Allocation de Solidarité Spécifique", "ass.html"),
     ALLOCATIONS_FAMILIALES("AF", "Allocations Familiales", ""),
     ALLOCATION_SOUTIEN_FAMILIAL("ASF", "Allocation de Soutien Familial", ""),

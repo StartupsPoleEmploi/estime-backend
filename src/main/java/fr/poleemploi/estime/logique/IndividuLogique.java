@@ -88,7 +88,7 @@ public class IndividuLogique {
 	    // @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
 
 	    suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoPEIO, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
-		    individu.getInformationsPersonnelles(), detailIndemnisationPEIO);
+		    detailIndemnisationPEIO);
 
 	    individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationPEIO));
 

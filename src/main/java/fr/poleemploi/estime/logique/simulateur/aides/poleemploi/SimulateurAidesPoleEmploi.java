@@ -48,7 +48,7 @@ public class SimulateurAidesPoleEmploi {
 	    }
 	}
 	if (beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
-	    are.simulerAideEtGetReliquat(aidesPourCeMois, demandeurEmploi, numeroMoisSimule, moisSimule);
+	    are.simuler(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
 	}
 
 	//	if (agepi.isEligible(numeroMoisSimule, demandeurEmploi)) {

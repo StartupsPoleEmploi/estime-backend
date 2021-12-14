@@ -1,6 +1,5 @@
 package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 
@@ -39,7 +38,7 @@ public class AreUtile {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AreUtile.class);
 
-    public void simulerAideEtGetReliquat(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate moisSimule) {
+    public void simuler(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
 
 	if (isMoisCalculARE(numeroMoisSimule)) {
 	    calculerMontantComplementARE(aidesPourCeMois, demandeurEmploi);
@@ -87,10 +86,6 @@ public class AreUtile {
     private Aide creerComplementARE(float montantAide) {
 	Aide are = new Aide();
 	are.setCode(Aides.ALLOCATION_RETOUR_EMPLOI.getCode());
-	Optional<String> detailAideOptional = aideUtile.getDescription(Aides.ALLOCATION_RETOUR_EMPLOI.getNomFichierDetail());
-	if (detailAideOptional.isPresent()) {
-	    are.setDetail(detailAideOptional.get());
-	}
 	are.setNom(Aides.ALLOCATION_RETOUR_EMPLOI.getNom());
 	are.setOrganisme(Organismes.PE.getNom());
 	are.setMontant(montantAide);

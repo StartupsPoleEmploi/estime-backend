@@ -116,6 +116,7 @@ public class StagingEnvironnementUtile {
 
     private boolean isPopulationAutorisee(UserInfoPEIO userInfoPEIO) {
 	return userInfoPEIO.getGivenName().endsWith(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())
-		|| userInfoPEIO.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()) || userInfoPEIO.getGivenName().endsWith(Aides.RSA.getCode());
+		|| userInfoPEIO.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()) || userInfoPEIO.getGivenName().endsWith(Aides.RSA.getCode())
+		|| userInfoPEIO.getGivenName().equalsIgnoreCase("axel");
     }
 }
