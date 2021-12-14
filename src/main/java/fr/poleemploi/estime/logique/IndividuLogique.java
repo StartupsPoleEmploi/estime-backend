@@ -66,12 +66,13 @@ public class IndividuLogique {
 		String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
 		individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
 
-		DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
-		Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
-
 		if (stagingEnvironnementUtile.isStagingEnvironnement()) {
 			stagingEnvironnementUtile.gererAccesAvecBouchon(individu);
 		} else {
+
+			DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
+			Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
+			
 			if (userInfoOption.isPresent()) {
 				UserInfoESD userInfoESD = userInfoOption.get();
 
