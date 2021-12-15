@@ -64,17 +64,17 @@ public class IndividuLogique {
 
 		PeConnectAuthorizationESD peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
 		String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
-		individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
 
-		if (stagingEnvironnementUtile.isStagingEnvironnement()) {
-			stagingEnvironnementUtile.gererAccesAvecBouchon(individu);
-		} else {
+		DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
+		Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
 
-			DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
-			Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
+		if (userInfoOption.isPresent()) {
 			
-			if (userInfoOption.isPresent()) {
-				UserInfoESD userInfoESD = userInfoOption.get();
+			UserInfoESD userInfoESD = userInfoOption.get();
+			
+			if (stagingEnvironnementUtile.isStagingEnvironnement()) {
+				stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
+			} else {
 
 				individu.setIdPoleEmploi(userInfoESD.getSub());
 				if (demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
@@ -84,14 +84,19 @@ public class IndividuLogique {
 					individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
 					individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
 				}
-
+			}
+			
+			if(stagingEnvironnementUtile.isNotLocalhostEnvironnement())  {				
 				// @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
 				suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
 						individu.getInformationsPersonnelles(), detailIndemnisationESD);
-			} else {
-				LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
-				throw new InternalServerException(InternalServerMessages.IDENTIFICATION_IMPOSSIBLE.getMessage());
 			}
+			
+			individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
+			
+		} else {
+			LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
+			throw new InternalServerException(InternalServerMessages.IDENTIFICATION_IMPOSSIBLE.getMessage());
 		}
 
 		return individu;
