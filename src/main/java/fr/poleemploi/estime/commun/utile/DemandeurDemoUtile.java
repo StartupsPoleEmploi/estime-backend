@@ -13,36 +13,36 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 @Component
 public class DemandeurDemoUtile {
 
-    private static String nomDemandeurDemo = "estimedemo";
+	private static String nomDemandeurDemo = "estimedemo";
 
-    public boolean isDemandeurDemo(UserInfoESD userInfoESD) {
-	return userInfoESD.getFamilyName() != null && userInfoESD.getFamilyName().toLowerCase().contains(nomDemandeurDemo);
-    }
+	public boolean isDemandeurDemo(UserInfoESD userInfoESD) {
+		return userInfoESD.getFamilyName() != null && userInfoESD.getFamilyName().toLowerCase().contains(nomDemandeurDemo);
+	}
 
-    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD) {
-	addInformationsBeneficiaireAides(individu, detailIndemnisationESD);
-	addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
-    }
+	public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisationESD) {
+		addInformationsBeneficiaireAides(individu, detailIndemnisationESD);
+		addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
+	}
 
-    private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationESD detailIndemnisation) {
-	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
-	beneficiaireAides.setBeneficiaireAAH(false);
-	beneficiaireAides.setBeneficiaireARE(false);
-	beneficiaireAides.setBeneficiaireASS(true);
-	beneficiaireAides.setBeneficiaireRSA(false);
-	individu.setBeneficiaireAides(beneficiaireAides);
-    }
+	private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationESD detailIndemnisation) {
+		BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+		beneficiaireAides.setBeneficiaireAAH(false);
+		beneficiaireAides.setBeneficiaireARE(false);
+		beneficiaireAides.setBeneficiaireASS(true);
+		beneficiaireAides.setBeneficiaireRSA(false);
+		individu.setBeneficiaireAides(beneficiaireAides);
+	}
 
-    private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisation) {
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-	ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisation));
-	individu.setRessourcesFinancieres(ressourcesFinancieres);
-    }
+	private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationESD detailIndemnisation) {
+		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisation));
+		individu.setRessourcesFinancieres(ressourcesFinancieres);
+	}
 
-    private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationESD detailIndemnisation) {
-	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-	AllocationASS allocationASS = new AllocationASS();
-	aidesPoleEmploi.setAllocationASS(allocationASS);
-	return aidesPoleEmploi;
-    }
+	private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationESD detailIndemnisation) {
+		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+		AllocationASS allocationASS = new AllocationASS();
+		aidesPoleEmploi.setAllocationASS(allocationASS);
+		return aidesPoleEmploi;
+	}
 }

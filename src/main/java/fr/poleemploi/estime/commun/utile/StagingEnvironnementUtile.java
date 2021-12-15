@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
-import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Environnements;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -32,16 +31,39 @@ public class StagingEnvironnementUtile {
 
 	public void gererAccesAvecBouchon(Individu individu, UserInfoESD userInfo) {
 		individu.setIdPoleEmploi(userInfo.getSub());
-		individu.setPopulationAutorisee(isPopulationAutorisee(userInfo));
-		String population = userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
-		addInfosIndemnisation(individu, population);
+		individu.setPopulationAutorisee(true);		
+		addInfosIndemnisation(individu, getPopulationDeFictif(userInfo));
+	}
+	
+	public boolean isUtilisateurFictif(UserInfoESD userInfo) {
+		return isCandidatCaro(userInfo) || isDeFictifPoleemploiio(userInfo);
+	}
+	
+	private boolean isDeFictifPoleemploiio(UserInfoESD userInfo) {
+		return userInfo != null && userInfo.getEmail() != null && userInfo.getEmail().equalsIgnoreCase("emploistoredev@gmail.com");
+	}
+
+	/**
+	 * Les candidats "Caro" sont les candidats que l'on a créés en production 
+	 * afin de pouvoir tester l'application en étant connecté au api poleemploi.io de production.
+	 * 
+	 * Si on identifie un candidat "Caro", on bouchonne ses données d'indemnisation en fonction de son suffixe (ASS,AAH, RSA) afin de le laisser 
+	 * accéder à l'application.
+	 * @return
+	 */
+	public boolean isCandidatCaro(UserInfoESD userInfo) {
+		String givenName = userInfo.getGivenName();
+		return givenName != null 
+				&& (givenName.equalsIgnoreCase("caroass") 
+						|| givenName.equalsIgnoreCase("caroaah") 
+						|| givenName.equalsIgnoreCase("carorsa")); 
 	}
 
 	public boolean isStagingEnvironnement() {
 		return environment.equals(Environnements.LOCALHOST.getLibelle()) || environment.equals(Environnements.LOCALHOST_IP.getLibelle())
 				|| environment.equals(Environnements.RECETTE.getLibelle());
 	}
-	
+
 	public boolean isNotLocalhostEnvironnement() {
 		return !environment.equals(Environnements.LOCALHOST.getLibelle());
 	}
@@ -125,9 +147,12 @@ public class StagingEnvironnementUtile {
 		aidesCPAM.setAllocationSupplementaireInvalidite(0f);
 		ressourcesFinancieres.setAidesCPAM(aidesCPAM);
 	}
-
-	private boolean isPopulationAutorisee(UserInfoESD userInfoESD) {
-		return userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())
-				|| userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()) || userInfoESD.getGivenName().endsWith(Aides.RSA.getCode());
+	
+	private String getPopulationDeFictif(UserInfoESD userInfo) {
+		if(isCandidatCaro(userInfo)) {
+			return userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
+		} else {
+			return TypePopulation.ARE.getLibelle();
+		}
 	}
 }
