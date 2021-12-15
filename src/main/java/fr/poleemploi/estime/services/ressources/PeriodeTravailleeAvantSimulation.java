@@ -1,22 +1,21 @@
 package fr.poleemploi.estime.services.ressources;
 
-import java.util.Map;
+import java.util.Arrays;
 
 public class PeriodeTravailleeAvantSimulation {
 
-    private Map<String, MoisTravailleAvantSimulation> mois;
+    private MoisTravailleAvantSimulation[] mois;
 
-    public Map<String, MoisTravailleAvantSimulation> getMois() {
+    public MoisTravailleAvantSimulation[] getMois() {
 	return mois;
     }
 
-    public void setMois(Map<String, MoisTravailleAvantSimulation> mois) {
+    public void setMois(MoisTravailleAvantSimulation[] mois) {
 	this.mois = mois;
     }
 
     @Override
     public String toString() {
-	return "PeriodeTravailleeAvantSimulation [mois=" + mois + "]";
+	return "PeriodeTravailleeAvantSimulation [mois=" + Arrays.toString(mois) + "]";
     }
-
 }

@@ -1,8 +1,6 @@
 package fr.poleemploi.estime.commun.utile.demandeuremploi;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,13 +14,8 @@ import fr.poleemploi.estime.services.ressources.Salaire;
 public class PeriodeTravailleeAvantSimulationUtile {
 
     @Autowired
-    private BeneficiaireAidesUtile beneficiaireAidesUtile;
-
-    @Autowired
-    private SalaireUtile salaireUtile;
-
-    @Autowired
     private DateUtile dateUtile;
+    public static final int NOMBRE_MOIS_PERIODE_OPENFISCA_SALAIRES = 12;
 
     /**
      * Fonction qui permet de récupérer le nombre de mois travaillés dans la péridoe de 3 mois avant la simulation
@@ -35,8 +28,8 @@ public class PeriodeTravailleeAvantSimulationUtile {
 	for (int moisAvantSimulation = 1; moisAvantSimulation <= periodeMoisAvantSimulation; moisAvantSimulation++) {
 	    if (demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation() != null
 		    && demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation().getMois() != null) {
-		MoisTravailleAvantSimulation moisTravailleAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation().getMois()
-			.get(constructKeyMoisTravailleAvantSimulation(moisAvantSimulation));
+		MoisTravailleAvantSimulation moisTravailleAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation()
+			.getMois()[moisAvantSimulation];
 		if (moisTravailleAvantSimulation != null && isMoisTravaille(moisTravailleAvantSimulation)) {
 		    nombreMoisTravaillesDerniersMois++;
 		}
@@ -46,16 +39,17 @@ public class PeriodeTravailleeAvantSimulationUtile {
     }
 
     public Salaire getSalaireAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, int numeroMoisPeriodeOpenfisca) {
-	return getMoisTravaillesAvantSimulation(demandeurEmploi, numeroMoisSimule).get(constructKeyMoisTravailleAvantSimulation(numeroMoisPeriodeOpenfisca - numeroMoisSimule))
-		.getSalaire();
+	int indexMoisAvantPeriode = NOMBRE_MOIS_PERIODE_OPENFISCA_SALAIRES - (numeroMoisPeriodeOpenfisca + numeroMoisSimule + 1);
+	if (indexMoisAvantPeriode <= 0) {
+	    return demandeurEmploi.getFuturTravail().getSalaire();
+	}
+	return getMoisTravaillesAvantSimulation(demandeurEmploi, numeroMoisSimule)[indexMoisAvantPeriode].getSalaire();
     }
 
-    public Map<String, MoisTravailleAvantSimulation> getMoisTravaillesAvantSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
-	Map<String, MoisTravailleAvantSimulation> moisTravaillesAvantSimulation = null;
+    public MoisTravailleAvantSimulation[] getMoisTravaillesAvantSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+	MoisTravailleAvantSimulation[] moisTravaillesAvantSimulation = {};
 	if (hasSalairesAvantPeriodeSimulation(demandeurEmploi)) {
 	    moisTravaillesAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation().getMois();
-	    moisTravaillesAvantSimulation.keySet().removeAll(Arrays.asList(moisTravaillesAvantSimulation.keySet().toArray())
-		    .subList(moisTravaillesAvantSimulation.size() - numeroMoisSimule, moisTravaillesAvantSimulation.size()));
 	}
 	return moisTravaillesAvantSimulation;
     }
