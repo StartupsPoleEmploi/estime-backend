@@ -116,6 +116,7 @@ public class StagingEnvironnementUtile {
 
     private boolean isPopulationAutorisee(UserInfoESD userInfoESD) {
 	return userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())
-		|| userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()) || userInfoESD.getGivenName().endsWith(Aides.RSA.getCode());
+		|| userInfoESD.getGivenName().endsWith(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode()) || userInfoESD.getGivenName().endsWith(Aides.RSA.getCode())
+		|| userInfoESD.getGivenName().equalsIgnoreCase("axel");
     }
 }
