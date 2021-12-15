@@ -69,10 +69,10 @@ public class IndividuLogique {
 		Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
 
 		if (userInfoOption.isPresent()) {
-			
+
 			UserInfoESD userInfoESD = userInfoOption.get();
-			
-			if (stagingEnvironnementUtile.isStagingEnvironnement()) {
+
+			if (stagingEnvironnementUtile.isStagingEnvironnement() && stagingEnvironnementUtile.isUtilisateurFictif(userInfoESD)) {
 				stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
 			} else {
 
@@ -85,15 +85,14 @@ public class IndividuLogique {
 					individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
 				}
 			}
-			
+
 			if(stagingEnvironnementUtile.isNotLocalhostEnvironnement())  {				
 				// @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
-				suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
-						individu.getInformationsPersonnelles(), detailIndemnisationESD);
+				suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(), detailIndemnisationESD);
 			}
-			
+
 			individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
-			
+
 		} else {
 			LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
 			throw new InternalServerException(InternalServerMessages.IDENTIFICATION_IMPOSSIBLE.getMessage());
@@ -109,15 +108,17 @@ public class IndividuLogique {
 
 		DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 		demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
-		if (!stagingEnvironnementUtile.isStagingEnvironnement()) {
+		if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
 			demandeurEmploiUtile.addCodeDepartement(demandeurEmploi, bearerToken);
 			demandeurEmploiUtile.addDateNaissance(demandeurEmploi, bearerToken);		
 		}
 		demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
 		demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
 
-		suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(),
-				individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
+		if(stagingEnvironnementUtile.isNotLocalhostEnvironnement())  {	
+			suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_COMMENCEE.getParcours(),
+					individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());			
+		}
 
 		return demandeurEmploi;
 	}
@@ -125,8 +126,10 @@ public class IndividuLogique {
 	public SimulationAides simulerMesAides(DemandeurEmploi demandeurEmploi) {
 		SimulationAides simulationAides = simulateurAides.simuler(demandeurEmploi);
 
-		suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(),
-				demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
+		if(stagingEnvironnementUtile.isNotLocalhostEnvironnement())  {	
+			suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(),
+					demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());			
+		}
 
 		return simulationAides;
 	}
@@ -134,5 +137,4 @@ public class IndividuLogique {
 	public void supprimerSuiviParcoursUtilisateur(String idPoleEmploi) {
 		suiviUtilisateurUtile.supprimerTracesParcoursUtilisateur(idPoleEmploi);
 	}
-
 }
