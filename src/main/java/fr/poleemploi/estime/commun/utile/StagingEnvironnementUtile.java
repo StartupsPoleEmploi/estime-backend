@@ -41,6 +41,10 @@ public class StagingEnvironnementUtile {
 		return environment.equals(Environnements.LOCALHOST.getLibelle()) || environment.equals(Environnements.LOCALHOST_IP.getLibelle())
 				|| environment.equals(Environnements.RECETTE.getLibelle());
 	}
+	
+	public boolean isNotLocalhostEnvironnement() {
+		return !environment.equals(Environnements.LOCALHOST.getLibelle());
+	}
 
 	private void addInfosIndemnisation(Individu individu, String population) {
 		switch (population) {
