@@ -7,10 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
@@ -25,6 +26,7 @@ import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessage
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.UnauthorizedMessages;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
+import fr.poleemploi.estime.services.exceptions.TooManyRequestException;
 import fr.poleemploi.estime.services.exceptions.UnauthorizedException;
 
 @Component
@@ -52,6 +54,11 @@ public class PoleEmploiIODevClient {
 	private RestTemplate restTemplate;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PoleEmploiIODevClient.class);
+	
+	//Nombre max de tentatives d'appel
+	private static final int MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR = 3;
+	//Temps d'attente avant de retenter une requête HTTP
+	private static final int RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR = 3000; 
 
 	public PeConnectAuthorizationESD callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
 		HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreDevUtile.getAccesTokenRequeteHTTP(code, redirectURI);
@@ -99,43 +106,37 @@ public class PoleEmploiIODevClient {
 		}
 	}
 
+	@Retryable(value = { TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
 	public Optional<CoordonneesESD> callCoordonneesAPI(String bearerToken) {
 		try {
 			HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
 			ResponseEntity<CoordonneesESD> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesESD.class);
-			if (reponse.getStatusCode().equals(HttpStatus.OK)) {
-				return Optional.of(reponse.getBody());
-			} else {
-				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiCoordonneesURI);
-				LOGGER.error(messageError);
-			}
-		} catch (Exception e) {
-			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiCoordonneesURI);
-			LOGGER.error(messageError);
+			return Optional.of(reponse.getBody());
+
+		} catch (HttpClientErrorException e) {
+			if(isTooManyRequestsHttpClientError(e)) {
+				throw new TooManyRequestException(e.getMessage());
+			} 
 		}
-
 		return Optional.empty();
-	}
+	}	
 
+	@Retryable(value = { TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
 	public Optional<DateNaissanceESD> callDateNaissanceEndPoint(String bearerToken) {
+		ResponseEntity<DateNaissanceESD> reponse = null;
 		try {
 			HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-			ResponseEntity<DateNaissanceESD> reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissanceESD.class);
-			if (reponse.getStatusCode().equals(HttpStatus.OK)) {
-				return Optional.of(reponse.getBody());
-			} else {
-				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDateNaissanceURI);
-				LOGGER.error(messageError);
-			}
-		} catch (Exception e) {
-			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiDateNaissanceURI);
-			LOGGER.error(messageError);
+			reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissanceESD.class);
+			return Optional.of(reponse.getBody());
+		} catch (HttpClientErrorException e) {
+			if(isTooManyRequestsHttpClientError(e)) {
+				throw new TooManyRequestException(e.getMessage());
+			} 
 		}
-
 		return Optional.empty();
 	}
 	
-	private void manageTooManyRequest(HttpHeaders headers) {
-		headers.get(key)
+	private boolean isTooManyRequestsHttpClientError(Exception e) {
+		return e instanceof HttpClientErrorException && ((HttpClientErrorException) e).getRawStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value();
 	}
 }
