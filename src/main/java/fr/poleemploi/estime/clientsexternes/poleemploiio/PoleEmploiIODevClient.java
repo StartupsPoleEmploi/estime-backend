@@ -95,14 +95,18 @@ public class PoleEmploiIODevClient {
 	}
 
 	public DetailIndemnisationESD callDetailIndemnisationEndPoint(String bearerToken) {
-		HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-		ResponseEntity<DetailIndemnisationESD> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationESD.class);
-		if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+		try {			
+			HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
+			ResponseEntity<DetailIndemnisationESD> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationESD.class);
 			return reponse.getBody();
-		} else {
-			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDetailIndemnisationURI);
-			LOGGER.error(messageError);
-			throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+		} catch (Exception exception) {
+			if(isTooManyRequestsHttpClientError(exception)) {
+				throw new TooManyRequestException(exception.getMessage());
+			} else {
+				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), apiDetailIndemnisationURI);
+				LOGGER.error(messageError);
+				throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+			}
 		}
 	}
 
@@ -113,9 +117,9 @@ public class PoleEmploiIODevClient {
 			ResponseEntity<CoordonneesESD> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesESD.class);
 			return Optional.of(reponse.getBody());
 
-		} catch (HttpClientErrorException e) {
-			if(isTooManyRequestsHttpClientError(e)) {
-				throw new TooManyRequestException(e.getMessage());
+		} catch (HttpClientErrorException httpClientErrorException) {
+			if(isTooManyRequestsHttpClientError(httpClientErrorException)) {
+				throw new TooManyRequestException(httpClientErrorException.getMessage());
 			} 
 		}
 		return Optional.empty();
@@ -128,15 +132,15 @@ public class PoleEmploiIODevClient {
 			HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
 			reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissanceESD.class);
 			return Optional.of(reponse.getBody());
-		} catch (HttpClientErrorException e) {
-			if(isTooManyRequestsHttpClientError(e)) {
-				throw new TooManyRequestException(e.getMessage());
+		} catch (HttpClientErrorException httpClientErrorException) {
+			if(isTooManyRequestsHttpClientError(httpClientErrorException)) {
+				throw new TooManyRequestException(httpClientErrorException.getMessage());
 			} 
 		}
 		return Optional.empty();
 	}
 	
-	private boolean isTooManyRequestsHttpClientError(Exception e) {
-		return e instanceof HttpClientErrorException && ((HttpClientErrorException) e).getRawStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value();
+	private boolean isTooManyRequestsHttpClientError(Exception exception) {
+		return exception instanceof HttpClientErrorException && ((HttpClientErrorException) exception).getRawStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value();
 	}
 }
