@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DateNaissanceESD;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
@@ -26,7 +26,7 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 public class DemandeurEmploiUtile {
 
 	@Autowired
-	private PoleEmploiIODevClient emploiStoreDevClient;
+	private PoleEmploiIOClient emploiStoreDevClient;
 
 	@Autowired
 	private DateUtile dateUtile;

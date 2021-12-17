@@ -9,7 +9,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 @Component
-public class PoleEmploiIODevUtile {
+public class PoleEmploiIOUtile {
     
     @Value("${spring.security.oauth2.client.registration.estime.authorization-grant-type}")
     private String authorizationGrantType;

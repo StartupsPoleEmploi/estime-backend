@@ -30,7 +30,7 @@ import fr.poleemploi.estime.services.exceptions.TooManyRequestException;
 import fr.poleemploi.estime.services.exceptions.UnauthorizedException;
 
 @Component
-public class PoleEmploiIODevClient {
+public class PoleEmploiIOClient {
 
 	@Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.token-uri}")
 	private String accessTokenURI;
@@ -48,13 +48,13 @@ public class PoleEmploiIODevClient {
 	private String userInfoURI;
 
 	@Autowired
-	private PoleEmploiIODevUtile emploiStoreDevUtile;
+	private PoleEmploiIOUtile emploiStoreDevUtile;
 
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PoleEmploiIODevClient.class);
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(PoleEmploiIOClient.class);
+
 	//Nombre max de tentatives d'appel
 	private static final int MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR = 3;
 	//Temps d'attente avant de retenter une requête HTTP
@@ -64,17 +64,12 @@ public class PoleEmploiIODevClient {
 		HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreDevUtile.getAccesTokenRequeteHTTP(code, redirectURI);
 		try {
 			ResponseEntity<PeConnectAuthorizationESD> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP, PeConnectAuthorizationESD.class);
-			if (reponse.getStatusCode().equals(HttpStatus.OK)) {
-				PeConnectAuthorizationESD informationsAccessTokenESD = reponse.getBody();
-				if (informationsAccessTokenESD.getNonce().compareTo(nonce) != 0) {
-					LOGGER.error(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
-					throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
-				}
-				return informationsAccessTokenESD;
+			PeConnectAuthorizationESD informationsAccessTokenESD = reponse.getBody();
+			if (informationsAccessTokenESD.getNonce().compareTo(nonce) != 0) {
+				LOGGER.error(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
+				throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 			} else {
-				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), accessTokenURI);
-				LOGGER.error(messageError);
-				throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+				return informationsAccessTokenESD;				
 			}
 		} catch (HttpClientErrorException e) {
 			LOGGER.error(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
@@ -82,16 +77,16 @@ public class PoleEmploiIODevClient {
 		}
 	}
 
-	public Optional<UserInfoESD> callUserInfoEndPoint(String bearerToken) {
-		HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-		ResponseEntity<UserInfoESD> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoESD.class);
-		if (reponse.getStatusCode().equals(HttpStatus.OK)) {
-			return Optional.of(reponse.getBody());
-		} else {
-			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), userInfoURI);
+	public UserInfoESD callUserInfoEndPoint(String bearerToken) {
+		try {
+			HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
+			ResponseEntity<UserInfoESD> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoESD.class);
+			return reponse.getBody();
+		} catch (Exception e) {
+			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), userInfoURI);
 			LOGGER.error(messageError);
+			throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 		}
-		return Optional.empty();
 	}
 
 	public DetailIndemnisationESD callDetailIndemnisationEndPoint(String bearerToken) {
@@ -139,7 +134,7 @@ public class PoleEmploiIODevClient {
 		}
 		return Optional.empty();
 	}
-	
+
 	private boolean isTooManyRequestsHttpClientError(Exception exception) {
 		return exception instanceof HttpClientErrorException && ((HttpClientErrorException) exception).getRawStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value();
 	}
