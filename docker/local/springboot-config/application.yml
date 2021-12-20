@@ -37,11 +37,8 @@ management:
       exposure:
         include: "*"
         
-#emploi store dev
-emploi-store-dev:
-  coordonnees-api-uri : "--ESD_COORDONNEES_API_URI--"
-  date-naissance-api-uri : "--ESD_DATE_NAISSANCE_API_URI--"
-  detail-indemnisation-api-uri : "--ESD_DETAIL_INDEMNISATION_API_URI--"
+#poleemploi.io
+poleemploiio-uri : "--POLE_EMPLOI_IO_URI--"
   
 #open fisca
 openfisca-api-uri: "https://estime.beta.pole-emploi.fr/calculate"
