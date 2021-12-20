@@ -61,6 +61,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 
     public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi) {
 	int nombreMoisCumulesASSPercueEtSalaire = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
+	System.out.println(nombreMoisCumulesASSPercueEtSalaire);
 	if (futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
 	    return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
 	} else if (futurTravailUtile.hasContratCDD(demandeurEmploi.getFuturTravail())) {

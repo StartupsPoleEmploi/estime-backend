@@ -21,6 +21,8 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
@@ -49,8 +51,16 @@ class DemandeurAahAss3MoisTravaillesAvantSimulationTests extends Commun {
 	// futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
+	Salaire[] salaires = utileTests.creerSalaires(0, 0, 3);
+	Salaire salaireMoisMoins1 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins4 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins5 = utileTests.creerSalaire(850, 1101);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins1, 1);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins4, 4);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins5, 5);
+	periodeTravailleeAvantSimulation.setMois(utileTests.createMoisTravaillesAvantSimulation(salaires));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks(demandeurEmploi);
@@ -194,8 +204,16 @@ class DemandeurAahAss3MoisTravaillesAvantSimulationTests extends Commun {
 	// futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
+	Salaire[] salaires = utileTests.creerSalaires(0, 0, 6);
+	Salaire salaireMoisMoins1 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins2 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins5 = utileTests.creerSalaire(850, 1101);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins1, 1);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins2, 2);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins5, 5);
+	periodeTravailleeAvantSimulation.setMois(utileTests.createMoisTravaillesAvantSimulation(salaires));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks(demandeurEmploi);
@@ -344,8 +362,7 @@ class DemandeurAahAss3MoisTravaillesAvantSimulationTests extends Commun {
 	// futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 1038, 800));
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 3));
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks(demandeurEmploi);

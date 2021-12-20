@@ -1,12 +1,12 @@
 package fr.poleemploi.estime.services.ressources;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class MoisTravailleAvantSimulation {
 
     private Salaire salaire;
     private boolean isSansSalaire;
-    private Date date;
+    private LocalDate date;
 
     public Salaire getSalaire() {
 	return salaire;
@@ -24,11 +24,11 @@ public class MoisTravailleAvantSimulation {
 	this.isSansSalaire = isSansSalaire;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
 	return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
 	this.date = date;
     }
 

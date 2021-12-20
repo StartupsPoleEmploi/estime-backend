@@ -35,7 +35,6 @@ import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
-import fr.poleemploi.estime.services.ressources.MoisTravailleAvantSimulation;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
@@ -73,8 +72,8 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void creerPeriodeAideeAAHTest1() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-	String openFiscaPayloadExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-non-travaille-6-derniers-mois-numero-mois-2.json");
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-non-travaille-6-derniers-mois-numero-mois-2.json");
 
 	String codeAideAAH = Aides.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
@@ -98,8 +97,8 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void creerPeriodeAideeAAHTest2() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-	String openFiscaPayloadExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-non-travaille-6-derniers-mois-numero-mois-5.json");
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-non-travaille-6-derniers-mois-numero-mois-5.json");
 
 	String codeAideAAH = Aides.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
@@ -125,8 +124,8 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void creerPeriodeAideeAAHTest3() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-	String openFiscaPayloadExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-6-mois-travaille-6-derniers-mois-numero-mois-2.json");
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-6-mois-travaille-6-derniers-mois-numero-mois-2.json");
 
 	String codeAideAAH = Aides.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
@@ -151,8 +150,8 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void creerPeriodeAideeAAHTest4() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
-	String openFiscaPayloadExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-6-mois-travaille-6-derniers-mois-numero-mois-5.json");
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-6-mois-travaille-6-derniers-mois-numero-mois-5.json");
 
 	String codeAideAAH = Aides.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
@@ -197,10 +196,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest1() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-non-travaille-avant-simulation-mois-2.json");
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-non-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-non-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-non-travaille-avant-simulation-mois-2.json");
 
 	int numeroMoisSimulation = 2;
 
@@ -211,7 +210,6 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -228,10 +226,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest2() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-non-travaille-avant-simulation-mois-5.json");
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-non-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-non-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-non-travaille-avant-simulation-mois-5.json");
 
 	int numeroMoisSimulation = 5;
 
@@ -241,7 +239,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -258,10 +256,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest3() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-6mois-travaille-avant-simulation-mois-2.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-6mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-6mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-6mois-travaille-avant-simulation-mois-2.json");
 
 	int numeroMoisSimulation = 2;
 
@@ -272,31 +270,8 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(6);
-	
-	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
-	
-	MoisTravailleAvantSimulation moisMoins1AvantSimulation = new MoisTravailleAvantSimulation();
-	Salaire salaireMoisMoins1 = new Salaire();
-	salaireMoisMoins1.setMontantNet(850);
-	salaireMoisMoins1.setMontantBrut(1101);
-	moisMoins1AvantSimulation.setSalaire(salaireMoisMoins1);
-	periodeTravailleeAvantSimulation.setMoisMoins1(moisMoins1AvantSimulation);
-	
-	MoisTravailleAvantSimulation moisMoins2AvantSimulation = new MoisTravailleAvantSimulation();	
-	Salaire salaireMoisMoins2 = new Salaire();
-	salaireMoisMoins2.setMontantNet(800);
-	salaireMoisMoins2.setMontantBrut(1038);
-	moisMoins2AvantSimulation.setSalaire(salaireMoisMoins2);
-	periodeTravailleeAvantSimulation.setMoisMoins2(moisMoins2AvantSimulation);
-	
-	MoisTravailleAvantSimulation moisMoins3AvantSimulation = new MoisTravailleAvantSimulation();
-	Salaire salaireMoisMoins3 = new Salaire();
-	salaireMoisMoins3.setMontantNet(750);
-	salaireMoisMoins3.setMontantBrut(975);
-	moisMoins3AvantSimulation.setSalaire(salaireMoisMoins3);
-	periodeTravailleeAvantSimulation.setMoisMoins3(moisMoins3AvantSimulation);
-	
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 6);
+
 	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
@@ -314,10 +289,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest4() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-6mois-travaille-avant-simulation-mois-5.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-6mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-6mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-6mois-travaille-avant-simulation-mois-5.json");
 
 	int numeroMoisSimulation = 5;
 
@@ -328,30 +303,8 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(6);
-	
-	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
-	
-	MoisTravailleAvantSimulation moisMoins1AvantSimulation = new MoisTravailleAvantSimulation();
-	Salaire salaireMoisMoins1 = new Salaire();
-	salaireMoisMoins1.setMontantNet(850);
-	salaireMoisMoins1.setMontantBrut(1101);
-	moisMoins1AvantSimulation.setSalaire(salaireMoisMoins1);
-	periodeTravailleeAvantSimulation.setMoisMoins1(moisMoins1AvantSimulation);
-	
-	MoisTravailleAvantSimulation moisMoins2AvantSimulation = new MoisTravailleAvantSimulation();
-	Salaire salaireMoisMoins2 = new Salaire();
-	salaireMoisMoins2.setMontantNet(800);
-	salaireMoisMoins2.setMontantBrut(1038);
-	moisMoins2AvantSimulation.setSalaire(salaireMoisMoins2);
-	periodeTravailleeAvantSimulation.setMoisMoins2(moisMoins2AvantSimulation);
-	
-	MoisTravailleAvantSimulation moisMoins3AvantSimulation = new MoisTravailleAvantSimulation();
-	Salaire salaireMoisMoins3 = new Salaire();
-	salaireMoisMoins3.setMontantNet(0);
-	salaireMoisMoins3.setMontantBrut(0);
-	moisMoins3AvantSimulation.setSalaire(salaireMoisMoins3);
-	periodeTravailleeAvantSimulation.setMoisMoins3(moisMoins3AvantSimulation);
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 6);
+
 	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
@@ -369,10 +322,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest5() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-5mois-travaille-avant-simulation-mois-2.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-5mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-5mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-5mois-travaille-avant-simulation-mois-2.json");
 
 	int numeroMoisSimulation = 2;
 
@@ -383,30 +336,8 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(5);
-	
-	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
-	
-	MoisTravailleAvantSimulation moisMoins1AvantSimulation = new MoisTravailleAvantSimulation();
-	Salaire salaireMoisMoins1 = new Salaire();
-	salaireMoisMoins1.setMontantNet(850);
-	salaireMoisMoins1.setMontantBrut(1101);
-	moisMoins1AvantSimulation.setSalaire(salaireMoisMoins1);
-	periodeTravailleeAvantSimulation.setMoisMoins1(moisMoins1AvantSimulation);
-	
-	MoisTravailleAvantSimulation moisMoins2AvantSimulation = new MoisTravailleAvantSimulation();
-	Salaire salaireMoisMoins2 = new Salaire();
-	salaireMoisMoins2.setMontantNet(800);
-	salaireMoisMoins2.setMontantBrut(1038);
-	moisMoins2AvantSimulation.setSalaire(salaireMoisMoins2);
-	periodeTravailleeAvantSimulation.setMoisMoins2(moisMoins2AvantSimulation);
-	
-	MoisTravailleAvantSimulation moisMoins3AvantSimulation = new MoisTravailleAvantSimulation();
-	Salaire salaireMoisMoins3 = new Salaire();
-	salaireMoisMoins3.setMontantNet(0);
-	salaireMoisMoins3.setMontantBrut(0);
-	moisMoins3AvantSimulation.setSalaire(salaireMoisMoins3);
-	periodeTravailleeAvantSimulation.setMoisMoins3(moisMoins3AvantSimulation);
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 5);
+
 	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
@@ -424,10 +355,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest6() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-5mois-travaille-avant-simulation-mois-5.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-5mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-5mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-5mois-travaille-avant-simulation-mois-5.json");
 
 	int numeroMoisSimulation = 5;
 
@@ -438,9 +369,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(5);	
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
-	
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 5);
+
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
+
 	FuturTravail futurTravail = new FuturTravail();
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(1200);
@@ -463,10 +395,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest7() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-4mois-travaille-avant-simulation-mois-2.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-4mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-4mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-4mois-travaille-avant-simulation-mois-2.json");
 
 	int numeroMoisSimulation = 2;
 
@@ -477,8 +409,9 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(4);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 4);
+
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -495,10 +428,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest8() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-4mois-travaille-avant-simulation-mois-5.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-4mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-4mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-4mois-travaille-avant-simulation-mois-5.json");
 
 	int numeroMoisSimulation = 5;
 
@@ -509,8 +442,9 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(4);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 4);
+
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -527,10 +461,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest9() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-3mois-travaille-avant-simulation-mois-5.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-3mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-3mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-3mois-travaille-avant-simulation-mois-5.json");
 
 	int numeroMoisSimulation = 5;
 
@@ -541,8 +475,9 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 3);
+
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -559,10 +494,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest10() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-3mois-travaille-avant-simulation-mois-2.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-3mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-3mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-3mois-travaille-avant-simulation-mois-2.json");
 
 	int numeroMoisSimulation = 2;
 
@@ -573,8 +508,9 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(3);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 3);
+
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -591,10 +527,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest11() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-2mois-travaille-avant-simulation-mois-5.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-2mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-2mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-2mois-travaille-avant-simulation-mois-5.json");
 
 	int numeroMoisSimulation = 5;
 
@@ -605,8 +541,9 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 2);
+
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -623,10 +560,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest12() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-2mois-travaille-avant-simulation-mois-2.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-2mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-2mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-2mois-travaille-avant-simulation-mois-2.json");
 
 	int numeroMoisSimulation = 2;
 
@@ -637,8 +574,9 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(2);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1038, 800, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 2);
+
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -655,10 +593,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest13() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-1mois-travaille-avant-simulation-mois-5.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-1mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-1mois-travaille-avant-simulation-mois-5.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-1mois-travaille-avant-simulation-mois-5.json");
 
 	int numeroMoisSimulation = 5;
 
@@ -669,8 +607,9 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(1);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 1);
+
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -687,10 +626,10 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
     @Test
     void mapPeriodeSalaireTest14() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-	String openFiscaPayloadSalaireImposableExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-1mois-travaille-avant-simulation-mois-2.json");
-	String openFiscaPayloadSalaireBaseExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-1mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireImposableExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-imposable-1mois-travaille-avant-simulation-mois-2.json");
+	String openFiscaPayloadSalaireBaseExpected = testUtile.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/salaire/salaire-base-1mois-travaille-avant-simulation-mois-2.json");
 
 	int numeroMoisSimulation = 2;
 
@@ -701,8 +640,9 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200);
 	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
 	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(1);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 0, 0, 0, 0));
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 1);
+
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
