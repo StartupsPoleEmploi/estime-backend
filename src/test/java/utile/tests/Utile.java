@@ -24,7 +24,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -133,7 +133,7 @@ public class Utile {
 	}
     }
 
-    public DetailIndemnisationESD creerDetailIndemnisationESD(String population) {
+    public DetailIndemnisationPEIO creerDetailIndemnisationESD(String population) {
 	switch (population) {
 	case "AAH":
 	    return creerDetailIndemnisationESD(true, false, false, false);
@@ -278,8 +278,8 @@ public class Utile {
 	return beneficiaireAides;
     }
 
-    private DetailIndemnisationESD creerDetailIndemnisationESD(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
-	DetailIndemnisationESD detailIndemnisationESD = new DetailIndemnisationESD();
+    private DetailIndemnisationPEIO creerDetailIndemnisationESD(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
+	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
 	detailIndemnisationESD.setBeneficiaireAAH(beneficiaireAAH);
 	detailIndemnisationESD.setBeneficiaireAssuranceChomage(beneficiaireARE);
 	detailIndemnisationESD.setBeneficiaireAideSolidarite(beneficiaireASS);

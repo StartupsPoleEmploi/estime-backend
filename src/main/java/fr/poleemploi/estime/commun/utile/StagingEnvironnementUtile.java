@@ -3,7 +3,7 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.Environnements;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -28,17 +28,17 @@ public class StagingEnvironnementUtile {
 	addInfosIndemnisation(individu, TypePopulation.ARE.getLibelle());
     }
 
-    public void gererAccesAvecBouchon(Individu individu, UserInfoESD userInfo) {
+    public void gererAccesAvecBouchon(Individu individu, UserInfoPEIO userInfo) {
 	individu.setIdPoleEmploi(userInfo.getSub());
 	individu.setPopulationAutorisee(true);
 	addInfosIndemnisation(individu, getPopulationDeFictif(userInfo));
     }
 
-    public boolean isUtilisateurFictif(UserInfoESD userInfo) {
+    public boolean isUtilisateurFictif(UserInfoPEIO userInfo) {
 	return isCandidatCaro(userInfo) || isDeFictifPoleemploiio(userInfo);
     }
 
-    private boolean isDeFictifPoleemploiio(UserInfoESD userInfo) {
+    private boolean isDeFictifPoleemploiio(UserInfoPEIO userInfo) {
 	return userInfo != null && userInfo.getEmail() != null && userInfo.getEmail().equalsIgnoreCase("emploistoredev@gmail.com");
     }
 
@@ -50,7 +50,7 @@ public class StagingEnvironnementUtile {
      * accéder à l'application.
      * @return
      */
-    public boolean isCandidatCaro(UserInfoESD userInfo) {
+    public boolean isCandidatCaro(UserInfoPEIO userInfo) {
 	String givenName = userInfo.getGivenName();
 	return givenName != null && (givenName.equalsIgnoreCase("caroass") || givenName.equalsIgnoreCase("caroaah") || givenName.equalsIgnoreCase("carorsa"));
     }
@@ -144,7 +144,7 @@ public class StagingEnvironnementUtile {
 	ressourcesFinancieres.setAidesCPAM(aidesCPAM);
     }
 
-    private String getPopulationDeFictif(UserInfoESD userInfo) {
+    private String getPopulationDeFictif(UserInfoPEIO userInfo) {
 	if (isCandidatCaro(userInfo)) {
 	    return userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
 	} else {

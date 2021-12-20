@@ -1,19 +1,13 @@
 package fr.poleemploi.estime.logique;
 
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIODevClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
-import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
-import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
 import fr.poleemploi.estime.commun.utile.DemandeurDemoUtile;
 import fr.poleemploi.estime.commun.utile.IndividuUtile;
@@ -22,7 +16,6 @@ import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeConnectUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.SimulateurAides;
-import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
@@ -40,7 +33,7 @@ public class IndividuLogique {
 	private DemandeurEmploiUtile demandeurEmploiUtile;
 
 	@Autowired
-	private PoleEmploiIODevClient emploiStoreDevClient;
+	private PoleEmploiIOClient emploiStoreDevClient;
 
 	@Autowired
 	private IndividuUtile individuUtile;
@@ -57,46 +50,34 @@ public class IndividuLogique {
 	@Autowired
 	private SuiviUtilisateurUtile suiviUtilisateurUtile;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(IndividuLogique.class);
-
 	public Individu authentifier(String code, String redirectURI, String nonce) {
 		Individu individu = new Individu();
 
-		PeConnectAuthorizationESD peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
+		PeConnectAuthorizationPEIO peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
 		String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
 
-		DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
-		Optional<UserInfoESD> userInfoOption = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
+		DetailIndemnisationPEIO detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
+		UserInfoPEIO userInfoESD = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
 
-		if (userInfoOption.isPresent()) {
-
-			UserInfoESD userInfoESD = userInfoOption.get();
-
-			if (stagingEnvironnementUtile.isStagingEnvironnement() && stagingEnvironnementUtile.isUtilisateurFictif(userInfoESD)) {
-				stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
-			} else {
-
-				individu.setIdPoleEmploi(userInfoESD.getSub());
-				if (demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
-					individu.setPopulationAutorisee(true);
-					demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
-				} else {
-					individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
-					individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
-				}
-			}
-
-			if(stagingEnvironnementUtile.isNotLocalhostEnvironnement())  {				
-				// @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
-				suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(), detailIndemnisationESD);
-			}
-
-			individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
-
+		if (stagingEnvironnementUtile.isStagingEnvironnement() && stagingEnvironnementUtile.isUtilisateurFictif(userInfoESD)) {
+			stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
 		} else {
-			LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
-			throw new InternalServerException(InternalServerMessages.IDENTIFICATION_IMPOSSIBLE.getMessage());
+			individu.setIdPoleEmploi(userInfoESD.getSub());
+			if (demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
+				individu.setPopulationAutorisee(true);
+				demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
+			} else {
+				individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
+				individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
+			}
 		}
+
+		if(stagingEnvironnementUtile.isNotLocalhostEnvironnement())  {				
+			// @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
+			suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(), detailIndemnisationESD);
+		}
+
+		individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
 
 		return individu;
 	}
