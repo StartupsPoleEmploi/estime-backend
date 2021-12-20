@@ -17,11 +17,11 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DateNaissanceESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.EtatCivilPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.UnauthorizedMessages;
@@ -35,14 +35,8 @@ public class PoleEmploiIOClient {
 	@Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.token-uri}")
 	private String accessTokenURI;
 
-	@Value("${emploi-store-dev.coordonnees-api-uri}")
-	private String apiCoordonneesURI;
-
-	@Value("${emploi-store-dev.date-naissance-api-uri}")
-	private String apiDateNaissanceURI;
-
-	@Value("${emploi-store-dev.detail-indemnisation-api-uri}")
-	private String apiDetailIndemnisationURI;
+	@Value("${poleemploiio-uri}")
+	private String poleemploiioURI;
 
 	@Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.user-info-uri}")
 	private String userInfoURI;
@@ -60,11 +54,11 @@ public class PoleEmploiIOClient {
 	//Temps d'attente avant de retenter une requête HTTP
 	private static final int RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR = 3000; 
 
-	public PeConnectAuthorizationESD callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
+	public PeConnectAuthorizationPEIO callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
 		HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreDevUtile.getAccesTokenRequeteHTTP(code, redirectURI);
 		try {
-			ResponseEntity<PeConnectAuthorizationESD> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP, PeConnectAuthorizationESD.class);
-			PeConnectAuthorizationESD informationsAccessTokenESD = reponse.getBody();
+			ResponseEntity<PeConnectAuthorizationPEIO> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP, PeConnectAuthorizationPEIO.class);
+			PeConnectAuthorizationPEIO informationsAccessTokenESD = reponse.getBody();
 			if (informationsAccessTokenESD.getNonce().compareTo(nonce) != 0) {
 				LOGGER.error(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
 				throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
@@ -77,10 +71,10 @@ public class PoleEmploiIOClient {
 		}
 	}
 
-	public UserInfoESD callUserInfoEndPoint(String bearerToken) {
+	public UserInfoPEIO callUserInfoEndPoint(String bearerToken) {
 		try {
 			HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-			ResponseEntity<UserInfoESD> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoESD.class);
+			ResponseEntity<UserInfoPEIO> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoPEIO.class);
 			return reponse.getBody();
 		} catch (Exception e) {
 			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), userInfoURI);
@@ -89,10 +83,12 @@ public class PoleEmploiIOClient {
 		}
 	}
 
-	public DetailIndemnisationESD callDetailIndemnisationEndPoint(String bearerToken) {
+	@Retryable(value = { TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
+	public DetailIndemnisationPEIO callDetailIndemnisationEndPoint(String bearerToken) {
+		String apiDetailIndemnisationURI = poleemploiioURI + "peconnect-detailindemnisations/v1/indemnisation";
 		try {			
 			HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-			ResponseEntity<DetailIndemnisationESD> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationESD.class);
+			ResponseEntity<DetailIndemnisationPEIO> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationPEIO.class);
 			return reponse.getBody();
 		} catch (Exception exception) {
 			if(isTooManyRequestsHttpClientError(exception)) {
@@ -106,10 +102,11 @@ public class PoleEmploiIOClient {
 	}
 
 	@Retryable(value = { TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
-	public Optional<CoordonneesESD> callCoordonneesAPI(String bearerToken) {
+	public Optional<CoordonneesPEIO> callCoordonneesAPI(String bearerToken) {
+		String apiCoordonneesURI = poleemploiioURI + "peconnect-coordonnees/v1/coordonnees";
 		try {
 			HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-			ResponseEntity<CoordonneesESD> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesESD.class);
+			ResponseEntity<CoordonneesPEIO> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesPEIO.class);
 			return Optional.of(reponse.getBody());
 
 		} catch (HttpClientErrorException httpClientErrorException) {
@@ -121,11 +118,12 @@ public class PoleEmploiIOClient {
 	}	
 
 	@Retryable(value = { TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
-	public Optional<DateNaissanceESD> callDateNaissanceEndPoint(String bearerToken) {
-		ResponseEntity<DateNaissanceESD> reponse = null;
+	public Optional<EtatCivilPEIO> callEtatCivilEndPoint(String bearerToken) {
+		String apiEtatCivilURI = poleemploiioURI + "peconnect-datenaissance/v1/etat-civil";
+		ResponseEntity<EtatCivilPEIO> reponse = null;
 		try {
 			HttpEntity<String> requeteHTTP = emploiStoreDevUtile.getRequeteHTTP(bearerToken);
-			reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissanceESD.class);
+			reponse = this.restTemplate.exchange(apiEtatCivilURI, HttpMethod.GET, requeteHTTP, EtatCivilPEIO.class);
 			return Optional.of(reponse.getBody());
 		} catch (HttpClientErrorException httpClientErrorException) {
 			if(isTooManyRequestsHttpClientError(httpClientErrorException)) {

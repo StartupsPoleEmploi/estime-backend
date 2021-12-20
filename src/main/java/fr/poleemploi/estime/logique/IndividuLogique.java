@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationESD;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoESD;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
 import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
 import fr.poleemploi.estime.commun.utile.DemandeurDemoUtile;
@@ -53,11 +53,11 @@ public class IndividuLogique {
 	public Individu authentifier(String code, String redirectURI, String nonce) {
 		Individu individu = new Individu();
 
-		PeConnectAuthorizationESD peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
+		PeConnectAuthorizationPEIO peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
 		String bearerToken = accesTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
 
-		DetailIndemnisationESD detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
-		UserInfoESD userInfoESD = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
+		DetailIndemnisationPEIO detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
+		UserInfoPEIO userInfoESD = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
 
 		if (stagingEnvironnementUtile.isStagingEnvironnement() && stagingEnvironnementUtile.isUtilisateurFictif(userInfoESD)) {
 			stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
