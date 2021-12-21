@@ -59,7 +59,7 @@ class OpenFiscaMappeurIndividuTests extends Commun {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");
         JSONObject openFiscaPayload = openFiscaMappeurIndividu.creerDemandeurJSON(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -76,7 +76,7 @@ class OpenFiscaMappeurIndividuTests extends Commun {
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");
         JSONObject openFiscaPayload = openFiscaMappeurIndividu.creerDemandeurJSON(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
 }

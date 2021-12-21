@@ -60,265 +60,272 @@ class OpenFiscaMappeurTestsConjoint extends Commun {
     @Test
     void mapDemandeurAvecConjointAAHToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-aah.json");
+	String openFiscaPayloadExpected = testUtile
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-aah.json");
 
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
-        FuturTravail futurTravail = new FuturTravail();
-        Salaire salaire = new Salaire();
-        salaire.setMontantNet(900);
-        salaire.setMontantBrut(1165);
-        futurTravail.setSalaire(salaire);
-        demandeurEmploi.setFuturTravail(futurTravail);
+	FuturTravail futurTravail = new FuturTravail();
+	Salaire salaire = new Salaire();
+	salaire.setMontantNet(900);
+	salaire.setMontantBrut(1165);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
 
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
-        Logement logement = new Logement();
-        logement.setMontantLoyer(500f);
-        logement.setMontantCharges(50f);
-        logement.setCodeInsee("44109");
-        logement.setDeMayotte(false);
-        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-        statutOccupationLogement.setLocataireNonMeuble(true);
-        logement.setStatutOccupationLogement(statutOccupationLogement);
-        informationsPersonnelles.setLogement(logement);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+	Logement logement = new Logement();
+	logement.setMontantLoyer(500f);
+	logement.setMontantCharges(50f);
+	logement.setCodeInsee("44109");
+	logement.setDeMayotte(false);
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AidesCAF aidesCAF = createAidesCAF();
-        ressourcesFinancieres.setAidesCAF(aidesCAF);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        situationFamiliale.setIsEnCouple(true);
-        Personne conjoint = new Personne();
-        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
-        beneficiaireAides.setBeneficiaireAAH(true);
-        conjoint.setBeneficiaireAides(beneficiaireAides);
-        RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        AidesCAF aidesCAFConjoint = createAidesCAF();
-        aidesCAFConjoint.setAllocationAAH(900f);
-        ressourcesFinancieresConjoint.setAidesCAF(aidesCAFConjoint);
-        conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
-        situationFamiliale.setConjoint(conjoint);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+	SituationFamiliale situationFamiliale = new SituationFamiliale();
+	situationFamiliale.setIsEnCouple(true);
+	Personne conjoint = new Personne();
+	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+	beneficiaireAides.setBeneficiaireAAH(true);
+	conjoint.setBeneficiaireAides(beneficiaireAides);
+	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	AidesCAF aidesCAFConjoint = createAidesCAF();
+	aidesCAFConjoint.setAllocationAAH(900f);
+	ressourcesFinancieresConjoint.setAidesCAF(aidesCAFConjoint);
+	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	situationFamiliale.setConjoint(conjoint);
+	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
     void mapDemandeurAvecConjointASSToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-ass.json");
+	String openFiscaPayloadExpected = testUtile
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-ass.json");
 
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
-        FuturTravail futurTravail = new FuturTravail();
-        Salaire salaire = new Salaire();
-        salaire.setMontantNet(900);
-        salaire.setMontantBrut(1165);
-        futurTravail.setSalaire(salaire);
-        demandeurEmploi.setFuturTravail(futurTravail);
+	FuturTravail futurTravail = new FuturTravail();
+	Salaire salaire = new Salaire();
+	salaire.setMontantNet(900);
+	salaire.setMontantBrut(1165);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
 
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
-        Logement logement = new Logement();
-        logement.setMontantLoyer(500f);
-        logement.setMontantCharges(50f);
-        logement.setCodeInsee("44109");
-        logement.setDeMayotte(false);
-        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-        statutOccupationLogement.setLocataireNonMeuble(true);
-        logement.setStatutOccupationLogement(statutOccupationLogement);
-        informationsPersonnelles.setLogement(logement);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+	Logement logement = new Logement();
+	logement.setMontantLoyer(500f);
+	logement.setMontantCharges(50f);
+	logement.setCodeInsee("44109");
+	logement.setDeMayotte(false);
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AidesCAF aidesCAF = createAidesCAF();
-        ressourcesFinancieres.setAidesCAF(aidesCAF);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        situationFamiliale.setIsEnCouple(true);
-        Personne conjoint = new Personne();
-        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
-        beneficiaireAides.setBeneficiaireASS(true);
-        conjoint.setBeneficiaireAides(beneficiaireAides);
-        RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-        AllocationASS allocationASS = new AllocationASS();
-        allocationASS.setAllocationMensuelleNet(900f);
-        aidesPoleEmploi.setAllocationASS(allocationASS);
-        ressourcesFinancieresConjoint.setAidesPoleEmploi(aidesPoleEmploi);
-        conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
-        situationFamiliale.setConjoint(conjoint);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+	SituationFamiliale situationFamiliale = new SituationFamiliale();
+	situationFamiliale.setIsEnCouple(true);
+	Personne conjoint = new Personne();
+	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+	beneficiaireAides.setBeneficiaireASS(true);
+	conjoint.setBeneficiaireAides(beneficiaireAides);
+	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+	AllocationASS allocationASS = new AllocationASS();
+	allocationASS.setAllocationMensuelleNet(900f);
+	aidesPoleEmploi.setAllocationASS(allocationASS);
+	ressourcesFinancieresConjoint.setAidesPoleEmploi(aidesPoleEmploi);
+	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	situationFamiliale.setConjoint(conjoint);
+	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
     void mapDemandeurAvecConjointAREToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-are.json");
+	String openFiscaPayloadExpected = testUtile
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-are.json");
 
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
-        FuturTravail futurTravail = new FuturTravail();
-        Salaire salaire = new Salaire();
-        salaire.setMontantNet(900);
-        salaire.setMontantBrut(1165);
-        futurTravail.setSalaire(salaire);
-        demandeurEmploi.setFuturTravail(futurTravail);
+	FuturTravail futurTravail = new FuturTravail();
+	Salaire salaire = new Salaire();
+	salaire.setMontantNet(900);
+	salaire.setMontantBrut(1165);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
 
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
-        Logement logement = new Logement();
-        logement.setMontantLoyer(500f);
-        logement.setMontantCharges(50f);
-        logement.setCodeInsee("44109");
-        logement.setDeMayotte(false);
-        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-        statutOccupationLogement.setLocataireNonMeuble(true);
-        logement.setStatutOccupationLogement(statutOccupationLogement);
-        informationsPersonnelles.setLogement(logement);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+	Logement logement = new Logement();
+	logement.setMontantLoyer(500f);
+	logement.setMontantCharges(50f);
+	logement.setCodeInsee("44109");
+	logement.setDeMayotte(false);
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AidesCAF aidesCAF = createAidesCAF();
-        ressourcesFinancieres.setAidesCAF(aidesCAF);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        situationFamiliale.setIsEnCouple(true);
-        Personne conjoint = new Personne();
-        BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
-        beneficiaireAides.setBeneficiaireARE(true);
-        conjoint.setBeneficiaireAides(beneficiaireAides);
-        RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-        AllocationARE allocationARE = new AllocationARE();
-        allocationARE.setAllocationMensuelleNet(900f);
-        aidesPoleEmploi.setAllocationARE(allocationARE);
-        ressourcesFinancieresConjoint.setAidesPoleEmploi(aidesPoleEmploi);
-        conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
-        situationFamiliale.setConjoint(conjoint);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	SituationFamiliale situationFamiliale = new SituationFamiliale();
+	situationFamiliale.setIsEnCouple(true);
+	Personne conjoint = new Personne();
+	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+	beneficiaireAides.setBeneficiaireARE(true);
+	conjoint.setBeneficiaireAides(beneficiaireAides);
+	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+	AllocationARE allocationARE = new AllocationARE();
+	allocationARE.setAllocationMensuelleNet(900f);
+	aidesPoleEmploi.setAllocationARE(allocationARE);
+	ressourcesFinancieresConjoint.setAidesPoleEmploi(aidesPoleEmploi);
+	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	situationFamiliale.setConjoint(conjoint);
+	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
-    void mapDemandeurAvecConjointPensionInvaliditeToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+    void mapDemandeurAvecConjointPensionInvaliditeToOpenFiscaPayloadTest()
+	    throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-        String openFiscaPayloadExpected = testUtile
-                .getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-pension-invalidite.json");
+	String openFiscaPayloadExpected = testUtile
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-pension-invalidite.json");
 
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
-        FuturTravail futurTravail = new FuturTravail();
-        Salaire salaire = new Salaire();
-        salaire.setMontantNet(900);
-        salaire.setMontantBrut(1165);
-        futurTravail.setSalaire(salaire);
-        demandeurEmploi.setFuturTravail(futurTravail);
+	FuturTravail futurTravail = new FuturTravail();
+	Salaire salaire = new Salaire();
+	salaire.setMontantNet(900);
+	salaire.setMontantBrut(1165);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
 
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
-        Logement logement = new Logement();
-        logement.setMontantLoyer(500f);
-        logement.setMontantCharges(50f);
-        logement.setCodeInsee("44109");
-        logement.setDeMayotte(false);
-        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-        statutOccupationLogement.setLocataireNonMeuble(true);
-        logement.setStatutOccupationLogement(statutOccupationLogement);
-        informationsPersonnelles.setLogement(logement);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+	Logement logement = new Logement();
+	logement.setMontantLoyer(500f);
+	logement.setMontantCharges(50f);
+	logement.setCodeInsee("44109");
+	logement.setDeMayotte(false);
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AidesCAF aidesCAF = createAidesCAF();
-        ressourcesFinancieres.setAidesCAF(aidesCAF);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        situationFamiliale.setIsEnCouple(true);
-        Personne conjoint = new Personne();
-        RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        AidesCPAM aidesCPAM = new AidesCPAM();
-        aidesCPAM.setPensionInvalidite(200f);
-        ressourcesFinancieresConjoint.setAidesCPAM(aidesCPAM);
-        conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
-        situationFamiliale.setConjoint(conjoint);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+	SituationFamiliale situationFamiliale = new SituationFamiliale();
+	situationFamiliale.setIsEnCouple(true);
+	Personne conjoint = new Personne();
+	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	AidesCPAM aidesCPAM = new AidesCPAM();
+	aidesCPAM.setPensionInvalidite(200f);
+	ressourcesFinancieresConjoint.setAidesCPAM(aidesCPAM);
+	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	situationFamiliale.setConjoint(conjoint);
+	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
     void mapDemandeurAvecConjointSalaireToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-        String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-salaire.json");
+	String openFiscaPayloadExpected = testUtile
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-salaire.json");
 
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
-        FuturTravail futurTravail = new FuturTravail();
-        Salaire salaire = new Salaire();
-        salaire.setMontantNet(900);
-        salaire.setMontantBrut(1165);
-        futurTravail.setSalaire(salaire);
-        demandeurEmploi.setFuturTravail(futurTravail);
+	FuturTravail futurTravail = new FuturTravail();
+	Salaire salaire = new Salaire();
+	salaire.setMontantNet(900);
+	salaire.setMontantBrut(1165);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
 
-        InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-        informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
-        Logement logement = new Logement();
-        logement.setMontantLoyer(500f);
-        logement.setMontantCharges(50f);
-        logement.setCodeInsee("44109");
-        logement.setDeMayotte(false);
-        StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-        statutOccupationLogement.setLocataireNonMeuble(true);
-        logement.setStatutOccupationLogement(statutOccupationLogement);
-        informationsPersonnelles.setLogement(logement);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+	Logement logement = new Logement();
+	logement.setMontantLoyer(500f);
+	logement.setMontantCharges(50f);
+	logement.setCodeInsee("44109");
+	logement.setDeMayotte(false);
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        AidesCAF aidesCAF = createAidesCAF();
-        ressourcesFinancieres.setAidesCAF(aidesCAF);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
 
-        SituationFamiliale situationFamiliale = new SituationFamiliale();
-        situationFamiliale.setIsEnCouple(true);
-        Personne conjoint = new Personne();
-        RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-        Salaire salaireConjoint = new Salaire();
-        salaireConjoint.setMontantNet(1200);
-        salaireConjoint.setMontantBrut(1544);
-        futurTravail.setSalaire(salaire);
-        ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
-        conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
-        situationFamiliale.setConjoint(conjoint);
-        demandeurEmploi.setSituationFamiliale(situationFamiliale);
+	SituationFamiliale situationFamiliale = new SituationFamiliale();
+	situationFamiliale.setIsEnCouple(true);
+	Personne conjoint = new Personne();
+	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	Salaire salaireConjoint = new Salaire();
+	salaireConjoint.setMontantNet(1200);
+	salaireConjoint.setMontantBrut(1544);
+	futurTravail.setSalaire(salaire);
+	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
+	ressourcesFinancieresConjoint.setHasTravailleAuCoursDerniersMois(true);
+	ressourcesFinancieresConjoint.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1200, 1544, 13));
+	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	situationFamiliale.setConjoint(conjoint);
+	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-        LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-        JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 }

@@ -103,7 +103,7 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -154,7 +154,7 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -205,7 +205,7 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -247,7 +247,7 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -291,7 +291,7 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -335,7 +335,7 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -378,7 +378,7 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -424,7 +424,7 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -471,7 +471,7 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 
     @Test
@@ -521,6 +521,6 @@ class OpenFiscaMappeurTests extends Commun {
 
         JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
-        assertThat(openFiscaPayload.toString()).isEqualTo(openFiscaPayloadExpected);
+        assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
 }
