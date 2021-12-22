@@ -65,8 +65,8 @@ public class PoleEmploiIOClient {
 			} else {
 				return informationsAccessTokenESD;				
 			}
-		} catch (HttpClientErrorException e) {
-			LOGGER.error(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
+		} catch (HttpClientErrorException exception) {
+			LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), accessTokenURI));
 			throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 		}
 	}
@@ -77,8 +77,7 @@ public class PoleEmploiIOClient {
 			ResponseEntity<UserInfoPEIO> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoPEIO.class);
 			return reponse.getBody();
 		} catch (Exception e) {
-			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), userInfoURI);
-			LOGGER.error(messageError);
+			LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), userInfoURI));
 			throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 		}
 	}
@@ -93,9 +92,8 @@ public class PoleEmploiIOClient {
 		} catch (Exception exception) {
 			if(isTooManyRequestsHttpClientError(exception)) {
 				throw new TooManyRequestException(exception.getMessage());
-			} else {
-				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), apiDetailIndemnisationURI);
-				LOGGER.error(messageError);
+			} else {		
+				LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), apiDetailIndemnisationURI));
 				throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 			}
 		}
