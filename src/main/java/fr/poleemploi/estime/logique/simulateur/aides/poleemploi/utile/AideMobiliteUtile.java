@@ -2,21 +2,14 @@ package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOIn;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.NombresJoursIndemnises;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
@@ -47,10 +40,6 @@ public class AideMobiliteUtile {
     public static final int TRAJET_KM_ALLER_RETOUR_MINIMUM = 60;
     public static final int TRAJET_KM_ALLER_RETOUR_MINIMUM_DOM = 20;
     private static final int NOMBRE_MAX_JOURS_INDEMNISES = 20;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AideMobiliteUtile.class);
-
-    @Autowired
-    private AccesTokenUtile accesTokenUtile;
 
     @Autowired
     private AideUtile aideeUtile;
@@ -70,8 +59,11 @@ public class AideMobiliteUtile {
     @Autowired
     private SimulateurAidesUtile simulateurAidesUtile;
 
-    @Autowired
-    private PoleEmploiIOClient poleEmploiIOClient;
+    //    @Autowired
+    //    private PoleEmploiIOClient poleEmploiIOClient;
+    //
+    //    @Autowired
+    //    private AccesTokenUtile accesTokenUtile;
 
     public Aide simulerAide(DemandeurEmploi demandeurEmploi) {
 	float montantAideMobilite = calculerMontantAideMobilite(demandeurEmploi);
@@ -97,46 +89,46 @@ public class AideMobiliteUtile {
     //	}
     //	return Optional.empty();
     //    }
-
-    private AideMobilitePEIOIn remplirAideMobiliteIn(DemandeurEmploi demandeurEmploi) {
-	AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
-	aideMobilitePEIOIn.setContexte("Reprise");
-	aideMobilitePEIOIn.setDateActionReclassement(LocalDate.now().with(TemporalAdjusters.firstDayOfNextMonth()).toString());
-	aideMobilitePEIOIn.setDateDepot(LocalDate.now().toString());
-	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
-	aideMobilitePEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
-	aideMobilitePEIOIn.setOrigine("W");
-	aideMobilitePEIOIn.setDistanceDomicileActionReclassement(Math.round(demandeurEmploi.getFuturTravail().getDistanceKmDomicileTravail()));
-	aideMobilitePEIOIn.setNombreAllersRetours(demandeurEmploi.getFuturTravail().getNombreTrajetsDomicileTravail());
-	aideMobilitePEIOIn.setNombreRepas(getNombreRepas(demandeurEmploi));
-	aideMobilitePEIOIn.setNombreNuitees(getNombreNuitees(demandeurEmploi));
-	aideMobilitePEIOIn.setContexte("Reprise");
-	aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
-
-	return aideMobilitePEIOIn;
-    }
-
-    private int getNombreNuitees(DemandeurEmploi demandeurEmploi) {
-	int nombreJoursIndemnises = getNombrejoursIndemnises(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine());
-	if (nombreJoursIndemnises - 1 > 0) {
-	    return nombreJoursIndemnises - 1;
-	} else {
-	    return 0;
-	}
-    }
-
-    private int getNombreRepas(DemandeurEmploi demandeurEmploi) {
-	float nombreHeuresHebdoTravaillees = demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine();
-	int nombreRepas = 0;
-	for (NombresJoursIndemnises nombresJoursTravailles : NombresJoursIndemnises.values()) {
-	    if (nombreHeuresHebdoTravaillees >= nombresJoursTravailles.getNombreHeuresMinHebdo()
-		    && nombreHeuresHebdoTravaillees <= nombresJoursTravailles.getNombreHeuresMaxHebdo()) {
-		nombreRepas = nombresJoursTravailles.getNombreRepasIndemnises();
-	    }
-	}
-
-	return nombreRepas;
-    }
+    //
+    //    private AideMobilitePEIOIn remplirAideMobiliteIn(DemandeurEmploi demandeurEmploi) {
+    //	AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
+    //	aideMobilitePEIOIn.setContexte("Reprise");
+    //	aideMobilitePEIOIn.setDateActionReclassement(LocalDate.now().with(TemporalAdjusters.firstDayOfNextMonth()).toString());
+    //	aideMobilitePEIOIn.setDateDepot(LocalDate.now().toString());
+    //	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
+    //	aideMobilitePEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
+    //	aideMobilitePEIOIn.setOrigine("W");
+    //	aideMobilitePEIOIn.setDistanceDomicileActionReclassement(Math.round(demandeurEmploi.getFuturTravail().getDistanceKmDomicileTravail()));
+    //	aideMobilitePEIOIn.setNombreAllersRetours(demandeurEmploi.getFuturTravail().getNombreTrajetsDomicileTravail());
+    //	aideMobilitePEIOIn.setNombreRepas(getNombreRepas(demandeurEmploi));
+    //	aideMobilitePEIOIn.setNombreNuitees(getNombreNuitees(demandeurEmploi));
+    //	aideMobilitePEIOIn.setContexte("Reprise");
+    //	aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
+    //
+    //	return aideMobilitePEIOIn;
+    //    }
+    //
+    //    private int getNombreNuitees(DemandeurEmploi demandeurEmploi) {
+    //	int nombreJoursIndemnises = getNombrejoursIndemnises(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine());
+    //	if (nombreJoursIndemnises - 1 > 0) {
+    //	    return nombreJoursIndemnises - 1;
+    //	} else {
+    //	    return 0;
+    //	}
+    //    }
+    //
+    //    private int getNombreRepas(DemandeurEmploi demandeurEmploi) {
+    //	float nombreHeuresHebdoTravaillees = demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine();
+    //	int nombreRepas = 0;
+    //	for (NombresJoursIndemnises nombresJoursTravailles : NombresJoursIndemnises.values()) {
+    //	    if (nombreHeuresHebdoTravaillees >= nombresJoursTravailles.getNombreHeuresMinHebdo()
+    //		    && nombreHeuresHebdoTravaillees <= nombresJoursTravailles.getNombreHeuresMaxHebdo()) {
+    //		nombreRepas = nombresJoursTravailles.getNombreRepasIndemnises();
+    //	    }
+    //	}
+    //
+    //	return nombreRepas;
+    //    }
 
     public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	return simulateurAidesUtile.isPremierMois(numeroMoisSimule) && futurTravailUtile.isFuturContratTravailEligible(demandeurEmploi.getFuturTravail())

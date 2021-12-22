@@ -15,7 +15,6 @@ import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
@@ -23,9 +22,6 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 public class AreUtile {
     @Autowired
     private AccesTokenUtile accesTokenUtile;
-
-    @Autowired
-    private AideUtile aideUtile;
 
     @Autowired
     private PoleEmploiIOClient poleEmploiIOClient;

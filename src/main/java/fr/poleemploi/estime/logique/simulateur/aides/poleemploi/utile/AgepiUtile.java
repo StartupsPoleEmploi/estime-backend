@@ -2,23 +2,15 @@ package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
 import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
@@ -28,7 +20,6 @@ import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Personne;
 
 /**
  * Classe permettant de calculer le montant de l'AGEPI (Aide à la garde d'enfants pour parent isolé).
@@ -45,10 +36,6 @@ public class AgepiUtile {
     public static final int NBR_ENFANT_PALIER_MAX = 3;
     public static final int NBR_ENFANT_PALIER_MIN = 1;
     public static final int NBR_HEURE_PALIER_INTERMEDIAIRE = 15;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AgepiUtile.class);
-
-    @Autowired
-    private AccesTokenUtile accesTokenUtile;
 
     @Autowired
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
@@ -71,8 +58,11 @@ public class AgepiUtile {
     @Autowired
     private SimulateurAidesUtile simulateurAidesUtile;
 
-    @Autowired
-    private PoleEmploiIOClient poleEmploiIOClient;
+    //    @Autowired
+    //    private PoleEmploiIOClient poleEmploiIOClient;
+    //    
+    //    @Autowired
+    //    private AccesTokenUtile accesTokenUtile;
 
     /** Qui peut percevoir l'Agepi ?
      *   Vous pouvez percevoir l'Agepi si vous remplissez toutes les conditions suivantes :
@@ -110,38 +100,38 @@ public class AgepiUtile {
     //	}
     //	return Optional.empty();
     //    }
-
-    private AgepiPEIOIn remplirAgepiIn(DemandeurEmploi demandeurEmploi) {
-	AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
-	agepiPEIOIn.setContexte("Reprise");
-	agepiPEIOIn.setDateActionReclassement(LocalDate.now().with(TemporalAdjusters.firstDayOfNextMonth()).toString());
-	agepiPEIOIn.setDateDepot(LocalDate.now().withDayOfMonth(1).toString());
-	agepiPEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
-	agepiPEIOIn.setEleveSeulEnfants(!demandeurEmploi.getSituationFamiliale().getIsEnCouple());
-	agepiPEIOIn.setIntensite(Math.round(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine()));
-	agepiPEIOIn.setLieuFormationOuEmploi("France");
-	agepiPEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
-
-	int nombreEnfants = 0;
-	int nombreEnfantsMoinsDixAns = 0;
-	for (Personne personneACharge : demandeurEmploi.getSituationFamiliale().getPersonnesACharge()) {
-	    LocalDate today = LocalDate.now();
-	    int agePersonneACharge = Period.between(personneACharge.getInformationsPersonnelles().getDateNaissance(), today).getYears();
-	    if (agePersonneACharge < 10) {
-		++nombreEnfants;
-		++nombreEnfantsMoinsDixAns;
-	    } else if (agePersonneACharge < 18) {
-		++nombreEnfants;
-	    }
-	}
-
-	agepiPEIOIn.setNombreEnfants(nombreEnfants);
-	agepiPEIOIn.setNombreEnfantsMoins10Ans(nombreEnfantsMoinsDixAns);
-	agepiPEIOIn.setOrigine("W");
-	agepiPEIOIn.setTypeIntensite("Hebdomadaire");
-	agepiPEIOIn.setCodeTerritoire("001");
-	return agepiPEIOIn;
-    }
+    //
+    //    private AgepiPEIOIn remplirAgepiIn(DemandeurEmploi demandeurEmploi) {
+    //	AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
+    //	agepiPEIOIn.setContexte("Reprise");
+    //	agepiPEIOIn.setDateActionReclassement(LocalDate.now().with(TemporalAdjusters.firstDayOfNextMonth()).toString());
+    //	agepiPEIOIn.setDateDepot(LocalDate.now().withDayOfMonth(1).toString());
+    //	agepiPEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
+    //	agepiPEIOIn.setEleveSeulEnfants(!demandeurEmploi.getSituationFamiliale().getIsEnCouple());
+    //	agepiPEIOIn.setIntensite(Math.round(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine()));
+    //	agepiPEIOIn.setLieuFormationOuEmploi("France");
+    //	agepiPEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
+    //
+    //	int nombreEnfants = 0;
+    //	int nombreEnfantsMoinsDixAns = 0;
+    //	for (Personne personneACharge : demandeurEmploi.getSituationFamiliale().getPersonnesACharge()) {
+    //	    LocalDate today = LocalDate.now();
+    //	    int agePersonneACharge = Period.between(personneACharge.getInformationsPersonnelles().getDateNaissance(), today).getYears();
+    //	    if (agePersonneACharge < 10) {
+    //		++nombreEnfants;
+    //		++nombreEnfantsMoinsDixAns;
+    //	    } else if (agePersonneACharge < 18) {
+    //		++nombreEnfants;
+    //	    }
+    //	}
+    //
+    //	agepiPEIOIn.setNombreEnfants(nombreEnfants);
+    //	agepiPEIOIn.setNombreEnfantsMoins10Ans(nombreEnfantsMoinsDixAns);
+    //	agepiPEIOIn.setOrigine("W");
+    //	agepiPEIOIn.setTypeIntensite("Hebdomadaire");
+    //	agepiPEIOIn.setCodeTerritoire("001");
+    //	return agepiPEIOIn;
+    //    }
 
     private float calculerMontantAgepi(DemandeurEmploi demandeurEmploi) {
 	int nombreEnfantACharge = situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, AGE_MAX_ENFANT);
