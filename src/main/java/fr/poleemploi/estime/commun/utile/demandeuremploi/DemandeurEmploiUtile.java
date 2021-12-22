@@ -25,100 +25,99 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 @Component
 public class DemandeurEmploiUtile {
 
-	@Autowired
-	private PoleEmploiIOClient emploiStoreDevClient;
+    @Autowired
+    private PoleEmploiIOClient emploiStoreDevClient;
 
-	@Autowired
-	private DateUtile dateUtile;
+    @Autowired
+    private DateUtile dateUtile;
 
-	@Autowired
-	private IndividuUtile individuUtile;
+    @Autowired
+    private IndividuUtile individuUtile;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(DemandeurEmploiUtile.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DemandeurEmploiUtile.class);
 
-	public boolean isSansRessourcesFinancieres(DemandeurEmploi demandeurEmploi) {
-		return demandeurEmploi.getRessourcesFinancieres() == null;
+    public boolean isSansRessourcesFinancieres(DemandeurEmploi demandeurEmploi) {
+	return demandeurEmploi.getRessourcesFinancieres() == null;
+    }
+
+    public void addRessourcesFinancieres(DemandeurEmploi demandeurEmploi, Individu individu) {
+	if (individu.getRessourcesFinancieres() != null) {
+	    demandeurEmploi.setRessourcesFinancieres(individu.getRessourcesFinancieres());
+	} else {
+	    demandeurEmploi.setRessourcesFinancieres(new RessourcesFinancieres());
 	}
+	demandeurEmploi.getRessourcesFinancieres().setAidesCAF(creerAidesCAF());
+	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+    }
 
-	public void addRessourcesFinancieres(DemandeurEmploi demandeurEmploi, Individu individu) {
-		if (individu.getRessourcesFinancieres() != null) {
-			demandeurEmploi.setRessourcesFinancieres(individu.getRessourcesFinancieres());
+    public void addInformationsPersonnelles(DemandeurEmploi demandeurEmploi, Individu individu) {
+	if (individu.getInformationsPersonnelles() != null) {
+	    demandeurEmploi.setInformationsPersonnelles(individu.getInformationsPersonnelles());
+	} else {
+	    demandeurEmploi.setInformationsPersonnelles(individuUtile.creerInformationsPersonnelles());
+	}
+    }
+
+    public void addDateNaissance(DemandeurEmploi demandeurEmploi, String bearerToken) {
+	try {
+	    Optional<EtatCivilPEIO> etatCivilPEIOOptional = emploiStoreDevClient.callEtatCivilEndPoint(bearerToken);
+	    if (etatCivilPEIOOptional.isPresent()) {
+		EtatCivilPEIO etatCivilPEIO = etatCivilPEIOOptional.get();
+		if (etatCivilPEIO.getDateDeNaissance() != null) {
+		    LocalDate dateNaissanceLocalDate = dateUtile.convertDateToLocalDate(etatCivilPEIO.getDateDeNaissance());
+		    if (demandeurEmploi.getInformationsPersonnelles() != null) {
+			demandeurEmploi.getInformationsPersonnelles().setDateNaissance(dateNaissanceLocalDate);
+		    } else {
+			InformationsPersonnelles informationsPersonnelles = individuUtile.creerInformationsPersonnelles();
+			informationsPersonnelles.setDateNaissance(dateNaissanceLocalDate);
+			demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+		    }
+		}
+	    }
+	} catch (Exception e) {
+	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), "peio api date de naissance");
+	    LOGGER.error(messageError);
+	}
+    }
+
+    public void addCodeDepartement(DemandeurEmploi demandeurEmploi, String bearerToken) {
+	try {
+	    Optional<CoordonneesPEIO> coordonneesESDOptional = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
+	    if (coordonneesESDOptional.isPresent()) {
+		CoordonneesPEIO coordonneesESD = coordonneesESDOptional.get();
+		if (demandeurEmploi.getInformationsPersonnelles() != null) {
+		    demandeurEmploi.getInformationsPersonnelles().setCodePostal(coordonneesESD.getCodePostal());
 		} else {
-			demandeurEmploi.setRessourcesFinancieres(new RessourcesFinancieres());
+		    InformationsPersonnelles informationsPersonnelles = individuUtile.creerInformationsPersonnelles();
+		    informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
+		    demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 		}
-		demandeurEmploi.getRessourcesFinancieres().setAidesCAF(creerAidesCAF());
-		demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	    }
+	} catch (Exception e) {
+	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), "peio api coordonnees");
+	    LOGGER.error(messageError);
 	}
+    }
 
-	public void addInformationsPersonnelles(DemandeurEmploi demandeurEmploi, Individu individu, String bearerToken) {
-		if (individu.getInformationsPersonnelles() != null) {
-			demandeurEmploi.setInformationsPersonnelles(individu.getInformationsPersonnelles());
-		} else {
-			demandeurEmploi.setInformationsPersonnelles(individuUtile.creerInformationsPersonnelles());
-		}
-		addDateNaissance(demandeurEmploi, bearerToken);
-	}
+    private AidesCAF creerAidesCAF() {
+	AidesCAF aidesCAF = new AidesCAF();
+	aidesCAF.setAidesLogement(creerAidesLogement());
+	return aidesCAF;
+    }
 
-	public void addDateNaissance(DemandeurEmploi demandeurEmploi, String bearerToken) {
-		try {
-			Optional<EtatCivilPEIO> etatCivilPEIOOptional = emploiStoreDevClient.callEtatCivilEndPoint(bearerToken);
-			if (etatCivilPEIOOptional.isPresent()) {
-				EtatCivilPEIO etatCivilPEIO = etatCivilPEIOOptional.get();
-				if (etatCivilPEIO.getDateDeNaissance() != null) {
-					LocalDate dateNaissanceLocalDate = dateUtile.convertDateToLocalDate(etatCivilPEIO.getDateDeNaissance());
-					if (demandeurEmploi.getInformationsPersonnelles() != null) {
-						demandeurEmploi.getInformationsPersonnelles().setDateNaissance(dateNaissanceLocalDate);
-					} else {
-						InformationsPersonnelles informationsPersonnelles = individuUtile.creerInformationsPersonnelles();
-						informationsPersonnelles.setDateNaissance(dateNaissanceLocalDate);
-						demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-					}
-				}
-			}		
-		} catch (Exception e) {
-			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), "peio api date de naissance");
-			LOGGER.error(messageError);		
-		}				
-	}
+    private AidesLogement creerAidesLogement() {
+	AidesLogement aidesLogement = new AidesLogement();
+	aidesLogement.setAidePersonnaliseeLogement(creerAllocationsLogement());
+	aidesLogement.setAllocationLogementFamiliale(creerAllocationsLogement());
+	aidesLogement.setAllocationLogementSociale(creerAllocationsLogement());
+	return aidesLogement;
+    }
 
-	public void addCodeDepartement(DemandeurEmploi demandeurEmploi, String bearerToken) {
-		try {
-			Optional<CoordonneesPEIO> coordonneesESDOptional = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
-			if (coordonneesESDOptional.isPresent()) {
-				CoordonneesPEIO coordonneesESD = coordonneesESDOptional.get();
-				if (demandeurEmploi.getInformationsPersonnelles() != null) {
-					demandeurEmploi.getInformationsPersonnelles().setCodePostal(coordonneesESD.getCodePostal());
-				} else {
-					InformationsPersonnelles informationsPersonnelles = individuUtile.creerInformationsPersonnelles();
-					informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
-					demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
-				}
-			}
-		} catch (Exception e) {
-			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), "peio api coordonnees");
-			LOGGER.error(messageError);	
-		}
-	}
-
-	private AidesCAF creerAidesCAF() {
-		AidesCAF aidesCAF = new AidesCAF();
-		aidesCAF.setAidesLogement(creerAidesLogement());
-		return aidesCAF;
-	}
-
-	private AidesLogement creerAidesLogement() {
-		AidesLogement aidesLogement = new AidesLogement();
-		aidesLogement.setAidePersonnaliseeLogement(creerAllocationsLogement());
-		aidesLogement.setAllocationLogementFamiliale(creerAllocationsLogement());
-		aidesLogement.setAllocationLogementSociale(creerAllocationsLogement());
-		return aidesLogement;
-	}
-
-	private AllocationsLogement creerAllocationsLogement() {
-		AllocationsLogement allocationsLogement = new AllocationsLogement();
-		allocationsLogement.setMoisNMoins1(0);
-		allocationsLogement.setMoisNMoins2(0);
-		allocationsLogement.setMoisNMoins3(0);
-		return allocationsLogement;
-	}
+    private AllocationsLogement creerAllocationsLogement() {
+	AllocationsLogement allocationsLogement = new AllocationsLogement();
+	allocationsLogement.setMoisNMoins1(0);
+	allocationsLogement.setMoisNMoins2(0);
+	allocationsLogement.setMoisNMoins3(0);
+	return allocationsLogement;
+    }
 }

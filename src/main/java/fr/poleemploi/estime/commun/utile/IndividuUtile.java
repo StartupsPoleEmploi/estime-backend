@@ -1,5 +1,7 @@
 package fr.poleemploi.estime.commun.utile;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
@@ -73,6 +75,8 @@ public class IndividuUtile {
 
     public InformationsPersonnelles creerInformationsPersonnelles() {
 	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setCodePostal("44000");
+	informationsPersonnelles.setDateNaissance(LocalDate.of(1985, 8, 1));
 	Logement logement = creerLogement();
 	StatutOccupationLogement statutOccupationLogement = creerStatutOccupationLogement();
 	logement.setStatutOccupationLogement(statutOccupationLogement);

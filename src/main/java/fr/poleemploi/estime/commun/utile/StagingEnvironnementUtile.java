@@ -1,5 +1,6 @@
 package fr.poleemploi.estime.commun.utile;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,9 @@ public class StagingEnvironnementUtile {
     @Value("${spring.profiles.active}")
     private String environment;
 
+    @Autowired
+    private IndividuUtile individuUtile;
+
     public void gererAccesAvecBouchon(Individu individu) {
 	individu.setIdPoleEmploi("bouchon");
 	individu.setPopulationAutorisee(true);
@@ -32,6 +36,7 @@ public class StagingEnvironnementUtile {
 	individu.setIdPoleEmploi(userInfo.getSub());
 	individu.setPopulationAutorisee(true);
 	addInfosIndemnisation(individu, getPopulationDeFictif(userInfo));
+	addInfosPersonnelles(individu);
     }
 
     public boolean isUtilisateurFictif(UserInfoPEIO userInfo) {
@@ -52,7 +57,7 @@ public class StagingEnvironnementUtile {
      */
     public boolean isCandidatCaro(UserInfoPEIO userInfo) {
 	String givenName = userInfo.getGivenName();
-	return givenName != null && (givenName.equalsIgnoreCase("caroass") || givenName.equalsIgnoreCase("caroaah") || givenName.equalsIgnoreCase("carorsa"));
+	return givenName != null && (givenName.equalsIgnoreCase("caroass") || givenName.equalsIgnoreCase("julietteaah") || givenName.equalsIgnoreCase("carorsa"));
     }
 
     public boolean isStagingEnvironnement() {
@@ -62,6 +67,10 @@ public class StagingEnvironnementUtile {
 
     public boolean isNotLocalhostEnvironnement() {
 	return !environment.equals(Environnements.LOCALHOST.getLibelle());
+    }
+
+    private void addInfosPersonnelles(Individu individu) {
+	individu.setInformationsPersonnelles(individuUtile.creerInformationsPersonnelles());
     }
 
     private void addInfosIndemnisation(Individu individu, String population) {
