@@ -14,6 +14,7 @@ import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.Param
 import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ParametresPEIO.FRAIS_PRIS_EN_CHARGE_PAR_TIERS;
 import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ParametresPEIO.GAIN_BRUT;
 import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ParametresPEIO.GRANT_TYPE;
+import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ParametresPEIO.REFRESH_TOKEN;
 import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ParametresPEIO.INTENSITE;
 import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ParametresPEIO.LIEU_FORMATION_OU_EMPLOI;
 import static fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ParametresPEIO.NATURE_CONTRAT_TRAVAIL;
@@ -46,99 +47,115 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOIn;
 @Component
 public class PoleEmploiIOUtile {
 
-    @Value("${spring.security.oauth2.client.registration.estime.authorization-grant-type}")
-    private String authorizationGrantType;
+	@Value("${spring.security.oauth2.client.registration.estime.authorization-grant-type}")
+	private String authorizationGrantType;
 
-    @Value("${spring.security.oauth2.client.registration.estime.client-id}")
-    private String clientId;
+	@Value("${spring.security.oauth2.client.registration.estime.client-id}")
+	private String clientId;
 
-    @Value("${spring.security.oauth2.client.registration.estime.client-secret}")
-    private String clientSecret;
+	@Value("${spring.security.oauth2.client.registration.estime.client-secret}")
+	private String clientSecret;
 
-    public HttpEntity<MultiValueMap<String, String>> getAccesTokenRequeteHTTP(String code, String redirectURI) {
-	HttpHeaders headers = new HttpHeaders();
-	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+	public HttpEntity<MultiValueMap<String, String>> getAccesTokenRequeteHTTP(String code, String redirectURI) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-	MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-	map.add(CODE, code);
-	map.add(REDIRECT_URI, redirectURI);
-	map.add(CLIENT_ID, clientId);
-	map.add(CLIENT_SECRET, clientSecret);
-	map.add(GRANT_TYPE, authorizationGrantType);
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+		map.add(CODE, code);
+		map.add(REDIRECT_URI, redirectURI);
+		map.add(CLIENT_ID, clientId);
+		map.add(CLIENT_SECRET, clientSecret);
+		map.add(GRANT_TYPE, authorizationGrantType);
 
-	return new HttpEntity<>(map, headers);
-    }
+		return new HttpEntity<>(map, headers);
+	}
 
-    public HttpEntity<String> getRequeteHTTP(String bearerToken) {
-	HttpHeaders headers = new HttpHeaders();
-	headers.add("Authorization", bearerToken);
-	return new HttpEntity<>(headers);
-    }
 
-    public HttpEntity<MultiValueMap<String, Object>> getAgepiRequeteHTTP(AgepiPEIOIn agepiIn, String bearerToken) {
-	HttpHeaders headers = new HttpHeaders();
-	headers.setContentType(MediaType.APPLICATION_JSON);
-	headers.add("Authorization", bearerToken);
+	public HttpEntity<MultiValueMap<String, String>> getAccesTokenFromRefreshTokenRequeteHTTP(String refreshToken) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-	MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-	map.add(ORIGINE, agepiIn.getOrigine());
-	map.add(DATE_DEPOT, agepiIn.getDateDepot());
-	map.add(DATE_ACTION_RECLASSEMENT, agepiIn.getDateActionReclassement());
-	map.add(CONTEXTE, agepiIn.getContexte());
-	map.add(NATURE_CONTRAT_TRAVAIL, agepiIn.getNatureContratTravail());
-	map.add(LIEU_FORMATION_OU_EMPLOI, agepiIn.getLieuFormationOuEmploi());
-	map.add(TYPE_INTENSITE, agepiIn.getTypeIntensite());
-	map.add(INTENSITE, agepiIn.getIntensite());
-	map.add(DUREE_PERIODE_EMPLOI_OU_FORMATION, agepiIn.getDureePeriodeEmploiOuFormation());
-	map.add(NOMBRE_ENFANTS, agepiIn.getNombreEnfants());
-	map.add(NOMBRE_ENFANTS_MOINS_10_ANS, agepiIn.getNombreEnfantsMoins10Ans());
-	map.add(ELEVE_SEUL_ENFANTS, agepiIn.getEleveSeulEnfants());
-	map.add(CODE_TERRITOIRE, agepiIn.getCodeTerritoire());
-	return new HttpEntity<>(map, headers);
-    }
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+		map.add(CLIENT_ID, clientId);
+		map.add(CLIENT_SECRET, clientSecret);
+		map.add(GRANT_TYPE, "refresh_token");
+		map.add(REFRESH_TOKEN, refreshToken);
 
-    public HttpEntity<MultiValueMap<String, Object>> getAideMobiliteRequeteHTTP(AideMobilitePEIOIn aideMobiliteIn, String bearerToken) {
-	HttpHeaders headers = new HttpHeaders();
-	headers.setContentType(MediaType.APPLICATION_JSON);
-	headers.add("Authorization", bearerToken);
+		HttpEntity<MultiValueMap<String, String>> result = new HttpEntity<>(map, headers);
 
-	MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-	map.add(ORIGINE, aideMobiliteIn.getOrigine());
-	map.add(DATE_DEPOT, aideMobiliteIn.getDateDepot());
-	map.add(DATE_ACTION_RECLASSEMENT, aideMobiliteIn.getDateActionReclassement());
-	map.add(CONTEXTE, aideMobiliteIn.getContexte());
-	map.add(NATURE_CONTRAT_TRAVAIL, aideMobiliteIn.getNatureContratTravail());
-	map.add(DUREE_PERIODE_EMPLOI_OU_FORMATION, aideMobiliteIn.getDureePeriodeEmploiOuFormation());
-	map.add(DISTANCE_DOMICILE_ACTION_RECLASSEMENT, aideMobiliteIn.getDistanceDomicileActionReclassement());
-	map.add(DUREE_PERIODE_EMPLOI_OU_FORMATION, aideMobiliteIn.getDureePeriodeEmploiOuFormation());
-	map.add(NOMBRE_ALLERS_RETOURS, aideMobiliteIn.getNombreAllersRetours());
-	map.add(NOMBRE_REPAS, aideMobiliteIn.getNombreRepas());
-	map.add(NOMBRE_NUITEES, aideMobiliteIn.getNombreNuitees());
-	map.add(LIEU_FORMATION_OU_EMPLOI, aideMobiliteIn.getLieuFormationOuEmploi());
-	map.add(FRAIS_PRIS_EN_CHARGE_PAR_TIERS, aideMobiliteIn.isFraisPrisEnChargeParTiers());
-	map.add(TYPE_INTENSITE, aideMobiliteIn.getTypeIntensite());
-	map.add(INTENSITE, aideMobiliteIn.getIntensite());
-	map.add(NOMBRE_ENFANTS, aideMobiliteIn.getNombreEnfants());
-	map.add(NOMBRE_ENFANTS_MOINS_10_ANS, aideMobiliteIn.getNombreEnfantsMoins10Ans());
-	map.add(ELEVE_SEUL_ENFANTS, aideMobiliteIn.isEleveSeulEnfants());
-	map.add(CODE_TERRITOIRE, aideMobiliteIn.getCodeTerritoire());
+		return result;
+	}
 
-	return new HttpEntity<>(map, headers);
-    }
+	public HttpEntity<String> getRequeteHTTP(String bearerToken) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", bearerToken);
+		return new HttpEntity<>(headers);
+	}
 
-    public HttpEntity<Map<String, Object>> getAreRequeteHTTP(ArePEIOIn areIn, String bearerToken) {
-	HttpHeaders headers = new HttpHeaders();
-	headers.add("Authorization", bearerToken);
-	headers.setContentType(MediaType.APPLICATION_JSON);
-	Map<String, Object> map = new HashMap<String, Object>();
-	float allocationBruteJournaliere = areIn.getAllocationBruteJournaliere();
-	float gainBrut = areIn.getGainBrut();
-	float salaireBrutJournalier = areIn.getSalaireBrutJournalier();
+	public HttpEntity<MultiValueMap<String, Object>> getAgepiRequeteHTTP(AgepiPEIOIn agepiIn, String bearerToken) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("Authorization", bearerToken);
 
-	map.put(ALLOCATION_BRUTE_JOURNALIERE, allocationBruteJournaliere);
-	map.put(GAIN_BRUT, gainBrut);
-	map.put(SALAIRE_BRUT_JOURNALIER, salaireBrutJournalier);
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+		map.add(ORIGINE, agepiIn.getOrigine());
+		map.add(DATE_DEPOT, agepiIn.getDateDepot());
+		map.add(DATE_ACTION_RECLASSEMENT, agepiIn.getDateActionReclassement());
+		map.add(CONTEXTE, agepiIn.getContexte());
+		map.add(NATURE_CONTRAT_TRAVAIL, agepiIn.getNatureContratTravail());
+		map.add(LIEU_FORMATION_OU_EMPLOI, agepiIn.getLieuFormationOuEmploi());
+		map.add(TYPE_INTENSITE, agepiIn.getTypeIntensite());
+		map.add(INTENSITE, agepiIn.getIntensite());
+		map.add(DUREE_PERIODE_EMPLOI_OU_FORMATION, agepiIn.getDureePeriodeEmploiOuFormation());
+		map.add(NOMBRE_ENFANTS, agepiIn.getNombreEnfants());
+		map.add(NOMBRE_ENFANTS_MOINS_10_ANS, agepiIn.getNombreEnfantsMoins10Ans());
+		map.add(ELEVE_SEUL_ENFANTS, agepiIn.getEleveSeulEnfants());
+		map.add(CODE_TERRITOIRE, agepiIn.getCodeTerritoire());
+		return new HttpEntity<>(map, headers);
+	}
 
-	return new HttpEntity<>(map, headers);
-    }
+	public HttpEntity<MultiValueMap<String, Object>> getAideMobiliteRequeteHTTP(AideMobilitePEIOIn aideMobiliteIn, String bearerToken) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("Authorization", bearerToken);
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+		map.add(ORIGINE, aideMobiliteIn.getOrigine());
+		map.add(DATE_DEPOT, aideMobiliteIn.getDateDepot());
+		map.add(DATE_ACTION_RECLASSEMENT, aideMobiliteIn.getDateActionReclassement());
+		map.add(CONTEXTE, aideMobiliteIn.getContexte());
+		map.add(NATURE_CONTRAT_TRAVAIL, aideMobiliteIn.getNatureContratTravail());
+		map.add(DUREE_PERIODE_EMPLOI_OU_FORMATION, aideMobiliteIn.getDureePeriodeEmploiOuFormation());
+		map.add(DISTANCE_DOMICILE_ACTION_RECLASSEMENT, aideMobiliteIn.getDistanceDomicileActionReclassement());
+		map.add(DUREE_PERIODE_EMPLOI_OU_FORMATION, aideMobiliteIn.getDureePeriodeEmploiOuFormation());
+		map.add(NOMBRE_ALLERS_RETOURS, aideMobiliteIn.getNombreAllersRetours());
+		map.add(NOMBRE_REPAS, aideMobiliteIn.getNombreRepas());
+		map.add(NOMBRE_NUITEES, aideMobiliteIn.getNombreNuitees());
+		map.add(LIEU_FORMATION_OU_EMPLOI, aideMobiliteIn.getLieuFormationOuEmploi());
+		map.add(FRAIS_PRIS_EN_CHARGE_PAR_TIERS, aideMobiliteIn.isFraisPrisEnChargeParTiers());
+		map.add(TYPE_INTENSITE, aideMobiliteIn.getTypeIntensite());
+		map.add(INTENSITE, aideMobiliteIn.getIntensite());
+		map.add(NOMBRE_ENFANTS, aideMobiliteIn.getNombreEnfants());
+		map.add(NOMBRE_ENFANTS_MOINS_10_ANS, aideMobiliteIn.getNombreEnfantsMoins10Ans());
+		map.add(ELEVE_SEUL_ENFANTS, aideMobiliteIn.isEleveSeulEnfants());
+		map.add(CODE_TERRITOIRE, aideMobiliteIn.getCodeTerritoire());
+
+		return new HttpEntity<>(map, headers);
+	}
+
+	public HttpEntity<Map<String, Object>> getAreRequeteHTTP(ArePEIOIn areIn, String bearerToken) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", bearerToken);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		Map<String, Object> map = new HashMap<String, Object>();
+		float allocationBruteJournaliere = areIn.getAllocationBruteJournaliere();
+		float gainBrut = areIn.getGainBrut();
+		float salaireBrutJournalier = areIn.getSalaireBrutJournalier();
+
+		map.put(ALLOCATION_BRUTE_JOURNALIERE, allocationBruteJournaliere);
+		map.put(GAIN_BRUT, gainBrut);
+		map.put(SALAIRE_BRUT_JOURNALIER, salaireBrutJournalier);
+
+		return new HttpEntity<>(map, headers);
+	}
 }

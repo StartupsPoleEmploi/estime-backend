@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import fr.poleemploi.estime.commun.enumerations.Aides;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
@@ -30,7 +32,6 @@ import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 
 /**
  * Classe permettant de calculer le montant de l'AGEPI (Aide à la garde d'enfants pour parent isolé).
@@ -91,6 +92,7 @@ public class AgepiUtile {
 	}
 
 	public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi) {
+		getAccessTokenValid(demandeurEmploi);
 		String bearerToken = accesTokenUtile.getBearerToken(demandeurEmploi.getPeConnectAuthorization().getAccessToken());
 		AgepiPEIOIn agepiIn = remplirAgepiIn(demandeurEmploi);
 		Optional<AgepiPEIOOut> optionalAgepiOut = poleEmploiIOClient.callAgepiEndPoint(agepiIn, bearerToken);
@@ -206,5 +208,13 @@ public class AgepiUtile {
 			return situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, AgepiUtile.AGE_MAX_ENFANT) > 0;
 		}
 		return false;
+	}
+	
+	private void getAccessTokenValid(DemandeurEmploi demandeurEmploi) {
+		Date currentDateMoinsUneMinute = new Date(System.currentTimeMillis() - (60 * 1000));
+		if(demandeurEmploi.getPeConnectAuthorization().getExpiryTime().before(currentDateMoinsUneMinute)) {
+			String newAccessToken = poleEmploiIOClient.retreiveAccessTokenFromRefreshToken(demandeurEmploi.getPeConnectAuthorization().getRefreshToken());
+			demandeurEmploi.getPeConnectAuthorization().setAccessToken(newAccessToken);
+		}
 	}
 }
