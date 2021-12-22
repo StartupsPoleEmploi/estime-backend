@@ -23,7 +23,7 @@ public class BeneficiaireAidesUtile {
     }
 
     public boolean isBeneficiaireAidePEouCAF(DemandeurEmploi demandeurEmploi) {
-	return isBeneficiaireAideMinimaSocial(demandeurEmploi) || isBeneficiaireARE(demandeurEmploi);
+	return isBeneficiaireAideMinimaSocial(demandeurEmploi) || isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibilite(demandeurEmploi);
     }
 
     public boolean isBeneficiaireARE(Personne personne) {
