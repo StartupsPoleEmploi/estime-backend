@@ -1,9 +1,5 @@
 #!/bin/sh
 
-
-
-#!/bin/sh
-
 function replace_properties_in_application {
   log 'replace properties in application.yml'
   perl -i -p -e "s|--DATABASE_USERNAME--|${DATABASE_USERNAME}|g" app/application.yml
@@ -16,12 +12,13 @@ function replace_properties_in_application {
   perl -i -p -e "s|--PE_CONNECT_JWK_SET_URI--|${PE_CONNECT_JWK_SET_URI}|g" app/application.yml
   perl -i -p -e "s|--PE_CONNECT_ISSUER_URI--|${PE_CONNECT_ISSUER_URI}|g" app/application.yml
   perl -i -p -e "s|--POLE_EMPLOI_IO_URI--|${POLE_EMPLOI_IO_URI}|g" app/application.yml
-  
+  perl -i -p -e "s|--TOMCAT_THREADS_MAX--|${TOMCAT_THREADS_MAX}|g" app/application.yml
+  perl -i -p -e "s|--TOMCAT_THREADS_MIN_SPARE--|${TOMCAT_THREADS_MIN_SPARE}|g" app/application.yml
 }
 
 function start_estime_application {
-	log 'start Estime application'
-	java -cp app:app/lib/* fr.poleemploi.estime.EstimeApplication
+  log 'start Estime application'
+  java -cp app:app/lib/* fr.poleemploi.estime.EstimeApplication
 }
 
 function start {
@@ -30,7 +27,7 @@ function start {
 }
 
 function log {
-	echo "<EVT TIMESTAMP="$(date '+%Y-%m-%d %H:%M:%S,000')" TYPE="INFO"><![CDATA[INFO startup.sh : $1]]></EVT>"
+  echo "<EVT TIMESTAMP="$(date '+%Y-%m-%d %H:%M:%S,000')" TYPE="INFO"><![CDATA[INFO startup.sh : $1]]></EVT>"
 }
 
 start

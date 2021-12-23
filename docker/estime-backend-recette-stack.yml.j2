@@ -2,18 +2,20 @@ version: '3.8'
 
 services:
   estime-backend:
-    image: registry.beta.pole-emploi.fr/estime/estime-backend:release
+    image: registry.beta.pole-emploi.fr/estime/estime-backend:release-candidate
     environment:
       DATABASE_USERNAME: "{{ POSTGRES_USER }}"
-      DATABASE_PASSWORD: "{{ POSTGRES_PASSWORD_PROD }}"
-      ENVIRONMENT: "{{ ENVIRONMENT_PROD }}"
-      PE_CONNECT_CLIENT_ID: "{{ PE_CONNECT_CLIENT_ID }}"
-      PE_CONNECT_CLIENT_SECRET: "{{ PE_CONNECT_CLIENT_SECRET }}"
-      PE_CONNECT_ISSUER_URI: "{{ PE_CONNECT_ISSUER_URI }}"
-      PE_CONNECT_JWK_SET_URI: "{{ PE_CONNECT_JWK_SET_URI }}"
-      PE_CONNECT_TOKEN_URI: "{{ PE_CONNECT_TOKEN_URI }}"
-      PE_CONNECT_USER_INFO_URI: "{{ PE_CONNECT_USER_INFO_URI }}"
-      POLE_EMPLOI_IO_URI: "{{ POLE_EMPLOI_IO_URI }}"
+      DATABASE_PASSWORD: "{{ R7_POSTGRES_PASSWORD }}"
+      ENVIRONMENT: "{{ R7_ENVIRONMENT }}"
+      PE_CONNECT_CLIENT_ID: "{{ R7_PE_CONNECT_CLIENT_ID }}"
+      PE_CONNECT_CLIENT_SECRET: "{{ R7_PE_CONNECT_CLIENT_SECRET }}"
+      PE_CONNECT_ISSUER_URI: "{{ R7_PE_CONNECT_ISSUER_URI }}"
+      PE_CONNECT_JWK_SET_URI: "{{ R7_PE_CONNECT_JWK_SET_URI }}"
+      PE_CONNECT_TOKEN_URI: "{{ R7_PE_CONNECT_TOKEN_URI }}"
+      PE_CONNECT_USER_INFO_URI: "{{ R7_PE_CONNECT_USER_INFO_URI }}"
+      POLE_EMPLOI_IO_URI: "{{ R7_POLE_EMPLOI_IO_URI }}"
+      TOMCAT_THREADS_MAX: 250
+      TOMCAT_THREADS_MIN_SPARE: 25
       TZ: "Europe/Paris"
     networks:
      - estime
@@ -27,11 +29,11 @@ services:
       replicas: 2
       resources:
         reservations:
-          cpus: '0.50'
-          memory: 512Mi
+          cpus: '0.20'
+          memory: 256Mi
         limits:
-          cpus: '1'
-          memory: 2048Mi
+          cpus: '0.40'
+          memory: 512Mi
       update_config:
         parallelism: 1
         order: start-first
@@ -49,12 +51,14 @@ services:
     image: registry.beta.pole-emploi.fr/customize-docker-images/postgres
     networks:
       - estime
+    ports:
+      - "5432:5432"
     volumes:
       - ./database/var/lib/postgresql/data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: {{ POSTGRES_DB }}
       POSTGRES_USER: {{ POSTGRES_USER }}
-      POSTGRES_PASSWORD: {{ POSTGRES_PASSWORD_PROD }}
+      POSTGRES_PASSWORD: {{ POSTGRES_PASSWORD }}
       TZ: "Europe/Paris"
     command: postgres -c max_connections=250
     deploy:
@@ -62,10 +66,10 @@ services:
       resources:
         reservations:
           cpus: '0.20'
-          memory: 512Mi
+          memory: 256Mi
         limits:
           cpus: '0.40'
-          memory: 1536Mi
+          memory: 512Mi
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -80,10 +84,10 @@ services:
       resources:
         reservations:
           cpus: '0.05'
-          memory: 128Mi
+          memory: 64Mi
         limits:
           cpus: '0.10'
-          memory: 256Mi
+          memory: 128Mi
       restart_policy:
         condition: on-failure
         delay: 5s
