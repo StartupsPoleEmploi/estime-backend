@@ -19,10 +19,10 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
-import fr.poleemploi.estime.services.IndividuService;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
+import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
@@ -35,7 +35,7 @@ import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 
     @Autowired
-    private IndividuService individuService;
+    private DemandeurEmploiService demandeurEmploiService;
 
     private static int PROCHAINE_DECLARATION_TRIMESTRIELLE = 1;
 
@@ -53,13 +53,13 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	// RSA 500€, déclaration trimetrielle en M1, non travaillé au cours des 3 derniers mois
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
-	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
@@ -71,7 +71,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks("20-10-2020");
-	SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
 	// RSA : 497€ (simulateur CAF : 497€)
@@ -164,11 +164,11 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	// enfant 4 ans (05/03/2017)
 	boolean isEnCouple = true;
 	int nbEnfant = 1;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
-	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
@@ -189,7 +189,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks("20-10-2020");
-	SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
 	// RSA : 175€ (simulateur CAF : 149€), PA : 431 (simulateur CAF : 452€)
@@ -292,14 +292,14 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	// APL 310€
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
-	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement());
 	demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
@@ -312,7 +312,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks("20-10-2020");
-	SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
 	// RSA : 497€ (simulateur CAF : 497€)

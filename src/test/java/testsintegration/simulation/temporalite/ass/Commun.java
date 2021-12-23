@@ -16,9 +16,9 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.Utile;
@@ -37,12 +37,12 @@ public class Commun {
     protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+        demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1245);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1600);
@@ -61,7 +61,7 @@ public class Commun {
         doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
 
         // mock retour appel détail indemnisation de l'ESD
-        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.ASS.getLibelle());
+        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulationEnum.ASS.getLibelle());
         doReturn(detailIndemnisationESD).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
     }
 }

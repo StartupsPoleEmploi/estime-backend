@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -88,7 +88,7 @@ public class PrimeActiviteRSAUtile {
 	aideRSA.setCode(AideEnum.RSA.getCode());
 	aideRSA.setMontant(montantRSA);
 	aideRSA.setNom(AideEnum.RSA.getNom());
-	aideRSA.setOrganisme(Organismes.CAF.getNomCourt());
+	aideRSA.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	aideRSA.setReportee(isAideReportee);
 	return aideRSA;
     }

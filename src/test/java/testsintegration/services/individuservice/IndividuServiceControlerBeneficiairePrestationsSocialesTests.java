@@ -20,7 +20,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
-import fr.poleemploi.estime.services.IndividuService;
+import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
@@ -31,7 +31,7 @@ import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 class BeneficiaireAidesControleurTests extends CommunTests {
     
     @Autowired
-    private IndividuService individuService;
+    private DemandeurEmploiService demandeurEmploiService;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -49,7 +49,7 @@ class BeneficiaireAidesControleurTests extends CommunTests {
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
                
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAides(demandeurEmploi);
+            demandeurEmploiService.simulerAides(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "beneficiaireAides"));
     }    
 }

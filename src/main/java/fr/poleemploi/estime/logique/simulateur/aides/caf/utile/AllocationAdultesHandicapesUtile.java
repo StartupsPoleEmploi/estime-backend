@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
@@ -97,7 +97,7 @@ public class AllocationAdultesHandicapesUtile {
 	}
 	allocationAAH.setMontant(montant);
 	allocationAAH.setNom(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getNom());
-	allocationAAH.setOrganisme(Organismes.CAF.getNom());
+	allocationAAH.setOrganisme(OrganismeEnum.CAF.getNom());
 	allocationAAH.setReportee(false);
 	aidesPourCeMois.put(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), allocationAAH);
     }

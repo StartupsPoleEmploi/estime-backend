@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
@@ -29,12 +29,12 @@ public class Commun {
     protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
 	boolean isEnCouple = false;
 	int nbEnfant = 1;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1245);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1600);
@@ -51,7 +51,7 @@ public class Commun {
 	Aide aideAgepi = new Aide();
 	aideAgepi.setCode(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode());
 	aideAgepi.setNom(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getNom());
-	aideAgepi.setOrganisme(Organismes.CAF.getNom());
+	aideAgepi.setOrganisme(OrganismeEnum.CAF.getNom());
 	aideAgepi.setMontant(montant);
 	aideAgepi.setReportee(false);
 	return aideAgepi;
@@ -61,7 +61,7 @@ public class Commun {
 	Aide aideAgepi = new Aide();
 	aideAgepi.setCode(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
 	aideAgepi.setNom(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
-	aideAgepi.setOrganisme(Organismes.PE.getNom());
+	aideAgepi.setOrganisme(OrganismeEnum.PE.getNom());
 	aideAgepi.setMontant(montant);
 	aideAgepi.setReportee(false);
 	return aideAgepi;

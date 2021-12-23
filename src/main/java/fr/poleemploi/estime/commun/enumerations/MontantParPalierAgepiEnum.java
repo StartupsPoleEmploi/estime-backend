@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum MontantsParPalierAgepi {
+public enum MontantParPalierAgepiEnum {
 
     NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_INTERMEDIAIRE(170),
     NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_MAX(400),
@@ -11,7 +11,7 @@ public enum MontantsParPalierAgepi {
 
     private int montantAgepi;
 
-    MontantsParPalierAgepi(int montantAgepi) {
+    MontantParPalierAgepiEnum(int montantAgepi) {
         this.montantAgepi = montantAgepi;
     }
 

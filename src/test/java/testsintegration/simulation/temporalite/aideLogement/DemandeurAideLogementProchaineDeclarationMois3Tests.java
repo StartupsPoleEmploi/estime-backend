@@ -19,7 +19,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.services.IndividuService;
+import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -30,7 +30,7 @@ import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 
     @Autowired
-    private IndividuService individuService;
+    private DemandeurEmploiService demandeurEmploiService;
 
     private static final int PROCHAINE_DECLARATION_TRIMESTRIELLE = 3;
     
@@ -53,7 +53,7 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks("20-10-2020");
-        SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+        SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
         // RSA : 500€
@@ -175,7 +175,7 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 
         // Lorsque je simule mes prestations le 20/10/2020
         initMocks("20-10-2020");
-        SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+        SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
         // RSA : 710€
@@ -297,7 +297,7 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
         
         // Lorsque je simule mes prestations le 23/07/2021
         initMocks("23-07-2021");
-        SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+        SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 08/2021 sont :
         // RSA : 500€

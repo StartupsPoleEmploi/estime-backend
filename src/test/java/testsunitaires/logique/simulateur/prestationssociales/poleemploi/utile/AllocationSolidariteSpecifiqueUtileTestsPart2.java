@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
-import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
@@ -79,7 +79,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         //le montant de l'ASS sur le mois de novembre 2021 est de 506€
         assertThat(ass.get().getMontant()).isEqualTo(506);
         //le message d'alerte sur le renouvellement de l'aide est présent
-        assertThat(ass.get().getMessageAlerte()).isEqualTo(MessagesInformatifs.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
+        assertThat(ass.get().getMessageAlerte()).isEqualTo(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
     }
     
     @Test
@@ -108,7 +108,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         //alors le montant de l'ASS sur le mois de décembre 2021 est de 523€
         assertThat(ass.get().getMontant()).isEqualTo(523);
         //le message d'alerte sur le renouvellement de l'aide est présent
-        assertThat(ass.get().getMessageAlerte()).isEqualTo(MessagesInformatifs.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
+        assertThat(ass.get().getMessageAlerte()).isEqualTo(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
     }
     
     @Test

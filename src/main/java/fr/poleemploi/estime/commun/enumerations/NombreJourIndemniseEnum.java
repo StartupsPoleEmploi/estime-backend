@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum NombresJoursIndemnises {
+public enum NombreJourIndemniseEnum {
 
     HEURES_HEBDO_TRAVAILLEES_1H_A_7H(1, 7, 4),
     HEURES_HEBDO_TRAVAILLEES_8H_A_10H(8, 10, 5),
@@ -24,7 +24,7 @@ public enum NombresJoursIndemnises {
     private int nombreHeuresMaxHebdo;
     private int nombreRepasIndemnises; 
     
-    NombresJoursIndemnises(int nombreHeuresMinHebdo, int nombreHeuresMaxHebdo, int nombreRepasIndemnises) {
+    NombreJourIndemniseEnum(int nombreHeuresMinHebdo, int nombreHeuresMaxHebdo, int nombreRepasIndemnises) {
         this.nombreHeuresMinHebdo = nombreHeuresMinHebdo;
         this.nombreHeuresMaxHebdo = nombreHeuresMaxHebdo;
         this.nombreRepasIndemnises = nombreRepasIndemnises;

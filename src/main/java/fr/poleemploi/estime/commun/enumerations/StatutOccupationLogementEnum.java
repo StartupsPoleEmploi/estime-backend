@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum StatutsOccupationLogement {
+public enum StatutOccupationLogementEnum {
     LOCATAIRE_HLM("locataire_hlm"),
     LOCATAIRE_MEUBLE("locataire_meuble"),
     LOCATAIRE_NON_MEUBLE("locataire_vide"),
@@ -11,7 +11,7 @@ public enum StatutsOccupationLogement {
     
     private String libelle;
     
-    StatutsOccupationLogement(String libelle) {
+    StatutOccupationLogementEnum(String libelle) {
         this.libelle = libelle;
     }
 

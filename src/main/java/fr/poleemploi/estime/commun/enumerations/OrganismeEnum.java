@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum Organismes {
+public enum OrganismeEnum {
     
     CAF("CAF", "Caisse d'allocation familiales"),
     PE("PE", "Pôle emploi"),
@@ -9,7 +9,7 @@ public enum Organismes {
     private String nomCourt;
     private String nom;
     
-    Organismes(String nomCourt, String nom) {
+    OrganismeEnum(String nomCourt, String nom) {
         this.nomCourt = nomCourt;
         this.nom = nom;
     }

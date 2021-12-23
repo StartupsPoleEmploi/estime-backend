@@ -2,7 +2,7 @@ package fr.poleemploi.estime.services.ressources;
 
 public class PeConnectAuthorization {
 
-    private String accessToken;
+    private String bearerToken;
     private Long expireIn;
     private String idToken;
     private String refreshToken;
@@ -33,11 +33,11 @@ public class PeConnectAuthorization {
     public void setExpireIn(Long expireIn) {
         this.expireIn = expireIn;
     }
-    public String getAccessToken() {
-        return accessToken;
+    public String getBearerToken() {
+        return bearerToken;
     }
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setBearerToken(String bearerToken) {
+        this.bearerToken = bearerToken;
     }
     public String getScope() {
         return scope;
@@ -45,10 +45,9 @@ public class PeConnectAuthorization {
     public void setScope(String scope) {
         this.scope = scope;
     }
-    
     @Override
     public String toString() {
-        return "DonneesAccessToken [accessToken=" + accessToken + ", expireIn=" + expireIn + ", idToken=" + idToken
+        return "PeConnectAuthorization [bearerToken=" + bearerToken + ", expireIn=" + expireIn + ", idToken=" + idToken
                 + ", refreshToken=" + refreshToken + ", scope=" + scope + ", tokenType=" + tokenType + "]";
     }
 }

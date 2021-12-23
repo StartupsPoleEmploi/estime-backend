@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum ParcoursUtilisateur {
+public enum ParcourUtilisateurEnum {
 
     CONNEXION_REFUSEE("Connexion refusée"),
     CONNEXION_REUSSIE("Connexion réussie"),
@@ -9,7 +9,7 @@ public enum ParcoursUtilisateur {
     
     private String parcours;
     
-    ParcoursUtilisateur(String parcours) {
+    ParcourUtilisateurEnum(String parcours) {
         this.parcours = parcours;
     }
 

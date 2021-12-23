@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
-import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
+import fr.poleemploi.estime.commun.enumerations.MontantParPalierAgepiEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
@@ -86,18 +86,18 @@ public class AgepiUtile {
 
             case NBR_ENFANT_PALIER_MIN:
                 return determinerMontantAgepi(
-                        MontantsParPalierAgepi.NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_INTERMEDIAIRE, 
-                        MontantsParPalierAgepi.NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_MAX, 
+                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_INTERMEDIAIRE, 
+                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_MAX, 
                         demandeurEmploi);
             case NBR_ENFANT_PALIER_INTERMEDIAIRE:
                 return determinerMontantAgepi(
-                        MontantsParPalierAgepi.NBR_ENFANT_PALIER_INTERMEDIAIRE_NBR_HEURE_PALIER_INTERMEDIAIRE, 
-                        MontantsParPalierAgepi.NBR_ENFANT_PALIER_INTERMEDIAIRE_NBR_HEURE_PALIER_MAX, 
+                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_INTERMEDIAIRE_NBR_HEURE_PALIER_INTERMEDIAIRE, 
+                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_INTERMEDIAIRE_NBR_HEURE_PALIER_MAX, 
                         demandeurEmploi);
             default:
                 return determinerMontantAgepi(
-                        MontantsParPalierAgepi.NBR_ENFANT_PALIER_MAX_NBR_HEURE_PALIER_INTERMEDIAIRE, 
-                        MontantsParPalierAgepi.NBR_ENFANT_PALIER_MAX_NBR_HEURE_PALIER_MAX, 
+                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_MAX_NBR_HEURE_PALIER_INTERMEDIAIRE, 
+                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_MAX_NBR_HEURE_PALIER_MAX, 
                         demandeurEmploi);
             }
         }
@@ -111,15 +111,15 @@ public class AgepiUtile {
         if(detailAideOptional.isPresent()) {
             agepi.setDetail(detailAideOptional.get());            
         }
-	agepi.setMessageAlerte(MessagesInformatifs.AGEPI_IDF.getMessage());
+	agepi.setMessageAlerte(MessageInformatifEnum.AGEPI_IDF.getMessage());
         agepi.setNom(AideEnum.AGEPI.getNom());
-        agepi.setOrganisme(Organismes.PE.getNom());
+        agepi.setOrganisme(OrganismeEnum.PE.getNom());
         agepi.setMontant(montantAide);
         agepi.setReportee(false);
         return agepi;
     }
 
-    private float determinerMontantAgepi(MontantsParPalierAgepi montantPalierIntermediaire, MontantsParPalierAgepi montantPalierMax, DemandeurEmploi demandeurEmploi) {
+    private float determinerMontantAgepi(MontantParPalierAgepiEnum montantPalierIntermediaire, MontantParPalierAgepiEnum montantPalierMax, DemandeurEmploi demandeurEmploi) {
         float nombreHeuresTravailleesSemaine = demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine();
         if(nombreHeuresTravailleesSemaine < NBR_HEURE_PALIER_INTERMEDIAIRE) {
             int montantHorsMayotte = montantPalierIntermediaire.getMontant();

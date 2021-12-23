@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum Nationalites {
+public enum NationaliteEnum {
 
     FRANCAISE("Française"),
     EUROPEEN_OU_SUISSE("Ressortissant européen ou suisse"),
@@ -8,7 +8,7 @@ public enum Nationalites {
     
     private String valeur;
     
-    Nationalites(String valeur) {
+    NationaliteEnum(String valeur) {
         this.valeur = valeur;
     }
 

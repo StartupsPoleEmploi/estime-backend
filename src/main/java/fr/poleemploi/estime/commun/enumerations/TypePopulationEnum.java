@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum TypePopulation {
+public enum TypePopulationEnum {
 
     AAH("AAH"),
     ARE("ARE"),
@@ -11,7 +11,7 @@ public enum TypePopulation {
     
     private String libelle;
     
-    TypePopulation(String libelle) {
+    TypePopulationEnum(String libelle) {
         this.libelle = libelle;
     }
 

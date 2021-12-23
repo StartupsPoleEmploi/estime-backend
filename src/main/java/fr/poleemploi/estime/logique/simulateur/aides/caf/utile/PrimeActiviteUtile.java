@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -48,10 +48,10 @@ public class PrimeActiviteUtile {
         if (detailAideOptional.isPresent()) {
             aidePrimeActivite.setDetail(detailAideOptional.get());
         }
-        aidePrimeActivite.setMessageAlerte(MessagesInformatifs.PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA.getMessage());
+        aidePrimeActivite.setMessageAlerte(MessageInformatifEnum.PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA.getMessage());
         aidePrimeActivite.setMontant(montantPrimeActivite);
         aidePrimeActivite.setNom(AideEnum.PRIME_ACTIVITE.getNom());
-        aidePrimeActivite.setOrganisme(Organismes.CAF.getNomCourt());
+        aidePrimeActivite.setOrganisme(OrganismeEnum.CAF.getNomCourt());
         aidePrimeActivite.setReportee(isAideReportee);
         return aidePrimeActivite;
     }

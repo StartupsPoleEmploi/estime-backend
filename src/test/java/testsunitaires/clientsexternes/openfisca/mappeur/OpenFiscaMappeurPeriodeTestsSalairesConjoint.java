@@ -24,7 +24,7 @@ import com.github.tsohr.JSONException;
 import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPeriode;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Personne;
@@ -242,7 +242,7 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
 	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);

@@ -19,7 +19,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.services.IndividuService;
+import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -30,7 +30,7 @@ import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 class DemandeurAss3MoisCumulSalaireAvantSimulationTests extends Commun {
 
     @Autowired
-    private IndividuService individuService;
+    private DemandeurEmploiService demandeurEmploiService;
 
     @Configuration
     @ComponentScan({ "utile.tests", "fr.poleemploi.estime" })
@@ -50,7 +50,7 @@ class DemandeurAss3MoisCumulSalaireAvantSimulationTests extends Commun {
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks();
-	SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
 	// AGEPI : 400€, Aide mobilité : 258€

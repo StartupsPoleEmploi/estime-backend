@@ -20,7 +20,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
-import fr.poleemploi.estime.services.IndividuService;
+import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
 
 @SpringBootTest
@@ -29,7 +29,7 @@ import fr.poleemploi.estime.services.exceptions.BadRequestException;
 class IndividuServiceTests extends CommunTests {
 
     @Autowired
-    private IndividuService individuService;
+    private DemandeurEmploiService demandeurEmploiService;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -40,7 +40,7 @@ class IndividuServiceTests extends CommunTests {
     @Test
     void controlerDonneeesEntreeTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAides(null);
+            demandeurEmploiService.simulerAides(null);
         }).getMessage()).isEqualTo(BadRequestMessages.DEMANDEUR_EMPLOI_OBLIGATOIRE.getMessage());
     }
 }

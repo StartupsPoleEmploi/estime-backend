@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.Utile;
@@ -48,8 +48,8 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
@@ -67,8 +67,8 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 14.38€ (< seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.38f);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
@@ -86,8 +86,8 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDD de 3 mois ( = minimum exigé) , pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDD.name());
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDD.name());
         demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(3);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
@@ -106,8 +106,8 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDD de 4 mois ( > minimum exigé), pas en couple, 1 enfant 9 ans à charge et allocation journalière net = 29.38€ (= seuil max.)
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDD.name());
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDD.name());
         demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
@@ -126,8 +126,8 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et bénéficiaire du RSA
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
         
@@ -144,8 +144,8 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et bénéficiaire de AAH
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.AAH.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));        
         
@@ -162,8 +162,8 @@ class AgepiUtileTestsHorsMayotte1 {
         //Si DE France Métropolitaine, futur contrat CDI, pas en couple, 1 enfant 9 ans à charge et bénéficiaire de ASS
         boolean isEnCouple = false;
         int nbEnfant = 1;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));      
         
@@ -181,7 +181,7 @@ class AgepiUtileTestsHorsMayotte1 {
         boolean isEnCouple = false;
         int nbEnfant = 1;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi("NON BENEFICIAIRE", isEnCouple, nbEnfant);
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
         demandeurEmploi.setRessourcesFinancieres(null);

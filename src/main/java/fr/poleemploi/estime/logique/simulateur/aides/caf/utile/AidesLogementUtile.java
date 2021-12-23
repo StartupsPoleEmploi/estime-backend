@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -121,10 +121,10 @@ public class AidesLogementUtile {
     private Aide ajouterAidePersonnaliseeLogement(float montant, boolean isReportee) {
 	Aide aidePersonnaliseeLogement = new Aide();
 	aidePersonnaliseeLogement.setCode(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode());
-	aidePersonnaliseeLogement.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	aidePersonnaliseeLogement.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	aidePersonnaliseeLogement.setMontant(montant);
 	aidePersonnaliseeLogement.setNom(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getNom());
-	aidePersonnaliseeLogement.setOrganisme(Organismes.CAF.getNom());
+	aidePersonnaliseeLogement.setOrganisme(OrganismeEnum.CAF.getNom());
 	aidePersonnaliseeLogement.setReportee(isReportee);
 	return aidePersonnaliseeLogement;
     }
@@ -132,10 +132,10 @@ public class AidesLogementUtile {
     private Aide ajouterAllocationLogementFamiliale(float montant, boolean isReportee) {
 	Aide allocationLogementFamiliale = new Aide();
 	allocationLogementFamiliale.setCode(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode());
-	allocationLogementFamiliale.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	allocationLogementFamiliale.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	allocationLogementFamiliale.setMontant(montant);
 	allocationLogementFamiliale.setNom(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getNom());
-	allocationLogementFamiliale.setOrganisme(Organismes.CAF.getNom());
+	allocationLogementFamiliale.setOrganisme(OrganismeEnum.CAF.getNom());
 	allocationLogementFamiliale.setReportee(isReportee);
 	return allocationLogementFamiliale;
     }
@@ -143,10 +143,10 @@ public class AidesLogementUtile {
     private Aide ajouterAllocationLogementSociale(float montant, boolean isReportee) {
 	Aide allocationLogementSociale = new Aide();
 	allocationLogementSociale.setCode(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode());
-	allocationLogementSociale.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	allocationLogementSociale.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	allocationLogementSociale.setMontant(montant);
 	allocationLogementSociale.setNom(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getNom());
-	allocationLogementSociale.setOrganisme(Organismes.CAF.getNom());
+	allocationLogementSociale.setOrganisme(OrganismeEnum.CAF.getNom());
 	allocationLogementSociale.setReportee(isReportee);
 	return allocationLogementSociale;
     }

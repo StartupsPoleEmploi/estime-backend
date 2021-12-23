@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum MessagesInformatifs {
+public enum MessageInformatifEnum {
     
     AGEPI_IDF("Si vous êtes domicilé⸱e en Ile de France, veuillez vous rapprocher de votre conseiller référent pour en faire la demande. (Les montants peuvent être légèrement différents)."),
     ASS_DEMANDE_RENOUVELLEMENT("Le droit à l’ASS est calculé pour 6 mois et il peut être renouvelé en fonction de vos ressources. Vous allez recevoir un dossier de demande de renouvellement à compléter."),
@@ -9,7 +9,7 @@ public enum MessagesInformatifs {
     
     private String message;
     
-    MessagesInformatifs(String message) {
+    MessageInformatifEnum(String message) {
         this.message = message;
     }
 

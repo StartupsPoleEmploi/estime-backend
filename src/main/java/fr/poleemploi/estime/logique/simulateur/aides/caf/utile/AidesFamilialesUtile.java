@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -66,10 +66,10 @@ public class AidesFamilialesUtile {
     private void ajouterAllocationSoutienFamilial(Map<String, Aide> aidesPourCeMois, float montant) {
 	Aide allocationSoutienFamilial = new Aide();
 	allocationSoutienFamilial.setCode(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode());
-	allocationSoutienFamilial.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	allocationSoutienFamilial.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	allocationSoutienFamilial.setMontant(montant);
 	allocationSoutienFamilial.setNom(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getNom());
-	allocationSoutienFamilial.setOrganisme(Organismes.CAF.getNom());
+	allocationSoutienFamilial.setOrganisme(OrganismeEnum.CAF.getNom());
 	allocationSoutienFamilial.setReportee(true);
 	aidesPourCeMois.put(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode(), allocationSoutienFamilial);
     }
@@ -77,10 +77,10 @@ public class AidesFamilialesUtile {
     private void ajouterAllocationsFamiliales(Map<String, Aide> aidesPourCeMois, float montant) {
 	Aide allocationsFamiliales = new Aide();
 	allocationsFamiliales.setCode(AideEnum.ALLOCATIONS_FAMILIALES.getCode());
-	allocationsFamiliales.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	allocationsFamiliales.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	allocationsFamiliales.setMontant(montant);
 	allocationsFamiliales.setNom(AideEnum.ALLOCATIONS_FAMILIALES.getNom());
-	allocationsFamiliales.setOrganisme(Organismes.CAF.getNom());
+	allocationsFamiliales.setOrganisme(OrganismeEnum.CAF.getNom());
 	allocationsFamiliales.setReportee(true);
 	aidesPourCeMois.put(AideEnum.ALLOCATIONS_FAMILIALES.getCode(), allocationsFamiliales);
     }
@@ -88,10 +88,10 @@ public class AidesFamilialesUtile {
     private void ajouterComplementFamilial(Map<String, Aide> aidesPourCeMois, float montant) {
 	Aide complementFamilial = new Aide();
 	complementFamilial.setCode(AideEnum.COMPLEMENT_FAMILIAL.getCode());
-	complementFamilial.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	complementFamilial.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	complementFamilial.setMontant(montant);
 	complementFamilial.setNom(AideEnum.COMPLEMENT_FAMILIAL.getNom());
-	complementFamilial.setOrganisme(Organismes.CAF.getNom());
+	complementFamilial.setOrganisme(OrganismeEnum.CAF.getNom());
 	complementFamilial.setReportee(true);
 	aidesPourCeMois.put(AideEnum.COMPLEMENT_FAMILIAL.getCode(), complementFamilial);
     }
@@ -99,10 +99,10 @@ public class AidesFamilialesUtile {
     private void ajouterPrestationAccueilJeuneEnfant(Map<String, Aide> aidesPourCeMois, float montant) {
 	Aide prestationAccueilJeuneEnfant = new Aide();
 	prestationAccueilJeuneEnfant.setCode(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode());
-	prestationAccueilJeuneEnfant.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	prestationAccueilJeuneEnfant.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	prestationAccueilJeuneEnfant.setMontant(montant);
 	prestationAccueilJeuneEnfant.setNom(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getNom());
-	prestationAccueilJeuneEnfant.setOrganisme(Organismes.CAF.getNom());
+	prestationAccueilJeuneEnfant.setOrganisme(OrganismeEnum.CAF.getNom());
 	prestationAccueilJeuneEnfant.setReportee(true);
 	aidesPourCeMois.put(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode(), prestationAccueilJeuneEnfant);
     }
@@ -110,10 +110,10 @@ public class AidesFamilialesUtile {
     private void ajouterPensionsAlimentaires(Map<String, Aide> aidesPourCeMois, float montant) {
 	Aide pensionsAlimentaires = new Aide();
 	pensionsAlimentaires.setCode(AideEnum.PENSIONS_ALIMENTAIRES.getCode());
-	pensionsAlimentaires.setMessageAlerte(MessagesInformatifs.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	pensionsAlimentaires.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	pensionsAlimentaires.setMontant(montant);
 	pensionsAlimentaires.setNom(AideEnum.PENSIONS_ALIMENTAIRES.getNom());
-	pensionsAlimentaires.setOrganisme(Organismes.CAF.getNom());
+	pensionsAlimentaires.setOrganisme(OrganismeEnum.CAF.getNom());
 	pensionsAlimentaires.setReportee(true);
 	aidesPourCeMois.put(AideEnum.PENSIONS_ALIMENTAIRES.getCode(), pensionsAlimentaires);
     }

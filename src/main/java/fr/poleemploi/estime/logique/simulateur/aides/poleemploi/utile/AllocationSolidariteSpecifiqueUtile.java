@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
@@ -82,7 +82,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 	}
 	ass.setMontant(montantAide);
 	ass.setNom(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
-	ass.setOrganisme(Organismes.PE.getNom());
+	ass.setOrganisme(OrganismeEnum.PE.getNom());
 	ass.setReportee(false);
 	return ass;
     }
@@ -101,7 +101,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 	LocalDate dateFinDroitASS = dateUtile.ajouterMoisALocalDate(dateDerniereOuvertureDroitASS, 6);
 	LocalDate date3emeMoisSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, 3);
 	if (dateUtile.isDateAvant(dateFinDroitASS, date3emeMoisSimulation)) {
-	    return Optional.of(MessagesInformatifs.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
+	    return Optional.of(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
 	}
 	return Optional.empty();
     }

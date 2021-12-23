@@ -1,12 +1,12 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum TypesContratTravail {
+public enum TypesContratTravailEnum {
     CDI("CDI"),
     CDD("CDD");
     
     private String valeur;
     
-    TypesContratTravail(String valeur) {
+    TypesContratTravailEnum(String valeur) {
         this.valeur = valeur;
     }
     

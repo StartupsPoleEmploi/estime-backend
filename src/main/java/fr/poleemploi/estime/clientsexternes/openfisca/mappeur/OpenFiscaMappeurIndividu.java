@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.StatutsMarital;
+import fr.poleemploi.estime.commun.enumerations.StatutMaritalEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -110,9 +110,9 @@ public class OpenFiscaMappeurIndividu {
     
     private String getStatutMarital(DemandeurEmploi demandeurEmploi) {
         if(demandeurEmploi.getSituationFamiliale().getIsEnCouple().booleanValue()) {
-            return StatutsMarital.MARIE.getLibelle();
+            return StatutMaritalEnum.MARIE.getLibelle();
         }
-        return StatutsMarital.CELIBATAIRE.getLibelle();
+        return StatutMaritalEnum.CELIBATAIRE.getLibelle();
     }
     
     private String getDateNaissance(DemandeurEmploi demandeurEmploi) {

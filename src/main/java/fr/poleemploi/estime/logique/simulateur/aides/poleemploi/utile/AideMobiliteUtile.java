@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.NombresJoursIndemnises;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.NombreJourIndemniseEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
@@ -113,7 +113,7 @@ public class AideMobiliteUtile {
         }
         aideMobilite.setMontant(montantAide);
         aideMobilite.setNom(AideEnum.AIDE_MOBILITE.getNom());
-        aideMobilite.setOrganisme(Organismes.PE.getNom());
+        aideMobilite.setOrganisme(OrganismeEnum.PE.getNom());
         aideMobilite.setReportee(false);
         return aideMobilite;
     }
@@ -130,7 +130,7 @@ public class AideMobiliteUtile {
     }
 
     private int getNombrejoursIndemnises(float nombreHeuresHebdoTravaillees) {
-        for (NombresJoursIndemnises nombresJoursTravailles : NombresJoursIndemnises.values()) {
+        for (NombreJourIndemniseEnum nombresJoursTravailles : NombreJourIndemniseEnum.values()) {
             if(nombreHeuresHebdoTravaillees >= nombresJoursTravailles.getNombreHeuresMinHebdo() && nombreHeuresHebdoTravaillees <= nombresJoursTravailles.getNombreHeuresMaxHebdo()) {
                 return nombresJoursTravailles.getNombreRepasIndemnises();
             }

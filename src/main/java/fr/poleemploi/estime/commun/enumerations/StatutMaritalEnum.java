@@ -1,14 +1,12 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum Environnements {
-
-    LOCALHOST("localhost"),
-    LOCALHOST_IP("127.0.0.1"),
-    RECETTE("recette");
+public enum StatutMaritalEnum {
+    MARIE("marie"),
+    CELIBATAIRE("celibataire");
     
     private String libelle;
     
-    Environnements(String libelle) {
+    StatutMaritalEnum(String libelle) {
         this.libelle = libelle;
     }
 

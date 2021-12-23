@@ -22,7 +22,7 @@ public class AidesService {
     private AideServiceControleur aideServiceControleur;
     
    
-    @GetMapping(value = "/{codeAide}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{codeAide}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Aide getAideByCode(@PathVariable String codeAide) {
         aideServiceControleur.controlerDonneesEntreeServiceAuthentifier(codeAide);
         return aideLogique.getAideByCode(codeAide);

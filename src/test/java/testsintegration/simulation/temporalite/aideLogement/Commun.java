@@ -16,9 +16,9 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
@@ -44,7 +44,7 @@ public class Commun {
         doReturn(utileTests.getDate(dateSimulation)).when(dateUtile).getDateJour();
 
         // mock retour appel détail indemnisation de l'ESD
-        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulation.RSA.getLibelle());
+        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulationEnum.RSA.getLibelle());
         doReturn(detailIndemnisationESD).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
     }
 
@@ -64,17 +64,17 @@ public class Commun {
     protected DemandeurEmploi creerDemandeurEmploiAPL(int prochaineDeclarationTrimestrielle) throws ParseException {
         boolean isEnCouple = true;
         int nbEnfant = 2;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
         
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+        demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(7));
         
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", true));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
@@ -105,17 +105,17 @@ public class Commun {
     protected DemandeurEmploi creerDemandeurEmploiALF(int prochaineDeclarationTrimestrielle) throws ParseException  {
         boolean isEnCouple = true;
         int nbEnfant = 2;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
         
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+        demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(7));
         
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
@@ -146,16 +146,16 @@ public class Commun {
     protected DemandeurEmploi creerDemandeurEmploiALS(int prochaineDeclarationTrimestrielle) throws ParseException  {
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
         
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+        demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
         
         demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
         
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);

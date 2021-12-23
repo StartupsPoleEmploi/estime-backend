@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
-import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
+import fr.poleemploi.estime.commun.enumerations.ParcourUtilisateurEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.donnees.entities.SuiviParcoursUtilisateurEntity;
 import fr.poleemploi.estime.donnees.managers.SuiviParcoursUtilisateurManager;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
@@ -49,9 +49,9 @@ public class SuiviUtilisateurUtile {
 
 	public String getParcoursAccesService(Individu individu) {
 		if (individu.isPopulationAutorisee()) {
-			return ParcoursUtilisateur.CONNEXION_REUSSIE.getParcours();
+			return ParcourUtilisateurEnum.CONNEXION_REUSSIE.getParcours();
 		}
-		return ParcoursUtilisateur.CONNEXION_REFUSEE.getParcours();
+		return ParcourUtilisateurEnum.CONNEXION_REFUSEE.getParcours();
 	}
 
 	private String getTypePopulation(BeneficiaireAides beneficiaireAides) {
@@ -90,13 +90,13 @@ public class SuiviUtilisateurUtile {
 		StringBuilder typePopulationBuilder = new StringBuilder("");
 
 		if (isNonBeneficaireAllocations(isBeneficiaireARE, isBeneficiaireASS, isBeneficiaireRSA, isBeneficiaireAAH)) {
-			typePopulationBuilder.append(TypePopulation.NON_BENEFICIAIRE.getLibelle());
+			typePopulationBuilder.append(TypePopulationEnum.NON_BENEFICIAIRE.getLibelle());
 		} else {
 			StringBuilder beneficiaireBuilder = new StringBuilder("");
-			appendTypePopulation(beneficiaireBuilder, isBeneficiaireARE, TypePopulation.ARE.getLibelle());
-			appendTypePopulation(beneficiaireBuilder, isBeneficiaireASS, TypePopulation.ASS.getLibelle());
-			appendTypePopulation(beneficiaireBuilder, isBeneficiaireRSA, TypePopulation.RSA.getLibelle());
-			appendTypePopulation(beneficiaireBuilder, isBeneficiaireAAH, TypePopulation.AAH.getLibelle());
+			appendTypePopulation(beneficiaireBuilder, isBeneficiaireARE, TypePopulationEnum.ARE.getLibelle());
+			appendTypePopulation(beneficiaireBuilder, isBeneficiaireASS, TypePopulationEnum.ASS.getLibelle());
+			appendTypePopulation(beneficiaireBuilder, isBeneficiaireRSA, TypePopulationEnum.RSA.getLibelle());
+			appendTypePopulation(beneficiaireBuilder, isBeneficiaireAAH, TypePopulationEnum.AAH.getLibelle());
 			typePopulationBuilder.append(beneficiaireBuilder.toString());
 		}
 		return typePopulationBuilder.toString();
