@@ -7,16 +7,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -106,13 +106,13 @@ public class AgepiUtile {
     
     private Aide creerAide(float montantAide) {
         Aide agepi = new Aide();
-        agepi.setCode(Aides.AGEPI.getCode());
-        Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.AGEPI.getNomFichierDetail());
+        agepi.setCode(AideEnum.AGEPI.getCode());
+        Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AGEPI.getNomFichierDetail());
         if(detailAideOptional.isPresent()) {
             agepi.setDetail(detailAideOptional.get());            
         }
 	agepi.setMessageAlerte(MessagesInformatifs.AGEPI_IDF.getMessage());
-        agepi.setNom(Aides.AGEPI.getNom());
+        agepi.setNom(AideEnum.AGEPI.getNom());
         agepi.setOrganisme(Organismes.PE.getNom());
         agepi.setMontant(montantAide);
         agepi.setReportee(false);

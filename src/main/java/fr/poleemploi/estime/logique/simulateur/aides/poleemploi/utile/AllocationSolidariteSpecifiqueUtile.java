@@ -8,13 +8,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
@@ -71,8 +71,8 @@ public class AllocationSolidariteSpecifiqueUtile {
 
     private Aide creerAide(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, float montantAide) {
 	Aide ass = new Aide();
-	ass.setCode(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
-	Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNomFichierDetail());
+	ass.setCode(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
+	Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNomFichierDetail());
 	if (detailAideOptional.isPresent()) {
 	    ass.setDetail(detailAideOptional.get());
 	}
@@ -81,7 +81,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 	    ass.setMessageAlerte(messageAlerteOptional.get());
 	}
 	ass.setMontant(montantAide);
-	ass.setNom(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
+	ass.setNom(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
 	ass.setOrganisme(Organismes.PE.getNom());
 	ass.setReportee(false);
 	return ass;

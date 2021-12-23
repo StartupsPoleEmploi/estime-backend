@@ -30,7 +30,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPeriode;
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -75,7 +75,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-non-travaille-6-derniers-mois-numero-mois-2.json");
 
-	String codeAideAAH = Aides.ALLOCATION_ADULTES_HANDICAPES.getCode();
+	String codeAideAAH = AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
 	int numeroMoisSimule = 2;
 
@@ -100,7 +100,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-non-travaille-6-derniers-mois-numero-mois-5.json");
 
-	String codeAideAAH = Aides.ALLOCATION_ADULTES_HANDICAPES.getCode();
+	String codeAideAAH = AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
 	int numeroMoisSimule = 5;
 
@@ -127,7 +127,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-6-mois-travaille-6-derniers-mois-numero-mois-2.json");
 
-	String codeAideAAH = Aides.ALLOCATION_ADULTES_HANDICAPES.getCode();
+	String codeAideAAH = AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
 	int numeroMoisSimule = 2;
 
@@ -153,7 +153,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsAAH/periode-aah-6-mois-travaille-6-derniers-mois-numero-mois-5.json");
 
-	String codeAideAAH = Aides.ALLOCATION_ADULTES_HANDICAPES.getCode();
+	String codeAideAAH = AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode();
 	LocalDate dateDebutSimulation = testUtile.getDate("01-10-2020");
 	int numeroMoisSimule = 5;
 

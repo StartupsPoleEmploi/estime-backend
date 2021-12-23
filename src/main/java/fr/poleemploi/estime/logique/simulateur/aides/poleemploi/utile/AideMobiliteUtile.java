@@ -7,14 +7,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.NombresJoursIndemnises;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -106,13 +106,13 @@ public class AideMobiliteUtile {
     
     private Aide creerAide(float montantAide) {
         Aide aideMobilite = new Aide();
-        aideMobilite.setCode(Aides.AIDE_MOBILITE.getCode());
-        Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.AIDE_MOBILITE.getNomFichierDetail());
+        aideMobilite.setCode(AideEnum.AIDE_MOBILITE.getCode());
+        Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AIDE_MOBILITE.getNomFichierDetail());
         if(detailAideOptional.isPresent()) {
             aideMobilite.setDetail(detailAideOptional.get());            
         }
         aideMobilite.setMontant(montantAide);
-        aideMobilite.setNom(Aides.AIDE_MOBILITE.getNom());
+        aideMobilite.setNom(AideEnum.AIDE_MOBILITE.getNom());
         aideMobilite.setOrganisme(Organismes.PE.getNom());
         aideMobilite.setReportee(false);
         return aideMobilite;

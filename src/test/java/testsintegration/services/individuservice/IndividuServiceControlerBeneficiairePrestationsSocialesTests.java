@@ -1,4 +1,4 @@
-package testsunitaires.services.controleurs;
+package testsintegration.services.individuservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,27 +22,34 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class IndividuServiceControleur {
+class BeneficiaireAidesControleurTests extends CommunTests {
     
     @Autowired
     private IndividuService individuService;
-    
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
     public static class SpringConfig {
 
     }
-
-    @Test
-    void controlerDonneeesEntreeDemandeurEmploiTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAides(null);
-        }).getMessage()).isEqualTo(BadRequestMessages.DEMANDEUR_EMPLOI_OBLIGATOIRE.getMessage());
-    }
     
+    @Test
+    void controlerDonneeesEntreeBeneficiaireAidesTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+        
+        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        demandeurEmploi.setBeneficiaireAides(null);
+        demandeurEmploi.setFuturTravail(creerFuturTravail());
+        demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
+        demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
+               
+        assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+            individuService.simulerAides(demandeurEmploi);
+        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "beneficiaireAides"));
+    }    
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.Organismes;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
@@ -49,8 +49,8 @@ public class Commun {
 
     protected Aide getAideeAAH(float montant) {
 	Aide aideAgepi = new Aide();
-	aideAgepi.setCode(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode());
-	aideAgepi.setNom(Aides.ALLOCATION_ADULTES_HANDICAPES.getNom());
+	aideAgepi.setCode(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode());
+	aideAgepi.setNom(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getNom());
 	aideAgepi.setOrganisme(Organismes.CAF.getNom());
 	aideAgepi.setMontant(montant);
 	aideAgepi.setReportee(false);
@@ -59,8 +59,8 @@ public class Commun {
 
     protected Aide getAideeASS(float montant) {
 	Aide aideAgepi = new Aide();
-	aideAgepi.setCode(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
-	aideAgepi.setNom(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
+	aideAgepi.setCode(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
+	aideAgepi.setNom(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
 	aideAgepi.setOrganisme(Organismes.PE.getNom());
 	aideAgepi.setMontant(montant);
 	aideAgepi.setReportee(false);

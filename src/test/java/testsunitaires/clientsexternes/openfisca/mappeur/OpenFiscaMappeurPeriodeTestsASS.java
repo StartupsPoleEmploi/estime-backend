@@ -30,7 +30,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPeriode;
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -65,7 +65,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-3-mois-ass-salaire-simulation-mois-2.json");
 
-	String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
+	String codeAideASS = AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
 	LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
 	int numeroMoisSimule = 2;
 
@@ -88,7 +88,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-2-mois-ass-salaire-simulation-mois-6.json");
 
-	String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
+	String codeAideASS = AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
 	LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
 	int numeroMoisSimule = 6;
 
@@ -116,7 +116,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-2-mois-ass-salaire-simulation-mois-3.json");
 
-	String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
+	String codeAideASS = AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
 	LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
 	int numeroMoisSimule = 3;
 
@@ -140,7 +140,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-1-mois-ass-salaire-simulation-mois-4.json");
 
-	String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
+	String codeAideASS = AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
 	LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
 	int numeroMoisSimule = 4;
 
@@ -166,7 +166,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	String openFiscaPayloadExpected = utileTests.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsASS/periode-ass-cumul-0-mois-ass-salaire-simulation-mois-5.json");
 
-	String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
+	String codeAideASS = AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
 	LocalDate dateDebutSimulation = utileTests.getDate("01-10-2020");
 	int numeroMoisSimule = 5;
 

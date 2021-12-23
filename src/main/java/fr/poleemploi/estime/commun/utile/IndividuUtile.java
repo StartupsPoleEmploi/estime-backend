@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
@@ -52,12 +52,12 @@ public class IndividuUtile {
 
     private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIO detailIndemnisation) {
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-	if (Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
+	if (AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
 	    AllocationASS allocationASS = new AllocationASS();
 	    allocationASS.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());
 	    aidesPoleEmploi.setAllocationASS(allocationASS);
 	}
-	if (Aides.ALLOCATION_RETOUR_EMPLOI.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
+	if (AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
 	    AllocationARE allocationARE = new AllocationARE();
 	    allocationARE.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());
 	    aidesPoleEmploi.setAllocationARE(allocationARE);

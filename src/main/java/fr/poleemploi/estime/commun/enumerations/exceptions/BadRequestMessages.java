@@ -2,6 +2,7 @@ package fr.poleemploi.estime.commun.enumerations.exceptions;
 
 public enum BadRequestMessages {
 
+    CODE_AIDE_INCORRECT("Le code aide fourni n'existe pas. Codes aide possibles : %s"),
     CHAMP_OBLIGATOIRE("Le champ %s est obligatoire"),
 	DEMANDEUR_EMPLOI_OBLIGATOIRE("Des informations sur le demandeur d'emploi sont obligatoires."),
 	NATIONALITE_INCORRECTE("La nationalité du demandeur d'emploi doit avoir pour valeur : %s"),

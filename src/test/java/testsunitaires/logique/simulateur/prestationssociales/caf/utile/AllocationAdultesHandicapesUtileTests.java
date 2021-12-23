@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AllocationAdultesHandicapesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -114,7 +114,7 @@ class AllocationAdultesHandicapesUtileTests {
 	// Alors le montant de l'AAH est de 370€
 	// 20% du salaire = 80
 	// AAH - 60% du salaire = 450 - 80 = 370€
-	assertThat(aidesPourCeMois.get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aideAAH -> {
+	assertThat(aidesPourCeMois.get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aideAAH -> {
 	    assertThat(aideAAH.getMontant()).isEqualTo(370);
 	});
     }
@@ -155,7 +155,7 @@ class AllocationAdultesHandicapesUtileTests {
 	// Alors le montant de l'AAH est de 150€
 	// 60% du salaire = 300
 	// AAH - 60% du salaire = 450 - 300 = 150€
-	assertThat(aidesPourCeMois.get(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aideAAH -> {
+	assertThat(aidesPourCeMois.get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aideAAH -> {
 	    assertThat(aideAAH.getMontant()).isEqualTo(150);
 	});
     }

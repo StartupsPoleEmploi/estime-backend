@@ -1,4 +1,4 @@
-package testsunitaires.services.controleurs.demandeuremploi;
+package testsintegration.services.individuservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,7 +29,7 @@ import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class SituationFamilialeControleurTests extends CommunTests {
+class IndividuServiceControlerSituationFamilialeControleurTests extends CommunTests {
     
     @Autowired
     private IndividuService individuService;

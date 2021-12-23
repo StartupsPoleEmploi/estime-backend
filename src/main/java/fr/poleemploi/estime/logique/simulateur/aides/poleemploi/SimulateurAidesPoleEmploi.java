@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AideMobiliteUtile;
@@ -32,16 +32,16 @@ public class SimulateurAidesPoleEmploi {
     
     public void simuler(Map<String, Aide>  aidesPourCeMois, int numeroMoisSimule, LocalDate moisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
         if(agepi.isEligible(numeroMoisSimule, demandeurEmploi)) {
-            aidesPourCeMois.put(Aides.AGEPI.getCode(), agepi.simulerAide(demandeurEmploi));
+            aidesPourCeMois.put(AideEnum.AGEPI.getCode(), agepi.simulerAide(demandeurEmploi));
         }
         if(aideMobilite.isEligible(numeroMoisSimule, demandeurEmploi)) {
-            aidesPourCeMois.put(Aides.AIDE_MOBILITE.getCode(), aideMobilite.simulerAide(demandeurEmploi));
+            aidesPourCeMois.put(AideEnum.AIDE_MOBILITE.getCode(), aideMobilite.simulerAide(demandeurEmploi));
         }
         if(beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)
            && allocationSolidariteSpecifique.isEligible(numeroMoisSimule, demandeurEmploi)) {            
             Optional<Aide> aideOptional = allocationSolidariteSpecifique.simulerAide(demandeurEmploi, moisSimule, dateDebutSimulation);
             if(aideOptional.isPresent()) {
-                aidesPourCeMois.put(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());                
+                aidesPourCeMois.put(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());                
             }
         }
     }

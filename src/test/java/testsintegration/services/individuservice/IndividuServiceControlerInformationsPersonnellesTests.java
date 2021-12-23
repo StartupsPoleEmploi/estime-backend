@@ -1,4 +1,4 @@
-package testsunitaires.services.controleurs.demandeuremploi;
+package testsintegration.services.individuservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +31,7 @@ import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class InformationsPersonnellesControleurTests extends CommunTests {
+class IndividuServiceControlerInformationsPersonnellesTests extends CommunTests {
 
     @Autowired
     private IndividuService individuService;
@@ -41,6 +41,14 @@ class InformationsPersonnellesControleurTests extends CommunTests {
     public static class SpringConfig {
 
     }
+    
+    @Test
+    void controlerDonneeesEntreeTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+        assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+            individuService.simulerAides(null);
+        }).getMessage()).isEqualTo(BadRequestMessages.DEMANDEUR_EMPLOI_OBLIGATOIRE.getMessage());
+    }
+    
     
     @Test
     void controlerDonneeesEntreeInformationsPersonnellesTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {

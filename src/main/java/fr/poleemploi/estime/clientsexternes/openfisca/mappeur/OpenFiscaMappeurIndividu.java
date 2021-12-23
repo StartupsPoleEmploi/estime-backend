@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 import com.github.tsohr.JSONObject;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.StatutsMarital;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
@@ -68,11 +68,11 @@ public class OpenFiscaMappeurIndividu {
     
     private void addRessourcesFinancieresDemandeur(JSONObject demandeurJSON, DemandeurEmploi demandeurEmploi, SimulationAides simulationAides, int numeroMoisSimule, LocalDate dateDebutSimulation) {
         if(ressourcesFinancieresUtile.hasAllocationAdultesHandicapes(demandeurEmploi)) {
-            String codeAideAAH = Aides.ALLOCATION_ADULTES_HANDICAPES.getCode();
+            String codeAideAAH = AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode();
             demandeurJSON.put(AAH, openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule));            
         }
         if(ressourcesFinancieresUtile.hasAllocationSolidariteSpecifique(demandeurEmploi.getRessourcesFinancieres())) {
-            String codeAideASS = Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
+            String codeAideASS = AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode();
             demandeurJSON.put(ASS, openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule));
         }
         if(ressourcesFinancieresUtile.hasRevenusImmobilier(demandeurEmploi)) {
