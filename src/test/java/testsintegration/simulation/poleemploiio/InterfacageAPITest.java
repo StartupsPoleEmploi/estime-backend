@@ -29,209 +29,267 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.Salaire;
 
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations = "classpath:application-test.properties")
 class InterfacageAPITest extends Commun {
 
+	@Autowired
+	private PoleEmploiIOClient poleEmploiIOClient;
+	
     @Autowired
-    private PoleEmploiIOClient poleEmploiIOClient;
+    private AgepiUtile agepiUtile;
+    
+    public static final String CODE_POSTAL_MAYOTTE = "97600";
+    public static final String CODE_POSTAL_METROPOLITAIN = "72300";
+    public static final int PREMIER_MOIS_SIMULATION = 1;
+    public static final String ACCESS_TOKEN = "s0PnbrZXGdmj96IUg-NYJpl7F6I";
 
-    @Configuration
-    @ComponentScan({ "utile.tests", "fr.poleemploi.estime" })
-    public static class SpringConfig {
+	@Configuration
+	@ComponentScan({ "utile.tests", "fr.poleemploi.estime" })
+	public static class SpringConfig {
 
-    }
-
-    @Test
-    void testInterfacageApiAGEPIValide() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-
-	//        // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
-	//        // enfant à charge de 9ans, af = 90€
-	//        // Montant net journalier ASS = 16,89€
-	//        // AAH = 900€
-	//        // 0 mois travaillé avant simulation
-	//        // futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par mois, 35h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
-	//        DemandeurEmploi demandeurEmploi = createDemandeurEmploiAgepi();
-	//        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
-	//
-	//        // Lorsque je simule mes prestations le 20/10/2020
-	//        initMocks(demandeurEmploi);
-
-	AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
-	agepiPEIOIn.setContexte("Reprise");
-	agepiPEIOIn.setDateActionReclassement("2021-11-22");
-	agepiPEIOIn.setDateDepot("2021-11-22");
-	agepiPEIOIn.setDureePeriodeEmploiOuFormation(90);
-	agepiPEIOIn.setEleveSeulEnfants(true);
-	agepiPEIOIn.setIntensite((int) Math.round(50));
-	agepiPEIOIn.setLieuFormationOuEmploi("France");
-	agepiPEIOIn.setNatureContratTravail("CDI");
-	agepiPEIOIn.setNombreEnfants(3);
-	agepiPEIOIn.setNombreEnfantsMoins10Ans(2);
-	agepiPEIOIn.setOrigine("c");
-	agepiPEIOIn.setTypeIntensite("Mensuelle");
-
-	initMocksAPI(true, false, false);
-	Optional<AgepiPEIOOut> agepiOutOptional = poleEmploiIOClient.callAgepiEndPoint(agepiPEIOIn, "");
-	if (agepiOutOptional.isPresent()) {
-	    AgepiPEIOOut agepiOut = agepiOutOptional.get();
-	    float montant = agepiOut.getDecisionAgepiAPI().getMontant();
-	    assertThat(montant).isPositive();
 	}
-    }
 
-    @Test
-    void testInterfacageApiAGEPIInvalide() {
-	AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
-	agepiPEIOIn.setContexte("Reprise");
-	agepiPEIOIn.setDateActionReclassement("2021-11-04");
-	agepiPEIOIn.setDateDepot("2021-11-04");
-	agepiPEIOIn.setDureePeriodeEmploiOuFormation(90);
-	agepiPEIOIn.setEleveSeulEnfants(false);
-	agepiPEIOIn.setIntensite((int) Math.round(50));
-	agepiPEIOIn.setLieuFormationOuEmploi("France");
-	agepiPEIOIn.setNatureContratTravail("CDI");
-	agepiPEIOIn.setNombreEnfants(0);
-	agepiPEIOIn.setNombreEnfantsMoins10Ans(0);
-	agepiPEIOIn.setOrigine("c");
-	agepiPEIOIn.setTypeIntensite("Mensuelle");
+	@Test
+	void testInterfacageApiAGEPIValide() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-	initMocksAPI();
-	Optional<AgepiPEIOOut> agepiOutOptional = poleEmploiIOClient.callAgepiEndPoint(agepiPEIOIn, "");
-	if (agepiOutOptional.isPresent()) {
-	    AgepiPEIOOut agepiOut = agepiOutOptional.get();
-	    float montant = agepiOut.getDecisionAgepiAPI().getMontant();
-	    assertThat(montant).isZero();
+		//        // Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
+		//        // enfant à charge de 9ans, af = 90€
+		//        // Montant net journalier ASS = 16,89€
+		//        // AAH = 900€
+		//        // 0 mois travaillé avant simulation
+		//        // futur contrat CDI, salaire 1200€ brut par mois soit 940€ net par mois, 35h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
+		//        DemandeurEmploi demandeurEmploi = createDemandeurEmploiAgepi();
+		//        demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+		//
+		//        // Lorsque je simule mes prestations le 20/10/2020
+		//        initMocks(demandeurEmploi);
+
+		AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
+		agepiPEIOIn.setContexte("Reprise");
+		agepiPEIOIn.setDateActionReclassement("2021-11-22");
+		agepiPEIOIn.setDateDepot("2021-11-22");
+		agepiPEIOIn.setDureePeriodeEmploiOuFormation(90);
+		agepiPEIOIn.setEleveSeulEnfants(true);
+		agepiPEIOIn.setIntensite((int) Math.round(50));
+		agepiPEIOIn.setLieuFormationOuEmploi("France");
+		agepiPEIOIn.setNatureContratTravail("CDI");
+		agepiPEIOIn.setNombreEnfants(3);
+		agepiPEIOIn.setNombreEnfantsMoins10Ans(2);
+		agepiPEIOIn.setOrigine("c");
+		agepiPEIOIn.setTypeIntensite("Mensuelle");
+
+		initMocksAPI(true, false, false);
+		Optional<AgepiPEIOOut> agepiOutOptional = poleEmploiIOClient.callAgepiEndPoint(agepiPEIOIn, "");
+		if (agepiOutOptional.isPresent()) {
+			AgepiPEIOOut agepiOut = agepiOutOptional.get();
+			float montant = agepiOut.getDecisionAgepiAPI().getMontant();
+			assertThat(montant).isPositive();
+		}
 	}
-    }
 
-    @Test
-    void testInterfacageApiAideMobValide() {
-	AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
-	aideMobilitePEIOIn.setContexte("Reprise");
-	aideMobilitePEIOIn.setDateActionReclassement("2021-11-09");
-	aideMobilitePEIOIn.setDateDepot("2021-11-09");
-	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
-	aideMobilitePEIOIn.setNatureContratTravail("CDI");
-	aideMobilitePEIOIn.setOrigine("c");
-	aideMobilitePEIOIn.setDistanceDomicileActionReclassement(65000);
-	aideMobilitePEIOIn.setNombreAllersRetours(15);
-	aideMobilitePEIOIn.setNombreRepas(0);
-	aideMobilitePEIOIn.setNombreNuitees(0);
-	aideMobilitePEIOIn.setCodeTerritoire("001");
-	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
-	aideMobilitePEIOIn.setEleveSeulEnfants(true);
-	aideMobilitePEIOIn.setFraisPrisEnChargeParTiers(false);
-	aideMobilitePEIOIn.setIntensite(50);
-	aideMobilitePEIOIn.setTypeIntensite("mensuelle");
-	aideMobilitePEIOIn.setNombreEnfantsMoins10Ans(2);
-	aideMobilitePEIOIn.setNombreEnfants(3);
-	aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
+	@Test
+	void testInterfacageApiAGEPIInvalide() {
+		AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
+		agepiPEIOIn.setContexte("Reprise");
+		agepiPEIOIn.setDateActionReclassement("2021-11-04");
+		agepiPEIOIn.setDateDepot("2021-11-04");
+		agepiPEIOIn.setDureePeriodeEmploiOuFormation(90);
+		agepiPEIOIn.setEleveSeulEnfants(false);
+		agepiPEIOIn.setIntensite((int) Math.round(50));
+		agepiPEIOIn.setLieuFormationOuEmploi("France");
+		agepiPEIOIn.setNatureContratTravail("CDI");
+		agepiPEIOIn.setNombreEnfants(0);
+		agepiPEIOIn.setNombreEnfantsMoins10Ans(0);
+		agepiPEIOIn.setOrigine("c");
+		agepiPEIOIn.setTypeIntensite("Mensuelle");
 
-	initMocksAPI(false, true, false);
-	Optional<AideMobilitePEIOOut> aideMobilitePEIOOutOptional = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, "");
-	if (aideMobilitePEIOOutOptional.isPresent()) {
-	    AideMobilitePEIOOut agepiOut = aideMobilitePEIOOutOptional.get();
-	    float montant = agepiOut.getDecisionAideMobiliteAPI().getMontant();
-	    assertThat(montant).isPositive();
+		initMocksAPI();
+		Optional<AgepiPEIOOut> agepiOutOptional = poleEmploiIOClient.callAgepiEndPoint(agepiPEIOIn, "");
+		if (agepiOutOptional.isPresent()) {
+			AgepiPEIOOut agepiOut = agepiOutOptional.get();
+			float montant = agepiOut.getDecisionAgepiAPI().getMontant();
+			assertThat(montant).isZero();
+		}
 	}
-    }
 
-    @Test
-    void testInterfacageApiAideMobInvalide() {
-	AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
-	aideMobilitePEIOIn.setContexte("Reprise");
-	aideMobilitePEIOIn.setDateActionReclassement("2021-11-09");
-	aideMobilitePEIOIn.setDateDepot("2021-11-09");
-	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
-	aideMobilitePEIOIn.setNatureContratTravail("CDI");
-	aideMobilitePEIOIn.setOrigine("c");
-	aideMobilitePEIOIn.setDistanceDomicileActionReclassement(25000);
-	aideMobilitePEIOIn.setNombreAllersRetours(15);
-	aideMobilitePEIOIn.setNombreRepas(0);
-	aideMobilitePEIOIn.setNombreNuitees(0);
-	aideMobilitePEIOIn.setCodeTerritoire("001");
-	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
-	aideMobilitePEIOIn.setEleveSeulEnfants(true);
-	aideMobilitePEIOIn.setFraisPrisEnChargeParTiers(false);
-	aideMobilitePEIOIn.setIntensite(50);
-	aideMobilitePEIOIn.setTypeIntensite("mensuelle");
-	aideMobilitePEIOIn.setNombreEnfantsMoins10Ans(2);
-	aideMobilitePEIOIn.setNombreEnfants(3);
-	aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
+	@Test
+	void testInterfacageApiAideMobValide() {
+		AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
+		aideMobilitePEIOIn.setContexte("Reprise");
+		aideMobilitePEIOIn.setDateActionReclassement("2021-11-09");
+		aideMobilitePEIOIn.setDateDepot("2021-11-09");
+		aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
+		aideMobilitePEIOIn.setNatureContratTravail("CDI");
+		aideMobilitePEIOIn.setOrigine("c");
+		aideMobilitePEIOIn.setDistanceDomicileActionReclassement(65000);
+		aideMobilitePEIOIn.setNombreAllersRetours(15);
+		aideMobilitePEIOIn.setNombreRepas(0);
+		aideMobilitePEIOIn.setNombreNuitees(0);
+		aideMobilitePEIOIn.setCodeTerritoire("001");
+		aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
+		aideMobilitePEIOIn.setEleveSeulEnfants(true);
+		aideMobilitePEIOIn.setFraisPrisEnChargeParTiers(false);
+		aideMobilitePEIOIn.setIntensite(50);
+		aideMobilitePEIOIn.setTypeIntensite("mensuelle");
+		aideMobilitePEIOIn.setNombreEnfantsMoins10Ans(2);
+		aideMobilitePEIOIn.setNombreEnfants(3);
+		aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
 
-	initMocksAPI();
-	Optional<AideMobilitePEIOOut> aideMobilitePEIOOutOptional = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, "");
-	if (aideMobilitePEIOOutOptional.isPresent()) {
-	    AideMobilitePEIOOut agepiOut = aideMobilitePEIOOutOptional.get();
-	    float montant = agepiOut.getDecisionAideMobiliteAPI().getMontant();
-	    assertThat(montant).isZero();
+		initMocksAPI(false, true, false);
+		Optional<AideMobilitePEIOOut> aideMobilitePEIOOutOptional = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, "");
+		if (aideMobilitePEIOOutOptional.isPresent()) {
+			AideMobilitePEIOOut agepiOut = aideMobilitePEIOOutOptional.get();
+			float montant = agepiOut.getDecisionAideMobiliteAPI().getMontant();
+			assertThat(montant).isPositive();
+		}
 	}
-    }
 
-    @Test
-    void testInterfacageApiAreValide() {
-	ArePEIOIn areIn = new ArePEIOIn();
-	areIn.setAllocationBruteJournaliere(45f);
-	areIn.setGainBrut(27f);
-	areIn.setSalaireBrutJournalier(375f);
+	@Test
+	void testInterfacageApiAideMobInvalide() {
+		AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
+		aideMobilitePEIOIn.setContexte("Reprise");
+		aideMobilitePEIOIn.setDateActionReclassement("2021-11-09");
+		aideMobilitePEIOIn.setDateDepot("2021-11-09");
+		aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
+		aideMobilitePEIOIn.setNatureContratTravail("CDI");
+		aideMobilitePEIOIn.setOrigine("c");
+		aideMobilitePEIOIn.setDistanceDomicileActionReclassement(25000);
+		aideMobilitePEIOIn.setNombreAllersRetours(15);
+		aideMobilitePEIOIn.setNombreRepas(0);
+		aideMobilitePEIOIn.setNombreNuitees(0);
+		aideMobilitePEIOIn.setCodeTerritoire("001");
+		aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(90);
+		aideMobilitePEIOIn.setEleveSeulEnfants(true);
+		aideMobilitePEIOIn.setFraisPrisEnChargeParTiers(false);
+		aideMobilitePEIOIn.setIntensite(50);
+		aideMobilitePEIOIn.setTypeIntensite("mensuelle");
+		aideMobilitePEIOIn.setNombreEnfantsMoins10Ans(2);
+		aideMobilitePEIOIn.setNombreEnfants(3);
+		aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
 
-	initMocksAPI(false, false, true);
-	Optional<ArePEIOOut> areOutOptional = poleEmploiIOClient.callAreEndPoint(areIn, "");
-	if (areOutOptional.isPresent()) {
-	    ArePEIOOut areOut = areOutOptional.get();
-	    float montant = areOut.getAllocationMensuelle();
-	    assertThat(montant).isPositive();
+		initMocksAPI();
+		Optional<AideMobilitePEIOOut> aideMobilitePEIOOutOptional = poleEmploiIOClient.callAideMobiliteEndPoint(aideMobilitePEIOIn, "");
+		if (aideMobilitePEIOOutOptional.isPresent()) {
+			AideMobilitePEIOOut agepiOut = aideMobilitePEIOOutOptional.get();
+			float montant = agepiOut.getDecisionAideMobiliteAPI().getMontant();
+			assertThat(montant).isZero();
+		}
 	}
-    }
 
-    @Test
-    void testInterfacageApiAreInvalide() {
-	ArePEIOIn areIn = new ArePEIOIn();
-	areIn.setAllocationBruteJournaliere(0f);
-	areIn.setGainBrut(555555f);
-	areIn.setSalaireBrutJournalier(7777f);
+	@Test
+	void testInterfacageApiAreValide() {
+		ArePEIOIn areIn = new ArePEIOIn();
+		areIn.setAllocationBruteJournaliere(45f);
+		areIn.setGainBrut(27f);
+		areIn.setSalaireBrutJournalier(375f);
 
-	initMocksAPI();
-	Optional<ArePEIOOut> areOutOptional = poleEmploiIOClient.callAreEndPoint(areIn, "");
-	if (areOutOptional.isPresent()) {
-	    ArePEIOOut areOut = areOutOptional.get();
-	    float montant = areOut.getAllocationMensuelle();
-	    assertThat(montant).isZero();
+		initMocksAPI(false, false, true);
+		Optional<ArePEIOOut> areOutOptional = poleEmploiIOClient.callAreEndPoint(areIn, "");
+		if (areOutOptional.isPresent()) {
+			ArePEIOOut areOut = areOutOptional.get();
+			float montant = areOut.getAllocationMensuelle();
+			assertThat(montant).isPositive();
+		}
 	}
-    }
 
-    protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
+	@Test
+	void testInterfacageApiAreInvalide() {
+		ArePEIOIn areIn = new ArePEIOIn();
+		areIn.setAllocationBruteJournaliere(0f);
+		areIn.setGainBrut(555555f);
+		areIn.setSalaireBrutJournalier(7777f);
 
-	boolean isEnCouple = false;
-	int nbEnfant = 1;
-	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
+		initMocksAPI();
+		Optional<ArePEIOOut> areOutOptional = poleEmploiIOClient.callAreEndPoint(areIn, "");
+		if (areOutOptional.isPresent()) {
+			ArePEIOOut areOut = areOutOptional.get();
+			float montant = areOut.getAllocationMensuelle();
+			assertThat(montant).isZero();
+		}
+	}
 
-	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
-	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
+	@Test
+	void testIntefacageAGEPI() {
+		boolean isEnCouple = false;
+		int nbEnfant = 3;
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ARE.getLibelle(), isEnCouple, nbEnfant);
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
+		demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
+		demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(30.28f);
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(8));
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(13));
+	
+		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(90);
+		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
+		
+		Salaire salaire = new Salaire();
+		salaire.setMontantBrut(400);
+		salaire.setMontantNet(350);
+		ressourcesFinancieres.setSalaire(salaire);
+		
+		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+		AllocationARE allocARE = new AllocationARE();
+		allocARE.setAllocationJournaliereNet(50f);
+		allocARE.setAllocationMensuelleNet(300f);
+		allocARE.setMontantJournalierBrut(60f);
+		aidesPoleEmploi.setAllocationARE(allocARE);
+		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+		
+		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		
+		PeConnectAuthorization peConnectAuth = new PeConnectAuthorization();
+		peConnectAuth.setAccessToken(ACCESS_TOKEN);
+		demandeurEmploi.setPeConnectAuthorization(peConnectAuth);
+		
+		//Lorsque l'on calcul le montant de l'agepi
+		Optional<Aide> agepi = agepiUtile.simulerAide(demandeurEmploi);
+	
+		//alors le montant retourné est de 520€
+		assertThat(agepi).isPresent();
+	}
+	
+	protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
 
-	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
+		boolean isEnCouple = false;
+		int nbEnfant = 1;
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.AAH.getLibelle(), isEnCouple, nbEnfant);
 
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
-	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
-	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
+		demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+		demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
-	AidesFamiliales aidesFamiliales = new AidesFamiliales();
-	aidesFamiliales.setAllocationsFamiliales(0);
-	aidesFamiliales.setAllocationSoutienFamilial(117);
-	aidesFamiliales.setComplementFamilial(0);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
 
-	return demandeurEmploi;
-    }
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+		demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
+		demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+
+		AidesFamiliales aidesFamiliales = new AidesFamiliales();
+		aidesFamiliales.setAllocationsFamiliales(0);
+		aidesFamiliales.setAllocationSoutienFamilial(117);
+		aidesFamiliales.setComplementFamilial(0);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
+		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+
+		return demandeurEmploi;
+	}
 }

@@ -1,5 +1,6 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -36,158 +37,181 @@ import fr.poleemploi.estime.services.exceptions.UnauthorizedException;
 @Component
 public class PoleEmploiIOClient {
 
-    @Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.token-uri}")
-    private String accessTokenURI;
+	@Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.token-uri}")
+	private String accessTokenURI;
 
-    @Value("${emploi-store-io.coordonnees-api-uri}")
-    private String apiCoordonneesURI;
+	@Value("${emploi-store-io.coordonnees-api-uri}")
+	private String apiCoordonneesURI;
 
-    @Value("${emploi-store-io.date-naissance-api-uri}")
-    private String apiDateNaissanceURI;
+	@Value("${emploi-store-io.date-naissance-api-uri}")
+	private String apiDateNaissanceURI;
 
-    @Value("${emploi-store-io.detail-indemnisation-api-uri}")
-    private String apiDetailIndemnisationURI;
+	@Value("${emploi-store-io.detail-indemnisation-api-uri}")
+	private String apiDetailIndemnisationURI;
 
-    @Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.user-info-uri}")
-    private String userInfoURI;
+	@Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.user-info-uri}")
+	private String userInfoURI;
 
-    @Autowired
-    private PoleEmploiIOUtile emploiStoreUtile;
+	@Autowired
+	private PoleEmploiIOUtile poleEmploiIOUtile;
 
-    @Value("${emploi-store-io.agepi-api-uri}")
-    private String apiAgepiURI;
+	@Value("${emploi-store-io.agepi-api-uri}")
+	private String apiAgepiURI;
 
-    @Value("${emploi-store-io.aide-mobilite-api-uri}")
-    private String apiAideMobiliteURI;
+	@Value("${emploi-store-io.aide-mobilite-api-uri}")
+	private String apiAideMobiliteURI;
 
-    @Value("${emploi-store-io.are-api-uri}")
-    private String apiAreURI;
+	@Value("${emploi-store-io.are-api-uri}")
+	private String apiAreURI;
 
-    @Autowired
-    private RestTemplate restTemplate;
+	@Autowired
+	private RestTemplate restTemplate;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PoleEmploiIOClient.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PoleEmploiIOClient.class);
 
-    public PeConnectAuthorizationPEIO callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
-	HttpEntity<MultiValueMap<String, String>> requeteHTTP = emploiStoreUtile.getAccesTokenRequeteHTTP(code, redirectURI);
-	try {
-	    ResponseEntity<PeConnectAuthorizationPEIO> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP, PeConnectAuthorizationPEIO.class);
-	    if (reponse.getStatusCode().equals(HttpStatus.OK)) {
-		PeConnectAuthorizationPEIO informationsAccessTokenPEIO = reponse.getBody();
-		if (informationsAccessTokenPEIO != null && informationsAccessTokenPEIO.getNonce().compareTo(nonce) != 0) {
-		    LOGGER.info(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
-		    throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+	public PeConnectAuthorizationPEIO callAccessTokenEndPoint(String code, String redirectURI, String nonce) {
+		HttpEntity<MultiValueMap<String, String>> requeteHTTP = poleEmploiIOUtile.getAccesTokenRequeteHTTP(code, redirectURI);
+		try {
+			ResponseEntity<PeConnectAuthorizationPEIO> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP, PeConnectAuthorizationPEIO.class);
+			if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+				PeConnectAuthorizationPEIO informationsAccessTokenPEIO = reponse.getBody();
+				if (informationsAccessTokenPEIO != null && informationsAccessTokenPEIO.getNonce().compareTo(nonce) != 0) {
+					LOGGER.info(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
+					throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+				}
+				return informationsAccessTokenPEIO;
+			} else {
+				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), accessTokenURI);
+				LOGGER.error(messageError);
+				throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+			}
+		} catch (HttpClientErrorException e) {
+			LOGGER.info(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
+			throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 		}
-		return informationsAccessTokenPEIO;
-	    } else {
-		String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), accessTokenURI);
-		LOGGER.error(messageError);
-		throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
-	    }
-	} catch (HttpClientErrorException e) {
-	    LOGGER.info(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
-	    throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
-	}
-    }
-
-    public Optional<ArePEIOOut> callAreEndPoint(ArePEIOIn areIn, String bearerToken) {
-	HttpEntity<Map<String, Object>> requeteHTTP = emploiStoreUtile.getAreRequeteHTTP(areIn, bearerToken);
-	try {
-	    ResponseEntity<ArePEIOOut> reponse = restTemplate.postForEntity(apiAreURI, requeteHTTP, ArePEIOOut.class);
-	    return Optional.of(reponse.getBody());
-	} catch (Exception e) {
-	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiAreURI);
-	    LOGGER.error(messageError);
-	}
-	return Optional.empty();
-    }
-
-    public Optional<AgepiPEIOOut> callAgepiEndPoint(AgepiPEIOIn agepiIn, String bearerToken) {
-	HttpEntity<MultiValueMap<String, Object>> requeteHTTP = emploiStoreUtile.getAgepiRequeteHTTP(agepiIn, bearerToken);
-	try {
-	    ResponseEntity<AgepiPEIOOut> reponse = restTemplate.postForEntity(apiAgepiURI, requeteHTTP, AgepiPEIOOut.class);
-	    return Optional.of(reponse.getBody());
-	} catch (Exception e) {
-	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiAgepiURI);
-	    LOGGER.error(messageError);
-	}
-	return Optional.empty();
-    }
-
-    public Optional<AideMobilitePEIOOut> callAideMobiliteEndPoint(AideMobilitePEIOIn aideMobiliteIn, String bearerToken) {
-	HttpEntity<MultiValueMap<String, Object>> requeteHTTP = emploiStoreUtile.getAideMobiliteRequeteHTTP(aideMobiliteIn, bearerToken);
-	try {
-	    ResponseEntity<AideMobilitePEIOOut> reponse = restTemplate.postForEntity(apiAideMobiliteURI, requeteHTTP, AideMobilitePEIOOut.class);
-	    return Optional.of(reponse.getBody());
-	} catch (Exception e) {
-	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiAideMobiliteURI);
-	    LOGGER.error(messageError);
-	}
-	return Optional.empty();
-    }
-
-    public Optional<UserInfoPEIO> callUserInfoEndPoint(String bearerToken) {
-	try {
-	    HttpEntity<String> requeteHTTP = emploiStoreUtile.getRequeteHTTP(bearerToken);
-	    ResponseEntity<UserInfoPEIO> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoPEIO.class);
-	    if (reponse.getStatusCode().equals(HttpStatus.OK)) {
-		return Optional.of(reponse.getBody());
-	    } else {
-		String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), userInfoURI);
-		LOGGER.error(messageError);
-	    }
-	} catch (Exception e) {
-	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiCoordonneesURI);
-	    LOGGER.error(messageError);
-	}
-	return Optional.empty();
-    }
-
-    public DetailIndemnisationPEIO callDetailIndemnisationEndPoint(String bearerToken) {
-	HttpEntity<String> requeteHTTP = emploiStoreUtile.getRequeteHTTP(bearerToken);
-	ResponseEntity<DetailIndemnisationPEIO> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationPEIO.class);
-	if (reponse.getStatusCode().equals(HttpStatus.OK)) {
-	    return reponse.getBody();
-	} else {
-	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDetailIndemnisationURI);
-	    LOGGER.error(messageError);
-	    throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
-	}
-    }
-
-    public Optional<CoordonneesPEIO> callCoordonneesAPI(String bearerToken) {
-	try {
-	    HttpEntity<String> requeteHTTP = emploiStoreUtile.getRequeteHTTP(bearerToken);
-	    ResponseEntity<CoordonneesPEIO> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesPEIO.class);
-	    if (reponse.getStatusCode().equals(HttpStatus.OK)) {
-		return Optional.of(reponse.getBody());
-	    } else {
-		String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiCoordonneesURI);
-		LOGGER.error(messageError);
-	    }
-	} catch (Exception e) {
-	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiCoordonneesURI);
-	    LOGGER.error(messageError);
 	}
 
-	return Optional.empty();
-    }
+	public String retreiveAccessTokenFromRefreshToken(String refreshToken) {
+		HttpEntity<MultiValueMap<String, String>> requeteHTTP = poleEmploiIOUtile.getAccesTokenFromRefreshTokenRequeteHTTP(refreshToken);
+		try {
+			ResponseEntity<PeConnectAuthorizationPEIO> reponse = restTemplate.postForEntity(accessTokenURI, requeteHTTP, PeConnectAuthorizationPEIO.class);
+			if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+				PeConnectAuthorizationPEIO informationsAccessTokenPEIO = reponse.getBody();
+				if (informationsAccessTokenPEIO == null) {
+					LOGGER.info(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
+					throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+				}
 
-    public Optional<DateNaissancePEIO> callDateNaissanceEndPoint(String bearerToken) {
-	try {
-	    HttpEntity<String> requeteHTTP = emploiStoreUtile.getRequeteHTTP(bearerToken);
-	    ResponseEntity<DateNaissancePEIO> reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissancePEIO.class);
-	    if (reponse.getStatusCode().equals(HttpStatus.OK)) {
-		return Optional.of(reponse.getBody());
-	    } else {
-		String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDateNaissanceURI);
-		LOGGER.error(messageError);
-	    }
-	} catch (Exception e) {
-	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiDateNaissanceURI);
-	    LOGGER.error(messageError);
+				return informationsAccessTokenPEIO.getAccessToken();
+			} else {
+				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), accessTokenURI);
+				LOGGER.error(messageError);
+				throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+			}
+		} catch (HttpClientErrorException e) {
+			LOGGER.info(String.format(LoggerMessages.DETAIL_REQUETE_HTTP.getMessage(), e.getMessage(), requeteHTTP.toString()));
+			throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+		}    	
 	}
 
-	return Optional.empty();
-    }
+	public Optional<ArePEIOOut> callAreEndPoint(ArePEIOIn areIn, String bearerToken) {
+		HttpEntity<Map<String, Object>> requeteHTTP = poleEmploiIOUtile.getAreRequeteHTTP(areIn, bearerToken);
+		try {
+			ResponseEntity<ArePEIOOut> reponse = restTemplate.postForEntity(apiAreURI, requeteHTTP, ArePEIOOut.class);
+			return Optional.of(reponse.getBody());
+		} catch (Exception e) {
+			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiAreURI);
+			LOGGER.error(messageError);
+		}
+		return Optional.empty();
+	}
+
+	public Optional<AgepiPEIOOut> callAgepiEndPoint(AgepiPEIOIn agepiIn, String bearerToken) {
+		HttpEntity<MultiValueMap<String, Object>> requeteHTTP = poleEmploiIOUtile.getAgepiRequeteHTTP(agepiIn, bearerToken);
+		try {
+			ResponseEntity<AgepiPEIOOut> reponse = restTemplate.postForEntity(apiAgepiURI, requeteHTTP, AgepiPEIOOut.class);
+			return Optional.of(reponse.getBody());
+		} catch (Exception e) {
+			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiAgepiURI);
+			LOGGER.error(messageError);
+		}
+		return Optional.empty();
+	}
+
+	public Optional<AideMobilitePEIOOut> callAideMobiliteEndPoint(AideMobilitePEIOIn aideMobiliteIn, String bearerToken) {
+		HttpEntity<MultiValueMap<String, Object>> requeteHTTP = poleEmploiIOUtile.getAideMobiliteRequeteHTTP(aideMobiliteIn, bearerToken);
+		try {
+			ResponseEntity<AideMobilitePEIOOut> reponse = restTemplate.postForEntity(apiAideMobiliteURI, requeteHTTP, AideMobilitePEIOOut.class);
+			return Optional.of(reponse.getBody());
+		} catch (Exception e) {
+			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiAideMobiliteURI);
+			LOGGER.error(messageError);
+		}
+		return Optional.empty();
+	}
+
+	public Optional<UserInfoPEIO> callUserInfoEndPoint(String bearerToken) {
+		try {
+			HttpEntity<String> requeteHTTP = poleEmploiIOUtile.getRequeteHTTP(bearerToken);
+			ResponseEntity<UserInfoPEIO> reponse = this.restTemplate.exchange(userInfoURI, HttpMethod.GET, requeteHTTP, UserInfoPEIO.class);
+			if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+				return Optional.of(reponse.getBody());
+			} else {
+				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), userInfoURI);
+				LOGGER.error(messageError);
+			}
+		} catch (Exception e) {
+			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiCoordonneesURI);
+			LOGGER.error(messageError);
+		}
+		return Optional.empty();
+	}
+
+	public DetailIndemnisationPEIO callDetailIndemnisationEndPoint(String bearerToken) {
+		HttpEntity<String> requeteHTTP = poleEmploiIOUtile.getRequeteHTTP(bearerToken);
+		ResponseEntity<DetailIndemnisationPEIO> reponse = this.restTemplate.exchange(apiDetailIndemnisationURI, HttpMethod.GET, requeteHTTP, DetailIndemnisationPEIO.class);
+		if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+			return reponse.getBody();
+		} else {
+			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDetailIndemnisationURI);
+			LOGGER.error(messageError);
+			throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
+		}
+	}
+
+	public Optional<CoordonneesPEIO> callCoordonneesAPI(String bearerToken) {
+		try {
+			HttpEntity<String> requeteHTTP = poleEmploiIOUtile.getRequeteHTTP(bearerToken);
+			ResponseEntity<CoordonneesPEIO> reponse = this.restTemplate.exchange(apiCoordonneesURI, HttpMethod.GET, requeteHTTP, CoordonneesPEIO.class);
+			if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+				return Optional.of(reponse.getBody());
+			} else {
+				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiCoordonneesURI);
+				LOGGER.error(messageError);
+			}
+		} catch (Exception e) {
+			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiCoordonneesURI);
+			LOGGER.error(messageError);
+		}
+
+		return Optional.empty();
+	}
+
+	public Optional<DateNaissancePEIO> callDateNaissanceEndPoint(String bearerToken) {
+		try {
+			HttpEntity<String> requeteHTTP = poleEmploiIOUtile.getRequeteHTTP(bearerToken);
+			ResponseEntity<DateNaissancePEIO> reponse = this.restTemplate.exchange(apiDateNaissanceURI, HttpMethod.GET, requeteHTTP, DateNaissancePEIO.class);
+			if (reponse.getStatusCode().equals(HttpStatus.OK)) {
+				return Optional.of(reponse.getBody());
+			} else {
+				String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), reponse.getStatusCode(), apiDateNaissanceURI);
+				LOGGER.error(messageError);
+			}
+		} catch (Exception e) {
+			String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiDateNaissanceURI);
+			LOGGER.error(messageError);
+		}
+
+		return Optional.empty();
+	}
 }

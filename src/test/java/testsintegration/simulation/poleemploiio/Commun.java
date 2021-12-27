@@ -30,102 +30,111 @@ import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.Utile;
 
 public class Commun {
 
-    @Autowired
-    protected Utile utile;
+	@Autowired
+	protected Utile utile;
 
-    @SpyBean
-    protected DateUtile dateUtile;
+	@SpyBean
+	protected DateUtile dateUtile;
 
-    @SpyBean
-    private SuiviUtilisateurUtile suiviUtilisateurUtile;
+	@SpyBean
+	private SuiviUtilisateurUtile suiviUtilisateurUtile;
 
-    @SpyBean
-    private PoleEmploiIOClient poleEmploiIOClient;
+	@SpyBean
+	private PoleEmploiIOClient poleEmploiIOClient;
 
-    protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant) throws ParseException {
+	protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant) throws ParseException {
 
-	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
-	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-	demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
-	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
-	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
+		demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+		demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
+		demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
+		demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
 
-	return demandeurEmploi;
-    }
+		return demandeurEmploi;
+	}
 
-    protected DemandeurEmploi createDemandeurEmploiAgepi() throws ParseException {
+	protected DemandeurEmploi createDemandeurEmploiAgepi() throws ParseException {
 
-	boolean isEnCouple = false;
-	int nbEnfant = 1;
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
+		boolean isEnCouple = false;
+		int nbEnfant = 1;
+		DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 
-	return demandeurEmploi;
-    }
+		return demandeurEmploi;
+	}
 
-    protected DemandeurEmploi createDemandeurEmploiAideMobilite() throws ParseException {
+	protected DemandeurEmploi createDemandeurEmploiAideMobilite() throws ParseException {
 
-	boolean isEnCouple = false;
-	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
+		boolean isEnCouple = false;
+		int nbEnfant = 0;
+		DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 
-	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(100f);
-	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
+		demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(100f);
+		demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 
-	return demandeurEmploi;
-    }
+		return demandeurEmploi;
+	}
 
-    protected void initMocks(DemandeurEmploi demandeurEmploi, boolean decisionAgepi, boolean decisionAideMobilite, boolean decisionAre)
-	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-	// mock tracer parcours utilisateur
-	doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(),
-		ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
+	protected void initMocks(DemandeurEmploi demandeurEmploi, boolean decisionAgepi, boolean decisionAideMobilite, boolean decisionAre)
+			throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+		// mock tracer parcours utilisateur
+		doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(),
+				ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 
-	// mock création date de demande de simulation
-	doReturn(utile.getDate("20-10-2020")).when(dateUtile).getDateJour();
+		// mock création date de demande de simulation
+		doReturn(utile.getDate("20-10-2020")).when(dateUtile).getDateJour();
 
-	//mock retour appel détail indemnisation de l'ESD 
-	DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.AAH_ASS.getLibelle());
-	doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
+		//mock retour appel détail indemnisation de l'ESD 
+		DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.AAH_ASS.getLibelle());
+		doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
 
-	//mock retour appel api aide mobilite
-	Optional<AgepiPEIOOut> agepiPEIOOut = Optional.of(utile.creerAgepiPEIOOut(decisionAgepi));
-	doReturn(agepiPEIOOut).when(poleEmploiIOClient).callAgepiEndPoint(Mockito.any(AgepiPEIOIn.class), Mockito.any(String.class));
+		//mock retour appel api aide mobilite
+		if(decisionAgepi) {
+			Optional<Aide> aideAgepi = Optional.of(utile.creerAidePourMock("AGEPI"));
+			doReturn(aideAgepi).when(poleEmploiIOClient).callAgepiEndPoint(Mockito.any(AgepiPEIOIn.class), Mockito.any(String.class));		
+		}
 
-	//mock retour appel api aide mobilite
-	Optional<AideMobilitePEIOOut> aideMobilitePEIOOut = Optional.of(utile.creerAideMobilitePEIOOut(decisionAideMobilite));
-	doReturn(aideMobilitePEIOOut).when(poleEmploiIOClient).callAideMobiliteEndPoint(Mockito.any(AideMobilitePEIOIn.class), Mockito.any(String.class));//mock retour appel api aide mobilite
+		//mock retour appel api aide mobilite
+		if(decisionAideMobilite) {
+			Optional<Aide> aideMobilite = Optional.of(utile.creerAidePourMock("AIDE_MOBILITE"));
+			doReturn(aideMobilite).when(poleEmploiIOClient).callAideMobiliteEndPoint(Mockito.any(AideMobilitePEIOIn.class), Mockito.any(String.class));//mock retour appel api aide mobilite
 
-	//mock retour appel api are
-	Optional<ArePEIOOut> arePEIOOut = Optional.of(utile.creerArePEIOOut(decisionAre));
-	doReturn(arePEIOOut).when(poleEmploiIOClient).callAreEndPoint(Mockito.any(ArePEIOIn.class), Mockito.any(String.class));
-    }
+		}
 
-    protected void initMocksAPI() {
-	initMocksAPI(false, false, false);
-    }
+		//mock retour appel api are
+		if(decisionAre) {
+			Optional<Aide> arePEIOOut = Optional.of(utile.creerAidePourMock("ARE"));
+			doReturn(arePEIOOut).when(poleEmploiIOClient).callAreEndPoint(Mockito.any(ArePEIOIn.class), Mockito.any(String.class));
 
-    protected void initMocksAPI(boolean decisionAgepi, boolean decisionAideMobilite, boolean decisionAre) {
+		}
+	}
 
-	//mock retour appel api aide mobilite
-	Optional<AgepiPEIOOut> agepiPEIOOut = Optional.of(utile.creerAgepiPEIOOut(decisionAgepi));
-	doReturn(agepiPEIOOut).when(poleEmploiIOClient).callAgepiEndPoint(Mockito.any(AgepiPEIOIn.class), Mockito.any(String.class));
+	protected void initMocksAPI() {
+		initMocksAPI(false, false, false);
+	}
 
-	//mock retour appel api aide mobilite
-	Optional<AideMobilitePEIOOut> aideMobilitePEIOOut = Optional.of(utile.creerAideMobilitePEIOOut(decisionAideMobilite));
-	doReturn(aideMobilitePEIOOut).when(poleEmploiIOClient).callAideMobiliteEndPoint(Mockito.any(AideMobilitePEIOIn.class), Mockito.any(String.class));//mock retour appel api aide mobilite
+	protected void initMocksAPI(boolean decisionAgepi, boolean decisionAideMobilite, boolean decisionAre) {
 
-	//mock retour appel api are
-	Optional<ArePEIOOut> arePEIOOut = Optional.of(utile.creerArePEIOOut(decisionAre));
-	doReturn(arePEIOOut).when(poleEmploiIOClient).callAreEndPoint(Mockito.any(ArePEIOIn.class), Mockito.any(String.class));
-    }
+		//mock retour appel api aide mobilite
+		Optional<AgepiPEIOOut> agepiPEIOOut = Optional.of(utile.creerAgepiPEIOOut(decisionAgepi));
+		doReturn(agepiPEIOOut).when(poleEmploiIOClient).callAgepiEndPoint(Mockito.any(AgepiPEIOIn.class), Mockito.any(String.class));
+
+		//mock retour appel api aide mobilite
+		Optional<AideMobilitePEIOOut> aideMobilitePEIOOut = Optional.of(utile.creerAideMobilitePEIOOut(decisionAideMobilite));
+		doReturn(aideMobilitePEIOOut).when(poleEmploiIOClient).callAideMobiliteEndPoint(Mockito.any(AideMobilitePEIOIn.class), Mockito.any(String.class));//mock retour appel api aide mobilite
+
+		//mock retour appel api are
+		Optional<ArePEIOOut> arePEIOOut = Optional.of(utile.creerArePEIOOut(decisionAre));
+		doReturn(arePEIOOut).when(poleEmploiIOClient).callAreEndPoint(Mockito.any(ArePEIOIn.class), Mockito.any(String.class));
+	}
 }
