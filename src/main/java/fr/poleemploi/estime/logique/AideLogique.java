@@ -8,11 +8,11 @@ import fr.poleemploi.estime.services.ressources.Aide;
 
 @Component
 public class AideLogique {
-    
-    @Autowired
-    private AideUtile aideUtile;
-    
-    public Aide getAideByCode(String codeAide) {
-        return aideUtile.creerAide(aideUtile.getAideEnumByCode(codeAide));
-    }
+
+	@Autowired
+	private AideUtile aideUtile;
+
+	public Aide getAideByCode(String codeAide) {
+		return aideUtile.creerAide(aideUtile.getAideEnumByCode(codeAide));
+	}
 }
