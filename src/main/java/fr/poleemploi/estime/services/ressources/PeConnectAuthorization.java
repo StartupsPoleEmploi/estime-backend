@@ -1,5 +1,7 @@
 package fr.poleemploi.estime.services.ressources;
 
+import java.util.Date;
+
 public class PeConnectAuthorization {
 
     private String bearerToken;
@@ -8,7 +10,15 @@ public class PeConnectAuthorization {
     private String refreshToken;
     private String scope;
     private String tokenType;
+    private Date expiryTime;
     
+    
+    public Date getExpiryTime() {
+        return expiryTime;
+    }
+    public void setExpiryTime(Date expiryTime) {
+        this.expiryTime = expiryTime;
+    }
     public String getIdToken() {
         return idToken;
     }
@@ -48,6 +58,7 @@ public class PeConnectAuthorization {
     @Override
     public String toString() {
         return "PeConnectAuthorization [bearerToken=" + bearerToken + ", expireIn=" + expireIn + ", idToken=" + idToken
-                + ", refreshToken=" + refreshToken + ", scope=" + scope + ", tokenType=" + tokenType + "]";
+                + ", refreshToken=" + refreshToken + ", scope=" + scope + ", tokenType=" + tokenType + ", expiryTime="
+                + expiryTime + "]";
     }
 }

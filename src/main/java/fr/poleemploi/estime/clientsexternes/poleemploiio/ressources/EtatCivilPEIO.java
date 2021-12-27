@@ -10,6 +10,7 @@ public class EtatCivilPEIO {
     private String nomMarital;
     private String prenom;
     private Date dateDeNaissance;
+    
     public String getCodeCivilite() {
         return codeCivilite;
     }
@@ -48,7 +49,7 @@ public class EtatCivilPEIO {
     }
     @Override
     public String toString() {
-        return "DateNaissanceESD [codeCivilite=" + codeCivilite + ", libelleCivilite=" + libelleCivilite
+        return "EtatCivilPEIO [codeCivilite=" + codeCivilite + ", libelleCivilite=" + libelleCivilite
                 + ", nomPatronymique=" + nomPatronymique + ", nomMarital=" + nomMarital + ", prenom=" + prenom
                 + ", dateDeNaissance=" + dateDeNaissance + "]";
     }

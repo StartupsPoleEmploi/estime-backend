@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
-import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 

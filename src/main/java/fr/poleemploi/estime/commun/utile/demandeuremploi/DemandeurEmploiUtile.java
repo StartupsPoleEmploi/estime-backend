@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.EtatCivilPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.aidemobilite.CoordonneesPEIO;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
@@ -28,7 +28,7 @@ import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 public class DemandeurEmploiUtile {
 
     @Autowired
-    private PoleEmploiIOClient emploiStoreDevClient;
+    private PoleEmploiIOClient poleEmploiIOClient;
 
     @Autowired
     private DateUtile dateUtile;
@@ -37,6 +37,7 @@ public class DemandeurEmploiUtile {
     private StagingEnvironnementUtile stagingEnvironnementUtile;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeurEmploiUtile.class);
+
 
     public boolean isSansRessourcesFinancieres(DemandeurEmploi demandeurEmploi) {
         return demandeurEmploi.getRessourcesFinancieres() == null;
@@ -54,7 +55,7 @@ public class DemandeurEmploiUtile {
 
     public void addDateNaissance(InformationsPersonnelles informationsPersonnelles, String bearerToken) {
         try {
-            Optional<EtatCivilPEIO> etatCivilPEIOOptional = emploiStoreDevClient.callEtatCivilEndPoint(bearerToken);
+            Optional<EtatCivilPEIO> etatCivilPEIOOptional = poleEmploiIOClient.getEtatCivil(bearerToken);
             if (etatCivilPEIOOptional.isPresent()) {
                 EtatCivilPEIO etatCivilPEIO = etatCivilPEIOOptional.get();
                 if (etatCivilPEIO.getDateDeNaissance() != null) {
@@ -70,7 +71,7 @@ public class DemandeurEmploiUtile {
 
     public void addCodeDepartement(InformationsPersonnelles informationsPersonnelles, String bearerToken) {
         try {
-            Optional<CoordonneesPEIO> coordonneesESDOptional = emploiStoreDevClient.callCoordonneesAPI(bearerToken);
+            Optional<CoordonneesPEIO> coordonneesESDOptional = poleEmploiIOClient.getCoordonnees(bearerToken);
             if (coordonneesESDOptional.isPresent()) {
                 CoordonneesPEIO coordonneesESD = coordonneesESDOptional.get();
                 informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
@@ -80,7 +81,7 @@ public class DemandeurEmploiUtile {
             LOGGER.error(messageError);
         }
     }
-    
+
     public void addInformationsPersonnelles(DemandeurEmploi demandeurEmploi, Individu individu) {        
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         Logement logement = creerLogement();
@@ -98,7 +99,7 @@ public class DemandeurEmploiUtile {
         
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
     }
-    
+
     private AidesCAF creerAidesCAF() {
         AidesCAF aidesCAF = new AidesCAF();
         aidesCAF.setAidesLogement(creerAidesLogement());

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
-import fr.poleemploi.estime.commun.utile.AideUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
 
 @Component

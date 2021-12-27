@@ -3,7 +3,7 @@ package testsintegration.services.individuservice;
 import java.time.LocalDate;
 
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
@@ -40,7 +40,7 @@ public class CommunTests {
         salaire.setMontantNet(900);
         salaire.setMontantBrut(1200);
         futurTravail.setSalaire(salaire);        
-        futurTravail.setTypeContrat(TypesContratTravailEnum.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         return futurTravail;
     }
 }

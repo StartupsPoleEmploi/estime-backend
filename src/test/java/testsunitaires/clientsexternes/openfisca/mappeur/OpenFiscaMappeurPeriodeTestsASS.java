@@ -31,8 +31,8 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPeriode;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
@@ -423,7 +423,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.toString());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.toString());
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1228);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(950);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(15);

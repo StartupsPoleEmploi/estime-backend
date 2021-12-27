@@ -3,7 +3,7 @@ package fr.poleemploi.estime.logique;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.utile.AideUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 
 @Component

@@ -20,8 +20,8 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
 import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -61,7 +61,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
@@ -170,7 +170,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
@@ -340,7 +340,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
@@ -458,7 +458,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
@@ -584,7 +584,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement());
 	demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);

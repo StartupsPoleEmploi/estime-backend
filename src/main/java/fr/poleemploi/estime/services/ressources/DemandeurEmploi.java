@@ -6,9 +6,16 @@ public class DemandeurEmploi {
     private BeneficiaireAides beneficiaireAides;
     private FuturTravail futurTravail;
     private InformationsPersonnelles informationsPersonnelles;
+    private PeConnectAuthorization peConnectAuthorization;
     private RessourcesFinancieres ressourcesFinancieres;
     private SituationFamiliale situationFamiliale;
 
+    public PeConnectAuthorization getPeConnectAuthorization() {
+        return peConnectAuthorization;
+    }
+    public void setPeConnectAuthorization(PeConnectAuthorization peConnectAuthorization) {
+        this.peConnectAuthorization = peConnectAuthorization;
+    }
     public String getIdPoleEmploi() {
         return idPoleEmploi;
     }
@@ -47,9 +54,9 @@ public class DemandeurEmploi {
     }
     @Override
     public String toString() {
-        return "DemandeurEmploi [idPoleEmploi=" + idPoleEmploi + ", beneficiaireAides="
-                + beneficiaireAides + ", futurTravail=" + futurTravail + ", informationsPersonnelles="
-                + informationsPersonnelles + ", ressourcesFinancieres=" + ressourcesFinancieres
-                + ", situationFamiliale=" + situationFamiliale + "]";
+        return "DemandeurEmploi [idPoleEmploi=" + idPoleEmploi + ", beneficiaireAides=" + beneficiaireAides
+                + ", futurTravail=" + futurTravail + ", informationsPersonnelles=" + informationsPersonnelles
+                + ", peConnectAuthorization=" + peConnectAuthorization + ", ressourcesFinancieres="
+                + ressourcesFinancieres + ", situationFamiliale=" + situationFamiliale + "]";
     }
 }

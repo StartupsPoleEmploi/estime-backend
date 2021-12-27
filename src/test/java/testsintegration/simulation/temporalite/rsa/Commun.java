@@ -40,7 +40,7 @@ public class Commun {
 
         //mock retour appel détail indemnisation de l'ESD 
         DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulationEnum.RSA.getLibelle());        
-        doReturn(detailIndemnisationESD).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class)); 
+        doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class)); 
     }
 
     protected Logement initLogement() {

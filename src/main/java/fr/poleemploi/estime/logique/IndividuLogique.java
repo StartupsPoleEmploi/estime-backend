@@ -25,7 +25,7 @@ public class IndividuLogique {
     private DemandeurDemoUtile demandeurDemoUtile;    
 
     @Autowired
-    private PoleEmploiIOClient emploiStoreDevClient;
+    private PoleEmploiIOClient poleEmploiIOClient;
 
     @Autowired
     private IndividuUtile individuUtile;
@@ -42,11 +42,11 @@ public class IndividuLogique {
     public Individu authentifier(String code, String redirectURI, String nonce) {
         Individu individu = new Individu();
 
-        PeConnectAuthorizationPEIO peConnectAuthorizationESD = emploiStoreDevClient.callAccessTokenEndPoint(code, redirectURI, nonce);
+        PeConnectAuthorizationPEIO peConnectAuthorizationESD = poleEmploiIOClient.getPeConnectAuthorizationByCode(code, redirectURI, nonce);
         String bearerToken = bearerTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
 
-        DetailIndemnisationPEIO detailIndemnisationESD = emploiStoreDevClient.callDetailIndemnisationEndPoint(bearerToken);
-        UserInfoPEIO userInfoESD = emploiStoreDevClient.callUserInfoEndPoint(bearerToken);
+        DetailIndemnisationPEIO detailIndemnisationESD = poleEmploiIOClient.getDetailIndemnisation(bearerToken);
+        UserInfoPEIO userInfoESD = poleEmploiIOClient.getUserInfo(bearerToken);
 
         if (stagingEnvironnementUtile.isStagingEnvironnement() && stagingEnvironnementUtile.isUtilisateurFictif(userInfoESD)) {
             stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
@@ -54,7 +54,7 @@ public class IndividuLogique {
             individu.setIdPoleEmploi(userInfoESD.getSub());
             if (demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
                 individu.setPopulationAutorisee(true);
-                demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
+                demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu);
             } else {
                 individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
                 individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
@@ -71,4 +71,5 @@ public class IndividuLogique {
 
         return individu;
     }
+
 }

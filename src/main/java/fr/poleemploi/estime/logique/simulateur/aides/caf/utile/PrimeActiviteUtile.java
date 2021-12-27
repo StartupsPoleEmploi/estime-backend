@@ -12,7 +12,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
-import fr.poleemploi.estime.commun.utile.AideUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SimulationAides;

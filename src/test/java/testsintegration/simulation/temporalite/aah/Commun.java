@@ -19,8 +19,8 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.ParcourUtilisateurEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
@@ -53,7 +53,7 @@ public class Commun {
 
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
 
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
@@ -82,6 +82,6 @@ public class Commun {
 
 	//mock retour appel détail indemnisation de l'ESD 
 	DetailIndemnisationPEIO detailIndemnisationPEIO = utileTests.creerDetailIndemnisationESD(TypePopulationEnum.AAH.getLibelle());
-	doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
+	doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
     }
 }

@@ -19,7 +19,7 @@ import org.springframework.test.context.TestPropertySource;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.TypeContratUtile;
 import fr.poleemploi.estime.services.DemandeurEmploiService;
@@ -105,7 +105,7 @@ class IndividuServiceControlerFuturTravailTests extends CommunTests {
         
         FuturTravail futurTravail = creerFuturTravail();
         futurTravail.setNombreMoisContratCDD(null);
-        futurTravail.setTypeContrat(TypesContratTravailEnum.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         demandeurEmploi.setFuturTravail(futurTravail);
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {

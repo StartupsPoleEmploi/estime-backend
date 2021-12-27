@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 
 import com.github.tsohr.JSONObject;
 
-import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;

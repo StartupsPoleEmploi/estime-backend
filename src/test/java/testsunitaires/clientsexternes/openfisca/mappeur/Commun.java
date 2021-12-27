@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
@@ -34,7 +34,7 @@ public class Commun {
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1245);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1600);

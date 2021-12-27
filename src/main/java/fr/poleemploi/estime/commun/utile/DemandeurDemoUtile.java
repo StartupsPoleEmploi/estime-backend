@@ -2,7 +2,6 @@ package fr.poleemploi.estime.commun.utile;
 
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
@@ -19,12 +18,12 @@ public class DemandeurDemoUtile {
 		return userInfoESD.getFamilyName() != null && userInfoESD.getFamilyName().toLowerCase().contains(nomDemandeurDemo);
 	}
 
-	public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisationESD) {
-		addInformationsBeneficiaireAides(individu, detailIndemnisationESD);
-		addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
+	public void addInformationsDetailIndemnisationPoleEmploi(Individu individu) {
+		addInformationsBeneficiaireAides(individu);
+		addInformationsRessourcesFinancieresPoleEmploi(individu);
 	}
 
-	private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationPEIO detailIndemnisation) {
+	private void addInformationsBeneficiaireAides(Individu individu) {
 		BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
 		beneficiaireAides.setBeneficiaireAAH(false);
 		beneficiaireAides.setBeneficiaireARE(false);
@@ -33,13 +32,13 @@ public class DemandeurDemoUtile {
 		individu.setBeneficiaireAides(beneficiaireAides);
 	}
 
-	private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisation) {
+	private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu) {
 		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-		ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisation));
+		ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi());
 		individu.setRessourcesFinancieres(ressourcesFinancieres);
 	}
 
-	private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIO detailIndemnisation) {
+	private AidesPoleEmploi creerAidePoleEmploi() {
 		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 		AllocationASS allocationASS = new AllocationASS();
 		aidesPoleEmploi.setAllocationASS(allocationASS);

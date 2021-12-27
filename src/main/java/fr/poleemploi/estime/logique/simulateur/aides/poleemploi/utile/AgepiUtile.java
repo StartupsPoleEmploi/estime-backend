@@ -1,22 +1,20 @@
 package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.agepi.AgepiPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
-import fr.poleemploi.estime.commun.enumerations.MontantParPalierAgepiEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
-import fr.poleemploi.estime.commun.utile.AideUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -41,9 +39,6 @@ public class AgepiUtile {
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
     @Autowired
-    private InformationsPersonnellesUtile informationsPersonnellesUtile;
-
-    @Autowired
     private DemandeurEmploiUtile demandeurEmploiUtile;
 
     @Autowired
@@ -51,13 +46,15 @@ public class AgepiUtile {
 
     @Autowired
     private SituationFamilialeUtile situationFamilialeUtile;
-    
+
     @Autowired
     private AideUtile aideeUtile;
-    
+
     @Autowired
     private SimulateurAidesUtile simulateurAidesUtile;
 
+    @Autowired
+    private PoleEmploiIOClient poleEmploiIOClient;
 
     /** Qui peut percevoir l'Agepi ?
      *   Vous pouvez percevoir l'Agepi si vous remplissez toutes les conditions suivantes :
@@ -68,75 +65,36 @@ public class AgepiUtile {
      * @param numeroMoisSimule 
      */
     public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        return  simulateurAidesUtile.isPremierMois(numeroMoisSimule) &&
-                isSituationFamilialeEligibleAgepi(demandeurEmploi) &&
-                futurTravailUtile.isFuturContratTravailEligible(demandeurEmploi.getFuturTravail()) &&
-                (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
+        return simulateurAidesUtile.isPremierMois(numeroMoisSimule) && isSituationFamilialeEligibleAgepi(demandeurEmploi)
+                && futurTravailUtile.isFuturContratTravailEligible(demandeurEmploi.getFuturTravail())
+                && (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
     }
 
-    public Aide simulerAide(DemandeurEmploi demandeurEmploi) {
-        float montantAgepi = calculerMontantAgepi(demandeurEmploi);
-        return creerAide(montantAgepi);   
+    public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi) {
+        Optional<AgepiPEIOOut> optionalAgepiOut = poleEmploiIOClient.getAgepiSimulateurAides(demandeurEmploi);
+        if (optionalAgepiOut.isPresent()) {
+            AgepiPEIOOut agepiOut = optionalAgepiOut.get();
+            if (agepiOut.getDecisionAgepiAPI().getNature().equals("Demande attribuée")) {
+                float montantAide = agepiOut.getDecisionAgepiAPI().getMontant();
+                return Optional.of(creerAide(montantAide));
+            } 
+        } 
+        return Optional.empty();
     }
 
-    private float calculerMontantAgepi(DemandeurEmploi demandeurEmploi) {
-        int nombreEnfantACharge = situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, AGE_MAX_ENFANT);
-        if(nombreEnfantACharge > 0) {
-            switch (nombreEnfantACharge) {
-
-            case NBR_ENFANT_PALIER_MIN:
-                return determinerMontantAgepi(
-                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_INTERMEDIAIRE, 
-                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_MAX, 
-                        demandeurEmploi);
-            case NBR_ENFANT_PALIER_INTERMEDIAIRE:
-                return determinerMontantAgepi(
-                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_INTERMEDIAIRE_NBR_HEURE_PALIER_INTERMEDIAIRE, 
-                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_INTERMEDIAIRE_NBR_HEURE_PALIER_MAX, 
-                        demandeurEmploi);
-            default:
-                return determinerMontantAgepi(
-                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_MAX_NBR_HEURE_PALIER_INTERMEDIAIRE, 
-                        MontantParPalierAgepiEnum.NBR_ENFANT_PALIER_MAX_NBR_HEURE_PALIER_MAX, 
-                        demandeurEmploi);
-            }
-        }
-        return 0;
-    }
-    
     private Aide creerAide(float montantAide) {
         Aide agepi = new Aide();
         agepi.setCode(AideEnum.AGEPI.getCode());
         Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AGEPI.getNomFichierDetail());
-        if(detailAideOptional.isPresent()) {
-            agepi.setDetail(detailAideOptional.get());            
+        if (detailAideOptional.isPresent()) {
+            agepi.setDetail(detailAideOptional.get());
         }
-	agepi.setMessageAlerte(MessageInformatifEnum.AGEPI_IDF.getMessage());
+        agepi.setMessageAlerte(MessageInformatifEnum.AGEPI_IDF.getMessage());
         agepi.setNom(AideEnum.AGEPI.getNom());
         agepi.setOrganisme(OrganismeEnum.PE.getNom());
         agepi.setMontant(montantAide);
         agepi.setReportee(false);
         return agepi;
-    }
-
-    private float determinerMontantAgepi(MontantParPalierAgepiEnum montantPalierIntermediaire, MontantParPalierAgepiEnum montantPalierMax, DemandeurEmploi demandeurEmploi) {
-        float nombreHeuresTravailleesSemaine = demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine();
-        if(nombreHeuresTravailleesSemaine < NBR_HEURE_PALIER_INTERMEDIAIRE) {
-            int montantHorsMayotte = montantPalierIntermediaire.getMontant();
-            return informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) ? calculerMontantMayotte(montantHorsMayotte) : montantHorsMayotte;
-        } else {
-            int montantHorsMayotte = montantPalierMax.getMontant();
-            return informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) ? calculerMontantMayotte(montantHorsMayotte) : montantHorsMayotte;
-        }
-    }
-
-    /**
-     * 
-     * @param montantHorsMayotte
-     * @return montant arrondi au supérieur à 0 chiffre après la virgule 
-     */
-    private float calculerMontantMayotte(int montantHorsMayotte) {
-        return BigDecimal.valueOf(montantHorsMayotte).divide(BigDecimal.valueOf(2)).setScale(0, RoundingMode.DOWN).floatValue();
     }
 
     /**
@@ -145,7 +103,7 @@ public class AgepiUtile {
      * @return true si éligible AGEPI
      */
     private boolean isSituationFamilialeEligibleAgepi(DemandeurEmploi demandeurEmploi) {
-        if(!demandeurEmploi.getSituationFamiliale().getIsEnCouple().booleanValue()) {
+        if (!demandeurEmploi.getSituationFamiliale().getIsEnCouple().booleanValue()) {
             return situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, AgepiUtile.AGE_MAX_ENFANT) > 0;
         }
         return false;

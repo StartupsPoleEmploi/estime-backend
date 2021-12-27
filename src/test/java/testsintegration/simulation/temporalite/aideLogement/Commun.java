@@ -17,8 +17,8 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravailEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
@@ -45,7 +45,7 @@ public class Commun {
 
         // mock retour appel détail indemnisation de l'ESD
         DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulationEnum.RSA.getLibelle());
-        doReturn(detailIndemnisationESD).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
+        doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
     }
 
     protected Logement initLogement(String codeInsee, boolean isLogementConventionne) {
@@ -74,7 +74,7 @@ public class Commun {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(7));
         
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", true));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
@@ -115,7 +115,7 @@ public class Commun {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(7));
         
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
@@ -155,7 +155,7 @@ public class Commun {
         demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
         
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravailEnum.CDI.name());
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);

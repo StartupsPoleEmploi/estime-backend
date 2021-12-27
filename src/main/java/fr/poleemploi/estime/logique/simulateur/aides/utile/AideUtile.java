@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.commun.utile;
+package fr.poleemploi.estime.logique.simulateur.aides.utile;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.commun.utile.StringUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -24,22 +26,22 @@ import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 @Component
 public class AideUtile {
-
+    
     @Autowired
     private DateUtile dateUtile;
-
+    
     @Autowired
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifique;
-
+    
     public static final String PATH_DIR_DETAIL_PRESTATION = "details-prestations/";
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(AideUtile.class);
 
     public Aide creerAide(AideEnum aideEnum) {
         Aide aide = new Aide();
         aide.setCode(aideEnum.getCode());
         aide.setNom(aideEnum.getNom());
-        Optional<String> description = this.getDescription(aideEnum.getNomFichierDetail());
+        Optional<String> description = getDescription(aideEnum.getNomFichierDetail());
         if(description.isPresent()) {
             aide.setDetail(description.get());            
         }
@@ -47,10 +49,7 @@ public class AideUtile {
         return aide;
     }
 
-    public AideEnum getAideEnumByCode(String code) {
-        return Arrays.stream(AideEnum.values()).filter(aideEnum -> aideEnum.getCode().equals(code)).findFirst().get();
-    }
-
+    
     public Optional<String> getDescription(String nomFichier) {
         try {
             File resource = new ClassPathResource(PATH_DIR_DETAIL_PRESTATION + nomFichier).getFile();
@@ -60,7 +59,8 @@ public class AideUtile {
         }
         return Optional.empty();
     }
-
+    
+    
     public float getMontantAidePourCeMoisSimule(SimulationAides simulationAides, String codeAide, int numeroMoisMontantARecuperer) { 
         Optional<Aide> aidePourCeMois = getAidePourCeMoisSimule(simulationAides, codeAide, numeroMoisMontantARecuperer);
         if(aidePourCeMois.isPresent()) {
@@ -68,7 +68,7 @@ public class AideUtile {
         } 
         return 0;
     }
-
+    
     public float getMontantAideeAvantSimulation(int numeroMoisMontantARecuperer, DemandeurEmploi demandeurEmploi, String codeAide, LocalDate dateDebutSimulation) {
         if(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode().equals(codeAide)) {
             return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH();
@@ -79,7 +79,7 @@ public class AideUtile {
         }
         return 0;
     }
-
+    
     public Optional<Aide> getAidePourCeMoisSimule(SimulationAides simulationAides, String codeAide, int numeroMois) {        
         if(simulationAides != null && simulationAides.getSimulationsMensuelles() != null) {       
             int indexSimulationMensuelARecuperer = numeroMois - 1;            
@@ -95,25 +95,21 @@ public class AideUtile {
         }
         return Optional.empty();
     }
-
+    
     public boolean isCodeAideNotExit(String codeAide) {        
         Stream<AideEnum> aidesStream = Arrays.stream(AideEnum.values());
         return !aidesStream.anyMatch(aide -> aide.getCode().equalsIgnoreCase(codeAide));
+    }
+    
+    public AideEnum getAideEnumByCode(String code) {
+        return Arrays.stream(AideEnum.values()).filter(aideEnum -> aideEnum.getCode().equals(code)).findFirst().get();
     }
 
     public String getListeFormateeCodesAidePossibles() {
         Stream<AideEnum> aidesStream = Arrays.stream(AideEnum.values());                    
         return String.join(" / ", aidesStream.map(AideEnum::getCode).collect(Collectors.toList()));  
     }
-
-    private LocalDate getMoisAvantSimulation(int numeroMoisMontantARecuperer, LocalDate dateDebutSimulation) {
-        LocalDate dateDemandeSimulation = dateUtile.enleverMoisALocalDate(dateDebutSimulation, 1);
-        if(numeroMoisMontantARecuperer < 0) {
-            return dateUtile.enleverMoisALocalDate(dateDemandeSimulation, Math.abs(numeroMoisMontantARecuperer));            
-        }
-        return dateDemandeSimulation;
-    }
-
+    
     private String getLienExterne(AideEnum aideEnum) {
         switch (aideEnum) {
         case AGEPI:
@@ -124,5 +120,13 @@ public class AideUtile {
         default:
             return StringUtile.EMPTY;
         }
+    }
+    
+    private LocalDate getMoisAvantSimulation(int numeroMoisMontantARecuperer, LocalDate dateDebutSimulation) {
+        LocalDate dateDemandeSimulation = dateUtile.enleverMoisALocalDate(dateDebutSimulation, 1);
+        if(numeroMoisMontantARecuperer < 0) {
+            return dateUtile.enleverMoisALocalDate(dateDemandeSimulation, Math.abs(numeroMoisMontantARecuperer));            
+        }
+        return dateDemandeSimulation;
     }
 }

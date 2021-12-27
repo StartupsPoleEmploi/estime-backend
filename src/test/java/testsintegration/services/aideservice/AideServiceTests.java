@@ -13,7 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
-import fr.poleemploi.estime.commun.utile.AideUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.AidesService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
 import fr.poleemploi.estime.services.ressources.Aide;
