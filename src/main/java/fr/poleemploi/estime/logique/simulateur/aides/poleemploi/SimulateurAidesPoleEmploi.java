@@ -19,7 +19,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 public class SimulateurAidesPoleEmploi {
     
     @Autowired
-    private AgepiUtile agepi;
+    private AgepiUtile agepiUtile;
     
     @Autowired
     private AideMobiliteUtile aideMobilite;
@@ -32,8 +32,8 @@ public class SimulateurAidesPoleEmploi {
     
     public void simuler(Map<String, Aide>  aidesPourCeMois, int numeroMoisSimule, LocalDate moisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
        
-        if(agepi.isEligible(numeroMoisSimule, demandeurEmploi)) {
-            Optional<Aide> agepiOptional = agepi.simulerAide(demandeurEmploi);
+        if(agepiUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
+            Optional<Aide> agepiOptional = agepiUtile.simulerAide(demandeurEmploi);
             if (agepiOptional.isPresent()) {
                 aidesPourCeMois.put(AideEnum.AGEPI.getCode(), agepiOptional.get());
             }
