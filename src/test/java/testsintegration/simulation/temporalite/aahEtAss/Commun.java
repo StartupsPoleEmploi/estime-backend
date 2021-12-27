@@ -17,9 +17,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOIn;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.Nationalites;
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
@@ -121,10 +118,5 @@ public class Commun {
 			doReturn(aideMobilite).when(aideMobUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
 		}
 
-		//mock retour appel api are
-		if(decisionAre) {
-			Optional<Aide> arePEIOOut = Optional.of(utile.creerAidePourMock("ARE"));
-			doReturn(arePEIOOut).when(areUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
-		}
 	}
 }

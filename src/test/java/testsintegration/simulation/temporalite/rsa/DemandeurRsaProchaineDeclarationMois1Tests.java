@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import fr.poleemploi.estime.commun.enumerations.TypePopulation;
 import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
 import fr.poleemploi.estime.services.IndividuService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
@@ -60,7 +62,8 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");       
         demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
         demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
-        demandeurEmploi.getSituationFamiliale().setPersonnesACharge(new ArrayList());
+        List<Personne> personnesACharge = new ArrayList<Personne>();
+        demandeurEmploi.getSituationFamiliale().setPersonnesACharge(personnesACharge);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
@@ -302,7 +305,8 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
         demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement());     
         demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
         demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
-        demandeurEmploi.getSituationFamiliale().setPersonnesACharge(new ArrayList());
+        List<Personne> personnesACharge = new ArrayList<Personne>();
+        demandeurEmploi.getSituationFamiliale().setPersonnesACharge(personnesACharge);
         demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);

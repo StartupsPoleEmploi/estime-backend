@@ -103,11 +103,5 @@ public class Commun {
 			Optional<Aide> aideMobilite = Optional.of(utile.creerAidePourMock("AM"));
 			doReturn(aideMobilite).when(aideMobUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
 		}
-
-		//mock retour appel api are
-		if(decisionAre) {
-			Optional<Aide> arePEIOOut = Optional.of(utile.creerAidePourMock("ARE"));
-			doReturn(arePEIOOut).when(areUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
-		}
 	}
 }

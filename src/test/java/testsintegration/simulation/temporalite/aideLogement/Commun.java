@@ -6,19 +6,13 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Optional;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.web.accept.PathExtensionContentNegotiationStrategy;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -39,7 +33,6 @@ import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
-import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
 
@@ -92,12 +85,6 @@ public class Commun {
 		if(decisionAideMobilite) {
 			Optional<Aide> aideMobilite = Optional.of(utile.creerAidePourMock("AM"));
 			doReturn(aideMobilite).when(aideMobUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
-		}
-
-		//mock retour appel api are
-		if(decisionAre) {
-			Optional<Aide> arePEIOOut = Optional.of(utile.creerAidePourMock("ARE"));
-			doReturn(arePEIOOut).when(areUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
 		}
 	}
 

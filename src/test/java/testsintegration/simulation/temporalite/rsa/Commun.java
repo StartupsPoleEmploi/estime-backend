@@ -67,7 +67,7 @@ public class Commun {
 		// mock la creation du PeConnectAuth du demandeur d'emploi
 		PeConnectAuthorization peConnectAuthorization = new PeConnectAuthorization();
 		peConnectAuthorization.setAccessToken("");
-		peConnectAuthorization.setExpireIn(new Long(222));
+		peConnectAuthorization.setExpireIn(Long.valueOf(222));
 		peConnectAuthorization.setExpiryTime(new Date());
 		peConnectAuthorization.setIdToken("");
 		peConnectAuthorization.setRefreshToken("");
@@ -91,12 +91,6 @@ public class Commun {
 		if(decisionAideMobilite) {
 			Optional<Aide> aideMobilite = Optional.of(utile.creerAidePourMock("AM"));
 			doReturn(aideMobilite).when(aideMobUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
-		}
-
-		//mock retour appel api are
-		if(decisionAre) {
-			Optional<Aide> arePEIOOut = Optional.of(utile.creerAidePourMock("ARE"));
-			doReturn(arePEIOOut).when(areUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
 		}
 	}
 
