@@ -3,8 +3,8 @@ package fr.poleemploi.estime.commun.utile.demandeuremploi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
-import fr.poleemploi.estime.commun.enumerations.StatutsOccupationLogement;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.StatutOccupationLogementEnum;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Logement;
@@ -17,15 +17,15 @@ public class InformationsPersonnellesUtile {
     private CodeDepartementUtile codeDepartementUtile;
 
     public boolean isFrancais(InformationsPersonnelles informationsPersonnelles) {
-        return Nationalites.FRANCAISE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
+        return NationaliteEnum.FRANCAISE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
     }
 
     public boolean isEuropeenOuSuisse(InformationsPersonnelles informationsPersonnelles) {
-        return Nationalites.EUROPEEN_OU_SUISSE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
+        return NationaliteEnum.EUROPEEN_OU_SUISSE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
     }
 
     public boolean isNotFrancaisOuEuropeenOuSuisse(InformationsPersonnelles informationsPersonnelles) {
-        return Nationalites.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
+        return NationaliteEnum.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
     }
 
     public boolean isTitreSejourEnFranceValide(InformationsPersonnelles informationsPersonnelles) {
@@ -58,18 +58,18 @@ public class InformationsPersonnellesUtile {
         if (logement != null) {
             StatutOccupationLogement statutOccupationLogement = logement.getStatutOccupationLogement();
             if (statutOccupationLogement.isLogeGratuitement())
-                return StatutsOccupationLogement.LOGE_GRATUITEMENT.getLibelle();
+                return StatutOccupationLogementEnum.LOGE_GRATUITEMENT.getLibelle();
             else if (statutOccupationLogement.isLocataireHLM())
-                return StatutsOccupationLogement.LOCATAIRE_HLM.getLibelle();
+                return StatutOccupationLogementEnum.LOCATAIRE_HLM.getLibelle();
             else if (statutOccupationLogement.isLocataireMeuble())
-                return StatutsOccupationLogement.LOCATAIRE_MEUBLE.getLibelle();
+                return StatutOccupationLogementEnum.LOCATAIRE_MEUBLE.getLibelle();
             else if (statutOccupationLogement.isLocataireNonMeuble())
-                return StatutsOccupationLogement.LOCATAIRE_NON_MEUBLE.getLibelle();
+                return StatutOccupationLogementEnum.LOCATAIRE_NON_MEUBLE.getLibelle();
             else if (statutOccupationLogement.isProprietaire())
-                return StatutsOccupationLogement.PROPRIETAIRE.getLibelle();
+                return StatutOccupationLogementEnum.PROPRIETAIRE.getLibelle();
             else if (statutOccupationLogement.isProprietaireAvecEmprunt())
-                return StatutsOccupationLogement.PROPRIETAIRE_AVEC_EMPRUNT.getLibelle();
+                return StatutOccupationLogementEnum.PROPRIETAIRE_AVEC_EMPRUNT.getLibelle();
         }
-        return StatutsOccupationLogement.NON_RENSEIGNE.getLibelle();
+        return StatutOccupationLogementEnum.NON_RENSEIGNE.getLibelle();
     }
 }

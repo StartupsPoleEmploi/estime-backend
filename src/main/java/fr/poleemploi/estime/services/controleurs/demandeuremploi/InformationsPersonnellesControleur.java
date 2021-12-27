@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.NationalitesUtile;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
@@ -38,13 +38,13 @@ public class InformationsPersonnellesControleur {
 
     private void controleNationalite(InformationsPersonnelles informationsPersonnelles) {
         isValeurNationnaliteCorrecte(informationsPersonnelles.getNationalite());
-        if (Nationalites.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite()) && informationsPersonnelles.getTitreSejourEnFranceValide() == null) {
+        if (NationaliteEnum.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite()) && informationsPersonnelles.getTitreSejourEnFranceValide() == null) {
             throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "titreSejourEnFranceValide de informationsPersonnelles"));
         }
     }
 
     private void isValeurNationnaliteCorrecte(String nationalite) {
-        boolean nationaliteCorrecte = Arrays.asList(Nationalites.values()).stream().anyMatch(nationaliteEnum -> nationaliteEnum.getValeur().equalsIgnoreCase(nationalite));
+        boolean nationaliteCorrecte = Arrays.asList(NationaliteEnum.values()).stream().anyMatch(nationaliteEnum -> nationaliteEnum.getValeur().equalsIgnoreCase(nationalite));
         if (!nationaliteCorrecte) {
             throw new BadRequestException(String.format(BadRequestMessages.NATIONALITE_INCORRECTE.getMessage(), nationalitesUtile.getListeFormateeNationalitesPossibles()));
         }

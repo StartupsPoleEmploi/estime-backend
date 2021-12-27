@@ -2,8 +2,8 @@ package testsunitaires.services.controleurs.demandeuremploi;
 
 import java.time.LocalDate;
 
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
@@ -26,7 +26,7 @@ public class Commun {
     protected InformationsPersonnelles creerInformationsPersonnelles() {
         InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
         informationsPersonnelles.setDateNaissance(LocalDate.now());
-        informationsPersonnelles.setNationalite(Nationalites.FRANCAISE.getValeur());
+        informationsPersonnelles.setNationalite(NationaliteEnum.FRANCAISE.getValeur());
         informationsPersonnelles.setCodePostal("44200");
         return informationsPersonnelles;
     }
@@ -40,7 +40,7 @@ public class Commun {
         salaire.setMontantNet(900);
         salaire.setMontantBrut(1200);
         futurTravail.setSalaire(salaire);        
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         return futurTravail;
     }
 }

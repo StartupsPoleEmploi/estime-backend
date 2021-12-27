@@ -18,7 +18,7 @@ class DemandeurAre0MoisTravailleAvantSimulationTests extends Commun {
     }
 
     //    @Autowired
-    //    private IndividuService individuService;
+    //    private DemandeurEmploiService demandeurEmploiService;
     //
     //    @Test
     //    void simulerPopulationAreNonTravailleAvantSimulationProchaineDeclarationMois0() throws Exception {
@@ -28,7 +28,7 @@ class DemandeurAre0MoisTravailleAvantSimulationTests extends Commun {
     //
     //	initMocksARE(true);
     //
-    //	SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+    //	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
     //	List<SimulationMensuelle> listeAides = simulationAides.getSimulationsMensuelles();
     //	for (SimulationMensuelle simulationMensuelle : listeAides) {
     //	    Map<String, Aide> mesAides = simulationMensuelle.getMesAides();

@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -30,25 +30,25 @@ public class Commun {
     public SimulationMensuelle createSimulationMensuelleASS(float montantASS) {
         SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
         HashMap<String, Aide> prestations = new HashMap<>();
-        prestations.put(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), createSimulationMensuelAideASS(montantASS));
+        prestations.put(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), createSimulationMensuelAideASS(montantASS));
         simulationMensuelle.setMesAides(prestations);
         return simulationMensuelle;
     }
 
     private Aide createSimulationMensuelAideASS(float montantASS) {
         Aide ass = new Aide();
-        ass.setCode(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
-        ass.setOrganisme(Organismes.PE.getNomCourt());
+        ass.setCode(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
+        ass.setOrganisme(OrganismeEnum.PE.getNomCourt());
         ass.setMontant(montantASS);
         return ass;
     }
 
     protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant) throws ParseException {
-        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.ASS.getLibelle(), isEnCouple, nbEnfant);
+        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-        demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+        demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
         demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
-        demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
         demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);

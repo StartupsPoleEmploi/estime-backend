@@ -19,8 +19,8 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
-import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateur;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
+import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateurEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
@@ -61,12 +61,12 @@ public class Commun {
 		doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
 
 		//mock retour appel détail indemnisation de l'ESD 
-		DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.RSA.getLibelle());
-		doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
+		DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulationEnum.RSA.getLibelle());
+		doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
 
 		// mock la creation du PeConnectAuth du demandeur d'emploi
 		PeConnectAuthorization peConnectAuthorization = new PeConnectAuthorization();
-		peConnectAuthorization.setAccessToken("");
+		peConnectAuthorization.setBearerToken("");
 		peConnectAuthorization.setExpireIn(Long.valueOf(222));
 		peConnectAuthorization.setExpiryTime(new Date());
 		peConnectAuthorization.setIdToken("");
@@ -79,7 +79,7 @@ public class Commun {
 
 		// mock tracer parcours utilisateur
 		doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(),
-				ParcoursUtilisateur.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
+				ParcoursUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 
 		//mock retour appel api aide mobilite
 		if(decisionAgepi) {

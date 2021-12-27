@@ -22,13 +22,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AideMobilitePEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DecisionAGEPIAPI;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DecisionAideMobiliteAPI;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.agepi.AgepiPEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.agepi.DecisionAGEPIAPI;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.aidemobilite.AideMobilitePEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.aidemobilite.DecisionAideMobiliteAPI;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
@@ -266,7 +266,7 @@ public class Utile {
 	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population));
 	    break;
 	case "AAH_ASS":
-	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));
+	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));
 	default:
 	    break;
 	}
@@ -320,11 +320,11 @@ public class Utile {
 
     private AidesPoleEmploi creerAidePoleEmploi(String population) {
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-	if (Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(population)) {
+	if (AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(population)) {
 	    AllocationASS allocationASS = new AllocationASS();
 	    aidesPoleEmploi.setAllocationASS(allocationASS);
 	}
-	if (Aides.ALLOCATION_RETOUR_EMPLOI.getCode().equals(population)) {
+	if (AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode().equals(population)) {
 	    AllocationARE allocationARE = new AllocationARE();
 	    aidesPoleEmploi.setAllocationARE(allocationARE);
 	}

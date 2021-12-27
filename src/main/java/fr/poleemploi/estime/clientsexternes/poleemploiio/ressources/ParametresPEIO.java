@@ -20,7 +20,6 @@ public class ParametresPEIO {
     public static final String FRAIS_PRIS_EN_CHARGE_PAR_TIERS = "fraisPrisEnChargeParTiers";
     public static final String GAIN_BRUT = "gainBrut";
     public static final String GRANT_TYPE = "grant_type";
-    public static final String REFRESH_TOKEN = "refresh_token";
     public static final String INTENSITE = "intensite";
     public static final String LIEU_FORMATION_OU_EMPLOI = "lieuFormationOuEmploi";
     public static final String NATURE_CONTRAT_TRAVAIL = "natureContratTravail";
@@ -31,6 +30,7 @@ public class ParametresPEIO {
     public static final String NOMBRE_REPAS = "nombreRepas";
     public static final String ORIGINE = "origine";
     public static final String REDIRECT_URI = "redirect_uri";
+    public static final String REFRESH_TOKEN = "refresh_token";
     public static final String SALAIRE_BRUT_JOURNALIER = "salaireBrutJournalier";
     public static final String TYPE_INTENSITE = "typeIntensite";
 

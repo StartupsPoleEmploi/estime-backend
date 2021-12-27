@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -86,15 +86,15 @@ public class AllocationAdultesHandicapesUtile {
     
     private void ajouterAideAAH(Map<String, Aide>  aidesPourCeMois, float montant) {
         Aide allocationAAH = new Aide();
-        allocationAAH.setCode(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode());
-        Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.ALLOCATION_ADULTES_HANDICAPES.getNomFichierDetail());
+        allocationAAH.setCode(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode());
+        Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getNomFichierDetail());
         if(detailAideOptional.isPresent()) {
             allocationAAH.setDetail(detailAideOptional.get());            
         }
         allocationAAH.setMontant(montant);
-        allocationAAH.setNom(Aides.ALLOCATION_ADULTES_HANDICAPES.getNom());
-        allocationAAH.setOrganisme(Organismes.CAF.getNom());
+        allocationAAH.setNom(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getNom());
+        allocationAAH.setOrganisme(OrganismeEnum.CAF.getNom());
         allocationAAH.setReportee(false);
-        aidesPourCeMois.put(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode(), allocationAAH);
+        aidesPourCeMois.put(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), allocationAAH);
     }
 }

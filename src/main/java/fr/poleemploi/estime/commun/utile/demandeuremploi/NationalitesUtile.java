@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 
 @Component
 public class NationalitesUtile {
 
     public String getListeFormateeNationalitesPossibles() {
-        return String.join(" / ", Arrays.asList(Nationalites.values()).stream().map(Object::toString).collect(Collectors.toList()));
+        return String.join(" / ", Arrays.asList(NationaliteEnum.values()).stream().map(Object::toString).collect(Collectors.toList()));
     }
 }

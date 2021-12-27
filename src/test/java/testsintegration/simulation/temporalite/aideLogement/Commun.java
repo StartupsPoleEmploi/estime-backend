@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.mockito.Mockito;
@@ -19,9 +20,9 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AideMobiliteUtile;
@@ -33,6 +34,7 @@ import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
+import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
 
@@ -62,8 +64,8 @@ public class Commun {
 		
 		// mock la creation du PeConnectAuth du demandeur d'emploi
 		PeConnectAuthorization peConnectAuthorization = new PeConnectAuthorization();
-		peConnectAuthorization.setAccessToken("");
-		peConnectAuthorization.setExpireIn(new Long(222));
+		peConnectAuthorization.setBearerToken("");
+		peConnectAuthorization.setExpireIn(Long.valueOf(222));
 		peConnectAuthorization.setExpiryTime(new Date());
 		peConnectAuthorization.setIdToken("");
 		peConnectAuthorization.setRefreshToken("");
@@ -72,8 +74,8 @@ public class Commun {
 		demandeurEmploi.setPeConnectAuthorization(peConnectAuthorization);
 
 		//mock retour appel détail indemnisation de l'ESD 
-		DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulation.RSA.getLibelle());
-		doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).callDetailIndemnisationEndPoint(Mockito.any(String.class));
+		DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulationEnum.RSA.getLibelle());
+		doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
 
 		//mock retour appel api aide mobilite
 		if(decisionAgepi) {
@@ -104,17 +106,17 @@ public class Commun {
 	protected DemandeurEmploi creerDemandeurEmploiAPL(int prochaineDeclarationTrimestrielle) throws ParseException {
 		boolean isEnCouple = true;
 		int nbEnfant = 2;
-		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
 
 		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-		demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+		demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 		demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
 		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
 		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(7));
 
 		demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", true));
-		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 		demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
 		demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
@@ -144,17 +146,17 @@ public class Commun {
 	protected DemandeurEmploi creerDemandeurEmploiALF(int prochaineDeclarationTrimestrielle) throws ParseException {
 		boolean isEnCouple = true;
 		int nbEnfant = 2;
-		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
 
 		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-		demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+		demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 		demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
 		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
 		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(7));
 
 		demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
-		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 		demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
 		demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
@@ -184,17 +186,18 @@ public class Commun {
 	protected DemandeurEmploi creerDemandeurEmploiALS(int prochaineDeclarationTrimestrielle) throws ParseException {
 		boolean isEnCouple = false;
 		int nbEnfant = 0;
-		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulation.RSA.getLibelle(), isEnCouple, nbEnfant);
+		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
 
 		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-		demandeurEmploi.getInformationsPersonnelles().setNationalite(Nationalites.FRANCAISE.getValeur());
+		demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 		demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
 		demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
-		demandeurEmploi.getSituationFamiliale().setPersonnesACharge(new ArrayList());
+		List<Personne> personnesACharge = new ArrayList<Personne>();
+		demandeurEmploi.getSituationFamiliale().setPersonnesACharge(personnesACharge);
 
 		demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
-		demandeurEmploi.getFuturTravail().setTypeContrat(TypesContratTravail.CDI.name());
+		demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 		demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
 		demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);

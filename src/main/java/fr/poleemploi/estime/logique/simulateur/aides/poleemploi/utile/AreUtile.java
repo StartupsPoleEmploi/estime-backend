@@ -3,25 +3,18 @@ package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 import java.util.Map;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOIn;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
-import fr.poleemploi.estime.commun.enumerations.Aides;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
-import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @Component
 public class AreUtile {
-    @Autowired
-    private AccesTokenUtile accesTokenUtile;
 
     @Autowired
     private PoleEmploiIOClient poleEmploiIOClient;
@@ -32,10 +25,7 @@ public class AreUtile {
     private float nombreJoursRestants;
     private float montantComplementARE;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AreUtile.class);
-
     public void simuler(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
-
         if (isMoisCalculARE(numeroMoisSimule)) {
             calculerMontantComplementARE(aidesPourCeMois, demandeurEmploi);
         } else {
@@ -48,9 +38,7 @@ public class AreUtile {
     }
 
     private void calculerMontantComplementARE(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-        String bearerToken = accesTokenUtile.getBearerToken(demandeurEmploi.getPeConnectAuthorization().getAccessToken());
-        ArePEIOIn areIn = remplirAreIn(demandeurEmploi);
-        Optional<ArePEIOOut> optionalAreOut = poleEmploiIOClient.callAreEndPoint(areIn, bearerToken);
+        Optional<ArePEIOOut> optionalAreOut = poleEmploiIOClient.getAreSimulateurRepriseActivite(demandeurEmploi);
         if (optionalAreOut.isPresent() && optionalAreOut.get().getAllocationMensuelle() > 0) {
             ArePEIOOut areOut = optionalAreOut.get();
             this.montantComplementARE = (float) Math.floor(areOut.getAllocationMensuelle() - (areOut.getMontantCRC() + areOut.getMontantCRDS() + areOut.getMontantCSG()));
@@ -58,32 +46,30 @@ public class AreUtile {
             this.joursIndemnisables = getNombreJoursIndemnisables(areOut, demandeurEmploi);
             this.nombreJoursRestants -= this.joursIndemnisables;
             Aide complementARE = creerComplementARE(montantComplementARE);
-            aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
-        } else {
-            LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
-        }
+            aidesPourCeMois.put(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
+        } 
     }
 
     private void verserReliquatComplementARE(Map<String, Aide> aidesPourCeMois) {
         this.nombreJoursRestants = getNombreJoursRestantsReliquat();
         if (nombreJoursRestants > 0) {
             Aide complementARE = creerComplementARE(this.montantComplementARE);
-            aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
+            aidesPourCeMois.put(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
         } else {
             float nombreJoursRestantsAvantCeMois = getNombreJoursRestantsReliquatAvantCeMois();
             if (nombreJoursRestantsAvantCeMois > 0) {
                 float montantReliquatComplementARE = (float) Math.floor((this.montantComplementARE / this.joursIndemnisables) * nombreJoursRestantsAvantCeMois);
                 Aide complementARE = creerComplementARE(montantReliquatComplementARE);
-                aidesPourCeMois.put(Aides.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
+                aidesPourCeMois.put(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
             }
         }
     }
 
     private Aide creerComplementARE(float montantAide) {
         Aide are = new Aide();
-        are.setCode(Aides.ALLOCATION_RETOUR_EMPLOI.getCode());
-        are.setNom(Aides.ALLOCATION_RETOUR_EMPLOI.getNom());
-        are.setOrganisme(Organismes.PE.getNom());
+        are.setCode(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode());
+        are.setNom(AideEnum.ALLOCATION_RETOUR_EMPLOI.getNom());
+        are.setOrganisme(OrganismeEnum.PE.getNom());
         are.setMontant(montantAide);
         are.setReportee(false);
         return are;
@@ -118,18 +104,5 @@ public class AreUtile {
 
     private float getMontantAllocationARE(ArePEIOOut areOut) {
         return (float) Math.floor(areOut.getAllocationMensuelle() - (areOut.getMontantCRC() + areOut.getMontantCRDS() + areOut.getMontantCSG()));
-    }
-
-    private ArePEIOIn remplirAreIn(DemandeurEmploi demandeurEmploi) {
-        ArePEIOIn areIn = new ArePEIOIn();
-        if (demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
-                && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null) {
-            areIn.setAllocationBruteJournaliere(demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut());
-            areIn.setSalaireBrutJournalier(demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut());
-            areIn.setGainBrut(demandeurEmploi.getFuturTravail().getSalaire().getMontantBrut());
-        } else {
-            LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
-        }
-        return areIn;
     }
 }

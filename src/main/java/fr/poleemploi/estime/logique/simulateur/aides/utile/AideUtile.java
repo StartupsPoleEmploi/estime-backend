@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.commun.utile.StringUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -33,6 +37,19 @@ public class AideUtile {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(AideUtile.class);
 
+    public Aide creerAide(AideEnum aideEnum) {
+        Aide aide = new Aide();
+        aide.setCode(aideEnum.getCode());
+        aide.setNom(aideEnum.getNom());
+        Optional<String> description = getDescription(aideEnum.getNomFichierDetail());
+        if(description.isPresent()) {
+            aide.setDetail(description.get());            
+        }
+        aide.setLienExterne(getLienExterne(aideEnum));
+        return aide;
+    }
+
+    
     public Optional<String> getDescription(String nomFichier) {
         try {
             File resource = new ClassPathResource(PATH_DIR_DETAIL_PRESTATION + nomFichier).getFile();
@@ -43,6 +60,7 @@ public class AideUtile {
         return Optional.empty();
     }
     
+    
     public float getMontantAidePourCeMoisSimule(SimulationAides simulationAides, String codeAide, int numeroMoisMontantARecuperer) { 
         Optional<Aide> aidePourCeMois = getAidePourCeMoisSimule(simulationAides, codeAide, numeroMoisMontantARecuperer);
         if(aidePourCeMois.isPresent()) {
@@ -52,10 +70,10 @@ public class AideUtile {
     }
     
     public float getMontantAideeAvantSimulation(int numeroMoisMontantARecuperer, DemandeurEmploi demandeurEmploi, String codeAide, LocalDate dateDebutSimulation) {
-        if(Aides.ALLOCATION_ADULTES_HANDICAPES.getCode().equals(codeAide)) {
+        if(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode().equals(codeAide)) {
             return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH();
         }
-        if(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(codeAide)) {
+        if(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(codeAide)) {
             LocalDate moisAvantPeriodeSimulation = getMoisAvantSimulation(numeroMoisMontantARecuperer, dateDebutSimulation);
             return allocationSolidariteSpecifique.calculerMontant(demandeurEmploi, moisAvantPeriodeSimulation);
         }
@@ -76,6 +94,32 @@ public class AideUtile {
             }
         }
         return Optional.empty();
+    }
+    
+    public boolean isCodeAideNotExit(String codeAide) {        
+        Stream<AideEnum> aidesStream = Arrays.stream(AideEnum.values());
+        return !aidesStream.anyMatch(aide -> aide.getCode().equalsIgnoreCase(codeAide));
+    }
+    
+    public AideEnum getAideEnumByCode(String code) {
+        return Arrays.stream(AideEnum.values()).filter(aideEnum -> aideEnum.getCode().equals(code)).findFirst().get();
+    }
+
+    public String getListeFormateeCodesAidePossibles() {
+        Stream<AideEnum> aidesStream = Arrays.stream(AideEnum.values());                    
+        return String.join(" / ", aidesStream.map(AideEnum::getCode).collect(Collectors.toList()));  
+    }
+    
+    private String getLienExterne(AideEnum aideEnum) {
+        switch (aideEnum) {
+        case AGEPI:
+        case AIDE_MOBILITE:
+            return "https://candidat.pole-emploi.fr/candidat/aides/mobilite/tableaudebord\\r\\n";
+        case PRIME_ACTIVITE:
+            return "https://www.caf.fr/allocataires/mes-services-en-ligne/faire-une-demande-de-prestation";
+        default:
+            return StringUtile.EMPTY;
+        }
     }
     
     private LocalDate getMoisAvantSimulation(int numeroMoisMontantARecuperer, LocalDate dateDebutSimulation) {

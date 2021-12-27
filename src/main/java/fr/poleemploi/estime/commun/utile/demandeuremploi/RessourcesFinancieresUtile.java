@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
@@ -236,11 +236,11 @@ public class RessourcesFinancieresUtile {
     public String getTypeAideLogementDeclare(DemandeurEmploi demandeurEmploi) {
         String typeAideLogement = "";
         if (hasAidePersonnaliseeLogement(demandeurEmploi))
-            typeAideLogement = Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode();
+            typeAideLogement = AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode();
         else if (hasAllocationLogementFamiliale(demandeurEmploi))
-            typeAideLogement = Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode();
+            typeAideLogement = AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode();
         else if (hasAllocationLogementSociale(demandeurEmploi))
-            typeAideLogement = Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode();
+            typeAideLogement = AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode();
         return typeAideLogement;
     }
 

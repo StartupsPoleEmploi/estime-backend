@@ -18,8 +18,8 @@ import org.springframework.test.context.TestPropertySource;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
-import fr.poleemploi.estime.services.IndividuService;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -30,7 +30,7 @@ import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 
     @Autowired
-    private IndividuService individuService;
+    private DemandeurEmploiService demandeurEmploiService;
 
     private static final int PROCHAINE_DECLARATION_TRIMESTRIELLE = 2;
 
@@ -53,7 +53,7 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks("20-10-2020", demandeurEmploi, false, false, false);
-	SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
 	// RSA : 500€
@@ -64,10 +64,10 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(2);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(300f);
 	    });
 	});
@@ -80,10 +80,10 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(2);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(392f);
 	    });
 	});
@@ -96,13 +96,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(716f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(211f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(392f);
 	    });
 	});
@@ -115,13 +115,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(716f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(211f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(392f);
 	    });
 	});
@@ -134,13 +134,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(716f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(211f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(392f);
 	    });
 	});
@@ -153,13 +153,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(112f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(631f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(392f);
 	    });
 	});
@@ -178,7 +178,7 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 
 	// Lorsque je simule mes prestations le 20/10/2020
 	initMocks("20-10-2020", demandeurEmploi, false, false, false);
-	SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
 	// RSA : 710€
@@ -189,10 +189,10 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(2);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(300f);
 	    });
 	});
@@ -205,10 +205,10 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(2);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(438f);
 	    });
 	});
@@ -221,13 +221,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(716f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(211f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(438f);
 	    });
 	});
@@ -240,13 +240,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(716f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(211f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(438f);
 	    });
 	});
@@ -259,13 +259,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(716f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(211f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(438f);
 	    });
 	});
@@ -278,13 +278,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(112f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(631f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(438f);
 	    });
 	});
@@ -303,7 +303,7 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 
 	// Lorsque je simule mes prestations le 23/07/2021
 	initMocks("23-07-2021", demandeurEmploi, false, false, false);
-	SimulationAides simulationAides = individuService.simulerAides(demandeurEmploi);
+	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 08/2021 sont :
 	// RSA : 500€
@@ -314,10 +314,10 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(2);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(300f);
 	    });
 	});
@@ -330,10 +330,10 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(2);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(271f);
 	    });
 	});
@@ -346,13 +346,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(196f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(71f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(271f);
 	    });
 	});
@@ -365,13 +365,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(196f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(71f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(271f);
 	    });
 	});
@@ -384,13 +384,13 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
-	    assertThat(simulation.getMesAides().get(Aides.RSA.getCode())).satisfies(rsa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(196f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(71f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(271f);
 	    });
 	});
@@ -403,10 +403,10 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(2);
-	    assertThat(simulation.getMesAides().get(Aides.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(212f);
 	    });
-	    assertThat(simulation.getMesAides().get(Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(271f);
 	    });
 	});

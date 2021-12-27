@@ -1,37 +1,23 @@
 package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Date;
-import java.util.Map;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOIn;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AgepiPEIOOut;
-import fr.poleemploi.estime.commun.enumerations.Aides;
-import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
-import fr.poleemploi.estime.commun.enumerations.MontantsParPalierAgepi;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
-import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
-import fr.poleemploi.estime.commun.utile.AccesTokenUtile;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.agepi.AgepiPEIOOut;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Personne;
 
 /**
  * Classe permettant de calculer le montant de l'AGEPI (Aide à la garde d'enfants pour parent isolé).
@@ -48,16 +34,9 @@ public class AgepiUtile {
     public static final int NBR_ENFANT_PALIER_MAX = 3;
     public static final int NBR_ENFANT_PALIER_MIN = 1;
     public static final int NBR_HEURE_PALIER_INTERMEDIAIRE = 15;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AgepiUtile.class);
-
-    @Autowired
-    private AccesTokenUtile accesTokenUtile;
 
     @Autowired
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
-
-    @Autowired
-    private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
     @Autowired
     private DemandeurEmploiUtile demandeurEmploiUtile;
@@ -92,110 +71,30 @@ public class AgepiUtile {
     }
 
     public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi) {
-        getAccessTokenValid(demandeurEmploi);
-        String bearerToken = accesTokenUtile.getBearerToken(demandeurEmploi.getPeConnectAuthorization().getAccessToken());
-        AgepiPEIOIn agepiIn = remplirAgepiIn(demandeurEmploi);
-        Optional<AgepiPEIOOut> optionalAgepiOut = poleEmploiIOClient.callAgepiEndPoint(agepiIn, bearerToken);
+        Optional<AgepiPEIOOut> optionalAgepiOut = poleEmploiIOClient.getAgepiSimulateurAides(demandeurEmploi);
         if (optionalAgepiOut.isPresent()) {
             AgepiPEIOOut agepiOut = optionalAgepiOut.get();
             if (agepiOut.getDecisionAgepiAPI().getNature().equals("Demande attribuée")) {
                 float montantAide = agepiOut.getDecisionAgepiAPI().getMontant();
                 return Optional.of(creerAide(montantAide));
-            } else {
-                LOGGER.error(LoggerMessages.SIMULATION_IMPOSSIBLE_DEMANDE_REFUSEE.getMessage());
-            }
-        } else {
-            LOGGER.error(LoggerMessages.USER_INFO_KO.getMessage());
-        }
+            } 
+        } 
         return Optional.empty();
-    }
-
-    private AgepiPEIOIn remplirAgepiIn(DemandeurEmploi demandeurEmploi) {
-        AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
-        agepiPEIOIn.setContexte("Reprise");
-        agepiPEIOIn.setDateActionReclassement(LocalDate.now().toString());
-        agepiPEIOIn.setDateDepot(LocalDate.now().toString());
-        agepiPEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
-        agepiPEIOIn.setEleveSeulEnfants(!demandeurEmploi.getSituationFamiliale().getIsEnCouple());
-        agepiPEIOIn.setIntensite(Math.round(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine()));
-        agepiPEIOIn.setLieuFormationOuEmploi("France");
-        agepiPEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
-
-        int nombreEnfants = 0;
-        int nombreEnfantsMoinsDixAns = 0;
-        for (Personne personneACharge : demandeurEmploi.getSituationFamiliale().getPersonnesACharge()) {
-            LocalDate today = LocalDate.now();
-            int agePersonneACharge = Period.between(personneACharge.getInformationsPersonnelles().getDateNaissance(), today).getYears();
-            if (agePersonneACharge < 10) {
-                ++nombreEnfants;
-                ++nombreEnfantsMoinsDixAns;
-            } else if (agePersonneACharge < 18) {
-                ++nombreEnfants;
-            }
-        }
-
-        agepiPEIOIn.setNombreEnfants(nombreEnfants);
-        agepiPEIOIn.setNombreEnfantsMoins10Ans(nombreEnfantsMoinsDixAns);
-        agepiPEIOIn.setOrigine("c");
-        agepiPEIOIn.setTypeIntensite("Mensuelle");
-        agepiPEIOIn.setCodeTerritoire("001");
-        return agepiPEIOIn;
-    }
-
-    private float calculerMontantAgepi(DemandeurEmploi demandeurEmploi) {
-        int nombreEnfantACharge = situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, AGE_MAX_ENFANT);
-        if (nombreEnfantACharge > 0) {
-            switch (nombreEnfantACharge) {
-
-            case NBR_ENFANT_PALIER_MIN:
-                return determinerMontantAgepi(MontantsParPalierAgepi.NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_INTERMEDIAIRE,
-                        MontantsParPalierAgepi.NBR_ENFANT_PALIER_MIN_NBR_HEURE_PALIER_MAX, demandeurEmploi);
-            case NBR_ENFANT_PALIER_INTERMEDIAIRE:
-                return determinerMontantAgepi(MontantsParPalierAgepi.NBR_ENFANT_PALIER_INTERMEDIAIRE_NBR_HEURE_PALIER_INTERMEDIAIRE,
-                        MontantsParPalierAgepi.NBR_ENFANT_PALIER_INTERMEDIAIRE_NBR_HEURE_PALIER_MAX, demandeurEmploi);
-            default:
-                return determinerMontantAgepi(MontantsParPalierAgepi.NBR_ENFANT_PALIER_MAX_NBR_HEURE_PALIER_INTERMEDIAIRE,
-                        MontantsParPalierAgepi.NBR_ENFANT_PALIER_MAX_NBR_HEURE_PALIER_MAX, demandeurEmploi);
-            }
-        }
-        return 0;
     }
 
     private Aide creerAide(float montantAide) {
         Aide agepi = new Aide();
-        agepi.setCode(Aides.AGEPI.getCode());
-        Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.AGEPI.getNomFichierDetail());
+        agepi.setCode(AideEnum.AGEPI.getCode());
+        Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AGEPI.getNomFichierDetail());
         if (detailAideOptional.isPresent()) {
             agepi.setDetail(detailAideOptional.get());
         }
-        agepi.setMessageAlerte(MessagesInformatifs.AGEPI_IDF.getMessage());
-        agepi.setNom(Aides.AGEPI.getNom());
-        agepi.setOrganisme(Organismes.PE.getNom());
+        agepi.setMessageAlerte(MessageInformatifEnum.AGEPI_IDF.getMessage());
+        agepi.setNom(AideEnum.AGEPI.getNom());
+        agepi.setOrganisme(OrganismeEnum.PE.getNom());
         agepi.setMontant(montantAide);
         agepi.setReportee(false);
         return agepi;
-    }
-
-    private float determinerMontantAgepi(MontantsParPalierAgepi montantPalierIntermediaire, MontantsParPalierAgepi montantPalierMax, DemandeurEmploi demandeurEmploi) {
-        float nombreHeuresTravailleesSemaine = demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine();
-
-        if (nombreHeuresTravailleesSemaine < NBR_HEURE_PALIER_INTERMEDIAIRE) {
-            int montantHorsMayotte = montantPalierIntermediaire.getMontant();
-            return informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) ? calculerMontantMayotte(montantHorsMayotte) : montantHorsMayotte;
-        } else {
-            int montantHorsMayotte = montantPalierMax.getMontant();
-            return informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) ? calculerMontantMayotte(montantHorsMayotte) : montantHorsMayotte;
-        }
-
-    }
-
-    /**
-     * 
-     * @param montantHorsMayotte
-     * @return montant arrondi au supérieur à 0 chiffre après la virgule 
-     */
-    private float calculerMontantMayotte(int montantHorsMayotte) {
-        return BigDecimal.valueOf(montantHorsMayotte).divide(BigDecimal.valueOf(2)).setScale(0, RoundingMode.DOWN).floatValue();
     }
 
     /**
@@ -208,13 +107,5 @@ public class AgepiUtile {
             return situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, AgepiUtile.AGE_MAX_ENFANT) > 0;
         }
         return false;
-    }
-
-    private void getAccessTokenValid(DemandeurEmploi demandeurEmploi) {
-        Date currentDateMoinsUneMinute = new Date(System.currentTimeMillis() - (60 * 1000));
-        if(demandeurEmploi.getPeConnectAuthorization().getExpiryTime().before(currentDateMoinsUneMinute)) {
-            String newAccessToken = poleEmploiIOClient.retreiveAccessTokenFromRefreshToken(demandeurEmploi.getPeConnectAuthorization().getRefreshToken());
-            demandeurEmploi.getPeConnectAuthorization().setAccessToken(newAccessToken);
-        }
     }
 }

@@ -3,8 +3,8 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
-import fr.poleemploi.estime.commun.enumerations.Aides;
-import fr.poleemploi.estime.commun.enumerations.TypePopulation;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
@@ -50,12 +50,12 @@ public class IndividuUtile {
 
     private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIO detailIndemnisationPEIO) {
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-	if (Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisationPEIO.getCodeIndemnisation())) {
+	if (AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisationPEIO.getCodeIndemnisation())) {
 	    AllocationASS allocationASS = new AllocationASS();
 	    allocationASS.setAllocationJournaliereNet(detailIndemnisationPEIO.getIndemnisationJournalierNet());
 	    aidesPoleEmploi.setAllocationASS(allocationASS);
 	}
-	if (Aides.ALLOCATION_RETOUR_EMPLOI.getCode().equals(detailIndemnisationPEIO.getCodeIndemnisation())) {
+	if (AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode().equals(detailIndemnisationPEIO.getCodeIndemnisation())) {
 	    AllocationARE allocationARE = new AllocationARE();
 	    allocationARE.setAllocationJournaliereNet(detailIndemnisationPEIO.getIndemnisationJournalierNet());
 	    aidesPoleEmploi.setAllocationARE(allocationARE);
@@ -64,11 +64,11 @@ public class IndividuUtile {
     }
 
     private boolean isBeneficiaireARE(DetailIndemnisationPEIO detailIndemnisationPEIO) {
-	return detailIndemnisationPEIO.getCodeIndemnisation() != null && TypePopulation.ARE.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation());
+	return detailIndemnisationPEIO.getCodeIndemnisation() != null && TypePopulationEnum.ARE.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation());
     }
 
     private boolean isBeneficiaireASS(DetailIndemnisationPEIO detailIndemnisationPEIO) {
-	return detailIndemnisationPEIO.getCodeIndemnisation() != null && TypePopulation.ASS.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation());
+	return detailIndemnisationPEIO.getCodeIndemnisation() != null && TypePopulationEnum.ASS.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation());
     }
 
     public InformationsPersonnelles creerInformationsPersonnelles() {

@@ -12,9 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AideMobiliteUtile;
-import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
@@ -54,7 +53,7 @@ class AideMobiliteUtileTestsMayotte {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	futurTravail.setDistanceKmDomicileTravail(11);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
@@ -88,7 +87,7 @@ class AideMobiliteUtileTestsMayotte {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	futurTravail.setDistanceKmDomicileTravail(11);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
@@ -123,7 +122,7 @@ class AideMobiliteUtileTestsMayotte {
 
 	FuturTravail futurTravail = new FuturTravail();
 	futurTravail.setDistanceKmDomicileTravail(11);
-	futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
 	futurTravail.setNombreMoisContratCDD(3);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
@@ -158,7 +157,7 @@ class AideMobiliteUtileTestsMayotte {
 
 	FuturTravail futurTravail = new FuturTravail();
 	futurTravail.setDistanceKmDomicileTravail(11);
-	futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
 	futurTravail.setNombreMoisContratCDD(4);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
@@ -192,7 +191,7 @@ class AideMobiliteUtileTestsMayotte {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	futurTravail.setDistanceKmDomicileTravail(11);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
@@ -221,7 +220,7 @@ class AideMobiliteUtileTestsMayotte {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	futurTravail.setDistanceKmDomicileTravail(11);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
@@ -250,7 +249,7 @@ class AideMobiliteUtileTestsMayotte {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	futurTravail.setDistanceKmDomicileTravail(11);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
@@ -279,7 +278,7 @@ class AideMobiliteUtileTestsMayotte {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	futurTravail.setDistanceKmDomicileTravail(11);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
@@ -309,7 +308,7 @@ class AideMobiliteUtileTestsMayotte {
 
 	FuturTravail futurTravail = new FuturTravail();
 	futurTravail.setDistanceKmDomicileTravail(10);
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -343,7 +342,7 @@ class AideMobiliteUtileTestsMayotte {
 
 	FuturTravail futurTravail = new FuturTravail();
 	futurTravail.setDistanceKmDomicileTravail(7);
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -377,7 +376,7 @@ class AideMobiliteUtileTestsMayotte {
 
 	FuturTravail futurTravail = new FuturTravail();
 	futurTravail.setDistanceKmDomicileTravail(11);
-	futurTravail.setTypeContrat(TypesContratTravail.CDI.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
@@ -411,7 +410,7 @@ class AideMobiliteUtileTestsMayotte {
 
 	FuturTravail futurTravail = new FuturTravail();
 	futurTravail.setDistanceKmDomicileTravail(11);
-	futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
 	futurTravail.setNombreMoisContratCDD(2);
 	demandeurEmploi.setFuturTravail(futurTravail);
 

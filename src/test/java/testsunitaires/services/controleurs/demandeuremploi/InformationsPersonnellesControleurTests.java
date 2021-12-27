@@ -19,9 +19,9 @@ import org.springframework.test.context.TestPropertySource;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import fr.poleemploi.estime.commun.enumerations.Nationalites;
+import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
-import fr.poleemploi.estime.services.IndividuService;
+import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -34,7 +34,7 @@ import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 class InformationsPersonnellesControleurTests extends Commun {
 
     @Autowired
-    private IndividuService individuService;
+    private DemandeurEmploiService demandeurEmploiService;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -53,7 +53,7 @@ class InformationsPersonnellesControleurTests extends Commun {
         demandeurEmploi.setInformationsPersonnelles(null);
 
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAides(demandeurEmploi);
+            demandeurEmploiService.simulerAides(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "informationsPersonnelles"));
     }
     
@@ -70,7 +70,7 @@ class InformationsPersonnellesControleurTests extends Commun {
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAides(demandeurEmploi);
+            demandeurEmploiService.simulerAides(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "dateNaissance de informationsPersonnelles"));
     }
     
@@ -87,7 +87,7 @@ class InformationsPersonnellesControleurTests extends Commun {
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAides(demandeurEmploi);
+            demandeurEmploiService.simulerAides(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "codePostal de informationsPersonnelles"));
     }
     
@@ -104,7 +104,7 @@ class InformationsPersonnellesControleurTests extends Commun {
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAides(demandeurEmploi);
+            demandeurEmploiService.simulerAides(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nationalite de informationsPersonnelles"));
     }
     
@@ -117,12 +117,12 @@ class InformationsPersonnellesControleurTests extends Commun {
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
         
         InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
-        informationsPersonnelles.setNationalite(Nationalites.AUTRE.getValeur());
+        informationsPersonnelles.setNationalite(NationaliteEnum.AUTRE.getValeur());
         informationsPersonnelles.setTitreSejourEnFranceValide(null);
         demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            individuService.simulerAides(demandeurEmploi);
+            demandeurEmploiService.simulerAides(demandeurEmploi);
         }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "titreSejourEnFranceValide de informationsPersonnelles"));
     }
     

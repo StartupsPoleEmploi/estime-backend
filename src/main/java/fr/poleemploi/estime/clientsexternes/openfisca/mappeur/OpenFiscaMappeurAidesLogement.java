@@ -19,7 +19,7 @@ import com.github.tsohr.JSONObject;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
@@ -58,13 +58,13 @@ public class OpenFiscaMappeurAidesLogement {
             JsonObject alsJsonObject = famille1JsonObject.get(ALS).getAsJsonObject();
             String periodeFormateeAideLogement = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
             if (aplJsonObject.get(periodeFormateeAideLogement).getAsBigDecimal().setScale(0, RoundingMode.HALF_UP).floatValue() > 0) {
-                typeAideLogement = Aides.AIDE_PERSONNALISEE_LOGEMENT.getCode();
+                typeAideLogement = AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode();
             }
             if (alfJsonObject.get(periodeFormateeAideLogement).getAsBigDecimal().setScale(0, RoundingMode.HALF_UP).floatValue() > 0) {
-                typeAideLogement = Aides.ALLOCATION_LOGEMENT_FAMILIALE.getCode();
+                typeAideLogement = AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode();
             }
             if (alsJsonObject.get(periodeFormateeAideLogement).getAsBigDecimal().setScale(0, RoundingMode.HALF_UP).floatValue() > 0) {
-                typeAideLogement = Aides.ALLOCATION_LOGEMENT_SOCIALE.getCode();
+                typeAideLogement = AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode();
             }
             return typeAideLogement;
         } catch (NullPointerException e) {

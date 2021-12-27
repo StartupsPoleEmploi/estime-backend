@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.TypeContratUtile;
@@ -64,7 +64,7 @@ public class FuturTravailControleur {
     }
 
     private void isTypeContratCorrect(String typeContratToCheck) {
-        boolean typeContratCorrect = Arrays.asList(TypesContratTravail.values()).stream().anyMatch(typeContrat -> typeContrat.name().equals(typeContratToCheck));
+        boolean typeContratCorrect = Arrays.asList(TypeContratTravailEnum.values()).stream().anyMatch(typeContrat -> typeContrat.name().equals(typeContratToCheck));
         if(!typeContratCorrect) {
             throw new BadRequestException(String.format(BadRequestMessages.TYPE_CONTRAT_INCORRECT.getMessage(), typeContratUtile.getListeFormateeTypesContratPossibles()));            
         }

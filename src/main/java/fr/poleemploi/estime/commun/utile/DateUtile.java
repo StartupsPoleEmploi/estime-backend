@@ -8,6 +8,7 @@ import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -39,6 +40,10 @@ public class DateUtile {
     
     public LocalDate getDateJour() {
         return LocalDate.now(ZONE_ID_FRANCE);
+    }
+        
+    public LocalDate getDateMoisProchain() {
+        return LocalDate.now(ZONE_ID_FRANCE).with(TemporalAdjusters.firstDayOfNextMonth());
     }
     
     public LocalDateTime getDateTimeJour() {

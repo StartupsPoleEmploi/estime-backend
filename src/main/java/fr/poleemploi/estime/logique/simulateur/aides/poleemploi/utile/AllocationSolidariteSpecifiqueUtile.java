@@ -8,9 +8,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
-import fr.poleemploi.estime.commun.enumerations.MessagesInformatifs;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
@@ -72,8 +72,8 @@ public class AllocationSolidariteSpecifiqueUtile {
 
     private Aide creerAide(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, float montantAide) {
 	Aide ass = new Aide();
-	ass.setCode(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
-	Optional<String> detailAideOptional = aideeUtile.getDescription(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNomFichierDetail());
+	ass.setCode(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
+	Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNomFichierDetail());
 	if (detailAideOptional.isPresent()) {
 	    ass.setDetail(detailAideOptional.get());
 	}
@@ -82,8 +82,8 @@ public class AllocationSolidariteSpecifiqueUtile {
 	    ass.setMessageAlerte(messageAlerteOptional.get());
 	}
 	ass.setMontant(montantAide);
-	ass.setNom(Aides.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
-	ass.setOrganisme(Organismes.PE.getNom());
+	ass.setNom(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
+	ass.setOrganisme(OrganismeEnum.PE.getNom());
 	ass.setReportee(false);
 	return ass;
     }
@@ -102,7 +102,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 	LocalDate dateFinDroitASS = dateUtile.ajouterMoisALocalDate(dateDerniereOuvertureDroitASS, 6);
 	LocalDate date3emeMoisSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, 3);
 	if (dateUtile.isDateAvant(dateFinDroitASS, date3emeMoisSimulation)) {
-	    return Optional.of(MessagesInformatifs.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
+	    return Optional.of(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
 	}
 	return Optional.empty();
     }

@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.Aides;
-import fr.poleemploi.estime.commun.enumerations.Organismes;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -73,22 +73,22 @@ public class PrimeActiviteRSAUtile {
     void reporterRsaEtPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	Optional<Aide> rsaMoisPrecedent = getRSASimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
 	if (rsaMoisPrecedent.isPresent()) {
-	    aidesPourCeMois.put(Aides.RSA.getCode(), rsaMoisPrecedent.get());
+	    aidesPourCeMois.put(AideEnum.RSA.getCode(), rsaMoisPrecedent.get());
 	} else if (isEligiblePourReportRSADeclare(numeroMoisSimule, demandeurEmploi)) {
-	    aidesPourCeMois.put(Aides.RSA.getCode(), getRSADeclare(demandeurEmploi));
+	    aidesPourCeMois.put(AideEnum.RSA.getCode(), getRSADeclare(demandeurEmploi));
 	}
 	Optional<Aide> primeActiviteMoisPrecedent = primeActiviteUtile.getPrimeActiviteMoisPrecedent(simulationAides, numeroMoisSimule);
 	if (primeActiviteMoisPrecedent.isPresent()) {
-	    aidesPourCeMois.put(Aides.PRIME_ACTIVITE.getCode(), primeActiviteMoisPrecedent.get());
+	    aidesPourCeMois.put(AideEnum.PRIME_ACTIVITE.getCode(), primeActiviteMoisPrecedent.get());
 	}
     }
 
     protected Aide creerAideRSA(float montantRSA, boolean isAideReportee) {
 	Aide aideRSA = new Aide();
-	aideRSA.setCode(Aides.RSA.getCode());
+	aideRSA.setCode(AideEnum.RSA.getCode());
 	aideRSA.setMontant(montantRSA);
-	aideRSA.setNom(Aides.RSA.getNom());
-	aideRSA.setOrganisme(Organismes.CAF.getNomCourt());
+	aideRSA.setNom(AideEnum.RSA.getNom());
+	aideRSA.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	aideRSA.setReportee(isAideReportee);
 	return aideRSA;
     }
@@ -100,7 +100,7 @@ public class PrimeActiviteRSAUtile {
 
     private Optional<Aide> getRSASimuleeMoisPrecedent(SimulationAides simulationAides, int numeroMoisSimule) {
 	int moisNMoins1 = numeroMoisSimule - 1;
-	return aideUtile.getAidePourCeMoisSimule(simulationAides, Aides.RSA.getCode(), moisNMoins1);
+	return aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.RSA.getCode(), moisNMoins1);
     }
 
     private boolean isEligiblePourReportRSADeclare(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {

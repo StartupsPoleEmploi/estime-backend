@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
-import fr.poleemploi.estime.commun.enumerations.TypesContratTravail;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
@@ -64,7 +64,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(1);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -99,7 +99,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(1);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -134,7 +134,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(1);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -170,7 +170,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(1);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -205,7 +205,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(2);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -240,7 +240,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(2);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -275,7 +275,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(2);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -304,7 +304,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(2);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -339,7 +339,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(3);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -367,7 +367,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(3);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -395,7 +395,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(3);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -430,7 +430,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(3);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -465,7 +465,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(4);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -500,7 +500,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(4);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -535,7 +535,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(4);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -571,7 +571,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
         demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
         
         FuturTravail futurTravail = new FuturTravail();
-        futurTravail.setTypeContrat(TypesContratTravail.CDD.name());
+        futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
         futurTravail.setNombreMoisContratCDD(4);
         demandeurEmploi.setFuturTravail(futurTravail);
         
