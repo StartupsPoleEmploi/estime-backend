@@ -9,7 +9,7 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
-import fr.poleemploi.estime.commun.utile.AccessTokenUtile;
+import fr.poleemploi.estime.commun.utile.BearerTokenUtile;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
@@ -32,7 +32,7 @@ public class Commun {
     private PoleEmploiIOClient poleEmploiIOClient;
 
     @SpyBean
-    private AccessTokenUtile accessTokenUtile;
+    private BearerTokenUtile accessTokenUtile;
 
     protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
 	boolean isEnCouple = false;

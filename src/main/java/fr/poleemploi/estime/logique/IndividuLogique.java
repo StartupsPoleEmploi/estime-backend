@@ -7,7 +7,7 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationPEIO;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
-import fr.poleemploi.estime.commun.utile.AccessTokenUtile;
+import fr.poleemploi.estime.commun.utile.BearerTokenUtile;
 import fr.poleemploi.estime.commun.utile.DemandeurDemoUtile;
 import fr.poleemploi.estime.commun.utile.IndividuUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
@@ -19,7 +19,7 @@ import fr.poleemploi.estime.services.ressources.Individu;
 public class IndividuLogique {
 
     @Autowired
-    private AccessTokenUtile bearerTokenUtile;
+    private BearerTokenUtile bearerTokenUtile;
 
     @Autowired
     private DemandeurDemoUtile demandeurDemoUtile;

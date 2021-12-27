@@ -3,7 +3,7 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccessTokenUtile {
+public class BearerTokenUtile {
 
     private static final String BEARER = "Bearer ";
     

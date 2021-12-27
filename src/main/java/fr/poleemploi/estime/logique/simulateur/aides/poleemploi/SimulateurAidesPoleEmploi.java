@@ -19,46 +19,46 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 @Component
 public class SimulateurAidesPoleEmploi {
 
-	@Autowired
-	private AgepiUtile agepi;
+    @Autowired
+    private AgepiUtile agepiUtile;
 
-	@Autowired
-	private AideMobiliteUtile aideMobilite;
+    @Autowired
+    private AideMobiliteUtile aideMobilite;
 
-	@Autowired
-	private AreUtile are;
+    @Autowired
+    private AreUtile areUtile;
 
-	@Autowired
-	private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifique;
+    @Autowired
+    private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifique;
 
-	@Autowired
-	private BeneficiaireAidesUtile beneficiaireAidesUtile;
+    @Autowired
+    private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
-	public void simuler(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, LocalDate moisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-		
-	    Optional<Aide> agepiOptional = agepi.simulerAide(demandeurEmploi);
-		if (agepiOptional.isPresent() && isPremierMois(numeroMoisSimule)) {
-			aidesPourCeMois.put(AideEnum.AGEPI.getCode(), agepiOptional.get());
-		}
-		
-		Optional<Aide> aideMobiliteOptional = aideMobilite.simulerAide(demandeurEmploi);
-		if (aideMobiliteOptional.isPresent() && isPremierMois(numeroMoisSimule)) {
-			aidesPourCeMois.put(AideEnum.AIDE_MOBILITE.getCode(), aideMobiliteOptional.get());
-		}
-		
-		if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi) && allocationSolidariteSpecifique.isEligible(numeroMoisSimule, demandeurEmploi)) {
-			Optional<Aide> aideOptional = allocationSolidariteSpecifique.simulerAide(demandeurEmploi, moisSimule, dateDebutSimulation);
-			if (aideOptional.isPresent()) {
-				aidesPourCeMois.put(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());
-			}
-		}
-		
-		if (beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
-	        are.simuler(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
-	    }
-	}
-	
-	private boolean isPremierMois(int numeroMoisSimule) {
-		return numeroMoisSimule==1;
-	}
+    public void simuler(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, LocalDate moisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+
+        if(agepiUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
+            Optional<Aide> agepiOptional = agepiUtile.simulerAide(demandeurEmploi);
+            if (agepiOptional.isPresent()) {
+                aidesPourCeMois.put(AideEnum.AGEPI.getCode(), agepiOptional.get());
+            }
+        }
+
+        if(aideMobilite.isEligible(numeroMoisSimule, demandeurEmploi)) {
+            Optional<Aide> aideMobiliteOptional = aideMobilite.simulerAide(demandeurEmploi);
+            if (aideMobiliteOptional.isPresent()) {
+                aidesPourCeMois.put(AideEnum.AIDE_MOBILITE.getCode(), aideMobiliteOptional.get());
+            }
+        }
+
+        if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi) && allocationSolidariteSpecifique.isEligible(numeroMoisSimule, demandeurEmploi)) {
+            Optional<Aide> aideOptional = allocationSolidariteSpecifique.simulerAide(demandeurEmploi, moisSimule, dateDebutSimulation);
+            if (aideOptional.isPresent()) {
+                aidesPourCeMois.put(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());
+            }
+        }
+
+        if (beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
+            areUtile.simuler(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
+        }
+    }
 }
