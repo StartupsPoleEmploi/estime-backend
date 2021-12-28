@@ -1,4 +1,4 @@
-package testsintegration.services.aideservice;
+package testsintegration.services.controleurs.aideservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
