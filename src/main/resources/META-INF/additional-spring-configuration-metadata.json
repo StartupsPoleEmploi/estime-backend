@@ -30,6 +30,11 @@
     "description": "A description for 'emploi-store-io.are-api-uri'"
   },
   {
+    "name": "poleemploiio-uri",
+    "type": "java.lang.String",
+    "description": "URI racine de poleemploi.io'"
+  },
+  {
     "name": "openfisca-api-uri",
     "type": "java.lang.String",
     "description": "A description for 'open-fisca-api-uri'"

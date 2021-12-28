@@ -17,9 +17,9 @@
 
     <properties>
         <java.version>11</java.version>
+        <log4j2.version>2.16.0</log4j2.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <selma.version>1.0</selma.version>
         <sonar.language>java</sonar.language>
         <sonar.scm.disabled>true</sonar.scm.disabled>
     </properties>
@@ -154,6 +154,18 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+        </dependency>
+
+        <!-- MockWebServer -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <profiles>

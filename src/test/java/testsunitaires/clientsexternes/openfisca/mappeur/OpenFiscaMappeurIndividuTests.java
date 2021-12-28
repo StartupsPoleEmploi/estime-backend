@@ -34,7 +34,7 @@ class OpenFiscaMappeurIndividuTests extends Commun {
     private OpenFiscaMappeurIndividu openFiscaMappeurIndividu;
 
     @Autowired
-    Utile utile;
+    Utile utileTests;
 
     private static final int NUMERA_MOIS_SIMULE_PPA = 5;
 
@@ -47,16 +47,16 @@ class OpenFiscaMappeurIndividuTests extends Commun {
     @Test
     void mapDemandeurTravailleurIndependantPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-        String openFiscaPayloadExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-travailleur-independant.json");
+        String openFiscaPayloadExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-travailleur-independant.json");
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getRessourcesFinancieres().setChiffreAffairesIndependantDernierExercice(12000f);
         demandeurEmploi.getRessourcesFinancieres().setAidesCAF(createAidesCAF());
 
-        LocalDate dateDebutPeriodeSimulee = utile.getDate("01-07-2020");
+        LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");
         JSONObject openFiscaPayload = openFiscaMappeurIndividu.creerDemandeurJSON(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
@@ -65,15 +65,15 @@ class OpenFiscaMappeurIndividuTests extends Commun {
     @Test
     void mapDemandeurRevenusMicroEntreprisePayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
-        String openFiscaPayloadExpected = utile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-micro-entreprise.json");
+        String openFiscaPayloadExpected = utileTests.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-micro-entreprise.json");
 
         boolean isEnCouple = false;
         int nbEnfant = 0;
-        DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
-        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
         demandeurEmploi.getRessourcesFinancieres().setBeneficesMicroEntrepriseDernierExercice(9000f);
 
-        LocalDate dateDebutPeriodeSimulee = utile.getDate("01-07-2020");
+        LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");
         JSONObject openFiscaPayload = openFiscaMappeurIndividu.creerDemandeurJSON(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
         assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);

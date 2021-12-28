@@ -22,7 +22,7 @@ public class IndividuLogique {
     private BearerTokenUtile bearerTokenUtile;
 
     @Autowired
-    private DemandeurDemoUtile demandeurDemoUtile;
+    private DemandeurDemoUtile demandeurDemoUtile;    
 
     @Autowired
     private PoleEmploiIOClient poleEmploiIOClient;
@@ -38,7 +38,6 @@ public class IndividuLogique {
 
     @Autowired
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
-    
 
     public Individu authentifier(String code, String redirectURI, String nonce) {
         Individu individu = new Individu();
@@ -72,4 +71,5 @@ public class IndividuLogique {
 
         return individu;
     }
+
 }

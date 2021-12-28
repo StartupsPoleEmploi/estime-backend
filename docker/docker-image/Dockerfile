@@ -1,5 +1,5 @@
 #https://spring.io/guides/gs/spring-boot-docker/
-FROM adoptopenjdk/openjdk11:alpine
+FROM adoptopenjdk/openjdk11:alpine-jre
 
 RUN apk --no-cache update && \
     apk --no-cache upgrade && \
@@ -14,17 +14,15 @@ RUN apk --no-cache update && \
 RUN addgroup -S java && adduser -S java -G java
 
 #add useful scripts
-COPY ./docker/commun/scripts/startup.sh .
+COPY ./docker/docker-image/scripts/startup.sh .
 RUN chmod +x startup.sh
 
 #add application sources
-ADD ./target/**.jar /app.jar
-RUN jar -xf ../*.jar
-RUN mkdir -p /app
-RUN cp -r BOOT-INF/lib /app
-RUN cp -r META-INF /app
-RUN cp -a BOOT-INF/classes/. /app
-COPY ./docker/local/springboot-config/application.yml /app/
+ARG DEPENDENCY=./target/app
+COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY ${DEPENDENCY}/META-INF /app/META-INF
+COPY ${DEPENDENCY}/BOOT-INF/classes /app
+COPY ./docker/docker-image/springboot-config/application.yml /app/
 
 ## add permissions for java user
 RUN chown java:java startup.sh && \

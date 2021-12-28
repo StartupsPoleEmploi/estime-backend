@@ -1,12 +1,12 @@
 package fr.poleemploi.estime.commun.enumerations;
 
-public enum StatutsMarital {
+public enum StatutMaritalEnum {
     MARIE("marie"),
     CELIBATAIRE("celibataire");
     
     private String libelle;
     
-    StatutsMarital(String libelle) {
+    StatutMaritalEnum(String libelle) {
         this.libelle = libelle;
     }
 

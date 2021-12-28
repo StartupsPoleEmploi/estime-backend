@@ -3,7 +3,7 @@ package fr.poleemploi.estime.logique;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateurEnum;
+import fr.poleemploi.estime.commun.enumerations.ParcourUtilisateurEnum;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
@@ -26,30 +26,31 @@ public class DemandeurEmploiLogique {
     
     @Autowired
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
-
-
+    
     public DemandeurEmploi creerDemandeurEmploi(Individu individu) {
-        
+
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
         demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
         demandeurEmploiUtile.addInformationsPersonnelles(demandeurEmploi, individu);        
         demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
         demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
-        
+
         if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-            suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(),
+            suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(),
                     individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
         }
-        
+
         return demandeurEmploi;
     }
 
     public SimulationAides simulerMesAides(DemandeurEmploi demandeurEmploi) {
         SimulationAides simulationAides = simulateurAides.simuler(demandeurEmploi);
+
         if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-            suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
+            suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
                     demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
         }
+
         return simulationAides;
     }
 

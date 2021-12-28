@@ -30,7 +30,7 @@ class BeneficiaireAidesUtileTests {
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
     
     @Autowired
-    private Utile utile;
+    private Utile utileTests;
     
     @Configuration
     @ComponentScan({"utile.tests","fr.poleemploi.estime"})
@@ -42,7 +42,7 @@ class BeneficiaireAidesUtileTests {
     void isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest1() throws ParseException {
         
         //si DE France Metropolitaine et montant journalier = 29,38€ (= seuil max.)
-        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
 
@@ -57,7 +57,7 @@ class BeneficiaireAidesUtileTests {
     void isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest2() throws ParseException {
         
         //si DE France Metropolitaine et montant journalier = 18,38€ (< seuil max.)
-        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(18.38f);
         
@@ -72,7 +72,7 @@ class BeneficiaireAidesUtileTests {
     void isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest3() throws ParseException {
         
         //si DE Mayotte et montant journalier = 14.68€ (= seuil max.)
-        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_METROPOLITAIN);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);      
         
@@ -87,7 +87,7 @@ class BeneficiaireAidesUtileTests {
     void isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest4() throws ParseException {
         
         //si DE Mayotte et montant journalier = 12.68€ (< seuil max.)
-        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(12.68f);  
         
@@ -102,7 +102,7 @@ class BeneficiaireAidesUtileTests {
     void isNotBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest1() throws ParseException {
         
         //si DE Mayotte et montant journalier = 39,38€ (> seuil max.)
-        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(39.38f);        
         
@@ -117,7 +117,7 @@ class BeneficiaireAidesUtileTests {
     void isNotBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibiliteTest2() throws ParseException {
         
         //si DE Mayotte et montant journalier = 16.68€ (> seuil max.)
-        DemandeurEmploi demandeurEmploi =  utile.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
+        DemandeurEmploi demandeurEmploi =  utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
         demandeurEmploi.getInformationsPersonnelles().setCodePostal(CODE_POSTAL_MAYOTTE);
         demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(16.68f);   
         

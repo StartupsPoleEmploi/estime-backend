@@ -9,7 +9,7 @@ import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
 
 @Component
 public class PeConnectUtile {
-
+    
     @Autowired
     private BearerTokenUtile bearerTokenUtile;
 
