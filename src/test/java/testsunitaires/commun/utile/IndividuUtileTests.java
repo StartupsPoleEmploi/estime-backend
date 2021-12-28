@@ -9,222 +9,221 @@ import fr.poleemploi.estime.commun.utile.IndividuUtile;
 
 class IndividuUtileTests {
 
-    private IndividuUtile individuUtile = new IndividuUtile();
+	private IndividuUtile individuUtile = new IndividuUtile();
 
-    @Test
-    void isPopulationAutoriseeTest1() {
+	@Test
+	void isPopulationAutoriseeTest1() {
 
-	//si l'individu est population AAH
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(true);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(false);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
-	detailIndemnisationESD.setBeneficiaireRSA(false);
-	detailIndemnisationESD.setCodeIndemnisation(null);
+		//si l'individu est population AAH
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(true);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(false);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(true);
+		detailIndemnisationPEIO.setBeneficiaireRSA(false);
+		detailIndemnisationPEIO.setCodeIndemnisation(null);
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu est dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu est dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest2() {
+	@Test
+	void isPopulationAutoriseeTest2() {
 
-	//si l'individu est population ASS
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(false);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
-	detailIndemnisationESD.setBeneficiaireRSA(false);
-	detailIndemnisationESD.setCodeIndemnisation("ASS");
+		//si l'individu est population ASS
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(false);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(true);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(false);
+		detailIndemnisationPEIO.setBeneficiaireRSA(false);
+		detailIndemnisationPEIO.setCodeIndemnisation("ASS");
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu est dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu est dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest3() {
+	@Test
+	void isPopulationAutoriseeTest3() {
 
-	//si l'individu est population RSA
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(false);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(false);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
-	detailIndemnisationESD.setBeneficiaireRSA(true);
-	detailIndemnisationESD.setCodeIndemnisation(null);
+		//si l'individu est population RSA
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(false);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(false);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(true);
+		detailIndemnisationPEIO.setBeneficiaireRSA(true);
+		detailIndemnisationPEIO.setCodeIndemnisation(null);
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu est dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu est dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest4() {
+	@Test
+	void isPopulationAutoriseeTest4() {
 
-	//si l'individu est population AAH et ASS
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(true);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
-	detailIndemnisationESD.setBeneficiaireRSA(false);
-	detailIndemnisationESD.setCodeIndemnisation("ASS");
+		//si l'individu est population AAH et ASS
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(true);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(true);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(false);
+		detailIndemnisationPEIO.setBeneficiaireRSA(false);
+		detailIndemnisationPEIO.setCodeIndemnisation("ASS");
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu est dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu est dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest5() {
+	@Test
+	void isPopulationAutoriseeTest5() {
 
-	//si l'individu est population AAH et RSA
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(true);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(false);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
-	detailIndemnisationESD.setBeneficiaireRSA(true);
-	detailIndemnisationESD.setCodeIndemnisation(null);
+		//si l'individu est population AAH et RSA
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(true);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(false);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(false);
+		detailIndemnisationPEIO.setBeneficiaireRSA(true);
+		detailIndemnisationPEIO.setCodeIndemnisation(null);
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu est dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu est dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest6() {
+	@Test
+	void isPopulationAutoriseeTest6() {
 
-	//si l'individu est population ASS et RSA
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(false);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
-	detailIndemnisationESD.setBeneficiaireRSA(true);
-	detailIndemnisationESD.setCodeIndemnisation("ASS");
+		//si l'individu est population ASS et RSA
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(false);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(true);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(false);
+		detailIndemnisationPEIO.setBeneficiaireRSA(true);
+		detailIndemnisationPEIO.setCodeIndemnisation("ASS");
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu est dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu est dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest7() {
+	@Test
+	void isPopulationAutoriseeTest7() {
 
-	//si l'individu est population ASS, AAH et RSA
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(true);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
-	detailIndemnisationESD.setBeneficiaireRSA(true);
-	detailIndemnisationESD.setCodeIndemnisation("ASS");
+		//si l'individu est population ASS, AAH et RSA
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(true);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(true);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(false);
+		detailIndemnisationPEIO.setBeneficiaireRSA(true);
+		detailIndemnisationPEIO.setCodeIndemnisation("ASS");
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu est dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu est dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest8() {
+	@Test
+	void isPopulationAutoriseeTest8() {
 
-	//si l'individu est population ARE
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(false);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
-	detailIndemnisationESD.setBeneficiaireRSA(false);
-	detailIndemnisationESD.setCodeIndemnisation("ARE");
+		//si l'individu est population ARE
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(false);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(true);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(false);
+		detailIndemnisationPEIO.setBeneficiaireRSA(false);
+		detailIndemnisationPEIO.setCodeIndemnisation("ARE");
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu n'est pas dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu n'est pas dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest9() {
+	@Test
+	void isPopulationAutoriseeTest9() {
 
-	//si l'individu est population ARE + AAH
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(true);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
-	detailIndemnisationESD.setBeneficiaireRSA(false);
-	detailIndemnisationESD.setCodeIndemnisation("ARE");
+		//si l'individu est population ARE + AAH
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(true);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(true);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(true);
+		detailIndemnisationPEIO.setBeneficiaireRSA(false);
+		detailIndemnisationPEIO.setCodeIndemnisation("ARE");
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu n'est pas dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu n'est pas dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest10() {
+	@Test
+	void isPopulationAutoriseeTest10() {
 
-	//si l'individu est population ARE + RSA
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(false);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
-	detailIndemnisationESD.setBeneficiaireRSA(true);
-	detailIndemnisationESD.setCodeIndemnisation("ARE");
+		//si l'individu est population ARE + RSA
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(false);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(true);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(true);
+		detailIndemnisationPEIO.setBeneficiaireRSA(true);
+		detailIndemnisationPEIO.setCodeIndemnisation("ARE");
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu n'est pas dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu n'est pas dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest11() {
+	@Test
+	void isPopulationAutoriseeTest11() {
 
-	//si l'individu est population ARE + RSA + AAH
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(true);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(true);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(true);
-	detailIndemnisationESD.setBeneficiaireRSA(true);
-	detailIndemnisationESD.setCodeIndemnisation("ARE");
+		//si l'individu est population ARE + RSA + AAH
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(true);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(true);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(true);
+		detailIndemnisationPEIO.setBeneficiaireRSA(true);
+		detailIndemnisationPEIO.setCodeIndemnisation("ARE");
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu n'est pas dans la population autorisée
-	assertThat(isPopulationAutorisee).isTrue();
-    }
+		//Alors l'individu n'est pas dans la population autorisée
+		assertThat(isPopulationAutorisee).isTrue();
+	}
 
-    @Test
-    void isPopulationAutoriseeTest12() {
+	@Test
+	void isPopulationAutoriseeTest12() {
 
-	//si l'individu est population candidat
-	DetailIndemnisationPEIO detailIndemnisationESD = new DetailIndemnisationPEIO();
-	detailIndemnisationESD.setBeneficiaireAAH(false);
-	detailIndemnisationESD.setBeneficiaireAssuranceChomage(false);
-	detailIndemnisationESD.setBeneficiaireAideSolidarite(false);
-	detailIndemnisationESD.setBeneficiaireRSA(false);
-	detailIndemnisationESD.setCodeIndemnisation(null);
+		//si l'individu est population candidat
+		DetailIndemnisationPEIO detailIndemnisationPEIO = new DetailIndemnisationPEIO();
+		detailIndemnisationPEIO.setBeneficiaireAAH(false);
+		detailIndemnisationPEIO.setBeneficiaireAssuranceChomage(false);
+		detailIndemnisationPEIO.setBeneficiaireAideSolidarite(false);
+		detailIndemnisationPEIO.setBeneficiaireRSA(false);
+		detailIndemnisationPEIO.setCodeIndemnisation(null);
 
-	//Lorsque l'on appele la méthode isPopulationAutorisee
-	boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationESD);
+		//Lorsque l'on appele la méthode isPopulationAutorisee
+		boolean isPopulationAutorisee = individuUtile.isPopulationAutorisee(detailIndemnisationPEIO);
 
-	//Alors l'individu n'est pas dans la population autorisée
-	assertThat(isPopulationAutorisee).isFalse();
-    }
-
+		//Alors l'individu n'est pas dans la population autorisée
+		assertThat(isPopulationAutorisee).isFalse();
+	}
 }

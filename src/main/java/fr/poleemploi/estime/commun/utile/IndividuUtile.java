@@ -10,10 +10,7 @@ import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
-import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
-import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
-import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
 public class IndividuUtile {
@@ -40,13 +37,12 @@ public class IndividuUtile {
 		individu.setBeneficiaireAides(beneficiaireAides);
 	}
 
-	private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisation) {
+	private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO) {
 		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-		if (detailIndemnisation.getCodeIndemnisation() != null) {
-			ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisation));
+		if (detailIndemnisationPEIO.getCodeIndemnisation() != null) {
+			ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisationPEIO));
 		}
 		individu.setRessourcesFinancieres(ressourcesFinancieres);
-
 	}
 
 	private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIO detailIndemnisationPEIO) {
@@ -70,40 +66,5 @@ public class IndividuUtile {
 
 	private boolean isBeneficiaireASS(DetailIndemnisationPEIO detailIndemnisationPEIO) {
 		return detailIndemnisationPEIO.getCodeIndemnisation() != null && TypePopulationEnum.ASS.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation());
-	}
-
-	public InformationsPersonnelles creerInformationsPersonnelles() {
-		InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-		Logement logement = creerLogement();
-		StatutOccupationLogement statutOccupationLogement = creerStatutOccupationLogement();
-		logement.setStatutOccupationLogement(statutOccupationLogement);
-		informationsPersonnelles.setLogement(logement);
-
-		return informationsPersonnelles;
-	}
-
-	public Logement creerLogement() {
-		Logement logement = new Logement();
-		logement.setChambre(false);
-		logement.setCodeInsee(null);
-		logement.setConventionne(false);
-		logement.setColloc(false);
-		logement.setCrous(false);
-		logement.setDeMayotte(false);
-		logement.setMontantCharges(0);
-		logement.setMontantLoyer(0);
-		logement.setStatutOccupationLogement(null);
-		return logement;
-	}
-
-	public StatutOccupationLogement creerStatutOccupationLogement() {
-		StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-		statutOccupationLogement.setLocataireHLM(false);
-		statutOccupationLogement.setLocataireMeuble(false);
-		statutOccupationLogement.setLocataireNonMeuble(false);
-		statutOccupationLogement.setLogeGratuitement(false);
-		statutOccupationLogement.setProprietaire(false);
-		statutOccupationLogement.setProprietaireAvecEmprunt(false);
-		return statutOccupationLogement;
 	}
 }
