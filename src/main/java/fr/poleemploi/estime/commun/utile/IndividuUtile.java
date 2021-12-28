@@ -18,43 +18,43 @@ public class IndividuUtile {
     /**
      * Population autorisée ASS, RSA ou AAH, et pouvant cumuler ces 3 prestations.
      */
-    public boolean isPopulationAutorisee(DetailIndemnisationPEIO detailIndemnisationESD) {
-        return !isBeneficiaireARE(detailIndemnisationESD)
-                && (isBeneficiaireASS(detailIndemnisationESD) || detailIndemnisationESD.isBeneficiaireAAH() || detailIndemnisationESD.isBeneficiaireRSA());
+    public boolean isPopulationAutorisee(DetailIndemnisationPEIO detailIndemnisationPEIO) {
+        return !isBeneficiaireARE(detailIndemnisationPEIO)
+                && (isBeneficiaireASS(detailIndemnisationPEIO) || detailIndemnisationPEIO.isBeneficiaireAAH() || detailIndemnisationPEIO.isBeneficiaireRSA());
     }
 
-    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisationESD) {
-        addInformationsBeneficiaireAides(individu, detailIndemnisationESD);
-        addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationESD);
+    public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO) {
+        addInformationsBeneficiaireAides(individu, detailIndemnisationPEIO);
+        addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationPEIO);
     }
 
-    private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationPEIO detailIndemnisation) {
+    private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO) {
         BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
-        beneficiaireAides.setBeneficiaireAAH(detailIndemnisation.isBeneficiaireAAH());
-        beneficiaireAides.setBeneficiaireARE(isBeneficiaireARE(detailIndemnisation));
-        beneficiaireAides.setBeneficiaireASS(isBeneficiaireASS(detailIndemnisation));
-        beneficiaireAides.setBeneficiaireRSA(detailIndemnisation.isBeneficiaireRSA());
+        beneficiaireAides.setBeneficiaireAAH(detailIndemnisationPEIO.isBeneficiaireAAH());
+        beneficiaireAides.setBeneficiaireARE(isBeneficiaireARE(detailIndemnisationPEIO));
+        beneficiaireAides.setBeneficiaireASS(isBeneficiaireASS(detailIndemnisationPEIO));
+        beneficiaireAides.setBeneficiaireRSA(detailIndemnisationPEIO.isBeneficiaireRSA());
         individu.setBeneficiaireAides(beneficiaireAides);
     }
 
-    private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisation) {
+    private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO) {
         RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        if (detailIndemnisation.getCodeIndemnisation() != null) {
-            ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisation));
+        if (detailIndemnisationPEIO.getCodeIndemnisation() != null) {
+            ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisationPEIO));
         }
         individu.setRessourcesFinancieres(ressourcesFinancieres);
     }
 
-    private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIO detailIndemnisation) {
+    private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIO detailIndemnisationPEIO) {
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-        if (AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
+        if (AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisationPEIO.getCodeIndemnisation())) {
             AllocationASS allocationASS = new AllocationASS();
-            allocationASS.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());
+            allocationASS.setAllocationJournaliereNet(detailIndemnisationPEIO.getIndemnisationJournalierNet());
             aidesPoleEmploi.setAllocationASS(allocationASS);
         }
-        if (AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode().equals(detailIndemnisation.getCodeIndemnisation())) {
+        if (AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode().equals(detailIndemnisationPEIO.getCodeIndemnisation())) {
             AllocationARE allocationARE = new AllocationARE();
-            allocationARE.setAllocationJournaliereNet(detailIndemnisation.getIndemnisationJournalierNet());
+            allocationARE.setAllocationJournaliereNet(detailIndemnisationPEIO.getIndemnisationJournalierNet());
             aidesPoleEmploi.setAllocationARE(allocationARE);
         }
         return aidesPoleEmploi;

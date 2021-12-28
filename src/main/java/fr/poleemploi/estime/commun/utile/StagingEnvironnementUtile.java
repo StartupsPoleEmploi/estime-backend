@@ -24,47 +24,34 @@ public class StagingEnvironnementUtile {
 
     @Value("${spring.profiles.active}")
     private String environment;
-
+    
+    public void bouchonnerCodeDepartementEtDateNaissance(InformationsPersonnelles informationsPersonnelles) {
+        informationsPersonnelles.setCodePostal("44000");
+        informationsPersonnelles.setDateNaissance(LocalDate.of(1985, 8, 1));
+    }
+    
     public void gererAccesAvecBouchon(Individu individu) {
         individu.setIdPoleEmploi("bouchon");
         individu.setPopulationAutorisee(true);
         addInfosIndemnisation(individu, TypePopulationEnum.ARE.getLibelle());
     }
-
-    public void gererAccesAvecBouchon(Individu individu, UserInfoPEIO userInfo) {
-        individu.setIdPoleEmploi(userInfo.getSub());
+    
+    public void gererAccesAvecBouchon(Individu individu, UserInfoPEIO userInfoPEIO) {
+        individu.setIdPoleEmploi(userInfoPEIO.getSub());
         individu.setPopulationAutorisee(true);
-        addInfosIndemnisation(individu, getPopulationDeFictif(userInfo));
+        addInfosIndemnisation(individu, getPopulationDeFictif(userInfoPEIO));
     }
-
-    public boolean isUtilisateurFictif(UserInfoPEIO userInfo) {
-        return isCandidatCaro(userInfo) || isDeFictifPoleemploiio(userInfo);
-    }
-
-    private boolean isDeFictifPoleemploiio(UserInfoPEIO userInfo) {
-        return userInfo != null && userInfo.getEmail() != null && userInfo.getEmail().equalsIgnoreCase("emploistoredev@gmail.com");
-    }
-
-    /**
-     * Les candidats "Caro" sont les candidats que l'on a créés en production 
-     * afin de pouvoir tester l'application en étant connecté au api poleemploi.io de production.
-     * 
-     * Si on identifie un candidat "Caro", on bouchonne ses données d'indemnisation en fonction de son suffixe (ASS,AAH, RSA) afin de le laisser 
-     * accéder à l'application.
-     * @return
-     */
-    public boolean isCandidatCaro(UserInfoPEIO userInfo) {
-        String givenName = userInfo.getGivenName();
-        return givenName != null && (givenName.equalsIgnoreCase("caroass") || givenName.equalsIgnoreCase("julietteaah") || givenName.equalsIgnoreCase("carorsa"));
-    }
-
-    public boolean isStagingEnvironnement() {
-        return environment.equals(EnvironnementEnum.LOCALHOST.getLibelle())
-                || environment.equals(EnvironnementEnum.RECETTE.getLibelle());
-    }
-
+    
     public boolean isNotLocalhostEnvironnement() {
         return !environment.equals(EnvironnementEnum.LOCALHOST.getLibelle()) && !environment.equals(EnvironnementEnum.TESTS_INTEGRATION.getLibelle());
+    }    
+
+    public boolean isStagingEnvironnement() {
+        return environment.equals(EnvironnementEnum.LOCALHOST.getLibelle()) || environment.equals(EnvironnementEnum.RECETTE.getLibelle());
+    }
+    
+    public boolean isUtilisateurFictif(UserInfoPEIO userInfo) {
+        return isCandidatCaro(userInfo) || isDeFictifPoleemploiio(userInfo);
     }
 
     private void addInfosIndemnisation(Individu individu, String population) {
@@ -121,11 +108,11 @@ public class StagingEnvironnementUtile {
 
     private void creerBouchonAllocationCAF(RessourcesFinancieres ressourcesFinancieres) {
         AidesCAF aidesCAF = new AidesCAF();
-        aidesCAF.setAidesLogement(creerBouchonAidesLogement());
+        aidesCAF.setAidesLogement(creerBouconAidesLogement());
         ressourcesFinancieres.setAidesCAF(aidesCAF);
     }
 
-    private AidesLogement creerBouchonAidesLogement() {
+    private AidesLogement creerBouconAidesLogement() {
         AidesLogement aidesLogement = new AidesLogement();
         aidesLogement.setAidePersonnaliseeLogement(creerBouchonAllocationsLogement());
         aidesLogement.setAllocationLogementFamiliale(creerBouchonAllocationsLogement());
@@ -146,7 +133,7 @@ public class StagingEnvironnementUtile {
         aidesCPAM.setAllocationSupplementaireInvalidite(0f);
         ressourcesFinancieres.setAidesCPAM(aidesCPAM);
     }
-
+    
     private String getPopulationDeFictif(UserInfoPEIO userInfo) {
         if (isCandidatCaro(userInfo)) {
             return userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
@@ -154,9 +141,21 @@ public class StagingEnvironnementUtile {
             return TypePopulationEnum.ARE.getLibelle();
         }
     }
+    
+    /**
+     * Les candidats "Caro" sont les candidats que l'on a créés en production 
+     * afin de pouvoir tester l'application en étant connecté au api poleemploi.io de production.
+     * 
+     * Si on identifie un candidat "Caro", on bouchonne ses données d'indemnisation en fonction de son suffixe (ASS,AAH, RSA) afin de le laisser 
+     * accéder à l'application.
+     * @return
+     */
+    private boolean isCandidatCaro(UserInfoPEIO userInfo) {
+        String givenName = userInfo.getGivenName();
+        return givenName != null && (givenName.equalsIgnoreCase("caroass") || givenName.equalsIgnoreCase("julietteaah") || givenName.equalsIgnoreCase("carorsa"));
+    }
 
-    public void bouchonnerCodeDepartementEtDateNaissance(InformationsPersonnelles informationsPersonnelles) {
-        informationsPersonnelles.setCodePostal("44000");
-        informationsPersonnelles.setDateNaissance(LocalDate.of(1985, 8, 1));
+    private boolean isDeFictifPoleemploiio(UserInfoPEIO userInfo) {
+        return userInfo != null && userInfo.getEmail() != null && userInfo.getEmail().equalsIgnoreCase("emploistoredev@gmail.com");
     }
 }

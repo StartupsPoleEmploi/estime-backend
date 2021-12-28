@@ -22,10 +22,10 @@ public class SimulateurAidesPoleEmploi {
     private AgepiUtile agepiUtile;
     
     @Autowired
-    private AideMobiliteUtile aideMobilite;
+    private AideMobiliteUtile aideMobiliteUtile;
     
     @Autowired
-    private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifique;
+    private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifiqueUtile;
     
     @Autowired
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
@@ -39,16 +39,16 @@ public class SimulateurAidesPoleEmploi {
             }
         }
         
-        if(aideMobilite.isEligible(numeroMoisSimule, demandeurEmploi)) {
-            Optional<Aide> aideMobiliteOptional = aideMobilite.simulerAide(demandeurEmploi);
+        if(aideMobiliteUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
+            Optional<Aide> aideMobiliteOptional = aideMobiliteUtile.simulerAide(demandeurEmploi);
             if (aideMobiliteOptional.isPresent()) {
                 aidesPourCeMois.put(AideEnum.AIDE_MOBILITE.getCode(), aideMobiliteOptional.get());
             }
         }
         
         if(beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)
-           && allocationSolidariteSpecifique.isEligible(numeroMoisSimule, demandeurEmploi)) {            
-            Optional<Aide> aideOptional = allocationSolidariteSpecifique.simulerAide(demandeurEmploi, moisSimule, dateDebutSimulation);
+           && allocationSolidariteSpecifiqueUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {            
+            Optional<Aide> aideOptional = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, moisSimule, dateDebutSimulation);
             if(aideOptional.isPresent()) {
                 aidesPourCeMois.put(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());                
             }
