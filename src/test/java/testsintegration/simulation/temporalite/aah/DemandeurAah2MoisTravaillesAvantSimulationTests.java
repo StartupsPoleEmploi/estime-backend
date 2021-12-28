@@ -79,7 +79,7 @@ class DemandeurAah2MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
-		assertThat(aideMobilite.getMontant()).isEqualTo(504);
+		assertThat(aideMobilite.getMontant()).isEqualTo(450);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);
@@ -235,7 +235,7 @@ class DemandeurAah2MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
-		assertThat(aideMobilite.getMontant()).isEqualTo(504);
+		assertThat(aideMobilite.getMontant()).isEqualTo(450);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);
@@ -391,7 +391,7 @@ class DemandeurAah2MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
-		assertThat(aideMobilite.getMontant()).isEqualTo(504);
+		assertThat(aideMobilite.getMontant()).isEqualTo(450);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);
@@ -547,7 +547,7 @@ class DemandeurAah2MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
-		assertThat(aideMobilite.getMontant()).isEqualTo(504);
+		assertThat(aideMobilite.getMontant()).isEqualTo(450);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);

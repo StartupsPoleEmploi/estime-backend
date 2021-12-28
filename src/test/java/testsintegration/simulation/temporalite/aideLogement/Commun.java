@@ -44,7 +44,7 @@ public class Commun {
         doReturn(utileTests.getDate(dateSimulation)).when(dateUtile).getDateJour();
 
         // mock retour appel détail indemnisation de l'ESD
-        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulationEnum.RSA.getLibelle());
+        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.RSA.getLibelle());
         doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
     }
 

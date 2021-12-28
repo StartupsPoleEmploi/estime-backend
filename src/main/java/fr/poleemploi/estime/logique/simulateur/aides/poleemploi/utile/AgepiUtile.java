@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.agepi.AgepiPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
@@ -29,6 +28,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 @Component
 public class AgepiUtile {
 
+    //TODO REFACTO JLA à tous les attributs à supprimer ?
     public static final int AGE_MAX_ENFANT = 10;
     public static final int NBR_ENFANT_PALIER_INTERMEDIAIRE = 2;
     public static final int NBR_ENFANT_PALIER_MAX = 3;
@@ -71,13 +71,9 @@ public class AgepiUtile {
     }
 
     public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi) {
-        Optional<AgepiPEIOOut> optionalAgepiOut = poleEmploiIOClient.getAgepiSimulateurAides(demandeurEmploi);
-        if (optionalAgepiOut.isPresent()) {
-            AgepiPEIOOut agepiOut = optionalAgepiOut.get();
-            if (agepiOut.getDecisionAgepiAPI().getNature().equals("Demande attribuée")) {
-                float montantAide = agepiOut.getDecisionAgepiAPI().getMontant();
-                return Optional.of(creerAide(montantAide));
-            } 
+        float montantAgepiSimule = poleEmploiIOClient.getMontantAgepiSimulateurAides(demandeurEmploi);
+        if (montantAgepiSimule > 0) {
+            return Optional.of(creerAide(montantAgepiSimule));
         } 
         return Optional.empty();
     }

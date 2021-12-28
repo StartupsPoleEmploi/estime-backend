@@ -119,12 +119,17 @@ public class PoleEmploiIOClient {
     }
     
     @Retryable(value = { TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
-    public Optional<AgepiPEIOOut> getAgepiSimulateurAides(DemandeurEmploi demandeurEmploi) {
+    public float getMontantAgepiSimulateurAides(DemandeurEmploi demandeurEmploi) {
         String apiSimulateurAidesAgepiURI = poleemploiioURI + "peconnect-simulateurs-aides/v1/demande-agepi/simuler";
         try {
             //TODO JLA implémenter accessTokenValid
             HttpEntity<String> httpEntity = simulateurAidesAgepiUtile.createHttpEntityAgepiSimulateurAides(demandeurEmploi);
-            return Optional.of(restTemplate.postForEntity(apiSimulateurAidesAgepiURI, httpEntity, AgepiPEIOOut.class).getBody());
+            AgepiPEIOOut agepiPEIOOut = restTemplate.postForEntity(apiSimulateurAidesAgepiURI, httpEntity, AgepiPEIOOut.class).getBody();
+            if(agepiPEIOOut != null && agepiPEIOOut.getDecisionAgepiAPI() != null) {
+                return agepiPEIOOut.getDecisionAgepiAPI().getMontant();
+            } else {
+                return 0;
+            }
         } catch (Exception exception) {
             if(isTooManyRequestsHttpClientError(exception)) {
                 throw new TooManyRequestException(exception.getMessage());
@@ -136,17 +141,21 @@ public class PoleEmploiIOClient {
     }
 
     @Retryable(value = { TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
-    public Optional<AideMobilitePEIOOut> getAideMobiliteSimulateurAides(DemandeurEmploi demandeurEmploi) {
+    public float getMontantAideMobiliteSimulateurAides(DemandeurEmploi demandeurEmploi) {
         String apiSimulateurAidesAideMobiliteURI = poleemploiioURI + "peconnect-simulateurs-aides/v1/demande-aidemobilite/simuler";
         try {
             //TODO JLA implémenter accessTokenValid
             HttpEntity<String> httpEntity = simulateurAidesAideMobiliteUtile.createHttpEntityAgepiSimulateurAides(demandeurEmploi);
-            return Optional.of(restTemplate.postForEntity(apiSimulateurAidesAideMobiliteURI, httpEntity, AideMobilitePEIOOut.class).getBody());
-        } catch (Exception e) {
-            String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), apiSimulateurAidesAideMobiliteURI);
-            LOGGER.error(messageError);
+            AideMobilitePEIOOut aideMobilitePEIOOut = restTemplate.postForEntity(apiSimulateurAidesAideMobiliteURI, httpEntity, AideMobilitePEIOOut.class).getBody();
+            if(aideMobilitePEIOOut != null && aideMobilitePEIOOut.getDecisionAideMobiliteAPI() != null) {
+                return aideMobilitePEIOOut.getDecisionAideMobiliteAPI().getMontant();
+            } else {
+                return 0;
+            }
+        } catch (Exception exception) {
+            LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), apiSimulateurAidesAideMobiliteURI));
+            throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
         }
-        return Optional.empty();
     }
 
     @Retryable(value = { TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))

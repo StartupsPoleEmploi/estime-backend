@@ -23,7 +23,7 @@ import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
 
 public class Commun {
-    
+
     @Autowired
     protected Utile utileTests;
 
@@ -32,15 +32,15 @@ public class Commun {
 
     @SpyBean
     protected DateUtile dateUtile;    
-    
-    
+
+
     protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
         //mock création date de demande de simulation
         doReturn(utileTests.getDate(dateSimulation)).when(dateUtile).getDateJour();
 
         //mock retour appel détail indemnisation de l'ESD 
-        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationESD(TypePopulationEnum.RSA.getLibelle());        
-        doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class)); 
+        DetailIndemnisationPEIO detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.RSA.getLibelle());        
+        doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
     }
 
     protected Logement initLogement() {
