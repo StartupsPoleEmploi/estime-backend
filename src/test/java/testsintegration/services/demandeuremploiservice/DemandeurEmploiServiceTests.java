@@ -1,4 +1,4 @@
-package testsintegration.services.individuservice;
+package testsintegration.services.demandeuremploiservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +26,7 @@ import fr.poleemploi.estime.services.exceptions.BadRequestException;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class IndividuServiceTests extends CommunTests {
+class DemandeurEmploiServiceTests extends CommunTests {
 
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;

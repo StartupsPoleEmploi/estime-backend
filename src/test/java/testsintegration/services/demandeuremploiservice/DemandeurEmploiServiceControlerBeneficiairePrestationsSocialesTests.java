@@ -1,4 +1,4 @@
-package testsintegration.services.individuservice;
+package testsintegration.services.demandeuremploiservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
