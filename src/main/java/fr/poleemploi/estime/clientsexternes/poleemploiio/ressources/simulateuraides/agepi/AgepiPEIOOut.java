@@ -23,6 +23,7 @@ public class AgepiPEIOOut {
 	private int droitAREMinimal;
 	private String libelleDroit;
 	private ConditionAGEPIAPI conditionsAGEPIAPI;
+	//TODO REFACTO JLA nécessaire ??
 	@JsonProperty("decisionAGEPIAPI")
 	private DecisionAGEPIAPI decisionAGEPIAPI;
 	

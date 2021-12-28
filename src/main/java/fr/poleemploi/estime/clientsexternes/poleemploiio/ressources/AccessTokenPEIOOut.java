@@ -2,7 +2,7 @@ package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PeConnectAuthorizationPEIO {
+public class AccessTokenPEIOOut {
     
     @JsonProperty("access_token")
     private String accessToken;

@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
+package fr.poleemploi.estime.clientsexternes.poleemploiio.utile;
 
 public class ParametresPEIO {
 
