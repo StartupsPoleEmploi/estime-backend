@@ -20,16 +20,17 @@ public class SimulateurAidesAgepiUtile {
     @Autowired
     private DateUtile dateUtile;
 
-    private static final String CONTEXTE_REPRISE_EMPLOI = "Reprise";
+    private static final String CONTEXTE_REPRISE_EMPLOI = "reprise";
 
-    public HttpEntity<String> createHttpEntityAgepiSimulateurAides(DemandeurEmploi demandeurEmploi) {
+    public HttpEntity<AgepiPEIOIn> createHttpEntityAgepiSimulateurAides(DemandeurEmploi demandeurEmploi) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization", demandeurEmploi.getPeConnectAuthorization().getBearerToken());
-        return new HttpEntity<String>(createAgepiPEIOIn(demandeurEmploi), headers);
+        AgepiPEIOIn agepiPEIOIn = createAgepiPEIOIn(demandeurEmploi);
+        return new HttpEntity<AgepiPEIOIn>(agepiPEIOIn, headers);
     }
 
-    public String createAgepiPEIOIn(DemandeurEmploi demandeurEmploi) {
+    private AgepiPEIOIn createAgepiPEIOIn(DemandeurEmploi demandeurEmploi) {
         AgepiPEIOIn agepiPEIOIn = new AgepiPEIOIn();
         agepiPEIOIn.setCodeTerritoire("001");
         agepiPEIOIn.setContexte(CONTEXTE_REPRISE_EMPLOI);
@@ -58,7 +59,7 @@ public class SimulateurAidesAgepiUtile {
         agepiPEIOIn.setNombreEnfants(nombreEnfants);
         agepiPEIOIn.setNombreEnfantsMoins10Ans(nombreEnfantsMoinsDixAns);
         agepiPEIOIn.setOrigine("c");
-        agepiPEIOIn.setTypeIntensite("Mensuelle");
-        return agepiPEIOIn.toString();
+        agepiPEIOIn.setTypeIntensite("mensuelle");
+        return agepiPEIOIn;
     }
 }

@@ -17,14 +17,14 @@ public class SimulateurAidesAideMobiliteUtile {
     
     private static final int NOMBRE_MAX_JOURS_INDEMNISES = 20;
     
-    public HttpEntity<String> createHttpEntityAgepiSimulateurAides(DemandeurEmploi demandeurEmploi) {
+    public HttpEntity<AideMobilitePEIOIn> createHttpEntityAgepiSimulateurAides(DemandeurEmploi demandeurEmploi) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization", demandeurEmploi.getPeConnectAuthorization().getBearerToken());    
-        return new HttpEntity<String>(createAideMobilitePEIOIn(demandeurEmploi), headers);
+        return new HttpEntity<AideMobilitePEIOIn>(createAideMobilitePEIOIn(demandeurEmploi), headers);
     }
     
-    private String createAideMobilitePEIOIn(DemandeurEmploi demandeurEmploi) {
+    private AideMobilitePEIOIn createAideMobilitePEIOIn(DemandeurEmploi demandeurEmploi) {
         AideMobilitePEIOIn aideMobilitePEIOIn = new AideMobilitePEIOIn();
         aideMobilitePEIOIn.setContexte("Reprise");
         aideMobilitePEIOIn.setDateActionReclassement(LocalDate.now().with(TemporalAdjusters.firstDayOfNextMonth()).toString());
@@ -38,7 +38,7 @@ public class SimulateurAidesAideMobiliteUtile {
         aideMobilitePEIOIn.setNombreNuitees(getNombreNuitees(demandeurEmploi));
         aideMobilitePEIOIn.setContexte("Reprise");
         aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
-        return aideMobilitePEIOIn.toString();
+        return aideMobilitePEIOIn;
     }
 
     //TODO JLA ??
