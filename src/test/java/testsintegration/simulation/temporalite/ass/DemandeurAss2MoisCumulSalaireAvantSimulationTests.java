@@ -57,7 +57,7 @@ class DemandeurAss2MoisCumulSalaireAvantSimulationTests extends Commun {
 	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
-	// AGEPI : 400€, Aide mobilité : 258€, ASS : 506€
+	// AGEPI : 400€, Aide mobilité : 450€, ASS : 506€
 	SimulationMensuelle simulationMois1 = simulationAides.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {

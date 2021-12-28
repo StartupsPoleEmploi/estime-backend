@@ -1,12 +1,10 @@
 package testsintegration.simulation.temporalite.aah;
 
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.util.Optional;
 
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,95 +17,64 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
-import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateurEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AideMobiliteUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
-import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.Utile;
 
 public class Commun {
 
-	@Autowired
-	protected Utile utile;
+    @Autowired
+    protected Utile utileTests;
 
-	@SpyBean
-	protected DateUtile dateUtile;
+    @SpyBean
+    protected DateUtile dateUtile;
 
-	@SpyBean
-	private SuiviUtilisateurUtile suiviUtilisateurUtile;
+    @SpyBean
+    private PoleEmploiIOClient poleEmploiIOClient;
 
-	@SpyBean
-	private PoleEmploiIOClient poleEmploiIOClient;
-	
-	@SpyBean
-	private AgepiUtile agepiUtile;
-	
-	@SpyBean
-	private AideMobiliteUtile aideMobUtile;
+    protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
 
-	@SpyBean
-	private AreUtile areUtile;
+        boolean isEnCouple = false;
+        int nbEnfant = 1;
+        DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.AAH.getLibelle(), isEnCouple, nbEnfant);
 
-	protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
+        demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+        demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
+        demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 
-		boolean isEnCouple = false;
-		int nbEnfant = 1;
-		DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.AAH.getLibelle(), isEnCouple, nbEnfant);
+        demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
 
-		demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
-		demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
-		demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
+        demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
+        demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+        demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
+        demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+        demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
+        demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
-		demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
+        AidesFamiliales aidesFamiliales = new AidesFamiliales();
+        aidesFamiliales.setAllocationsFamiliales(0);
+        aidesFamiliales.setAllocationSoutienFamilial(117);
+        aidesFamiliales.setComplementFamilial(0);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
+        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
 
-		demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
-		demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-		demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-		demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
-		demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
-		demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+        return demandeurEmploi;
+    }
 
-		AidesFamiliales aidesFamiliales = new AidesFamiliales();
-		aidesFamiliales.setAllocationsFamiliales(0);
-		aidesFamiliales.setAllocationSoutienFamilial(117);
-		aidesFamiliales.setComplementFamilial(0);
-		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
-		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+    protected void initMocks(DemandeurEmploi demandeurEmploi)
+            throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+        
+        doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
 
-		return demandeurEmploi;
-	}
-
-	protected void initMocks(DemandeurEmploi demandeurEmploi, boolean decisionAgepi, boolean decisionAideMobilite, boolean decisionAre)
-			throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-		//mock tracer parcours utilisateur 
-		doNothing().when(suiviUtilisateurUtile).tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(),
-				ParcoursUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
-
-		//mock création date de demande de simulation
-		doReturn(utile.getDate("20-10-2020")).when(dateUtile).getDateJour();
-
-		//mock retour appel détail indemnisation de l'ESD 
-		DetailIndemnisationPEIO detailIndemnisationPEIO = utile.creerDetailIndemnisationPEIO(TypePopulationEnum.AAH.getLibelle());
-		doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
-	
-		//mock retour appel api agepi
-		if(decisionAgepi) {
-			Optional<Aide> aideAgepi = Optional.of(utile.creerAidePourMock("AGEPI"));
-			doReturn(aideAgepi).when(agepiUtile).simulerAide(Mockito.any(DemandeurEmploi.class));		
-		}
-
-		//mock retour appel api aide mobilite
-		if(decisionAideMobilite) {
-			Optional<Aide> aideMobilite = Optional.of(utile.creerAidePourMock("AM"));
-			doReturn(aideMobilite).when(aideMobUtile).simulerAide(Mockito.any(DemandeurEmploi.class));
-		}
-	}
+        DetailIndemnisationPEIO detailIndemnisationPEIO = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.AAH.getLibelle());
+        doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
+       
+        doReturn(400f).when(poleEmploiIOClient).getMontantAgepiSimulateurAides(Mockito.any(DemandeurEmploi.class));   
+        
+        doReturn(450f).when(poleEmploiIOClient).getMontantAideMobiliteSimulateurAides(Mockito.any(DemandeurEmploi.class));
+    }
 }

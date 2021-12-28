@@ -1,4 +1,4 @@
-package testsintegration.services.individuservice;
+package testsintegration.services.controleurs.demandeuremploiservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,12 +22,14 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class IndividuServiceTests extends CommunTests {
-
+class BeneficiaireAidesControleurTests extends CommunTests {
+    
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;
     
@@ -38,9 +40,16 @@ class IndividuServiceTests extends CommunTests {
     }
     
     @Test
-    void controlerDonneeesEntreeTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+    void controlerDonneeesEntreeBeneficiaireAidesTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+        
+        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+        demandeurEmploi.setBeneficiaireAides(null);
+        demandeurEmploi.setFuturTravail(creerFuturTravail());
+        demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
+        demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
+               
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            demandeurEmploiService.simulerAides(null);
-        }).getMessage()).isEqualTo(BadRequestMessages.DEMANDEUR_EMPLOI_OBLIGATOIRE.getMessage());
-    }
+            demandeurEmploiService.simulerAides(demandeurEmploi);
+        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "beneficiaireAides"));
+    }    
 }
