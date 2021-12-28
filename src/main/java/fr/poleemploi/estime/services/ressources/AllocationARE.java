@@ -65,36 +65,4 @@ public class AllocationARE {
                 + ", salaireJournalierReferenceBrut=" + salaireJournalierReferenceBrut + ", nombreJoursRestants="
                 + nombreJoursRestants + ", isConcerneDegressivite=" + isConcerneDegressivite + "]";
     }
-
-	public Float getMontantJournalierBrut() {
-		return montantJournalierBrut;
-	}
-
-	public void setMontantJournalierBrut(Float montantJournalierBrut) {
-		this.montantJournalierBrut = montantJournalierBrut;
-	}
-
-	public Float getSalaireJournalierReferenceBrut() {
-		return salaireJournalierReferenceBrut;
-	}
-
-	public void setSalaireJournalierReferenceBrut(Float salaireJournalierReferenceBrut) {
-		this.salaireJournalierReferenceBrut = salaireJournalierReferenceBrut;
-	}
-
-	public Float getNombreJoursRestants() {
-		return nombreJoursRestants;
-	}
-
-	public void setNombreJoursRestants(Float nombreJoursRestants) {
-		this.nombreJoursRestants = nombreJoursRestants;
-	}
-
-	public boolean isConcerneDegressivite() {
-		return isConcerneDegressivite;
-	}
-
-	public void setConcerneDegressivite(boolean isConcerneDegressivite) {
-		this.isConcerneDegressivite = isConcerneDegressivite;
-	}
 }

@@ -52,7 +52,7 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiAPL(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 
         // Lorsque je simule mes prestations le 20/10/2020
-        initMocks("20-10-2020", demandeurEmploi, false, false, false);
+        initMocks("20-10-2020");
         SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
@@ -171,7 +171,7 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiALF(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 
         // Lorsque je simule mes prestations le 20/10/2020
-        initMocks("20-10-2020", demandeurEmploi, false, false, false);
+        initMocks("20-10-2020");
         SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
@@ -290,7 +290,7 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiALS(PROCHAINE_DECLARATION_TRIMESTRIELLE);
         
         // Lorsque je simule mes prestations le 23/07/2021
-        initMocks("23-07-2021", demandeurEmploi, false, false, false);
+        initMocks("23-07-2021");
         SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 08/2021 sont :

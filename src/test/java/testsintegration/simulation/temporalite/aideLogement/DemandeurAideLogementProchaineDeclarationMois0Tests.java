@@ -50,9 +50,9 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
         // Pas travaillé au cours des 3 derniers mois
 
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiAPL(PROCHAINE_DECLARATION_TRIMESTRIELLE);
-        
+
         // Lorsque je simule mes prestations le 20/10/2020
-        initMocks("20-10-2020", demandeurEmploi, false, false, false);
+        initMocks("20-10-2020");
         SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
@@ -174,7 +174,7 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiALF(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 
         // Lorsque je simule mes prestations le 20/10/2020
-        initMocks("20-10-2020", demandeurEmploi, false, false, false);
+        initMocks("20-10-2020");
         SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 11/2020 sont :
@@ -292,11 +292,11 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
         // APL 300€, RSA 500€, prochaine déclaration trimestrielle mois M
         // Salaire CDI 35h/semaine 940€ net, kilométrage domicile -> taf = 12kms + 20 trajets
         // Pas travaillé au cours des 3 derniers mois
-    	System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+        
         DemandeurEmploi demandeurEmploi = creerDemandeurEmploiALS(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 
         // Lorsque je simule mes prestations le 23/07/2021
-        initMocks("23-07-2021", demandeurEmploi, false, false, false);
+        initMocks("23-07-2021");
         SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
         // Alors les prestations du premier mois 08/2021 sont :
