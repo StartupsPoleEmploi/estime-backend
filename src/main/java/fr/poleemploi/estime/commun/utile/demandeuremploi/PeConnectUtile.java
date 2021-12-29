@@ -13,7 +13,7 @@ public class PeConnectUtile {
     @Autowired
     private AccessTokenUtile bearerTokenUtile;
 
-    public PeConnectAuthorization mapInformationsAccessTokenPeConnect(AccessTokenPEIOOut peConnectAuthorizationESD) {
+    public PeConnectAuthorization mapAccessInformationsTokenToPeConnectAuthorization(AccessTokenPEIOOut peConnectAuthorizationESD) {
         PeConnectAuthorization peConnectAuthorization = new PeConnectAuthorization();
         peConnectAuthorization.setBearerToken(bearerTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken()));
         peConnectAuthorization.setExpireIn(peConnectAuthorizationESD.getExpiresIn());

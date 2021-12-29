@@ -3,8 +3,8 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.ParcourUtilisateurEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.donnees.entities.SuiviParcoursUtilisateurEntity;
@@ -29,7 +29,7 @@ public class SuiviUtilisateurUtile {
 	@Autowired
 	private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
 
-	public void tracerParcoursUtilisateurAuthentification(UserInfoPEIO userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, DetailIndemnisationPEIO detailIndemnisationESD) {
+	public void tracerParcoursUtilisateurAuthentification(UserInfoPEIOOut userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, DetailIndemnisationPEIOOut detailIndemnisationESD) {
 		SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityAuthentification(userInfoESD, parcours,
 				getTypePopulation(beneficiaireAides), detailIndemnisationESD);
 
@@ -59,7 +59,7 @@ public class SuiviUtilisateurUtile {
 				beneficiaireAides.isBeneficiaireAAH());
 	}
 
-	private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityAuthentification(UserInfoPEIO userInfoESD, String parcours, String typePopulation, DetailIndemnisationPEIO detailIndemnisationESD) {
+	private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityAuthentification(UserInfoPEIOOut userInfoESD, String parcours, String typePopulation, DetailIndemnisationPEIOOut detailIndemnisationESD) {
 		SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
 		suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
 		suiviParcoursUtilisateurEntity.setIdPoleEmploi(userInfoESD.getSub());

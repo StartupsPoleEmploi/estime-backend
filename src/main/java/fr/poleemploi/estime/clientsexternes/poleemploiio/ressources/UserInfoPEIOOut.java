@@ -2,7 +2,7 @@ package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserInfoPEIO {
+public class UserInfoPEIOOut {
 
     private String sub;
     private String gender;

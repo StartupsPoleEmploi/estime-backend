@@ -5,8 +5,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AccessTokenPEIOIn;
 import fr.poleemploi.estime.commun.utile.StringUtile;
 
 @Component
@@ -27,39 +28,39 @@ public class AccessTokenUtile {
 		return BEARER + accessToken;
 	}
 
-	public HttpEntity<AccessTokenPEIOIn> createAccessTokenByCodeHttpEntity(String code, String redirectURI) {
-		AccessTokenPEIOIn accessTokenPEIOIn = createAccessTokenPEIOIn(GRANT_TYPE_CODE, code, redirectURI);		
+	public HttpEntity<MultiValueMap<String, String>>  createAccessTokenByCodeHttpEntity(String code, String redirectURI) {
+		MultiValueMap<String, String> accessTokenPEIOIn = createAccessTokenPEIOIn(GRANT_TYPE_CODE, code, redirectURI);		
 		return createHttpEntity(accessTokenPEIOIn);
 	}
 
-	public HttpEntity<AccessTokenPEIOIn> createAccessTokenByRefreshTokenHttpEntity(String refreshToken) {
-		AccessTokenPEIOIn accessTokenPEIOIn = createAccessTokenPEIOIn(GRANT_TYPE_REFRESH_TOKEN, refreshToken, StringUtile.EMPTY);
+	public HttpEntity<MultiValueMap<String, String>>  createAccessTokenByRefreshTokenHttpEntity(String refreshToken) {
+		MultiValueMap<String, String> accessTokenPEIOIn = createAccessTokenPEIOIn(GRANT_TYPE_REFRESH_TOKEN, refreshToken, StringUtile.EMPTY);
 		return createHttpEntity(accessTokenPEIOIn);
 	}
 
-	private HttpEntity<AccessTokenPEIOIn> createHttpEntity(AccessTokenPEIOIn accessTokenPEIOIn) {
+	private HttpEntity<MultiValueMap<String, String>> createHttpEntity(MultiValueMap<String, String> accessTokenPEIOIn) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		return new HttpEntity<AccessTokenPEIOIn>(accessTokenPEIOIn, headers);
+		return new HttpEntity<>(accessTokenPEIOIn, headers);
 	}
 
-	private AccessTokenPEIOIn createAccessTokenPEIOIn(String grantType, String codeOrRefreshToken, String redirectURI) {
-		AccessTokenPEIOIn accessTokenPEIOIn = new AccessTokenPEIOIn();
-		accessTokenPEIOIn.setClientId(clientId);
-		accessTokenPEIOIn.setClientSecret(clientSecret);
-		accessTokenPEIOIn.setGrantType(grantType);
+	private MultiValueMap<String, String> createAccessTokenPEIOIn(String grantType, String codeOrRefreshToken, String redirectURI) {
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+		map.add("client_id", clientId);
+		map.add("client_secret", clientSecret);
+		map.add("grant_type", grantType);
 
 		switch (grantType) {
 		case GRANT_TYPE_REFRESH_TOKEN:
-			accessTokenPEIOIn.setRefreshToken(codeOrRefreshToken);
+			map.add("refresh_token", codeOrRefreshToken);
 			break;
 
 		default:
-			accessTokenPEIOIn.setCode(codeOrRefreshToken);
-			accessTokenPEIOIn.setRedirectURI(redirectURI);
+			map.add("code", codeOrRefreshToken);
+			map.add("redirect_uri", redirectURI);
 			break;
 		}
 
-		return accessTokenPEIOIn;
+		return map;
 	}
 }

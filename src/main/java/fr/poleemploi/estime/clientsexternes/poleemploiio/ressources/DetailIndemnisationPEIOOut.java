@@ -2,7 +2,7 @@ package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
 import java.util.Date;
 
-public class DetailIndemnisationPEIO {
+public class DetailIndemnisationPEIOOut {
     
     private boolean beneficiaireAideSolidarite;
     private boolean beneficiaireAssuranceChomage;

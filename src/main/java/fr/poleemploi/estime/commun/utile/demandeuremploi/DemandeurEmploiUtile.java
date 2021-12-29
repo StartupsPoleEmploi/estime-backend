@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.EtatCivilPEIO;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.aidemobilite.CoordonneesPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.EtatCivilPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
@@ -55,9 +55,9 @@ public class DemandeurEmploiUtile {
 
     public void addDateNaissance(InformationsPersonnelles informationsPersonnelles, String bearerToken) {
         try {
-            Optional<EtatCivilPEIO> etatCivilPEIOOptional = poleEmploiIOClient.getEtatCivil(bearerToken);
+            Optional<EtatCivilPEIOOut> etatCivilPEIOOptional = poleEmploiIOClient.getEtatCivil(bearerToken);
             if (etatCivilPEIOOptional.isPresent()) {
-                EtatCivilPEIO etatCivilPEIO = etatCivilPEIOOptional.get();
+                EtatCivilPEIOOut etatCivilPEIO = etatCivilPEIOOptional.get();
                 if (etatCivilPEIO.getDateDeNaissance() != null) {
                     LocalDate dateNaissanceLocalDate = dateUtile.convertDateToLocalDate(etatCivilPEIO.getDateDeNaissance());
                     informationsPersonnelles.setDateNaissance(dateNaissanceLocalDate);
@@ -71,9 +71,9 @@ public class DemandeurEmploiUtile {
 
     public void addCodeDepartement(InformationsPersonnelles informationsPersonnelles, String bearerToken) {
         try {
-            Optional<CoordonneesPEIO> coordonneesESDOptional = poleEmploiIOClient.getCoordonnees(bearerToken);
+            Optional<CoordonneesPEIOOut> coordonneesESDOptional = poleEmploiIOClient.getCoordonnees(bearerToken);
             if (coordonneesESDOptional.isPresent()) {
-                CoordonneesPEIO coordonneesESD = coordonneesESDOptional.get();
+                CoordonneesPEIOOut coordonneesESD = coordonneesESDOptional.get();
                 informationsPersonnelles.setCodePostal(coordonneesESD.getCodePostal());
             }
         } catch (Exception e) {

@@ -1,6 +1,6 @@
-package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.aidemobilite;
+package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 
-public class CoordonneesPEIO {
+public class CoordonneesPEIOOut {
 
     private String adresse1;
     private String adresse2;
