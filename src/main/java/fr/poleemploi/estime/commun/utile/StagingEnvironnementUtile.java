@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.EnvironnementEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -36,7 +36,7 @@ public class StagingEnvironnementUtile {
         addInfosIndemnisation(individu, TypePopulationEnum.ARE.getLibelle());
     }
     
-    public void gererAccesAvecBouchon(Individu individu, UserInfoPEIO userInfoPEIO) {
+    public void gererAccesAvecBouchon(Individu individu, UserInfoPEIOOut userInfoPEIO) {
         individu.setIdPoleEmploi(userInfoPEIO.getSub());
         individu.setPopulationAutorisee(true);
         addInfosIndemnisation(individu, getPopulationDeFictif(userInfoPEIO));
@@ -50,7 +50,7 @@ public class StagingEnvironnementUtile {
         return environment.equals(EnvironnementEnum.LOCALHOST.getLibelle()) || environment.equals(EnvironnementEnum.RECETTE.getLibelle());
     }
     
-    public boolean isUtilisateurFictif(UserInfoPEIO userInfo) {
+    public boolean isUtilisateurFictif(UserInfoPEIOOut userInfo) {
         return isCandidatCaro(userInfo) || isDeFictifPoleemploiio(userInfo);
     }
 
@@ -134,7 +134,7 @@ public class StagingEnvironnementUtile {
         ressourcesFinancieres.setAidesCPAM(aidesCPAM);
     }
     
-    private String getPopulationDeFictif(UserInfoPEIO userInfo) {
+    private String getPopulationDeFictif(UserInfoPEIOOut userInfo) {
         if (isCandidatCaro(userInfo)) {
             return userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
         } else {
@@ -150,12 +150,12 @@ public class StagingEnvironnementUtile {
      * accéder à l'application.
      * @return
      */
-    private boolean isCandidatCaro(UserInfoPEIO userInfo) {
+    private boolean isCandidatCaro(UserInfoPEIOOut userInfo) {
         String givenName = userInfo.getGivenName();
         return givenName != null && (givenName.equalsIgnoreCase("caroass") || givenName.equalsIgnoreCase("julietteaah") || givenName.equalsIgnoreCase("carorsa"));
     }
 
-    private boolean isDeFictifPoleemploiio(UserInfoPEIO userInfo) {
+    private boolean isDeFictifPoleemploiio(UserInfoPEIOOut userInfo) {
         return userInfo != null && userInfo.getEmail() != null && userInfo.getEmail().equalsIgnoreCase("emploistoredev@gmail.com");
     }
 }

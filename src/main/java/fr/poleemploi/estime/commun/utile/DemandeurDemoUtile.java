@@ -2,7 +2,7 @@ package fr.poleemploi.estime.commun.utile;
 
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
@@ -14,7 +14,7 @@ public class DemandeurDemoUtile {
 
 	private static String nomDemandeurDemo = "estimedemo";
 
-	public boolean isDemandeurDemo(UserInfoPEIO userInfoESD) {
+	public boolean isDemandeurDemo(UserInfoPEIOOut userInfoESD) {
 		return userInfoESD.getFamilyName() != null && userInfoESD.getFamilyName().toLowerCase().contains(nomDemandeurDemo);
 	}
 
