@@ -2,7 +2,7 @@ package fr.poleemploi.estime.commun.utile;
 
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
@@ -18,17 +18,17 @@ public class IndividuUtile {
 	/**
 	 * Population autorisée ASS, RSA ou AAH, et pouvant cumuler ces 3 prestations.
 	 */
-	public boolean isPopulationAutorisee(DetailIndemnisationPEIO detailIndemnisationPEIO) {
+	public boolean isPopulationAutorisee(DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
 		return isBeneficiaireARE(detailIndemnisationPEIO) || isBeneficiaireASS(detailIndemnisationPEIO) || detailIndemnisationPEIO.isBeneficiaireAAH()
 				|| detailIndemnisationPEIO.isBeneficiaireRSA();
 	}
 
-	public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO) {
+	public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
 		addInformationsBeneficiaireAides(individu, detailIndemnisationPEIO);
 		addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationPEIO);
 	}
 
-	private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO) {
+	private void addInformationsBeneficiaireAides(Individu individu, DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
 		BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
 		beneficiaireAides.setBeneficiaireAAH(detailIndemnisationPEIO.isBeneficiaireAAH());
 		beneficiaireAides.setBeneficiaireARE(isBeneficiaireARE(detailIndemnisationPEIO));
@@ -37,7 +37,7 @@ public class IndividuUtile {
 		individu.setBeneficiaireAides(beneficiaireAides);
 	}
 
-	private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationPEIO detailIndemnisationPEIO) {
+	private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
 		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
 		if (detailIndemnisationPEIO.getCodeIndemnisation() != null) {
 			ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisationPEIO));
@@ -45,7 +45,7 @@ public class IndividuUtile {
 		individu.setRessourcesFinancieres(ressourcesFinancieres);
 	}
 
-	private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIO detailIndemnisationPEIO) {
+	private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
 		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 		if (AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(detailIndemnisationPEIO.getCodeIndemnisation())) {
 			AllocationASS allocationASS = new AllocationASS();
@@ -60,11 +60,11 @@ public class IndividuUtile {
 		return aidesPoleEmploi;
 	}
 
-	private boolean isBeneficiaireARE(DetailIndemnisationPEIO detailIndemnisationPEIO) {
+	private boolean isBeneficiaireARE(DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
 		return detailIndemnisationPEIO.getCodeIndemnisation() != null && TypePopulationEnum.ARE.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation());
 	}
 
-	private boolean isBeneficiaireASS(DetailIndemnisationPEIO detailIndemnisationPEIO) {
+	private boolean isBeneficiaireASS(DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
 		return detailIndemnisationPEIO.getCodeIndemnisation() != null && TypePopulationEnum.ASS.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation());
 	}
 }

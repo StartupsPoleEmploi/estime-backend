@@ -10,16 +10,15 @@ public class PeConnectAuthorization {
     private String refreshToken;
     private String scope;
     private String tokenType;
-    private Date expiryTime;
+    private Date expireInDate;
     
-    
-    public Date getExpiryTime() {
-        return expiryTime;
-    }
-    public void setExpiryTime(Date expiryTime) {
-        this.expiryTime = expiryTime;
-    }
-    public String getIdToken() {
+    public Date getExpireInDate() {
+		return expireInDate;
+	}
+	public void setExpireInDate(Date expireInDate) {
+		this.expireInDate = expireInDate;
+	}
+	public String getIdToken() {
         return idToken;
     }
     public void setIdToken(String idToken) {
@@ -55,10 +54,10 @@ public class PeConnectAuthorization {
     public void setScope(String scope) {
         this.scope = scope;
     }
-    @Override
-    public String toString() {
-        return "PeConnectAuthorization [bearerToken=" + bearerToken + ", expireIn=" + expireIn + ", idToken=" + idToken
-                + ", refreshToken=" + refreshToken + ", scope=" + scope + ", tokenType=" + tokenType + ", expiryTime="
-                + expiryTime + "]";
-    }
+	@Override
+	public String toString() {
+		return "PeConnectAuthorization [bearerToken=" + bearerToken + ", expireIn=" + expireIn + ", idToken=" + idToken
+				+ ", refreshToken=" + refreshToken + ", scope=" + scope + ", tokenType=" + tokenType + ", expireInDate="
+				+ expireInDate + "]";
+	}
 }

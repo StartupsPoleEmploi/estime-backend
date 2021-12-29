@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIO;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.PeConnectAuthorizationPEIO;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIO;
-import fr.poleemploi.estime.commun.utile.BearerTokenUtile;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
 import fr.poleemploi.estime.commun.utile.DemandeurDemoUtile;
 import fr.poleemploi.estime.commun.utile.IndividuUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
@@ -17,9 +15,6 @@ import fr.poleemploi.estime.services.ressources.Individu;
 
 @Component
 public class IndividuLogique {
-
-    @Autowired
-    private BearerTokenUtile bearerTokenUtile;
 
     @Autowired
     private DemandeurDemoUtile demandeurDemoUtile;    
@@ -42,11 +37,10 @@ public class IndividuLogique {
     public Individu authentifier(String code, String redirectURI, String nonce) {
         Individu individu = new Individu();
 
-        PeConnectAuthorizationPEIO peConnectAuthorizationESD = poleEmploiIOClient.getPeConnectAuthorizationByCode(code, redirectURI, nonce);
-        String bearerToken = bearerTokenUtile.getBearerToken(peConnectAuthorizationESD.getAccessToken());
+        individu.setPeConnectAuthorization(peConnectUtile.mapAccessInformationsTokenToPeConnectAuthorization(poleEmploiIOClient.getAccessTokenInformationsByCode(code, redirectURI, nonce)));
 
-        DetailIndemnisationPEIO detailIndemnisationESD = poleEmploiIOClient.getDetailIndemnisation(bearerToken);
-        UserInfoPEIO userInfoESD = poleEmploiIOClient.getUserInfo(bearerToken);
+        DetailIndemnisationPEIOOut detailIndemnisationESD = poleEmploiIOClient.getDetailIndemnisation(individu.getPeConnectAuthorization().getBearerToken());
+        UserInfoPEIOOut userInfoESD = poleEmploiIOClient.getUserInfo(individu.getPeConnectAuthorization().getBearerToken());
 
         if (stagingEnvironnementUtile.isStagingEnvironnement() && stagingEnvironnementUtile.isUtilisateurFictif(userInfoESD)) {
             stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
@@ -66,8 +60,6 @@ public class IndividuLogique {
             suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
                     detailIndemnisationESD);
         }
-
-        individu.setPeConnectAuthorization(peConnectUtile.mapInformationsAccessTokenPeConnect(peConnectAuthorizationESD));
 
         return individu;
     }
