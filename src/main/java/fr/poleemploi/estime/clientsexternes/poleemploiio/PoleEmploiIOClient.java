@@ -38,6 +38,7 @@ import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.exceptions.TooManyRequestException;
 import fr.poleemploi.estime.services.exceptions.UnauthorizedException;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
 
 
 @Component
@@ -76,19 +77,19 @@ public class PoleEmploiIOClient {
 	private static final int RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR = 3000; 
 
 
-	public AccessTokenPEIOOut getAccessTokenInformationsByCode(String code, String redirectURI, String nonce) {
+	public PeConnectAuthorization getPeConnectAuthorizationByCode(String code, String redirectURI, String nonce) {
 		HttpEntity<MultiValueMap<String, String>>  httpEntity = accessTokenUtile.createAccessTokenByCodeHttpEntity(code, redirectURI);
 		AccessTokenPEIOOut accessTokenPEIOOut = callAccessTokenEndPoint(httpEntity);
 		if (accessTokenPEIOOut.getNonce().compareTo(nonce) != 0) {
 			LOGGER.error(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
 			throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 		}
-		return accessTokenPEIOOut;              
+		return accessTokenUtile.mapAccessInformationsTokenToPeConnectAuthorization(accessTokenPEIOOut);              
 	}   
 
-	public AccessTokenPEIOOut getAccessTokenInformationsByRefreshToken(String refreshToken) {
+	public PeConnectAuthorization getPeConnectAuthorizationByRefreshToken(String refreshToken) {
 		HttpEntity<MultiValueMap<String, String>> httpEntity = accessTokenUtile.createAccessTokenByRefreshTokenHttpEntity(refreshToken);
-		return callAccessTokenEndPoint(httpEntity);
+		return accessTokenUtile.mapAccessInformationsTokenToPeConnectAuthorization(callAccessTokenEndPoint(httpEntity));
 	}
 
 	public UserInfoPEIOOut getUserInfo(String bearerToken) {
@@ -121,7 +122,8 @@ public class PoleEmploiIOClient {
 	public float getMontantAgepiSimulateurAides(DemandeurEmploi demandeurEmploi) {
 		String apiSimulateurAidesAgepiURI = poleemploiioURI + "peconnect-simulateurs-aides/v1/demande-agepi/simuler";
 		try {
-			//TODO JLA implémenter accessTokenValid
+			//avant appel au service, vérification que l'access token est toujours valide
+			refreshAccessToken(demandeurEmploi);
 			HttpEntity<AgepiPEIOIn> httpEntity = simulateurAidesAgepiUtile.createHttpEntityAgepiSimulateurAides(demandeurEmploi);
 			AgepiPEIOOut agepiPEIOOut = restTemplate.postForEntity(apiSimulateurAidesAgepiURI, httpEntity, AgepiPEIOOut.class).getBody();
 			if(agepiPEIOOut != null && agepiPEIOOut.getDecisionAgepiAPI() != null) {
@@ -142,7 +144,8 @@ public class PoleEmploiIOClient {
 	public float getMontantAideMobiliteSimulateurAides(DemandeurEmploi demandeurEmploi) {
 		String apiSimulateurAidesAideMobiliteURI = poleemploiioURI + "peconnect-simulateurs-aides/v1/demande-aidemobilite/simuler";
 		try {
-			//TODO JLA implémenter accessTokenValid
+			//avant appel au service, vérification que l'access token est toujours valide
+			refreshAccessToken(demandeurEmploi);
 			HttpEntity<AideMobilitePEIOIn> httpEntity = simulateurAidesAideMobiliteUtile.createHttpEntityAgepiSimulateurAides(demandeurEmploi);
 			AideMobilitePEIOOut aideMobilitePEIOOut = restTemplate.postForEntity(apiSimulateurAidesAideMobiliteURI, httpEntity, AideMobilitePEIOOut.class).getBody();
 			if(aideMobilitePEIOOut != null && aideMobilitePEIOOut.getDecisionAideMobiliteAPI() != null) {
@@ -217,4 +220,11 @@ public class PoleEmploiIOClient {
         headers.add("Authorization", bearerToken);
         return new HttpEntity<>(headers);
     }
+	
+	private void refreshAccessToken(DemandeurEmploi demandeurEmploi) {
+		if(accessTokenUtile.isAccessTokenExpired(demandeurEmploi.getPeConnectAuthorization().getExpireInDate())) {
+			PeConnectAuthorization newPeConnectAuthorization = getPeConnectAuthorizationByRefreshToken(demandeurEmploi.getPeConnectAuthorization().getRefreshToken());
+			demandeurEmploi.setPeConnectAuthorization(newPeConnectAuthorization);					
+		}
+	}
 }

@@ -10,7 +10,6 @@ import fr.poleemploi.estime.commun.utile.DemandeurDemoUtile;
 import fr.poleemploi.estime.commun.utile.IndividuUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.PeConnectUtile;
 import fr.poleemploi.estime.services.ressources.Individu;
 
 @Component
@@ -26,9 +25,6 @@ public class IndividuLogique {
     private IndividuUtile individuUtile;
 
     @Autowired
-    private PeConnectUtile peConnectUtile;
-
-    @Autowired
     private StagingEnvironnementUtile stagingEnvironnementUtile;
 
     @Autowired
@@ -37,7 +33,7 @@ public class IndividuLogique {
     public Individu authentifier(String code, String redirectURI, String nonce) {
         Individu individu = new Individu();
 
-        individu.setPeConnectAuthorization(peConnectUtile.mapAccessInformationsTokenToPeConnectAuthorization(poleEmploiIOClient.getAccessTokenInformationsByCode(code, redirectURI, nonce)));
+        individu.setPeConnectAuthorization(poleEmploiIOClient.getPeConnectAuthorizationByCode(code, redirectURI, nonce));
 
         DetailIndemnisationPEIOOut detailIndemnisationESD = poleEmploiIOClient.getDetailIndemnisation(individu.getPeConnectAuthorization().getBearerToken());
         UserInfoPEIOOut userInfoESD = poleEmploiIOClient.getUserInfo(individu.getPeConnectAuthorization().getBearerToken());
