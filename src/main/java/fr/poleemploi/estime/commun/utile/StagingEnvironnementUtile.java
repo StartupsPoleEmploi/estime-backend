@@ -15,12 +15,15 @@ import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
 public class StagingEnvironnementUtile {
+	
+	private static final String ID_POLE_EMPLOI_FICTIF = "utilisateur_fictif";
 
     @Value("${spring.profiles.active}")
     private String environment;
@@ -30,14 +33,8 @@ public class StagingEnvironnementUtile {
         informationsPersonnelles.setDateNaissance(LocalDate.of(1985, 8, 1));
     }
     
-    public void gererAccesAvecBouchon(Individu individu) {
-        individu.setIdPoleEmploi("bouchon");
-        individu.setPopulationAutorisee(true);
-        addInfosIndemnisation(individu, TypePopulationEnum.ARE.getLibelle());
-    }
-    
     public void gererAccesAvecBouchon(Individu individu, UserInfoPEIOOut userInfoPEIO) {
-        individu.setIdPoleEmploi(userInfoPEIO.getSub());
+        individu.setIdPoleEmploi(ID_POLE_EMPLOI_FICTIF);
         individu.setPopulationAutorisee(true);
         addInfosIndemnisation(individu, getPopulationDeFictif(userInfoPEIO));
     }
@@ -52,6 +49,10 @@ public class StagingEnvironnementUtile {
     
     public boolean isUtilisateurFictif(UserInfoPEIOOut userInfo) {
         return isCandidatCaro(userInfo) || isDeFictifPoleemploiio(userInfo);
+    }
+    
+    public boolean isNotDemandeurFictif(DemandeurEmploi demandeurEmploi) {
+    	return !ID_POLE_EMPLOI_FICTIF.equalsIgnoreCase(demandeurEmploi.getIdPoleEmploi());
     }
 
     private void addInfosIndemnisation(Individu individu, String population) {
