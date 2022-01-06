@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class InformationsPersonnelles {
 
-    private String codePostal;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateNaissance;
     private String email;
@@ -21,114 +20,106 @@ public class InformationsPersonnelles {
     private Boolean titreSejourEnFranceValide;
     private Logement logement;
 
-    public String getCodePostal() {
-        return codePostal;
-    }
-
-    public void setCodePostal(String codePostal) {
-        this.codePostal = codePostal;
-    }
-
     public LocalDate getDateNaissance() {
-        return dateNaissance;
+	return dateNaissance;
     }
 
     public void setDateNaissance(LocalDate dateNaissance) {
-        this.dateNaissance = dateNaissance;
+	this.dateNaissance = dateNaissance;
     }
 
     public String getEmail() {
-        return email;
+	return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
 
     public boolean isHasRevenusImmobilier() {
-        return hasRevenusImmobilier;
+	return hasRevenusImmobilier;
     }
 
     public void setHasRevenusImmobilier(boolean hasRevenusImmobilier) {
-        this.hasRevenusImmobilier = hasRevenusImmobilier;
+	this.hasRevenusImmobilier = hasRevenusImmobilier;
     }
 
     public boolean isTravailleurIndependant() {
-        return travailleurIndependant;
+	return travailleurIndependant;
     }
 
     public void setTravailleurIndependant(boolean travailleurIndependant) {
-        this.travailleurIndependant = travailleurIndependant;
+	this.travailleurIndependant = travailleurIndependant;
     }
 
     public boolean isMicroEntrepreneur() {
-        return microEntrepreneur;
+	return microEntrepreneur;
     }
 
     public void setMicroEntrepreneur(boolean microEntrepreneur) {
-        this.microEntrepreneur = microEntrepreneur;
+	this.microEntrepreneur = microEntrepreneur;
     }
 
     public boolean isSalarie() {
-        return isSalarie;
+	return isSalarie;
     }
 
     public void setSalarie(boolean isSalarie) {
-        this.isSalarie = isSalarie;
+	this.isSalarie = isSalarie;
     }
 
     public boolean isSansRessource() {
-        return isSansRessource;
+	return isSansRessource;
     }
 
     public void setSansRessource(boolean isSansRessource) {
-        this.isSansRessource = isSansRessource;
+	this.isSansRessource = isSansRessource;
     }
 
     public String getNationalite() {
-        return nationalite;
+	return nationalite;
     }
 
     public void setNationalite(String nationalite) {
-        this.nationalite = nationalite;
+	this.nationalite = nationalite;
     }
 
     public String getNom() {
-        return nom;
+	return nom;
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+	this.nom = nom;
     }
 
     public String getPrenom() {
-        return prenom;
+	return prenom;
     }
 
     public void setPrenom(String prenom) {
-        this.prenom = prenom;
+	this.prenom = prenom;
     }
 
     public Boolean getTitreSejourEnFranceValide() {
-        return titreSejourEnFranceValide;
+	return titreSejourEnFranceValide;
     }
 
     public void setTitreSejourEnFranceValide(Boolean titreSejourEnFranceValide) {
-        this.titreSejourEnFranceValide = titreSejourEnFranceValide;
+	this.titreSejourEnFranceValide = titreSejourEnFranceValide;
     }
 
     public Logement getLogement() {
-        return logement;
+	return logement;
     }
 
     public void setLogement(Logement logement) {
-        this.logement = logement;
+	this.logement = logement;
     }
 
     @Override
     public String toString() {
-        return "InformationsPersonnelles [codePostal=" + codePostal + ", dateNaissance=" + dateNaissance + ", email=" + email + ", hasRevenusImmobilier=" + hasRevenusImmobilier
-                + ", travailleurIndependant=" + travailleurIndependant + ", microEntrepreneur=" + microEntrepreneur + ", isSalarie=" + isSalarie + ", isSansRessource=" + isSansRessource
-                + ", nationalite=" + nationalite + ", nom=" + nom + ", prenom=" + prenom + ", titreSejourEnFranceValide=" + titreSejourEnFranceValide + ", logement=" + logement + "]";
+	return "InformationsPersonnelles [dateNaissance=" + dateNaissance + ", email=" + email + ", hasRevenusImmobilier=" + hasRevenusImmobilier + ", travailleurIndependant="
+		+ travailleurIndependant + ", microEntrepreneur=" + microEntrepreneur + ", isSalarie=" + isSalarie + ", isSansRessource=" + isSansRessource + ", nationalite="
+		+ nationalite + ", nom=" + nom + ", prenom=" + prenom + ", titreSejourEnFranceValide=" + titreSejourEnFranceValide + ", logement=" + logement + "]";
     }
 }

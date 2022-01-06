@@ -24,114 +24,163 @@ import fr.poleemploi.estime.commun.enumerations.exceptions.BadRequestMessages;
 import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.exceptions.BadRequestException;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
+import fr.poleemploi.estime.services.ressources.Coordonnees;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 
 @SpringBootTest
 @ContextConfiguration
-@TestPropertySource(locations="classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 class DemandeurEmploiServiceControlerInformationsPersonnellesTests extends CommunTests {
 
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;
-    
+
     @Configuration
-    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
+    @ComponentScan({ "utile.tests", "fr.poleemploi.estime" })
     public static class SpringConfig {
 
     }
-    
+
     @Test
     void controlerDonneeesEntreeTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            demandeurEmploiService.simulerAides(null);
-        }).getMessage()).isEqualTo(BadRequestMessages.DEMANDEUR_EMPLOI_OBLIGATOIRE.getMessage());
+	assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+	    demandeurEmploiService.simulerAides(null);
+	}).getMessage()).isEqualTo(BadRequestMessages.DEMANDEUR_EMPLOI_OBLIGATOIRE.getMessage());
     }
-    
-    
-    @Test
-    void controlerDonneeesEntreeInformationsPersonnellesTest1() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
-        demandeurEmploi.setFuturTravail(creerFuturTravail());
-        demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
-        
-        demandeurEmploi.setInformationsPersonnelles(null);
 
-        assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            demandeurEmploiService.simulerAides(demandeurEmploi);
-        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "informationsPersonnelles"));
-    }
-    
     @Test
-    void controlerDonneeesEntreeInformationsPersonnellesTest2() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
-        demandeurEmploi.setFuturTravail(creerFuturTravail());
-        demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
-        
-        InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
-        informationsPersonnelles.setDateNaissance(null);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+    void controlerDonneeesEntreeInformationsPersonnellesTest1()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-        assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            demandeurEmploiService.simulerAides(demandeurEmploi);
-        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "dateNaissance de informationsPersonnelles"));
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
+	demandeurEmploi.setFuturTravail(creerFuturTravail());
+	demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
+
+	demandeurEmploi.setInformationsPersonnelles(null);
+
+	assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+	    demandeurEmploiService.simulerAides(demandeurEmploi);
+	}).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "informationsPersonnelles"));
     }
-    
+
     @Test
-    void controlerDonneeesEntreeInformationsPersonnellesTest3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
-        demandeurEmploi.setFuturTravail(creerFuturTravail());
-        demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
-        
-        InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
-        informationsPersonnelles.setCodePostal(null);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+    void controlerDonneeesEntreeInformationsPersonnellesTest2()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-        assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            demandeurEmploiService.simulerAides(demandeurEmploi);
-        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "codePostal de informationsPersonnelles"));
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
+	demandeurEmploi.setFuturTravail(creerFuturTravail());
+	demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
+
+	InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(null);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+	    demandeurEmploiService.simulerAides(demandeurEmploi);
+	}).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "dateNaissance de informationsPersonnelles"));
     }
-    
+
     @Test
-    void controlerDonneeesEntreeInformationsPersonnellesTest4() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
-        demandeurEmploi.setFuturTravail(creerFuturTravail());
-        demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
-        
-        InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
-        informationsPersonnelles.setNationalite(null);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+    void controlerDonneeesEntreeInformationsPersonnellesTest3()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-        assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            demandeurEmploiService.simulerAides(demandeurEmploi);
-        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nationalite de informationsPersonnelles"));
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
+	demandeurEmploi.setFuturTravail(creerFuturTravail());
+	demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
+
+	InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
+	informationsPersonnelles.setLogement(null);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+	    demandeurEmploiService.simulerAides(demandeurEmploi);
+	}).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "logement de informationsPersonnelles"));
     }
-    
+
     @Test
-    void controlerDonneeesEntreeInformationsPersonnellesTest5() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-        
-        DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
-        demandeurEmploi.setFuturTravail(creerFuturTravail());
-        demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
-        
-        InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
-        informationsPersonnelles.setNationalite(NationaliteEnum.AUTRE.getValeur());
-        informationsPersonnelles.setTitreSejourEnFranceValide(null);
-        demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+    void controlerDonneeesEntreeInformationsPersonnellesTest4()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-        assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
-            demandeurEmploiService.simulerAides(demandeurEmploi);
-        }).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "titreSejourEnFranceValide de informationsPersonnelles"));
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
+	demandeurEmploi.setFuturTravail(creerFuturTravail());
+	demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
+
+	InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
+	Logement logement = new Logement();
+	logement.setCoordonnees(null);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+	    demandeurEmploiService.simulerAides(demandeurEmploi);
+	}).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "coordonnees de logement"));
     }
-    
+
+    @Test
+    void controlerDonneeesEntreeInformationsPersonnellesTest5()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
+	demandeurEmploi.setFuturTravail(creerFuturTravail());
+	demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
+
+	InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
+	Logement logement = new Logement();
+	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal(null);
+	coordonnees.setDeMayotte(false);
+	logement.setCoordonnees(coordonnees);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+	    demandeurEmploiService.simulerAides(demandeurEmploi);
+	}).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "codePostal de coordonnees"));
+    }
+
+    @Test
+    void controlerDonneeesEntreeInformationsPersonnellesTest6()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
+	demandeurEmploi.setFuturTravail(creerFuturTravail());
+	demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
+
+	InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
+	informationsPersonnelles.setNationalite(null);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+	    demandeurEmploiService.simulerAides(demandeurEmploi);
+	}).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nationalite de informationsPersonnelles"));
+    }
+
+    @Test
+    void controlerDonneeesEntreeInformationsPersonnellesTest7()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setBeneficiaireAides(new BeneficiaireAides());
+	demandeurEmploi.setFuturTravail(creerFuturTravail());
+	demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
+
+	InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
+	informationsPersonnelles.setNationalite(NationaliteEnum.AUTRE.getValeur());
+	informationsPersonnelles.setTitreSejourEnFranceValide(null);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
+	    demandeurEmploiService.simulerAides(demandeurEmploi);
+	}).getMessage()).isEqualTo(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "titreSejourEnFranceValide de informationsPersonnelles"));
+    }
+
 }
