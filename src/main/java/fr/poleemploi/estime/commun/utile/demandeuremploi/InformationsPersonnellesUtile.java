@@ -33,19 +33,16 @@ public class InformationsPersonnellesUtile {
     }
 
     public boolean isDeFranceMetropolitaine(DemandeurEmploi demandeurEmploi) {
-	String codeDepartement = codeDepartementUtile.getCodeDepartement(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal());
-	return codeDepartement.length() == 2;
+	return !codeDepartementUtile.isDesDOM(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal());
     }
 
     public boolean isDesDOM(DemandeurEmploi demandeurEmploi) {
-	String codeDepartement = codeDepartementUtile.getCodeDepartement(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal());
-	return codeDepartement.length() == 3;
+	return codeDepartementUtile.isDesDOM(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal());
     }
 
     public boolean isDeMayotte(DemandeurEmploi demandeurEmploi) {
 	if (hasCodePostal(demandeurEmploi)) {
-	    String codeDepartement = codeDepartementUtile.getCodeDepartement(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal());
-	    return CodeDepartementUtile.CODE_DEPARTEMENT_MAYOTTE.equals(codeDepartement);
+	    return codeDepartementUtile.isDeMayotte(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal());
 	}
 	return false;
     }

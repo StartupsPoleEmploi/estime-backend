@@ -14,8 +14,8 @@ public class Logement {
     private boolean isConventionne;
     @JsonProperty("isChambre")
     private boolean isChambre;
-    private float montantLoyer;
-    private float montantCharges;
+    private Float montantLoyer;
+    private Float montantCharges;
 
     public Coordonnees getCoordonnees() {
 	return coordonnees;
@@ -69,19 +69,19 @@ public class Logement {
 	this.isChambre = isChambre;
     }
 
-    public float getMontantLoyer() {
+    public Float getMontantLoyer() {
 	return montantLoyer;
     }
 
-    public void setMontantLoyer(float montantLoyer) {
+    public void setMontantLoyer(Float montantLoyer) {
 	this.montantLoyer = montantLoyer;
     }
 
-    public float getMontantCharges() {
+    public Float getMontantCharges() {
 	return montantCharges;
     }
 
-    public void setMontantCharges(float montantCharges) {
+    public void setMontantCharges(Float montantCharges) {
 	this.montantCharges = montantCharges;
     }
 

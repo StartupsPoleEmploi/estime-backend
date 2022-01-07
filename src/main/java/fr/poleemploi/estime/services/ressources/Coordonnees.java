@@ -31,6 +31,7 @@ public class Coordonnees {
 	return isDeMayotte;
     }
 
+    @JsonProperty("isDeMayotte")
     public void setDeMayotte(boolean isDeMayotte) {
 	this.isDeMayotte = isDeMayotte;
     }
@@ -39,6 +40,7 @@ public class Coordonnees {
 	return isDesDOM;
     }
 
+    @JsonProperty("isDesDOM")
     public void setDesDOM(boolean isDesDOM) {
 	this.isDesDOM = isDesDOM;
     }

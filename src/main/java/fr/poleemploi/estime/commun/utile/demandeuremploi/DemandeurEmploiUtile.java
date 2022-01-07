@@ -37,6 +37,9 @@ public class DemandeurEmploiUtile {
     @Autowired
     private StagingEnvironnementUtile stagingEnvironnementUtile;
 
+    @Autowired
+    private CodeDepartementUtile codeDepartementUtile;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeurEmploiUtile.class);
 
     public boolean isSansRessourcesFinancieres(DemandeurEmploi demandeurEmploi) {
@@ -74,7 +77,7 @@ public class DemandeurEmploiUtile {
 	    Optional<CoordonneesPEIOOut> coordonneesESDOptional = poleEmploiIOClient.getCoordonnees(bearerToken);
 	    if (coordonneesESDOptional.isPresent()) {
 		CoordonneesPEIOOut coordonneesESD = coordonneesESDOptional.get();
-		informationsPersonnelles.getLogement().getCoordonnees().setCodePostal(coordonneesESD.getCodePostal());
+		addCoordonnees(informationsPersonnelles, coordonneesESD.getCodePostal());
 	    }
 	} catch (Exception e) {
 	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), "peio api coordonnees");
@@ -82,13 +85,19 @@ public class DemandeurEmploiUtile {
 	}
     }
 
+    public void addCoordonnees(InformationsPersonnelles informationsPersonnelles, String codePostal) {
+	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal(codePostal);
+	coordonnees.setDeMayotte(codeDepartementUtile.isDeMayotte(codePostal));
+	coordonnees.setDesDOM(codeDepartementUtile.isDesDOM(codePostal));
+	informationsPersonnelles.getLogement().setCoordonnees(coordonnees);
+    }
+
     public void addInformationsPersonnelles(DemandeurEmploi demandeurEmploi, Individu individu) {
 	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
 	Logement logement = creerLogement();
-	StatutOccupationLogement statutOccupationLogement = creerStatutOccupationLogement();
-	logement.setStatutOccupationLogement(statutOccupationLogement);
-	Coordonnees coordonnees = creerCoordonnees();
-	logement.setCoordonnees(coordonnees);
+	logement.setStatutOccupationLogement(creerStatutOccupationLogement());
+	logement.setCoordonnees(creerCoordonnees());
 	informationsPersonnelles.setLogement(logement);
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
@@ -100,6 +109,19 @@ public class DemandeurEmploiUtile {
 	}
 
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+    }
+
+    public void miseAJourCoordonnees(DemandeurEmploi demandeurEmploi) {
+	if (demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().getLogement() != null
+		&& demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees() != null
+		&& demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal() != null) {
+	    String codePostal = demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal();
+	    Coordonnees coordonnees = demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees();
+	    coordonnees.setCodePostal(codePostal);
+	    coordonnees.setDeMayotte(codeDepartementUtile.isDeMayotte(codePostal));
+	    coordonnees.setDesDOM(codeDepartementUtile.isDesDOM(codePostal));
+	    demandeurEmploi.getInformationsPersonnelles().getLogement().setCoordonnees(coordonnees);
+	}
     }
 
     private AidesCAF creerAidesCAF() {
@@ -130,8 +152,8 @@ public class DemandeurEmploiUtile {
 	logement.setConventionne(false);
 	logement.setColloc(false);
 	logement.setCrous(false);
-	logement.setMontantCharges(0);
-	logement.setMontantLoyer(0);
+	logement.setMontantCharges(null);
+	logement.setMontantLoyer(null);
 	logement.setCoordonnees(null);
 	logement.setStatutOccupationLogement(null);
 	return logement;
@@ -153,7 +175,7 @@ public class DemandeurEmploiUtile {
 	coordonnees.setCodeInsee("");
 	coordonnees.setCodePostal("");
 	coordonnees.setDeMayotte(false);
-	coordonnees.setDesDOM(false);
+	coordonnees.setDesDOM(true);
 	return coordonnees;
     }
 }

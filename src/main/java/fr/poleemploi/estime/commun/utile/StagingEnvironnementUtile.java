@@ -21,6 +21,7 @@ import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
 public class StagingEnvironnementUtile {
@@ -32,7 +33,6 @@ public class StagingEnvironnementUtile {
 
     public void bouchonnerCodeDepartementEtDateNaissance(InformationsPersonnelles informationsPersonnelles) {
 	creerBouchonLogement(informationsPersonnelles);
-	informationsPersonnelles.getLogement().getCoordonnees().setCodePostal("44000");
 	informationsPersonnelles.setDateNaissance(LocalDate.of(1985, 8, 1));
     }
 
@@ -112,11 +112,11 @@ public class StagingEnvironnementUtile {
 
     private void creerBouchonAllocationCAF(RessourcesFinancieres ressourcesFinancieres) {
 	AidesCAF aidesCAF = new AidesCAF();
-	aidesCAF.setAidesLogement(creerBouconAidesLogement());
+	aidesCAF.setAidesLogement(creerBouchonAidesLogement());
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
     }
 
-    private AidesLogement creerBouconAidesLogement() {
+    private AidesLogement creerBouchonAidesLogement() {
 	AidesLogement aidesLogement = new AidesLogement();
 	aidesLogement.setAidePersonnaliseeLogement(creerBouchonAllocationsLogement());
 	aidesLogement.setAllocationLogementFamiliale(creerBouchonAllocationsLogement());
@@ -140,8 +140,35 @@ public class StagingEnvironnementUtile {
 
     private void creerBouchonLogement(InformationsPersonnelles informationsPersonnelles) {
 	Logement logement = new Logement();
-	logement.setCoordonnees(new Coordonnees());
+	logement.setChambre(false);
+	logement.setConventionne(false);
+	logement.setColloc(false);
+	logement.setCrous(false);
+	logement.setMontantCharges(null);
+	logement.setMontantLoyer(null);
+	logement.setCoordonnees(creerBouchonCoordonnees());
+	logement.setStatutOccupationLogement(creerBouchonStatutOccupationLogement());
 	informationsPersonnelles.setLogement(logement);
+    }
+
+    private StatutOccupationLogement creerBouchonStatutOccupationLogement() {
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireHLM(false);
+	statutOccupationLogement.setLocataireMeuble(false);
+	statutOccupationLogement.setLocataireNonMeuble(false);
+	statutOccupationLogement.setLogeGratuitement(false);
+	statutOccupationLogement.setProprietaire(false);
+	statutOccupationLogement.setProprietaireAvecEmprunt(false);
+	return statutOccupationLogement;
+    }
+
+    private Coordonnees creerBouchonCoordonnees() {
+	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodeInsee("");
+	coordonnees.setCodePostal("44000");
+	coordonnees.setDeMayotte(false);
+	coordonnees.setDesDOM(false);
+	return coordonnees;
     }
 
     private String getPopulationDeFictif(UserInfoPEIOOut userInfo) {
