@@ -19,7 +19,7 @@ public class AideLogique {
     
     public Aide getAideByCode(String codeAide) {
     	Optional<AideEnum> aideEnumOptional = aideUtile.getAideEnumByCode(codeAide);
-    	if(aideEnumOptional.isEmpty()) {
+    	if(!aideEnumOptional.isEmpty()) {
     		return aideUtile.creerAide(aideEnumOptional.get());
     	} else {
     		throw new ResourceNotFoundException(RessourceNotFoundMessages.AIDE_NOT_FOUND.getMessage());
