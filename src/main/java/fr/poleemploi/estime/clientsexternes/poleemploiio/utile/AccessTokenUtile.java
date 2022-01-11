@@ -83,7 +83,7 @@ public class AccessTokenUtile {
 
 		switch (grantType) {
 		case GRANT_TYPE_REFRESH_TOKEN:
-			map.add("refresh_token", codeOrRefreshToken);
+			map.add(GRANT_TYPE_REFRESH_TOKEN, codeOrRefreshToken);
 			break;
 
 		default:

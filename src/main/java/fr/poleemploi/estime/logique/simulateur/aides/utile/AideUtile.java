@@ -101,8 +101,8 @@ public class AideUtile {
         return !aidesStream.anyMatch(aide -> aide.getCode().equalsIgnoreCase(codeAide));
     }
     
-    public AideEnum getAideEnumByCode(String code) {
-        return Arrays.stream(AideEnum.values()).filter(aideEnum -> aideEnum.getCode().equals(code)).findFirst().get();
+    public Optional<AideEnum> getAideEnumByCode(String code) {
+        return Arrays.stream(AideEnum.values()).filter(aideEnum -> aideEnum.getCode().equals(code)).findFirst();
     }
 
     public String getListeFormateeCodesAidePossibles() {
