@@ -189,35 +189,6 @@ public class OpenFiscaMappeurPeriode {
     }
 
     /**
-     * Méthode permettant de savoir si la mois de la periode OpenFisca est avant la période de simulation
-     * 
-     * @param numeroMoisSimule                                : numero mois simulé dans la période de simulation
-     * @param numeroMoisPeriodeOpenfisca                      : numero du mois dans la periode OpenFisca
-     * @param numerosPeriodeOpenfiscaAvantDebutPeriodeSimulee : numeros des mois de la péridoe OpenFisca se situant avant la période de simulation
-     * @return true si mois période OpenFisca avant période de simulation, sinon false
-     */
-    private boolean isMoisPeriodeOpenFiscaAvantPeriodeSimulation(int numeroMoisSimule, int numeroMoisPeriodeOpenfisca) {
-	int numeroMoisPeriodeOpenfiscaPlusEloigneAvantDebutPeriodeSimulee = getNumeroMoisPeriodeOpenfiscaPlusEloigneAvantDebutPeriodeSimulee(numeroMoisSimule);
-	return numeroMoisSimule <= NOMBRE_MOIS_PERIODE_OPENFISCA && numeroMoisPeriodeOpenfisca < numeroMoisPeriodeOpenfiscaPlusEloigneAvantDebutPeriodeSimulee;
-    }
-
-    /**
-     * Méthode permettant d'obtenir le numéro du mois de la période OpenFisca qui est le plus éloigné du début de la période de simulation
-     * 
-     * Exemple : ci-dessous le numero du mois le plus éloigné sera 2
-     * 
-     * ------ mois avant simulation ------ période de simulation -------- periode OpenFisca
-     * 
-     * M-1 M0 M1 M2 M3 M4 M5 M6 --------------------------------------------------------------------
-     * 
-     * @param numeroMoisSimule : numéro du mois simulé
-     * @return numéro du mois de la période OpenFisca qui est le plus éloigné du début de la période de simulation
-     */
-    private int getNumeroMoisPeriodeOpenfiscaPlusEloigneAvantDebutPeriodeSimulee(int numeroMoisSimule) {
-	return NOMBRE_MOIS_PERIODE_OPENFISCA - numeroMoisSimule;
-    }
-
-    /**
      * La simulation se fait sur N si le numeroMoisMontantARecuperer est < NUMERO_MOIS_PERIODE cela veut dire que l'on est sur un mois avant la simulation
      * 
      * @param numeroMoisMontantARecuperer : numéro du mois pour lequel on souhaite récupérer le montant de l'aide
