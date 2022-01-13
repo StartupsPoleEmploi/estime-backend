@@ -15,7 +15,7 @@ public class SimulateurRepriseActiviteUtile {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", demandeurEmploi.getPeConnectAuthorization().getBearerToken());
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return new HttpEntity<String>(createArePEIOIn(demandeurEmploi), headers);
+        return new HttpEntity<>(createArePEIOIn(demandeurEmploi), headers);
     }
     
     private String createArePEIOIn(DemandeurEmploi demandeurEmploi) {
