@@ -81,7 +81,7 @@ public class AccessTokenUtile {
 		map.add("client_secret", clientSecret);
 		map.add("grant_type", grantType);
 		
-		if(GRANT_TYPE_REFRESH_TOKEN.equalsIgnoreCase(GRANT_TYPE_REFRESH_TOKEN)) {
+		if(grantType.equalsIgnoreCase(GRANT_TYPE_REFRESH_TOKEN)) {
 			map.add(GRANT_TYPE_REFRESH_TOKEN, codeOrRefreshToken);			
 		} else {
 			map.add("code", codeOrRefreshToken);
