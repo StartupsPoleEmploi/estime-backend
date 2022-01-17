@@ -98,11 +98,11 @@ public class AideUtile {
     
     public boolean isCodeAideNotExit(String codeAide) {        
         Stream<AideEnum> aidesStream = Arrays.stream(AideEnum.values());
-        return !aidesStream.anyMatch(aide -> aide.getCode().equalsIgnoreCase(codeAide));
+        return aidesStream.noneMatch(aide -> aide.getCode().equalsIgnoreCase(codeAide));
     }
     
-    public AideEnum getAideEnumByCode(String code) {
-        return Arrays.stream(AideEnum.values()).filter(aideEnum -> aideEnum.getCode().equals(code)).findFirst().get();
+    public Optional<AideEnum> getAideEnumByCode(String code) {
+        return Arrays.stream(AideEnum.values()).filter(aideEnum -> aideEnum.getCode().equals(code)).findFirst();
     }
 
     public String getListeFormateeCodesAidePossibles() {

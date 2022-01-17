@@ -56,7 +56,6 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
@@ -167,7 +166,6 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
@@ -295,7 +293,6 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-	demandeurEmploi.getInformationsPersonnelles().setCodePostal("44200");
 	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement());
 	demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);

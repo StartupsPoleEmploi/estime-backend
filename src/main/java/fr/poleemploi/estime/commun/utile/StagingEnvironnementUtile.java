@@ -15,133 +15,170 @@ import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
+import fr.poleemploi.estime.services.ressources.Coordonnees;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
 public class StagingEnvironnementUtile {
 
+    private static final String ID_POLE_EMPLOI_FICTIF = "utilisateur_fictif";
+
     @Value("${spring.profiles.active}")
     private String environment;
-    
+
     public void bouchonnerCodeDepartementEtDateNaissance(InformationsPersonnelles informationsPersonnelles) {
-        informationsPersonnelles.setCodePostal("44000");
-        informationsPersonnelles.setDateNaissance(LocalDate.of(1985, 8, 1));
+	creerBouchonLogement(informationsPersonnelles);
+	informationsPersonnelles.setDateNaissance(LocalDate.of(1985, 8, 1));
     }
-    
-    public void gererAccesAvecBouchon(Individu individu) {
-        individu.setIdPoleEmploi("bouchon");
-        individu.setPopulationAutorisee(true);
-        addInfosIndemnisation(individu, TypePopulationEnum.ARE.getLibelle());
-    }
-    
+
     public void gererAccesAvecBouchon(Individu individu, UserInfoPEIOOut userInfoPEIO) {
-        individu.setIdPoleEmploi(userInfoPEIO.getSub());
-        individu.setPopulationAutorisee(true);
-        addInfosIndemnisation(individu, getPopulationDeFictif(userInfoPEIO));
+	individu.setIdPoleEmploi(ID_POLE_EMPLOI_FICTIF);
+	individu.setPopulationAutorisee(true);
+	addInfosIndemnisation(individu, getPopulationDeFictif(userInfoPEIO));
     }
-    
+
     public boolean isNotLocalhostEnvironnement() {
-        return !environment.equals(EnvironnementEnum.LOCALHOST.getLibelle()) && !environment.equals(EnvironnementEnum.TESTS_INTEGRATION.getLibelle());
-    }    
+	return !environment.equals(EnvironnementEnum.LOCALHOST.getLibelle()) && !environment.equals(EnvironnementEnum.TESTS_INTEGRATION.getLibelle());
+    }
 
     public boolean isStagingEnvironnement() {
-        return environment.equals(EnvironnementEnum.LOCALHOST.getLibelle()) || environment.equals(EnvironnementEnum.RECETTE.getLibelle());
+	return environment.equals(EnvironnementEnum.LOCALHOST.getLibelle()) || environment.equals(EnvironnementEnum.RECETTE.getLibelle());
     }
-    
+
     public boolean isUtilisateurFictif(UserInfoPEIOOut userInfo) {
-        return isCandidatCaro(userInfo) || isDeFictifPoleemploiio(userInfo);
+	return isCandidatCaro(userInfo) || isDeFictifPoleemploiio(userInfo);
+    }
+
+    public boolean isNotDemandeurFictif(DemandeurEmploi demandeurEmploi) {
+	return !ID_POLE_EMPLOI_FICTIF.equalsIgnoreCase(demandeurEmploi.getIdPoleEmploi());
     }
 
     private void addInfosIndemnisation(Individu individu, String population) {
-        switch (population) {
-        case "AAH":
-            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(true, false, false, false));
-            break;
-        case "ARE":
-            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, true, false, false));
-            break;
-        case "ASS":
-            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, true, false));
-            individu.setRessourcesFinancieres(creerBouchonRessourcesFinancieresASS());
-            break;
-        case "RSA":
-            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, true));
-            break;
-        default:
-            individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, false));
-            break;
-        }
+	switch (population) {
+	case "AAH":
+	    individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(true, false, false, false));
+	    break;
+	case "ARE":
+	    individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, true, false, false));
+	    break;
+	case "ASS":
+	    individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, true, false));
+	    individu.setRessourcesFinancieres(creerBouchonRessourcesFinancieresASS());
+	    break;
+	case "RSA":
+	    individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, true));
+	    break;
+	default:
+	    individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, false));
+	    break;
+	}
     }
 
     private BeneficiaireAides creerBouchonBeneficiaireAides(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
-        BeneficiaireAides beneficiaire = new BeneficiaireAides();
-        beneficiaire.setBeneficiaireAAH(beneficiaireAAH);
-        beneficiaire.setBeneficiaireASS(beneficiaireASS);
-        beneficiaire.setBeneficiaireARE(beneficiaireARE);
-        beneficiaire.setBeneficiaireRSA(beneficiaireRSA);
-        return beneficiaire;
+	BeneficiaireAides beneficiaire = new BeneficiaireAides();
+	beneficiaire.setBeneficiaireAAH(beneficiaireAAH);
+	beneficiaire.setBeneficiaireASS(beneficiaireASS);
+	beneficiaire.setBeneficiaireARE(beneficiaireARE);
+	beneficiaire.setBeneficiaireRSA(beneficiaireRSA);
+	return beneficiaire;
     }
 
     private RessourcesFinancieres creerBouchonRessourcesFinancieresASS() {
-        RessourcesFinancieres ressourcesFinancieres = creerBouchonRessourcesFinancieres();
-        ressourcesFinancieres.setAidesPoleEmploi(creerBouchonAidesPoleEmploiAvecASS(16.89f));
-        return ressourcesFinancieres;
+	RessourcesFinancieres ressourcesFinancieres = creerBouchonRessourcesFinancieres();
+	ressourcesFinancieres.setAidesPoleEmploi(creerBouchonAidesPoleEmploiAvecASS(16.89f));
+	return ressourcesFinancieres;
     }
 
     private AidesPoleEmploi creerBouchonAidesPoleEmploiAvecASS(float montant) {
-        AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-        AllocationASS allocationASS = new AllocationASS();
-        allocationASS.setAllocationJournaliereNet(montant);
-        aidesPoleEmploi.setAllocationASS(allocationASS);
-        return aidesPoleEmploi;
+	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+	AllocationASS allocationASS = new AllocationASS();
+	allocationASS.setAllocationJournaliereNet(montant);
+	aidesPoleEmploi.setAllocationASS(allocationASS);
+	return aidesPoleEmploi;
     }
 
     private RessourcesFinancieres creerBouchonRessourcesFinancieres() {
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(0);
-        creerBouchonAllocationCAF(ressourcesFinancieres);
-        creerBouchonAllocationCPAM(ressourcesFinancieres);
-        return ressourcesFinancieres;
+	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(0);
+	creerBouchonAllocationCAF(ressourcesFinancieres);
+	creerBouchonAllocationCPAM(ressourcesFinancieres);
+	return ressourcesFinancieres;
     }
 
     private void creerBouchonAllocationCAF(RessourcesFinancieres ressourcesFinancieres) {
-        AidesCAF aidesCAF = new AidesCAF();
-        aidesCAF.setAidesLogement(creerBouconAidesLogement());
-        ressourcesFinancieres.setAidesCAF(aidesCAF);
+	AidesCAF aidesCAF = new AidesCAF();
+	aidesCAF.setAidesLogement(creerBouchonAidesLogement());
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
     }
 
-    private AidesLogement creerBouconAidesLogement() {
-        AidesLogement aidesLogement = new AidesLogement();
-        aidesLogement.setAidePersonnaliseeLogement(creerBouchonAllocationsLogement());
-        aidesLogement.setAllocationLogementFamiliale(creerBouchonAllocationsLogement());
-        aidesLogement.setAllocationLogementSociale(creerBouchonAllocationsLogement());
-        return aidesLogement;
+    private AidesLogement creerBouchonAidesLogement() {
+	AidesLogement aidesLogement = new AidesLogement();
+	aidesLogement.setAidePersonnaliseeLogement(creerBouchonAllocationsLogement());
+	aidesLogement.setAllocationLogementFamiliale(creerBouchonAllocationsLogement());
+	aidesLogement.setAllocationLogementSociale(creerBouchonAllocationsLogement());
+	return aidesLogement;
     }
 
     private AllocationsLogement creerBouchonAllocationsLogement() {
-        AllocationsLogement allocationsLogement = new AllocationsLogement();
-        allocationsLogement.setMoisNMoins1(0);
-        allocationsLogement.setMoisNMoins2(0);
-        allocationsLogement.setMoisNMoins3(0);
-        return allocationsLogement;
+	AllocationsLogement allocationsLogement = new AllocationsLogement();
+	allocationsLogement.setMoisNMoins1(0);
+	allocationsLogement.setMoisNMoins2(0);
+	allocationsLogement.setMoisNMoins3(0);
+	return allocationsLogement;
     }
 
     private void creerBouchonAllocationCPAM(RessourcesFinancieres ressourcesFinancieres) {
-        AidesCPAM aidesCPAM = new AidesCPAM();
-        aidesCPAM.setAllocationSupplementaireInvalidite(0f);
-        ressourcesFinancieres.setAidesCPAM(aidesCPAM);
+	AidesCPAM aidesCPAM = new AidesCPAM();
+	aidesCPAM.setAllocationSupplementaireInvalidite(0f);
+	ressourcesFinancieres.setAidesCPAM(aidesCPAM);
     }
-    
+
+    private void creerBouchonLogement(InformationsPersonnelles informationsPersonnelles) {
+	Logement logement = new Logement();
+	logement.setChambre(false);
+	logement.setConventionne(false);
+	logement.setColloc(false);
+	logement.setCrous(false);
+	logement.setMontantCharges(null);
+	logement.setMontantLoyer(null);
+	logement.setCoordonnees(creerBouchonCoordonnees());
+	logement.setStatutOccupationLogement(creerBouchonStatutOccupationLogement());
+	informationsPersonnelles.setLogement(logement);
+    }
+
+    private StatutOccupationLogement creerBouchonStatutOccupationLogement() {
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireHLM(false);
+	statutOccupationLogement.setLocataireMeuble(false);
+	statutOccupationLogement.setLocataireNonMeuble(false);
+	statutOccupationLogement.setLogeGratuitement(false);
+	statutOccupationLogement.setProprietaire(false);
+	statutOccupationLogement.setProprietaireAvecEmprunt(false);
+	return statutOccupationLogement;
+    }
+
+    private Coordonnees creerBouchonCoordonnees() {
+	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodeInsee("");
+	coordonnees.setCodePostal("44000");
+	coordonnees.setDeMayotte(false);
+	coordonnees.setDesDOM(false);
+	return coordonnees;
+    }
+
     private String getPopulationDeFictif(UserInfoPEIOOut userInfo) {
-        if (isCandidatCaro(userInfo)) {
-            return userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
-        } else {
-            return TypePopulationEnum.ARE.getLibelle();
-        }
+	if (isCandidatCaro(userInfo)) {
+	    return userInfo.getGivenName().substring(userInfo.getGivenName().length() - 3);
+	} else {
+	    return TypePopulationEnum.ARE.getLibelle();
+	}
     }
-    
+
     /**
      * Les candidats "Caro" sont les candidats que l'on a créés en production 
      * afin de pouvoir tester l'application en étant connecté au api poleemploi.io de production.
@@ -151,11 +188,11 @@ public class StagingEnvironnementUtile {
      * @return
      */
     private boolean isCandidatCaro(UserInfoPEIOOut userInfo) {
-        String givenName = userInfo.getGivenName();
-        return givenName != null && (givenName.equalsIgnoreCase("caroass") || givenName.equalsIgnoreCase("julietteaah") || givenName.equalsIgnoreCase("carorsa"));
+	String givenName = userInfo.getGivenName();
+	return givenName != null && (givenName.equalsIgnoreCase("caroass") || givenName.equalsIgnoreCase("julietteaah") || givenName.equalsIgnoreCase("carorsa"));
     }
 
     private boolean isDeFictifPoleemploiio(UserInfoPEIOOut userInfo) {
-        return userInfo != null && userInfo.getEmail() != null && userInfo.getEmail().equalsIgnoreCase("emploistoredev@gmail.com");
+	return userInfo != null && userInfo.getEmail() != null && userInfo.getEmail().equalsIgnoreCase("emploistoredev@gmail.com");
     }
 }

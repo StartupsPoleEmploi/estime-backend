@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AideMobiliteUtile;
@@ -34,23 +35,29 @@ public class SimulateurAidesPoleEmploi {
     @Autowired
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
-    public void simuler(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, LocalDate moisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+    @Autowired
+    private StagingEnvironnementUtile stagingEnvironnementUtile;
 
-        if(agepiUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
-            Optional<Aide> agepiOptional = agepiUtile.simulerAide(demandeurEmploi);
-            if (agepiOptional.isPresent()) {
-                aidesPourCeMois.put(AideEnum.AGEPI.getCode(), agepiOptional.get());
-            }
-        }
+    public void simuler(Map<String, Aide>  aidesPourCeMois, int numeroMoisSimule, LocalDate moisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 
-        if(aideMobiliteUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
-            Optional<Aide> aideMobiliteOptional = aideMobiliteUtile.simulerAide(demandeurEmploi);
-            if (aideMobiliteOptional.isPresent()) {
-                aidesPourCeMois.put(AideEnum.AIDE_MOBILITE.getCode(), aideMobiliteOptional.get());
-            }
-        }
+    	if(stagingEnvironnementUtile.isNotDemandeurFictif(demandeurEmploi)) {
+    		if(agepiUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
+    			Optional<Aide> agepiOptional = agepiUtile.simulerAide(demandeurEmploi);
+    			if (agepiOptional.isPresent()) {
+    				aidesPourCeMois.put(AideEnum.AGEPI.getCode(), agepiOptional.get());
+    			}
+    		}
 
-        if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi) && allocationSolidariteSpecifiqueUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
+    		if(aideMobiliteUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
+    			Optional<Aide> aideMobiliteOptional = aideMobiliteUtile.simulerAide(demandeurEmploi);
+    			if (aideMobiliteOptional.isPresent()) {
+    				aidesPourCeMois.put(AideEnum.AIDE_MOBILITE.getCode(), aideMobiliteOptional.get());
+    			}
+    		}
+    	}
+
+        if(beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)
+           && allocationSolidariteSpecifiqueUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
             Optional<Aide> aideOptional = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, moisSimule, dateDebutSimulation);
             if (aideOptional.isPresent()) {
                 aidesPourCeMois.put(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());

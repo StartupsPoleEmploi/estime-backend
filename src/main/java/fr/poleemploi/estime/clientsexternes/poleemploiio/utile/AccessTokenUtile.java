@@ -80,18 +80,14 @@ public class AccessTokenUtile {
 		map.add("client_id", clientId);
 		map.add("client_secret", clientSecret);
 		map.add("grant_type", grantType);
-
-		switch (grantType) {
-		case GRANT_TYPE_REFRESH_TOKEN:
-			map.add("refresh_token", codeOrRefreshToken);
-			break;
-
-		default:
+		
+		if(grantType.equalsIgnoreCase(GRANT_TYPE_REFRESH_TOKEN)) {
+			map.add(GRANT_TYPE_REFRESH_TOKEN, codeOrRefreshToken);			
+		} else {
 			map.add("code", codeOrRefreshToken);
-			map.add("redirect_uri", redirectURI);
-			break;
+			map.add("redirect_uri", redirectURI);			
 		}
-
+		
 		return map;
 	}	
 }

@@ -114,10 +114,10 @@ public class SuiviUtilisateurUtile {
 	private boolean isNonBeneficaireAllocations(boolean isBeneficiaireARE, boolean isBeneficiaireASS, boolean isBeneficiaireRSA, boolean isBeneficiaireAAH) {
 		return !isBeneficiaireARE && !isBeneficiaireASS && !isBeneficiaireRSA && !isBeneficiaireAAH;
 	}
-	
+
 	private String getCodePostal(InformationsPersonnelles informationsPersonnelles) {
-		if(informationsPersonnelles != null) {
-			return informationsPersonnelles.getCodePostal();
+		if (informationsPersonnelles != null && informationsPersonnelles.getLogement() != null && informationsPersonnelles.getLogement().getCoordonnees() != null) {
+			return informationsPersonnelles.getLogement().getCoordonnees().getCodePostal();
 		} else {
 			return StringUtile.EMPTY;
 		}

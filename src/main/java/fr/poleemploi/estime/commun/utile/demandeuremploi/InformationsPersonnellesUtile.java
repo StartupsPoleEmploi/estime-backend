@@ -13,63 +13,68 @@ import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 @Component
 public class InformationsPersonnellesUtile {
 
-    @Autowired
-    private CodeDepartementUtile codeDepartementUtile;
+	@Autowired
+	private CodeDepartementUtile codeDepartementUtile;
 
-    public boolean isFrancais(InformationsPersonnelles informationsPersonnelles) {
-        return NationaliteEnum.FRANCAISE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
-    }
+	public boolean isFrancais(InformationsPersonnelles informationsPersonnelles) {
+		return NationaliteEnum.FRANCAISE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
+	}
 
-    public boolean isEuropeenOuSuisse(InformationsPersonnelles informationsPersonnelles) {
-        return NationaliteEnum.EUROPEEN_OU_SUISSE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
-    }
+	public boolean isEuropeenOuSuisse(InformationsPersonnelles informationsPersonnelles) {
+		return NationaliteEnum.EUROPEEN_OU_SUISSE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
+	}
 
-    public boolean isNotFrancaisOuEuropeenOuSuisse(InformationsPersonnelles informationsPersonnelles) {
-        return NationaliteEnum.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
-    }
+	public boolean isNotFrancaisOuEuropeenOuSuisse(InformationsPersonnelles informationsPersonnelles) {
+		return NationaliteEnum.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
+	}
 
-    public boolean isTitreSejourEnFranceValide(InformationsPersonnelles informationsPersonnelles) {
-        return informationsPersonnelles.getTitreSejourEnFranceValide().booleanValue();
-    }
+	public boolean isTitreSejourEnFranceValide(InformationsPersonnelles informationsPersonnelles) {
+		return informationsPersonnelles.getTitreSejourEnFranceValide().booleanValue();
+	}
 
-    public boolean isDeFranceMetropolitaine(DemandeurEmploi demandeurEmploi) {
-        String codeDepartement = codeDepartementUtile.getCodeDepartement(demandeurEmploi.getInformationsPersonnelles().getCodePostal());
-        return codeDepartement.length() == 2;
-    }
+	public boolean isDeFranceMetropolitaine(DemandeurEmploi demandeurEmploi) {
+		return !codeDepartementUtile.isDesDOM(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal());
+	}
 
-    public boolean isDesDOM(DemandeurEmploi demandeurEmploi) {
-        String codeDepartement = codeDepartementUtile.getCodeDepartement(demandeurEmploi.getInformationsPersonnelles().getCodePostal());
-        return codeDepartement.length() == 3;
-    }
+	public boolean isDesDOM(DemandeurEmploi demandeurEmploi) {
+		return codeDepartementUtile.isDesDOM(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal());
+	}
 
-    public boolean isDeMayotte(DemandeurEmploi demandeurEmploi) {
-        if (hasCodePostal(demandeurEmploi)) {
-            String codeDepartement = codeDepartementUtile.getCodeDepartement(demandeurEmploi.getInformationsPersonnelles().getCodePostal());
-            return CodeDepartementUtile.CODE_DEPARTEMENT_MAYOTTE.equals(codeDepartement);
-        }
-        return false;
-    }
+	public boolean isDeMayotte(DemandeurEmploi demandeurEmploi) {
+		if (hasCodePostal(demandeurEmploi)) {
+			return codeDepartementUtile.isDeMayotte(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal());
+		}
+		return false;
+	}
 
-    public boolean hasCodePostal(DemandeurEmploi demandeurEmploi) {
-        return demandeurEmploi.getInformationsPersonnelles().getCodePostal() != null;
-    }
+	public boolean hasCodePostal(DemandeurEmploi demandeurEmploi) {
+		return demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().getLogement() != null
+				&& demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees() != null
+				&& demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal() != null;
+	}
 
-    public String getStatutOccupationLogement(Logement logement) {
-        if (logement != null) {
-            StatutOccupationLogement statutOccupationLogement = logement.getStatutOccupationLogement();
-            if (statutOccupationLogement.isLogeGratuitement())
-                return StatutOccupationLogementEnum.LOGE_GRATUITEMENT.getLibelle();
-            else if (statutOccupationLogement.isLocataireHLM())
-                return StatutOccupationLogementEnum.LOCATAIRE_HLM.getLibelle();
-            else if (statutOccupationLogement.isLocataireMeuble())
-                return StatutOccupationLogementEnum.LOCATAIRE_MEUBLE.getLibelle();
-            else if (statutOccupationLogement.isLocataireNonMeuble())
-                return StatutOccupationLogementEnum.LOCATAIRE_NON_MEUBLE.getLibelle();
-            else if (statutOccupationLogement.isProprietaire())
-                return StatutOccupationLogementEnum.PROPRIETAIRE.getLibelle();
-            else if (statutOccupationLogement.isProprietaireAvecEmprunt())
-                return StatutOccupationLogementEnum.PROPRIETAIRE_AVEC_EMPRUNT.getLibelle();
-        }
-        return StatutOccupationLogementEnum.NON_RENSEIGNE.getLibelle();
-    }
+	public String getStatutOccupationLogement(Logement logement) {
+		if (logement != null) {
+			StatutOccupationLogement statutOccupationLogement = logement.getStatutOccupationLogement();
+			if (statutOccupationLogement.isLogeGratuitement()) {
+				return StatutOccupationLogementEnum.LOGE_GRATUITEMENT.getLibelle();				
+			} 
+			if (statutOccupationLogement.isLocataireHLM()) {
+				return StatutOccupationLogementEnum.LOCATAIRE_HLM.getLibelle();				
+			}			
+			if (statutOccupationLogement.isLocataireMeuble()) {
+				return StatutOccupationLogementEnum.LOCATAIRE_MEUBLE.getLibelle();
+			}
+			if (statutOccupationLogement.isLocataireNonMeuble()) {			
+				return StatutOccupationLogementEnum.LOCATAIRE_NON_MEUBLE.getLibelle();
+			}
+			if (statutOccupationLogement.isProprietaire()) {
+				return StatutOccupationLogementEnum.PROPRIETAIRE.getLibelle();
+			}
+			if (statutOccupationLogement.isProprietaireAvecEmprunt()) {			
+				return StatutOccupationLogementEnum.PROPRIETAIRE_AVEC_EMPRUNT.getLibelle();
+			}
+		}
+		return StatutOccupationLogementEnum.NON_RENSEIGNE.getLibelle();
+	}
 }
