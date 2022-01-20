@@ -89,7 +89,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeAAH.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -116,7 +116,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-02-2021"), codeAideAAH, montantAAH));
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeAAH.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -142,7 +142,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeAAH.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -170,7 +170,7 @@ class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-02-2021"), codeAideAAH, montantAAHReduit));
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeAAH.toString()).hasToString(openFiscaPayloadExpected);
     }

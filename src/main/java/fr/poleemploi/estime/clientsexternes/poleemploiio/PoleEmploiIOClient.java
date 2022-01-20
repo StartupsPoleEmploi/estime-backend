@@ -200,6 +200,8 @@ public class PoleEmploiIOClient {
 	} catch (Exception exception) {
 	    if (isTooManyRequestsHttpClientError(exception)) {
 		throw new TooManyRequestException(exception.getMessage());
+	    } else if (isNombreDeJoursIndemnisesEgalAZeroError(exception)) {
+		return Optional.of(new ArePEIOOut());
 	    } else {
 		LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), apiSimulateurRepriseActiviteURI));
 		throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
@@ -218,6 +220,10 @@ public class PoleEmploiIOClient {
 
     private boolean isTooManyRequestsHttpClientError(Exception exception) {
 	return exception instanceof HttpClientErrorException && ((HttpClientErrorException) exception).getRawStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value();
+    }
+
+    private boolean isNombreDeJoursIndemnisesEgalAZeroError(Exception exception) {
+	return exception instanceof HttpClientErrorException && ((HttpClientErrorException) exception).getRawStatusCode() == HttpStatus.PRECONDITION_FAILED.value();
     }
 
     private HttpEntity<String> createAuthorizationHttpEntity(String bearerToken) {

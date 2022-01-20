@@ -77,7 +77,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 0));
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeASS.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -105,7 +105,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeASS.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -129,7 +129,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-12-2020"), codeAideASS, 0));
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeASS.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -155,7 +155,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeASS.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -182,7 +182,7 @@ class OpenFiscaMappeurPeriodeTestsASS extends Commun {
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideASS, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeASS.toString()).hasToString(openFiscaPayloadExpected);
     }

@@ -5,6 +5,7 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHOMAGE_NET;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DATE_NAISSANCE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT_A_CHARGE;
@@ -70,11 +71,15 @@ public class OpenFiscaMappeurIndividu {
 
     private void addRessourcesFinancieresDemandeur(JSONObject demandeurJSON, DemandeurEmploi demandeurEmploi, SimulationAides simulationAides, int numeroMoisSimule, LocalDate dateDebutSimulation) {
 	if (ressourcesFinancieresUtile.hasAllocationAdultesHandicapes(demandeurEmploi)) {
-	    demandeurJSON.put(AAH, openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(),
+	    demandeurJSON.put(AAH, openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(),
 		    dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasAllocationSolidariteSpecifique(demandeurEmploi.getRessourcesFinancieres())) {
-	    demandeurJSON.put(ASS, openFiscaMappeurPeriode.creerPeriodesAidee(demandeurEmploi, simulationAides, AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(),
+	    demandeurJSON.put(ASS, openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(),
+		    dateDebutSimulation, numeroMoisSimule));
+	}
+	if (ressourcesFinancieresUtile.hasAllocationARE(demandeurEmploi.getRessourcesFinancieres())) {
+	    demandeurJSON.put(CHOMAGE_NET, openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(),
 		    dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasRevenusImmobilier(demandeurEmploi.getRessourcesFinancieres())) {

@@ -35,6 +35,9 @@ public class TemporaliteCAFUtile {
     private PrimeActiviteAAHUtile primeActiviteAAHUtile;
 
     @Autowired
+    private PrimeActiviteAREUtile primeActiviteAREUtile;
+
+    @Autowired
     private PrimeActiviteASSUtile primeActiviteASSUtile;
 
     /**
@@ -50,6 +53,7 @@ public class TemporaliteCAFUtile {
      * @param demandeurEmploi
      */
     public void simulerTemporaliteAppelOpenfisca(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+
 	// Si l'on doit verser l'aide au logement et la prime d'activité pour les demandeurs ASS/AAH
 	if (isAideLogementAvecPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi)) {
 	    verserAideLogementAvecPrimeActivite(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
@@ -57,13 +61,13 @@ public class TemporaliteCAFUtile {
 	// Si l'on doit verser l'aide au logement, prime d'activité et le RSA pour les demandeurs RSA
 	else if (isAideLogementAvecPrimeActiviteEtRSAAVerser(numeroMoisSimule, demandeurEmploi)) {
 	    verserAideLogementAvecPrimeActiviteEtRSA(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
-	} 
+	}
 	// Si l'on doit verser uniquement l'aide au logement pour les demandeurs ASS/AAH/RSA
 	else if (isAideLogementAVerser(numeroMoisSimule, demandeurEmploi)) {
 	    verserAideLogement(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
 	    primeActiviteRSAUtile.reporterRsaEtPrimeActivite(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
 	    primeActiviteUtile.reporterPrimeActivite(simulationAides, aidesPourCeMois, numeroMoisSimule);
-	} 
+	}
 	// Si l'on doit verser la prime d'activité et le RSA pour les demandeurs RSA
 	else if (isPrimeActiviteEtRSAAVerser(numeroMoisSimule, demandeurEmploi)) {
 	    verserPrimeActiviteEtRSA(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule - 1, demandeurEmploi);
@@ -73,7 +77,7 @@ public class TemporaliteCAFUtile {
 	else if (isPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi)) {
 	    verserPrimeActivite(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
 	    aidesLogementUtile.reporterAideLogement(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
-	} 
+	}
 	// Sinon, on reporte ce qui doit l'être
 	else {
 	    primeActiviteRSAUtile.reporterRsaEtPrimeActivite(simulationAides, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
@@ -99,7 +103,11 @@ public class TemporaliteCAFUtile {
 	} else if (aidesLogementUtile.isEligibleAidesLogement(demandeurEmploi) && aidesLogementUtile.isAideLogementAVerser(numeroMoisSimule, demandeurEmploi)
 		&& beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
 	    isAideLogementAvecPrimeActiviteAVerser = primeActiviteAAHUtile.isPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi);
+	} else if (aidesLogementUtile.isEligibleAidesLogement(demandeurEmploi) && aidesLogementUtile.isAideLogementAVerser(numeroMoisSimule, demandeurEmploi)
+		&& beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
+	    isAideLogementAvecPrimeActiviteAVerser = primeActiviteAREUtile.isPrimeActiviteAVerser(numeroMoisSimule);
 	}
+
 	return isAideLogementAvecPrimeActiviteAVerser;
     }
 
@@ -113,6 +121,8 @@ public class TemporaliteCAFUtile {
 	    isPrimeActiviteAVerser = primeActiviteASSUtile.isPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi);
 	} else if (beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
 	    isPrimeActiviteAVerser = primeActiviteAAHUtile.isPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi);
+	} else if (beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
+	    isPrimeActiviteAVerser = primeActiviteAREUtile.isPrimeActiviteAVerser(numeroMoisSimule);
 	}
 	return isPrimeActiviteAVerser;
     }

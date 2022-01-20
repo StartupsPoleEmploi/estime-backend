@@ -214,6 +214,16 @@ public class RessourcesFinancieresUtile {
 		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() > 0;
     }
 
+    public boolean hasAllocationARE(RessourcesFinancieres ressourcesFinancieres) {
+	return ressourcesFinancieres != null && ressourcesFinancieres.getAidesPoleEmploi() != null && ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE() != null
+		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut() != null
+		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut() > 0
+		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut() != null
+		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut() > 0
+		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants() != null
+		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants() > 0;
+    }
+
     public boolean hasBeneficesTravailleurIndependant(RessourcesFinancieres ressourcesFinancieres) {
 	return ressourcesFinancieres != null && ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice() != null
 		&& ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice() > 0;
