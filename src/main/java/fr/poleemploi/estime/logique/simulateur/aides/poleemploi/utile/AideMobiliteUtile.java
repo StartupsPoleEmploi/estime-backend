@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
@@ -60,42 +61,43 @@ public class AideMobiliteUtile {
     @Autowired
     private PoleEmploiIOClient poleEmploiIOClient;
 
-    public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi) {	
-        float montantAideMobiliteSimule = poleEmploiIOClient.getMontantAideMobiliteSimulateurAides(demandeurEmploi);
-        if (montantAideMobiliteSimule > 0) {
-            return Optional.of(creerAide(montantAideMobiliteSimule));
-        }
-        return Optional.empty();
+    public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi) {
+	float montantAideMobiliteSimule = poleEmploiIOClient.getMontantAideMobiliteSimulateurAides(demandeurEmploi);
+	if (montantAideMobiliteSimule > 0) {
+	    return Optional.of(creerAide(montantAideMobiliteSimule));
+	}
+	return Optional.empty();
     }
 
     public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        return simulateurAidesUtile.isPremierMois(numeroMoisSimule) && futurTravailUtile.isFuturContratTravailEligible(demandeurEmploi.getFuturTravail())
-                && isDistanceAllerRetourDomicileFuturTavailEligible(demandeurEmploi)
-                && (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
+	return simulateurAidesUtile.isPremierMois(numeroMoisSimule) && futurTravailUtile.isFuturContratTravailEligible(demandeurEmploi.getFuturTravail())
+		&& isDistanceAllerRetourDomicileFuturTavailEligible(demandeurEmploi)
+		&& (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
     }
 
     private Aide creerAide(float montantAide) {
-        Aide aideMobilite = new Aide();
-        aideMobilite.setCode(AideEnum.AIDE_MOBILITE.getCode());
-        Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AIDE_MOBILITE.getNomFichierDetail());
-        if (detailAideOptional.isPresent()) {
-            aideMobilite.setDetail(detailAideOptional.get());
-        }
-        aideMobilite.setMontant(montantAide);
-        aideMobilite.setNom(AideEnum.AIDE_MOBILITE.getNom());
-        aideMobilite.setOrganisme(OrganismeEnum.PE.getNom());
-        aideMobilite.setReportee(false);
-        return aideMobilite;
+	Aide aideMobilite = new Aide();
+	aideMobilite.setCode(AideEnum.AIDE_MOBILITE.getCode());
+	Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AIDE_MOBILITE.getNomFichierDetail());
+	if (detailAideOptional.isPresent()) {
+	    aideMobilite.setDetail(detailAideOptional.get());
+	}
+	aideMobilite.setMessageAlerte(MessageInformatifEnum.AIDE_MOBILITE.getMessage());
+	aideMobilite.setMontant(montantAide);
+	aideMobilite.setNom(AideEnum.AIDE_MOBILITE.getNom());
+	aideMobilite.setOrganisme(OrganismeEnum.PE.getNom());
+	aideMobilite.setReportee(false);
+	return aideMobilite;
     }
 
     private boolean isDistanceAllerRetourDomicileFuturTavailEligible(DemandeurEmploi demandeurEmploi) {
-        float distanceKmDomicileTravailAllerRetour = calculerDistanceAllerRetourDomicileTravail(demandeurEmploi);
-        return (!informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && distanceKmDomicileTravailAllerRetour > TRAJET_KM_ALLER_RETOUR_MINIMUM)
-                || (informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && distanceKmDomicileTravailAllerRetour > TRAJET_KM_ALLER_RETOUR_MINIMUM_DOM);
+	float distanceKmDomicileTravailAllerRetour = calculerDistanceAllerRetourDomicileTravail(demandeurEmploi);
+	return (!informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && distanceKmDomicileTravailAllerRetour > TRAJET_KM_ALLER_RETOUR_MINIMUM)
+		|| (informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && distanceKmDomicileTravailAllerRetour > TRAJET_KM_ALLER_RETOUR_MINIMUM_DOM);
     }
 
     private float calculerDistanceAllerRetourDomicileTravail(DemandeurEmploi demandeurEmploi) {
-        return BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getDistanceKmDomicileTravail()).multiply(BigDecimal.valueOf(2)).floatValue();
+	return BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getDistanceKmDomicileTravail()).multiply(BigDecimal.valueOf(2)).floatValue();
 
     }
 }
