@@ -15,43 +15,36 @@ import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 @Configuration
-@Profile({"localhost","recette","production"})
+@Profile({ "localhost", "recette", "production" })
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
+
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private String issuerLocation;
-    
+
     @Value("${spring.security.oauth2.client.registration.estime.client-id}")
     private String clientId;
-    
+
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/individus/authentifier");
-        web.ignoring().antMatchers("/actuator/info");
-        web.ignoring().antMatchers("/actuator/health"); 
-        web.ignoring().antMatchers("/aides/**");
-        web.ignoring().antMatchers("/apiam/**");
+	web.ignoring().antMatchers("/individus/authentifier");
+	web.ignoring().antMatchers("/actuator/info");
+	web.ignoring().antMatchers("/actuator/health");
+	web.ignoring().antMatchers("/aides/**");
     }
-    
-    @Override  
-    protected void configure(HttpSecurity http) throws Exception {  
-        // method will add the Spring-provided CorsFilter to the application context which in turn bypasses the authorization checks for OPTIONS requests.
-        http.cors();
-        
-        http
-        .authorizeRequests()
-        .anyRequest().authenticated()
-        .and()
-        .oauth2ResourceServer()
-        .jwt()
-        .decoder(jwtTokenDecoder());
-    }  
-    
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+	// method will add the Spring-provided CorsFilter to the application context which in turn bypasses the authorization checks for OPTIONS requests.
+	http.cors();
+
+	http.authorizeRequests().anyRequest().authenticated().and().oauth2ResourceServer().jwt().decoder(jwtTokenDecoder());
+    }
+
     private JwtDecoder jwtTokenDecoder() {
-        NimbusJwtDecoder decoder = (NimbusJwtDecoder) JwtDecoders.fromOidcIssuerLocation(issuerLocation);
-        OAuth2TokenValidator<Jwt> defaultValidators = JwtValidators.createDefaultWithIssuer(issuerLocation);
-        OAuth2TokenValidator<Jwt> delegatingValidator = new DelegatingOAuth2TokenValidator<>(defaultValidators, new JwtTokenValidator(clientId));
-        decoder.setJwtValidator(delegatingValidator);
-        return decoder;
+	NimbusJwtDecoder decoder = (NimbusJwtDecoder) JwtDecoders.fromOidcIssuerLocation(issuerLocation);
+	OAuth2TokenValidator<Jwt> defaultValidators = JwtValidators.createDefaultWithIssuer(issuerLocation);
+	OAuth2TokenValidator<Jwt> delegatingValidator = new DelegatingOAuth2TokenValidator<>(defaultValidators, new JwtTokenValidator(clientId));
+	decoder.setJwtValidator(delegatingValidator);
+	return decoder;
     }
 }

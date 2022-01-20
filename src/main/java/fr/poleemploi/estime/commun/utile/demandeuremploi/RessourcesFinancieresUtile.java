@@ -64,7 +64,13 @@ public class RessourcesFinancieresUtile {
 	if (hasPensionsAlimentaires(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer()));
 	}
-	if (hasRevenusImmobilier(demandeurEmploi)) {
+	if (hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(getBeneficesMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
+	}
+	if (hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(getChiffreAffairesIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
+	}
+	if (hasRevenusImmobilier(demandeurEmploi.getRessourcesFinancieres())) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
 	}
 	if (hasAidePersonnaliseeLogement(demandeurEmploi)) {
@@ -219,9 +225,8 @@ public class RessourcesFinancieresUtile {
 		&& demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getPensionInvalidite() > 0;
     }
 
-    public boolean hasRevenusImmobilier(DemandeurEmploi demandeurEmploi) {
-	return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getRevenusImmobilier3DerniersMois() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getRevenusImmobilier3DerniersMois() > 0;
+    public boolean hasRevenusImmobilier(RessourcesFinancieres ressourcesFinancieres) {
+	return ressourcesFinancieres != null && ressourcesFinancieres.getRevenusImmobilier3DerniersMois() != null && ressourcesFinancieres.getRevenusImmobilier3DerniersMois() > 0;
     }
 
     public boolean hasRevenusMicroEntreprise(RessourcesFinancieres ressourcesFinancieres) {

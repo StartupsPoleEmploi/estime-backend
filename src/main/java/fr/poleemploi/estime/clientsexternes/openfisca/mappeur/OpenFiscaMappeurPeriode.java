@@ -57,10 +57,10 @@ public class OpenFiscaMappeurPeriode {
 	return periode;
     }
 
-    public JSONObject creerPeriodesRevenusImmobilier(Object valeur, LocalDate dateDebutSimulation) {
+    public JSONObject creerPeriodesRevenusImmobilier(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	JSONObject periode = new JSONObject();
-	LocalDate datePlusNbrPeriodeMois = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, NOMBRE_MOIS_PERIODE_OPENFISCA);
-	for (int nombreMoisAEnlever = 36; nombreMoisAEnlever >= 1; nombreMoisAEnlever--) {
+	LocalDate datePlusNbrPeriodeMois = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisSimule);
+	for (int nombreMoisAEnlever = NOMBRE_MOIS_PERIODE_36; nombreMoisAEnlever >= 1; nombreMoisAEnlever--) {
 	    LocalDate datePeriode = dateUtile.enleverMoisALocalDate(datePlusNbrPeriodeMois, nombreMoisAEnlever);
 	    periode.put(getPeriodeFormatee(datePeriode), valeur);
 	}
@@ -157,9 +157,9 @@ public class OpenFiscaMappeurPeriode {
 	return periode;
     }
 
-    public JSONObject creerPeriodesAnnees(Object valeur, LocalDate dateDebutSimulation) {
+    public JSONObject creerPeriodesAnnees(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	JSONObject periode = new JSONObject();
-	int anneeDateSimulation = dateDebutSimulation.getYear();
+	int anneeDateSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisSimule).getYear();
 	String anneeMoinsUnAnneeSimulation = String.valueOf(anneeDateSimulation - 1);
 	String anneeMoinsDeuxAnneeSimulation = String.valueOf(anneeDateSimulation - 2);
 	periode.put(anneeMoinsUnAnneeSimulation, valeur);
