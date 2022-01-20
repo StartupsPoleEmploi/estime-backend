@@ -30,6 +30,18 @@ public class RessourcesFinancieresUtile {
     public float calculerMontantRessourcesFinancieresMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {
 	BigDecimal montantTotal = BigDecimal.ZERO;
 	LocalDate moisAvantSimulation = dateUtile.enleverMoisALocalDate(dateUtile.getDateJour(), 1);
+
+	montantTotal = montantTotal.add(BigDecimal.valueOf(calculerMontantAidesMoisAvantSimulation(demandeurEmploi, moisAvantSimulation)));
+	montantTotal = montantTotal.add(BigDecimal.valueOf(calculerMontantRevenusMoisAvantSimulation(demandeurEmploi)));
+
+	return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
+    }
+
+    private float calculerMontantAidesMoisAvantSimulation(DemandeurEmploi demandeurEmploi, LocalDate moisAvantSimulation) {
+	BigDecimal montantTotal = BigDecimal.ZERO;
+	if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)) {
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(allocationSolidariteSpecifique.calculerMontant(demandeurEmploi, moisAvantSimulation)));
+	}
 	if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(allocationSolidariteSpecifique.calculerMontant(demandeurEmploi, moisAvantSimulation)));
 	}
@@ -42,12 +54,6 @@ public class RessourcesFinancieresUtile {
 	}
 	if (beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA()));
-	}
-	if (hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(getBeneficesMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
-	}
-	if (hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(getChiffreAffairesIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
 	}
 	if (hasAllocationsFamiliales(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales()));
@@ -64,15 +70,6 @@ public class RessourcesFinancieresUtile {
 	if (hasPensionsAlimentaires(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer()));
 	}
-	if (hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(getBeneficesMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
-	}
-	if (hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(getChiffreAffairesIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
-	}
-	if (hasRevenusImmobilier(demandeurEmploi.getRessourcesFinancieres())) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
-	}
 	if (hasAidePersonnaliseeLogement(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(
 		    BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement())));
@@ -84,6 +81,20 @@ public class RessourcesFinancieresUtile {
 	if (hasAllocationLogementSociale(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(
 		    BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale())));
+	}
+	return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
+    }
+
+    private float calculerMontantRevenusMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {
+	BigDecimal montantTotal = BigDecimal.ZERO;
+	if (hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(getBeneficesMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
+	}
+	if (hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(getChiffreAffairesIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
+	}
+	if (hasRevenusImmobilier(demandeurEmploi.getRessourcesFinancieres())) {
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
 	}
 	return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
     }

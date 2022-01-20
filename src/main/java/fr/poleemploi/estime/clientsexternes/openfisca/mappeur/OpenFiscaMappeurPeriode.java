@@ -157,22 +157,6 @@ public class OpenFiscaMappeurPeriode {
 	return periode;
     }
 
-    public JSONObject creerPeriodesAre(DemandeurEmploi demandeurEmploi, SimulationAides simulationAides, String codeAide, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject periode = new JSONObject();
-	int numeroMoisMontantARecuperer = numeroMoisSimule - (OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA - 1);
-	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode++) {
-	    float montantAidee = 0;
-	    if (isNumeroMoisMontantARecupererDansPeriodeSimulation(numeroMoisMontantARecuperer)) {
-		montantAidee = aideeUtile.getMontantAidePourCeMoisSimule(simulationAides, codeAide, numeroMoisMontantARecuperer);
-	    } else {
-		montantAidee = aideeUtile.getMontantAideAvantSimulation(numeroMoisMontantARecuperer, demandeurEmploi, codeAide, dateDebutSimulation);
-	    }
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisPeriode, numeroMoisSimule), montantAidee);
-	    numeroMoisMontantARecuperer++;
-	}
-	return periode;
-    }
-
     public JSONObject creerPeriodesAnnees(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	JSONObject periode = new JSONObject();
 	int anneeDateSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisSimule).getYear();
