@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -25,7 +26,10 @@ public class RessourcesFinancieresUtile {
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
     @Autowired
-    private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifique;
+    private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifiqueUtile;
+
+    @Autowired
+    private AreUtile areUtile;
 
     public float calculerMontantRessourcesFinancieresMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {
 	BigDecimal montantTotal = BigDecimal.ZERO;
@@ -40,10 +44,10 @@ public class RessourcesFinancieresUtile {
     private float calculerMontantAidesMoisAvantSimulation(DemandeurEmploi demandeurEmploi, LocalDate moisAvantSimulation) {
 	BigDecimal montantTotal = BigDecimal.ZERO;
 	if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(allocationSolidariteSpecifique.calculerMontant(demandeurEmploi, moisAvantSimulation)));
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(allocationSolidariteSpecifiqueUtile.calculerMontant(demandeurEmploi, moisAvantSimulation)));
 	}
-	if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(allocationSolidariteSpecifique.calculerMontant(demandeurEmploi, moisAvantSimulation)));
+	if (beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(areUtile.calculerMontantAreAvantSimulation(demandeurEmploi, moisAvantSimulation)));
 	}
 	if (beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH()));
