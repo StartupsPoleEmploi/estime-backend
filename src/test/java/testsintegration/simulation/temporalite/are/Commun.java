@@ -1,19 +1,34 @@
 package testsintegration.simulation.temporalite.are;
 
-import java.text.ParseException;
+import static org.mockito.Mockito.doReturn;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.util.Optional;
+
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
+import fr.poleemploi.estime.services.ressources.Coordonnees;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.Salaire;
+import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
 
 public class Commun {
@@ -61,6 +76,38 @@ public class Commun {
 	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().setAllocationARE(allocationARE);
 
 	return demandeurEmploi;
+    }
+
+    protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+	//mock création date de demande de simulation
+	doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
+
+	//mock retour appel détail indemnisation de l'ESD 
+	DetailIndemnisationPEIOOut detailIndemnisationESD = utile.creerDetailIndemnisationPEIO(TypePopulationEnum.ARE.getLibelle());
+	doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
+
+	//mock retour appel ARE de l'ESD 
+	Optional<ArePEIOOut> arePEIOOutVide = Optional.of(new ArePEIOOut());
+	doReturn(arePEIOOutVide).when(poleEmploiIOClient).getAreSimulateurRepriseActivite(Mockito.any(DemandeurEmploi.class));
+    }
+
+    protected Logement initLogement() {
+	Logement logement = new Logement();
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	logement.setMontantCharges(50f);
+	logement.setMontantLoyer(500f);
+	logement.setCoordonnees(createCoordonnees());
+	return logement;
+    }
+
+    protected Coordonnees createCoordonnees() {
+	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44200");
+	coordonnees.setCodeInsee("44109");
+	coordonnees.setDeMayotte(false);
+	return coordonnees;
     }
 
 }

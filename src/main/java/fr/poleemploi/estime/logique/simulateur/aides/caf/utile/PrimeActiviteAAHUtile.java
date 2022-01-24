@@ -11,7 +11,7 @@ public class PrimeActiviteAAHUtile {
      * Fonction permettant de déterminer si le montant de la prime d'activité doit être calculé ce mois-ci
      * 
      * @param numeroMoisSimule
-     * @param prochaineDeclarationTrimestrielle
+     * @param demandeurEmploi
      * @return
      *       _________________________________________________________________________________________
      *      |            |          |          |          |          |          |          |          |
@@ -27,8 +27,7 @@ public class PrimeActiviteAAHUtile {
 	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
 	return numeroMoisSimule == 1 || ((prochaineDeclarationTrimestrielle == 1 && (numeroMoisSimule == 4))
 		|| (prochaineDeclarationTrimestrielle == 2 && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
-		|| ((prochaineDeclarationTrimestrielle == 0 || prochaineDeclarationTrimestrielle == 3)
-			&& (numeroMoisSimule == 3 || numeroMoisSimule == 6)));
+		|| ((prochaineDeclarationTrimestrielle == 0 || prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 3 || numeroMoisSimule == 6)));
 
     }
 
@@ -36,7 +35,7 @@ public class PrimeActiviteAAHUtile {
      * Fonction permettant de déterminer si le montant de la prime d'activité doit être calculé ce mois-ci
      * 
      * @param numeroMoisSimule
-     * @param prochaineDeclarationTrimestrielle
+     * @param demandeurEmploi
      * @return
      *       _________________________________________________________________________________________
      *      |            |          |          |          |          |          |          |          |

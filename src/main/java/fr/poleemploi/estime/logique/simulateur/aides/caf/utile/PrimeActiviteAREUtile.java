@@ -2,6 +2,8 @@ package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+
 @Component
 public class PrimeActiviteAREUtile {
 
@@ -9,31 +11,45 @@ public class PrimeActiviteAREUtile {
      * Fonction permettant de déterminer si on doit calculer le montant de la prime d'activité ce mois-ci
      * 
      * @param numeroMoisSimule
+     * @param demandeurEmploi
      * @return
-     *       ____________________________________________________________________________
-     *      |          |          |          |          |          |          |          |
-     *      |    M0    |    M1    |    M2    |    M3    |    M4    |    M5    |    M6    |
-     *      |          |          |          |          |          |          |          |
-     *      |          |   (C1)   |    V1    |    R1    | (C2)/R1  |    V2    |    R2    |
-     *      |__________|__________|__________|__________|__________|__________|__________|
+     *       _________________________________________________________________________________________
+     *      |            |          |          |          |          |          |          |          |
+     *      | Mois décla |    M0    |    M1    |    M2    |    M3    |     M4   |    M5    |    M6    |
+     *      |            |          |          |          |          |          |          |          |  
+     *      |  -  M0     |          |    C1    |    V1    | (C2)/R1  |     V2   |    R2    | (C3)/R2  |              
+     *      |  -  M1     |          |    C1    |    V1    |    R1    |  (C2)/R1 |    V2    |    R2    |          
+     *      |  -  M2     |          |    C1    | (C2)/V1  |    V2    |     R2   | (C3)/R2  |    V3    |          
+     *      |  -  M3     |          |    C1    |    V1    | (C2)/R1  |     V2   |    R2    | (C3)/R2  |  
+     *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      */
-    protected boolean isPrimeActiviteACalculer(int numeroMoisSimule) {
-	return numeroMoisSimule == 1 || numeroMoisSimule == 4;
+    protected boolean isPrimeActiviteACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	return numeroMoisSimule == 1 || ((prochaineDeclarationTrimestrielle == 1 && (numeroMoisSimule == 4))
+		|| (prochaineDeclarationTrimestrielle == 2 && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
+		|| ((prochaineDeclarationTrimestrielle == 0 || prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 3 || numeroMoisSimule == 6)));
     }
 
     /**
      * Fonction permettant de déterminer si on doit verser le montant de la prime d'activité calculé au mois précédent ce mois-ci
      * 
      * @param numeroMoisSimule
+     * @param demandeurEmploi
      * @return
-     *       ____________________________________________________________________________
-     *      |          |          |          |          |          |          |          |
-     *      |    M0    |    M1    |    M2    |    M3    |    M4    |    M5    |    M6    |
-     *      |          |          |          |          |          |          |          |
-     *      |          |    C1    |   (V1)   |    R1    |   C2/R1  |   (V2)   |    R2    |
-     *      |__________|__________|__________|__________|__________|__________|__________|
+     *       _________________________________________________________________________________________
+     *      |            |          |          |          |          |          |          |          |
+     *      | Mois décla |    M0    |    M1    |    M2    |    M3    |    M4    |    M5    |    M6    |
+     *      |            |          |          |          |          |          |          |          |  
+     *      |  -  M0     |          |    C1    |   (V1)   |  C2/R1   |   (V2)   |    R2    |  C3/R2   |              
+     *      |  -  M1     |          |    C1    |   (V1)   |    R1    |  C2/R1   |   (V2)   |    R2    |          
+     *      |  -  M2     |          |    C1    |  C2/(V1) |   (V2)   |    R2    |  C3/R2   |   (V3)   |          
+     *      |  -  M3     |          |    C1    |   (V1)   |  C2/R1   |   (V2)   |    R2    |  C3/R2   |  
+     *      |____________|__________|__________|__________|__________|__________|__________|__________|      
      */
-    protected boolean isPrimeActiviteAVerser(int numeroMoisSimule) {
-	return numeroMoisSimule == 2 || numeroMoisSimule == 5;
+    protected boolean isPrimeActiviteAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	return numeroMoisSimule == 2 || ((prochaineDeclarationTrimestrielle == 1 && (numeroMoisSimule == 5))
+		|| (prochaineDeclarationTrimestrielle == 2 && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
+		|| ((prochaineDeclarationTrimestrielle == 0 || prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
     }
 }
