@@ -4,6 +4,7 @@ public enum TypePopulationEnum {
 
     AAH("AAH"),
     ARE("ARE"),
+    AREF("AREF"),
     ASS("ASS"),
     RSA("RSA"),
     AAH_ASS("AAH_ASS"),
