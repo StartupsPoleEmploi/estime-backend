@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -52,7 +53,7 @@ public class AreUtile {
 	    this.nombreJoursRestants = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants();
 	    this.joursIndemnisables = getNombreJoursIndemnisables(areOut, demandeurEmploi);
 	    this.nombreJoursRestants -= this.joursIndemnisables;
-	    Aide complementARE = creerComplementARE(montantComplementARE);
+	    Aide complementARE = creerComplementARE(montantComplementARE, false);
 	    aidesPourCeMois.put(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
 	}
     }
@@ -60,23 +61,26 @@ public class AreUtile {
     private void verserReliquatComplementARE(Map<String, Aide> aidesPourCeMois) {
 	this.nombreJoursRestants = getNombreJoursRestantsReliquat();
 	if (nombreJoursRestants > 0) {
-	    Aide complementARE = creerComplementARE(this.montantComplementARE);
+	    Aide complementARE = creerComplementARE(this.montantComplementARE, false);
 	    aidesPourCeMois.put(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
 	} else {
 	    float nombreJoursRestantsAvantCeMois = getNombreJoursRestantsReliquatAvantCeMois();
 	    if (nombreJoursRestantsAvantCeMois > 0) {
 		float montantReliquatComplementARE = (float) Math.floor((this.montantComplementARE / this.joursIndemnisables) * nombreJoursRestantsAvantCeMois);
-		Aide complementARE = creerComplementARE(montantReliquatComplementARE);
+		Aide complementARE = creerComplementARE(montantReliquatComplementARE, true);
 		aidesPourCeMois.put(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
 	    }
 	}
     }
 
-    private Aide creerComplementARE(float montantAide) {
+    private Aide creerComplementARE(float montantAide, boolean isDernierMoisComplementARE) {
 	Aide are = new Aide();
 	are.setCode(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode());
 	are.setNom(AideEnum.ALLOCATION_RETOUR_EMPLOI.getNom());
-	are.setOrganisme(OrganismeEnum.PE.getNom());
+	if (isDernierMoisComplementARE) {
+	    are.setMessageAlerte(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage());
+	}
+	are.setOrganisme(OrganismeEnum.PE.getNomCourt());
 	are.setMontant(montantAide);
 	are.setReportee(false);
 	return are;
