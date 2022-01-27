@@ -313,4 +313,13 @@ public class RessourcesFinancieresUtile {
     public boolean isAllocationLogementNotEmpty(AllocationsLogement allocationsLogement) {
 	return (allocationsLogement != null && (allocationsLogement.getMoisNMoins1() > 0 || allocationsLogement.getMoisNMoins2() > 0 || allocationsLogement.getMoisNMoins3() > 0));
     }
+
+    public int getProchaineDeclarationTrimestrielle(DemandeurEmploi demandeurEmploi) {
+	int prochaineDeclarationTrimestrielle = 1;
+	if (demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null
+		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle() != null) {
+	    prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	}
+	return prochaineDeclarationTrimestrielle;
+    }
 }

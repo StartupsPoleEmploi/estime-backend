@@ -18,7 +18,6 @@ import fr.poleemploi.estime.services.ressources.SimulationAides;
 @Component
 public class AidesLogementUtile {
 
-
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
@@ -42,9 +41,9 @@ public class AidesLogementUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      */
     boolean isAideLogementACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
-	return ((numeroMoisSimule == 1) || (prochaineDeclarationTrimestrielle == numeroMoisSimule)
-		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
+	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
+	return ((numeroMoisSimule == 1) || (prochaineDeclarationTrimestrielle == numeroMoisSimule) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
+		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
     }
 
     /**
@@ -65,7 +64,7 @@ public class AidesLogementUtile {
      *      
      */
     boolean isAideLogementAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	return (numeroMoisSimule == 2 || ((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
 		|| ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 5))
 		|| ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
@@ -99,7 +98,7 @@ public class AidesLogementUtile {
     }
 
     private boolean isEligiblePourReportAideLogementDeclare(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
-	return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi) 
+	return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi)
 		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle() != null
 		&& (numeroMoisSimule == 1 || numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle());
     }

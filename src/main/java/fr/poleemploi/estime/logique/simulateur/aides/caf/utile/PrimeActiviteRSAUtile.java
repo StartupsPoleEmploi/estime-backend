@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -21,6 +22,9 @@ public class PrimeActiviteRSAUtile {
 
     @Autowired
     private PrimeActiviteUtile primeActiviteUtile;
+
+    @Autowired
+    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
     /**
      * Fonction permettant de déterminer si le montant de la prime d'activité doit être calculé ce mois-ci
@@ -40,7 +44,7 @@ public class PrimeActiviteRSAUtile {
      *  
      */
     boolean isRSAACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	return ((prochaineDeclarationTrimestrielle == numeroMoisSimule) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
 		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
     }
@@ -63,7 +67,7 @@ public class PrimeActiviteRSAUtile {
      *       
      */
     boolean isRSAAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	return (((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
 		|| ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
 		|| ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
@@ -105,11 +109,9 @@ public class PrimeActiviteRSAUtile {
 
     private boolean isEligiblePourReportRSADeclare(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	boolean isEligiblePourReportRSADeclare = false;
-	if (demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() != null
+	if (demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() != null
 		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() > 0) {
-	    isEligiblePourReportRSADeclare = numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieres().getAidesCAF()
-		    .getProchaineDeclarationTrimestrielle();
+	    isEligiblePourReportRSADeclare = numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
 	}
 	return isEligiblePourReportRSADeclare;
     }

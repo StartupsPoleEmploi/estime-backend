@@ -1,11 +1,16 @@
 package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @Component
 public class PrimeActiviteAAHUtile {
+
+    @Autowired
+    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
     /**
      * Fonction permettant de déterminer si le montant de la prime d'activité doit être calculé ce mois-ci
@@ -24,7 +29,7 @@ public class PrimeActiviteAAHUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      */
     protected boolean isPrimeActiviteACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	return numeroMoisSimule == 1 || ((prochaineDeclarationTrimestrielle == 1 && (numeroMoisSimule == 4))
 		|| (prochaineDeclarationTrimestrielle == 2 && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
 		|| ((prochaineDeclarationTrimestrielle == 0 || prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 3 || numeroMoisSimule == 6)));
@@ -48,7 +53,7 @@ public class PrimeActiviteAAHUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      */
     protected boolean isPrimeActiviteAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	return numeroMoisSimule == 2 || ((prochaineDeclarationTrimestrielle == 1 && (numeroMoisSimule == 5))
 		|| (prochaineDeclarationTrimestrielle == 2 && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
 		|| ((prochaineDeclarationTrimestrielle == 0 || prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
