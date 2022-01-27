@@ -195,6 +195,8 @@ public class PoleEmploiIOClient {
     public Optional<ArePEIOOut> getAreSimulateurRepriseActivite(DemandeurEmploi demandeurEmploi) {
 	String apiSimulateurRepriseActiviteURI = poleemploiioURI + "peconnect-simuler-reprise-activite/v1/simulation-droits/reprise-activite";
 	try {
+	    //avant appel au service, vérification que l'access token est toujours valide
+	    refreshAccessToken(demandeurEmploi);
 	    HttpEntity<ArePEIOIn> httpEntity = simulateurRepriseActiviteUtile.createHttpEntityAre(demandeurEmploi);
 	    return Optional.of(restTemplate.postForEntity(apiSimulateurRepriseActiviteURI, httpEntity, ArePEIOOut.class).getBody());
 	} catch (Exception exception) {
