@@ -203,7 +203,9 @@ public class PoleEmploiIOClient {
 	    if (isTooManyRequestsHttpClientError(exception)) {
 		throw new TooManyRequestException(exception.getMessage());
 	    } else if (isNombreDeJoursIndemnisesEgalAZeroError(exception)) {
-		return Optional.of(new ArePEIOOut());
+		// TODO: améliorer la gestion des retours en erreur de l'API reprise d'activité quand le demandeur n'a pas le droit à du complément ARE 
+		LOGGER.info(String.format(LoggerMessages.RETOUR_API_ARE_ZERO_JOUR_INDEMNISE.getMessage(), apiSimulateurRepriseActiviteURI, exception.getMessage()));
+		return Optional.empty();
 	    } else {
 		LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), apiSimulateurRepriseActiviteURI));
 		throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
