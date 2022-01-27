@@ -11,6 +11,6 @@ import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 public class NationalitesUtile {
 
     public String getListeFormateeNationalitesPossibles() {
-        return String.join(" / ", Arrays.asList(NationaliteEnum.values()).stream().map(Object::toString).collect(Collectors.toList()));
+	return String.join(" / ", Arrays.asList(NationaliteEnum.values()).stream().map(Object::toString).collect(Collectors.toList()));
     }
 }

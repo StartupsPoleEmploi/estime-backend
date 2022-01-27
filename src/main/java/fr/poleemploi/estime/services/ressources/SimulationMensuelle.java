@@ -6,27 +6,27 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class SimulationMensuelle {
-    
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datePremierJourMoisSimule;
     private Map<String, Aide> mesAides;
-    
+
     public LocalDate getDatePremierJourMoisSimule() {
-        return datePremierJourMoisSimule;
+	return datePremierJourMoisSimule;
     }
     public void setDatePremierJourMoisSimule(LocalDate datePremierJourMoisSimule) {
-        this.datePremierJourMoisSimule = datePremierJourMoisSimule;
+	this.datePremierJourMoisSimule = datePremierJourMoisSimule;
     }
     public Map<String, Aide> getMesAides() {
-        return mesAides;
+	return mesAides;
     }
     public void setMesAides(Map<String, Aide> mesAides) {
-        this.mesAides = mesAides;
+	this.mesAides = mesAides;
     }
-    
+
     @Override
     public String toString() {
-        return "SimulationMensuelle [datePremierJourMoisSimule=" + datePremierJourMoisSimule + ", mesAides=" + mesAides
-                + "]";
+	return "SimulationMensuelle [datePremierJourMoisSimule=" + datePremierJourMoisSimule + ", mesAides=" + mesAides
+		+ "]";
     }   
 }

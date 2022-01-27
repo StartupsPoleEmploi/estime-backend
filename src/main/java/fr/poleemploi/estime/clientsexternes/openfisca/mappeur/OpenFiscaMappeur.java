@@ -39,36 +39,36 @@ public class OpenFiscaMappeur {
     private OpenFiscaMappeurIndividu openFiscaMappeurIndividu;
 
     public JSONObject mapDemandeurEmploiToOpenFiscaPayload(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        JSONObject payloadOpenFisca = new JSONObject();
-        Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA);
-        payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulationAides, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
-        payloadOpenFisca.put(FAMILLES, creerFamillesJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
-        payloadOpenFisca.put(MENAGES, creerMenagesJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
-        return payloadOpenFisca;
+	JSONObject payloadOpenFisca = new JSONObject();
+	Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA);
+	payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulationAides, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
+	payloadOpenFisca.put(FAMILLES, creerFamillesJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
+	payloadOpenFisca.put(MENAGES, creerMenagesJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+	return payloadOpenFisca;
     }
 
     private JSONObject creerIndividusJSON(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional,
-            LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        JSONObject individu = new JSONObject();
-        individu.put(DEMANDEUR, openFiscaMappeurIndividu.creerDemandeurJSON(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
-        if (personneAChargeAgeInferieureAgeLimiteOptional.isPresent()) {
-            openFiscaMappeurIndividu.ajouterPersonneACharge(individu, personneAChargeAgeInferieureAgeLimiteOptional.get(), dateDebutSimulation, numeroMoisSimule);
-        }
-        if (situationFamilialeUtile.isEnCouple(demandeurEmploi)) {
-            individu.put(CONJOINT, openFiscaMappeurIndividu.creerConjointJSON(demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimule));
-        }
-        return individu;
+                                          LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	JSONObject individu = new JSONObject();
+	individu.put(DEMANDEUR, openFiscaMappeurIndividu.creerDemandeurJSON(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+	if (personneAChargeAgeInferieureAgeLimiteOptional.isPresent()) {
+	    openFiscaMappeurIndividu.ajouterPersonneACharge(individu, personneAChargeAgeInferieureAgeLimiteOptional.get(), dateDebutSimulation, numeroMoisSimule);
+	}
+	if (situationFamilialeUtile.isEnCouple(demandeurEmploi)) {
+	    individu.put(CONJOINT, openFiscaMappeurIndividu.creerConjointJSON(demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimule));
+	}
+	return individu;
     }
 
     private JSONObject creerFamillesJSON(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        JSONObject familles = new JSONObject();
-        familles.put(FAMILLE1, openFiscaMappeurFamille.creerFamilleJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
-        return familles;
+	JSONObject familles = new JSONObject();
+	familles.put(FAMILLE1, openFiscaMappeurFamille.creerFamilleJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
+	return familles;
     }
 
     private JSONObject creerMenagesJSON(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        JSONObject menages = new JSONObject();
-        menages.put(MENAGE1, openFiscaMappeurMenage.creerMenageJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
-        return menages;
+	JSONObject menages = new JSONObject();
+	menages.put(MENAGE1, openFiscaMappeurMenage.creerMenageJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+	return menages;
     }
 }

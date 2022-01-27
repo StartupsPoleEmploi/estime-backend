@@ -11,53 +11,53 @@ public class PeConnectAuthorization {
     private String scope;
     private String tokenType;
     private LocalDateTime expireInDate;
-    
+
     public LocalDateTime getExpireInDate() {
-		return expireInDate;
-	}
-	public void setExpireInDate(LocalDateTime expireInDate) {
-		this.expireInDate = expireInDate;
-	}
-	public String getIdToken() {
-        return idToken;
+	return expireInDate;
+    }
+    public void setExpireInDate(LocalDateTime expireInDate) {
+	this.expireInDate = expireInDate;
+    }
+    public String getIdToken() {
+	return idToken;
     }
     public void setIdToken(String idToken) {
-        this.idToken = idToken;
+	this.idToken = idToken;
     }
     public String getRefreshToken() {
-        return refreshToken;
+	return refreshToken;
     }
     public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+	this.refreshToken = refreshToken;
     }
     public String getTokenType() {
-        return tokenType;
+	return tokenType;
     }
     public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
+	this.tokenType = tokenType;
     }
     public Long getExpireIn() {
-        return expireIn;
+	return expireIn;
     }
     public void setExpireIn(Long expireIn) {
-        this.expireIn = expireIn;
+	this.expireIn = expireIn;
     }
     public String getBearerToken() {
-        return bearerToken;
+	return bearerToken;
     }
     public void setBearerToken(String bearerToken) {
-        this.bearerToken = bearerToken;
+	this.bearerToken = bearerToken;
     }
     public String getScope() {
-        return scope;
+	return scope;
     }
     public void setScope(String scope) {
-        this.scope = scope;
+	this.scope = scope;
     }
-	@Override
-	public String toString() {
-		return "PeConnectAuthorization [bearerToken=" + bearerToken + ", expireIn=" + expireIn + ", idToken=" + idToken
-				+ ", refreshToken=" + refreshToken + ", scope=" + scope + ", tokenType=" + tokenType + ", expireInDate="
-				+ expireInDate + "]";
-	}
+    @Override
+    public String toString() {
+	return "PeConnectAuthorization [bearerToken=" + bearerToken + ", expireIn=" + expireIn + ", idToken=" + idToken
+		+ ", refreshToken=" + refreshToken + ", scope=" + scope + ", tokenType=" + tokenType + ", expireInDate="
+		+ expireInDate + "]";
+    }
 }

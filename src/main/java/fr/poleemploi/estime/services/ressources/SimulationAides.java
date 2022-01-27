@@ -8,22 +8,22 @@ public class SimulationAides {
     private List<SimulationMensuelle> simulationsMensuelles;
 
     public List<SimulationMensuelle> getSimulationsMensuelles() {
-        return simulationsMensuelles;
+	return simulationsMensuelles;
     }
     public void setSimulationsMensuelles(List<SimulationMensuelle> simulationsMensuelles) {
-        this.simulationsMensuelles = simulationsMensuelles;
+	this.simulationsMensuelles = simulationsMensuelles;
     }
     public float getMontantRessourcesFinancieresMoisAvantSimulation() {
-        return montantRessourcesFinancieresMoisAvantSimulation;
+	return montantRessourcesFinancieresMoisAvantSimulation;
     }
     public void setMontantRessourcesFinancieresMoisAvantSimulation(float montantRessourcesFinancieresMoisAvantSimulation) {
-        this.montantRessourcesFinancieresMoisAvantSimulation = montantRessourcesFinancieresMoisAvantSimulation;
+	this.montantRessourcesFinancieresMoisAvantSimulation = montantRessourcesFinancieresMoisAvantSimulation;
     }
-    
+
     @Override
     public String toString() {
-        return "SimulationAides [montantRessourcesFinancieresMoisAvantSimulation="
-                + montantRessourcesFinancieresMoisAvantSimulation + ", simulationsMensuelles=" + simulationsMensuelles
-                + "]";
+	return "SimulationAides [montantRessourcesFinancieresMoisAvantSimulation="
+		+ montantRessourcesFinancieresMoisAvantSimulation + ", simulationsMensuelles=" + simulationsMensuelles
+		+ "]";
     }
 }

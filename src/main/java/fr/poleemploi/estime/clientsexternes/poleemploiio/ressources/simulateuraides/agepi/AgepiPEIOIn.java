@@ -1,7 +1,7 @@
 package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.agepi;
 
 public class AgepiPEIOIn {
-    
+
     private String codeTerritoire;
     private String origine;
     private String dateDepot;
@@ -122,11 +122,11 @@ public class AgepiPEIOIn {
 
     @Override
     public String toString() {
-        return "AgepiPEIOIn [codeTerritoire=" + codeTerritoire + ", origine=" + origine + ", dateDepot=" + dateDepot
-                + ", dateActionReclassement=" + dateActionReclassement + ", contexte=" + contexte
-                + ", natureContratTravail=" + natureContratTravail + ", lieuFormationOuEmploi=" + lieuFormationOuEmploi
-                + ", typeIntensite=" + typeIntensite + ", intensite=" + intensite + ", dureePeriodeEmploiOuFormation="
-                + dureePeriodeEmploiOuFormation + ", nombreEnfants=" + nombreEnfants + ", nombreEnfantsMoins10Ans="
-                + nombreEnfantsMoins10Ans + ", eleveSeulEnfants=" + eleveSeulEnfants + "]";
+	return "AgepiPEIOIn [codeTerritoire=" + codeTerritoire + ", origine=" + origine + ", dateDepot=" + dateDepot
+		+ ", dateActionReclassement=" + dateActionReclassement + ", contexte=" + contexte
+		+ ", natureContratTravail=" + natureContratTravail + ", lieuFormationOuEmploi=" + lieuFormationOuEmploi
+		+ ", typeIntensite=" + typeIntensite + ", intensite=" + intensite + ", dureePeriodeEmploiOuFormation="
+		+ dureePeriodeEmploiOuFormation + ", nombreEnfants=" + nombreEnfants + ", nombreEnfantsMoins10Ans="
+		+ nombreEnfantsMoins10Ans + ", eleveSeulEnfants=" + eleveSeulEnfants + "]";
     }
 }

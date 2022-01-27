@@ -6,49 +6,49 @@ package fr.poleemploi.estime.services.ressources;
  *
  */
 public class AidesFamiliales {
-    
+
     private float allocationsFamiliales;
     private float allocationSoutienFamilial;
     private float complementFamilial;
     private float prestationAccueilJeuneEnfant;
     private float pensionsAlimentairesFoyer;
-    
+
     public float getAllocationsFamiliales() {
-        return allocationsFamiliales;
+	return allocationsFamiliales;
     }
     public void setAllocationsFamiliales(float allocationsFamiliales) {
-        this.allocationsFamiliales = allocationsFamiliales;
+	this.allocationsFamiliales = allocationsFamiliales;
     }
     public float getAllocationSoutienFamilial() {
-        return allocationSoutienFamilial;
+	return allocationSoutienFamilial;
     }
     public void setAllocationSoutienFamilial(float allocationSoutienFamilial) {
-        this.allocationSoutienFamilial = allocationSoutienFamilial;
+	this.allocationSoutienFamilial = allocationSoutienFamilial;
     }
     public float getComplementFamilial() {
-        return complementFamilial;
+	return complementFamilial;
     }
     public void setComplementFamilial(float complementFamilial) {
-        this.complementFamilial = complementFamilial;
+	this.complementFamilial = complementFamilial;
     }
     public float getPrestationAccueilJeuneEnfant() {
-        return prestationAccueilJeuneEnfant;
+	return prestationAccueilJeuneEnfant;
     }
     public void setPrestationAccueilJeuneEnfant(float prestationAccueilJeuneEnfant) {
-        this.prestationAccueilJeuneEnfant = prestationAccueilJeuneEnfant;
+	this.prestationAccueilJeuneEnfant = prestationAccueilJeuneEnfant;
     }
     public float getPensionsAlimentairesFoyer() {
-        return pensionsAlimentairesFoyer;
+	return pensionsAlimentairesFoyer;
     }
     public void setPensionsAlimentairesFoyer(float pensionsAlimentairesFoyer) {
-        this.pensionsAlimentairesFoyer = pensionsAlimentairesFoyer;
+	this.pensionsAlimentairesFoyer = pensionsAlimentairesFoyer;
     }
 
     @Override
     public String toString() {
-        return "AidesFamiliales [allocationsFamiliales=" + allocationsFamiliales + ", allocationSoutienFamilial="
-                + allocationSoutienFamilial + ", complementFamilial=" + complementFamilial
-                + ", prestationAccueilJeuneEnfant=" + prestationAccueilJeuneEnfant + ", pensionsAlimentairesFoyer="
-                + pensionsAlimentairesFoyer + "]";
+	return "AidesFamiliales [allocationsFamiliales=" + allocationsFamiliales + ", allocationSoutienFamilial="
+		+ allocationSoutienFamilial + ", complementFamilial=" + complementFamilial
+		+ ", prestationAccueilJeuneEnfant=" + prestationAccueilJeuneEnfant + ", pensionsAlimentairesFoyer="
+		+ pensionsAlimentairesFoyer + "]";
     }
 }

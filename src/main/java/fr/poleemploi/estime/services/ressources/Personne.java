@@ -7,26 +7,26 @@ public class Personne {
     private RessourcesFinancieres ressourcesFinancieres;
 
     public BeneficiaireAides getBeneficiaireAides() {
-        return beneficiaireAides;
+	return beneficiaireAides;
     }
     public void setBeneficiaireAides(BeneficiaireAides beneficiaireAides) {
-        this.beneficiaireAides = beneficiaireAides;
+	this.beneficiaireAides = beneficiaireAides;
     }
     public InformationsPersonnelles getInformationsPersonnelles() {
-        return informationsPersonnelles;
+	return informationsPersonnelles;
     }
     public void setInformationsPersonnelles(InformationsPersonnelles informationsPersonnelles) {
-        this.informationsPersonnelles = informationsPersonnelles;
+	this.informationsPersonnelles = informationsPersonnelles;
     }
     public RessourcesFinancieres getRessourcesFinancieres() {
-        return ressourcesFinancieres;
+	return ressourcesFinancieres;
     }
     public void setRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres) {
-        this.ressourcesFinancieres = ressourcesFinancieres;
+	this.ressourcesFinancieres = ressourcesFinancieres;
     }
     @Override
     public String toString() {
-        return "Personne [beneficiaireAides=" + beneficiaireAides + ", informationsPersonnelles="
-                + informationsPersonnelles + ", ressourcesFinancieres=" + ressourcesFinancieres + "]";
+	return "Personne [beneficiaireAides=" + beneficiaireAides + ", informationsPersonnelles="
+		+ informationsPersonnelles + ", ressourcesFinancieres=" + ressourcesFinancieres + "]";
     }
 }

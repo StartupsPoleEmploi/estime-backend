@@ -12,14 +12,14 @@ public class AideServiceControleur {
 
     @Autowired
     private AideUtile aideUtile;
-    
+
     public void controlerDonneesEntreeServiceAuthentifier(String codeAide) {
-        if (codeAide == null || codeAide.isBlank()) {
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "codeAide"));
-        }
-        
-        if(aideUtile.isCodeAideNotExit(codeAide)) {
-            throw new BadRequestException(String.format(BadRequestMessages.CODE_AIDE_INCORRECT.getMessage(), aideUtile.getListeFormateeCodesAidePossibles()));
-        }        
+	if (codeAide == null || codeAide.isBlank()) {
+	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "codeAide"));
+	}
+
+	if(aideUtile.isCodeAideNotExit(codeAide)) {
+	    throw new BadRequestException(String.format(BadRequestMessages.CODE_AIDE_INCORRECT.getMessage(), aideUtile.getListeFormateeCodesAidePossibles()));
+	}        
     }
 }

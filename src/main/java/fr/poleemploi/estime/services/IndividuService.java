@@ -15,20 +15,20 @@ import fr.poleemploi.estime.services.ressources.PeConnectPayload;
 @RestController
 @RequestMapping("/individus")
 public class IndividuService {
-    
+
     @Autowired
     private IndividuLogique individuLogique;
-    
+
     @Autowired
     private IndividuServiceControleur individuServiceControleur;
-    
+
     @PostMapping(value = "/authentifier", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Individu authentifier(@RequestBody PeConnectPayload peConnectPayload) {
-        individuServiceControleur.controlerDonneesEntreeServiceAuthentifier(peConnectPayload);
-        return individuLogique.authentifier(
-                peConnectPayload.getCode(), 
-                peConnectPayload.getRedirectURI(), 
-                peConnectPayload.getNonce());
+	individuServiceControleur.controlerDonneesEntreeServiceAuthentifier(peConnectPayload);
+	return individuLogique.authentifier(
+		peConnectPayload.getCode(), 
+		peConnectPayload.getRedirectURI(), 
+		peConnectPayload.getNonce());
     }
 
 }

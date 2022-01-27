@@ -8,9 +8,9 @@ import fr.poleemploi.estime.services.ressources.Salaire;
 public class SalaireUtile {
 
     public Salaire getSalaireMontantZero() {
-        Salaire salaire = new Salaire();
-        salaire.setMontantBrut(0);
-        salaire.setMontantNet(0);
-        return salaire;
+	Salaire salaire = new Salaire();
+	salaire.setMontantBrut(0);
+	salaire.setMontantNet(0);
+	return salaire;
     }    
 }

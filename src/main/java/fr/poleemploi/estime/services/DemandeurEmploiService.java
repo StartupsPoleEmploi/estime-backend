@@ -20,28 +20,28 @@ import fr.poleemploi.estime.services.ressources.SimulationAides;
 @RestController
 @RequestMapping("/demandeurs_emploi")
 public class DemandeurEmploiService {
-    
+
     @Autowired
     private DemandeurEmploiServiceControleur demandeurEmploiServiceControleur;
-    
+
     @Autowired
     private DemandeurEmploiLogique demandeurEmploiLogique;
-    
+
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public DemandeurEmploi creerDemandeurEmploi(@RequestBody Individu individu) {
-        demandeurEmploiServiceControleur.controlerDonneesEntreeServiceCreerDemandeurEmploi(individu);
-        return demandeurEmploiLogique.creerDemandeurEmploi(individu);
+	demandeurEmploiServiceControleur.controlerDonneesEntreeServiceCreerDemandeurEmploi(individu);
+	return demandeurEmploiLogique.creerDemandeurEmploi(individu);
     }
 
     @PostMapping(value = "/simulation_aides", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public SimulationAides simulerAides(@RequestBody DemandeurEmploi demandeurEmploi) {
-        demandeurEmploiServiceControleur.controlerDonneesEntreeServiceSimulerMesAides(demandeurEmploi);
-        return demandeurEmploiLogique.simulerMesAides(demandeurEmploi);
+	demandeurEmploiServiceControleur.controlerDonneesEntreeServiceSimulerMesAides(demandeurEmploi);
+	return demandeurEmploiLogique.simulerMesAides(demandeurEmploi);
     }
-    
+
     @DeleteMapping(value = "suivi_parcours", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public void supprimerSuiviParcoursUtilisateur(@RequestParam("idPoleEmploi") final String idPoleEmploi) {
-        demandeurEmploiLogique.supprimerSuiviParcoursUtilisateur(idPoleEmploi);
+	demandeurEmploiLogique.supprimerSuiviParcoursUtilisateur(idPoleEmploi);
     }
 }

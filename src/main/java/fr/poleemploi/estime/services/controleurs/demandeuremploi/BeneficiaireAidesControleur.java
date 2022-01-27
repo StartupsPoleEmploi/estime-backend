@@ -13,20 +13,20 @@ public class BeneficiaireAidesControleur {
 
     @Autowired
     private RessourcesFinancieresControleur ressourcesFinancieresControleur;
-    
+
     public void controlerDonnees(DemandeurEmploi demandeurEmploi) {
-        BeneficiaireAides beneficiaireAides = demandeurEmploi.getBeneficiaireAides();
-        if(beneficiaireAides == null) {
-            throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "beneficiaireAides"));
-        }
-        if(beneficiaireAides.isBeneficiaireAAH()) {
-            ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsCafAAH(demandeurEmploi.getRessourcesFinancieres());
-        }
-        if(beneficiaireAides.isBeneficiaireRSA()) {
-            ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsCafRSA(demandeurEmploi);
-        }
-        if(beneficiaireAides.isBeneficiaireASS()) {
-            ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsPoleEmploiASS(demandeurEmploi.getRessourcesFinancieres());
-        }
+	BeneficiaireAides beneficiaireAides = demandeurEmploi.getBeneficiaireAides();
+	if(beneficiaireAides == null) {
+	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "beneficiaireAides"));
+	}
+	if(beneficiaireAides.isBeneficiaireAAH()) {
+	    ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsCafAAH(demandeurEmploi.getRessourcesFinancieres());
+	}
+	if(beneficiaireAides.isBeneficiaireRSA()) {
+	    ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsCafRSA(demandeurEmploi);
+	}
+	if(beneficiaireAides.isBeneficiaireASS()) {
+	    ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsPoleEmploiASS(demandeurEmploi.getRessourcesFinancieres());
+	}
     }
 }

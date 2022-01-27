@@ -18,27 +18,27 @@ public enum NombreJourIndemniseEnum {
     HEURES_HEBDO_TRAVAILLEES_32H(32, 32, 17),
     HEURES_HEBDO_TRAVAILLEES_33H(33, 33, 18),
     HEURES_HEBDO_TRAVAILLEES_34H(34, 34, 19);
-    
-    
+
+
     private int nombreHeuresMinHebdo;
     private int nombreHeuresMaxHebdo;
     private int nombreRepasIndemnises; 
-    
+
     NombreJourIndemniseEnum(int nombreHeuresMinHebdo, int nombreHeuresMaxHebdo, int nombreRepasIndemnises) {
-        this.nombreHeuresMinHebdo = nombreHeuresMinHebdo;
-        this.nombreHeuresMaxHebdo = nombreHeuresMaxHebdo;
-        this.nombreRepasIndemnises = nombreRepasIndemnises;
+	this.nombreHeuresMinHebdo = nombreHeuresMinHebdo;
+	this.nombreHeuresMaxHebdo = nombreHeuresMaxHebdo;
+	this.nombreRepasIndemnises = nombreRepasIndemnises;
     }
 
     public int getNombreHeuresMinHebdo() {
-        return nombreHeuresMinHebdo;
+	return nombreHeuresMinHebdo;
     }
 
     public int getNombreHeuresMaxHebdo() {
-        return nombreHeuresMaxHebdo;
+	return nombreHeuresMaxHebdo;
     }
 
     public int getNombreRepasIndemnises() {
-        return nombreRepasIndemnises;
+	return nombreRepasIndemnises;
     }
 }

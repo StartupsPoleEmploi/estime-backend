@@ -20,16 +20,16 @@ public class MetricsConfig {
 
     @Bean
     MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer() {
-      return registry -> registry.config()
-          .commonTags("application", nameApplication,
-              "environment", environment)
-          .meterFilter(MeterFilter.deny(id -> {
-            String uri = id.getTag("uri");
-            return uri != null && uri.startsWith("/actuator");
-          }))
-          .meterFilter(MeterFilter.deny(id -> {
-            String uri = id.getTag("uri");
-            return uri != null && uri.contains("favicon");
-          }));
+	return registry -> registry.config()
+		.commonTags("application", nameApplication,
+			"environment", environment)
+		.meterFilter(MeterFilter.deny(id -> {
+		    String uri = id.getTag("uri");
+		    return uri != null && uri.startsWith("/actuator");
+		}))
+		.meterFilter(MeterFilter.deny(id -> {
+		    String uri = id.getTag("uri");
+		    return uri != null && uri.contains("favicon");
+		}));
     }
 }

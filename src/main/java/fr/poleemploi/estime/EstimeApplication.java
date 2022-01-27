@@ -14,7 +14,7 @@ import org.springframework.retry.annotation.EnableRetry;
 @EnableRetry
 public class EstimeApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(EstimeApplication.class, args);
-	}
+    public static void main(String[] args) {
+	SpringApplication.run(EstimeApplication.class, args);
+    }
 }

@@ -8,14 +8,14 @@ public enum StatutOccupationLogementEnum {
     PROPRIETAIRE("proprietaire"),
     PROPRIETAIRE_AVEC_EMPRUNT("proprietaire"),
     NON_RENSEIGNE("non_renseigne");
-    
+
     private String libelle;
-    
+
     StatutOccupationLogementEnum(String libelle) {
-        this.libelle = libelle;
+	this.libelle = libelle;
     }
 
     public String getLibelle() {
-        return libelle;
+	return libelle;
     }
 }

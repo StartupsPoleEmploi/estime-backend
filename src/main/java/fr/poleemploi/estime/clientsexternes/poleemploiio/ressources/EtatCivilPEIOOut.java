@@ -10,47 +10,47 @@ public class EtatCivilPEIOOut {
     private String nomMarital;
     private String prenom;
     private Date dateDeNaissance;
-    
+
     public String getCodeCivilite() {
-        return codeCivilite;
+	return codeCivilite;
     }
     public void setCodeCivilite(String codeCivilite) {
-        this.codeCivilite = codeCivilite;
+	this.codeCivilite = codeCivilite;
     }
     public String getLibelleCivilite() {
-        return libelleCivilite;
+	return libelleCivilite;
     }
     public void setLibelleCivilite(String libelleCivilite) {
-        this.libelleCivilite = libelleCivilite;
+	this.libelleCivilite = libelleCivilite;
     }
     public String getNomPatronymique() {
-        return nomPatronymique;
+	return nomPatronymique;
     }
     public void setNomPatronymique(String nomPatronymique) {
-        this.nomPatronymique = nomPatronymique;
+	this.nomPatronymique = nomPatronymique;
     }
     public String getNomMarital() {
-        return nomMarital;
+	return nomMarital;
     }
     public void setNomMarital(String nomMarital) {
-        this.nomMarital = nomMarital;
+	this.nomMarital = nomMarital;
     }
     public String getPrenom() {
-        return prenom;
+	return prenom;
     }
     public void setPrenom(String prenom) {
-        this.prenom = prenom;
+	this.prenom = prenom;
     }
     public Date getDateDeNaissance() {
-        return dateDeNaissance;
+	return dateDeNaissance;
     }
     public void setDateDeNaissance(Date dateDeNaissance) {
-        this.dateDeNaissance = dateDeNaissance;
+	this.dateDeNaissance = dateDeNaissance;
     }
     @Override
     public String toString() {
-        return "EtatCivilPEIO [codeCivilite=" + codeCivilite + ", libelleCivilite=" + libelleCivilite
-                + ", nomPatronymique=" + nomPatronymique + ", nomMarital=" + nomMarital + ", prenom=" + prenom
-                + ", dateDeNaissance=" + dateDeNaissance + "]";
+	return "EtatCivilPEIO [codeCivilite=" + codeCivilite + ", libelleCivilite=" + libelleCivilite
+		+ ", nomPatronymique=" + nomPatronymique + ", nomMarital=" + nomMarital + ", prenom=" + prenom
+		+ ", dateDeNaissance=" + dateDeNaissance + "]";
     }
 }

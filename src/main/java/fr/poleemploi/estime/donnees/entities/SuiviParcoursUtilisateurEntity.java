@@ -21,7 +21,7 @@ public class SuiviParcoursUtilisateurEntity {
 
     @Column(name = "date_creation", columnDefinition = "TIMESTAMP")
     private LocalDateTime dateCreation;  
-    
+
     private String idPoleEmploi;
     private String nom;
     private String email;
@@ -32,129 +32,129 @@ public class SuiviParcoursUtilisateurEntity {
     private String typePopulation;
     private String codePostal;
 
-    
+
     public boolean isEsdBeneficiaireAssuranceChomage() {
-        return esdBeneficiaireAssuranceChomage;
+	return esdBeneficiaireAssuranceChomage;
     }
 
     public void setEsdBeneficiaireAssuranceChomage(boolean esdBeneficiaireAssuranceChomage) {
-        this.esdBeneficiaireAssuranceChomage = esdBeneficiaireAssuranceChomage;
+	this.esdBeneficiaireAssuranceChomage = esdBeneficiaireAssuranceChomage;
     }
 
     public String getEsdCodeIndemnisation() {
-        return esdCodeIndemnisation;
+	return esdCodeIndemnisation;
     }
 
     public void setEsdCodeIndemnisation(String esdCodeIndemnisation) {
-        this.esdCodeIndemnisation = esdCodeIndemnisation;
+	this.esdCodeIndemnisation = esdCodeIndemnisation;
     }
 
     public String getNom() {
-        return nom;
+	return nom;
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+	this.nom = nom;
     }
 
     public String getEmail() {
-        return email;
+	return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
 
     public String getPrenom() {
-        return prenom;
+	return prenom;
     }
 
     public void setPrenom(String prenom) {
-        this.prenom = prenom;
+	this.prenom = prenom;
     }
 
     public Integer getIdSuiviParcoursUtilisateur() {
-        return idSuiviParcoursUtilisateur;
+	return idSuiviParcoursUtilisateur;
     }
 
     public void setIdSuiviParcoursUtilisateur(Integer idSuiviParcoursUtilisateur) {
-        this.idSuiviParcoursUtilisateur = idSuiviParcoursUtilisateur;
+	this.idSuiviParcoursUtilisateur = idSuiviParcoursUtilisateur;
     }
 
     public String getIdPoleEmploi() {
-        return idPoleEmploi;
+	return idPoleEmploi;
     }
 
     public void setIdPoleEmploi(String idPoleEmploi) {
-        this.idPoleEmploi = idPoleEmploi;
+	this.idPoleEmploi = idPoleEmploi;
     }
 
     public String getSuiviParcours() {
-        return suiviParcours;
+	return suiviParcours;
     }
 
     public void setSuiviParcours(String suiviParcours) {
-        this.suiviParcours = suiviParcours;
+	this.suiviParcours = suiviParcours;
     }
 
     public String getTypePopulation() {
-        return typePopulation;
+	return typePopulation;
     }
 
     public void setTypePopulation(String typePopulation) {
-        this.typePopulation = typePopulation;
+	this.typePopulation = typePopulation;
     }
 
     public LocalDateTime getDateCreation() {
-        return dateCreation;
+	return dateCreation;
     }
 
     public void setDateCreation(LocalDateTime dateCreation) {
-        this.dateCreation = dateCreation;
+	this.dateCreation = dateCreation;
     }
 
     public String getCodePostal() {
-        return codePostal;
+	return codePostal;
     }
 
     public void setCodePostal(String codePostal) {
-        this.codePostal = codePostal;
+	this.codePostal = codePostal;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + ((this.idSuiviParcoursUtilisateur == null) ? 0 : this.idSuiviParcoursUtilisateur.hashCode());
-        return result;
+	final int prime = 31;
+	int result = 1;
+	result = (prime * result) + ((this.idSuiviParcoursUtilisateur == null) ? 0 : this.idSuiviParcoursUtilisateur.hashCode());
+	return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        SuiviParcoursUtilisateurEntity other = (SuiviParcoursUtilisateurEntity) obj;
-        if (this.idSuiviParcoursUtilisateur == null) {
-            if (other.idSuiviParcoursUtilisateur != null) {
-                return false;
-            }
-        } else if (!this.idSuiviParcoursUtilisateur.equals(other.idSuiviParcoursUtilisateur)) {
-            return false;
-        }
-        return true;
+	if (this == obj) {
+	    return true;
+	}
+	if (obj == null) {
+	    return false;
+	}
+	if (this.getClass() != obj.getClass()) {
+	    return false;
+	}
+	SuiviParcoursUtilisateurEntity other = (SuiviParcoursUtilisateurEntity) obj;
+	if (this.idSuiviParcoursUtilisateur == null) {
+	    if (other.idSuiviParcoursUtilisateur != null) {
+		return false;
+	    }
+	} else if (!this.idSuiviParcoursUtilisateur.equals(other.idSuiviParcoursUtilisateur)) {
+	    return false;
+	}
+	return true;
     }
 
     @Override
     public String toString() {
-        return "SuiviParcoursUtilisateurEntity [idSuiviParcoursUtilisateur=" + idSuiviParcoursUtilisateur + ", dateCreation=" + dateCreation + ", idPoleEmploi=" + idPoleEmploi + ", nom=" + nom
-                + ", email=" + email + ", esdBeneficiaireAssuranceChomage=" + esdBeneficiaireAssuranceChomage + ", esdCodeIndemnisation=" + esdCodeIndemnisation + ", prenom=" + prenom
-                + ", suiviParcours=" + suiviParcours + ", typePopulation=" + typePopulation + ", codePostal=" + codePostal + "]";
+	return "SuiviParcoursUtilisateurEntity [idSuiviParcoursUtilisateur=" + idSuiviParcoursUtilisateur + ", dateCreation=" + dateCreation + ", idPoleEmploi=" + idPoleEmploi + ", nom=" + nom
+		+ ", email=" + email + ", esdBeneficiaireAssuranceChomage=" + esdBeneficiaireAssuranceChomage + ", esdCodeIndemnisation=" + esdCodeIndemnisation + ", prenom=" + prenom
+		+ ", suiviParcours=" + suiviParcours + ", typePopulation=" + typePopulation + ", codePostal=" + codePostal + "]";
     }
 }

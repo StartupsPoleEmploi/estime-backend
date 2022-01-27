@@ -11,6 +11,6 @@ import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 public class TypeContratUtile {
 
     public String getListeFormateeTypesContratPossibles() {
-        return String.join(" / ", Arrays.asList(TypeContratTravailEnum.values()).stream().map(Object::toString).collect(Collectors.toList()));
+	return String.join(" / ", Arrays.asList(TypeContratTravailEnum.values()).stream().map(Object::toString).collect(Collectors.toList()));
     }
 }

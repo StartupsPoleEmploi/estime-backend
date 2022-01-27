@@ -25,26 +25,26 @@ public class OpenFiscaMappeurRSA {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
-        
+
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaMappeurRSA.class);
 
     public float getMontantRSA(String jsonResponse, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        try {
-            JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
-            JsonObject famillesJsonObject = jsonObject.get(FAMILLES).getAsJsonObject();
-            JsonObject famille1JsonObject = famillesJsonObject.get(FAMILLE1).getAsJsonObject();
-            JsonObject rsaJsonObject = famille1JsonObject.get(RSA).getAsJsonObject();
-            String periodeFormateeRSA = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
-            return rsaJsonObject.get(periodeFormateeRSA).getAsBigDecimal().setScale(0, RoundingMode.HALF_UP).floatValue();            
-        } catch (NullPointerException e) {
-            LOGGER.error( String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
-            throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
-        }
+	try {
+	    JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
+	    JsonObject famillesJsonObject = jsonObject.get(FAMILLES).getAsJsonObject();
+	    JsonObject famille1JsonObject = famillesJsonObject.get(FAMILLE1).getAsJsonObject();
+	    JsonObject rsaJsonObject = famille1JsonObject.get(RSA).getAsJsonObject();
+	    String periodeFormateeRSA = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
+	    return rsaJsonObject.get(periodeFormateeRSA).getAsBigDecimal().setScale(0, RoundingMode.HALF_UP).floatValue();            
+	} catch (NullPointerException e) {
+	    LOGGER.error( String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
+	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
+	}
     }
-    
+
     public JSONObject creerRSAJson(LocalDate dateDebutSimulation, int numeroMoisSimule) {        
-        JSONObject rsaJSON = new JSONObject();
-        rsaJSON.put(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule), JSONObject.NULL);
-        return rsaJSON;
+	JSONObject rsaJSON = new JSONObject();
+	rsaJSON.put(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule), JSONObject.NULL);
+	return rsaJSON;
     }
 }

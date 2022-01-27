@@ -65,32 +65,32 @@ public class AgepiUtile {
      * @param numeroMoisSimule 
      */
     public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        return simulateurAidesUtile.isPremierMois(numeroMoisSimule) && isSituationFamilialeEligibleAgepi(demandeurEmploi)
-                && futurTravailUtile.isFuturContratTravailEligible(demandeurEmploi.getFuturTravail())
-                && (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
+	return simulateurAidesUtile.isPremierMois(numeroMoisSimule) && isSituationFamilialeEligibleAgepi(demandeurEmploi)
+		&& futurTravailUtile.isFuturContratTravailEligible(demandeurEmploi.getFuturTravail())
+		&& (demandeurEmploiUtile.isSansRessourcesFinancieres(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi));
     }
 
     public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi) {
-        float montantAgepiSimule = poleEmploiIOClient.getMontantAgepiSimulateurAides(demandeurEmploi);
-        if (montantAgepiSimule > 0) {
-            return Optional.of(creerAide(montantAgepiSimule));
-        } 
-        return Optional.empty();
+	float montantAgepiSimule = poleEmploiIOClient.getMontantAgepiSimulateurAides(demandeurEmploi);
+	if (montantAgepiSimule > 0) {
+	    return Optional.of(creerAide(montantAgepiSimule));
+	} 
+	return Optional.empty();
     }
 
     private Aide creerAide(float montantAide) {
-        Aide agepi = new Aide();
-        agepi.setCode(AideEnum.AGEPI.getCode());
-        Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AGEPI.getNomFichierDetail());
-        if (detailAideOptional.isPresent()) {
-            agepi.setDetail(detailAideOptional.get());
-        }
-        agepi.setMessageAlerte(MessageInformatifEnum.AGEPI_IDF.getMessage());
-        agepi.setNom(AideEnum.AGEPI.getNom());
-        agepi.setOrganisme(OrganismeEnum.PE.getNom());
-        agepi.setMontant(montantAide);
-        agepi.setReportee(false);
-        return agepi;
+	Aide agepi = new Aide();
+	agepi.setCode(AideEnum.AGEPI.getCode());
+	Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AGEPI.getNomFichierDetail());
+	if (detailAideOptional.isPresent()) {
+	    agepi.setDetail(detailAideOptional.get());
+	}
+	agepi.setMessageAlerte(MessageInformatifEnum.AGEPI_IDF.getMessage());
+	agepi.setNom(AideEnum.AGEPI.getNom());
+	agepi.setOrganisme(OrganismeEnum.PE.getNom());
+	agepi.setMontant(montantAide);
+	agepi.setReportee(false);
+	return agepi;
     }
 
     /**
@@ -99,9 +99,9 @@ public class AgepiUtile {
      * @return true si éligible AGEPI
      */
     private boolean isSituationFamilialeEligibleAgepi(DemandeurEmploi demandeurEmploi) {
-        if (!demandeurEmploi.getSituationFamiliale().getIsEnCouple().booleanValue()) {
-            return situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, AgepiUtile.AGE_MAX_ENFANT) > 0;
-        }
-        return false;
+	if (!demandeurEmploi.getSituationFamiliale().getIsEnCouple().booleanValue()) {
+	    return situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, AgepiUtile.AGE_MAX_ENFANT) > 0;
+	}
+	return false;
     }
 }

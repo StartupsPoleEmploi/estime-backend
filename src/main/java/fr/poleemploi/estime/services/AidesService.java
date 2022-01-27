@@ -14,17 +14,17 @@ import fr.poleemploi.estime.services.ressources.Aide;
 @RestController
 @RequestMapping("/aides")
 public class AidesService {
-    
+
     @Autowired
     private AideLogique aideLogique;
-    
+
     @Autowired
     private AideServiceControleur aideServiceControleur;
-    
-   
+
+
     @GetMapping(value = "/{codeAide}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Aide getAideByCode(@PathVariable String codeAide) {
-        aideServiceControleur.controlerDonneesEntreeServiceAuthentifier(codeAide);
-        return aideLogique.getAideByCode(codeAide);
+	aideServiceControleur.controlerDonneesEntreeServiceAuthentifier(codeAide);
+	return aideLogique.getAideByCode(codeAide);
     }
 }

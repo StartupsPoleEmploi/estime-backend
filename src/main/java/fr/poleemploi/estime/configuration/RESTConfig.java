@@ -10,6 +10,6 @@ public class RESTConfig {
 
     @Bean
     public RestTemplate getRestTemplate(RestTemplateBuilder builder) {
-        return builder.build();
+	return builder.build();
     }
 }
