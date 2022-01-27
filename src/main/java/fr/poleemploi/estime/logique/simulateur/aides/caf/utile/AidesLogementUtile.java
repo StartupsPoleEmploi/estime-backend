@@ -18,7 +18,6 @@ import fr.poleemploi.estime.services.ressources.SimulationAides;
 @Component
 public class AidesLogementUtile {
 
-
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
 
@@ -43,8 +42,8 @@ public class AidesLogementUtile {
      */
     boolean isAideLogementACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
-	return ((numeroMoisSimule == 1) || (prochaineDeclarationTrimestrielle == numeroMoisSimule)
-		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
+	return ((numeroMoisSimule == 1) || (prochaineDeclarationTrimestrielle == numeroMoisSimule) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
+		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
     }
 
     /**
@@ -99,7 +98,7 @@ public class AidesLogementUtile {
     }
 
     private boolean isEligiblePourReportAideLogementDeclare(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
-	return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi) 
+	return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi)
 		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle() != null
 		&& (numeroMoisSimule == 1 || numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle());
     }
@@ -124,7 +123,7 @@ public class AidesLogementUtile {
 	aidePersonnaliseeLogement.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	aidePersonnaliseeLogement.setMontant(montant);
 	aidePersonnaliseeLogement.setNom(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getNom());
-	aidePersonnaliseeLogement.setOrganisme(OrganismeEnum.CAF.getNom());
+	aidePersonnaliseeLogement.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	aidePersonnaliseeLogement.setReportee(isReportee);
 	return aidePersonnaliseeLogement;
     }
@@ -135,7 +134,7 @@ public class AidesLogementUtile {
 	allocationLogementFamiliale.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	allocationLogementFamiliale.setMontant(montant);
 	allocationLogementFamiliale.setNom(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getNom());
-	allocationLogementFamiliale.setOrganisme(OrganismeEnum.CAF.getNom());
+	allocationLogementFamiliale.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	allocationLogementFamiliale.setReportee(isReportee);
 	return allocationLogementFamiliale;
     }
@@ -146,7 +145,7 @@ public class AidesLogementUtile {
 	allocationLogementSociale.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	allocationLogementSociale.setMontant(montant);
 	allocationLogementSociale.setNom(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getNom());
-	allocationLogementSociale.setOrganisme(OrganismeEnum.CAF.getNom());
+	allocationLogementSociale.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	allocationLogementSociale.setReportee(isReportee);
 	return allocationLogementSociale;
     }

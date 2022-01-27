@@ -82,7 +82,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 	}
 	ass.setMontant(montantAide);
 	ass.setNom(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
-	ass.setOrganisme(OrganismeEnum.PE.getNom());
+	ass.setOrganisme(OrganismeEnum.PE.getNomCourt());
 	ass.setReportee(false);
 	return ass;
     }

@@ -85,7 +85,7 @@ public class AideMobiliteUtile {
 	aideMobilite.setMessageAlerte(MessageInformatifEnum.AIDE_MOBILITE.getMessage());
 	aideMobilite.setMontant(montantAide);
 	aideMobilite.setNom(AideEnum.AIDE_MOBILITE.getNom());
-	aideMobilite.setOrganisme(OrganismeEnum.PE.getNom());
+	aideMobilite.setOrganisme(OrganismeEnum.PE.getNomCourt());
 	aideMobilite.setReportee(false);
 	return aideMobilite;
     }
