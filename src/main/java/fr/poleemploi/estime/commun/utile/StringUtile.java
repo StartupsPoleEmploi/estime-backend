@@ -7,17 +7,17 @@ import org.springframework.stereotype.Component;
 @Component      
 public class StringUtile {
 
-	public static final String EMPTY = "";
+    public static final String EMPTY = "";
     private Pattern patternCheckIsNumeric = Pattern.compile("-?\\d+(\\.\\d+)?");
-    
+
     public boolean isNumeric(String stringToCheck) {
-        if (stringToCheck == null) {
-            return false; 
-        }
-        return patternCheckIsNumeric.matcher(stringToCheck).matches();
+	if (stringToCheck == null) {
+	    return false; 
+	}
+	return patternCheckIsNumeric.matcher(stringToCheck).matches();
     }
-    
+
     public String getPremiersCaracteres(String stringValue, int nombreCaracteres) {
-        return stringValue.subSequence(0, nombreCaracteres).toString();
+	return stringValue.subSequence(0, nombreCaracteres).toString();
     }
 }

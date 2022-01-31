@@ -14,90 +14,90 @@ public class RessourcesFinancieres {
     private PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation;
 
     public AidesCAF getAidesCAF() {
-        return aidesCAF;
+	return aidesCAF;
     }
 
     public void setAidesCAF(AidesCAF aidesCAF) {
-        this.aidesCAF = aidesCAF;
+	this.aidesCAF = aidesCAF;
     }
 
     public AidesPoleEmploi getAidesPoleEmploi() {
-        return aidesPoleEmploi;
+	return aidesPoleEmploi;
     }
 
     public void setAidesPoleEmploi(AidesPoleEmploi aidesPoleEmploi) {
-        this.aidesPoleEmploi = aidesPoleEmploi;
+	this.aidesPoleEmploi = aidesPoleEmploi;
     }
 
     public AidesCPAM getAidesCPAM() {
-        return aidesCPAM;
+	return aidesCPAM;
     }
 
     public void setAidesCPAM(AidesCPAM aidesCPAM) {
-        this.aidesCPAM = aidesCPAM;
+	this.aidesCPAM = aidesCPAM;
     }
 
     public Boolean getHasTravailleAuCoursDerniersMois() {
-        return hasTravailleAuCoursDerniersMois;
+	return hasTravailleAuCoursDerniersMois;
     }
 
     public void setHasTravailleAuCoursDerniersMois(Boolean hasTravailleAuCoursDerniersMois) {
-        this.hasTravailleAuCoursDerniersMois = hasTravailleAuCoursDerniersMois;
+	this.hasTravailleAuCoursDerniersMois = hasTravailleAuCoursDerniersMois;
     }
 
     public Integer getNombreMoisTravaillesDerniersMois() {
-        return nombreMoisTravaillesDerniersMois;
+	return nombreMoisTravaillesDerniersMois;
     }
 
     public void setNombreMoisTravaillesDerniersMois(Integer nombreMoisTravaillesDerniersMois) {
-        this.nombreMoisTravaillesDerniersMois = nombreMoisTravaillesDerniersMois;
+	this.nombreMoisTravaillesDerniersMois = nombreMoisTravaillesDerniersMois;
     }
 
     public Float getChiffreAffairesIndependantDernierExercice() {
-        return chiffreAffairesIndependantDernierExercice;
+	return chiffreAffairesIndependantDernierExercice;
     }
 
     public void setChiffreAffairesIndependantDernierExercice(Float chiffreAffairesIndependantDernierExercice) {
-        this.chiffreAffairesIndependantDernierExercice = chiffreAffairesIndependantDernierExercice;
+	this.chiffreAffairesIndependantDernierExercice = chiffreAffairesIndependantDernierExercice;
     }
 
     public Float getBeneficesMicroEntrepriseDernierExercice() {
-        return beneficesMicroEntrepriseDernierExercice;
+	return beneficesMicroEntrepriseDernierExercice;
     }
 
     public void setBeneficesMicroEntrepriseDernierExercice(Float beneficesMicroEntrepriseDernierExercice) {
-        this.beneficesMicroEntrepriseDernierExercice = beneficesMicroEntrepriseDernierExercice;
+	this.beneficesMicroEntrepriseDernierExercice = beneficesMicroEntrepriseDernierExercice;
     }
 
     public Float getRevenusImmobilier3DerniersMois() {
-        return revenusImmobilier3DerniersMois;
+	return revenusImmobilier3DerniersMois;
     }
 
     public void setRevenusImmobilier3DerniersMois(Float revenusImmobilier3DerniersMois) {
-        this.revenusImmobilier3DerniersMois = revenusImmobilier3DerniersMois;
+	this.revenusImmobilier3DerniersMois = revenusImmobilier3DerniersMois;
     }
 
     public Salaire getSalaire() {
-        return salaire;
+	return salaire;
     }
 
     public void setSalaire(Salaire salaire) {
-        this.salaire = salaire;
+	this.salaire = salaire;
     }
 
     public PeriodeTravailleeAvantSimulation getPeriodeTravailleeAvantSimulation() {
-        return periodeTravailleeAvantSimulation;
+	return periodeTravailleeAvantSimulation;
     }
 
     public void setPeriodeTravailleeAvantSimulation(PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation) {
-        this.periodeTravailleeAvantSimulation = periodeTravailleeAvantSimulation;
+	this.periodeTravailleeAvantSimulation = periodeTravailleeAvantSimulation;
     }
 
     @Override
     public String toString() {
-        return "RessourcesFinancieres [aidesCAF=" + aidesCAF + ", aidesPoleEmploi=" + aidesPoleEmploi + ", aidesCPAM=" + aidesCPAM + ", hasTravailleAuCoursDerniersMois="
-                + hasTravailleAuCoursDerniersMois + ", nombreMoisTravaillesDerniersMois=" + nombreMoisTravaillesDerniersMois + ", chiffreAffairesIndependantDernierExercice="
-                + chiffreAffairesIndependantDernierExercice + ", beneficesMicroEntrepriseDernierExercice=" + beneficesMicroEntrepriseDernierExercice + ", revenusImmobilier3DerniersMois="
-                + revenusImmobilier3DerniersMois + ", salaire=" + salaire + ", periodeTravailleeAvantSimulation=" + periodeTravailleeAvantSimulation + "]";
+	return "RessourcesFinancieres [aidesCAF=" + aidesCAF + ", aidesPoleEmploi=" + aidesPoleEmploi + ", aidesCPAM=" + aidesCPAM + ", hasTravailleAuCoursDerniersMois="
+		+ hasTravailleAuCoursDerniersMois + ", nombreMoisTravaillesDerniersMois=" + nombreMoisTravaillesDerniersMois + ", chiffreAffairesIndependantDernierExercice="
+		+ chiffreAffairesIndependantDernierExercice + ", beneficesMicroEntrepriseDernierExercice=" + beneficesMicroEntrepriseDernierExercice + ", revenusImmobilier3DerniersMois="
+		+ revenusImmobilier3DerniersMois + ", salaire=" + salaire + ", periodeTravailleeAvantSimulation=" + periodeTravailleeAvantSimulation + "]";
     }
 }

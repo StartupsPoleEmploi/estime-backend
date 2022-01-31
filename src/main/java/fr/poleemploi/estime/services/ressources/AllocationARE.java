@@ -9,60 +9,60 @@ public class AllocationARE {
     private Float nombreJoursRestants;
     private boolean isConcerneDegressivite;
 
-    
+
     public Float getAllocationJournaliereNet() {
-        return allocationJournaliereNet;
+	return allocationJournaliereNet;
     }
 
     public void setAllocationJournaliereNet(Float allocationJournaliereNet) {
-        this.allocationJournaliereNet = allocationJournaliereNet;
+	this.allocationJournaliereNet = allocationJournaliereNet;
     }
 
     public Float getAllocationMensuelleNet() {
-        return allocationMensuelleNet;
+	return allocationMensuelleNet;
     }
 
     public void setAllocationMensuelleNet(Float allocationMensuelleNet) {
-        this.allocationMensuelleNet = allocationMensuelleNet;
+	this.allocationMensuelleNet = allocationMensuelleNet;
     }
 
     public Float getMontantJournalierBrut() {
-        return montantJournalierBrut;
+	return montantJournalierBrut;
     }
 
     public void setMontantJournalierBrut(Float montantJournalierBrut) {
-        this.montantJournalierBrut = montantJournalierBrut;
+	this.montantJournalierBrut = montantJournalierBrut;
     }
 
     public Float getSalaireJournalierReferenceBrut() {
-        return salaireJournalierReferenceBrut;
+	return salaireJournalierReferenceBrut;
     }
 
     public void setSalaireJournalierReferenceBrut(Float salaireJournalierReferenceBrut) {
-        this.salaireJournalierReferenceBrut = salaireJournalierReferenceBrut;
+	this.salaireJournalierReferenceBrut = salaireJournalierReferenceBrut;
     }
 
     public Float getNombreJoursRestants() {
-        return nombreJoursRestants;
+	return nombreJoursRestants;
     }
 
     public void setNombreJoursRestants(Float nombreJoursRestants) {
-        this.nombreJoursRestants = nombreJoursRestants;
+	this.nombreJoursRestants = nombreJoursRestants;
     }
 
     public boolean isConcerneDegressivite() {
-        return isConcerneDegressivite;
+	return isConcerneDegressivite;
     }
 
     public void setConcerneDegressivite(boolean isConcerneDegressivite) {
-        this.isConcerneDegressivite = isConcerneDegressivite;
+	this.isConcerneDegressivite = isConcerneDegressivite;
     }
 
     @Override
     public String toString() {
-        return "AllocationARE [allocationJournaliereNet=" + allocationJournaliereNet + ", montantJournalierBrut="
-                + montantJournalierBrut + ", allocationMensuelleNet=" + allocationMensuelleNet
-                + ", salaireJournalierReferenceBrut=" + salaireJournalierReferenceBrut + ", nombreJoursRestants="
-                + nombreJoursRestants + ", isConcerneDegressivite=" + isConcerneDegressivite + "]";
+	return "AllocationARE [allocationJournaliereNet=" + allocationJournaliereNet + ", montantJournalierBrut="
+		+ montantJournalierBrut + ", allocationMensuelleNet=" + allocationMensuelleNet
+		+ ", salaireJournalierReferenceBrut=" + salaireJournalierReferenceBrut + ", nombreJoursRestants="
+		+ nombreJoursRestants + ", isConcerneDegressivite=" + isConcerneDegressivite + "]";
     }
 }

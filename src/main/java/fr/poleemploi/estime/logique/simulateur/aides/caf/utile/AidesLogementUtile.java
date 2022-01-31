@@ -41,7 +41,7 @@ public class AidesLogementUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      */
     boolean isAideLogementACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	return ((numeroMoisSimule == 1) || (prochaineDeclarationTrimestrielle == numeroMoisSimule) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
 		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
     }
@@ -64,7 +64,7 @@ public class AidesLogementUtile {
      *      
      */
     boolean isAideLogementAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int prochaineDeclarationTrimestrielle = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	return (numeroMoisSimule == 2 || ((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
 		|| ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 5))
 		|| ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6))

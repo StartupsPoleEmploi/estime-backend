@@ -5,24 +5,24 @@ public class AidesCPAM {
     private Float allocationSupplementaireInvalidite;
 
     public Float getPensionInvalidite() {
-        return pensionInvalidite;
+	return pensionInvalidite;
     }
 
     public void setPensionInvalidite(Float pensionInvalidite) {
-        this.pensionInvalidite = pensionInvalidite;
+	this.pensionInvalidite = pensionInvalidite;
     }
-    
+
     public Float getAllocationSupplementaireInvalidite() {
-        return allocationSupplementaireInvalidite;
+	return allocationSupplementaireInvalidite;
     }
 
     public void setAllocationSupplementaireInvalidite(Float allocationSupplementaireInvalidite) {
-        this.allocationSupplementaireInvalidite = allocationSupplementaireInvalidite;
+	this.allocationSupplementaireInvalidite = allocationSupplementaireInvalidite;
     }
 
     @Override
     public String toString() {
-        return "AllocationsCPAM [pensionInvalidite=" + pensionInvalidite + ", allocationSupplementaireInvalidite="
-                + allocationSupplementaireInvalidite + "]";
+	return "AllocationsCPAM [pensionInvalidite=" + pensionInvalidite + ", allocationSupplementaireInvalidite="
+		+ allocationSupplementaireInvalidite + "]";
     }
 }

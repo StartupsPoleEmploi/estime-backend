@@ -9,40 +9,40 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice  
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(BadRequestException.class)
+    @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ExceptionResponse> handleCritereRechercheIncorrectException(BadRequestException ex) {
-		ExceptionResponse errorResponse = new ExceptionResponse();
-        errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-        errorResponse.setMessage(ex.getMessage());
-        errorResponse.setException(ex.toString());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+	ExceptionResponse errorResponse = new ExceptionResponse();
+	errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+	errorResponse.setMessage(ex.getMessage());
+	errorResponse.setException(ex.toString());
+	return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-	
-	@ExceptionHandler(ResourceNotFoundException.class)
+
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleResourceNonExistanteException(ResourceNotFoundException ex) {
-		ExceptionResponse errorResponse = new ExceptionResponse();
-        errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
-        errorResponse.setMessage(ex.getMessage());
-        errorResponse.setException(ex.toString());	
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	ExceptionResponse errorResponse = new ExceptionResponse();
+	errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+	errorResponse.setMessage(ex.getMessage());
+	errorResponse.setException(ex.toString());	
+	return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
-	
-	@ExceptionHandler(UnauthorizedException.class)
+
+    @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ExceptionResponse> handleInterdictionException(UnauthorizedException ex) {
-		ExceptionResponse errorResponse = new ExceptionResponse();
-        errorResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-        errorResponse.setMessage(ex.getMessage());
-        errorResponse.setException(ex.toString());	
-        errorResponse.setCode(ex.getCode());
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+	ExceptionResponse errorResponse = new ExceptionResponse();
+	errorResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+	errorResponse.setMessage(ex.getMessage());
+	errorResponse.setException(ex.toString());	
+	errorResponse.setCode(ex.getCode());
+	return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
-	
-	@ExceptionHandler(InternalServerException.class)
+
+    @ExceptionHandler(InternalServerException.class)
     public ResponseEntity<ExceptionResponse> handleErreurServeurException(InternalServerException ex) {
-		ExceptionResponse errorResponse = new ExceptionResponse();
-        errorResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        errorResponse.setMessage(ex.getMessage());
-        errorResponse.setException(ex.toString());	
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	ExceptionResponse errorResponse = new ExceptionResponse();
+	errorResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+	errorResponse.setMessage(ex.getMessage());
+	errorResponse.setException(ex.toString());	
+	return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

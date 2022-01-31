@@ -195,13 +195,17 @@ public class PoleEmploiIOClient {
     public Optional<ArePEIOOut> getAreSimulateurRepriseActivite(DemandeurEmploi demandeurEmploi) {
 	String apiSimulateurRepriseActiviteURI = poleemploiioURI + "peconnect-simuler-reprise-activite/v1/simulation-droits/reprise-activite";
 	try {
+	    //avant appel au service, vérification que l'access token est toujours valide
+	    refreshAccessToken(demandeurEmploi);
 	    HttpEntity<ArePEIOIn> httpEntity = simulateurRepriseActiviteUtile.createHttpEntityAre(demandeurEmploi);
 	    return Optional.of(restTemplate.postForEntity(apiSimulateurRepriseActiviteURI, httpEntity, ArePEIOOut.class).getBody());
 	} catch (Exception exception) {
 	    if (isTooManyRequestsHttpClientError(exception)) {
 		throw new TooManyRequestException(exception.getMessage());
 	    } else if (isNombreDeJoursIndemnisesEgalAZeroError(exception)) {
-		return Optional.of(new ArePEIOOut());
+		// TODO: améliorer la gestion des retours en erreur de l'API reprise d'activité quand le demandeur n'a pas le droit à du complément ARE 
+		LOGGER.info(String.format(LoggerMessages.RETOUR_API_ARE_ZERO_JOUR_INDEMNISE.getMessage(), apiSimulateurRepriseActiviteURI, exception.getMessage()));
+		return Optional.empty();
 	    } else {
 		LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), apiSimulateurRepriseActiviteURI));
 		throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());

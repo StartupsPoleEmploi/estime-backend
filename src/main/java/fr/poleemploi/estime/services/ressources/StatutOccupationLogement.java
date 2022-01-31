@@ -12,63 +12,63 @@ public class StatutOccupationLogement {
     private boolean isProprietaireAvecEmprunt;
 
     public boolean isLocataireHLM() {
-        return isLocataireHLM;
+	return isLocataireHLM;
     }
 
     @JsonProperty("isLocataireHLM")
     public void setLocataireHLM(boolean isLocataireHLM) {
-        this.isLocataireHLM = isLocataireHLM;
+	this.isLocataireHLM = isLocataireHLM;
     }
 
     public boolean isLocataireMeuble() {
-        return isLocataireMeuble;
+	return isLocataireMeuble;
     }
 
     @JsonProperty("isLocataireMeuble")
     public void setLocataireMeuble(boolean isLocataireMeuble) {
-        this.isLocataireMeuble = isLocataireMeuble;
+	this.isLocataireMeuble = isLocataireMeuble;
     }
 
     public boolean isLocataireNonMeuble() {
-        return isLocataireNonMeuble;
+	return isLocataireNonMeuble;
     }
 
     @JsonProperty("isLocataireNonMeuble")
     public void setLocataireNonMeuble(boolean isLocataireNonMeuble) {
-        this.isLocataireNonMeuble = isLocataireNonMeuble;
+	this.isLocataireNonMeuble = isLocataireNonMeuble;
     }
 
     public boolean isLogeGratuitement() {
-        return isLogeGratuitement;
+	return isLogeGratuitement;
     }
 
     @JsonProperty("isLogeGratuitement")
     public void setLogeGratuitement(boolean isLogeGratuitement) {
-        this.isLogeGratuitement = isLogeGratuitement;
+	this.isLogeGratuitement = isLogeGratuitement;
     }
 
     public boolean isProprietaire() {
-        return isProprietaire;
+	return isProprietaire;
     }
 
     @JsonProperty("isProprietaire")
     public void setProprietaire(boolean isProprietaire) {
-        this.isProprietaire = isProprietaire;
+	this.isProprietaire = isProprietaire;
     }
 
     public boolean isProprietaireAvecEmprunt() {
-        return isProprietaireAvecEmprunt;
+	return isProprietaireAvecEmprunt;
     }
 
     @JsonProperty("isProprietaireAvecEmprunt")
     public void setProprietaireAvecEmprunt(boolean isProprietaireAvecEmprunt) {
-        this.isProprietaireAvecEmprunt = isProprietaireAvecEmprunt;
+	this.isProprietaireAvecEmprunt = isProprietaireAvecEmprunt;
     }
 
     @Override
     public String toString() {
-        return "StatutOccupationLogement [isLocataireHLM=" + isLocataireHLM + ", isLocataireMeuble=" + isLocataireMeuble + ", isLocataireNonMeuble=" + isLocataireNonMeuble + ", isLogeGratuitement="
-                + isLogeGratuitement + ", isProprietaire=" + isProprietaire + ", isProprietaireAvecEmprunt=" + isProprietaireAvecEmprunt + "]";
+	return "StatutOccupationLogement [isLocataireHLM=" + isLocataireHLM + ", isLocataireMeuble=" + isLocataireMeuble + ", isLocataireNonMeuble=" + isLocataireNonMeuble + ", isLogeGratuitement="
+		+ isLogeGratuitement + ", isProprietaire=" + isProprietaire + ", isProprietaireAvecEmprunt=" + isProprietaireAvecEmprunt + "]";
     }
 
 }

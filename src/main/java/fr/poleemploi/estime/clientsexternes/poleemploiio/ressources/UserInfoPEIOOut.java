@@ -11,41 +11,41 @@ public class UserInfoPEIOOut {
     @JsonProperty("given_name")
     private String givenName;
     private String email;
-    
+
     public String getSub() {
-        return sub;
+	return sub;
     }
     public void setSub(String sub) {
-        this.sub = sub;
+	this.sub = sub;
     }
     public String getGender() {
-        return gender;
+	return gender;
     }
     public void setGender(String gender) {
-        this.gender = gender;
+	this.gender = gender;
     }
     public String getFamilyName() {
-        return familyName;
+	return familyName;
     }
     public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+	this.familyName = familyName;
     }
     public String getGivenName() {
-        return givenName;
+	return givenName;
     }
     public void setGivenName(String givenName) {
-        this.givenName = givenName;
+	this.givenName = givenName;
     }
     public String getEmail() {
-        return email;
+	return email;
     }
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
-    
+
     @Override
     public String toString() {
-        return "UserInfoRessource [sub=" + sub + ", gender=" + gender + ", familyName=" + familyName + ", givenName="
-                + givenName + ", email=" + email + "]";
+	return "UserInfoRessource [sub=" + sub + ", gender=" + gender + ", familyName=" + familyName + ", givenName="
+		+ givenName + ", email=" + email + "]";
     }
 }

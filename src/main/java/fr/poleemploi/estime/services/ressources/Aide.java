@@ -13,49 +13,49 @@ public class Aide {
     private String nom;
     private String organisme;
     private String lienExterne;
-   
-    
+
+
     public String getMessageAlerte() {
-        return messageAlerte;
+	return messageAlerte;
     }
     public void setMessageAlerte(String messageAlerte) {
-        this.messageAlerte = messageAlerte;
+	this.messageAlerte = messageAlerte;
     }
     public boolean isReportee() {
-        return isReportee;
+	return isReportee;
     }
     public void setReportee(boolean isReportee) {
-        this.isReportee = isReportee;
+	this.isReportee = isReportee;
     }
     public String getDetail() {
-        return detail;
+	return detail;
     }
     public void setDetail(String detail) {
-        this.detail = detail;
+	this.detail = detail;
     }
     public String getOrganisme() {
-        return organisme;
+	return organisme;
     }
     public void setOrganisme(String organisme) {
-        this.organisme = organisme;
+	this.organisme = organisme;
     }
     public String getCode() {
-        return code;
+	return code;
     }
     public void setCode(String code) {
-        this.code = code;
+	this.code = code;
     }
     public String getNom() {
-        return nom;
+	return nom;
     }
     public void setNom(String nom) {
-        this.nom = nom;
+	this.nom = nom;
     }
     public Float getMontant() {
-        return montant;
+	return montant;
     }
     public void setMontant(Float montant) {
-        this.montant = montant;
+	this.montant = montant;
     }
     public String getLienExterne() {
 	return lienExterne;

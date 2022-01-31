@@ -3,7 +3,7 @@ package fr.poleemploi.estime.clientsexternes.poleemploiio.ressources;
 import java.util.Date;
 
 public class DetailIndemnisationPEIOOut {
-    
+
     private boolean beneficiaireAideSolidarite;
     private boolean beneficiaireAssuranceChomage;
     private float indemnisationJournalierNet;
@@ -12,62 +12,62 @@ public class DetailIndemnisationPEIOOut {
     private String codeIndemnisation;
     private boolean beneficiaireRSA;
     private boolean beneficiaireAAH;
-    
+
     public boolean isBeneficiaireAssuranceChomage() {
-        return beneficiaireAssuranceChomage;
+	return beneficiaireAssuranceChomage;
     }
     public float getIndemnisationJournalierNet() {
-        return indemnisationJournalierNet;
+	return indemnisationJournalierNet;
     }
 
     public void setIndemnisationJournalierNet(float indemnisationJournalierNet) {
-        this.indemnisationJournalierNet = indemnisationJournalierNet;
+	this.indemnisationJournalierNet = indemnisationJournalierNet;
     }
     public int getDureeReliquat() {
-        return dureeReliquat;
+	return dureeReliquat;
     }
     public void setDureeReliquat(int dureeReliquat) {
-        this.dureeReliquat = dureeReliquat;
+	this.dureeReliquat = dureeReliquat;
     }
     public boolean isBeneficiaireAideSolidarite() {
-        return beneficiaireAideSolidarite;
+	return beneficiaireAideSolidarite;
     }
     public void setBeneficiaireAideSolidarite(boolean beneficiaireAideSolidarite) {
-        this.beneficiaireAideSolidarite = beneficiaireAideSolidarite;
+	this.beneficiaireAideSolidarite = beneficiaireAideSolidarite;
     }
     public Date getDateReliquat() {
-        return dateReliquat;
+	return dateReliquat;
     }
     public void setDateReliquat(Date dateReliquat) {
-        this.dateReliquat = dateReliquat;
+	this.dateReliquat = dateReliquat;
     }
     public void setBeneficiaireAssuranceChomage(boolean beneficiaireAssuranceChomage) {
-        this.beneficiaireAssuranceChomage = beneficiaireAssuranceChomage;
+	this.beneficiaireAssuranceChomage = beneficiaireAssuranceChomage;
     }
     public String getCodeIndemnisation() {
-        return codeIndemnisation;
+	return codeIndemnisation;
     }
     public void setCodeIndemnisation(String codeIndemnisation) {
-        this.codeIndemnisation = codeIndemnisation;
+	this.codeIndemnisation = codeIndemnisation;
     }
     public boolean isBeneficiaireRSA() {
-        return beneficiaireRSA;
+	return beneficiaireRSA;
     }
     public void setBeneficiaireRSA(boolean beneficiaireRSA) {
-        this.beneficiaireRSA = beneficiaireRSA;
+	this.beneficiaireRSA = beneficiaireRSA;
     }
     public boolean isBeneficiaireAAH() {
-        return beneficiaireAAH;
+	return beneficiaireAAH;
     }
     public void setBeneficiaireAAH(boolean beneficiaireAAH) {
-        this.beneficiaireAAH = beneficiaireAAH;
+	this.beneficiaireAAH = beneficiaireAAH;
     }
     @Override
     public String toString() {
-        return "DetailIndemnisationESD [beneficiaireAideSolidarite=" + beneficiaireAideSolidarite
-                + ", beneficiaireAssuranceChomage=" + beneficiaireAssuranceChomage + ", indemnisationJournalierNet="
-                + indemnisationJournalierNet + ", dureeReliquat=" + dureeReliquat + ", dateReliquat=" + dateReliquat
-                + ", codeIndemnisation=" + codeIndemnisation + ", beneficiaireRSA=" + beneficiaireRSA
-                + ", beneficiaireAAH=" + beneficiaireAAH + "]";
+	return "DetailIndemnisationESD [beneficiaireAideSolidarite=" + beneficiaireAideSolidarite
+		+ ", beneficiaireAssuranceChomage=" + beneficiaireAssuranceChomage + ", indemnisationJournalierNet="
+		+ indemnisationJournalierNet + ", dureeReliquat=" + dureeReliquat + ", dateReliquat=" + dateReliquat
+		+ ", codeIndemnisation=" + codeIndemnisation + ", beneficiaireRSA=" + beneficiaireRSA
+		+ ", beneficiaireAAH=" + beneficiaireAAH + "]";
     }
 }

@@ -8,40 +8,40 @@ public class OpenFiscaRetourSimulation {
     private String typeAideLogement;
 
     public float getMontantRSA() {
-        return montantRSA;
+	return montantRSA;
     }
 
     public void setMontantRSA(float montantRSA) {
-        this.montantRSA = montantRSA;
+	this.montantRSA = montantRSA;
     }
 
     public float getMontantPrimeActivite() {
-        return montantPrimeActivite;
+	return montantPrimeActivite;
     }
 
     public void setMontantPrimeActivite(float montantPrimeActivite) {
-        this.montantPrimeActivite = montantPrimeActivite;
+	this.montantPrimeActivite = montantPrimeActivite;
     }
 
     public float getMontantAideLogement() {
-        return montantAideLogement;
+	return montantAideLogement;
     }
 
     public void setMontantAideLogement(float montantAideLogement) {
-        this.montantAideLogement = montantAideLogement;
+	this.montantAideLogement = montantAideLogement;
     }
 
     public String getTypeAideLogement() {
-        return typeAideLogement;
+	return typeAideLogement;
     }
 
     public void setTypeAideLogement(String typeAideLogement) {
-        this.typeAideLogement = typeAideLogement;
+	this.typeAideLogement = typeAideLogement;
     }
 
     @Override
     public String toString() {
-        return "OpenFiscaRetourSimulation [montantRSA=" + montantRSA + ", montantPrimeActivite=" + montantPrimeActivite + ", montantAideLogement=" + montantAideLogement + ", typeAideLogement="
-                + typeAideLogement + "]";
+	return "OpenFiscaRetourSimulation [montantRSA=" + montantRSA + ", montantPrimeActivite=" + montantPrimeActivite + ", montantAideLogement=" + montantAideLogement + ", typeAideLogement="
+		+ typeAideLogement + "]";
     }
 }

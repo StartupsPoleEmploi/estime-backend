@@ -1,11 +1,11 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 
 public class ParametresOpenFisca {
-    
+
     private ParametresOpenFisca() {
-        
+
     }    
-    
+
     public static final String AAH = "aah";
     public static final String AF = "af";
     public static final String AGE = "age";

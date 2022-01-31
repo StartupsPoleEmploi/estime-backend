@@ -18,26 +18,26 @@ public enum AideEnum {
     PENSIONS_ALIMENTAIRES("PAF", "Pensions Alimentaires du Foyer",""),
     PRESTATION_ACCUEIL_JEUNE_ENFANT("PAJE", "Prestation d'Accueil du Jeune Enfant",""),
     RSA("RSA", "Revenu de Solidarité Active","");
-    
+
     private String code;
     private String nom;
     private String nomFichierDetail;
-    
+
     AideEnum(String code, String nom, String nomFichierDetail) {
-        this.code = code;
-        this.nom = nom;
-        this.nomFichierDetail = nomFichierDetail;
+	this.code = code;
+	this.nom = nom;
+	this.nomFichierDetail = nomFichierDetail;
     }
 
     public String getCode() {
-        return code;
+	return code;
     }
-    
+
     public String getNomFichierDetail() {
-        return nomFichierDetail;
+	return nomFichierDetail;
     }
 
     public String getNom() {
-        return nom;
+	return nom;
     }
 }

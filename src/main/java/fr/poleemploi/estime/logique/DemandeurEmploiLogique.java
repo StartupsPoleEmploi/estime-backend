@@ -15,47 +15,47 @@ import fr.poleemploi.estime.services.ressources.SimulationAides;
 @Component
 public class DemandeurEmploiLogique {
 
-	@Autowired
-	private DemandeurEmploiUtile demandeurEmploiUtile;
+    @Autowired
+    private DemandeurEmploiUtile demandeurEmploiUtile;
 
-	@Autowired
-	private SimulateurAides simulateurAides;
+    @Autowired
+    private SimulateurAides simulateurAides;
 
-	@Autowired
-	private StagingEnvironnementUtile stagingEnvironnementUtile;
+    @Autowired
+    private StagingEnvironnementUtile stagingEnvironnementUtile;
 
-	@Autowired
-	private SuiviUtilisateurUtile suiviUtilisateurUtile;
+    @Autowired
+    private SuiviUtilisateurUtile suiviUtilisateurUtile;
 
-	public DemandeurEmploi creerDemandeurEmploi(Individu individu) {
+    public DemandeurEmploi creerDemandeurEmploi(Individu individu) {
 
-		DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-		demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
-		demandeurEmploiUtile.addInformationsPersonnelles(demandeurEmploi, individu);
-		demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
-		demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
+	demandeurEmploiUtile.addInformationsPersonnelles(demandeurEmploi, individu);
+	demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
+	demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
 
-		if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-			suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(),
-					individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
-		}
-
-		return demandeurEmploi;
+	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
+	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(),
+		    individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 	}
 
-	public SimulationAides simulerMesAides(DemandeurEmploi demandeurEmploi) {
-		demandeurEmploiUtile.miseAJourCoordonnees(demandeurEmploi);
-		SimulationAides simulationAides = simulateurAides.simuler(demandeurEmploi);
+	return demandeurEmploi;
+    }
 
-		if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-			suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
-					demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
-		}
+    public SimulationAides simulerMesAides(DemandeurEmploi demandeurEmploi) {
+	demandeurEmploiUtile.miseAJourCoordonnees(demandeurEmploi);
+	SimulationAides simulationAides = simulateurAides.simuler(demandeurEmploi);
 
-		return simulationAides;
+	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
+	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
+		    demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 	}
 
-	public void supprimerSuiviParcoursUtilisateur(String idPoleEmploi) {
-		suiviUtilisateurUtile.supprimerTracesParcoursUtilisateur(idPoleEmploi);
-	}
+	return simulationAides;
+    }
+
+    public void supprimerSuiviParcoursUtilisateur(String idPoleEmploi) {
+	suiviUtilisateurUtile.supprimerTracesParcoursUtilisateur(idPoleEmploi);
+    }
 }

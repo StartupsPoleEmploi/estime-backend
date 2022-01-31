@@ -12,11 +12,11 @@ public enum MontantParPalierAgepiEnum {
     private int montantAgepi;
 
     MontantParPalierAgepiEnum(int montantAgepi) {
-        this.montantAgepi = montantAgepi;
+	this.montantAgepi = montantAgepi;
     }
 
     public int getMontant() {
-        return montantAgepi;
+	return montantAgepi;
     }
 
 }

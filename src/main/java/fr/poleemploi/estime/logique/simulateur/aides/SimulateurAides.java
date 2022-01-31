@@ -28,47 +28,47 @@ public class SimulateurAides {
 
     @Autowired
     private RessourcesFinancieresUtile ressourcesFinancieresUtile;
-    
+
     @Autowired
     private SimulateurAidesCAF simulateurAidesCAF;
 
     @Autowired
     private SimulateurAidesPoleEmploi simulateurAidesPoleEmploi;
 
-    
+
     public SimulationAides simuler(DemandeurEmploi demandeurEmploi) {
-        SimulationAides simulationAides = new SimulationAides();       
-        simulationAides.setSimulationsMensuelles(new ArrayList<>());
+	SimulationAides simulationAides = new SimulationAides();       
+	simulationAides.setSimulationsMensuelles(new ArrayList<>());
 
-        LocalDate dateDemandeSimulation = dateUtile.getDateJour();
-        LocalDate dateDebutSimulation = simulateurAidesUtile.getDateDebutSimulation(dateDemandeSimulation);
+	LocalDate dateDemandeSimulation = dateUtile.getDateJour();
+	LocalDate dateDebutSimulation = simulateurAidesUtile.getDateDebutSimulation(dateDemandeSimulation);
 
-        simulationAides.setMontantRessourcesFinancieresMoisAvantSimulation(ressourcesFinancieresUtile.calculerMontantRessourcesFinancieresMoisAvantSimulation(demandeurEmploi));
+	simulationAides.setMontantRessourcesFinancieresMoisAvantSimulation(ressourcesFinancieresUtile.calculerMontantRessourcesFinancieresMoisAvantSimulation(demandeurEmploi));
 
-        int nombreMoisASimuler = simulateurAidesUtile.getNombreMoisASimuler(demandeurEmploi);
+	int nombreMoisASimuler = simulateurAidesUtile.getNombreMoisASimuler(demandeurEmploi);
 
-        for (int numeroMoisSimule = 1; numeroMoisSimule <= nombreMoisASimuler; numeroMoisSimule++) {    
-            simulerAidesPourCeMois(simulationAides, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
-        }
-        return simulationAides;
+	for (int numeroMoisSimule = 1; numeroMoisSimule <= nombreMoisASimuler; numeroMoisSimule++) {    
+	    simulerAidesPourCeMois(simulationAides, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	}
+	return simulationAides;
     }
 
     private void simulerAidesPourCeMois(SimulationAides simulationAides, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-        LocalDate dateMoisASimuler = getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
+	LocalDate dateMoisASimuler = getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
 
-        SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
-        simulationMensuelle.setDatePremierJourMoisSimule(dateMoisASimuler);                           
-        simulationAides.getSimulationsMensuelles().add(simulationMensuelle);
+	SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
+	simulationMensuelle.setDatePremierJourMoisSimule(dateMoisASimuler);                           
+	simulationAides.getSimulationsMensuelles().add(simulationMensuelle);
 
-        HashMap<String, Aide> aidesPourCeMois = new HashMap<>();
-        simulationMensuelle.setMesAides(aidesPourCeMois);
+	HashMap<String, Aide> aidesPourCeMois = new HashMap<>();
+	simulationMensuelle.setMesAides(aidesPourCeMois);
 
-        simulateurAidesCAF.simuler(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
-        simulateurAidesPoleEmploi.simuler(aidesPourCeMois, numeroMoisSimule, dateMoisASimuler, demandeurEmploi, dateDebutSimulation);
+	simulateurAidesCAF.simuler(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	simulateurAidesPoleEmploi.simuler(aidesPourCeMois, numeroMoisSimule, dateMoisASimuler, demandeurEmploi, dateDebutSimulation);
     }
-    
+
     private LocalDate getDateMoisASimuler(LocalDate dateDebutSimulation, int numeroMoisSimule) {
-        int nombreMoisToAdd = numeroMoisSimule - 1;
-        return dateUtile.ajouterMoisALocalDate(dateDebutSimulation, nombreMoisToAdd);
+	int nombreMoisToAdd = numeroMoisSimule - 1;
+	return dateUtile.ajouterMoisALocalDate(dateDebutSimulation, nombreMoisToAdd);
     }
 }
