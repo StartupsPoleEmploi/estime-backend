@@ -156,8 +156,7 @@ public class AidesLogementUtile {
 		&& demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement() != null
 		&& (demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireHLM()
 			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireMeuble()
-			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireNonMeuble()
-			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isProprietaireAvecEmprunt())) {
+			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireNonMeuble())) {
 	    isEligible = true;
 	}
 	return isEligible;
