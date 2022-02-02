@@ -95,8 +95,8 @@ public class PoleEmploiIOClient {
 	try {
 	    HttpEntity<String> httpEntity = createAuthorizationHttpEntity(bearerToken);
 	    return this.restTemplate.exchange(userInfoURI, HttpMethod.GET, httpEntity, UserInfoPEIOOut.class).getBody();
-	} catch (Exception e) {
-	    LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), userInfoURI));
+	} catch (Exception exception) {
+	    LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), userInfoURI));
 	    throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 	}
     }
