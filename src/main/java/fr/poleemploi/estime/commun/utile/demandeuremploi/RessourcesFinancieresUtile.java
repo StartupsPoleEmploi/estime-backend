@@ -259,6 +259,10 @@ public class RessourcesFinancieresUtile {
 		&& ressourcesFinancieres.getBeneficesMicroEntrepriseDernierExercice() > 0;
     }
 
+    public boolean hasPensionRetraite(RessourcesFinancieres ressourcesFinancieres) {
+	return ressourcesFinancieres != null && ressourcesFinancieres.getPensionRetraite() != null && ressourcesFinancieres.getPensionRetraite() > 0;
+    }
+
     public boolean hasSalaire(RessourcesFinancieres ressourcesFinancieres) {
 	return ressourcesFinancieres.getSalaire() != null && ressourcesFinancieres.getSalaire().getMontantNet() > 0;
     }

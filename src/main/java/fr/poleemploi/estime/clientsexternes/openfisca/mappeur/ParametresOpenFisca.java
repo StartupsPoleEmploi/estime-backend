@@ -4,7 +4,7 @@ public class ParametresOpenFisca {
 
     private ParametresOpenFisca() {
 
-    }    
+    }
 
     public static final String AAH = "aah";
     public static final String AF = "af";
@@ -39,6 +39,7 @@ public class ParametresOpenFisca {
     public static final String PARENTS = "parents";
     public static final String PENSIONS_ALIMENTAIRES_PERCUES = "pensions_alimentaires_percues";
     public static final String PENSION_INVALIDITE = "pensions_invalidite";
+    public static final String PENSION_RETRAITE = "retraite_nette";
     public static final String PERSONNE_DE_REFERENCE = "personne_de_reference";
     public static final String PRESTATION_ACCUEIL_JEUNE_ENFANT = "paje_base";
     public static final String PPA = "ppa";
@@ -49,7 +50,7 @@ public class ParametresOpenFisca {
     public static final String SALAIRE_BASE = "salaire_de_base";
     public static final String SALAIRE_IMPOSABLE = "salaire_imposable";
     public static final String STATUT_MARITAL = "statut_marital";
-    public static final String STATUT_OCCUPATION_LOGEMENT = "statut_occupation_logement";    
-    public static final String CHIFFRE_AFFAIRES_INDEPENDANT = "rpns_autres_revenus";    
+    public static final String STATUT_OCCUPATION_LOGEMENT = "statut_occupation_logement";
+    public static final String CHIFFRE_AFFAIRES_INDEPENDANT = "rpns_autres_revenus";
     public static final String BENEFICES_MICRO_ENTREPRISE = "rpns_micro_entreprise_benefice";
 }

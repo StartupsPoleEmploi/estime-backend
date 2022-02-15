@@ -6,6 +6,7 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHOMAGE_NET;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_RETRAITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.REVENUS_LOCATIFS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
@@ -53,6 +54,10 @@ public class OpenFiscaMappeurRessourcesPersonne {
 	    if (ressourcesFinancieresUtile.hasRevenusMicroEntreprise(ressourcesFinancieres)) {
 		personneJSON.put(BENEFICES_MICRO_ENTREPRISE,
 			openFiscaMappeurPeriode.creerPeriodesAnnees(ressourcesFinancieres.getBeneficesMicroEntrepriseDernierExercice(), dateDebutSimulation, numeroMoisSimule));
+	    }
+	    if (ressourcesFinancieresUtile.hasPensionRetraite(ressourcesFinancieres)) {
+		personneJSON.put(PENSION_RETRAITE, openFiscaMappeurPeriode.creerPeriodes(ressourcesFinancieres.getPensionRetraite(), dateDebutSimulation, numeroMoisSimule,
+			OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	    }
 	    if (ressourcesFinancieresUtile.hasRevenusImmobilier(ressourcesFinancieres)) {
 		personneJSON.put(REVENUS_LOCATIFS, openFiscaMappeurPeriode

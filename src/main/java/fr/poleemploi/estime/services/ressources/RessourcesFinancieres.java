@@ -10,6 +10,7 @@ public class RessourcesFinancieres {
     private Float chiffreAffairesIndependantDernierExercice;
     private Float beneficesMicroEntrepriseDernierExercice;
     private Float revenusImmobilier3DerniersMois;
+    private Float pensionRetraite;
     private Salaire salaire;
     private PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation;
 
@@ -77,6 +78,14 @@ public class RessourcesFinancieres {
 	this.revenusImmobilier3DerniersMois = revenusImmobilier3DerniersMois;
     }
 
+    public Float getPensionRetraite() {
+	return pensionRetraite;
+    }
+
+    public void setPensionRetraite(Float pensionRetraite) {
+	this.pensionRetraite = pensionRetraite;
+    }
+
     public Salaire getSalaire() {
 	return salaire;
     }
@@ -97,7 +106,8 @@ public class RessourcesFinancieres {
     public String toString() {
 	return "RessourcesFinancieres [aidesCAF=" + aidesCAF + ", aidesPoleEmploi=" + aidesPoleEmploi + ", aidesCPAM=" + aidesCPAM + ", hasTravailleAuCoursDerniersMois="
 		+ hasTravailleAuCoursDerniersMois + ", nombreMoisTravaillesDerniersMois=" + nombreMoisTravaillesDerniersMois + ", chiffreAffairesIndependantDernierExercice="
-		+ chiffreAffairesIndependantDernierExercice + ", beneficesMicroEntrepriseDernierExercice=" + beneficesMicroEntrepriseDernierExercice + ", revenusImmobilier3DerniersMois="
-		+ revenusImmobilier3DerniersMois + ", salaire=" + salaire + ", periodeTravailleeAvantSimulation=" + periodeTravailleeAvantSimulation + "]";
+		+ chiffreAffairesIndependantDernierExercice + ", beneficesMicroEntrepriseDernierExercice=" + beneficesMicroEntrepriseDernierExercice
+		+ ", revenusImmobilier3DerniersMois=" + revenusImmobilier3DerniersMois + ", pensionRetraite=" + pensionRetraite + ", salaire=" + salaire
+		+ ", periodeTravailleeAvantSimulation=" + periodeTravailleeAvantSimulation + "]";
     }
 }
