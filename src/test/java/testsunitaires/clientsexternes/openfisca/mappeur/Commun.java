@@ -50,7 +50,7 @@ public class Commun {
 	Aide aideAgepi = new Aide();
 	aideAgepi.setCode(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode());
 	aideAgepi.setNom(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getNom());
-	aideAgepi.setOrganisme(OrganismeEnum.CAF.getNom());
+	aideAgepi.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	aideAgepi.setMontant(montant);
 	aideAgepi.setReportee(false);
 	return aideAgepi;
@@ -60,7 +60,7 @@ public class Commun {
 	Aide aideAgepi = new Aide();
 	aideAgepi.setCode(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
 	aideAgepi.setNom(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
-	aideAgepi.setOrganisme(OrganismeEnum.PE.getNom());
+	aideAgepi.setOrganisme(OrganismeEnum.PE.getNomCourt());
 	aideAgepi.setMontant(montant);
 	aideAgepi.setReportee(false);
 	return aideAgepi;
