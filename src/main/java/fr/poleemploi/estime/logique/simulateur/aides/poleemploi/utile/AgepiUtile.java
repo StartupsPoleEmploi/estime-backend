@@ -74,7 +74,7 @@ public class AgepiUtile {
 	float montantAgepiSimule = poleEmploiIOClient.getMontantAgepiSimulateurAides(demandeurEmploi);
 	if (montantAgepiSimule > 0) {
 	    return Optional.of(creerAide(montantAgepiSimule));
-	} 
+	}
 	return Optional.empty();
     }
 
@@ -87,7 +87,7 @@ public class AgepiUtile {
 	}
 	agepi.setMessageAlerte(MessageInformatifEnum.AGEPI_IDF.getMessage());
 	agepi.setNom(AideEnum.AGEPI.getNom());
-	agepi.setOrganisme(OrganismeEnum.PE.getNom());
+	agepi.setOrganisme(OrganismeEnum.PE.getNomCourt());
 	agepi.setMontant(montantAide);
 	agepi.setReportee(false);
 	return agepi;

@@ -36,8 +36,7 @@ public class AidesFamilialesUtile {
     }
 
     private void simulerAllocationSoutienFamilial(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-	float montantAllocationSoutienFamilial = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales()
-		.getAllocationSoutienFamilial();
+	float montantAllocationSoutienFamilial = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial();
 	ajouterAllocationSoutienFamilial(aidesPourCeMois, montantAllocationSoutienFamilial);
     }
 
@@ -52,14 +51,12 @@ public class AidesFamilialesUtile {
     }
 
     private void simulerPrestationAccueilJeuneEnfant(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-	float montantPrestationAccueilJeuneEnfant = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales()
-		.getPrestationAccueilJeuneEnfant();
+	float montantPrestationAccueilJeuneEnfant = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant();
 	ajouterPrestationAccueilJeuneEnfant(aidesPourCeMois, montantPrestationAccueilJeuneEnfant);
     }
 
     private void simulerPensionsAlimentaires(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-	float montantPensionsAlimentaires = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales()
-		.getPensionsAlimentairesFoyer();
+	float montantPensionsAlimentaires = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer();
 	ajouterPensionsAlimentaires(aidesPourCeMois, montantPensionsAlimentaires);
     }
 
@@ -69,7 +66,7 @@ public class AidesFamilialesUtile {
 	allocationSoutienFamilial.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	allocationSoutienFamilial.setMontant(montant);
 	allocationSoutienFamilial.setNom(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getNom());
-	allocationSoutienFamilial.setOrganisme(OrganismeEnum.CAF.getNom());
+	allocationSoutienFamilial.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	allocationSoutienFamilial.setReportee(true);
 	aidesPourCeMois.put(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode(), allocationSoutienFamilial);
     }
@@ -80,7 +77,7 @@ public class AidesFamilialesUtile {
 	allocationsFamiliales.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	allocationsFamiliales.setMontant(montant);
 	allocationsFamiliales.setNom(AideEnum.ALLOCATIONS_FAMILIALES.getNom());
-	allocationsFamiliales.setOrganisme(OrganismeEnum.CAF.getNom());
+	allocationsFamiliales.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	allocationsFamiliales.setReportee(true);
 	aidesPourCeMois.put(AideEnum.ALLOCATIONS_FAMILIALES.getCode(), allocationsFamiliales);
     }
@@ -91,7 +88,7 @@ public class AidesFamilialesUtile {
 	complementFamilial.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	complementFamilial.setMontant(montant);
 	complementFamilial.setNom(AideEnum.COMPLEMENT_FAMILIAL.getNom());
-	complementFamilial.setOrganisme(OrganismeEnum.CAF.getNom());
+	complementFamilial.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	complementFamilial.setReportee(true);
 	aidesPourCeMois.put(AideEnum.COMPLEMENT_FAMILIAL.getCode(), complementFamilial);
     }
@@ -102,7 +99,7 @@ public class AidesFamilialesUtile {
 	prestationAccueilJeuneEnfant.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	prestationAccueilJeuneEnfant.setMontant(montant);
 	prestationAccueilJeuneEnfant.setNom(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getNom());
-	prestationAccueilJeuneEnfant.setOrganisme(OrganismeEnum.CAF.getNom());
+	prestationAccueilJeuneEnfant.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	prestationAccueilJeuneEnfant.setReportee(true);
 	aidesPourCeMois.put(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode(), prestationAccueilJeuneEnfant);
     }
@@ -113,15 +110,14 @@ public class AidesFamilialesUtile {
 	pensionsAlimentaires.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
 	pensionsAlimentaires.setMontant(montant);
 	pensionsAlimentaires.setNom(AideEnum.PENSIONS_ALIMENTAIRES.getNom());
-	pensionsAlimentaires.setOrganisme(OrganismeEnum.CAF.getNom());
+	pensionsAlimentaires.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	pensionsAlimentaires.setReportee(true);
 	aidesPourCeMois.put(AideEnum.PENSIONS_ALIMENTAIRES.getCode(), pensionsAlimentaires);
     }
 
     public boolean isEligibleAidesFamiliales(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
-	return isEligibleAllocationsFamiliales(demandeurEmploi) || isEligibleAllocationSoutienFamilial(demandeurEmploi)
-		|| isEligibleComplementFamilial(demandeurEmploi) || isEligiblePrestationAccueilJeuneEnfant(demandeurEmploi, numeroMoisSimule)
-		|| isEligiblePensionsAlimentaires(demandeurEmploi);
+	return isEligibleAllocationsFamiliales(demandeurEmploi) || isEligibleAllocationSoutienFamilial(demandeurEmploi) || isEligibleComplementFamilial(demandeurEmploi)
+		|| isEligiblePrestationAccueilJeuneEnfant(demandeurEmploi, numeroMoisSimule) || isEligiblePensionsAlimentaires(demandeurEmploi);
     }
 
     boolean isEligibleAllocationsFamiliales(DemandeurEmploi demandeurEmploi) {

@@ -97,7 +97,7 @@ public class AllocationAdultesHandicapesUtile {
 	}
 	allocationAAH.setMontant(montant);
 	allocationAAH.setNom(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getNom());
-	allocationAAH.setOrganisme(OrganismeEnum.CAF.getNom());
+	allocationAAH.setOrganisme(OrganismeEnum.CAF.getNomCourt());
 	allocationAAH.setReportee(false);
 	aidesPourCeMois.put(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), allocationAAH);
     }
