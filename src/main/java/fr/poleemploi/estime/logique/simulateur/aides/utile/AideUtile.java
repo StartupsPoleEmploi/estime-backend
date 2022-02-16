@@ -16,6 +16,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.StringUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
@@ -37,11 +38,31 @@ public class AideUtile {
     @Autowired
     private AreUtile areUtile;
 
-    public static final String PATH_DIR_DETAIL_PRESTATION = "details-prestations/";
+    public static final String PATH_DIR_DETAIL_PRESTATION = "details-aides/";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AideUtile.class);
 
-    public Aide creerAide(AideEnum aideEnum) {
+    public Aide creerAide(AideEnum aideEnum, OrganismeEnum organismeEnum, Optional<String> messageAlerteOptional, boolean isAideReportee, float montantAide) {
+	Aide aide = new Aide();
+	aide.setCode(aideEnum.getCode());
+	Optional<String> detailAideOptional = Optional.empty();
+	if (!aideEnum.getNomFichierDetail().isEmpty())
+	    detailAideOptional = getDescription(aideEnum.getNomFichierDetail());
+	if (detailAideOptional.isPresent()) {
+	    aide.setDetail(detailAideOptional.get());
+	}
+	if (messageAlerteOptional.isPresent()) {
+	    aide.setMessageAlerte(messageAlerteOptional.get());
+	}
+	aide.setMontant(montantAide);
+	aide.setNom(aideEnum.getNom());
+	aide.setOrganisme(organismeEnum.getNomCourt());
+	aide.setReportee(isAideReportee);
+	aide.setLienExterne(getLienExterne(aideEnum));
+	return aide;
+    }
+
+    public Aide creerAideVide(AideEnum aideEnum) {
 	Aide aide = new Aide();
 	aide.setCode(aideEnum.getCode());
 	aide.setNom(aideEnum.getNom());
@@ -116,7 +137,7 @@ public class AideUtile {
 	return String.join(" / ", aidesStream.map(AideEnum::getCode).collect(Collectors.toList()));
     }
 
-    private String getLienExterne(AideEnum aideEnum) {
+    public String getLienExterne(AideEnum aideEnum) {
 	switch (aideEnum) {
 	case AGEPI:
 	case AIDE_MOBILITE:

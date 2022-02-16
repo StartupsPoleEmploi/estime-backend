@@ -24,7 +24,7 @@ public class AllocationSolidariteSpecifiqueUtile {
     private static final int NOMBRE_MOIS_MAX_ASS_ELIGIBLE = 3;
 
     @Autowired
-    private AideUtile aideeUtile;
+    private AideUtile aideUtile;
 
     @Autowired
     private DateUtile dateUtile;
@@ -70,21 +70,7 @@ public class AllocationSolidariteSpecifiqueUtile {
     }
 
     private Aide creerAide(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, float montantAide) {
-	Aide ass = new Aide();
-	ass.setCode(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode());
-	Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNomFichierDetail());
-	if (detailAideOptional.isPresent()) {
-	    ass.setDetail(detailAideOptional.get());
-	}
-	Optional<String> messageAlerteOptional = getMessageAlerte(demandeurEmploi, dateDebutSimulation);
-	if (messageAlerteOptional.isPresent()) {
-	    ass.setMessageAlerte(messageAlerteOptional.get());
-	}
-	ass.setMontant(montantAide);
-	ass.setNom(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getNom());
-	ass.setOrganisme(OrganismeEnum.PE.getNomCourt());
-	ass.setReportee(false);
-	return ass;
+	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, OrganismeEnum.PE, getMessageAlerte(demandeurEmploi, dateDebutSimulation), false, montantAide);
     }
 
     /**

@@ -24,7 +24,7 @@ public class PrimeActiviteUtile {
     private OpenFiscaClient openFiscaClient;
 
     @Autowired
-    private AideUtile aideeUtile;
+    private AideUtile aideUtile;
 
     public void calculerPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
@@ -42,25 +42,14 @@ public class PrimeActiviteUtile {
     }
 
     public Aide creerAidePrimeActivite(float montantPrimeActivite, boolean isAideReportee) {
-	Aide aidePrimeActivite = new Aide();
-	aidePrimeActivite.setCode(AideEnum.PRIME_ACTIVITE.getCode());
-	Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.PRIME_ACTIVITE.getNomFichierDetail());
-	if (detailAideOptional.isPresent()) {
-	    aidePrimeActivite.setDetail(detailAideOptional.get());
-	}
-	aidePrimeActivite.setMessageAlerte(MessageInformatifEnum.PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA.getMessage());
-	aidePrimeActivite.setMontant(montantPrimeActivite);
-	aidePrimeActivite.setNom(AideEnum.PRIME_ACTIVITE.getNom());
-	aidePrimeActivite.setOrganisme(OrganismeEnum.CAF.getNomCourt());
-	aidePrimeActivite.setReportee(isAideReportee);
-	return aidePrimeActivite;
+	return aideUtile.creerAide(AideEnum.PRIME_ACTIVITE, OrganismeEnum.CAF, Optional.of(MessageInformatifEnum.PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA.getMessage()), isAideReportee,
+		montantPrimeActivite);
     }
 
     public Optional<Aide> getPrimeActiviteMoisPrecedent(SimulationAides simulationAides, int numeroMoisSimule) {
 	int moisNMoins1 = numeroMoisSimule - 1;
-	return aideeUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.PRIME_ACTIVITE.getCode(), moisNMoins1);
+	return aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.PRIME_ACTIVITE.getCode(), moisNMoins1);
     }
-
 
     /**
      * Méthode permettant de reporter le montant de la prime d'activité ou de recalculer son montant. Le montant de la prime d'activité calculée à mois N
@@ -71,13 +60,13 @@ public class PrimeActiviteUtile {
      * | mois 1 | mois 2 | mois 3 | mois 4 | | montant calculé | montant reporté | montant reporté | montant calculé |
      * 
      */
-    public void reporterPrimeActiviteMoisPrecedent(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule,
-                                                   DemandeurEmploi demandeurEmploi, Optional<Aide> primeActiviteMoisPrecedentOptional) {
+    public void reporterPrimeActiviteMoisPrecedent(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi, Optional<Aide> primeActiviteMoisPrecedentOptional) {
 
 	// le montant calculé au mois N est reporté au mois N+1 et N+2, la validité du montant s'étale donc sur 3 mois
 	int moisMoinsPeriodeValiditeMontant = numeroMoisSimule - 3;
 
-	Optional<Aide> primeActiviteDebutPeriodeValiditeMontant = aideeUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.PRIME_ACTIVITE.getCode(), moisMoinsPeriodeValiditeMontant);
+	Optional<Aide> primeActiviteDebutPeriodeValiditeMontant = aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.PRIME_ACTIVITE.getCode(),
+		moisMoinsPeriodeValiditeMontant);
 
 	// si montant prime d'activité en N - NBR_MOIS_VALIDITE_MONTANT n'a pas été reporté alors on recalcule le montant
 	// sinon on reporte le montant de la prime d'activité précédente si prime d'activité il y a eu.

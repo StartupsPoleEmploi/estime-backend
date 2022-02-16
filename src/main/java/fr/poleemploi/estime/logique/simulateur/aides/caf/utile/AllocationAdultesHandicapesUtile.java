@@ -24,7 +24,7 @@ public class AllocationAdultesHandicapesUtile {
     public static final float POURCENTAGE_SALAIRE_PALIER_2 = 0.6f;
 
     @Autowired
-    private AideUtile aideeUtile;
+    private AideUtile aideUtile;
 
     @Autowired
     private PeriodeTravailleeAvantSimulationUtile periodeTravailleeAvantSimulationUtile;
@@ -47,12 +47,12 @@ public class AllocationAdultesHandicapesUtile {
 	if (numeroMoisSimule > diffNbrMoisSimulationEtNbrMoisTravailles) {
 	    float montantAllocationAAHReduit = calculerMontantReduit(demandeurEmploi);
 	    if (montantAllocationAAHReduit > 0) {
-		ajouterAideAAH(aidesPourCeMois, montantAllocationAAHReduit);
+		aidesPourCeMois.put(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), creerAide(montantAllocationAAHReduit));
 	    }
 	} else {
 	    //le demandeur cumule son AAH avant la simulation
 	    float montantAllocationAAHAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH();
-	    ajouterAideAAH(aidesPourCeMois, montantAllocationAAHAvantSimulation);
+	    aidesPourCeMois.put(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), creerAide(montantAllocationAAHAvantSimulation));
 	}
     }
 
@@ -88,17 +88,7 @@ public class AllocationAdultesHandicapesUtile {
 	return salaireBrut.compareTo(BigDecimal.valueOf(MONTANT_SALAIRE_BRUT_PALIER)) <= 0;
     }
 
-    private void ajouterAideAAH(Map<String, Aide> aidesPourCeMois, float montant) {
-	Aide allocationAAH = new Aide();
-	allocationAAH.setCode(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode());
-	Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getNomFichierDetail());
-	if (detailAideOptional.isPresent()) {
-	    allocationAAH.setDetail(detailAideOptional.get());
-	}
-	allocationAAH.setMontant(montant);
-	allocationAAH.setNom(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getNom());
-	allocationAAH.setOrganisme(OrganismeEnum.CAF.getNomCourt());
-	allocationAAH.setReportee(false);
-	aidesPourCeMois.put(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), allocationAAH);
+    private Aide creerAide(float montant) {
+	return aideUtile.creerAide(AideEnum.ALLOCATION_ADULTES_HANDICAPES, OrganismeEnum.CAF, Optional.empty(), false, montant);
     }
 }
