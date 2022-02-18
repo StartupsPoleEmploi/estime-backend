@@ -48,7 +48,7 @@ public class AgepiUtile {
     private SituationFamilialeUtile situationFamilialeUtile;
 
     @Autowired
-    private AideUtile aideeUtile;
+    private AideUtile aideUtile;
 
     @Autowired
     private SimulateurAidesUtile simulateurAidesUtile;
@@ -74,23 +74,12 @@ public class AgepiUtile {
 	float montantAgepiSimule = poleEmploiIOClient.getMontantAgepiSimulateurAides(demandeurEmploi);
 	if (montantAgepiSimule > 0) {
 	    return Optional.of(creerAide(montantAgepiSimule));
-	} 
+	}
 	return Optional.empty();
     }
 
     private Aide creerAide(float montantAide) {
-	Aide agepi = new Aide();
-	agepi.setCode(AideEnum.AGEPI.getCode());
-	Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AGEPI.getNomFichierDetail());
-	if (detailAideOptional.isPresent()) {
-	    agepi.setDetail(detailAideOptional.get());
-	}
-	agepi.setMessageAlerte(MessageInformatifEnum.AGEPI_IDF.getMessage());
-	agepi.setNom(AideEnum.AGEPI.getNom());
-	agepi.setOrganisme(OrganismeEnum.PE.getNom());
-	agepi.setMontant(montantAide);
-	agepi.setReportee(false);
-	return agepi;
+	return aideUtile.creerAide(AideEnum.AGEPI, OrganismeEnum.PE, Optional.of(MessageInformatifEnum.AGEPI_IDF.getMessage()), false, montantAide);
     }
 
     /**

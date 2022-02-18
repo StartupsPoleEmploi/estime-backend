@@ -15,6 +15,7 @@ import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
@@ -26,6 +27,9 @@ public class AreUtile {
 
     @Autowired
     private DateUtile dateUtile;
+
+    @Autowired
+    private AideUtile aideUtile;
 
     public static final float SOLDE_PREVISIONNEL_RELIQUAT = 10;
 
@@ -74,16 +78,11 @@ public class AreUtile {
     }
 
     private Aide creerComplementARE(float montantAide, boolean isDernierMoisComplementARE) {
-	Aide are = new Aide();
-	are.setCode(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode());
-	are.setNom(AideEnum.ALLOCATION_RETOUR_EMPLOI.getNom());
 	if (isDernierMoisComplementARE) {
-	    are.setMessageAlerte(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage());
+	    return aideUtile.creerAide(AideEnum.ALLOCATION_RETOUR_EMPLOI, OrganismeEnum.PE, Optional.of(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage()), false, montantAide);
+	} else {
+	    return aideUtile.creerAide(AideEnum.ALLOCATION_RETOUR_EMPLOI, OrganismeEnum.PE, Optional.empty(), false, montantAide);
 	}
-	are.setOrganisme(OrganismeEnum.PE.getNomCourt());
-	are.setMontant(montantAide);
-	are.setReportee(false);
-	return are;
     }
 
     private float getNombreJoursIndemnisables(ArePEIOOut areOut, DemandeurEmploi demandeurEmploi) {

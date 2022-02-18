@@ -13,16 +13,16 @@ import fr.poleemploi.estime.services.ressources.Aide;
 
 @Component
 public class AideLogique {
-    
+
     @Autowired
     private AideUtile aideUtile;
-    
+
     public Aide getAideByCode(String codeAide) {
-    	Optional<AideEnum> aideEnumOptional = aideUtile.getAideEnumByCode(codeAide);
-    	if(!aideEnumOptional.isEmpty()) {
-    		return aideUtile.creerAide(aideEnumOptional.get());
-    	} else {
-    		throw new ResourceNotFoundException(RessourceNotFoundMessages.AIDE_NOT_FOUND.getMessage());
-    	}      
+	Optional<AideEnum> aideEnumOptional = aideUtile.getAideEnumByCode(codeAide);
+	if (!aideEnumOptional.isEmpty()) {
+	    return aideUtile.creerAideVide(aideEnumOptional.get());
+	} else {
+	    throw new ResourceNotFoundException(RessourceNotFoundMessages.AIDE_NOT_FOUND.getMessage());
+	}
     }
 }

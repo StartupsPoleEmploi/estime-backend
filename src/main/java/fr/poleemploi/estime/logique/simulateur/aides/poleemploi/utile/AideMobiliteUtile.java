@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
@@ -41,7 +40,7 @@ public class AideMobiliteUtile {
     public static final int TRAJET_KM_ALLER_RETOUR_MINIMUM_DOM = 20;
 
     @Autowired
-    private AideUtile aideeUtile;
+    private AideUtile aideUtile;
 
     @Autowired
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
@@ -76,18 +75,7 @@ public class AideMobiliteUtile {
     }
 
     private Aide creerAide(float montantAide) {
-	Aide aideMobilite = new Aide();
-	aideMobilite.setCode(AideEnum.AIDE_MOBILITE.getCode());
-	Optional<String> detailAideOptional = aideeUtile.getDescription(AideEnum.AIDE_MOBILITE.getNomFichierDetail());
-	if (detailAideOptional.isPresent()) {
-	    aideMobilite.setDetail(detailAideOptional.get());
-	}
-	aideMobilite.setMessageAlerte(MessageInformatifEnum.AIDE_MOBILITE.getMessage());
-	aideMobilite.setMontant(montantAide);
-	aideMobilite.setNom(AideEnum.AIDE_MOBILITE.getNom());
-	aideMobilite.setOrganisme(OrganismeEnum.PE.getNom());
-	aideMobilite.setReportee(false);
-	return aideMobilite;
+	return aideUtile.creerAide(AideEnum.AIDE_MOBILITE, OrganismeEnum.PE, Optional.empty(), false, montantAide);
     }
 
     private boolean isDistanceAllerRetourDomicileFuturTavailEligible(DemandeurEmploi demandeurEmploi) {

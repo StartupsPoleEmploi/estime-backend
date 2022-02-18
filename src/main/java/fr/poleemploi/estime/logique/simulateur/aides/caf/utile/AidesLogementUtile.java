@@ -106,48 +106,30 @@ public class AidesLogementUtile {
     protected Aide creerAideLogement(float montantAideLogement, String typeAide, boolean isAideReportee) {
 	Aide aideLogement = new Aide();
 	if (typeAide.equals(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())) {
-	    aideLogement = ajouterAidePersonnaliseeLogement(montantAideLogement, isAideReportee);
+	    aideLogement = creerAidePersonnaliseeLogement(montantAideLogement, isAideReportee);
 	}
 	if (typeAide.equals(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())) {
-	    aideLogement = ajouterAllocationLogementFamiliale(montantAideLogement, isAideReportee);
+	    aideLogement = creerAllocationLogementFamiliale(montantAideLogement, isAideReportee);
 	}
 	if (typeAide.equals(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())) {
-	    aideLogement = ajouterAllocationLogementSociale(montantAideLogement, isAideReportee);
+	    aideLogement = creerAllocationLogementSociale(montantAideLogement, isAideReportee);
 	}
 	return aideLogement;
     }
 
-    private Aide ajouterAidePersonnaliseeLogement(float montant, boolean isReportee) {
-	Aide aidePersonnaliseeLogement = new Aide();
-	aidePersonnaliseeLogement.setCode(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode());
-	aidePersonnaliseeLogement.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
-	aidePersonnaliseeLogement.setMontant(montant);
-	aidePersonnaliseeLogement.setNom(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getNom());
-	aidePersonnaliseeLogement.setOrganisme(OrganismeEnum.CAF.getNom());
-	aidePersonnaliseeLogement.setReportee(isReportee);
-	return aidePersonnaliseeLogement;
+    private Aide creerAidePersonnaliseeLogement(float montant, boolean isReportee) {
+	return aideUtile.creerAide(AideEnum.AIDE_PERSONNALISEE_LOGEMENT, OrganismeEnum.CAF,
+		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), isReportee, montant);
     }
 
-    private Aide ajouterAllocationLogementFamiliale(float montant, boolean isReportee) {
-	Aide allocationLogementFamiliale = new Aide();
-	allocationLogementFamiliale.setCode(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode());
-	allocationLogementFamiliale.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
-	allocationLogementFamiliale.setMontant(montant);
-	allocationLogementFamiliale.setNom(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getNom());
-	allocationLogementFamiliale.setOrganisme(OrganismeEnum.CAF.getNom());
-	allocationLogementFamiliale.setReportee(isReportee);
-	return allocationLogementFamiliale;
+    private Aide creerAllocationLogementFamiliale(float montant, boolean isReportee) {
+	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE, OrganismeEnum.CAF,
+		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), isReportee, montant);
     }
 
-    private Aide ajouterAllocationLogementSociale(float montant, boolean isReportee) {
-	Aide allocationLogementSociale = new Aide();
-	allocationLogementSociale.setCode(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode());
-	allocationLogementSociale.setMessageAlerte(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
-	allocationLogementSociale.setMontant(montant);
-	allocationLogementSociale.setNom(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getNom());
-	allocationLogementSociale.setOrganisme(OrganismeEnum.CAF.getNom());
-	allocationLogementSociale.setReportee(isReportee);
-	return allocationLogementSociale;
+    private Aide creerAllocationLogementSociale(float montant, boolean isReportee) {
+	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_SOCIALE, OrganismeEnum.CAF,
+		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), isReportee, montant);
     }
 
     public boolean isEligibleAidesLogement(DemandeurEmploi demandeurEmploi) {
