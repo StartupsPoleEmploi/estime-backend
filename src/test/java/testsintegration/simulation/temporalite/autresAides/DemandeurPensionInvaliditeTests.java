@@ -1,4 +1,4 @@
-package testsintegration.simulation.temporalite.aahEtAss;
+package testsintegration.simulation.temporalite.autresAides;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,16 +20,15 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.services.DemandeurEmploiService;
+import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
-import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SimulationAides;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations = "classpath:application-test.properties")
-class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
+class DemandeurPensionInvaliditeTests extends Commun {
 
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;
@@ -41,31 +40,27 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
     }
 
     @Test
-    void simulerPopulationAah2MoisSur6Ass1MoisSur3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+    void simulerMesRessourcesFinancieresPensionInvaliditeTest()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1
-	// enfant à charge de 9ans, af = 90€
-	// AAH : 900€
-	// 2 mois travaillés avant simulation dont 1 mois dans les 3 derniers mois avant la simulation
-	// Montant net journalier ASS = 16,89€
-	// futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
+	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, asf = 117€
+	// Montant net journalier ASS = 16,89€, 0 mois cumulé ASS + salaire sur 3 derniers mois
+	// futur contrat CDI, salaire brut 1600€, soit 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
+	// DE micro entrepreneur
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
-	Salaire[] salaires = utileTests.creerSalaires(0, 0, 6);
-	Salaire salaireMoisMoins1 = utileTests.creerSalaire(500, 659);
-	Salaire salaireMoisMoins5 = utileTests.creerSalaire(500, 659);
-	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins1, 1);
-	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins5, 5);
-	periodeTravailleeAvantSimulation.setMois(utileTests.createMoisTravaillesAvantSimulation(salaires));
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
+	demandeurEmploi.getBeneficiaireAides().setBeneficiairePensionInvalidite(true);
+	AidesCPAM aidesCPAM = new AidesCPAM();
+	aidesCPAM.setPensionInvalidite(200f);
+	aidesCPAM.setAllocationSupplementaireInvalidite(0f);
+	demandeurEmploi.getRessourcesFinancieres().setAidesCPAM(aidesCPAM);
+	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
 
 	// Lorsque je simule mes prestations le 20/10/2020
-	initMocks(demandeurEmploi);
+	initMocks();
 	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
-	// AGEPI : 400€, Aide mobilité : 258€, AAH : 900€, ASS : 506€
+	// AGEPI : 400€, Aide mobilité : 450€, ASS : 506€
 	SimulationMensuelle simulationMois1 = simulationAides.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -74,14 +69,14 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(6);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
+	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
 		assertThat(aideMobilite.getMontant()).isEqualTo(450);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(900);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
 		assertThat(ass.getMontant()).isEqualTo(506);
@@ -91,7 +86,6 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	});
 	// Alors les prestations du second mois 12/2020 sont :
-	// AAH : 900€
 	// ASS : 523€
 	SimulationMensuelle simulationMois2 = simulationAides.getSimulationsMensuelles().get(1);
 	assertThat(simulationMois2).satisfies(simulation -> {
@@ -101,8 +95,8 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(4);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(900);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
 		assertThat(ass.getMontant()).isEqualTo(523);
@@ -112,46 +106,44 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	});
 	// Alors les prestations du troisième mois 01/2021 sont :
-	// AAH : 900€
+	// ASS : 523€
 	SimulationMensuelle simulationMois3 = simulationAides.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(900);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
+	    });
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
+		assertThat(ass.getMontant()).isEqualTo(523);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	});
 	// Alors les prestations du quatrième mois 02/2021 sont :
-	// AAH : 900€
-	// Prime d'activité : 64€ (Simulateur CAF : 52€)
+	// aucune aide
 	SimulationMensuelle simulationMois4 = simulationAides.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(3);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(900);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(64);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	});
 	// Alors les prestations du cinquième mois 03/2021 sont :
-	// AAH : 180€ (dégressivité : 900 - 60% * 1200 = 180)
-	// Prime d'activité : 64€
+	// Prime d'activité : 140€ (simulateur CAF : 129€)
 	SimulationMensuelle simulationMois5 = simulationAides.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -160,19 +152,18 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(4);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(180);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(64);
+		assertThat(ppa.getMontant()).isEqualTo(74);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	});
 	// Alors les prestations du sixième mois 04/2021 sont :
-	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 64€
+	// Prime d'activité : 140€
 	SimulationMensuelle simulationMois6 = simulationAides.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -181,11 +172,11 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(4);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(180);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(64);
+		assertThat(ppa.getMontant()).isEqualTo(74);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
@@ -194,95 +185,102 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
     }
 
     @Test
-    void simulerPopulationAah2MoisSur6Ass2MoisSur3() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+    void simulerMesRessourcesFinancieresPensionInvaliditeEtASITest()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, af = 90€
-	// Salaire m-1 par rapport au début de la simulation : 1200€
-	// AAH : 900€
-	// 2 mois travaillés avant simulation dont 2 mois dans les 3 derniers mois avant la simulation
-	// Montant net journalier ASS = 16,89€
-	// futur contrat CDI, 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 20 trajets
+	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, asf = 117€
+	// Montant net journalier ASS = 16,89€, 0 mois cumulé ASS + salaire sur 3 derniers mois
+	// futur contrat CDI, salaire brut 1600€, soit 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
+	// DE micro entrepreneur
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 2));
+	demandeurEmploi.getBeneficiaireAides().setBeneficiairePensionInvalidite(true);
+	AidesCPAM aidesCPAM = new AidesCPAM();
+	aidesCPAM.setPensionInvalidite(200f);
+	aidesCPAM.setAllocationSupplementaireInvalidite(200f);
+	demandeurEmploi.getRessourcesFinancieres().setAidesCPAM(aidesCPAM);
+	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
 
 	// Lorsque je simule mes prestations le 20/10/2020
-	initMocks(demandeurEmploi);
+	initMocks();
 	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
-	// AGEPI : 400€, Aide mobilité : 258€, AAH : 900€, ASS : 506€
+	// AGEPI : 400€, Aide mobilité : 450€, ASS : 506€
 	SimulationMensuelle simulationMois1 = simulationAides.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(6);
+	    assertThat(simulation.getMesAides()).hasSize(7);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
+	    });
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE.getCode())).satisfies(asi -> {
+		assertThat(asi.getMontant()).isEqualTo(200);
+	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
-		assertThat(agepi).isNotNull();
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
-		assertThat(aideMobilite).isNotNull();
 		assertThat(aideMobilite.getMontant()).isEqualTo(450);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(900);
-	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-		assertThat(ass).isNotNull();
 		assertThat(ass.getMontant()).isEqualTo(506);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	});
-
 	// Alors les prestations du second mois 12/2020 sont :
-	// AAH : 900€
+	// ASS : 523€
 	SimulationMensuelle simulationMois2 = simulationAides.getSimulationsMensuelles().get(1);
 	assertThat(simulationMois2).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(5);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(900);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
+	    });
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE.getCode())).satisfies(asi -> {
+		assertThat(asi.getMontant()).isEqualTo(200);
+	    });
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
+		assertThat(ass.getMontant()).isEqualTo(523);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	});
-
 	// Alors les prestations du troisième mois 01/2021 sont :
-	// AAH : 900€
-	// Prime d'activité : 64€ (Simulateur CAF : 52€)
+	// ASS : 523€
 	SimulationMensuelle simulationMois3 = simulationAides.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(5);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(900);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(64);
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE.getCode())).satisfies(asi -> {
+		assertThat(asi.getMontant()).isEqualTo(200);
+	    });
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
+		assertThat(ass.getMontant()).isEqualTo(523);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	});
-
 	// Alors les prestations du quatrième mois 02/2021 sont :
-	// AAH : 900€
-	// Prime d'activité : 64€
+	// aucune aide
 	SimulationMensuelle simulationMois4 = simulationAides.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -291,20 +289,18 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(4);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(900);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(64);
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE.getCode())).satisfies(asi -> {
+		assertThat(asi.getMontant()).isEqualTo(200);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	});
-
 	// Alors les prestations du cinquième mois 03/2021 sont :
-	// AAH : 180€ (dégressivité : 900 - 60% * 1200 = 180)
-	// Prime d'activité : 64€
+	// Prime d'activité : 140€ (simulateur CAF : 129€)
 	SimulationMensuelle simulationMois5 = simulationAides.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -313,21 +309,18 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(4);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(180);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa).isNotNull();
-		assertThat(ppa.getMontant()).isEqualTo(64);
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE.getCode())).satisfies(asi -> {
+		assertThat(asi.getMontant()).isEqualTo(200);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	});
-
 	// Alors les prestations du sixième mois 04/2021 sont :
-	// AAH : 180€ (report AAH dégressif)
-	// Prime d'activité : 274€ (Simulateur CAF : 251€)
+	// Prime d'activité : 140€
 	SimulationMensuelle simulationMois6 = simulationAides.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -336,12 +329,11 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(4);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
-		assertThat(aah.getMontant()).isEqualTo(180);
+	    assertThat(simulation.getMesAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
+		assertThat(pi.getMontant()).isEqualTo(200);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa).isNotNull();
-		assertThat(ppa.getMontant()).isEqualTo(274);
+	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE.getCode())).satisfies(asi -> {
+		assertThat(asi.getMontant()).isEqualTo(200);
 	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);

@@ -118,17 +118,17 @@ public class AidesLogementUtile {
     }
 
     private Aide creerAidePersonnaliseeLogement(float montant, boolean isReportee) {
-	return aideUtile.creerAide(AideEnum.AIDE_PERSONNALISEE_LOGEMENT, OrganismeEnum.CAF,
+	return aideUtile.creerAide(AideEnum.AIDE_PERSONNALISEE_LOGEMENT, Optional.of(OrganismeEnum.CAF),
 		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), isReportee, montant);
     }
 
     private Aide creerAllocationLogementFamiliale(float montant, boolean isReportee) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE, OrganismeEnum.CAF,
+	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE, Optional.of(OrganismeEnum.CAF),
 		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), isReportee, montant);
     }
 
     private Aide creerAllocationLogementSociale(float montant, boolean isReportee) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_SOCIALE, OrganismeEnum.CAF,
+	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_SOCIALE, Optional.of(OrganismeEnum.CAF),
 		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), isReportee, montant);
     }
 

@@ -75,7 +75,7 @@ public class AideMobiliteUtile {
     }
 
     private Aide creerAide(float montantAide) {
-	return aideUtile.creerAide(AideEnum.AIDE_MOBILITE, OrganismeEnum.PE, Optional.empty(), false, montantAide);
+	return aideUtile.creerAide(AideEnum.AIDE_MOBILITE, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantAide);
     }
 
     private boolean isDistanceAllerRetourDomicileFuturTavailEligible(DemandeurEmploi demandeurEmploi) {

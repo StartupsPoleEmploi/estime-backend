@@ -88,7 +88,7 @@ public class PrimeActiviteRSAUtile {
     }
 
     protected Aide creerAideRSA(float montantRSA, boolean isAideReportee) {
-	return aideUtile.creerAide(AideEnum.RSA, OrganismeEnum.CAF, Optional.empty(), isAideReportee, montantRSA);
+	return aideUtile.creerAide(AideEnum.RSA, Optional.of(OrganismeEnum.CAF), Optional.empty(), isAideReportee, montantRSA);
     }
 
     private Aide getRSADeclare(DemandeurEmploi demandeurEmploi) {

@@ -75,7 +75,7 @@ class AllocationAdultesHandicapesUtileTests {
 	// Alors l'AAH n'apparait pas dans les prestations du mois
 	// 60% du salaire = 600
 	// AAH - 60% du salaire = 450 - 600 = -150 donc AAH = 0€
-	assertThat(aidesPourCeMois.size()).isEqualTo(0);
+	assertThat(aidesPourCeMois).isEmpty();
     }
 
     @Test

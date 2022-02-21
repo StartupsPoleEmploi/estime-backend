@@ -14,6 +14,7 @@ import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 
 @Component
@@ -92,10 +93,10 @@ public class RessourcesFinancieresUtile {
     private float calculerMontantRevenusMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {
 	BigDecimal montantTotal = BigDecimal.ZERO;
 	if (hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(getBeneficesMicroEntrepriseSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusMicroEntrepriseSur1Mois(demandeurEmploi)));
 	}
-	if (hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(getChiffreAffairesIndependantSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
+	if (hasRevenusTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusTravailleurIndependantSur1Mois(demandeurEmploi)));
 	}
 	if (hasRevenusImmobilier(demandeurEmploi.getRessourcesFinancieres())) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres())));
@@ -114,16 +115,106 @@ public class RessourcesFinancieresUtile {
 	return BigDecimal.valueOf(allocationsLogement.getMoisNMoins1()).floatValue();
     }
 
+    public float getFuturSalaire(DemandeurEmploi demandeurEmploi) {
+	float montantFuturSalaire = 0;
+	if (hasFuturSalaire(demandeurEmploi)) {
+	    montantFuturSalaire = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet()).floatValue();
+	}
+	return montantFuturSalaire;
+    }
+
+    public float getSalaire(DemandeurEmploi demandeurEmploi) {
+	float montantSalaire = 0;
+	if (hasSalaire(demandeurEmploi)) {
+	    montantSalaire = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getSalaire().getMontantNet()).floatValue();
+	}
+	return montantSalaire;
+    }
+
+    public float getRevenusImmobilierSur1Mois(DemandeurEmploi demandeurEmploi) {
+	float montantRevenusImmobilierSur1Mois = 0;
+	if (hasRevenusImmobilier(demandeurEmploi)) {
+	    montantRevenusImmobilierSur1Mois = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getRevenusImmobilier3DerniersMois())
+		    .divide(BigDecimal.valueOf(3), 0, RoundingMode.HALF_UP).floatValue();
+	}
+	return montantRevenusImmobilierSur1Mois;
+    }
+
     public float getRevenusImmobilierSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
-	return BigDecimal.valueOf(ressourcesFinancieres.getRevenusImmobilier3DerniersMois()).divide(BigDecimal.valueOf(3), 0, RoundingMode.HALF_UP).floatValue();
+	float montantRevenusImmobilierSur1Mois = 0;
+	if (hasRevenusImmobilier(ressourcesFinancieres)) {
+	    montantRevenusImmobilierSur1Mois = BigDecimal.valueOf(ressourcesFinancieres.getRevenusImmobilier3DerniersMois()).divide(BigDecimal.valueOf(3), 0, RoundingMode.HALF_UP)
+		    .floatValue();
+	}
+	return montantRevenusImmobilierSur1Mois;
     }
 
-    public float getBeneficesMicroEntrepriseSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
-	return BigDecimal.valueOf(ressourcesFinancieres.getBeneficesMicroEntrepriseDernierExercice()).divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_UP).floatValue();
+    public float getRevenusImmobilier(RessourcesFinancieres ressourcesFinancieres) {
+	float montantRevenusImmobilier = 0;
+	if (hasRevenusImmobilier(ressourcesFinancieres)) {
+	    montantRevenusImmobilier = BigDecimal.valueOf(ressourcesFinancieres.getRevenusImmobilier3DerniersMois()).floatValue();
+	}
+	return montantRevenusImmobilier;
     }
 
-    public float getChiffreAffairesIndependantSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
-	return BigDecimal.valueOf(ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice()).divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_UP).floatValue();
+    public float getRevenusTravailleurIndependantSur1Mois(DemandeurEmploi demandeurEmploi) {
+	float montantRevenusIndependantSur1Mois = 0;
+	if (hasRevenusTravailleurIndependant(demandeurEmploi)) {
+	    montantRevenusIndependantSur1Mois = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getChiffreAffairesIndependantDernierExercice())
+		    .divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_UP).floatValue();
+	}
+	return montantRevenusIndependantSur1Mois;
+    }
+
+    public float getRevenusTravailleurIndependantSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
+	float montantRevenusIndependantSur1Mois = 0;
+	if (hasRevenusTravailleurIndependant(ressourcesFinancieres)) {
+	    montantRevenusIndependantSur1Mois = BigDecimal.valueOf(ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice())
+		    .divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_UP).floatValue();
+	}
+	return montantRevenusIndependantSur1Mois;
+    }
+
+    public float getRevenusTravailleurIndependant(RessourcesFinancieres ressourcesFinancieres) {
+	float montantRevenusIndependant = 0;
+	if (hasRevenusTravailleurIndependant(ressourcesFinancieres)) {
+	    montantRevenusIndependant = BigDecimal.valueOf(ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice()).floatValue();
+	}
+	return montantRevenusIndependant;
+    }
+
+    public float getRevenusMicroEntrepriseSur1Mois(DemandeurEmploi demandeurEmploi) {
+	float montantRevenusMicroEntrepriseSur1Mois = 0;
+	if (hasRevenusMicroEntreprise(demandeurEmploi)) {
+	    montantRevenusMicroEntrepriseSur1Mois = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieres().getBeneficesMicroEntrepriseDernierExercice())
+		    .divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_UP).floatValue();
+	}
+	return montantRevenusMicroEntrepriseSur1Mois;
+    }
+
+    public float getRevenusMicroEntrepriseSur1Mois(RessourcesFinancieres ressourcesFinancieres) {
+	float montantRevenusMicroEntrepriseSur1Mois = 0;
+	if (hasRevenusMicroEntreprise(ressourcesFinancieres)) {
+	    montantRevenusMicroEntrepriseSur1Mois = BigDecimal.valueOf(ressourcesFinancieres.getBeneficesMicroEntrepriseDernierExercice())
+		    .divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_UP).floatValue();
+	}
+	return montantRevenusMicroEntrepriseSur1Mois;
+    }
+
+    public float getRevenusMicroEntreprise(RessourcesFinancieres ressourcesFinancieres) {
+	float montantRevenusMicroEntreprise = 0;
+	if (hasRevenusMicroEntreprise(ressourcesFinancieres)) {
+	    montantRevenusMicroEntreprise = BigDecimal.valueOf(ressourcesFinancieres.getBeneficesMicroEntrepriseDernierExercice()).floatValue();
+	}
+	return montantRevenusMicroEntreprise;
+    }
+
+    public float getPensionRetraite(RessourcesFinancieres ressourcesFinancieres) {
+	float montantPensionRetraite = 0;
+	if (hasPensionRetraite(ressourcesFinancieres)) {
+	    montantPensionRetraite = BigDecimal.valueOf(ressourcesFinancieres.getPensionRetraite()).floatValue();
+	}
+	return montantPensionRetraite;
     }
 
     public AidesFamiliales getAidesFamiliales(DemandeurEmploi demandeurEmploi) {
@@ -163,6 +254,22 @@ public class RessourcesFinancieresUtile {
 	    prestationAccueilJeuneEnfant = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant();
 	}
 	return prestationAccueilJeuneEnfant;
+    }
+
+    public float getPensionInvalidite(DemandeurEmploi demandeurEmploi) {
+	float pensionInvalidite = 0;
+	if (hasPensionInvalidite(demandeurEmploi)) {
+	    pensionInvalidite = demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getPensionInvalidite();
+	}
+	return pensionInvalidite;
+    }
+
+    public float getAllocationSupplementaireInvalidite(DemandeurEmploi demandeurEmploi) {
+	float allocationSupplementaireInvalidite = 0;
+	if (hasAllocationSupplementaireInvalidite(demandeurEmploi)) {
+	    allocationSupplementaireInvalidite = demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getAllocationSupplementaireInvalidite();
+	}
+	return allocationSupplementaireInvalidite;
     }
 
     public boolean hasAllocationsCAF(DemandeurEmploi demandeurEmploi) {
@@ -239,19 +346,37 @@ public class RessourcesFinancieresUtile {
 		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants() > 0;
     }
 
-    public boolean hasBeneficesTravailleurIndependant(RessourcesFinancieres ressourcesFinancieres) {
-	return ressourcesFinancieres != null && ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice() != null
-		&& ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice() > 0;
-    }
-
     public boolean hasPensionInvalidite(DemandeurEmploi demandeurEmploi) {
 	return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesCPAM() != null
 		&& demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getPensionInvalidite() != null
 		&& demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getPensionInvalidite() > 0;
     }
 
+    public boolean hasAllocationSupplementaireInvalidite(DemandeurEmploi demandeurEmploi) {
+	return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesCPAM() != null
+		&& demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getAllocationSupplementaireInvalidite() != null
+		&& demandeurEmploi.getRessourcesFinancieres().getAidesCPAM().getAllocationSupplementaireInvalidite() > 0;
+    }
+
+    public boolean hasRevenusImmobilier(DemandeurEmploi demandeurEmploi) {
+	return hasRevenusImmobilier(demandeurEmploi.getRessourcesFinancieres());
+    }
+
     public boolean hasRevenusImmobilier(RessourcesFinancieres ressourcesFinancieres) {
 	return ressourcesFinancieres != null && ressourcesFinancieres.getRevenusImmobilier3DerniersMois() != null && ressourcesFinancieres.getRevenusImmobilier3DerniersMois() > 0;
+    }
+
+    public boolean hasRevenusTravailleurIndependant(DemandeurEmploi demandeurEmploi) {
+	return hasRevenusTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres());
+    }
+
+    public boolean hasRevenusTravailleurIndependant(RessourcesFinancieres ressourcesFinancieres) {
+	return ressourcesFinancieres != null && ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice() != null
+		&& ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice() > 0;
+    }
+
+    public boolean hasRevenusMicroEntreprise(DemandeurEmploi demandeurEmploi) {
+	return hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres());
     }
 
     public boolean hasRevenusMicroEntreprise(RessourcesFinancieres ressourcesFinancieres) {
@@ -259,17 +384,37 @@ public class RessourcesFinancieresUtile {
 		&& ressourcesFinancieres.getBeneficesMicroEntrepriseDernierExercice() > 0;
     }
 
+    public boolean hasPensionRetraite(DemandeurEmploi demandeurEmploi) {
+	return hasPensionRetraite(demandeurEmploi.getRessourcesFinancieres());
+    }
+
     public boolean hasPensionRetraite(RessourcesFinancieres ressourcesFinancieres) {
 	return ressourcesFinancieres != null && ressourcesFinancieres.getPensionRetraite() != null && ressourcesFinancieres.getPensionRetraite() > 0;
     }
 
+    public boolean hasFuturSalaire(DemandeurEmploi demandeurEmploi) {
+	return hasFuturSalaire(demandeurEmploi.getFuturTravail());
+    }
+
+    public boolean hasFuturSalaire(FuturTravail futurTravail) {
+	return futurTravail != null && futurTravail.getSalaire() != null && futurTravail.getSalaire().getMontantNet() > 0;
+    }
+
+    public boolean hasSalaire(DemandeurEmploi demandeurEmploi) {
+	return hasSalaire(demandeurEmploi.getRessourcesFinancieres());
+    }
+
     public boolean hasSalaire(RessourcesFinancieres ressourcesFinancieres) {
-	return ressourcesFinancieres.getSalaire() != null && ressourcesFinancieres.getSalaire().getMontantNet() > 0;
+	return ressourcesFinancieres != null && ressourcesFinancieres.getSalaire() != null && ressourcesFinancieres.getSalaire().getMontantNet() > 0;
     }
 
     public boolean hasTravailleAuCoursDerniersMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {
-	return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getHasTravailleAuCoursDerniersMois() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getHasTravailleAuCoursDerniersMois().booleanValue();
+	return hasTravailleAuCoursDerniersMoisAvantSimulation(demandeurEmploi.getRessourcesFinancieres());
+    }
+
+    public boolean hasTravailleAuCoursDerniersMoisAvantSimulation(RessourcesFinancieres ressourcesFinancieres) {
+	return ressourcesFinancieres != null && ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() != null
+		&& ressourcesFinancieres.getHasTravailleAuCoursDerniersMois().booleanValue();
     }
 
     public boolean hasAllocationsFamiliales(DemandeurEmploi demandeurEmploi) {

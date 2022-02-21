@@ -42,7 +42,7 @@ public class AideUtile {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AideUtile.class);
 
-    public Aide creerAide(AideEnum aideEnum, OrganismeEnum organismeEnum, Optional<String> messageAlerteOptional, boolean isAideReportee, float montantAide) {
+    public Aide creerAide(AideEnum aideEnum, Optional<OrganismeEnum> organismeEnumOptional, Optional<String> messageAlerteOptional, boolean isAideReportee, float montantAide) {
 	Aide aide = new Aide();
 	aide.setCode(aideEnum.getCode());
 	Optional<String> detailAideOptional = Optional.empty();
@@ -56,7 +56,9 @@ public class AideUtile {
 	}
 	aide.setMontant(montantAide);
 	aide.setNom(aideEnum.getNom());
-	aide.setOrganisme(organismeEnum.getNomCourt());
+	if (organismeEnumOptional.isPresent()) {
+	    aide.setOrganisme(organismeEnumOptional.get().getNomCourt());
+	}
 	aide.setReportee(isAideReportee);
 	aide.setLienExterne(getLienExterne(aideEnum));
 	return aide;
@@ -100,7 +102,7 @@ public class AideUtile {
 	    LocalDate moisAvantPeriodeSimulation = getMoisAvantSimulation(numeroMoisMontantARecuperer, dateDebutSimulation);
 	    return allocationSolidariteSpecifiqueUtile.calculerMontant(demandeurEmploi, moisAvantPeriodeSimulation);
 	}
-	if (AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode().equals(codeAide)) {
+	if (AideEnum.AIDE_RETOUR_EMPLOI.getCode().equals(codeAide)) {
 	    LocalDate moisAvantPeriodeSimulation = getMoisAvantSimulation(numeroMoisMontantARecuperer, dateDebutSimulation);
 	    return areUtile.calculerMontantAreAvantSimulation(demandeurEmploi, moisAvantPeriodeSimulation);
 	}

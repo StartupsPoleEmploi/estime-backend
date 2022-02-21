@@ -70,28 +70,28 @@ public class AidesFamilialesUtile {
     }
 
     private Aide creerAideAllocationSoutientFamilial(float montant) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL, OrganismeEnum.CAF,
+	return aideUtile.creerAide(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL, Optional.of(OrganismeEnum.CAF),
 		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
     }
 
     private Aide creerAideAllocationsFamiliales(float montant) {
-	return aideUtile.creerAide(AideEnum.ALLOCATIONS_FAMILIALES, OrganismeEnum.CAF, Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()),
-		true, montant);
+	return aideUtile.creerAide(AideEnum.ALLOCATIONS_FAMILIALES, Optional.of(OrganismeEnum.CAF),
+		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
     }
 
     private Aide creerAideComplementFamilial(float montant) {
-	return aideUtile.creerAide(AideEnum.COMPLEMENT_FAMILIAL, OrganismeEnum.CAF, Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true,
-		montant);
+	return aideUtile.creerAide(AideEnum.COMPLEMENT_FAMILIAL, Optional.of(OrganismeEnum.CAF),
+		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
     }
 
     private Aide creerAidePrestationAccueilJeuneEnfant(float montant) {
-	return aideUtile.creerAide(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT, OrganismeEnum.CAF,
+	return aideUtile.creerAide(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT, Optional.of(OrganismeEnum.CAF),
 		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
     }
 
     private Aide creerAidePensionsAlimentaires(float montant) {
-	return aideUtile.creerAide(AideEnum.PENSIONS_ALIMENTAIRES, OrganismeEnum.CAF, Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()),
-		true, montant);
+	return aideUtile.creerAide(AideEnum.PENSIONS_ALIMENTAIRES, Optional.of(OrganismeEnum.CAF),
+		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
     }
 
     public boolean isEligibleAidesFamiliales(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {

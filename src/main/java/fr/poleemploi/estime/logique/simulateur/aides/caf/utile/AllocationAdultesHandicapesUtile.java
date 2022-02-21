@@ -89,6 +89,6 @@ public class AllocationAdultesHandicapesUtile {
     }
 
     private Aide creerAide(float montant) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_ADULTES_HANDICAPES, OrganismeEnum.CAF, Optional.empty(), false, montant);
+	return aideUtile.creerAide(AideEnum.ALLOCATION_ADULTES_HANDICAPES, Optional.of(OrganismeEnum.CAF), Optional.empty(), false, montant);
     }
 }

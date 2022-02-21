@@ -79,18 +79,18 @@ public class OpenFiscaMappeurIndividu {
 		    dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasAllocationARE(demandeurEmploi.getRessourcesFinancieres())) {
-	    demandeurJSON.put(CHOMAGE_NET, openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(),
+	    demandeurJSON.put(CHOMAGE_NET,
+		    openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, AideEnum.AIDE_RETOUR_EMPLOI.getCode(), dateDebutSimulation, numeroMoisSimule));
+	}
+	if (ressourcesFinancieresUtile.hasRevenusImmobilier(demandeurEmploi)) {
+	    demandeurJSON.put(REVENUS_LOCATIFS, openFiscaMappeurPeriode.creerPeriodesRevenusImmobilier(ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(demandeurEmploi),
 		    dateDebutSimulation, numeroMoisSimule));
 	}
-	if (ressourcesFinancieresUtile.hasRevenusImmobilier(demandeurEmploi.getRessourcesFinancieres())) {
-	    demandeurJSON.put(REVENUS_LOCATIFS, openFiscaMappeurPeriode.creerPeriodesRevenusImmobilier(
-		    ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(demandeurEmploi.getRessourcesFinancieres()), dateDebutSimulation, numeroMoisSimule));
-	}
-	if (ressourcesFinancieresUtile.hasBeneficesTravailleurIndependant(demandeurEmploi.getRessourcesFinancieres())) {
+	if (ressourcesFinancieresUtile.hasRevenusTravailleurIndependant(demandeurEmploi)) {
 	    demandeurJSON.put(CHIFFRE_AFFAIRES_INDEPENDANT, openFiscaMappeurPeriode
 		    .creerPeriodesAnnees(demandeurEmploi.getRessourcesFinancieres().getChiffreAffairesIndependantDernierExercice(), dateDebutSimulation, numeroMoisSimule));
 	}
-	if (ressourcesFinancieresUtile.hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieres())) {
+	if (ressourcesFinancieresUtile.hasRevenusMicroEntreprise(demandeurEmploi)) {
 	    demandeurJSON.put(BENEFICES_MICRO_ENTREPRISE, openFiscaMappeurPeriode
 		    .creerPeriodesAnnees(demandeurEmploi.getRessourcesFinancieres().getBeneficesMicroEntrepriseDernierExercice(), dateDebutSimulation, numeroMoisSimule));
 	}

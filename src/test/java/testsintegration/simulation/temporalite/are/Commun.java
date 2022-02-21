@@ -27,7 +27,6 @@ import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.Coordonnees;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Logement;
-import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
 
@@ -45,40 +44,30 @@ public class Commun {
     @SpyBean
     private PoleEmploiIOClient poleEmploiIOClient;
 
-    protected DemandeurEmploi createDemandeurEmploi(int prochaineDeclarationTrimestrielle) throws ParseException {
-	boolean isEnCouple = false;
-	int nbEnfant = 1;
+    protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant) throws ParseException {
 	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), isEnCouple, nbEnfant);
 
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 
-	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDateNaissanceFromAge(9));
-
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
-	Salaire salaire = new Salaire();
-	salaire.setMontantBrut(350);
-	salaire.setMontantNet(200);
-	demandeurEmploi.getRessourcesFinancieres().setSalaire(salaire);
 
 	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setAllocationJournaliereNet(15f);
-	allocationARE.setAllocationMensuelleNet(150f);
-	allocationARE.setConcerneDegressivite(false);
-	allocationARE.setNombreJoursRestants(15f);
-	allocationARE.setMontantJournalierBrut(27f);
-	allocationARE.setSalaireJournalierReferenceBrut(45f);
+	allocationARE.setNombreJoursRestants(60f);
+	allocationARE.setMontantJournalierBrut(37f);
+	allocationARE.setSalaireJournalierReferenceBrut(48f);
 	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().setAllocationARE(allocationARE);
 
 	return demandeurEmploi;
     }
 
-    protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+    protected void initMocks(String dateSimulation, float montantSalaireNet)
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 	//mock création date de demande de simulation
 	doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
 
@@ -86,9 +75,17 @@ public class Commun {
 	DetailIndemnisationPEIOOut detailIndemnisationESD = utile.creerDetailIndemnisationPEIO(TypePopulationEnum.ARE.getLibelle());
 	doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
 
-	//mock retour appel ARE de l'ESD 
-	Optional<ArePEIOOut> arePEIOOutVide = Optional.of(new ArePEIOOut());
-	doReturn(arePEIOOutVide).when(poleEmploiIOClient).getAreSimulateurRepriseActivite(Mockito.any(DemandeurEmploi.class));
+	//mock retour appel ARE de l'ESD
+	ArePEIOOut arePEIOOut = new ArePEIOOut();
+	if (montantSalaireNet < 1200) {
+	    arePEIOOut.setAllocationMensuelle(148f);
+	    arePEIOOut.setSalaireRetenuActiviteReprise(900f);
+	    arePEIOOut.setMontantCRC(0);
+	    arePEIOOut.setMontantCRDS(0);
+	    arePEIOOut.setMontantCSG(0);
+	}
+	Optional<ArePEIOOut> arePEIOOutOptional = Optional.of(arePEIOOut);
+	doReturn(arePEIOOutOptional).when(poleEmploiIOClient).getAreSimulateurRepriseActivite(Mockito.any(DemandeurEmploi.class));
     }
 
     protected Logement initLogement() {

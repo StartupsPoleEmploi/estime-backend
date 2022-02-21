@@ -79,7 +79,7 @@ public class AgepiUtile {
     }
 
     private Aide creerAide(float montantAide) {
-	return aideUtile.creerAide(AideEnum.AGEPI, OrganismeEnum.PE, Optional.of(MessageInformatifEnum.AGEPI_IDF.getMessage()), false, montantAide);
+	return aideUtile.creerAide(AideEnum.AGEPI, Optional.of(OrganismeEnum.PE), Optional.of(MessageInformatifEnum.AGEPI_IDF.getMessage()), false, montantAide);
     }
 
     /**
