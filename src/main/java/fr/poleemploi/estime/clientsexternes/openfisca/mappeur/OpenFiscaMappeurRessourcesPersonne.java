@@ -6,6 +6,7 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHOMAGE_NET;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_RETRAITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.REVENUS_LOCATIFS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
@@ -37,8 +38,7 @@ public class OpenFiscaMappeurRessourcesPersonne {
     public void addRessourcesFinancieresPersonne(JSONObject personneJSON, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	RessourcesFinancieres ressourcesFinancieres = personne.getRessourcesFinancieres();
 	if (ressourcesFinancieres != null) {
-	    if (personne.getRessourcesFinancieres() != null && personne.getRessourcesFinancieres().getHasTravailleAuCoursDerniersMois() != null
-		    && personne.getRessourcesFinancieres().getHasTravailleAuCoursDerniersMois().booleanValue()) {
+	    if (ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMoisAvantSimulation(ressourcesFinancieres)) {
 		openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneJSON, personne, dateDebutSimulation, numeroMoisSimule);
 	    } else if (ressourcesFinancieresUtile.hasSalaire(ressourcesFinancieres)) {
 		personneJSON.put(SALAIRE_BASE, openFiscaMappeurPeriode.creerPeriodes(ressourcesFinancieres.getSalaire().getMontantBrut(), dateDebutSimulation, numeroMoisSimule,
@@ -46,13 +46,17 @@ public class OpenFiscaMappeurRessourcesPersonne {
 		personneJSON.put(SALAIRE_IMPOSABLE, openFiscaMappeurPeriode.creerPeriodes(ressourcesFinancieres.getSalaire().getMontantNet(), dateDebutSimulation, numeroMoisSimule,
 			OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	    }
-	    if (ressourcesFinancieresUtile.hasBeneficesTravailleurIndependant(ressourcesFinancieres)) {
-		personneJSON.put(CHIFFRE_AFFAIRES_INDEPENDANT,
-			openFiscaMappeurPeriode.creerPeriodesAnnees(ressourcesFinancieres.getChiffreAffairesIndependantDernierExercice(), dateDebutSimulation, numeroMoisSimule));
+	    if (ressourcesFinancieresUtile.hasRevenusTravailleurIndependant(ressourcesFinancieres)) {
+		personneJSON.put(CHIFFRE_AFFAIRES_INDEPENDANT, openFiscaMappeurPeriode
+			.creerPeriodesAnnees(ressourcesFinancieresUtile.getRevenusTravailleurIndependant(ressourcesFinancieres), dateDebutSimulation, numeroMoisSimule));
 	    }
 	    if (ressourcesFinancieresUtile.hasRevenusMicroEntreprise(ressourcesFinancieres)) {
-		personneJSON.put(BENEFICES_MICRO_ENTREPRISE,
-			openFiscaMappeurPeriode.creerPeriodesAnnees(ressourcesFinancieres.getBeneficesMicroEntrepriseDernierExercice(), dateDebutSimulation, numeroMoisSimule));
+		personneJSON.put(BENEFICES_MICRO_ENTREPRISE, openFiscaMappeurPeriode
+			.creerPeriodesAnnees(ressourcesFinancieresUtile.getRevenusMicroEntreprise(ressourcesFinancieres), dateDebutSimulation, numeroMoisSimule));
+	    }
+	    if (ressourcesFinancieresUtile.hasPensionRetraite(ressourcesFinancieres)) {
+		personneJSON.put(PENSION_RETRAITE, openFiscaMappeurPeriode.creerPeriodes(ressourcesFinancieresUtile.getPensionRetraite(ressourcesFinancieres), dateDebutSimulation,
+			numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	    }
 	    if (ressourcesFinancieresUtile.hasRevenusImmobilier(ressourcesFinancieres)) {
 		personneJSON.put(REVENUS_LOCATIFS, openFiscaMappeurPeriode

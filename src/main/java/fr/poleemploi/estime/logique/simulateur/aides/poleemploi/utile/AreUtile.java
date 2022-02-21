@@ -31,8 +31,6 @@ public class AreUtile {
     @Autowired
     private AideUtile aideUtile;
 
-    public static final float SOLDE_PREVISIONNEL_RELIQUAT = 10;
-
     private float joursIndemnisables;
     private float nombreJoursRestants;
     private float montantComplementARE;
@@ -54,11 +52,13 @@ public class AreUtile {
 	if (optionalAreOut.isPresent() && optionalAreOut.get().getAllocationMensuelle() > 0) {
 	    ArePEIOOut areOut = optionalAreOut.get();
 	    this.montantComplementARE = (float) Math.floor(areOut.getAllocationMensuelle() - (areOut.getMontantCRC() + areOut.getMontantCRDS() + areOut.getMontantCSG()));
-	    this.nombreJoursRestants = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants();
+	    this.nombreJoursRestants = getNombreJoursRestantsRenseigne(demandeurEmploi);
 	    this.joursIndemnisables = getNombreJoursIndemnisables(areOut, demandeurEmploi);
 	    this.nombreJoursRestants -= this.joursIndemnisables;
 	    Aide complementARE = creerComplementARE(montantComplementARE, false);
-	    aidesPourCeMois.put(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
+	    aidesPourCeMois.put(AideEnum.AIDE_RETOUR_EMPLOI.getCode(), complementARE);
+	} else {
+	    unsetComplementARE();
 	}
     }
 
@@ -66,22 +66,23 @@ public class AreUtile {
 	this.nombreJoursRestants = getNombreJoursRestantsReliquat();
 	if (nombreJoursRestants > 0) {
 	    Aide complementARE = creerComplementARE(this.montantComplementARE, false);
-	    aidesPourCeMois.put(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
+	    aidesPourCeMois.put(AideEnum.AIDE_RETOUR_EMPLOI.getCode(), complementARE);
 	} else {
 	    float nombreJoursRestantsAvantCeMois = getNombreJoursRestantsReliquatAvantCeMois();
 	    if (nombreJoursRestantsAvantCeMois > 0) {
 		float montantReliquatComplementARE = (float) Math.floor((this.montantComplementARE / this.joursIndemnisables) * nombreJoursRestantsAvantCeMois);
 		Aide complementARE = creerComplementARE(montantReliquatComplementARE, true);
-		aidesPourCeMois.put(AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode(), complementARE);
+		aidesPourCeMois.put(AideEnum.AIDE_RETOUR_EMPLOI.getCode(), complementARE);
 	    }
 	}
     }
 
     private Aide creerComplementARE(float montantAide, boolean isDernierMoisComplementARE) {
 	if (isDernierMoisComplementARE) {
-	    return aideUtile.creerAide(AideEnum.ALLOCATION_RETOUR_EMPLOI, OrganismeEnum.PE, Optional.of(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage()), false, montantAide);
+	    return aideUtile.creerAide(AideEnum.AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage()), false,
+		    montantAide);
 	} else {
-	    return aideUtile.creerAide(AideEnum.ALLOCATION_RETOUR_EMPLOI, OrganismeEnum.PE, Optional.empty(), false, montantAide);
+	    return aideUtile.creerAide(AideEnum.AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantAide);
 	}
     }
 
@@ -94,6 +95,14 @@ public class AreUtile {
 	    joursIndemnisablesMois = getNombreJoursIndemnisablesCalcule(getMontantAllocationARE(areOut), allocationJournaliereBrute);
 	}
 	return joursIndemnisablesMois;
+    }
+
+    private float getNombreJoursRestantsRenseigne(DemandeurEmploi demandeurEmploi) {
+	float nombreJoursRestantsRenseigne = 0;
+	if (demandeurEmploi != null && demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
+		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null)
+	    nombreJoursRestantsRenseigne = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants();
+	return nombreJoursRestantsRenseigne;
     }
 
     private float getNombreJoursRestantsReliquat() {
@@ -125,5 +134,11 @@ public class AreUtile {
 	    return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierBrutAre)).setScale(0, RoundingMode.DOWN).floatValue();
 	}
 	return 0;
+    }
+
+    private void unsetComplementARE() {
+	this.montantComplementARE = 0;
+	this.nombreJoursRestants = 0;
+	this.joursIndemnisables = 0;
     }
 }

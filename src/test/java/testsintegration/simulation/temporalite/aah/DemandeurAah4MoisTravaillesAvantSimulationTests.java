@@ -77,7 +77,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(5);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
@@ -102,7 +103,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);
 	    });
@@ -123,7 +125,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
@@ -144,7 +147,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
@@ -166,7 +170,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(274);
 	    });
@@ -187,7 +192,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(274);
 	    });
@@ -238,7 +244,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(5);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
@@ -263,7 +270,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);
 	    });
@@ -284,7 +292,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
@@ -305,7 +314,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
@@ -327,7 +337,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(355);
 	    });
@@ -348,7 +359,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(355);
 	    });
@@ -399,7 +411,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(5);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
@@ -424,7 +437,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);
 	    });
@@ -445,7 +459,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
@@ -466,7 +481,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
@@ -488,7 +504,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(204);
 	    });
@@ -509,7 +526,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(437);
 	    });
@@ -560,7 +578,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(5);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
 		assertThat(agepi.getMontant()).isEqualTo(400);
 	    });
@@ -585,7 +604,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);
 	    });
@@ -606,7 +626,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
@@ -627,7 +648,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
@@ -649,7 +671,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(274);
 	    });
@@ -670,7 +693,8 @@ class DemandeurAah4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(274);
 	    });

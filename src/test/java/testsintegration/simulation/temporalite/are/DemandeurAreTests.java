@@ -1,4 +1,4 @@
-package testsintegration.simulation.temporalite.aideLogement;
+package testsintegration.simulation.temporalite.are;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,12 +27,10 @@ import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations = "classpath:application-test.properties")
-class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
+class DemandeurAreTests extends Commun {
 
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;
-
-    private static int PROCHAINE_DECLARATION_TRIMESTRIELLE = 0;
 
     @Configuration
     @ComponentScan({ "utile.tests", "fr.poleemploi.estime" })
@@ -41,18 +39,19 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
     }
 
     @Test
-    void simulerAPLProchaineDeclarationMois0() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-	// Si DE Français, date naissance 05/07/1986, code postal 44200,
-	// en couple, 2 enfants 9 et 7 ans,
-	// locataire d'un logement non meublé conventionné, loyer 500€, charges 50€, codeInsee 44109
-	// APL 300€, RSA 500€, prochaine déclaration trimestrielle mois M
-	// Salaire CDI 35h/semaine 940€ net, kilométrage domicile -> taf = 12kms + 20 trajets
-	// Pas travaillé au cours des 3 derniers mois
+    void simulerMesRessourcesFinancieresPasDeComplementARETest()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiAPL(PROCHAINE_DECLARATION_TRIMESTRIELLE);
+	// Si DE ARE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
+	// Futur contrat CDI 15h, salaire net 1291€ brut 1000€,kilométrage domicile -> taf = 10kms + 20 trajets
+	// SJR : 48€, Allocation journalière brute : 37€, nombre de jours restants : 60 
 
-	// Lorsque je simule mes prestations le 20/10/2020
-	initMocks("20-10-2020");
+	boolean isEnCouple = false;
+	int nbEnfant = 0;
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544f);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200f);
+	initMocks("23-10-2021", demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
@@ -61,16 +60,10 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(1);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(1018f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
-	    });
 	});
 	// Alors les prestations du second mois 12/2020 sont :
 	// RSA : 500€
@@ -78,15 +71,12 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	assertThat(simulationMois2).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(1018f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(82);
 	    });
 	});
 	// Alors les prestations du troisième mois 01/2021 sont :
@@ -95,15 +85,12 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	assertThat(simulationMois3).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(1018f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(82);
 	    });
 	});
 	// Alors les prestations du quatrième mois 02/2021 sont :
@@ -112,18 +99,12 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	assertThat(simulationMois4).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(414f);
-	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(422f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(rsa.getMontant()).isEqualTo(82);
 	    });
 	});
 	// Alors les prestations du cinquième mois 03/2021 sont :
@@ -132,18 +113,12 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(414f);
-	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(422f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(ppa.getMontant()).isEqualTo(245);
 	    });
 	});
 	// Alors les prestations du sixième mois 04/2021 sont :
@@ -152,185 +127,156 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(414f);
-	    });
 	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(422f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(ppa.getMontant()).isEqualTo(245);
 	    });
 	});
     }
 
     @Test
-    void simulerALFProchaineDeclarationMois0() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-	// Si DE Français, date naissance 05/07/1986, code postal 44200, 
-	// en couple, 2 enfants 9 et 7 ans,
-	// locataire d'un logement non meublé, loyer 500€, charges 50€, codeInsee 44109
-	// APL 300€, RSA 500€, prochaine déclaration trimestrielle mois M
-	// Salaire CDI 35h/semaine 940€ net, kilométrage domicile -> taf = 12kms + 20 trajets
-	// Pas travaillé au cours des 3 derniers mois
+    void simulerMesRessourcesFinancieresComplementARE3MoisTest()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiALF(PROCHAINE_DECLARATION_TRIMESTRIELLE);
+	// Si DE ARE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
+	// Futur contrat CDI 15h, salaire net 1291€ brut 1000€,kilométrage domicile -> taf = 10kms + 20 trajets
+	// SJR : 48€, Allocation journalière brute : 37€, nombre de jours restants : 10 
 
-	// Lorsque je simule mes prestations le 20/10/2020
-	initMocks("20-10-2020");
+	boolean isEnCouple = false;
+	int nbEnfant = 0;
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
+	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setNombreJoursRestants(10f);
+	initMocks("23-10-2021", demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 11/2020 sont :
-	// RSA : 710€
+	// RSA : 350€
 	SimulationMensuelle simulationMois1 = simulationAides.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(1018f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(438f);
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(148);
 	    });
 	});
 	// Alors les prestations du second mois 12/2020 sont :
-	// RSA : 710€
+	// RSA : 350€
 	SimulationMensuelle simulationMois2 = simulationAides.getSimulationsMensuelles().get(1);
 	assertThat(simulationMois2).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(1018f);
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(148);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(438f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(41);
 	    });
 	});
 	// Alors les prestations du troisième mois 01/2021 sont :
-	// PA : 258 (simulateur CAF : 260€)
+	// RSA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312€)
 	SimulationMensuelle simulationMois3 = simulationAides.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(1018f);
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(74);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(438f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(41);
 	    });
 	});
 	// Alors les prestations du quatrième mois 02/2021 sont :
-	// PA : 258 (simulateur CAF : 260€)
+	// PA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312€)
 	SimulationMensuelle simulationMois4 = simulationAides.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(414f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(422f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(438f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(41);
 	    });
 	});
 	// Alors les prestations du cinquième mois 03/2021 sont :
-	// PA : 258€ (simulateur CAF : 260€)
+	// PA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312€)
 	SimulationMensuelle simulationMois5 = simulationAides.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(414f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(422f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(438f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
+		assertThat(rsa.getMontant()).isEqualTo(196);
 	    });
 	});
 	// Alors les prestations du sixième mois 04/2021 sont :
-	// PA : 384€ (simulateur CAF : 390€)
+	// PA : 367€ (simulateur CAF : 353€)
 	SimulationMensuelle simulationMois6 = simulationAides.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(4);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(414f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(422f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(438f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
+		assertThat(rsa.getMontant()).isEqualTo(196);
 	    });
 	});
     }
 
     @Test
-    void simulerALSProchaineDeclarationMois0() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-	// Si DE Français, date naissance 05/07/1986, code postal 44200, 
-	// célibataire, pas d'enfant,
-	// locataire d'un logement non meublé, loyer 500€, charges 50€, codeInsee 44109
-	// APL 300€, RSA 500€, prochaine déclaration trimestrielle mois M
-	// Salaire CDI 35h/semaine 940€ net, kilométrage domicile -> taf = 12kms + 20 trajets
-	// Pas travaillé au cours des 3 derniers mois
+    void simulerMesRessourcesFinancieresComplementARE6MoisTest()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiALS(PROCHAINE_DECLARATION_TRIMESTRIELLE);
+	// Si DE ARE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
+	// Futur contrat CDI 15h, salaire net 1291€ brut 1000€,kilométrage domicile -> taf = 10kms + 20 trajets
+	// SJR : 48€, Allocation journalière brute : 37€, nombre de jours restants : 60 
 
-	// Lorsque je simule mes prestations le 23/07/2021
-	initMocks("23-07-2021");
+	boolean isEnCouple = false;
+	int nbEnfant = 0;
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
+	initMocks("23-07-2021", demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	SimulationAides simulationAides = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 08/2021 sont :
-	// RSA : 500€
+	// RSA : 380€
 	SimulationMensuelle simulationMois1 = simulationAides.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("08");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
-	    assertThat(simulation.getMesAides()).hasSize(3);
+	    assertThat(simulation.getMesAides()).hasSize(2);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(497f);
-	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(148);
 	    });
 	});
+
 	// Alors les prestations du second mois 09/2021 sont :
-	// RSA : 500€
+	// RSA : 380€
 	SimulationMensuelle simulationMois2 = simulationAides.getSimulationsMensuelles().get(1);
+
 	assertThat(simulationMois2).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("09");
@@ -338,15 +284,15 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(497f);
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(148);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(41);
 	    });
 	});
 	// Alors les prestations du troisième mois 10/2021 sont :
-	// RSA : 176 (simulateur CAF : 180€), PA : 196 (simulateur CAF : 200€)
+	// RSA : 54 (simulateur CAF : 38€), PA : 270 (simulateur CAF : 271€)
 	SimulationMensuelle simulationMois3 = simulationAides.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -355,15 +301,15 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(497f);
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(148);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(41);
 	    });
 	});
 	// Alors les prestations du quatrième mois 11/2021 sont :
-	// RSA : 176 (simulateur CAF : 180€), PA : 196 (simulateur CAF : 200€)
+	// RSA : 54 (simulateur CAF : 38€), PA : 270 (simulateur CAF : 271€)
 	SimulationMensuelle simulationMois4 = simulationAides.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -372,15 +318,15 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(141f);
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(148);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(41);
 	    });
 	});
 	// Alors les prestations du cinquième mois 12/2021 sont :
-	// RSA : 176 (simulateur CAF : 180€), PA : 196 (simulateur CAF : 200€)
+	// RSA : 54 (simulateur CAF : 38€), PA : 270 (simulateur CAF : 271€)
 	SimulationMensuelle simulationMois5 = simulationAides.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -389,15 +335,15 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(141f);
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(148);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(122);
 	    });
 	});
 	// Alors les prestations du sixième mois 01/2022 sont :
-	// RSA : 16 (simulateur CAF : 20€), PA : 294 (simulateur CAF : 290€)
+	// RSA : 16 (simulateur CAF : 0€), PA : 294 (simulateur CAF : 291€)
 	SimulationMensuelle simulationMois6 = simulationAides.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulation -> {
 	    assertThat(simulation.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -406,11 +352,11 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 	    });
 	    assertThat(simulation.getMesAides()).hasSize(3);
 	    assertThat(simulation.getMesAides().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(141f);
+	    assertThat(simulation.getMesAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(148);
 	    });
-	    assertThat(simulation.getMesAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+	    assertThat(simulation.getMesAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(122);
 	    });
 	});
     }

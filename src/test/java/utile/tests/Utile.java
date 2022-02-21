@@ -311,7 +311,7 @@ public class Utile {
 	    AllocationASS allocationASS = new AllocationASS();
 	    aidesPoleEmploi.setAllocationASS(allocationASS);
 	}
-	if (AideEnum.ALLOCATION_RETOUR_EMPLOI.getCode().equals(population)) {
+	if (AideEnum.AIDE_RETOUR_EMPLOI.getCode().equals(population)) {
 	    AllocationARE allocationARE = new AllocationARE();
 	    aidesPoleEmploi.setAllocationARE(allocationARE);
 	}

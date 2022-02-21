@@ -392,4 +392,57 @@ class OpenFiscaMappeurTestsConjoint extends Commun {
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
+
+    @Test
+    void mapDemandeurAvecConjointPensionRetraiteToOpenFiscaPayloadTest()
+	    throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTestsConjoint/demandeur-avec-conjoint-pension-retraite.json");
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+
+	FuturTravail futurTravail = new FuturTravail();
+	Salaire salaire = new Salaire();
+	salaire.setMontantNet(900);
+	salaire.setMontantBrut(1165);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
+
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+	Logement logement = new Logement();
+	logement.setMontantLoyer(500f);
+	logement.setMontantCharges(50f);
+	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodeInsee("44109");
+	coordonnees.setDeMayotte(false);
+	logement.setCoordonnees(coordonnees);
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+
+	SituationFamiliale situationFamiliale = new SituationFamiliale();
+	situationFamiliale.setIsEnCouple(true);
+	Personne conjoint = new Personne();
+
+	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	ressourcesFinancieresConjoint.setPensionRetraite(1000f);
+	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	situationFamiliale.setConjoint(conjoint);
+	demandeurEmploi.setSituationFamiliale(situationFamiliale);
+
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+
+	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
 }

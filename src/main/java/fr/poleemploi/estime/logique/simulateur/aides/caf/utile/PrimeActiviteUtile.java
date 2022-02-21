@@ -42,8 +42,8 @@ public class PrimeActiviteUtile {
     }
 
     public Aide creerAidePrimeActivite(float montantPrimeActivite, boolean isAideReportee) {
-	return aideUtile.creerAide(AideEnum.PRIME_ACTIVITE, OrganismeEnum.CAF, Optional.of(MessageInformatifEnum.PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA.getMessage()), isAideReportee,
-		montantPrimeActivite);
+	return aideUtile.creerAide(AideEnum.PRIME_ACTIVITE, Optional.of(OrganismeEnum.CAF), Optional.of(MessageInformatifEnum.PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA.getMessage()),
+		isAideReportee, montantPrimeActivite);
     }
 
     public Optional<Aide> getPrimeActiviteMoisPrecedent(SimulationAides simulationAides, int numeroMoisSimule) {

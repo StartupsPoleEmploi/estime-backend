@@ -70,7 +70,8 @@ public class AllocationSolidariteSpecifiqueUtile {
     }
 
     private Aide creerAide(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, float montantAide) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, OrganismeEnum.PE, getMessageAlerte(demandeurEmploi, dateDebutSimulation), false, montantAide);
+	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), getMessageAlerte(demandeurEmploi, dateDebutSimulation), false,
+		montantAide);
     }
 
     /**
