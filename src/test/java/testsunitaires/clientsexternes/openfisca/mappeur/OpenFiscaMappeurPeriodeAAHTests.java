@@ -44,7 +44,7 @@ import utile.tests.Utile;
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class OpenFiscaMappeurPeriodeTestsAAH extends Commun {
+class OpenFiscaMappeurPeriodeAAHTests extends Commun {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;

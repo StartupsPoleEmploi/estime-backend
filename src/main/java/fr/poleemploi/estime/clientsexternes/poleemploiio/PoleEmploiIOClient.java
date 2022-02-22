@@ -79,7 +79,7 @@ public class PoleEmploiIOClient {
     public PeConnectAuthorization getPeConnectAuthorizationByCode(String code, String redirectURI, String nonce) {
 	HttpEntity<MultiValueMap<String, String>> httpEntity = accessTokenUtile.createAccessTokenByCodeHttpEntity(code, redirectURI);
 	AccessTokenPEIOOut accessTokenPEIOOut = callAccessTokenEndPoint(httpEntity);
-	if (accessTokenPEIOOut.getNonce().compareTo(nonce) != 0) {
+	if (accessTokenPEIOOut != null && accessTokenPEIOOut.getNonce().compareTo(nonce) != 0) {
 	    LOGGER.error(UnauthorizedMessages.ACCES_NON_AUTORISE_NONCE_INCORRECT.getMessage());
 	    throw new UnauthorizedException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 	}

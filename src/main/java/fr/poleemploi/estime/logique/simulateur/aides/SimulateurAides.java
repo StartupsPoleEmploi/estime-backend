@@ -70,7 +70,7 @@ public class SimulateurAides {
 	HashMap<String, Aide> aidesPourCeMois = new HashMap<>();
 	simulationMensuelle.setMesAides(aidesPourCeMois);
 
-	ajouterAidesSansCalcul(aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	ajouterAidesSansCalcul(aidesPourCeMois, demandeurEmploi);
 	simulateurAidesCAF.simuler(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
 	simulateurAidesPoleEmploi.simuler(aidesPourCeMois, numeroMoisSimule, dateMoisASimuler, demandeurEmploi, dateDebutSimulation);
     }
@@ -80,7 +80,7 @@ public class SimulateurAides {
 	return dateUtile.ajouterMoisALocalDate(dateDebutSimulation, nombreMoisToAdd);
     }
 
-    private void ajouterAidesSansCalcul(Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    private void ajouterAidesSansCalcul(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
 	if (ressourcesFinancieresUtile.hasPensionInvalidite(demandeurEmploi)) {
 	    float montantPensionInvalidite = ressourcesFinancieresUtile.getPensionInvalidite(demandeurEmploi);
 	    aidesPourCeMois.put(AideEnum.PENSION_INVALIDITE.getCode(), creerAideSansCalcul(AideEnum.PENSION_INVALIDITE, Optional.of(OrganismeEnum.CPAM), montantPensionInvalidite));

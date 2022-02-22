@@ -7,8 +7,6 @@ public class AllocationARE {
     private Float allocationMensuelleNet;
     private Float salaireJournalierReferenceBrut;
     private Float nombreJoursRestants;
-    private boolean isConcerneDegressivite;
-
 
     public Float getAllocationJournaliereNet() {
 	return allocationJournaliereNet;
@@ -50,19 +48,9 @@ public class AllocationARE {
 	this.nombreJoursRestants = nombreJoursRestants;
     }
 
-    public boolean isConcerneDegressivite() {
-	return isConcerneDegressivite;
-    }
-
-    public void setConcerneDegressivite(boolean isConcerneDegressivite) {
-	this.isConcerneDegressivite = isConcerneDegressivite;
-    }
-
     @Override
     public String toString() {
-	return "AllocationARE [allocationJournaliereNet=" + allocationJournaliereNet + ", montantJournalierBrut="
-		+ montantJournalierBrut + ", allocationMensuelleNet=" + allocationMensuelleNet
-		+ ", salaireJournalierReferenceBrut=" + salaireJournalierReferenceBrut + ", nombreJoursRestants="
-		+ nombreJoursRestants + ", isConcerneDegressivite=" + isConcerneDegressivite + "]";
+	return "AllocationARE [allocationJournaliereNet=" + allocationJournaliereNet + ", montantJournalierBrut=" + montantJournalierBrut + ", allocationMensuelleNet="
+		+ allocationMensuelleNet + ", salaireJournalierReferenceBrut=" + salaireJournalierReferenceBrut + ", nombreJoursRestants=" + nombreJoursRestants + "]";
     }
 }

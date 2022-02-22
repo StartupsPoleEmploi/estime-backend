@@ -30,7 +30,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class OpenFiscaMappeurPeriodesTestsRSA extends Commun {
+class OpenFiscaMappeurPeriodesRSATests extends Commun {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;

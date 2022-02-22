@@ -45,7 +45,7 @@ import utile.tests.Utile;
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class OpenFiscaMappeurTestsPersonnesACharge extends Commun {
+class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 
     private static final int NUMERA_MOIS_SIMULE_PPA = 5;
 

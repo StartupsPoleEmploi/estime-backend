@@ -62,7 +62,6 @@ public class BeneficiaireAidesUtile {
     }
 
     private boolean isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibilite(DemandeurEmploi demandeurEmploi) {
-
 	if (isBeneficiaireAides(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
 		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null
 		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereNet() != null) {

@@ -27,15 +27,12 @@ import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPe
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
-import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
 import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
+class OpenFiscaMappeurPeriodeSalairesTests extends Commun {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;
@@ -86,18 +83,18 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
     void mapPeriodeSalaireTest0() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
 	String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-imposable-8-mois-salaire-avant-simulation-mois-0.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-imposable-8-mois-salaire-avant-simulation-mois-0.json");
 	String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-base-8-mois-salaire-avant-simulation-mois-0.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-base-8-mois-salaire-avant-simulation-mois-0.json");
 
 	int numeroMoisSimulation = 0;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject conjointJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(conjointJSON, demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimulation);
+	JSONObject demandeurJSON = new JSONObject();
+	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
 
-	assertThat(conjointJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(conjointJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(demandeurJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(demandeurJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -109,18 +106,18 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
     void mapPeriodeSalaireTest1() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
 	String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-imposable-8-mois-salaire-avant-simulation-mois-1.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-imposable-8-mois-salaire-avant-simulation-mois-1.json");
 	String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-base-8-mois-salaire-avant-simulation-mois-1.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-base-8-mois-salaire-avant-simulation-mois-1.json");
 
 	int numeroMoisSimulation = 1;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject conjointJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(conjointJSON, demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimulation);
+	JSONObject demandeurJSON = new JSONObject();
+	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
 
-	assertThat(conjointJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(conjointJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(demandeurJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(demandeurJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -132,18 +129,18 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
     void mapPeriodeSalaireTest2() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
 	String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-imposable-8-mois-salaire-avant-simulation-mois-2.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-imposable-8-mois-salaire-avant-simulation-mois-2.json");
 	String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-base-8-mois-salaire-avant-simulation-mois-2.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-base-8-mois-salaire-avant-simulation-mois-2.json");
 
 	int numeroMoisSimulation = 2;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject conjointJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(conjointJSON, demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimulation);
+	JSONObject demandeurJSON = new JSONObject();
+	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
 
-	assertThat(conjointJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(conjointJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(demandeurJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(demandeurJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -155,18 +152,18 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
     void mapPeriodeSalaireTest3() throws Exception {
 
 	String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-imposable-8-mois-salaire-avant-simulation-mois-3.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-imposable-8-mois-salaire-avant-simulation-mois-3.json");
 	String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-base-8-mois-salaire-avant-simulation-mois-3.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-base-8-mois-salaire-avant-simulation-mois-3.json");
 
 	int numeroMoisSimulation = 3;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject conjointJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(conjointJSON, demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimulation);
+	JSONObject demandeurJSON = new JSONObject();
+	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
 
-	assertThat(conjointJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(conjointJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(demandeurJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(demandeurJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -178,18 +175,18 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
     void mapPeriodeSalaireTest4() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
 	String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-imposable-8-mois-salaire-avant-simulation-mois-4.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-imposable-8-mois-salaire-avant-simulation-mois-4.json");
 	String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-base-8-mois-salaire-avant-simulation-mois-4.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-base-8-mois-salaire-avant-simulation-mois-4.json");
 
 	int numeroMoisSimulation = 4;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject conjointJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(conjointJSON, demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimulation);
+	JSONObject demandeurJSON = new JSONObject();
+	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
 
-	assertThat(conjointJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(conjointJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(demandeurJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(demandeurJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -201,18 +198,18 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
     void mapPeriodeSalaireTest5() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
 	String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-imposable-8-mois-salaire-avant-simulation-mois-5.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-imposable-8-mois-salaire-avant-simulation-mois-5.json");
 	String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-base-8-mois-salaire-avant-simulation-mois-5.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-base-8-mois-salaire-avant-simulation-mois-5.json");
 
 	int numeroMoisSimulation = 5;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject conjointJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(conjointJSON, demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimulation);
+	JSONObject demandeurJSON = new JSONObject();
+	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
 
-	assertThat(conjointJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(conjointJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(demandeurJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(demandeurJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -224,18 +221,18 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
     void mapPeriodeSalaireTest6() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
 	String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-imposable-8-mois-salaire-avant-simulation-mois-6.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-imposable-8-mois-salaire-avant-simulation-mois-6.json");
 	String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
-		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/conjoint/salaire-base-8-mois-salaire-avant-simulation-mois-6.json");
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodeTestsSalaires/demandeur/salaire-base-8-mois-salaire-avant-simulation-mois-6.json");
 
 	int numeroMoisSimulation = 6;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject conjointJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(conjointJSON, demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimulation);
+	JSONObject demandeurJSON = new JSONObject();
+	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
 
-	assertThat(conjointJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(conjointJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(demandeurJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(demandeurJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     private DemandeurEmploi creerDemandeurEmploiSalairesTests() throws ParseException {
@@ -246,18 +243,8 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
 	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
 
-	SituationFamiliale situationFamiliale = new SituationFamiliale();
-	situationFamiliale.setIsEnCouple(true);
-	Personne conjoint = new Personne();
-	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
-	Salaire salaireConjoint = new Salaire();
-	salaireConjoint.setMontantNet(1200);
-	salaireConjoint.setMontantBrut(1544);
-	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
-
-	ressourcesFinancieresConjoint.setHasTravailleAuCoursDerniersMois(true);
+	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
 	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
 	Salaire[] salaires = utileTests.creerSalaires(0, 0, 13);
 	Salaire salaireMoisMoins1 = utileTests.creerSalaire(850, 1101);
@@ -277,10 +264,7 @@ class OpenFiscaMappeurPeriodeTestsSalairesConjoint extends Commun {
 	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins11, 11);
 	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins13, 13);
 	periodeTravailleeAvantSimulation.setMois(utileTests.createMoisTravaillesAvantSimulation(salaires));
-	ressourcesFinancieresConjoint.setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
-	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
-	situationFamiliale.setConjoint(conjoint);
-	demandeurEmploi.setSituationFamiliale(situationFamiliale);
+	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	return demandeurEmploi;
     }
