@@ -23,7 +23,7 @@ import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.Allocation
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 @Component
@@ -86,7 +86,7 @@ public class AideUtile {
 	return Optional.empty();
     }
 
-    public float getMontantAidePourCeMoisSimule(SimulationAides simulationAides, String codeAide, int numeroMoisMontantARecuperer) {
+    public float getMontantAidePourCeMoisSimule(Simulation simulationAides, String codeAide, int numeroMoisMontantARecuperer) {
 	Optional<Aide> aidePourCeMois = getAidePourCeMoisSimule(simulationAides, codeAide, numeroMoisMontantARecuperer);
 	if (aidePourCeMois.isPresent()) {
 	    return aidePourCeMois.get().getMontant();
@@ -96,7 +96,7 @@ public class AideUtile {
 
     public float getMontantAideAvantSimulation(int numeroMoisMontantARecuperer, DemandeurEmploi demandeurEmploi, String codeAide, LocalDate dateDebutSimulation) {
 	if (AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode().equals(codeAide)) {
-	    return demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationAAH();
+	    return demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationAAH();
 	}
 	if (AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(codeAide)) {
 	    LocalDate moisAvantPeriodeSimulation = getMoisAvantSimulation(numeroMoisMontantARecuperer, dateDebutSimulation);
@@ -109,13 +109,13 @@ public class AideUtile {
 	return 0;
     }
 
-    public Optional<Aide> getAidePourCeMoisSimule(SimulationAides simulationAides, String codeAide, int numeroMois) {
+    public Optional<Aide> getAidePourCeMoisSimule(Simulation simulationAides, String codeAide, int numeroMois) {
 	if (simulationAides != null && simulationAides.getSimulationsMensuelles() != null) {
 	    int indexSimulationMensuelARecuperer = numeroMois - 1;
 	    if (indexSimulationMensuelARecuperer >= 0 && indexSimulationMensuelARecuperer < simulationAides.getSimulationsMensuelles().size()) {
 		SimulationMensuelle simulationMensuelle = simulationAides.getSimulationsMensuelles().get(indexSimulationMensuelARecuperer);
-		if (simulationMensuelle != null && simulationMensuelle.getMesAides() != null && !simulationMensuelle.getMesAides().isEmpty()) {
-		    Aide aide = simulationMensuelle.getMesAides().get(codeAide);
+		if (simulationMensuelle != null && simulationMensuelle.getAides() != null && !simulationMensuelle.getAides().isEmpty()) {
+		    Aide aide = simulationMensuelle.getAides().get(codeAide);
 		    if (aide != null) {
 			return Optional.of(aide);
 		    }

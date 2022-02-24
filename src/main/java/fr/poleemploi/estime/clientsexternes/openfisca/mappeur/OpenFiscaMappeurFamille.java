@@ -28,7 +28,7 @@ import com.github.tsohr.JSONArray;
 import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
@@ -52,7 +52,7 @@ public class OpenFiscaMappeurFamille {
     private SituationFamilialeUtile situationFamilialeUtile;
 
     @Autowired
-    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     @Autowired
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
@@ -81,11 +81,11 @@ public class OpenFiscaMappeurFamille {
 	famille.put(PPA, openFiscaMappeurPrimeActivite.creerPrimeActiviteJSON(dateDebutSimulation, numeroMoisSimule));
 
 	famille.put(APL, openFiscaMappeurAidesLogement.creerAllocationLogementJSON(
-		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement(), dateDebutSimulation, numeroMoisSimule));
+		demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement(), dateDebutSimulation, numeroMoisSimule));
 	famille.put(ALF, openFiscaMappeurAidesLogement.creerAllocationLogementJSON(
-		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale(), dateDebutSimulation, numeroMoisSimule));
+		demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale(), dateDebutSimulation, numeroMoisSimule));
 	famille.put(ALS, openFiscaMappeurAidesLogement.creerAllocationLogementJSON(
-		demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesLogement().getAllocationLogementSociale(), dateDebutSimulation, numeroMoisSimule));
+		demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAllocationLogementSociale(), dateDebutSimulation, numeroMoisSimule));
 	famille.put(AIDE_LOGEMENT, openFiscaMappeurAidesLogement.creerAideLogementJSON(dateDebutSimulation, numeroMoisSimule));
 	return famille;
     }

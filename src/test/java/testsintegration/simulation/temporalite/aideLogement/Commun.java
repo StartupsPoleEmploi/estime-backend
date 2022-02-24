@@ -88,13 +88,13 @@ public class Commun {
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setNombreMoisTravaillesDerniersMois(0);
 
 	AidesFamiliales aidesFamiliales = new AidesFamiliales();
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
 
 	AidesLogement aidesLogement = new AidesLogement();
 	AllocationsLogement aidePersonnaliseeLogement = new AllocationsLogement();
@@ -103,7 +103,7 @@ public class Commun {
 	aidePersonnaliseeLogement.setMoisNMoins2(300f);
 	aidePersonnaliseeLogement.setMoisNMoins3(300f);
 	aidesLogement.setAidePersonnaliseeLogement(aidePersonnaliseeLogement);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(aidesLogement);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(aidesLogement);
 
 	return demandeurEmploi;
     }
@@ -127,13 +127,13 @@ public class Commun {
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setNombreMoisTravaillesDerniersMois(0);
 
 	AidesFamiliales aidesFamiliales = new AidesFamiliales();
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
 
 	AidesLogement aidesLogement = new AidesLogement();
 	AllocationsLogement allocationLogementFamiliale = new AllocationsLogement();
@@ -142,7 +142,7 @@ public class Commun {
 	allocationLogementFamiliale.setMoisNMoins2(300f);
 	allocationLogementFamiliale.setMoisNMoins3(300f);
 	aidesLogement.setAllocationLogementFamiliale(allocationLogementFamiliale);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(aidesLogement);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(aidesLogement);
 
 	return demandeurEmploi;
     }
@@ -165,13 +165,13 @@ public class Commun {
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setNombreMoisTravaillesDerniersMois(0);
 
 	AidesFamiliales aidesFamiliales = new AidesFamiliales();
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationRSA(500f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
 
 	AidesLogement aidesLogement = new AidesLogement();
 	AllocationsLogement allocationLogementSociale = new AllocationsLogement();
@@ -180,7 +180,7 @@ public class Commun {
 	allocationLogementSociale.setMoisNMoins2(300f);
 	allocationLogementSociale.setMoisNMoins3(300f);
 	aidesLogement.setAllocationLogementSociale(allocationLogementSociale);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(aidesLogement);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(aidesLogement);
 
 	return demandeurEmploi;
     }

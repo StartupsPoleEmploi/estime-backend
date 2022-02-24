@@ -33,7 +33,7 @@ import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
@@ -88,10 +88,10 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	informationsPersonnelles.setLogement(logement);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(true);
@@ -99,11 +99,11 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
 	beneficiaireAides.setBeneficiaireAAH(true);
 	conjoint.setBeneficiaireAides(beneficiaireAides);
-	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAFConjoint = createAidesCAF();
 	aidesCAFConjoint.setAllocationAAH(900f);
 	ressourcesFinancieresConjoint.setAidesCAF(aidesCAFConjoint);
-	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	conjoint.setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	situationFamiliale.setConjoint(conjoint);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
@@ -144,10 +144,10 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	informationsPersonnelles.setLogement(logement);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(true);
@@ -155,13 +155,13 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
 	beneficiaireAides.setBeneficiaireASS(true);
 	conjoint.setBeneficiaireAides(beneficiaireAides);
-	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationASS allocationASS = new AllocationASS();
 	allocationASS.setAllocationMensuelleNet(900f);
 	aidesPoleEmploi.setAllocationASS(allocationASS);
 	ressourcesFinancieresConjoint.setAidesPoleEmploi(aidesPoleEmploi);
-	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	conjoint.setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	situationFamiliale.setConjoint(conjoint);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
@@ -202,23 +202,23 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	informationsPersonnelles.setLogement(logement);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(true);
 	Personne conjoint = new Personne();
 	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
 	beneficiaireAides.setBeneficiaireARE(true);
 	conjoint.setBeneficiaireAides(beneficiaireAides);
-	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationARE allocationARE = new AllocationARE();
 	allocationARE.setAllocationMensuelleNet(900f);
 	aidesPoleEmploi.setAllocationARE(allocationARE);
 	ressourcesFinancieresConjoint.setAidesPoleEmploi(aidesPoleEmploi);
-	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	conjoint.setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	situationFamiliale.setConjoint(conjoint);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
@@ -260,19 +260,19 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	informationsPersonnelles.setLogement(logement);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(true);
 	Personne conjoint = new Personne();
-	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	AidesCPAM aidesCPAM = new AidesCPAM();
 	aidesCPAM.setPensionInvalidite(200f);
 	ressourcesFinancieresConjoint.setAidesCPAM(aidesCPAM);
-	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	conjoint.setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	situationFamiliale.setConjoint(conjoint);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
@@ -313,15 +313,15 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	informationsPersonnelles.setLogement(logement);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(true);
 	Personne conjoint = new Personne();
-	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	Salaire salaireConjoint = new Salaire();
 	salaireConjoint.setMontantNet(1200);
 	salaireConjoint.setMontantBrut(1544);
@@ -329,7 +329,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
 	ressourcesFinancieresConjoint.setHasTravailleAuCoursDerniersMois(true);
 	ressourcesFinancieresConjoint.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1200, 1544, 13));
-	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	conjoint.setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	situationFamiliale.setConjoint(conjoint);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
@@ -371,18 +371,18 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	informationsPersonnelles.setLogement(logement);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(true);
 	Personne conjoint = new Personne();
 
-	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieresConjoint.setRevenusImmobilier3DerniersMois(3000f);
-	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	conjoint.setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	situationFamiliale.setConjoint(conjoint);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
@@ -424,18 +424,18 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	informationsPersonnelles.setLogement(logement);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(true);
 	Personne conjoint = new Personne();
 
-	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieresConjoint.setPensionRetraite(1000f);
-	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	conjoint.setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	situationFamiliale.setConjoint(conjoint);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 

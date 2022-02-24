@@ -18,7 +18,7 @@ import fr.poleemploi.estime.services.ressources.Coordonnees;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
@@ -32,7 +32,7 @@ public class Commun {
 	SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
 	HashMap<String, Aide> prestations = new HashMap<>();
 	prestations.put(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), createSimulationMensuelAideASS(montantASS));
-	simulationMensuelle.setMesAides(prestations);
+	simulationMensuelle.setAides(prestations);
 	return simulationMensuelle;
     }
 
@@ -52,14 +52,14 @@ public class Commun {
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
 	return demandeurEmploi;
     }
 
-    protected SimulationAides createSimulationAides() {
-	SimulationAides simulationAides = new SimulationAides();
+    protected Simulation createSimulationAides() {
+	Simulation simulationAides = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
 	simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));

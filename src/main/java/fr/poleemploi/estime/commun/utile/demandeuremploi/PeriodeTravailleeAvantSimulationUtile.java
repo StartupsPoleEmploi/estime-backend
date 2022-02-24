@@ -28,9 +28,9 @@ public class PeriodeTravailleeAvantSimulationUtile {
     public int getNombreMoisTravaillesAuCoursDesXDerniersMoisAvantSimulation(DemandeurEmploi demandeurEmploi, int nombreDeMoisAConsiderer) {
 	int nombreMoisTravaillesDerniersMois = 0;
 	for (int moisAvantSimulation = 0; moisAvantSimulation < nombreDeMoisAConsiderer; moisAvantSimulation++) {
-	    if (demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation() != null
-		    && demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation().getMois() != null) {
-		MoisTravailleAvantSimulation moisTravailleAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation()
+	    if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation() != null
+		    && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois() != null) {
+		MoisTravailleAvantSimulation moisTravailleAvantSimulation = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation()
 			.getMois()[moisAvantSimulation];
 		if (moisTravailleAvantSimulation != null && isMoisTravaille(moisTravailleAvantSimulation)) {
 		    nombreMoisTravaillesDerniersMois++;
@@ -90,8 +90,8 @@ public class PeriodeTravailleeAvantSimulationUtile {
     public MoisTravailleAvantSimulation getMoisTravaillesAvantSimulation(DemandeurEmploi demandeurEmploi, int index) {
 	MoisTravailleAvantSimulation moisTravaillesAvantSimulation = getMoisTravailleVide();
 	if (hasSalairesAvantPeriodeSimulation(demandeurEmploi, index)
-		&& demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation().getMois()[index] != null) {
-	    moisTravaillesAvantSimulation = demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation().getMois()[index];
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois()[index] != null) {
+	    moisTravaillesAvantSimulation = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois()[index];
 
 	}
 	return moisTravaillesAvantSimulation;
@@ -113,9 +113,9 @@ public class PeriodeTravailleeAvantSimulationUtile {
     }
 
     public boolean hasSalairesAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int index) {
-	return demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation().getMois() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation().getMois()[index] != null;
+	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois()[index] != null;
     }
 
     public boolean hasSalairesAvantPeriodeSimulationPersonne(Personne personne, int index) {

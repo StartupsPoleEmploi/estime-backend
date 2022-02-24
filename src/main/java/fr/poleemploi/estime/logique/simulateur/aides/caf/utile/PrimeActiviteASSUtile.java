@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @Component
@@ -14,7 +14,7 @@ public class PrimeActiviteASSUtile {
     private PeriodeTravailleeAvantSimulationUtile periodeTravailleeAvantSimulationUtile;
 
     @Autowired
-    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     /**
      * Fonction permettant de déterminer si on a calculé le(s) montant(s) de la prime d'activité et/ou du RSA le mois précédent et s'il(s) doi(ven)t être versé(s) ce mois-ci

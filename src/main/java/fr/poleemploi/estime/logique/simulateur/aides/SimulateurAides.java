@@ -12,14 +12,16 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.SimulateurAidesCAF;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.SimulateurAidesPoleEmploi;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.utile.RessourceFinanciereUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.SimulateurAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.RessourceFinanciere;
+import fr.poleemploi.estime.services.ressources.Simulation;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 @Component
@@ -29,13 +31,16 @@ public class SimulateurAides {
     private AideUtile aideUtile;
 
     @Autowired
+    private RessourceFinanciereUtile ressourceFinanciereUtile;
+
+    @Autowired
     private DateUtile dateUtile;
 
     @Autowired
     private SimulateurAidesUtile simulateurAidesUtile;
 
     @Autowired
-    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     @Autowired
     private SimulateurAidesCAF simulateurAidesCAF;
@@ -43,8 +48,8 @@ public class SimulateurAides {
     @Autowired
     private SimulateurAidesPoleEmploi simulateurAidesPoleEmploi;
 
-    public SimulationAides simuler(DemandeurEmploi demandeurEmploi) {
-	SimulationAides simulationAides = new SimulationAides();
+    public Simulation simuler(DemandeurEmploi demandeurEmploi) {
+	Simulation simulationAides = new Simulation();
 	simulationAides.setSimulationsMensuelles(new ArrayList<>());
 
 	LocalDate dateDemandeSimulation = dateUtile.getDateJour();
@@ -60,7 +65,7 @@ public class SimulateurAides {
 	return simulationAides;
     }
 
-    private void simulerAidesPourCeMois(SimulationAides simulationAides, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    private void simulerAidesPourCeMois(Simulation simulationAides, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	LocalDate dateMoisASimuler = getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
 
 	SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
@@ -68,11 +73,17 @@ public class SimulateurAides {
 	simulationAides.getSimulationsMensuelles().add(simulationMensuelle);
 
 	HashMap<String, Aide> aidesPourCeMois = new HashMap<>();
-	simulationMensuelle.setMesAides(aidesPourCeMois);
+	simulationMensuelle.setAides(aidesPourCeMois);
 
 	ajouterAidesSansCalcul(aidesPourCeMois, demandeurEmploi);
 	simulateurAidesCAF.simuler(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
 	simulateurAidesPoleEmploi.simuler(aidesPourCeMois, numeroMoisSimule, dateMoisASimuler, demandeurEmploi, dateDebutSimulation);
+
+	HashMap<String, RessourceFinanciere> ressourcesFinancieresPourCeMois = new HashMap<>();
+	simulationMensuelle.setRessourcesFinancieres(ressourcesFinancieresPourCeMois);
+
+	ajouterRessourcesFinancieres(ressourcesFinancieresPourCeMois, demandeurEmploi);
+
     }
 
     private LocalDate getDateMoisASimuler(LocalDate dateDebutSimulation, int numeroMoisSimule) {
@@ -90,27 +101,35 @@ public class SimulateurAides {
 	    aidesPourCeMois.put(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE.getCode(),
 		    creerAideSansCalcul(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE, Optional.of(OrganismeEnum.CPAM), montantAllocationSupplementaireInvalidite));
 	}
+    }
+
+    private void ajouterRessourcesFinancieres(Map<String, RessourceFinanciere> ressourcesFinancieresPourCeMois, DemandeurEmploi demandeurEmploi) {
 	if (ressourcesFinancieresUtile.hasRevenusTravailleurIndependant(demandeurEmploi)) {
 	    float montantRevenusTravailleurIndependantSur1Mois = ressourcesFinancieresUtile.getRevenusTravailleurIndependantSur1Mois(demandeurEmploi);
-	    aidesPourCeMois.put(AideEnum.TRAVAILLEUR_INDEPENDANT.getCode(),
-		    creerAideSansCalcul(AideEnum.TRAVAILLEUR_INDEPENDANT, Optional.empty(), montantRevenusTravailleurIndependantSur1Mois));
+	    ressourcesFinancieresPourCeMois.put(AideEnum.TRAVAILLEUR_INDEPENDANT.getCode(),
+		    creerRessourceFinanciere(AideEnum.TRAVAILLEUR_INDEPENDANT, montantRevenusTravailleurIndependantSur1Mois));
 	}
 	if (ressourcesFinancieresUtile.hasRevenusMicroEntreprise(demandeurEmploi)) {
 	    float montantBeneficesMicroEntrepriseSur1Mois = ressourcesFinancieresUtile.getRevenusMicroEntrepriseSur1Mois(demandeurEmploi);
-	    aidesPourCeMois.put(AideEnum.MICRO_ENTREPRENEUR.getCode(), creerAideSansCalcul(AideEnum.MICRO_ENTREPRENEUR, Optional.empty(), montantBeneficesMicroEntrepriseSur1Mois));
+	    ressourcesFinancieresPourCeMois.put(AideEnum.MICRO_ENTREPRENEUR.getCode(),
+		    creerRessourceFinanciere(AideEnum.MICRO_ENTREPRENEUR, montantBeneficesMicroEntrepriseSur1Mois));
 	}
 	if (ressourcesFinancieresUtile.hasRevenusImmobilier(demandeurEmploi)) {
 	    float montantRevenusImmobilier = ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(demandeurEmploi);
-	    aidesPourCeMois.put(AideEnum.IMMOBILIER.getCode(), creerAideSansCalcul(AideEnum.IMMOBILIER, Optional.empty(), montantRevenusImmobilier));
+	    ressourcesFinancieresPourCeMois.put(AideEnum.IMMOBILIER.getCode(), creerRessourceFinanciere(AideEnum.IMMOBILIER, montantRevenusImmobilier));
 	}
 	if (ressourcesFinancieresUtile.hasFuturSalaire(demandeurEmploi)) {
 	    float montantSalaire = ressourcesFinancieresUtile.getFuturSalaire(demandeurEmploi);
-	    aidesPourCeMois.put(AideEnum.SALAIRE.getCode(), creerAideSansCalcul(AideEnum.SALAIRE, Optional.empty(), montantSalaire));
+	    ressourcesFinancieresPourCeMois.put(AideEnum.SALAIRE.getCode(), creerRessourceFinanciere(AideEnum.SALAIRE, montantSalaire));
 	}
     }
 
     private Aide creerAideSansCalcul(AideEnum aideEnum, Optional<OrganismeEnum> organismeEnumOptional, float montant) {
 	return aideUtile.creerAide(aideEnum, organismeEnumOptional, Optional.empty(), false, montant);
+    }
+
+    private RessourceFinanciere creerRessourceFinanciere(AideEnum aideEnum, float montant) {
+	return ressourceFinanciereUtile.creerRessourceFinanciere(aideEnum, montant);
     }
 
 }

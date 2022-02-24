@@ -20,7 +20,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Logement;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
@@ -68,7 +68,7 @@ public class StagingEnvironnementUtile {
 	    break;
 	case "ASS":
 	    individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, true, false));
-	    individu.setRessourcesFinancieres(creerBouchonRessourcesFinancieresASS());
+	    individu.setRessourcesFinancieresAvantSimulation(creerBouchonRessourcesFinancieresASS());
 	    break;
 	case "RSA":
 	    individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, true));
@@ -88,8 +88,8 @@ public class StagingEnvironnementUtile {
 	return beneficiaire;
     }
 
-    private RessourcesFinancieres creerBouchonRessourcesFinancieresASS() {
-	RessourcesFinancieres ressourcesFinancieres = creerBouchonRessourcesFinancieres();
+    private RessourcesFinancieresAvantSimulation creerBouchonRessourcesFinancieresASS() {
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = creerBouchonRessourcesFinancieres();
 	ressourcesFinancieres.setAidesPoleEmploi(creerBouchonAidesPoleEmploiAvecASS(16.89f));
 	return ressourcesFinancieres;
     }
@@ -102,15 +102,15 @@ public class StagingEnvironnementUtile {
 	return aidesPoleEmploi;
     }
 
-    private RessourcesFinancieres creerBouchonRessourcesFinancieres() {
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+    private RessourcesFinancieresAvantSimulation creerBouchonRessourcesFinancieres() {
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(0);
 	creerBouchonAllocationCAF(ressourcesFinancieres);
 	creerBouchonAllocationCPAM(ressourcesFinancieres);
 	return ressourcesFinancieres;
     }
 
-    private void creerBouchonAllocationCAF(RessourcesFinancieres ressourcesFinancieres) {
+    private void creerBouchonAllocationCAF(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	AidesCAF aidesCAF = new AidesCAF();
 	aidesCAF.setAidesLogement(creerBouchonAidesLogement());
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
@@ -132,7 +132,7 @@ public class StagingEnvironnementUtile {
 	return allocationsLogement;
     }
 
-    private void creerBouchonAllocationCPAM(RessourcesFinancieres ressourcesFinancieres) {
+    private void creerBouchonAllocationCPAM(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	AidesCPAM aidesCPAM = new AidesCPAM();
 	aidesCPAM.setAllocationSupplementaireInvalidite(0f);
 	ressourcesFinancieres.setAidesCPAM(aidesCPAM);

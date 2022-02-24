@@ -91,7 +91,7 @@ public class AreUtile {
 	if (areOut.getSoldePrevisionnelReliquat() != null) {
 	    joursIndemnisablesMois = areOut.getSoldePrevisionnelReliquat().floatValue();
 	} else {
-	    float allocationJournaliereBrute = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut();
+	    float allocationJournaliereBrute = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut();
 	    joursIndemnisablesMois = getNombreJoursIndemnisablesCalcule(getMontantAllocationARE(areOut), allocationJournaliereBrute);
 	}
 	return joursIndemnisablesMois;
@@ -99,9 +99,9 @@ public class AreUtile {
 
     private float getNombreJoursRestantsRenseigne(DemandeurEmploi demandeurEmploi) {
 	float nombreJoursRestantsRenseigne = 0;
-	if (demandeurEmploi != null && demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null)
-	    nombreJoursRestantsRenseigne = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants();
+	if (demandeurEmploi != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE() != null)
+	    nombreJoursRestantsRenseigne = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants();
 	return nombreJoursRestantsRenseigne;
     }
 
@@ -127,10 +127,10 @@ public class AreUtile {
 
     public float calculerMontantAreAvantSimulation(DemandeurEmploi demandeurEmploi, LocalDate mois) {
 	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);
-	if (demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut() != null) {
-	    float montantJournalierBrutAre = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut();
+	if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut() != null) {
+	    float montantJournalierBrutAre = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut();
 	    return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierBrutAre)).setScale(0, RoundingMode.DOWN).floatValue();
 	}
 	return 0;

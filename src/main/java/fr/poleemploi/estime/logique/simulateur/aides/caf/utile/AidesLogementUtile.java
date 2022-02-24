@@ -9,17 +9,17 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class AidesLogementUtile {
 
     @Autowired
-    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     @Autowired
     private AideUtile aideUtile;
@@ -71,7 +71,7 @@ public class AidesLogementUtile {
 		|| ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
     }
 
-    void reporterAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    void reporterAideLogement(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	Optional<Aide> aideLogementMoisPrecedent = getAideLogementSimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
 	if (aideLogementMoisPrecedent.isPresent()) {
 	    aidesPourCeMois.put(aideLogementMoisPrecedent.get().getCode(), aideLogementMoisPrecedent.get());
@@ -87,7 +87,7 @@ public class AidesLogementUtile {
 	return creerAideLogement(montantDeclare, typeAideLogement, true);
     }
 
-    private Optional<Aide> getAideLogementSimuleeMoisPrecedent(SimulationAides simulationAides, int numeroMoisSimule) {
+    private Optional<Aide> getAideLogementSimuleeMoisPrecedent(Simulation simulationAides, int numeroMoisSimule) {
 	int moisNMoins1 = numeroMoisSimule - 1;
 	Optional<Aide> aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode(), moisNMoins1);
 	if (aidePourCeMois.isEmpty())
@@ -99,8 +99,8 @@ public class AidesLogementUtile {
 
     private boolean isEligiblePourReportAideLogementDeclare(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
 	return ressourcesFinancieresUtile.hasAidesLogement(demandeurEmploi)
-		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle() != null
-		&& (numeroMoisSimule == 1 || numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle());
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getProchaineDeclarationTrimestrielle() != null
+		&& (numeroMoisSimule == 1 || numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getProchaineDeclarationTrimestrielle());
     }
 
     protected Aide creerAideLogement(float montantAideLogement, String typeAide, boolean isAideReportee) {

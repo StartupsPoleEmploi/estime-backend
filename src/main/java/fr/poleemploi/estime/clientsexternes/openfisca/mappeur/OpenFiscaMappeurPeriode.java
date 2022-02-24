@@ -17,7 +17,7 @@ import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.Salaire;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class OpenFiscaMappeurPeriode {
@@ -141,7 +141,7 @@ public class OpenFiscaMappeurPeriode {
 	personneJSON.put(SALAIRE_IMPOSABLE, periodeSalaireImposable);
     }
 
-    public JSONObject creerPeriodesAide(DemandeurEmploi demandeurEmploi, SimulationAides simulationAides, String codeAide, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public JSONObject creerPeriodesAide(DemandeurEmploi demandeurEmploi, Simulation simulationAides, String codeAide, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	JSONObject periode = new JSONObject();
 	int numeroMoisMontantARecuperer = numeroMoisSimule - (OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA - 1);
 	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode++) {

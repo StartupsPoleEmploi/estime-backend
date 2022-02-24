@@ -55,19 +55,19 @@ public class Commun {
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setNombreMoisTravaillesDerniersMois(0);
 
 	AidesFamiliales aidesFamiliales = new AidesFamiliales();
 	aidesFamiliales.setAllocationsFamiliales(0);
 	aidesFamiliales.setAllocationSoutienFamilial(117);
 	aidesFamiliales.setComplementFamilial(0);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationAAH(900f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));
 
 	return demandeurEmploi;
     }

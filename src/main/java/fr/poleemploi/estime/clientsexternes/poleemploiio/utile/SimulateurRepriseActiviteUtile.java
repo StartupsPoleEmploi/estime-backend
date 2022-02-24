@@ -21,10 +21,10 @@ public class SimulateurRepriseActiviteUtile {
     private ArePEIOIn createArePEIOIn(DemandeurEmploi demandeurEmploi) {
 	ArePEIOIn areIn = new ArePEIOIn();
 	//TODO JLA contrôle à déporter dans controleur couche service
-	if (demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE() != null) {
-	    areIn.setAllocationBruteJournaliere(demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut());
-	    areIn.setSalaireBrutJournalier(demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut());
+	if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE() != null) {
+	    areIn.setAllocationBruteJournaliere(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut());
+	    areIn.setSalaireBrutJournalier(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut());
 	    areIn.setGainBrut(demandeurEmploi.getFuturTravail().getSalaire().getMontantBrut());
 	}
 	return areIn;

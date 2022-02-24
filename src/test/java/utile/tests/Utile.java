@@ -44,7 +44,7 @@ import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.MoisTravailleAvantSimulation;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
@@ -107,9 +107,9 @@ public class Utile {
 	futurTravail.setSalaire(salaire);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	initRessourcesFinancieres(ressourcesFinancieres, population);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	return demandeurEmploi;
     }
@@ -253,7 +253,7 @@ public class Utile {
 	return detailIndemnisationPEIO;
     }
 
-    private void initRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres, String population) {
+    private void initRessourcesFinancieres(RessourcesFinancieresAvantSimulation ressourcesFinancieres, String population) {
 	switch (population) {
 	case "AAH":
 	case "RSA":

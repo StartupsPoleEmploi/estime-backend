@@ -13,7 +13,7 @@ import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AllocationAdultes
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.TemporaliteCAFUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class SimulateurAidesCAF {
@@ -36,7 +36,7 @@ public class SimulateurAidesCAF {
     @Autowired
     private TemporaliteCAFUtile temporaliteCAFUtile;
 
-    public void simuler(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simuler(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	if (isEligibleAidesCAF(demandeurEmploi)) {
 	    if (beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
 		allocationAdultesHandicapesUtile.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);

@@ -41,7 +41,7 @@ public class SimulateurAidesAideMobiliteUtile {
 	aideMobilitePEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
 	aideMobilitePEIOIn.setIntensite(Math.round(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine()));
 	aideMobilitePEIOIn.setTypeIntensite("Hebdomadaire");
-	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieres().getNombreMoisTravaillesDerniersMois());
+	aideMobilitePEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getNombreMoisTravaillesDerniersMois());
 	aideMobilitePEIOIn.setLieuFormationOuEmploi("France");
 	aideMobilitePEIOIn.setDistanceDomicileActionReclassement(Math.round(demandeurEmploi.getFuturTravail().getDistanceKmDomicileTravail() * 1000));
 	aideMobilitePEIOIn.setEleveSeulEnfants(!situationFamilialeUtile.isEnCouple(demandeurEmploi) && situationFamilialeUtile.hasPersonnesACharge(demandeurEmploi));

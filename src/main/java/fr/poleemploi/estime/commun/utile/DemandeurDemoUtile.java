@@ -7,7 +7,7 @@ import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 
 @Component
 public class DemandeurDemoUtile {
@@ -33,9 +33,9 @@ public class DemandeurDemoUtile {
     }
 
     private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu) {
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi());
-	individu.setRessourcesFinancieres(ressourcesFinancieres);
+	individu.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
     }
 
     private AidesPoleEmploi creerAidePoleEmploi() {

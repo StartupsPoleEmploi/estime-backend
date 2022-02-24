@@ -46,10 +46,10 @@ public class AllocationSolidariteSpecifiqueUtile {
 
     public float calculerMontant(DemandeurEmploi demandeurEmploi, LocalDate mois) {
 	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);
-	if (demandeurEmploi.getRessourcesFinancieres() != null && demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null) {
-	    float montantJournalierNetSolidariteSpecifique = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet();
+	if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null) {
+	    float montantJournalierNetSolidariteSpecifique = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet();
 	    return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();
 	}
 	return 0;
@@ -84,7 +84,7 @@ public class AllocationSolidariteSpecifiqueUtile {
      * @return message d'alerte sinon vide
      */
     private Optional<String> getMessageAlerte(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	LocalDate dateDerniereOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroit();
+	LocalDate dateDerniereOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroit();
 	LocalDate dateFinDroitASS = dateUtile.ajouterMoisALocalDate(dateDerniereOuvertureDroitASS, 6);
 	LocalDate date3emeMoisSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, 3);
 	if (dateUtile.isDateAvant(dateFinDroitASS, date3emeMoisSimulation)) {

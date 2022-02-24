@@ -15,7 +15,7 @@ import fr.poleemploi.estime.logique.DemandeurEmploiLogique;
 import fr.poleemploi.estime.services.controleurs.demandeuremploi.DemandeurEmploiServiceControleur;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 
 @RestController
 @RequestMapping("/demandeurs_emploi")
@@ -34,7 +34,7 @@ public class DemandeurEmploiService {
     }
 
     @PostMapping(value = "/simulation_aides", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public SimulationAides simulerAides(@RequestBody DemandeurEmploi demandeurEmploi) {
+    public Simulation simulerAides(@RequestBody DemandeurEmploi demandeurEmploi) {
 	demandeurEmploiServiceControleur.controlerDonneesEntreeServiceSimulerMesAides(demandeurEmploi);
 	return demandeurEmploiLogique.simulerMesAides(demandeurEmploi);
     }

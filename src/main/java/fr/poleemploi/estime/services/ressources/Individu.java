@@ -6,7 +6,7 @@ public class Individu {
     private BeneficiaireAides beneficiaireAides;
     private boolean isPopulationAutorisee;
     private PeConnectAuthorization peConnectAuthorization;
-    private RessourcesFinancieres ressourcesFinancieres;
+    private RessourcesFinancieresAvantSimulation ressourcesFinancieres;
 
     public String getIdPoleEmploi() {
 	return idPoleEmploi;
@@ -40,11 +40,11 @@ public class Individu {
 	this.beneficiaireAides = beneficiaireAides;
     }
 
-    public RessourcesFinancieres getRessourcesFinancieres() {
+    public RessourcesFinancieresAvantSimulation getRessourcesFinancieres() {
 	return ressourcesFinancieres;
     }
 
-    public void setRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres) {
+    public void setRessourcesFinancieresAvantSimulation(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	this.ressourcesFinancieres = ressourcesFinancieres;
     }
 

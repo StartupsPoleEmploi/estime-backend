@@ -20,13 +20,13 @@ public class BeneficiaireAidesControleur {
 	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "beneficiaireAides"));
 	}
 	if(beneficiaireAides.isBeneficiaireAAH()) {
-	    ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsCafAAH(demandeurEmploi.getRessourcesFinancieres());
+	    ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsCafAAH(demandeurEmploi.getRessourcesFinancieresAvantSimulation());
 	}
 	if(beneficiaireAides.isBeneficiaireRSA()) {
 	    ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsCafRSA(demandeurEmploi);
 	}
 	if(beneficiaireAides.isBeneficiaireASS()) {
-	    ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsPoleEmploiASS(demandeurEmploi.getRessourcesFinancieres());
+	    ressourcesFinancieresControleur.controlerDemandeurEmploiAllocationsPoleEmploiASS(demandeurEmploi.getRessourcesFinancieresAvantSimulation());
 	}
     }
 }

@@ -28,7 +28,7 @@ import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 
@@ -245,13 +245,13 @@ class OpenFiscaMappeurPeriodeSalairesConjointTests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
 
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(true);
 	Personne conjoint = new Personne();
-	RessourcesFinancieres ressourcesFinancieresConjoint = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	Salaire salaireConjoint = new Salaire();
 	salaireConjoint.setMontantNet(1200);
 	salaireConjoint.setMontantBrut(1544);
@@ -278,7 +278,7 @@ class OpenFiscaMappeurPeriodeSalairesConjointTests extends Commun {
 	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins13, 13);
 	periodeTravailleeAvantSimulation.setMois(utileTests.createMoisTravaillesAvantSimulation(salaires));
 	ressourcesFinancieresConjoint.setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
-	conjoint.setRessourcesFinancieres(ressourcesFinancieresConjoint);
+	conjoint.setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	situationFamiliale.setConjoint(conjoint);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 

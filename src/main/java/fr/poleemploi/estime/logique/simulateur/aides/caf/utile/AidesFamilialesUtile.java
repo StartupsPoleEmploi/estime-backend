@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -19,7 +19,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 public class AidesFamilialesUtile {
 
     @Autowired
-    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     @Autowired
     private SituationFamilialeUtile situationFamilialeUtile;
@@ -41,30 +41,30 @@ public class AidesFamilialesUtile {
     }
 
     private void simulerAllocationSoutienFamilial(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-	float montantAllocationSoutienFamilial = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial();
+	float montantAllocationSoutienFamilial = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial();
 	aidesPourCeMois.put(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode(), creerAideAllocationSoutientFamilial(montantAllocationSoutienFamilial));
     }
 
     private void simulerAllocationsFamiliales(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-	float montantAllocationsFamiliales = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales();
+	float montantAllocationsFamiliales = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales();
 	aidesPourCeMois.put(AideEnum.ALLOCATIONS_FAMILIALES.getCode(), creerAideAllocationsFamiliales(montantAllocationsFamiliales));
 
     }
 
     private void simulerComplementFamilial(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-	float montantComplementFamilial = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getComplementFamilial();
+	float montantComplementFamilial = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getComplementFamilial();
 	aidesPourCeMois.put(AideEnum.COMPLEMENT_FAMILIAL.getCode(), creerAideComplementFamilial(montantComplementFamilial));
 
     }
 
     private void simulerPrestationAccueilJeuneEnfant(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-	float montantPrestationAccueilJeuneEnfant = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant();
+	float montantPrestationAccueilJeuneEnfant = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant();
 	aidesPourCeMois.put(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode(), creerAidePrestationAccueilJeuneEnfant(montantPrestationAccueilJeuneEnfant));
 
     }
 
     private void simulerPensionsAlimentaires(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
-	float montantPensionsAlimentaires = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer();
+	float montantPensionsAlimentaires = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer();
 	aidesPourCeMois.put(AideEnum.PENSIONS_ALIMENTAIRES.getCode(), creerAidePensionsAlimentaires(montantPensionsAlimentaires));
 
     }

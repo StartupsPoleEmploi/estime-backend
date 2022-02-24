@@ -36,7 +36,7 @@ import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 @ContextConfiguration
@@ -71,7 +71,7 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
 
-	SimulationAides simulationAides = new SimulationAides();
+	Simulation simulationAides = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 0));
 	simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 0));
@@ -94,7 +94,7 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
 
-	SimulationAides simulationAides = new SimulationAides();
+	Simulation simulationAides = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 524));
 	simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 0));
@@ -122,7 +122,7 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
 
-	SimulationAides simulationAides = new SimulationAides();
+	Simulation simulationAides = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 524));
 	simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 0));
@@ -146,7 +146,7 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
 
-	SimulationAides simulationAides = new SimulationAides();
+	Simulation simulationAides = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 524));
 	simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 507));
@@ -172,7 +172,7 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests();
 
-	SimulationAides simulationAides = new SimulationAides();
+	Simulation simulationAides = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideASS, 524));
 	simulationsMensuelles.add(creerSimulationMensuelle(utileTests.getDate("01-11-2020"), codeAideASS, 507));
@@ -236,8 +236,8 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -266,12 +266,12 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
 
 	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 1);
 
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -300,12 +300,12 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
 
 	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 2);
 
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -334,12 +334,12 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
 
 	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 2);
 
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -368,12 +368,12 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
 
 	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 3);
 
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -402,12 +402,12 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(true);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
 
 	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, 3);
 
-	demandeurEmploi.getRessourcesFinancieres().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	JSONObject demandeurJSON = new JSONObject();
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimulation);
@@ -429,7 +429,7 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(15);
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
 	return demandeurEmploi;
     }
@@ -442,7 +442,7 @@ class OpenFiscaMappeurPeriodeASSTests extends Commun {
 	    Aide allocationASSMois1 = getAideeASS(montantASS);
 	    prestationsEligiblesPourMois1.put(codeAideASS, allocationASSMois1);
 	}
-	simulationMensuelleMois.setMesAides(prestationsEligiblesPourMois1);
+	simulationMensuelleMois.setAides(prestationsEligiblesPourMois1);
 	return simulationMensuelleMois;
     }
 

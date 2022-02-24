@@ -2,7 +2,7 @@ package fr.poleemploi.estime.services.ressources;
 
 import java.util.List;
 
-public class SimulationAides {
+public class Simulation {
 
     private float montantRessourcesFinancieresMoisAvantSimulation;
     private List<SimulationMensuelle> simulationsMensuelles;

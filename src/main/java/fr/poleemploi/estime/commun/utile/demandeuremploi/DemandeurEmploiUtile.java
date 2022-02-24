@@ -22,7 +22,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Logement;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
@@ -43,17 +43,17 @@ public class DemandeurEmploiUtile {
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeurEmploiUtile.class);
 
     public boolean isSansRessourcesFinancieres(DemandeurEmploi demandeurEmploi) {
-	return demandeurEmploi.getRessourcesFinancieres() == null;
+	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() == null;
     }
 
     public void addRessourcesFinancieres(DemandeurEmploi demandeurEmploi, Individu individu) {
 	if (individu.getRessourcesFinancieres() != null) {
-	    demandeurEmploi.setRessourcesFinancieres(individu.getRessourcesFinancieres());
+	    demandeurEmploi.setRessourcesFinancieresAvantSimulation(individu.getRessourcesFinancieres());
 	} else {
-	    demandeurEmploi.setRessourcesFinancieres(new RessourcesFinancieres());
+	    demandeurEmploi.setRessourcesFinancieresAvantSimulation(new RessourcesFinancieresAvantSimulation());
 	}
-	demandeurEmploi.getRessourcesFinancieres().setAidesCAF(creerAidesCAF());
-	demandeurEmploi.getRessourcesFinancieres().setNombreMoisTravaillesDerniersMois(0);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCAF(creerAidesCAF());
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setNombreMoisTravaillesDerniersMois(0);
     }
 
     public void addDateNaissance(InformationsPersonnelles informationsPersonnelles, String bearerToken) {

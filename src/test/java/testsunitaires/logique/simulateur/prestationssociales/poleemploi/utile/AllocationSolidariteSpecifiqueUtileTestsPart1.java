@@ -19,7 +19,7 @@ import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import utile.tests.Utile;
 
 @ContextConfiguration
@@ -51,7 +51,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
 
 		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
@@ -60,7 +60,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -84,7 +84,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1));
 
@@ -94,7 +94,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -118,7 +118,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 2));
 
@@ -128,7 +128,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -152,7 +152,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 3));
 
@@ -162,7 +162,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -188,7 +188,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
 
 		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
@@ -197,7 +197,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -221,7 +221,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(1);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1));
@@ -232,7 +232,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -256,7 +256,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 2));
 
@@ -266,7 +266,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -290,10 +290,10 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 3));
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -319,7 +319,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
 
 		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
@@ -328,7 +328,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -352,11 +352,11 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(1);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1));
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -380,10 +380,10 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 2));
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -407,7 +407,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 3));
 
@@ -416,7 +416,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		allocationASS.setAllocationJournaliereNet(16.89f);
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -442,7 +442,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(false);
 
 		AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
@@ -451,7 +451,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -475,7 +475,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(1);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1));
@@ -486,7 +486,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -510,7 +510,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 2));
 
@@ -520,7 +520,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -544,7 +544,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		beneficiaireAides.setBeneficiaireASS(true);
 		demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-		RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+		RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 		ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 		ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 3));
 
@@ -554,7 +554,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 		aidesPoleEmploi.setAllocationASS(allocationASS);
 		ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 
-		demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+		demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 		FuturTravail futurTravail = new FuturTravail();
 		futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());

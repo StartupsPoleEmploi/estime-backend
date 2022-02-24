@@ -21,7 +21,7 @@ import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import utile.tests.Utile;
 
 
@@ -60,14 +60,14 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         //Date derniere ouverture droit 14/04/2020 soit date fin droit 14/10/2020 (avant 3ème mois simulé)
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-04-2020"));
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-11-2021";
         LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
@@ -90,14 +90,14 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         //Date derniere ouverture droit 14/04/2020 soit date fin droit 14/10/2020 (avant 3ème mois simulé)
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-04-2020"));
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-12-2021";
         LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
@@ -119,14 +119,14 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         //Date derniere ouverture droit 14/09/2020 soit date fin droit 14/03/2021 (après 3ème mois simulé)
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-09-2020"));
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-01-2021";
         LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
@@ -149,14 +149,14 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
         //Date derniere ouverture droit 14/09/2020 soit date fin droit 14/03/2021 (après 3ème mois simulé)
         
         DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-09-2020"));
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
         
         String dateMoisSimuleJourMoisString = "01-02-2021";
         LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);

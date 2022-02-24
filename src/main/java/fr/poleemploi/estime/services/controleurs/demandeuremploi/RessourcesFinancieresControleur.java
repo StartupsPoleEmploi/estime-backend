@@ -7,14 +7,14 @@ import fr.poleemploi.estime.services.exceptions.BadRequestException;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 
 @Component
 public class RessourcesFinancieresControleur {
 
     private static final String MESSAGE_RESSOURCES_FINANCIERE_OBLIGATOIRE = "ressourcesFinancieres dans DemandeurEmploi";
 
-    public void controlerDemandeurEmploiAllocationsPoleEmploiASS(RessourcesFinancieres ressourcesFinancieres) {
+    public void controlerDemandeurEmploiAllocationsPoleEmploiASS(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	if (ressourcesFinancieres == null) {
 	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), MESSAGE_RESSOURCES_FINANCIERE_OBLIGATOIRE));
 	}
@@ -34,7 +34,7 @@ public class RessourcesFinancieresControleur {
 	controlerHasTravailleAvantSimulation(ressourcesFinancieres);
     }
 
-    public void controlerDemandeurEmploiAllocationsCafAAH(RessourcesFinancieres ressourcesFinancieres) {
+    public void controlerDemandeurEmploiAllocationsCafAAH(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	if (ressourcesFinancieres == null) {
 	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), MESSAGE_RESSOURCES_FINANCIERE_OBLIGATOIRE));
 	}
@@ -49,7 +49,7 @@ public class RessourcesFinancieresControleur {
     }
 
     public void controlerDemandeurEmploiAllocationsCafRSA(DemandeurEmploi demandeurEmploi) {
-	RessourcesFinancieres ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
 	if (ressourcesFinancieres == null) {
 	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), MESSAGE_RESSOURCES_FINANCIERE_OBLIGATOIRE));
 	}
@@ -71,7 +71,7 @@ public class RessourcesFinancieresControleur {
 	controlerHasTravailleAvantSimulation(ressourcesFinancieres);
     }
 
-    private void controlerHasTravailleAvantSimulation(RessourcesFinancieres ressourcesFinancieres) {
+    private void controlerHasTravailleAvantSimulation(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	if (ressourcesFinancieres.getHasTravailleAuCoursDerniersMois() == null) {
 	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "hasTravailleAuCoursDerniersMois dans RessourcesFinancieres"));
 	}

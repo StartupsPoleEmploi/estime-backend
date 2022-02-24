@@ -61,7 +61,7 @@ public class Commun {
 	allocationARE.setNombreJoursRestants(60f);
 	allocationARE.setMontantJournalierBrut(37f);
 	allocationARE.setSalaireJournalierReferenceBrut(48f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().setAllocationARE(allocationARE);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().setAllocationARE(allocationARE);
 
 	return demandeurEmploi;
     }

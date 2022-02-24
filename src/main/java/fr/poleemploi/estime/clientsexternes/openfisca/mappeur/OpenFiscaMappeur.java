@@ -21,7 +21,7 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile
 import fr.poleemploi.estime.logique.simulateur.aides.caf.SimulateurAidesCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class OpenFiscaMappeur {
@@ -38,7 +38,7 @@ public class OpenFiscaMappeur {
     @Autowired
     private OpenFiscaMappeurIndividu openFiscaMappeurIndividu;
 
-    public JSONObject mapDemandeurEmploiToOpenFiscaPayload(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public JSONObject mapDemandeurEmploiToOpenFiscaPayload(Simulation simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	JSONObject payloadOpenFisca = new JSONObject();
 	Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA);
 	payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulationAides, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
@@ -47,7 +47,7 @@ public class OpenFiscaMappeur {
 	return payloadOpenFisca;
     }
 
-    private JSONObject creerIndividusJSON(SimulationAides simulationAides, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional,
+    private JSONObject creerIndividusJSON(Simulation simulationAides, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional,
                                           LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	JSONObject individu = new JSONObject();
 	individu.put(DEMANDEUR, openFiscaMappeurIndividu.creerDemandeurJSON(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));

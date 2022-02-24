@@ -1,6 +1,6 @@
 package fr.poleemploi.estime.services.ressources;
 
-public class RessourcesFinancieres {
+public class RessourcesFinancieresAvantSimulation {
 
     private AidesCAF aidesCAF;
     private AidesPoleEmploi aidesPoleEmploi;

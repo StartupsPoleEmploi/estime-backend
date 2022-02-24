@@ -20,7 +20,7 @@ import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import utile.tests.Utile;
 
@@ -59,13 +59,13 @@ class AllocationAdultesHandicapesUtileTests {
 	demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
 	demandeurEmploi.setFuturTravail(futurTravail);
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 	ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 6));
 	AidesCAF aidesCAF = new AidesCAF();
 	aidesCAF.setAllocationAAH(450f);
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	// Lorsque l'on appel simulerAAH
 	Map<String, Aide> aidesPourCeMois = new HashMap<>();
@@ -97,14 +97,14 @@ class AllocationAdultesHandicapesUtileTests {
 	futurTravail.setSalaire(salaire);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 	ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 6));
 
 	AidesCAF aidesCAF = new AidesCAF();
 	aidesCAF.setAllocationAAH(450f);
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	// Lorsque l'on appel simulerAAH
 	Map<String, Aide> aidesPourCeMois = new HashMap<>();
@@ -138,14 +138,14 @@ class AllocationAdultesHandicapesUtileTests {
 	futurTravail.setSalaire(salaire);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
 	ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 6));
 
 	AidesCAF aidesCAF = new AidesCAF();
 	aidesCAF.setAllocationAAH(450f);
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	// Lorsque l'on appel simulerAAH
 	Map<String, Aide> aidesPourCeMois = new HashMap<>();

@@ -11,7 +11,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class TemporaliteCAFUtile {
@@ -52,7 +52,7 @@ public class TemporaliteCAFUtile {
      * @param numeroMoisSimule
      * @param demandeurEmploi
      */
-    public void simulerTemporaliteAppelOpenfisca(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simulerTemporaliteAppelOpenfisca(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 
 	// Si l'on doit verser l'aide au logement et la prime d'activité pour les demandeurs ASS/AAH/ARE
 	if (isAideLogementAvecPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi)) {
@@ -135,33 +135,33 @@ public class TemporaliteCAFUtile {
 	return isPrimeActiviteEtRSAAVerser;
     }
 
-    private void verserAideLogementAvecPrimeActiviteEtRSA(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    private void verserAideLogementAvecPrimeActiviteEtRSA(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogementAvecPrimeActiviteEtRSA(simulationAides, demandeurEmploi, dateDebutSimulation,
 		numeroMoisSimule);
 
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
-    private void verserAideLogementAvecPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    private void verserAideLogementAvecPrimeActivite(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogementAvecPrimeActivite(simulationAides, demandeurEmploi, dateDebutSimulation,
 		numeroMoisSimule);
 
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
-    private void verserAideLogement(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    private void verserAideLogement(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogement(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
 
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
-    private void verserPrimeActiviteEtRSA(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    private void verserPrimeActiviteEtRSA(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerRsaAvecPrimeActivite(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
 
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
-    private void verserPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    private void verserPrimeActivite(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
 
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);

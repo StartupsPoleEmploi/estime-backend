@@ -23,7 +23,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 
 @ContextConfiguration
 @SpringBootTest
@@ -58,9 +58,9 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
 
         AidesCPAM aidesCPAM = new AidesCPAM();
         aidesCPAM.setPensionInvalidite(200f);
-        demandeurEmploi.getRessourcesFinancieres().setAidesCPAM(aidesCPAM);
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCPAM(aidesCPAM);
 
-        SimulationAides simulationAides = createSimulationAides();
+        Simulation simulationAides = createSimulationAides();
 
         // Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
@@ -84,15 +84,15 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
 
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117);
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
         demandeurEmploi.getInformationsPersonnelles().setLogement(createLogement());
 
         AidesCPAM aidesCPAM = new AidesCPAM();
         aidesCPAM.setPensionInvalidite(200f);
-        demandeurEmploi.getRessourcesFinancieres().setAidesCPAM(aidesCPAM);
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCPAM(aidesCPAM);
 
-        SimulationAides simulationAides = createSimulationAides();
+        Simulation simulationAides = createSimulationAides();
 
         // Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
@@ -117,16 +117,16 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
         demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(5));
         demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
         demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(233);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAidesFamiliales().setAllocationsFamiliales(134);
-        demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(233);
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().setAllocationsFamiliales(134);
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
         demandeurEmploi.getInformationsPersonnelles().setLogement(createLogement());
 
         AidesCPAM aidesCPAM = new AidesCPAM();
         aidesCPAM.setPensionInvalidite(200f);
-        demandeurEmploi.getRessourcesFinancieres().setAidesCPAM(aidesCPAM);
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCPAM(aidesCPAM);
 
-        SimulationAides simulationAides = createSimulationAides();
+        Simulation simulationAides = createSimulationAides();
 
         // Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
@@ -152,9 +152,9 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
         AidesCPAM aidesCPAM = new AidesCPAM();
         aidesCPAM.setPensionInvalidite(200f);
         aidesCPAM.setAllocationSupplementaireInvalidite(200f);
-        demandeurEmploi.getRessourcesFinancieres().setAidesCPAM(aidesCPAM);
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCPAM(aidesCPAM);
 
-        SimulationAides simulationAides = createSimulationAides();
+        Simulation simulationAides = createSimulationAides();
 
         // Lorsque je calcul le montant de la prime d'activité
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");

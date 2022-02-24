@@ -43,7 +43,7 @@ class BeneficiaireAidesUtileTests {
 	//si DE France Metropolitaine et montant journalier = 29,38€ (= seuil max.)
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
 	demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(29.38f);
 
 	//lorsque l'on appelle isBeneficiaireAidePEouCAF
 	boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
@@ -58,7 +58,7 @@ class BeneficiaireAidesUtileTests {
 	//si DE France Metropolitaine et montant journalier = 18,38€ (< seuil max.)
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
 	demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(18.38f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(18.38f);
 
 	//lorsque l'on appelle isBeneficiaireAidePEouCAF
 	boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
@@ -73,7 +73,7 @@ class BeneficiaireAidesUtileTests {
 	//si DE Mayotte et montant journalier = 14.68€ (= seuil max.)
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
 	demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().setCodePostal(CODE_POSTAL_METROPOLITAIN);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(14.68f);
 
 	//lorsque l'on appelle isBeneficiaireAidePEouCAF
 	boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
@@ -88,7 +88,7 @@ class BeneficiaireAidesUtileTests {
 	//si DE Mayotte et montant journalier = 12.68€ (< seuil max.)
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
 	demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().setCodePostal(CODE_POSTAL_MAYOTTE);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(12.68f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(12.68f);
 
 	//lorsque l'on appelle isBeneficiaireAidePEouCAF
 	boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
@@ -103,7 +103,7 @@ class BeneficiaireAidesUtileTests {
 	//si DE Mayotte et montant journalier = 39,38€ (> seuil max.)
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
 	demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().setCodePostal(CODE_POSTAL_MAYOTTE);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(39.38f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(39.38f);
 
 	//lorsque l'on appelle isBeneficiaireAidePEouCAF
 	boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);
@@ -118,7 +118,7 @@ class BeneficiaireAidesUtileTests {
 	//si DE Mayotte et montant journalier = 16.68€ (> seuil max.)
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), false, 0);
 	demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().setCodePostal(CODE_POSTAL_MAYOTTE);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(16.68f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereNet(16.68f);
 
 	//lorsque l'on appelle isBeneficiaireAidePEouCAF
 	boolean beneficiaire = beneficiaireAidesUtile.isBeneficiaireAidePEouCAF(demandeurEmploi);

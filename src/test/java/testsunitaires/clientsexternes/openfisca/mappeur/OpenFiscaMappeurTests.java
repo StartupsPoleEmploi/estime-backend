@@ -31,7 +31,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Logement;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
@@ -89,7 +89,7 @@ class OpenFiscaMappeurTests extends Commun {
 	situationFamiliale.setIsEnCouple(false);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	AidesLogement aidesLogement = new AidesLogement();
 	AllocationsLogement aidePersonnaliseeLogement = new AllocationsLogement();
@@ -100,7 +100,7 @@ class OpenFiscaMappeurTests extends Commun {
 	aidesLogement.setAidePersonnaliseeLogement(aidePersonnaliseeLogement);
 	aidesCAF.setAidesLogement(aidesLogement);
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
@@ -142,7 +142,7 @@ class OpenFiscaMappeurTests extends Commun {
 	situationFamiliale.setIsEnCouple(false);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	AidesLogement aidesLogement = new AidesLogement();
 	AllocationsLogement allocationLogementFamiliale = new AllocationsLogement();
@@ -153,7 +153,7 @@ class OpenFiscaMappeurTests extends Commun {
 	aidesLogement.setAllocationLogementFamiliale(allocationLogementFamiliale);
 	aidesCAF.setAidesLogement(aidesLogement);
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
@@ -195,7 +195,7 @@ class OpenFiscaMappeurTests extends Commun {
 	situationFamiliale.setIsEnCouple(false);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	AidesLogement aidesLogement = new AidesLogement();
 	AllocationsLogement allocationLogementSociale = new AllocationsLogement();
@@ -206,7 +206,7 @@ class OpenFiscaMappeurTests extends Commun {
 	aidesLogement.setAllocationLogementSociale(allocationLogementSociale);
 	aidesCAF.setAidesLogement(aidesLogement);
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
@@ -243,10 +243,10 @@ class OpenFiscaMappeurTests extends Commun {
 	informationsPersonnelles.setLogement(logement);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(false);
@@ -293,11 +293,11 @@ class OpenFiscaMappeurTests extends Commun {
 	situationFamiliale.setIsEnCouple(false);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setRevenusImmobilier3DerniersMois(3000f);
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
@@ -341,11 +341,11 @@ class OpenFiscaMappeurTests extends Commun {
 	situationFamiliale.setIsEnCouple(false);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setChiffreAffairesIndependantDernierExercice(1000f);
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
@@ -388,11 +388,11 @@ class OpenFiscaMappeurTests extends Commun {
 	situationFamiliale.setIsEnCouple(false);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setBeneficesMicroEntrepriseDernierExercice(600f);
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
@@ -435,13 +435,13 @@ class OpenFiscaMappeurTests extends Commun {
 	situationFamiliale.setIsEnCouple(false);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCPAM aidesCPAM = new AidesCPAM();
 	aidesCPAM.setPensionInvalidite(200f);
 	ressourcesFinancieres.setAidesCPAM(aidesCPAM);
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
 
@@ -485,14 +485,14 @@ class OpenFiscaMappeurTests extends Commun {
 	situationFamiliale.setIsEnCouple(false);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCPAM aidesCPAM = new AidesCPAM();
 	aidesCPAM.setPensionInvalidite(200f);
 	aidesCPAM.setAllocationSupplementaireInvalidite(200f);
 	ressourcesFinancieres.setAidesCPAM(aidesCPAM);
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
 
@@ -539,12 +539,12 @@ class OpenFiscaMappeurTests extends Commun {
 	beneficiaireAides.setBeneficiaireRSA(true);
 	demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
 
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
 	aidesCAF.setAllocationRSA(400f);
 	aidesCAF.setProchaineDeclarationTrimestrielle(3);
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 

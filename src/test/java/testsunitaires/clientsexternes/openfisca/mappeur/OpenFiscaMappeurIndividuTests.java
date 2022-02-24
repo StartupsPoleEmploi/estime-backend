@@ -53,8 +53,8 @@ class OpenFiscaMappeurIndividuTests extends Commun {
         int nbEnfant = 0;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getRessourcesFinancieres().setChiffreAffairesIndependantDernierExercice(12000f);
-        demandeurEmploi.getRessourcesFinancieres().setAidesCAF(createAidesCAF());
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().setChiffreAffairesIndependantDernierExercice(12000f);
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCAF(createAidesCAF());
 
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");
         JSONObject openFiscaPayload = openFiscaMappeurIndividu.creerDemandeurJSON(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
@@ -71,7 +71,7 @@ class OpenFiscaMappeurIndividuTests extends Commun {
         int nbEnfant = 0;
         DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
         demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-        demandeurEmploi.getRessourcesFinancieres().setBeneficesMicroEntrepriseDernierExercice(9000f);
+        demandeurEmploi.getRessourcesFinancieresAvantSimulation().setBeneficesMicroEntrepriseDernierExercice(9000f);
 
         LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-07-2020");
         JSONObject openFiscaPayload = openFiscaMappeurIndividu.creerDemandeurJSON(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);

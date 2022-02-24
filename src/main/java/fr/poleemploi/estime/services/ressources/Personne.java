@@ -4,7 +4,7 @@ public class Personne {
 
     private BeneficiaireAides beneficiaireAides;
     private InformationsPersonnelles informationsPersonnelles;
-    private RessourcesFinancieres ressourcesFinancieres;
+    private RessourcesFinancieresAvantSimulation ressourcesFinancieres;
 
     public BeneficiaireAides getBeneficiaireAides() {
 	return beneficiaireAides;
@@ -18,10 +18,10 @@ public class Personne {
     public void setInformationsPersonnelles(InformationsPersonnelles informationsPersonnelles) {
 	this.informationsPersonnelles = informationsPersonnelles;
     }
-    public RessourcesFinancieres getRessourcesFinancieres() {
+    public RessourcesFinancieresAvantSimulation getRessourcesFinancieres() {
 	return ressourcesFinancieres;
     }
-    public void setRessourcesFinancieres(RessourcesFinancieres ressourcesFinancieres) {
+    public void setRessourcesFinancieresAvantSimulation(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	this.ressourcesFinancieres = ressourcesFinancieres;
     }
     @Override

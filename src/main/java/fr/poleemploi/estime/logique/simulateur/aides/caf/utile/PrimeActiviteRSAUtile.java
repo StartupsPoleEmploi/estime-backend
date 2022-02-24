@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class PrimeActiviteRSAUtile {
@@ -24,7 +24,7 @@ public class PrimeActiviteRSAUtile {
     private PrimeActiviteUtile primeActiviteUtile;
 
     @Autowired
-    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     /**
      * Fonction permettant de déterminer si le montant de la prime d'activité doit être calculé ce mois-ci
@@ -74,7 +74,7 @@ public class PrimeActiviteRSAUtile {
 		|| ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
     }
 
-    void reporterRsaEtPrimeActivite(SimulationAides simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    void reporterRsaEtPrimeActivite(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	Optional<Aide> rsaMoisPrecedent = getRSASimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
 	if (rsaMoisPrecedent.isPresent()) {
 	    aidesPourCeMois.put(AideEnum.RSA.getCode(), rsaMoisPrecedent.get());
@@ -92,20 +92,20 @@ public class PrimeActiviteRSAUtile {
     }
 
     private Aide getRSADeclare(DemandeurEmploi demandeurEmploi) {
-	float montantDeclare = demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA();
+	float montantDeclare = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationRSA();
 	return creerAideRSA(montantDeclare, true);
     }
 
-    private Optional<Aide> getRSASimuleeMoisPrecedent(SimulationAides simulationAides, int numeroMoisSimule) {
+    private Optional<Aide> getRSASimuleeMoisPrecedent(Simulation simulationAides, int numeroMoisSimule) {
 	int moisNMoins1 = numeroMoisSimule - 1;
 	return aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.RSA.getCode(), moisNMoins1);
     }
 
     private boolean isEligiblePourReportRSADeclare(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	boolean isEligiblePourReportRSADeclare = false;
-	if (demandeurEmploi.getRessourcesFinancieres().getAidesCAF() != null && demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() != null
-		&& demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getAllocationRSA() > 0) {
-	    isEligiblePourReportRSADeclare = numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieres().getAidesCAF().getProchaineDeclarationTrimestrielle();
+	if (demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationRSA() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationRSA() > 0) {
+	    isEligiblePourReportRSADeclare = numeroMoisSimule <= demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getProchaineDeclarationTrimestrielle();
 	}
 	return isEligiblePourReportRSADeclare;
     }

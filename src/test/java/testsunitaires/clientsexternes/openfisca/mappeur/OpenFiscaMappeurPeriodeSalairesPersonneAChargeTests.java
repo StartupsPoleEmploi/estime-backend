@@ -31,7 +31,7 @@ import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import utile.tests.Utile;
@@ -259,15 +259,15 @@ class OpenFiscaMappeurPeriodeSalairesPersonneAChargeTests extends Commun {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-	demandeurEmploi.getRessourcesFinancieres().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieres().setHasTravailleAuCoursDerniersMois(false);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
 
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	List<Personne> personnesACharge = new ArrayList<Personne>();
 	Personne personneACharge = createPersonne(testUtile.getDate("05-07-2000"));
 	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
 	personneACharge.setBeneficiaireAides(beneficiaireAides);
-	RessourcesFinancieres ressourcesFinancieresPersonneACharge = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresPersonneACharge = new RessourcesFinancieresAvantSimulation();
 	Salaire salairepersonneACharge = new Salaire();
 	salairepersonneACharge.setMontantNet(1200);
 	salairepersonneACharge.setMontantBrut(1544);
@@ -294,7 +294,7 @@ class OpenFiscaMappeurPeriodeSalairesPersonneAChargeTests extends Commun {
 	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins13, 13);
 	periodeTravailleeAvantSimulation.setMois(utileTests.createMoisTravaillesAvantSimulation(salaires));
 	ressourcesFinancieresPersonneACharge.setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
-	personneACharge.setRessourcesFinancieres(ressourcesFinancieresPersonneACharge);
+	personneACharge.setRessourcesFinancieresAvantSimulation(ressourcesFinancieresPersonneACharge);
 	personnesACharge.add(personneACharge);
 	situationFamiliale.setPersonnesACharge(personnesACharge);
 	situationFamiliale.setIsEnCouple(false);

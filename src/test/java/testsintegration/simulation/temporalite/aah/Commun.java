@@ -57,9 +57,9 @@ public class Commun {
 	aidesFamiliales.setAllocationsFamiliales(0);
 	aidesFamiliales.setAllocationSoutienFamilial(117);
 	aidesFamiliales.setComplementFamilial(0);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAidesFamiliales(aidesFamiliales);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setAllocationAAH(900f);
-	demandeurEmploi.getRessourcesFinancieres().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesFamiliales(aidesFamiliales);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationAAH(900f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(prochaineDeclarationTrimestrielle);
 
 	return demandeurEmploi;
     }

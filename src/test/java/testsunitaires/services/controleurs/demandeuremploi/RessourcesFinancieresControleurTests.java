@@ -27,7 +27,7 @@ import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import utile.tests.Utile;
 
@@ -75,8 +75,8 @@ class RessourcesFinancieresControleurTests extends Commun {
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
@@ -95,13 +95,13 @@ class RessourcesFinancieresControleurTests extends Commun {
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(0f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
@@ -120,13 +120,13 @@ class RessourcesFinancieresControleurTests extends Commun {
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
@@ -146,14 +146,14 @@ class RessourcesFinancieresControleurTests extends Commun {
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
         allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-04-2020"));
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
@@ -188,8 +188,8 @@ class RessourcesFinancieresControleurTests extends Commun {
         demandeurEmploi.setFuturTravail(creerFuturTravail());
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
@@ -208,11 +208,11 @@ class RessourcesFinancieresControleurTests extends Commun {
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
         AidesCAF aidesCAF = new AidesCAF();
         aidesCAF.setAllocationAAH(0f);
         ressourcesFinancieres.setAidesCAF(aidesCAF);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {
@@ -231,13 +231,13 @@ class RessourcesFinancieresControleurTests extends Commun {
         demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
         demandeurEmploi.setSituationFamiliale(new SituationFamiliale());
 
-        RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+        RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
         AidesCAF aidesCAF = new AidesCAF();
         aidesCAF.setAllocationAAH(900f);
         ressourcesFinancieres.setAidesCAF(aidesCAF);
         ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
         ressourcesFinancieres.setNombreMoisTravaillesDerniersMois(null);
-        demandeurEmploi.setRessourcesFinancieres(ressourcesFinancieres);
+        demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
         
         assertThat(Assertions.assertThrows(BadRequestException.class, () -> {

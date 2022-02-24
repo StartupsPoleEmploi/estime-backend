@@ -9,7 +9,7 @@ import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieres;
+import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 
 @Component
 public class IndividuUtile {
@@ -37,11 +37,11 @@ public class IndividuUtile {
     }
 
     private void addInformationsRessourcesFinancieresPoleEmploi(Individu individu, DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
-	RessourcesFinancieres ressourcesFinancieres = new RessourcesFinancieres();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	if (detailIndemnisationPEIO.getCodeIndemnisation() != null) {
 	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisationPEIO));
 	}
-	individu.setRessourcesFinancieres(ressourcesFinancieres);
+	individu.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
     }
 
     private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIOOut detailIndemnisationPEIO) {

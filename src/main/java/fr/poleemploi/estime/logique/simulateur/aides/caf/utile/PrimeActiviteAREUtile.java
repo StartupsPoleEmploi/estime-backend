@@ -3,14 +3,14 @@ package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @Component
 public class PrimeActiviteAREUtile {
 
     @Autowired
-    private RessourcesFinancieresUtile ressourcesFinancieresUtile;
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     /**
      * Fonction permettant de déterminer si on doit calculer le montant de la prime d'activité ce mois-ci

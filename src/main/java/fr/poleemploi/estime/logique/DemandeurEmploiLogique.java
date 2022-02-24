@@ -10,7 +10,7 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.SimulateurAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Individu;
-import fr.poleemploi.estime.services.ressources.SimulationAides;
+import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class DemandeurEmploiLogique {
@@ -43,9 +43,9 @@ public class DemandeurEmploiLogique {
 	return demandeurEmploi;
     }
 
-    public SimulationAides simulerMesAides(DemandeurEmploi demandeurEmploi) {
+    public Simulation simulerMesAides(DemandeurEmploi demandeurEmploi) {
 	demandeurEmploiUtile.miseAJourCoordonnees(demandeurEmploi);
-	SimulationAides simulationAides = simulateurAides.simuler(demandeurEmploi);
+	Simulation simulationAides = simulateurAides.simuler(demandeurEmploi);
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
 	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
