@@ -45,14 +45,14 @@ public class DemandeurEmploiLogique {
 
     public Simulation simulerMesAides(DemandeurEmploi demandeurEmploi) {
 	demandeurEmploiUtile.miseAJourCoordonnees(demandeurEmploi);
-	Simulation simulationAides = simulateurAides.simuler(demandeurEmploi);
+	Simulation simulation = simulateurAides.simuler(demandeurEmploi);
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
 	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
 		    demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 	}
 
-	return simulationAides;
+	return simulation;
     }
 
     public void supprimerSuiviParcoursUtilisateur(String idPoleEmploi) {

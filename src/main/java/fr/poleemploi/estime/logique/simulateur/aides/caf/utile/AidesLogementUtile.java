@@ -71,8 +71,8 @@ public class AidesLogementUtile {
 		|| ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
     }
 
-    void reporterAideLogement(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	Optional<Aide> aideLogementMoisPrecedent = getAideLogementSimuleeMoisPrecedent(simulationAides, numeroMoisSimule);
+    void reporterAideLogement(Simulation simulation, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	Optional<Aide> aideLogementMoisPrecedent = getAideLogementSimuleeMoisPrecedent(simulation, numeroMoisSimule);
 	if (aideLogementMoisPrecedent.isPresent()) {
 	    aidesPourCeMois.put(aideLogementMoisPrecedent.get().getCode(), aideLogementMoisPrecedent.get());
 	} else if (isEligiblePourReportAideLogementDeclare(demandeurEmploi, numeroMoisSimule)) {
@@ -87,13 +87,13 @@ public class AidesLogementUtile {
 	return creerAideLogement(montantDeclare, typeAideLogement, true);
     }
 
-    private Optional<Aide> getAideLogementSimuleeMoisPrecedent(Simulation simulationAides, int numeroMoisSimule) {
+    private Optional<Aide> getAideLogementSimuleeMoisPrecedent(Simulation simulation, int numeroMoisSimule) {
 	int moisNMoins1 = numeroMoisSimule - 1;
-	Optional<Aide> aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode(), moisNMoins1);
+	Optional<Aide> aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulation, AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode(), moisNMoins1);
 	if (aidePourCeMois.isEmpty())
-	    aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode(), moisNMoins1);
+	    aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulation, AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode(), moisNMoins1);
 	if (aidePourCeMois.isEmpty())
-	    aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode(), moisNMoins1);
+	    aidePourCeMois = aideUtile.getAidePourCeMoisSimule(simulation, AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode(), moisNMoins1);
 	return aidePourCeMois;
     }
 

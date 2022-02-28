@@ -26,16 +26,16 @@ public class PrimeActiviteUtile {
     @Autowired
     private AideUtile aideUtile;
 
-    public void calculerPrimeActivite(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+    public void calculerPrimeActivite(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
 	if (openFiscaRetourSimulation.getMontantPrimeActivite() > 0) {
 	    Aide primeActivite = creerAidePrimeActivite(openFiscaRetourSimulation.getMontantPrimeActivite(), false);
 	    aidesPourCeMois.put(AideEnum.PRIME_ACTIVITE.getCode(), primeActivite);
 	}
     }
 
-    void reporterPrimeActivite(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule) {
-	Optional<Aide> primeActiviteMoisPrecedent = getPrimeActiviteMoisPrecedent(simulationAides, numeroMoisSimule);
+    void reporterPrimeActivite(Simulation simulation, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule) {
+	Optional<Aide> primeActiviteMoisPrecedent = getPrimeActiviteMoisPrecedent(simulation, numeroMoisSimule);
 	if (primeActiviteMoisPrecedent.isPresent()) {
 	    aidesPourCeMois.put(AideEnum.PRIME_ACTIVITE.getCode(), primeActiviteMoisPrecedent.get());
 	}
@@ -46,9 +46,9 @@ public class PrimeActiviteUtile {
 		isAideReportee, montantPrimeActivite);
     }
 
-    public Optional<Aide> getPrimeActiviteMoisPrecedent(Simulation simulationAides, int numeroMoisSimule) {
+    public Optional<Aide> getPrimeActiviteMoisPrecedent(Simulation simulation, int numeroMoisSimule) {
 	int moisNMoins1 = numeroMoisSimule - 1;
-	return aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.PRIME_ACTIVITE.getCode(), moisNMoins1);
+	return aideUtile.getAidePourCeMoisSimule(simulation, AideEnum.PRIME_ACTIVITE.getCode(), moisNMoins1);
     }
 
     /**
@@ -60,18 +60,18 @@ public class PrimeActiviteUtile {
      * | mois 1 | mois 2 | mois 3 | mois 4 | | montant calculé | montant reporté | montant reporté | montant calculé |
      * 
      */
-    public void reporterPrimeActiviteMoisPrecedent(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi, Optional<Aide> primeActiviteMoisPrecedentOptional) {
+    public void reporterPrimeActiviteMoisPrecedent(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi, Optional<Aide> primeActiviteMoisPrecedentOptional) {
 
 	// le montant calculé au mois N est reporté au mois N+1 et N+2, la validité du montant s'étale donc sur 3 mois
 	int moisMoinsPeriodeValiditeMontant = numeroMoisSimule - 3;
 
-	Optional<Aide> primeActiviteDebutPeriodeValiditeMontant = aideUtile.getAidePourCeMoisSimule(simulationAides, AideEnum.PRIME_ACTIVITE.getCode(),
+	Optional<Aide> primeActiviteDebutPeriodeValiditeMontant = aideUtile.getAidePourCeMoisSimule(simulation, AideEnum.PRIME_ACTIVITE.getCode(),
 		moisMoinsPeriodeValiditeMontant);
 
 	// si montant prime d'activité en N - NBR_MOIS_VALIDITE_MONTANT n'a pas été reporté alors on recalcule le montant
 	// sinon on reporte le montant de la prime d'activité précédente si prime d'activité il y a eu.
 	if (primeActiviteDebutPeriodeValiditeMontant.isPresent() && !primeActiviteDebutPeriodeValiditeMontant.get().isReportee()) {
-	    calculerPrimeActivite(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	    calculerPrimeActivite(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
 	} else if (primeActiviteMoisPrecedentOptional.isPresent()) {
 	    Aide primeActiviteMoisPrecedent = primeActiviteMoisPrecedentOptional.get();
 	    Aide primeActiviteMoisSimule = creerAidePrimeActivite(primeActiviteMoisPrecedent.getMontant(), true);

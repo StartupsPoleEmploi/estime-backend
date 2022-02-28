@@ -36,7 +36,7 @@ public class SimulateurAidesCAF {
     @Autowired
     private TemporaliteCAFUtile temporaliteCAFUtile;
 
-    public void simuler(Simulation simulationAides, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simuler(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	if (isEligibleAidesCAF(demandeurEmploi)) {
 	    if (beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
 		allocationAdultesHandicapesUtile.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
@@ -44,7 +44,7 @@ public class SimulateurAidesCAF {
 	    if (aidesFamilialesUtile.isEligibleAidesFamiliales(demandeurEmploi, numeroMoisSimule)) {
 		aidesFamilialesUtile.simulerAidesFamiliales(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
 	    }
-	    temporaliteCAFUtile.simulerTemporaliteAppelOpenfisca(simulationAides, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	    temporaliteCAFUtile.simulerTemporaliteAppelOpenfisca(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
 	}
     }
 

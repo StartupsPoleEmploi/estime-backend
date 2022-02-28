@@ -38,19 +38,19 @@ public class OpenFiscaMappeur {
     @Autowired
     private OpenFiscaMappeurIndividu openFiscaMappeurIndividu;
 
-    public JSONObject mapDemandeurEmploiToOpenFiscaPayload(Simulation simulationAides, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public JSONObject mapDemandeurEmploiToOpenFiscaPayload(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	JSONObject payloadOpenFisca = new JSONObject();
 	Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA);
-	payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulationAides, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
+	payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulation, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
 	payloadOpenFisca.put(FAMILLES, creerFamillesJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
 	payloadOpenFisca.put(MENAGES, creerMenagesJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
 	return payloadOpenFisca;
     }
 
-    private JSONObject creerIndividusJSON(Simulation simulationAides, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional,
+    private JSONObject creerIndividusJSON(Simulation simulation, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional,
                                           LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	JSONObject individu = new JSONObject();
-	individu.put(DEMANDEUR, openFiscaMappeurIndividu.creerDemandeurJSON(simulationAides, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+	individu.put(DEMANDEUR, openFiscaMappeurIndividu.creerDemandeurJSON(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
 	if (personneAChargeAgeInferieureAgeLimiteOptional.isPresent()) {
 	    openFiscaMappeurIndividu.ajouterPersonneACharge(individu, personneAChargeAgeInferieureAgeLimiteOptional.get(), dateDebutSimulation, numeroMoisSimule);
 	}

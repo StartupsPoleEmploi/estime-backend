@@ -61,31 +61,36 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationRSA()));
 	}
 	if (hasAllocationsFamiliales(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales()));
+	    montantTotal = montantTotal
+		    .add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getAllocationsFamiliales()));
 	}
 	if (hasComplementFamilial(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getComplementFamilial()));
+	    montantTotal = montantTotal
+		    .add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getComplementFamilial()));
 	}
 	if (hasAllocationSoutienFamilial(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial()));
+	    montantTotal = montantTotal
+		    .add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial()));
 	}
 	if (hasPrestationAccueilJeuneEnfant(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant()));
+	    montantTotal = montantTotal
+		    .add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant()));
 	}
 	if (hasPensionsAlimentaires(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer()));
+	    montantTotal = montantTotal
+		    .add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer()));
 	}
 	if (hasAidePersonnaliseeLogement(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(
-		    BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement())));
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(
+		    getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement())));
 	}
 	if (hasAllocationLogementFamiliale(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(BigDecimal
-		    .valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale())));
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(
+		    getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale())));
 	}
 	if (hasAllocationLogementSociale(demandeurEmploi)) {
-	    montantTotal = montantTotal.add(
-		    BigDecimal.valueOf(getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAllocationLogementSociale())));
+	    montantTotal = montantTotal.add(BigDecimal.valueOf(
+		    getAllocationsLogementSur1Mois(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAllocationLogementSociale())));
 	}
 	return montantTotal.setScale(0, RoundingMode.DOWN).floatValue();
     }
@@ -426,15 +431,18 @@ public class RessourcesFinancieresAvantSimulationUtile {
     }
 
     public boolean hasAllocationSoutienFamilial(DemandeurEmploi demandeurEmploi) {
-	return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial() != 0;
+	return hasAidesFamiliales(demandeurEmploi)
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getAllocationSoutienFamilial() != 0;
     }
 
     public boolean hasPrestationAccueilJeuneEnfant(DemandeurEmploi demandeurEmploi) {
-	return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant() != 0;
+	return hasAidesFamiliales(demandeurEmploi)
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant() != 0;
     }
 
     public boolean hasPensionsAlimentaires(DemandeurEmploi demandeurEmploi) {
-	return hasAidesFamiliales(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer() != 0;
+	return hasAidesFamiliales(demandeurEmploi)
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer() != 0;
     }
 
     public float getMontantAideLogementDeclare(DemandeurEmploi demandeurEmploi) {

@@ -58,15 +58,15 @@ public class Commun {
 	return demandeurEmploi;
     }
 
-    protected Simulation createSimulationAides() {
-	Simulation simulationAides = new Simulation();
+    protected Simulation createSimulation() {
+	Simulation simulation = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(createSimulationMensuelleASS(506.7f));
 	simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
 	simulationsMensuelles.add(createSimulationMensuelleASS(523.6f));
 	simulationsMensuelles.add(createSimulationMensuelleASS(0));
-	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
-	return simulationAides;
+	simulation.setSimulationsMensuelles(simulationsMensuelles);
+	return simulation;
     }
 
     protected Salaire createSalaireConjoint() {

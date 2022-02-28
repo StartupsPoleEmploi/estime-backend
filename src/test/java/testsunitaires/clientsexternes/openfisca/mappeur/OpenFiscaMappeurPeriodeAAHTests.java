@@ -82,14 +82,14 @@ class OpenFiscaMappeurPeriodeAAHTests extends Commun {
 	float montantAAH = 900;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests(montantAAH);
 
-	Simulation simulationAides = new Simulation();
+	Simulation simulation = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-11-2020"), codeAideAAH, montantAAH));
-	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
-	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
+	simulation.setSimulationsMensuelles(simulationsMensuelles);
+	simulation.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulation, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeAAH.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -107,16 +107,16 @@ class OpenFiscaMappeurPeriodeAAHTests extends Commun {
 	float montantAAH = 900;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests(montantAAH);
 
-	Simulation simulationAides = new Simulation();
+	Simulation simulation = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-11-2020"), codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-12-2020"), codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-01-2021"), codeAideAAH, montantAAH));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-02-2021"), codeAideAAH, montantAAH));
-	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
+	simulation.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulation, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeAAH.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -134,15 +134,15 @@ class OpenFiscaMappeurPeriodeAAHTests extends Commun {
 	float montantAAH = 900;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests(montantAAH);
 
-	Simulation simulationAides = new Simulation();
+	Simulation simulation = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	float montantAAHReduit = 180;
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideAAH, montantAAHReduit));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-11-2020"), codeAideAAH, montantAAHReduit));
-	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
-	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
+	simulation.setSimulationsMensuelles(simulationsMensuelles);
+	simulation.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulation, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeAAH.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -160,7 +160,7 @@ class OpenFiscaMappeurPeriodeAAHTests extends Commun {
 	float montantAAH = 900;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiPeriodeAideeTests(montantAAH);
 
-	Simulation simulationAides = new Simulation();
+	Simulation simulation = new Simulation();
 	List<SimulationMensuelle> simulationsMensuelles = new ArrayList<>();
 	float montantAAHReduit = 180;
 	simulationsMensuelles.add(creerSimulationMensuelle(dateDebutSimulation, codeAideAAH, montantAAHReduit));
@@ -168,9 +168,9 @@ class OpenFiscaMappeurPeriodeAAHTests extends Commun {
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-12-2020"), codeAideAAH, montantAAHReduit));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-01-2021"), codeAideAAH, montantAAHReduit));
 	simulationsMensuelles.add(creerSimulationMensuelle(testUtile.getDate("01-02-2021"), codeAideAAH, montantAAHReduit));
-	simulationAides.setSimulationsMensuelles(simulationsMensuelles);
+	simulation.setSimulationsMensuelles(simulationsMensuelles);
 
-	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulationAides, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
+	JSONObject periodeAideeAAH = openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulation, codeAideAAH, dateDebutSimulation, numeroMoisSimule);
 
 	assertThat(periodeAideeAAH.toString()).hasToString(openFiscaPayloadExpected);
     }

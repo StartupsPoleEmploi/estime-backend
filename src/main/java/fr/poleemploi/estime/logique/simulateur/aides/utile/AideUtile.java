@@ -86,8 +86,8 @@ public class AideUtile {
 	return Optional.empty();
     }
 
-    public float getMontantAidePourCeMoisSimule(Simulation simulationAides, String codeAide, int numeroMoisMontantARecuperer) {
-	Optional<Aide> aidePourCeMois = getAidePourCeMoisSimule(simulationAides, codeAide, numeroMoisMontantARecuperer);
+    public float getMontantAidePourCeMoisSimule(Simulation simulation, String codeAide, int numeroMoisMontantARecuperer) {
+	Optional<Aide> aidePourCeMois = getAidePourCeMoisSimule(simulation, codeAide, numeroMoisMontantARecuperer);
 	if (aidePourCeMois.isPresent()) {
 	    return aidePourCeMois.get().getMontant();
 	}
@@ -109,11 +109,11 @@ public class AideUtile {
 	return 0;
     }
 
-    public Optional<Aide> getAidePourCeMoisSimule(Simulation simulationAides, String codeAide, int numeroMois) {
-	if (simulationAides != null && simulationAides.getSimulationsMensuelles() != null) {
+    public Optional<Aide> getAidePourCeMoisSimule(Simulation simulation, String codeAide, int numeroMois) {
+	if (simulation != null && simulation.getSimulationsMensuelles() != null) {
 	    int indexSimulationMensuelARecuperer = numeroMois - 1;
-	    if (indexSimulationMensuelARecuperer >= 0 && indexSimulationMensuelARecuperer < simulationAides.getSimulationsMensuelles().size()) {
-		SimulationMensuelle simulationMensuelle = simulationAides.getSimulationsMensuelles().get(indexSimulationMensuelARecuperer);
+	    if (indexSimulationMensuelARecuperer >= 0 && indexSimulationMensuelARecuperer < simulation.getSimulationsMensuelles().size()) {
+		SimulationMensuelle simulationMensuelle = simulation.getSimulationsMensuelles().get(indexSimulationMensuelARecuperer);
 		if (simulationMensuelle != null && simulationMensuelle.getAides() != null && !simulationMensuelle.getAides().isEmpty()) {
 		    Aide aide = simulationMensuelle.getAides().get(codeAide);
 		    if (aide != null) {
