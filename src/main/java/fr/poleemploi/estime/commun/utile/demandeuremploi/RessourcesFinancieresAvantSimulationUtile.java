@@ -343,8 +343,8 @@ public class RessourcesFinancieresAvantSimulationUtile {
 
     public boolean hasAllocationARE(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	return ressourcesFinancieres != null && ressourcesFinancieres.getAidesPoleEmploi() != null && ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE() != null
-		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut() != null
-		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut() > 0
+		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute() != null
+		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute() > 0
 		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut() != null
 		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut() > 0
 		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getNombreJoursRestants() != null

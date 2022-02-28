@@ -9,8 +9,8 @@ import fr.poleemploi.estime.services.ressources.Personne;
 @Component
 public class BeneficiaireAidesUtile {
 
-    public static final float ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE = 29.38f;
-    public static final float ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE_MAYOTTE = 14.68f;
+    public static final float ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE = 29.56f;
+    public static final float ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE_MAYOTTE = 14.77f;
 
     @Autowired
     private SituationFamilialeUtile situationFamilialeUtile;
@@ -23,7 +23,7 @@ public class BeneficiaireAidesUtile {
     }
 
     public boolean isBeneficiaireAidePEouCAF(DemandeurEmploi demandeurEmploi) {
-	return isBeneficiaireAideMinimaSocial(demandeurEmploi) || isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibilite(demandeurEmploi);
+	return isBeneficiaireAideMinimaSocial(demandeurEmploi) || isBeneficiaireAREMini(demandeurEmploi);
     }
 
     public boolean isBeneficiaireARE(Personne personne) {
@@ -61,13 +61,14 @@ public class BeneficiaireAidesUtile {
 		|| demandeurEmploi.getBeneficiaireAides().isBeneficiaireRSA());
     }
 
-    private boolean isBeneficiaireAREAvecMontantAREInferieurEgaleSeuilMaxEligibilite(DemandeurEmploi demandeurEmploi) {
-	if (isBeneficiaireAides(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
+    private boolean isBeneficiaireAREMini(DemandeurEmploi demandeurEmploi) {
+	if (isBeneficiaireAides(demandeurEmploi) && demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
 		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE() != null
-		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereNet() != null) {
-	    float indemnisationJournaliereNet = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereNet();
-	    return (!informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && indemnisationJournaliereNet <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE)
-		    || (informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && indemnisationJournaliereNet <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE_MAYOTTE);
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute() != null) {
+	    float allocationJournaliereBrute = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute();
+	    return (!informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && allocationJournaliereBrute <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE)
+		    || (informationsPersonnellesUtile.isDeMayotte(demandeurEmploi) && allocationJournaliereBrute <= ALLOCATION_CHOMAGE_MAX_ELIGIBILITE_AIDE_MAYOTTE);
 	}
 	return false;
     }

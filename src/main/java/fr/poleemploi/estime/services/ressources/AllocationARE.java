@@ -2,19 +2,10 @@ package fr.poleemploi.estime.services.ressources;
 
 public class AllocationARE {
 
-    private Float allocationJournaliereNet;
-    private Float montantJournalierBrut;
+    private Float allocationJournaliereBrute;
     private Float allocationMensuelleNet;
     private Float salaireJournalierReferenceBrut;
     private Float nombreJoursRestants;
-
-    public Float getAllocationJournaliereNet() {
-	return allocationJournaliereNet;
-    }
-
-    public void setAllocationJournaliereNet(Float allocationJournaliereNet) {
-	this.allocationJournaliereNet = allocationJournaliereNet;
-    }
 
     public Float getAllocationMensuelleNet() {
 	return allocationMensuelleNet;
@@ -24,12 +15,12 @@ public class AllocationARE {
 	this.allocationMensuelleNet = allocationMensuelleNet;
     }
 
-    public Float getMontantJournalierBrut() {
-	return montantJournalierBrut;
+    public Float getAllocationJournaliereBrute() {
+	return allocationJournaliereBrute;
     }
 
-    public void setMontantJournalierBrut(Float montantJournalierBrut) {
-	this.montantJournalierBrut = montantJournalierBrut;
+    public void setAllocationJournaliereBrute(Float allocationJournaliereBrute) {
+	this.allocationJournaliereBrute = allocationJournaliereBrute;
     }
 
     public Float getSalaireJournalierReferenceBrut() {
@@ -50,7 +41,7 @@ public class AllocationARE {
 
     @Override
     public String toString() {
-	return "AllocationARE [allocationJournaliereNet=" + allocationJournaliereNet + ", montantJournalierBrut=" + montantJournalierBrut + ", allocationMensuelleNet="
-		+ allocationMensuelleNet + ", salaireJournalierReferenceBrut=" + salaireJournalierReferenceBrut + ", nombreJoursRestants=" + nombreJoursRestants + "]";
+	return "AllocationARE [allocationJournaliereBrute=" + allocationJournaliereBrute + ", allocationMensuelleNet=" + allocationMensuelleNet
+		+ ", salaireJournalierReferenceBrut=" + salaireJournalierReferenceBrut + ", nombreJoursRestants=" + nombreJoursRestants + "]";
     }
 }

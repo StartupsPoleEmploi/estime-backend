@@ -23,7 +23,7 @@ public class SimulateurRepriseActiviteUtile {
 	//TODO JLA contrôle à déporter dans controleur couche service
 	if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
 		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE() != null) {
-	    areIn.setAllocationBruteJournaliere(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getMontantJournalierBrut());
+	    areIn.setAllocationBruteJournaliere(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute());
 	    areIn.setSalaireBrutJournalier(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut());
 	    areIn.setGainBrut(demandeurEmploi.getFuturTravail().getSalaire().getMontantBrut());
 	}

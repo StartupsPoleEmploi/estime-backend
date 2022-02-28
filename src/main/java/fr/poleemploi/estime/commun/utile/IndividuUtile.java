@@ -54,7 +54,6 @@ public class IndividuUtile {
 	if (TypePopulationEnum.ARE.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation())
 		|| TypePopulationEnum.AREF.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation())) {
 	    AllocationARE allocationARE = new AllocationARE();
-	    allocationARE.setAllocationJournaliereNet(detailIndemnisationPEIO.getIndemnisationJournalierNet());
 	    aidesPoleEmploi.setAllocationARE(allocationARE);
 	}
 	return aidesPoleEmploi;
