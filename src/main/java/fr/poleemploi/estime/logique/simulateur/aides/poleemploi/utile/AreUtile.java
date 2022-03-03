@@ -3,6 +3,7 @@ package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -78,12 +79,12 @@ public class AreUtile {
     }
 
     private Aide creerComplementARE(float montantAide, boolean isDernierMoisComplementARE) {
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.ACTUALISATION_ARE.getMessage());
 	if (isDernierMoisComplementARE) {
-	    return aideUtile.creerAide(AideEnum.AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage()), false,
-		    montantAide);
-	} else {
-	    return aideUtile.creerAide(AideEnum.AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantAide);
+	    messagesAlerte.add(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage());
 	}
+	return aideUtile.creerAide(AideEnum.AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
     }
 
     private float getNombreJoursIndemnisables(ArePEIOOut areOut, DemandeurEmploi demandeurEmploi) {

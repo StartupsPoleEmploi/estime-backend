@@ -1,5 +1,6 @@
 package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -70,28 +71,33 @@ public class AidesFamilialesUtile {
     }
 
     private Aide creerAideAllocationSoutientFamilial(float montant) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL, Optional.of(OrganismeEnum.CAF),
-		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	return aideUtile.creerAide(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL, Optional.of(OrganismeEnum.CAF), Optional.of(messagesAlerte), true, montant);
     }
 
     private Aide creerAideAllocationsFamiliales(float montant) {
-	return aideUtile.creerAide(AideEnum.ALLOCATIONS_FAMILIALES, Optional.of(OrganismeEnum.CAF),
-		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	return aideUtile.creerAide(AideEnum.ALLOCATIONS_FAMILIALES, Optional.of(OrganismeEnum.CAF), Optional.of(messagesAlerte), true, montant);
     }
 
     private Aide creerAideComplementFamilial(float montant) {
-	return aideUtile.creerAide(AideEnum.COMPLEMENT_FAMILIAL, Optional.of(OrganismeEnum.CAF),
-		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	return aideUtile.creerAide(AideEnum.COMPLEMENT_FAMILIAL, Optional.of(OrganismeEnum.CAF), Optional.of(messagesAlerte), true, montant);
     }
 
     private Aide creerAidePrestationAccueilJeuneEnfant(float montant) {
-	return aideUtile.creerAide(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT, Optional.of(OrganismeEnum.CAF),
-		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	return aideUtile.creerAide(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT, Optional.of(OrganismeEnum.CAF), Optional.of(messagesAlerte), true, montant);
     }
 
     private Aide creerAidePensionsAlimentaires(float montant) {
-	return aideUtile.creerAide(AideEnum.PENSIONS_ALIMENTAIRES, Optional.of(OrganismeEnum.CAF),
-		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), true, montant);
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	return aideUtile.creerAide(AideEnum.PENSIONS_ALIMENTAIRES, Optional.of(OrganismeEnum.CAF), Optional.of(messagesAlerte), true, montant);
     }
 
     public boolean isEligibleAidesFamiliales(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {

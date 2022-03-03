@@ -1,5 +1,6 @@
 package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +80,9 @@ public class AgepiUtile {
     }
 
     private Aide creerAide(float montantAide) {
-	return aideUtile.creerAide(AideEnum.AGEPI, Optional.of(OrganismeEnum.PE), Optional.of(MessageInformatifEnum.AGEPI_IDF.getMessage()), false, montantAide);
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.AGEPI_IDF.getMessage());
+	return aideUtile.creerAide(AideEnum.AGEPI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
     }
 
     /**

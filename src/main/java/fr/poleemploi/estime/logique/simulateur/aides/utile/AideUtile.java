@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -42,7 +43,7 @@ public class AideUtile {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AideUtile.class);
 
-    public Aide creerAide(AideEnum aideEnum, Optional<OrganismeEnum> organismeEnumOptional, Optional<String> messageAlerteOptional, boolean isAideReportee, float montantAide) {
+    public Aide creerAide(AideEnum aideEnum, Optional<OrganismeEnum> organismeEnumOptional, Optional<List<String>> messageAlerteOptional, boolean isAideReportee, float montantAide) {
 	Aide aide = new Aide();
 	aide.setCode(aideEnum.getCode());
 	Optional<String> detailAideOptional = Optional.empty();
@@ -52,7 +53,7 @@ public class AideUtile {
 	    aide.setDetail(detailAideOptional.get());
 	}
 	if (messageAlerteOptional.isPresent()) {
-	    aide.setMessageAlerte(messageAlerteOptional.get());
+	    aide.setMessagesAlerte(messageAlerteOptional.get());
 	}
 	aide.setMontant(montantAide);
 	aide.setNom(aideEnum.getNom());

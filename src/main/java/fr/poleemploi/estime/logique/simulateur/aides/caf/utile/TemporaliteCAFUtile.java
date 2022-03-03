@@ -181,5 +181,9 @@ public class TemporaliteCAFUtile {
 	    Aide rsa = rsaUtile.creerAideRSA(openFiscaRetourSimulation.getMontantRSA(), false);
 	    aidesPourCeMois.put(rsa.getCode(), rsa);
 	}
+	if (openFiscaRetourSimulation.getMontantPrimeActivite() > 0 && openFiscaRetourSimulation.getMontantRSA() > 0) {
+	    Aide primeActivite = primeActiviteRSAUtile.creerAidePrimeActivite(openFiscaRetourSimulation.getMontantPrimeActivite(), false);
+	    aidesPourCeMois.put(primeActivite.getCode(), primeActivite);
+	}
     }
 }

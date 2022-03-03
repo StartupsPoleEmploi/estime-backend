@@ -1,5 +1,6 @@
 package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -118,18 +119,21 @@ public class AidesLogementUtile {
     }
 
     private Aide creerAidePersonnaliseeLogement(float montant, boolean isReportee) {
-	return aideUtile.creerAide(AideEnum.AIDE_PERSONNALISEE_LOGEMENT, Optional.of(OrganismeEnum.CAF),
-		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), isReportee, montant);
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	return aideUtile.creerAide(AideEnum.AIDE_PERSONNALISEE_LOGEMENT, Optional.of(OrganismeEnum.CAF), Optional.of(messagesAlerte), isReportee, montant);
     }
 
     private Aide creerAllocationLogementFamiliale(float montant, boolean isReportee) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE, Optional.of(OrganismeEnum.CAF),
-		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), isReportee, montant);
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE, Optional.of(OrganismeEnum.CAF), Optional.of(messagesAlerte), isReportee, montant);
     }
 
     private Aide creerAllocationLogementSociale(float montant, boolean isReportee) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_SOCIALE, Optional.of(OrganismeEnum.CAF),
-		Optional.of(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage()), isReportee, montant);
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES.getMessage());
+	return aideUtile.creerAide(AideEnum.ALLOCATION_LOGEMENT_SOCIALE, Optional.of(OrganismeEnum.CAF), Optional.of(messagesAlerte), isReportee, montant);
     }
 
     public boolean isEligibleAidesLogement(DemandeurEmploi demandeurEmploi) {

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -42,8 +41,7 @@ public class PrimeActiviteUtile {
     }
 
     public Aide creerAidePrimeActivite(float montantPrimeActivite, boolean isAideReportee) {
-	return aideUtile.creerAide(AideEnum.PRIME_ACTIVITE, Optional.of(OrganismeEnum.CAF), Optional.of(MessageInformatifEnum.PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA.getMessage()),
-		isAideReportee, montantPrimeActivite);
+	return aideUtile.creerAide(AideEnum.PRIME_ACTIVITE, Optional.of(OrganismeEnum.CAF), Optional.empty(), isAideReportee, montantPrimeActivite);
     }
 
     public Optional<Aide> getPrimeActiviteMoisPrecedent(Simulation simulation, int numeroMoisSimule) {
@@ -65,8 +63,7 @@ public class PrimeActiviteUtile {
 	// le montant calculé au mois N est reporté au mois N+1 et N+2, la validité du montant s'étale donc sur 3 mois
 	int moisMoinsPeriodeValiditeMontant = numeroMoisSimule - 3;
 
-	Optional<Aide> primeActiviteDebutPeriodeValiditeMontant = aideUtile.getAidePourCeMoisSimule(simulation, AideEnum.PRIME_ACTIVITE.getCode(),
-		moisMoinsPeriodeValiditeMontant);
+	Optional<Aide> primeActiviteDebutPeriodeValiditeMontant = aideUtile.getAidePourCeMoisSimule(simulation, AideEnum.PRIME_ACTIVITE.getCode(), moisMoinsPeriodeValiditeMontant);
 
 	// si montant prime d'activité en N - NBR_MOIS_VALIDITE_MONTANT n'a pas été reporté alors on recalcule le montant
 	// sinon on reporte le montant de la prime d'activité précédente si prime d'activité il y a eu.
