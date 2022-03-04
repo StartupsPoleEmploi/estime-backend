@@ -19,8 +19,7 @@ public class FuturTravailUtile {
     }
 
     public boolean isFuturContratTravailEligible(FuturTravail futurTravail) {
-	return hasContratCDI(futurTravail) ||
-		hasContratNonCDISuperieurOuEgal3Mois(futurTravail); 
+	return hasContratCDI(futurTravail) || hasContratNonCDISuperieurOuEgal3Mois(futurTravail);
     }
 
     private boolean hasContratNonCDISuperieurOuEgal3Mois(FuturTravail futurTravail) {
