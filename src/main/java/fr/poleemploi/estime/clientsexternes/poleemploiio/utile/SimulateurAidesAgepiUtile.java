@@ -40,12 +40,13 @@ public class SimulateurAidesAgepiUtile {
 	agepiPEIOIn.setNatureContratTravail(demandeurEmploi.getFuturTravail().getTypeContrat());
 	agepiPEIOIn.setIntensite(Math.round(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine()));
 	agepiPEIOIn.setTypeIntensite("Hebdomadaire");
-	agepiPEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getNombreMoisTravaillesDerniersMois());
+	if (demandeurEmploi.getFuturTravail().getNombreMoisContratCDD() != null) {
+	    agepiPEIOIn.setDureePeriodeEmploiOuFormation(demandeurEmploi.getFuturTravail().getNombreMoisContratCDD());
+	}
 	agepiPEIOIn.setLieuFormationOuEmploi("France");
 	agepiPEIOIn.setEleveSeulEnfants(!situationFamilialeUtile.isEnCouple(demandeurEmploi));
 	agepiPEIOIn.setNombreEnfants(situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, 21));
 	agepiPEIOIn.setNombreEnfantsMoins10Ans(situationFamilialeUtile.getNombrePersonnesAChargeAgeInferieureAgeLimite(demandeurEmploi, 10));
-
 	return agepiPEIOIn;
     }
 }
