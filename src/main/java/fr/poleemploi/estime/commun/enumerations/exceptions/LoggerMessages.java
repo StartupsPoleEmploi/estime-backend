@@ -10,7 +10,9 @@ public enum LoggerMessages {
     SIMULATION_IMPOSSIBLE_MONTANT_ASS_SIMULE_KO("Erreur Technique : impossible d'effectuer la simulation car les montants ASS simulés sur les premiers mois non présents."),
     SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE("Erreur technique : simulation impossible dûe à l'erreur : %s"),
     SIMULATION_IMPOSSIBLE_DEMANDE_REFUSEE("Erreur Technique : impossible d'effectuer la simulation car la demande a été refusée."),
-    SUIVI_UTILISATEUR_ENREGISTREMENT_KO("Erreur Technique : enregistrement utilisateur impossible dûe à l'erreur : %s.");
+    SUIVI_UTILISATEUR_ENREGISTREMENT_KO("Erreur Technique : enregistrement utilisateur impossible dûe à l'erreur : %s."),
+    MAILJET_CREATION_CONTACT_KO("Erreur Technique : création du contact impossible dûe à l'erreur : %s."),
+    MAILJET_AJOUT_CONTACT_A_LA_LISTE_KO("Erreur Technique : ajout du contact à la liste de contacts impossible dûe à l'erreur : %s.");
 
     private String message;
 
