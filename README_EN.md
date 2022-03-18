@@ -144,11 +144,12 @@ foo@bar:~$ mvn -v
             web:
               exposure:
                 include: "*"
-        emploi-store-dev:
-          coordonnees-api-uri : "%% à renseigner %%"
-          date-naissance-api-uri : "%% à renseigner %%"
-          detail-indemnisation-api-uri : "%% à renseigner %%"
+        poleemploiio-uri: "%% à renseigner %%"
         openfisca-api-uri: "%% à renseigner %%"
+        mailjet-api-url: "%% à renseigner %%"
+        mailjet-api-secret-key: "%% à renseigner %%"
+        mailjet-api-key: "%% à renseigner %%"
+        mailjet-contact-list-id: "%% à renseigner %%"
         ```
 
     1. Create a **Springboot launcher** in **Run -> Debug Configurations**
