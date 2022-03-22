@@ -29,9 +29,9 @@ public class SuiviUtilisateurUtile {
     @Autowired
     private SuiviParcoursUtilisateurManager suiviParcoursUtilisateurManager;
 
-    public void tracerParcoursUtilisateurAuthentification(UserInfoPEIOOut userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, DetailIndemnisationPEIOOut detailIndemnisationESD) {
+    public void tracerParcoursUtilisateurAuthentification(UserInfoPEIOOut userInfoESD, String parcours, BeneficiaireAides beneficiaireAides, DetailIndemnisationPEIOOut detailIndemnisationESD, String trafficSource) {
 	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityAuthentification(userInfoESD, parcours,
-		getTypePopulation(beneficiaireAides), detailIndemnisationESD);
+		getTypePopulation(beneficiaireAides), detailIndemnisationESD, trafficSource);
 
 	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
@@ -59,7 +59,7 @@ public class SuiviUtilisateurUtile {
 		beneficiaireAides.isBeneficiaireAAH());
     }
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityAuthentification(UserInfoPEIOOut userInfoESD, String parcours, String typePopulation, DetailIndemnisationPEIOOut detailIndemnisationESD) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityAuthentification(UserInfoPEIOOut userInfoESD, String parcours, String typePopulation, DetailIndemnisationPEIOOut detailIndemnisationESD, String trafficSource) {
 	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
 	suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
 	suiviParcoursUtilisateurEntity.setIdPoleEmploi(userInfoESD.getSub());
@@ -68,6 +68,7 @@ public class SuiviUtilisateurUtile {
 	suiviParcoursUtilisateurEntity.setEmail(userInfoESD.getEmail());
 	suiviParcoursUtilisateurEntity.setNom(userInfoESD.getFamilyName());
 	suiviParcoursUtilisateurEntity.setPrenom(userInfoESD.getGivenName());
+	suiviParcoursUtilisateurEntity.setTrafficSource(trafficSource);
 
 	if (detailIndemnisationESD.getCodeIndemnisation() != null) {
 	    suiviParcoursUtilisateurEntity.setEsdCodeIndemnisation(detailIndemnisationESD.getCodeIndemnisation());

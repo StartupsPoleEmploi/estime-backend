@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.poleemploi.estime.logique.IndividuLogique;
@@ -23,12 +24,9 @@ public class IndividuService {
     private IndividuServiceControleur individuServiceControleur;
 
     @PostMapping(value = "/authentifier", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Individu authentifier(@RequestBody PeConnectPayload peConnectPayload) {
-	individuServiceControleur.controlerDonneesEntreeServiceAuthentifier(peConnectPayload);
-	return individuLogique.authentifier(
-		peConnectPayload.getCode(), 
-		peConnectPayload.getRedirectURI(), 
-		peConnectPayload.getNonce());
+    public Individu authentifier(@RequestBody PeConnectPayload peConnectPayload, @RequestParam("trafficSource") final String trafficSource) {
+	individuServiceControleur.controlerDonneesEntreeServiceAuthentifier(peConnectPayload, trafficSource);
+	return individuLogique.authentifier(peConnectPayload.getCode(), peConnectPayload.getRedirectURI(), peConnectPayload.getNonce(), trafficSource);
     }
 
 }

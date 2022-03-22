@@ -8,9 +8,9 @@ import fr.poleemploi.estime.services.exceptions.BadRequestException;
 import fr.poleemploi.estime.services.ressources.PeConnectPayload;
 
 @Component
-public class IndividuServiceControleur {   
+public class IndividuServiceControleur {
 
-    public void controlerDonneesEntreeServiceAuthentifier(PeConnectPayload peConnectPayload) {
+    public void controlerDonneesEntreeServiceAuthentifier(PeConnectPayload peConnectPayload, String trafficSource) {
 	if (peConnectPayload == null) {
 	    throw new BadRequestException(BadRequestMessages.INDIVIDU_OBLIGATOIRE.getMessage());
 	} else {
@@ -22,9 +22,11 @@ public class IndividuServiceControleur {
 	    }
 	    if (ObjectUtils.isEmpty(peConnectPayload.getNonce())) {
 		throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "nonce de peConnectPayload"));
-	    } 
-	}   
+	    }
+	}
+	if (trafficSource == null) {
+	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "trafficSource"));
+	}
     }
-
 
 }

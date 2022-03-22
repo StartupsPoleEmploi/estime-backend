@@ -20,7 +20,7 @@ public class SuiviParcoursUtilisateurEntity {
     private Integer idSuiviParcoursUtilisateur;
 
     @Column(name = "date_creation", columnDefinition = "TIMESTAMP")
-    private LocalDateTime dateCreation;  
+    private LocalDateTime dateCreation;
 
     private String idPoleEmploi;
     private String nom;
@@ -31,7 +31,7 @@ public class SuiviParcoursUtilisateurEntity {
     private String suiviParcours;
     private String typePopulation;
     private String codePostal;
-
+    private String trafficSource;
 
     public boolean isEsdBeneficiaireAssuranceChomage() {
 	return esdBeneficiaireAssuranceChomage;
@@ -121,6 +121,14 @@ public class SuiviParcoursUtilisateurEntity {
 	this.codePostal = codePostal;
     }
 
+    public String getTrafficSource() {
+	return trafficSource;
+    }
+
+    public void setTrafficSource(String trafficSource) {
+	this.trafficSource = trafficSource;
+    }
+
     @Override
     public int hashCode() {
 	final int prime = 31;
@@ -153,8 +161,9 @@ public class SuiviParcoursUtilisateurEntity {
 
     @Override
     public String toString() {
-	return "SuiviParcoursUtilisateurEntity [idSuiviParcoursUtilisateur=" + idSuiviParcoursUtilisateur + ", dateCreation=" + dateCreation + ", idPoleEmploi=" + idPoleEmploi + ", nom=" + nom
-		+ ", email=" + email + ", esdBeneficiaireAssuranceChomage=" + esdBeneficiaireAssuranceChomage + ", esdCodeIndemnisation=" + esdCodeIndemnisation + ", prenom=" + prenom
-		+ ", suiviParcours=" + suiviParcours + ", typePopulation=" + typePopulation + ", codePostal=" + codePostal + "]";
+	return "SuiviParcoursUtilisateurEntity [idSuiviParcoursUtilisateur=" + idSuiviParcoursUtilisateur + ", dateCreation=" + dateCreation + ", idPoleEmploi=" + idPoleEmploi
+		+ ", nom=" + nom + ", email=" + email + ", esdBeneficiaireAssuranceChomage=" + esdBeneficiaireAssuranceChomage + ", esdCodeIndemnisation=" + esdCodeIndemnisation
+		+ ", prenom=" + prenom + ", suiviParcours=" + suiviParcours + ", typePopulation=" + typePopulation + ", codePostal=" + codePostal + ", trafficSource="
+		+ trafficSource + "]";
     }
 }

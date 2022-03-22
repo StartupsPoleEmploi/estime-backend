@@ -16,7 +16,7 @@ import fr.poleemploi.estime.services.ressources.Individu;
 public class IndividuLogique {
 
     @Autowired
-    private DemandeurDemoUtile demandeurDemoUtile;    
+    private DemandeurDemoUtile demandeurDemoUtile;
 
     @Autowired
     private PoleEmploiIOClient poleEmploiIOClient;
@@ -30,7 +30,7 @@ public class IndividuLogique {
     @Autowired
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
 
-    public Individu authentifier(String code, String redirectURI, String nonce) {
+    public Individu authentifier(String code, String redirectURI, String nonce, String trafficSource) {
 	Individu individu = new Individu();
 
 	individu.setPeConnectAuthorization(poleEmploiIOClient.getPeConnectAuthorizationByCode(code, redirectURI, nonce));
@@ -54,7 +54,7 @@ public class IndividuLogique {
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
 	    // @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
 	    suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
-		    detailIndemnisationESD);
+		    detailIndemnisationESD, trafficSource);
 	}
 
 	return individu;
