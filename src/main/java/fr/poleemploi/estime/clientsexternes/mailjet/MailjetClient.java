@@ -59,7 +59,7 @@ public class MailjetClient {
     private JSONObject createContactMailjet(String email) {
 	JSONObject createContactPayload = mapCreateContactPayload(email);
 	HttpEntity<String> request = new HttpEntity<>(createContactPayload.toString(), getHeaders());
-	return restTemplate.postForObject(mailjetApiUrl + "/contact", request, JSONObject.class);
+	return restTemplate.postForObject(String.format("%s/contact", mailjetApiUrl), request, JSONObject.class);
     }
 
     private JSONObject mapCreateContactPayload(String email) {
@@ -71,7 +71,7 @@ public class MailjetClient {
     private JSONObject addContactToListMailjet(String email, JSONObject createContactMailjetResponse) {
 	JSONObject addContactToListPayload = mapAddContactToListPayload(email);
 	HttpEntity<String> request = new HttpEntity<>(addContactToListPayload.toString(), getHeaders());
-	return createContactMailjetResponse.append("addContactToList", restTemplate.postForObject(mailjetApiUrl + "/listrecipient", request, JSONObject.class));
+	return createContactMailjetResponse.append("addContactToList", restTemplate.postForObject(String.format("%s/listrecipient", mailjetApiUrl), request, JSONObject.class));
     }
 
     private JSONObject mapAddContactToListPayload(String email) {

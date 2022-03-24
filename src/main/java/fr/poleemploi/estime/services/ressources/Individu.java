@@ -7,6 +7,7 @@ public class Individu {
     private boolean isPopulationAutorisee;
     private PeConnectAuthorization peConnectAuthorization;
     private RessourcesFinancieresAvantSimulation ressourcesFinancieres;
+    private InformationsPersonnelles informationsPersonnelles;
 
     public String getIdPoleEmploi() {
 	return idPoleEmploi;
@@ -48,10 +49,22 @@ public class Individu {
 	this.ressourcesFinancieres = ressourcesFinancieres;
     }
 
+    public InformationsPersonnelles getInformationsPersonnelles() {
+	return informationsPersonnelles;
+    }
+
+    public void setInformationsPersonnelles(InformationsPersonnelles informationsPersonnelles) {
+	this.informationsPersonnelles = informationsPersonnelles;
+    }
+
+    public void setRessourcesFinancieres(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
+	this.ressourcesFinancieres = ressourcesFinancieres;
+    }
+
     @Override
     public String toString() {
-	return "Individu [idPoleEmploi=" + idPoleEmploi + ", beneficiaireAides=" + beneficiaireAides
-		+ ", isPopulationAutorisee=" + isPopulationAutorisee + ", peConnectAuthorization="
-		+ peConnectAuthorization + ", ressourcesFinancieres=" + ressourcesFinancieres + "]";
+	return "Individu [idPoleEmploi=" + idPoleEmploi + ", beneficiaireAides=" + beneficiaireAides + ", isPopulationAutorisee=" + isPopulationAutorisee
+		+ ", peConnectAuthorization=" + peConnectAuthorization + ", ressourcesFinancieres=" + ressourcesFinancieres + ", informationsPersonnelles="
+		+ informationsPersonnelles + "]";
     }
 }

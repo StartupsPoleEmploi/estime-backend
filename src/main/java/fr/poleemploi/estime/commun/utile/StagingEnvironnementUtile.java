@@ -40,6 +40,7 @@ public class StagingEnvironnementUtile {
 	individu.setIdPoleEmploi(ID_POLE_EMPLOI_FICTIF);
 	individu.setPopulationAutorisee(true);
 	addInfosIndemnisation(individu, getPopulationDeFictif(userInfoPEIO));
+	addInformationsPersonnelles(individu, getEmail(userInfoPEIO));
     }
 
     public boolean isNotLocalhostEnvironnement() {
@@ -77,6 +78,12 @@ public class StagingEnvironnementUtile {
 	    individu.setBeneficiaireAides(creerBouchonBeneficiaireAides(false, false, false, false));
 	    break;
 	}
+    }
+
+    private void addInformationsPersonnelles(Individu individu, String email) {
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setEmail(email);
+	individu.setInformationsPersonnelles(informationsPersonnelles);
     }
 
     private BeneficiaireAides creerBouchonBeneficiaireAides(boolean beneficiaireAAH, boolean beneficiaireARE, boolean beneficiaireASS, boolean beneficiaireRSA) {
@@ -194,5 +201,13 @@ public class StagingEnvironnementUtile {
 
     private boolean isDeFictifPoleemploiio(UserInfoPEIOOut userInfo) {
 	return userInfo != null && userInfo.getEmail() != null && userInfo.getEmail().equalsIgnoreCase("emploistoredev@gmail.com");
+    }
+
+    private String getEmail(UserInfoPEIOOut userInfoPEIO) {
+	if (userInfoPEIO.getEmail() != null) {
+	    return userInfoPEIO.getEmail();
+	} else {
+	    return StringUtile.EMPTY;
+	}
     }
 }

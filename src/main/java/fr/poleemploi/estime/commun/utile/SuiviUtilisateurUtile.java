@@ -38,7 +38,7 @@ public class SuiviUtilisateurUtile {
 
     public void tracerParcoursUtilisateurCreationSimulation(String idPoleEmploi, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles) {
 	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityCreationSimulation(idPoleEmploi, parcours,
-		getTypePopulation(beneficiaireAides), getCodePostal(informationsPersonnelles));
+		getTypePopulation(beneficiaireAides), getCodePostal(informationsPersonnelles), getEmail(informationsPersonnelles));
 
 	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
@@ -77,13 +77,14 @@ public class SuiviUtilisateurUtile {
 	return suiviParcoursUtilisateurEntity;
     }
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityCreationSimulation(String idPoleEmploi, String parcours, String typePopulation, String codePostal) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityCreationSimulation(String idPoleEmploi, String parcours, String typePopulation, String codePostal, String email) {
 	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
 	suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
 	suiviParcoursUtilisateurEntity.setIdPoleEmploi(idPoleEmploi);
 	suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
 	suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
 	suiviParcoursUtilisateurEntity.setCodePostal(codePostal);
+	suiviParcoursUtilisateurEntity.setEmail(email);
 	return suiviParcoursUtilisateurEntity;
     }
 
@@ -119,6 +120,14 @@ public class SuiviUtilisateurUtile {
     private String getCodePostal(InformationsPersonnelles informationsPersonnelles) {
 	if (informationsPersonnelles != null && informationsPersonnelles.getLogement() != null && informationsPersonnelles.getLogement().getCoordonnees() != null) {
 	    return informationsPersonnelles.getLogement().getCoordonnees().getCodePostal();
+	} else {
+	    return StringUtile.EMPTY;
+	}
+    }
+
+    private String getEmail(InformationsPersonnelles informationsPersonnelles) {
+	if (informationsPersonnelles != null && informationsPersonnelles.getEmail() != null) {
+	    return informationsPersonnelles.getEmail();
 	} else {
 	    return StringUtile.EMPTY;
 	}

@@ -85,6 +85,22 @@ public class DemandeurEmploiUtile {
 	}
     }
 
+    public void addEmail(InformationsPersonnelles informationsPersonnelles, String bearerToken) {
+	try {
+	    Optional<EtatCivilPEIOOut> etatCivilPEIOOptional = poleEmploiIOClient.getEtatCivil(bearerToken);
+	    if (etatCivilPEIOOptional.isPresent()) {
+		EtatCivilPEIOOut etatCivilPEIO = etatCivilPEIOOptional.get();
+		if (etatCivilPEIO.getDateDeNaissance() != null) {
+		    LocalDate dateNaissanceLocalDate = dateUtile.convertDateToLocalDate(etatCivilPEIO.getDateDeNaissance());
+		    informationsPersonnelles.setDateNaissance(dateNaissanceLocalDate);
+		}
+	    }
+	} catch (Exception e) {
+	    String messageError = String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), e.getMessage(), "peio api date de naissance");
+	    LOGGER.error(messageError);
+	}
+    }
+
     public void addCoordonnees(InformationsPersonnelles informationsPersonnelles, String codePostal) {
 	Coordonnees coordonnees = new Coordonnees();
 	coordonnees.setCodePostal(codePostal);
@@ -99,6 +115,7 @@ public class DemandeurEmploiUtile {
 	logement.setStatutOccupationLogement(creerStatutOccupationLogement());
 	logement.setCoordonnees(creerCoordonnees());
 	informationsPersonnelles.setLogement(logement);
+	informationsPersonnelles.setEmail(individu.getInformationsPersonnelles().getEmail());
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
 	    String bearerToken = individu.getPeConnectAuthorization().getBearerToken();

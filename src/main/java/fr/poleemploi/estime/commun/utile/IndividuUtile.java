@@ -3,12 +3,14 @@ package fr.poleemploi.estime.commun.utile;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
+import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Individu;
+import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 
 @Component
@@ -42,6 +44,14 @@ public class IndividuUtile {
 	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(detailIndemnisationPEIO));
 	}
 	individu.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+    }
+
+    public void addInformationsPersonnelles(Individu individu, UserInfoPEIOOut userInfoPEIO) {
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	if (userInfoPEIO.getEmail() != null) {
+	    informationsPersonnelles.setEmail(userInfoPEIO.getEmail());
+	}
+	individu.setInformationsPersonnelles(informationsPersonnelles);
     }
 
     private AidesPoleEmploi creerAidePoleEmploi(DetailIndemnisationPEIOOut detailIndemnisationPEIO) {

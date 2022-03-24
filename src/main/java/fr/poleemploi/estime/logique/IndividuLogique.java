@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
+import fr.poleemploi.estime.commun.utile.ContactSendinblueUtile;
 import fr.poleemploi.estime.commun.utile.DemandeurDemoUtile;
 import fr.poleemploi.estime.commun.utile.IndividuUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
@@ -14,6 +15,9 @@ import fr.poleemploi.estime.services.ressources.Individu;
 
 @Component
 public class IndividuLogique {
+
+    @Autowired
+    private ContactSendinblueUtile contactSendinblueUtile;
 
     @Autowired
     private DemandeurDemoUtile demandeurDemoUtile;
@@ -36,26 +40,30 @@ public class IndividuLogique {
 	individu.setPeConnectAuthorization(poleEmploiIOClient.getPeConnectAuthorizationByCode(code, redirectURI, nonce));
 
 	DetailIndemnisationPEIOOut detailIndemnisationESD = poleEmploiIOClient.getDetailIndemnisation(individu.getPeConnectAuthorization().getBearerToken());
-	UserInfoPEIOOut userInfoESD = poleEmploiIOClient.getUserInfo(individu.getPeConnectAuthorization().getBearerToken());
+	UserInfoPEIOOut userInfoPEIO = poleEmploiIOClient.getUserInfo(individu.getPeConnectAuthorization().getBearerToken());
 
-	if (stagingEnvironnementUtile.isStagingEnvironnement() && stagingEnvironnementUtile.isUtilisateurFictif(userInfoESD)) {
-	    stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoESD);
+	if (stagingEnvironnementUtile.isStagingEnvironnement() && stagingEnvironnementUtile.isUtilisateurFictif(userInfoPEIO)) {
+	    stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoPEIO);
 	} else {
-	    individu.setIdPoleEmploi(userInfoESD.getSub());
-	    if (demandeurDemoUtile.isDemandeurDemo(userInfoESD)) {
+	    individu.setIdPoleEmploi(userInfoPEIO.getSub());
+	    if (demandeurDemoUtile.isDemandeurDemo(userInfoPEIO)) {
 		individu.setPopulationAutorisee(true);
 		demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu);
+		demandeurDemoUtile.addInformationsPersonnelles(individu, userInfoPEIO);
 	    } else {
 		individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
 		individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
+		individuUtile.addInformationsPersonnelles(individu, userInfoPEIO);
 	    }
 	}
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
 	    // @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
-	    suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoESD, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
+	    suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoPEIO, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
 		    detailIndemnisationESD, trafficSource);
 	}
+
+	contactSendinblueUtile.ajouterContactSendinblue(individu);
 
 	return individu;
     }

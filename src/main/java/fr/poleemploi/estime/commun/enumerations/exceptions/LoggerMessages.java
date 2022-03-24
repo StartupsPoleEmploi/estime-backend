@@ -12,7 +12,11 @@ public enum LoggerMessages {
     SIMULATION_IMPOSSIBLE_DEMANDE_REFUSEE("Erreur Technique : impossible d'effectuer la simulation car la demande a été refusée."),
     SUIVI_UTILISATEUR_ENREGISTREMENT_KO("Erreur Technique : enregistrement utilisateur impossible dûe à l'erreur : %s."),
     MAILJET_CREATION_CONTACT_KO("Erreur Technique : création du contact impossible dûe à l'erreur : %s."),
-    MAILJET_AJOUT_CONTACT_A_LA_LISTE_KO("Erreur Technique : ajout du contact à la liste de contacts impossible dûe à l'erreur : %s.");
+    MAILJET_AJOUT_CONTACT_A_LA_LISTE_KO("Erreur Technique : ajout du contact à la liste de contacts impossible dûe à l'erreur : %s."),
+    SENDINBLUE_CREATE_CONTACT_KO("Erreur Technique : création du contact Sendinblue impossible dûe à l'erreur : %s"),
+    SENDINBLUE_ADD_CONTACT_KO("Erreur Technique : ajout du contact Sendinblue à la liste impossible dûe à l'erreur : %s"),
+    SENDINBLUE_UPDATE_CONTACT_NOT_EXIST("Erreur Technique : mise à jour du contact Sendinblue impossible car le contact n'existe pas."),
+    SENDINBLUE_UPDATE_CONTACT_KO("Erreur Technique : mise à jour du contact impossible dûe à l'erreur : %s.");
 
     private String message;
 

@@ -150,6 +150,9 @@ foo@bar:~$ mvn -v
         mailjet-api-secret-key: "%% à renseigner %%"
         mailjet-api-key: "%% à renseigner %%"
         mailjet-contact-list-id: "%% à renseigner %%"
+        sendinblue-api-url: "%% à renseigner %%"
+        sendinblue-api-key: "%% à renseigner %%"
+        sendinblue-contact-list-id: "%% à renseigner %%"
         ```
 
     1. Create a **Springboot launcher** in **Run -> Debug Configurations**
@@ -202,15 +205,20 @@ Right click on **src/test/java** => **Run As -> Junit Test**
         image: estime-backend
         environment:
           ENVIRONMENT: "localhost"
+          MAILJET_API_URL: "%% à renseigner %%"
+          MAILJET_API_SECRET_KEY: "%% à renseigner %%"
+          MAILJET_API_KEY: "%% à renseigner %%"
+          MAILJET_CONTACT_LIST_ID: "%% à renseigner %%"
           PE_CONNECT_CLIENT_ID: "%% à renseigner %%"
           PE_CONNECT_CLIENT_SECRET: "%% à renseigner %%"
           PE_CONNECT_ISSUER_URI: "%% à renseigner %%"
           PE_CONNECT_JWK_SET_URI: "%% à renseigner %%"
           PE_CONNECT_TOKEN_URI: "%% à renseigner %%"
           PE_CONNECT_USER_INFO_URI: "%% à renseigner %%"
-          ESD_COORDONNEES_API_URI: "%% à renseigner %%"
-          ESD_DATE_NAISSANCE_API_URI: "%% à renseigner %%"
-          ESD_DETAIL_INDEMNISATION_API_URI: "%% à renseigner %%"
+          POLE_EMPLOI_IO_URI: "%% à renseigner %%
+          SENDINBLUE_API_URL: "%% à renseigner %%
+          SENDINBLUE_API_KEY: "%% à renseigner %%
+          SENDINBLUE_CONTACT_LIST_ID: "%% à renseigner %%
           TZ: "Europe/Paris"
         ports:
           - 8081:8080
