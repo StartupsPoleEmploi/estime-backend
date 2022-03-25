@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.tsohr.JSONObject;
-
 import fr.poleemploi.estime.logique.EmailLogique;
 import fr.poleemploi.estime.services.controleurs.EmailServiceControleur;
 
@@ -23,9 +21,9 @@ public class EmailService {
     private EmailServiceControleur emailServiceControleur;
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public JSONObject creerEmail(@RequestBody String email) {
+    public void creerEmail(@RequestBody String email) {
 	emailServiceControleur.controlerDonneesEntreeServiceCreerEmail(email);
-	return emailLogique.createContact(email);
+	emailLogique.createContact(email);
     }
 
 }

@@ -35,31 +35,32 @@ public class MailjetClient {
     private String mailjetApiKey;
 
     @Value("${mailjet-contact-list-id}")
-    private String mailjetContactListID;
+    private String mailjetContactListId;
 
     @Autowired
     private RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailjetClient.class);
 
-    public JSONObject addContactMailjet(String email) {
-	try {
-	    return addContactToListMailjet(email, createContactMailjet(email));
-	} catch (Exception e) {
-	    if (isBadRequestHttpClientError(e)) {
-		LOGGER.error(String.format(LoggerMessages.MAILJET_CREATION_CONTACT_KO.getMessage(), e.getMessage()));
-		throw new BadRequestException(String.format(BadRequestMessages.MAILJET_CONTACT_DEJA_ENREGISTRE.getMessage(), email));
-	    } else {
-		LOGGER.error(String.format(LoggerMessages.MAILJET_CREATION_CONTACT_KO.getMessage(), e.getMessage()));
-		throw new InternalServerException(InternalServerMessages.MAILJET_AJOUT_CONTACT_IMPOSSIBLE.getMessage());
-	    }
-	}
+    public void addContactMailjet(String email) {
+	createContactMailjet(email);
+	addContactToListMailjet(email);
     }
 
-    private JSONObject createContactMailjet(String email) {
-	JSONObject createContactPayload = mapCreateContactPayload(email);
-	HttpEntity<String> request = new HttpEntity<>(createContactPayload.toString(), getHeaders());
-	return restTemplate.postForObject(String.format("%s/contact", mailjetApiUrl), request, JSONObject.class);
+    private void createContactMailjet(String email) {
+	try {
+	    JSONObject createContactPayload = mapCreateContactPayload(email);
+	    HttpEntity<String> request = new HttpEntity<>(createContactPayload.toString(), getHeaders());
+	    restTemplate.postForObject(String.format("%s/contact", mailjetApiUrl), request, JSONObject.class);
+	} catch (Exception e) {
+	    if (!isBadRequestHttpClientError(e)) {
+		LOGGER.error(String.format(LoggerMessages.MAILJET_CREATION_CONTACT_KO.getMessage(), e.getMessage()));
+		throw new InternalServerException(InternalServerMessages.MAILJET_AJOUT_CONTACT_IMPOSSIBLE.getMessage());
+	    } else {
+		LOGGER.warn(String.format(LoggerMessages.MAILJET_CONTACT_DEJA_ENREGISTRE.getMessage(), email));
+	    }
+
+	}
     }
 
     private JSONObject mapCreateContactPayload(String email) {
@@ -68,16 +69,26 @@ public class MailjetClient {
 	return createContactPayload;
     }
 
-    private JSONObject addContactToListMailjet(String email, JSONObject createContactMailjetResponse) {
-	JSONObject addContactToListPayload = mapAddContactToListPayload(email);
-	HttpEntity<String> request = new HttpEntity<>(addContactToListPayload.toString(), getHeaders());
-	return createContactMailjetResponse.append("addContactToList", restTemplate.postForObject(String.format("%s/listrecipient", mailjetApiUrl), request, JSONObject.class));
+    private void addContactToListMailjet(String email) {
+	try {
+	    JSONObject addContactToListPayload = mapAddContactToListPayload(email);
+	    HttpEntity<String> request = new HttpEntity<>(addContactToListPayload.toString(), getHeaders());
+	    restTemplate.postForObject(String.format("%s/listrecipient", mailjetApiUrl), request, JSONObject.class);
+	} catch (Exception e) {
+	    if (isBadRequestHttpClientError(e)) {
+		LOGGER.warn(String.format(LoggerMessages.MAILJET_AJOUT_CONTACT_A_LA_LISTE_DEJA_ENREGISTRE.getMessage(), email));
+		throw new BadRequestException(String.format(BadRequestMessages.MAILJET_CONTACT_DEJA_ENREGISTRE.getMessage(), email));
+	    } else {
+		LOGGER.error(String.format(LoggerMessages.MAILJET_CREATION_CONTACT_KO.getMessage(), e.getMessage()));
+		throw new InternalServerException(InternalServerMessages.MAILJET_AJOUT_CONTACT_IMPOSSIBLE.getMessage());
+	    }
+	}
     }
 
     private JSONObject mapAddContactToListPayload(String email) {
 	JSONObject addContactToListPayload = new JSONObject();
 	addContactToListPayload.accumulate("ContactAlt", email);
-	addContactToListPayload.accumulate("ListID", mailjetContactListID);
+	addContactToListPayload.accumulate("ListID", mailjetContactListId);
 	return addContactToListPayload;
     }
 
