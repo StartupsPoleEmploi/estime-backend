@@ -38,27 +38,7 @@
     "name": "openfisca-api-uri",
     "type": "java.lang.String",
     "description": "A description for 'open-fisca-api-uri'"
-  },  
-  {
-    "name": "mailjet-api-url",
-    "type": "java.lang.String",
-    "description": "URL de l'api Mailjet"
-  },  
-  {
-    "name": "mailjet-api-secret-key",
-    "type": "java.lang.String",
-    "description": "Clé api secrète Mailjet"
-  },
-  {
-    "name": "mailjet-api-key",
-    "type": "java.lang.String",
-    "description": "Clé API Mailjet"
-  },
-  {
-    "name": "mailjet-contact-list-id",
-    "type": "java.lang.String",
-    "description": "ID de la liste de contact Mailjet à peupler"
-  },    
+  }, 
   {
     "name": "sendinblue-api-url",
     "type": "java.lang.String",

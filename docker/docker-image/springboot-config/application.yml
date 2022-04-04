@@ -56,12 +56,6 @@ poleemploiio-uri: "--POLE_EMPLOI_IO_URI--"
 #open fisca
 openfisca-api-uri: "http://openfisca-france:5000/calculate"
 
-#mailjet
-mailjet-api-url: "--MAILJET_API_URL--"
-mailjet-api-secret-key: "--MAILJET_API_SECRET_KEY--"
-mailjet-api-key: "--MAILJET_API_KEY--"
-mailjet-contact-list-id: "--MAILJET_CONTACT_LIST_ID--"
-
 #sendinblue
 sendinblue-api-url: "--SENDINBLUE_API_URL--"
 sendinblue-api-key: "--SENDINBLUE_API_KEY--"
