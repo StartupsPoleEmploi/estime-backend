@@ -56,7 +56,13 @@ public class AreUtile {
 	    this.nombreJoursRestants = getNombreJoursRestantsRenseigne(demandeurEmploi);
 	    this.joursIndemnisables = getNombreJoursIndemnisables(areOut, demandeurEmploi);
 	    this.nombreJoursRestants -= this.joursIndemnisables;
-	    Aide complementARE = creerComplementARE(montantComplementARE, false);
+	    Aide complementARE;
+	    if (this.nombreJoursRestants <= 0) {
+		float montantReliquatComplementARE = (float) Math.floor((this.montantComplementARE / this.joursIndemnisables) * getNombreJoursRestantsRenseigne(demandeurEmploi));
+		complementARE = creerComplementARE(montantReliquatComplementARE, true);
+	    } else {
+		complementARE = creerComplementARE(montantComplementARE, false);
+	    }
 	    aidesPourCeMois.put(AideEnum.AIDE_RETOUR_EMPLOI.getCode(), complementARE);
 	} else {
 	    unsetComplementARE();
