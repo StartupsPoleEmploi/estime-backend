@@ -3,6 +3,7 @@ package fr.poleemploi.estime.logique.simulateur.aides;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
@@ -105,22 +107,26 @@ public class SimulateurAides {
 
     private void ajouterRessourcesFinancieres(Map<String, RessourceFinanciere> ressourcesFinancieresPourCeMois, DemandeurEmploi demandeurEmploi) {
 	if (ressourcesFinancieresUtile.hasRevenusTravailleurIndependant(demandeurEmploi)) {
+	    ArrayList<String> messagesAlerte = new ArrayList<>();
+	    messagesAlerte.add(MessageInformatifEnum.MOYENNE_REVENUS_ENTREPRENEURS.getMessage());
 	    float montantRevenusTravailleurIndependantSur1Mois = ressourcesFinancieresUtile.getRevenusTravailleurIndependantSur1Mois(demandeurEmploi);
 	    ressourcesFinancieresPourCeMois.put(AideEnum.TRAVAILLEUR_INDEPENDANT.getCode(),
-		    creerRessourceFinanciere(AideEnum.TRAVAILLEUR_INDEPENDANT, montantRevenusTravailleurIndependantSur1Mois));
+		    creerRessourceFinanciere(AideEnum.TRAVAILLEUR_INDEPENDANT, Optional.of(messagesAlerte), montantRevenusTravailleurIndependantSur1Mois));
 	}
 	if (ressourcesFinancieresUtile.hasRevenusMicroEntreprise(demandeurEmploi)) {
+	    ArrayList<String> messagesAlerte = new ArrayList<>();
+	    messagesAlerte.add(MessageInformatifEnum.MOYENNE_REVENUS_ENTREPRENEURS.getMessage());
 	    float montantBeneficesMicroEntrepriseSur1Mois = ressourcesFinancieresUtile.getRevenusMicroEntrepriseSur1Mois(demandeurEmploi);
 	    ressourcesFinancieresPourCeMois.put(AideEnum.MICRO_ENTREPRENEUR.getCode(),
-		    creerRessourceFinanciere(AideEnum.MICRO_ENTREPRENEUR, montantBeneficesMicroEntrepriseSur1Mois));
+		    creerRessourceFinanciere(AideEnum.MICRO_ENTREPRENEUR, Optional.of(messagesAlerte), montantBeneficesMicroEntrepriseSur1Mois));
 	}
 	if (ressourcesFinancieresUtile.hasRevenusImmobilier(demandeurEmploi)) {
 	    float montantRevenusImmobilier = ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(demandeurEmploi);
-	    ressourcesFinancieresPourCeMois.put(AideEnum.IMMOBILIER.getCode(), creerRessourceFinanciere(AideEnum.IMMOBILIER, montantRevenusImmobilier));
+	    ressourcesFinancieresPourCeMois.put(AideEnum.IMMOBILIER.getCode(), creerRessourceFinanciere(AideEnum.IMMOBILIER, Optional.empty(), montantRevenusImmobilier));
 	}
 	if (ressourcesFinancieresUtile.hasFuturSalaire(demandeurEmploi)) {
 	    float montantSalaire = ressourcesFinancieresUtile.getFuturSalaire(demandeurEmploi);
-	    ressourcesFinancieresPourCeMois.put(AideEnum.SALAIRE.getCode(), creerRessourceFinanciere(AideEnum.SALAIRE, montantSalaire));
+	    ressourcesFinancieresPourCeMois.put(AideEnum.SALAIRE.getCode(), creerRessourceFinanciere(AideEnum.SALAIRE, Optional.empty(), montantSalaire));
 	}
     }
 
@@ -128,8 +134,8 @@ public class SimulateurAides {
 	return aideUtile.creerAide(aideEnum, organismeEnumOptional, Optional.empty(), false, montant);
     }
 
-    private RessourceFinanciere creerRessourceFinanciere(AideEnum aideEnum, float montant) {
-	return ressourceFinanciereUtile.creerRessourceFinanciere(aideEnum, montant);
+    private RessourceFinanciere creerRessourceFinanciere(AideEnum aideEnum, Optional<List<String>> messageAlerteOptional, float montant) {
+	return ressourceFinanciereUtile.creerRessourceFinanciere(aideEnum, messageAlerteOptional, montant);
     }
 
 }

@@ -1,10 +1,13 @@
 package fr.poleemploi.estime.services.ressources;
 
+import java.util.List;
+
 public class RessourceFinanciere {
 
     private String code;
     private String nom;
     private Float montant;
+    private List<String> messagesAlerte;
 
     public String getCode() {
 	return code;
@@ -30,8 +33,16 @@ public class RessourceFinanciere {
 	this.montant = montant;
     }
 
+    public List<String> getMessagesAlerte() {
+	return messagesAlerte;
+    }
+
+    public void setMessagesAlerte(List<String> messagesAlerte) {
+	this.messagesAlerte = messagesAlerte;
+    }
+
     @Override
     public String toString() {
-	return "RessourceFinanciere [code=" + code + ", nom=" + nom + ", montant=" + montant + "]";
+	return "RessourceFinanciere [code=" + code + ", nom=" + nom + ", montant=" + montant + ", messagesAlerte=" + messagesAlerte + "]";
     }
 }
