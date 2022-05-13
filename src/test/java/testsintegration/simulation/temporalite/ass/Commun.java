@@ -20,6 +20,7 @@ import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import utile.tests.Utile;
 
@@ -33,6 +34,9 @@ public class Commun {
 
     @SpyBean
     protected DateUtile dateUtile;
+
+    @SpyBean
+    protected InformationsPersonnellesUtile informationsPersonnellesUtile;
 
     protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
 	boolean isEnCouple = false;
@@ -51,6 +55,16 @@ public class Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2020"));
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117f);
+
+	return demandeurEmploi;
+    }
+
+    protected DemandeurEmploi createDemandeurEmploiBeneficiaireACRE(int nombreMoisDepuisReprisCreationEntreprise) throws ParseException {
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
+
+	demandeurEmploi.getInformationsPersonnelles().setBeneficiaireACRE(true);
+	demandeurEmploi.getInformationsPersonnelles()
+		.setDateRepriseCreationEntreprise(dateUtile.enleverMoisALocalDate(dateUtile.getDateJour(), nombreMoisDepuisReprisCreationEntreprise));
 
 	return demandeurEmploi;
     }

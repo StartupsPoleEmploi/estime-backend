@@ -18,6 +18,10 @@ public class InformationsPersonnelles {
     private boolean microEntrepreneur;
     private boolean isSalarie;
     private boolean isSansRessource;
+    @JsonProperty("isBeneficiaireACRE")
+    private boolean isBeneficiaireACRE;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dateRepriseCreationEntreprise;
     private String nationalite;
     private String nom;
     private String prenom;
@@ -90,6 +94,23 @@ public class InformationsPersonnelles {
 	this.isSansRessource = isSansRessource;
     }
 
+    @JsonProperty("isBeneficiaireACRE")
+    public boolean isBeneficiaireACRE() {
+	return isBeneficiaireACRE;
+    }
+
+    public void setBeneficiaireACRE(boolean isBeneficiaireACRE) {
+	this.isBeneficiaireACRE = isBeneficiaireACRE;
+    }
+
+    public LocalDate getDateRepriseCreationEntreprise() {
+	return dateRepriseCreationEntreprise;
+    }
+
+    public void setDateRepriseCreationEntreprise(LocalDate dateRepriseCreationEntreprise) {
+	this.dateRepriseCreationEntreprise = dateRepriseCreationEntreprise;
+    }
+
     public String getNationalite() {
 	return nationalite;
     }
@@ -134,7 +155,8 @@ public class InformationsPersonnelles {
     public String toString() {
 	return "InformationsPersonnelles [dateNaissance=" + dateNaissance + ", email=" + email + ", hasPensionRetraite=" + hasPensionRetraite + ", hasRevenusImmobilier="
 		+ hasRevenusImmobilier + ", travailleurIndependant=" + travailleurIndependant + ", microEntrepreneur=" + microEntrepreneur + ", isSalarie=" + isSalarie
-		+ ", isSansRessource=" + isSansRessource + ", nationalite=" + nationalite + ", nom=" + nom + ", prenom=" + prenom + ", titreSejourEnFranceValide="
-		+ titreSejourEnFranceValide + ", logement=" + logement + "]";
+		+ ", isSansRessource=" + isSansRessource + ", isBeneficiaireACRE=" + isBeneficiaireACRE + ", dateRepriseCreationEntreprise=" + dateRepriseCreationEntreprise
+		+ ", nationalite=" + nationalite + ", nom=" + nom + ", prenom=" + prenom + ", titreSejourEnFranceValide=" + titreSejourEnFranceValide + ", logement=" + logement
+		+ "]";
     }
 }

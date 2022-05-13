@@ -15,6 +15,7 @@ import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -24,6 +25,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 public class AllocationSolidariteSpecifiqueUtile {
 
     private static final int NOMBRE_MOIS_MAX_ASS_ELIGIBLE = 3;
+    private static final int NOMBRE_MOIS_MAX_ASS_BENEFICIAIRE_ACRE_ELIGIBLE = 6;
 
     @Autowired
     private AideUtile aideUtile;
@@ -33,6 +35,9 @@ public class AllocationSolidariteSpecifiqueUtile {
 
     @Autowired
     private FuturTravailUtile futurTravailUtile;
+
+    @Autowired
+    private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
     @Autowired
     private PeriodeTravailleeAvantSimulationUtile periodeTravailleeAvantSimulationUtile;
@@ -58,16 +63,21 @@ public class AllocationSolidariteSpecifiqueUtile {
 	return 0;
     }
 
-    public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	return numeroMoisSimule <= getNombreMoisEligibles(demandeurEmploi);
+    public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	return numeroMoisSimule <= getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
     }
 
-    public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi) {
+    public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 	int nombreMoisCumulesASSPercueEtSalaire = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
-	if (futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
-	    return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
-	} else if (futurTravailUtile.hasContratCDD(demandeurEmploi.getFuturTravail())) {
-	    return getNombreMoisEligiblesCDD(demandeurEmploi, nombreMoisCumulesASSPercueEtSalaire);
+	if (informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)
+		&& informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation) < 12) {
+	    return getNombreMoisEligiblesBeneficiaireACRE(informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation));
+	} else {
+	    if (futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
+		return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
+	    } else if (futurTravailUtile.hasContratCDD(demandeurEmploi.getFuturTravail())) {
+		return getNombreMoisEligiblesCDD(demandeurEmploi, nombreMoisCumulesASSPercueEtSalaire);
+	    }
 	}
 	return 0;
     }
@@ -113,5 +123,13 @@ public class AllocationSolidariteSpecifiqueUtile {
 	    }
 	}
 	return 0;
+    }
+
+    private int getNombreMoisEligiblesBeneficiaireACRE(int nombreMoisDepuisCreationEntreprise) {
+	if (nombreMoisDepuisCreationEntreprise > 6) {
+	    int nombreDeMoisApres6PremiersMois = nombreMoisDepuisCreationEntreprise - 6;
+	    return NOMBRE_MOIS_MAX_ASS_BENEFICIAIRE_ACRE_ELIGIBLE - nombreDeMoisApres6PremiersMois;
+	}
+	return NOMBRE_MOIS_MAX_ASS_BENEFICIAIRE_ACRE_ELIGIBLE;
     }
 }

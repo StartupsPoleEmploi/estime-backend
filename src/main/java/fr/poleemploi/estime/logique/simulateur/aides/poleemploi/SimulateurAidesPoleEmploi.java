@@ -38,15 +38,14 @@ public class SimulateurAidesPoleEmploi {
     @Autowired
     private StagingEnvironnementUtile stagingEnvironnementUtile;
 
-    public void simuler(Map<String, Aide>  aidesPourCeMois, int numeroMoisSimule, LocalDate moisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+    public void simuler(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, LocalDate moisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 
 	//si l'utilisateur est un demandeur fictif, on ne peut pas simuler les aides necessitant un appel à une API peio sécurisée individu
-	if(stagingEnvironnementUtile.isNotDemandeurFictif(demandeurEmploi)) {
+	if (stagingEnvironnementUtile.isNotDemandeurFictif(demandeurEmploi)) {
 	    simulerAidesByCallingApiPEIO(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
 	}
 
-	if(beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi)
-		&& allocationSolidariteSpecifiqueUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
+	if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi) && allocationSolidariteSpecifiqueUtile.isEligible(numeroMoisSimule, demandeurEmploi, dateDebutSimulation)) {
 	    Optional<Aide> aideOptional = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, moisSimule, dateDebutSimulation);
 	    if (aideOptional.isPresent()) {
 		aidesPourCeMois.put(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), aideOptional.get());
@@ -54,15 +53,15 @@ public class SimulateurAidesPoleEmploi {
 	}
     }
 
-    private void simulerAidesByCallingApiPEIO(Map<String, Aide>  aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	if(agepiUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
+    private void simulerAidesByCallingApiPEIO(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	if (agepiUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
 	    Optional<Aide> agepiOptional = agepiUtile.simulerAide(demandeurEmploi);
 	    if (agepiOptional.isPresent()) {
 		aidesPourCeMois.put(AideEnum.AGEPI.getCode(), agepiOptional.get());
 	    }
 	}
 
-	if(aideMobiliteUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
+	if (aideMobiliteUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
 	    Optional<Aide> aideMobiliteOptional = aideMobiliteUtile.simulerAide(demandeurEmploi);
 	    if (aideMobiliteOptional.isPresent()) {
 		aidesPourCeMois.put(AideEnum.AIDE_MOBILITE.getCode(), aideMobiliteOptional.get());
