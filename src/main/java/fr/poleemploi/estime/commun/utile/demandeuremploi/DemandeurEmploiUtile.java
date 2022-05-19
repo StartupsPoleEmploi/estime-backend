@@ -116,6 +116,7 @@ public class DemandeurEmploiUtile {
 	logement.setCoordonnees(creerCoordonnees());
 	informationsPersonnelles.setLogement(logement);
 	informationsPersonnelles.setEmail(individu.getInformationsPersonnelles().getEmail());
+	informationsPersonnelles.setBeneficiaireACRE(null);
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
 	    String bearerToken = individu.getPeConnectAuthorization().getBearerToken();

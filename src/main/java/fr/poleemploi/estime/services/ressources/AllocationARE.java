@@ -9,9 +9,9 @@ public class AllocationARE {
     private Float salaireJournalierReferenceBrut;
     private Float nombreJoursRestants;
     @JsonProperty("hasDegressiviteAre")
-    private boolean hasDegressiviteAre;
-    private boolean isTauxPlein;
-    private boolean isTauxReduit;
+    private Boolean hasDegressiviteAre;
+    private Boolean isTauxPlein;
+    private Boolean isTauxReduit;
 
     public Float getAllocationMensuelleNet() {
 	return allocationMensuelleNet;
@@ -45,28 +45,28 @@ public class AllocationARE {
 	this.nombreJoursRestants = nombreJoursRestants;
     }
 
-    public boolean hasDegressiviteAre() {
+    public Boolean hasDegressiviteAre() {
 	return hasDegressiviteAre;
     }
 
     @JsonProperty("hasDegressiviteAre")
-    public void setHasDegressiviteAre(boolean hasDegressiviteAre) {
+    public void setHasDegressiviteAre(Boolean hasDegressiviteAre) {
 	this.hasDegressiviteAre = hasDegressiviteAre;
     }
 
-    public boolean isTauxPlein() {
+    public Boolean isTauxPlein() {
 	return isTauxPlein;
     }
 
-    public void setTauxPlein(boolean isTauxPlein) {
+    public void setTauxPlein(Boolean isTauxPlein) {
 	this.isTauxPlein = isTauxPlein;
     }
 
-    public boolean isTauxReduit() {
+    public Boolean isTauxReduit() {
 	return isTauxReduit;
     }
 
-    public void setTauxReduit(boolean isTauxReduit) {
+    public void setTauxReduit(Boolean isTauxReduit) {
 	this.isTauxReduit = isTauxReduit;
     }
 

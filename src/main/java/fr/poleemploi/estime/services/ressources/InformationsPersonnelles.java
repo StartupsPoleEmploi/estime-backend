@@ -19,7 +19,7 @@ public class InformationsPersonnelles {
     private boolean isSalarie;
     private boolean isSansRessource;
     @JsonProperty("isBeneficiaireACRE")
-    private boolean isBeneficiaireACRE;
+    private Boolean isBeneficiaireACRE;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateRepriseCreationEntreprise;
     private String nationalite;
@@ -95,11 +95,11 @@ public class InformationsPersonnelles {
     }
 
     @JsonProperty("isBeneficiaireACRE")
-    public boolean isBeneficiaireACRE() {
+    public Boolean isBeneficiaireACRE() {
 	return isBeneficiaireACRE;
     }
 
-    public void setBeneficiaireACRE(boolean isBeneficiaireACRE) {
+    public void setBeneficiaireACRE(Boolean isBeneficiaireACRE) {
 	this.isBeneficiaireACRE = isBeneficiaireACRE;
     }
 
