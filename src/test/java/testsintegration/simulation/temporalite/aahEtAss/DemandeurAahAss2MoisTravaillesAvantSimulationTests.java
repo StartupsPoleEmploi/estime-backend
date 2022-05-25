@@ -327,7 +327,7 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa).isNotNull();
-		assertThat(ppa.getMontant()).isEqualTo(193);
+		assertThat(ppa.getMontant()).isEqualTo(169);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);

@@ -838,7 +838,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(140);
+		assertThat(ppa.getMontant()).isEqualTo(133);
 	    });
 	});
 	// Alors les prestations du sixième mois 04/2021 sont :
@@ -854,7 +854,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(140);
+		assertThat(ppa.getMontant()).isEqualTo(133);
 	    });
 	});
     }
@@ -949,7 +949,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(282);
+		assertThat(ppa.getMontant()).isEqualTo(266);
 	    });
 	});
 	// Alors les prestations du sixième mois 04/2021 sont :
@@ -965,7 +965,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(282);
+		assertThat(ppa.getMontant()).isEqualTo(266);
 	    });
 	});
     }
@@ -1057,7 +1057,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(424);
+		assertThat(ppa.getMontant()).isEqualTo(400);
 	    });
 	});
 	// Alors les prestations du sixième mois 04/2021 sont :
@@ -1073,7 +1073,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(424);
+		assertThat(ppa.getMontant()).isEqualTo(400);
 	    });
 	});
     }

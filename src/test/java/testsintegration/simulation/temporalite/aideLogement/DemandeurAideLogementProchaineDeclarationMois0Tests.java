@@ -123,7 +123,7 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 		assertThat(rsa.getMontant()).isEqualTo(422f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(apl.getMontant()).isEqualTo(376f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 03/2021 sont :
@@ -143,7 +143,7 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(422f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(apl.getMontant()).isEqualTo(376f);
 	    });
 	});
 	// Alors les prestations du sixième mois 04/2021 sont :
@@ -163,7 +163,7 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(422f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(apl.getMontant()).isEqualTo(376f);
 	    });
 	});
     }
@@ -376,7 +376,7 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(141f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+		assertThat(apl.getMontant()).isEqualTo(272f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 12/2021 sont :
@@ -393,7 +393,7 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(141f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+		assertThat(apl.getMontant()).isEqualTo(272f);
 	    });
 	});
 	// Alors les prestations du sixième mois 01/2022 sont :
@@ -411,7 +411,7 @@ class DemandeurAideLogementProchaineDeclarationMois0Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(141f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+		assertThat(apl.getMontant()).isEqualTo(272f);
 	    });
 	});
     }

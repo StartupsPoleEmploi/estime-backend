@@ -166,7 +166,7 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(631f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(apl.getMontant()).isEqualTo(376f);
 	    });
 	});
     }
@@ -428,10 +428,10 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(212f);
+		assertThat(ppa.getMontant()).isEqualTo(208f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+		assertThat(apl.getMontant()).isEqualTo(272);
 	    });
 	});
     }

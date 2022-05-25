@@ -100,7 +100,7 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
 
 	// TODO montant : écart de 34€ avec CAF
 	// Alors le montant de la prime d'activité pour le 06/2021 est de 49€ (résultat simulateur CAF : 83€)
-	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(49);
+	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(41);
     }
 
     @Test
@@ -133,7 +133,7 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulation, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 06/2021 est de 18€ (résultat simulateur CAF : 0€)
-	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(81);
+	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(66);
     }
 
     @Test

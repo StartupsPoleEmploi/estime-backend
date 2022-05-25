@@ -65,7 +65,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
@@ -82,7 +81,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
@@ -101,7 +99,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
@@ -119,7 +116,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(414f);
 	    });
@@ -127,7 +123,7 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(rsa.getMontant()).isEqualTo(422f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(apl.getMontant()).isEqualTo(376f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 03/2021 sont :
@@ -140,7 +136,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(414f);
 	    });
@@ -148,7 +143,7 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(422f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(apl.getMontant()).isEqualTo(376f);
 	    });
 	});
 	// Alors les prestations du sixième mois 04/2021 sont :
@@ -161,7 +156,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(414f);
 	    });
@@ -169,7 +163,7 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(422f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(392f);
+		assertThat(apl.getMontant()).isEqualTo(376f);
 	    });
 	});
     }
@@ -199,7 +193,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
@@ -216,7 +209,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2020);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
@@ -235,7 +227,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
@@ -252,7 +243,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(414f);
@@ -274,7 +264,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(414f);
 	    });
@@ -294,7 +283,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(414f);
@@ -333,7 +321,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
@@ -350,7 +337,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
@@ -369,7 +355,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
@@ -387,12 +372,11 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(141f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+		assertThat(apl.getMontant()).isEqualTo(272f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 12/2021 sont :
@@ -405,12 +389,11 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(141f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+		assertThat(apl.getMontant()).isEqualTo(272f);
 	    });
 	});
 	// Alors les prestations du sixième mois 01/2022 sont :
@@ -423,12 +406,11 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(141f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(271f);
+		assertThat(apl.getMontant()).isEqualTo(272f);
 	    });
 	});
     }
