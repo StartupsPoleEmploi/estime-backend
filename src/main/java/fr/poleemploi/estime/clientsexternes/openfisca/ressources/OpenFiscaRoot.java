@@ -1,19 +1,23 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.ressources;
 
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.FAMILLES;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.INDIVIDUS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.MENAGES;
+
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OpenFiscaRoot {
 
-    @JsonProperty("individus")
+    @JsonProperty(INDIVIDUS)
     private Map<String, OpenFiscaIndividu> individus;
-    @JsonProperty("familles")
+    @JsonProperty(FAMILLES)
     private Map<String, OpenFiscaFamille> familles;
-    @JsonProperty("menages")
+    @JsonProperty(MENAGES)
     private Map<String, OpenFiscaMenage> menages;
 
-    @JsonProperty("individus")
+    @JsonProperty(INDIVIDUS)
     public Map<String, OpenFiscaIndividu> getIndividus() {
 	return individus;
     }
@@ -22,7 +26,7 @@ public class OpenFiscaRoot {
 	this.individus = individus;
     }
 
-    @JsonProperty("familles")
+    @JsonProperty(FAMILLES)
     public Map<String, OpenFiscaFamille> getFamilles() {
 	return familles;
     }
@@ -31,7 +35,7 @@ public class OpenFiscaRoot {
 	this.familles = familles;
     }
 
-    @JsonProperty("menages")
+    @JsonProperty(MENAGES)
     public Map<String, OpenFiscaMenage> getMenages() {
 	return menages;
     }

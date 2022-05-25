@@ -1,33 +1,44 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.ressources;
 
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHARGES_LOCATIVES;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COLOC;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEPCOM;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CHAMBRE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CONVENTIONNE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CROUS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOYER;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PERSONNE_DE_REFERENCE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.RESIDENCE_MAYOTTE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_OCCUPATION_LOGEMENT;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OpenFiscaMenage {
 
-    @JsonProperty("personne_de_reference")
+    @JsonProperty(PERSONNE_DE_REFERENCE)
     private List<String> personneDeReference;
-    @JsonProperty("depcom")
+    @JsonProperty(DEPCOM)
     private OpenFiscaPeriodes depcom;
-    @JsonProperty("residence_mayotte")
+    @JsonProperty(RESIDENCE_MAYOTTE)
     private OpenFiscaPeriodes residenceMayotte;
-    @JsonProperty("statut_occupation_logement")
+    @JsonProperty(STATUT_OCCUPATION_LOGEMENT)
     private OpenFiscaPeriodes statutOccupationLogement;
-    @JsonProperty("loyer")
+    @JsonProperty(LOYER)
     private OpenFiscaPeriodes loyer;
-    @JsonProperty("charges_locatives")
+    @JsonProperty(CHARGES_LOCATIVES)
     private OpenFiscaPeriodes chargesLocatives;
-    @JsonProperty("coloc")
+    @JsonProperty(COLOC)
     private OpenFiscaPeriodes coloc;
-    @JsonProperty("logement_chambre")
+    @JsonProperty(LOGEMENT_CHAMBRE)
     private OpenFiscaPeriodes logementChambre;
-    @JsonProperty("logement_conventionne")
+    @JsonProperty(LOGEMENT_CONVENTIONNE)
     private OpenFiscaPeriodes logementConventionne;
-    @JsonProperty("logement_crous")
+    @JsonProperty(LOGEMENT_CROUS)
     private OpenFiscaPeriodes logementCrous;
 
-    @JsonProperty("charges_locatives")
+    @JsonProperty(CHARGES_LOCATIVES)
     public OpenFiscaPeriodes getChargesLocatives() {
 	return chargesLocatives;
     }
@@ -36,7 +47,7 @@ public class OpenFiscaMenage {
 	this.chargesLocatives = chargesLocatives;
     }
 
-    @JsonProperty("coloc")
+    @JsonProperty(COLOC)
     public OpenFiscaPeriodes getColoc() {
 	return coloc;
     }
@@ -45,7 +56,7 @@ public class OpenFiscaMenage {
 	this.coloc = coloc;
     }
 
-    @JsonProperty("depcom")
+    @JsonProperty(DEPCOM)
     public OpenFiscaPeriodes getDepcom() {
 	return depcom;
     }
@@ -54,7 +65,7 @@ public class OpenFiscaMenage {
 	this.depcom = depcom;
     }
 
-    @JsonProperty("logement_chambre")
+    @JsonProperty(LOGEMENT_CHAMBRE)
     public OpenFiscaPeriodes getLogementChambre() {
 	return logementChambre;
     }
@@ -63,7 +74,7 @@ public class OpenFiscaMenage {
 	this.logementChambre = logementChambre;
     }
 
-    @JsonProperty("logement_conventionne")
+    @JsonProperty(LOGEMENT_CONVENTIONNE)
     public OpenFiscaPeriodes getLogementConventionne() {
 	return logementConventionne;
     }
@@ -72,7 +83,7 @@ public class OpenFiscaMenage {
 	this.logementConventionne = logementConventionne;
     }
 
-    @JsonProperty("logement_crous")
+    @JsonProperty(LOGEMENT_CROUS)
     public OpenFiscaPeriodes getLogementCrous() {
 	return logementCrous;
     }
@@ -81,7 +92,7 @@ public class OpenFiscaMenage {
 	this.logementCrous = logementCrous;
     }
 
-    @JsonProperty("loyer")
+    @JsonProperty(LOYER)
     public OpenFiscaPeriodes getLoyer() {
 	return loyer;
     }
@@ -90,7 +101,7 @@ public class OpenFiscaMenage {
 	this.loyer = loyer;
     }
 
-    @JsonProperty("personne_de_reference")
+    @JsonProperty(PERSONNE_DE_REFERENCE)
     public List<String> getPersonneDeReference() {
 	return personneDeReference;
     }
@@ -99,7 +110,7 @@ public class OpenFiscaMenage {
 	this.personneDeReference = personneDeReference;
     }
 
-    @JsonProperty("residence_mayotte")
+    @JsonProperty(RESIDENCE_MAYOTTE)
     public OpenFiscaPeriodes getResidenceMayotte() {
 	return residenceMayotte;
     }
@@ -108,7 +119,7 @@ public class OpenFiscaMenage {
 	this.residenceMayotte = residenceMayotte;
     }
 
-    @JsonProperty("statut_occupation_logement")
+    @JsonProperty(STATUT_OCCUPATION_LOGEMENT)
     public OpenFiscaPeriodes getStatutOccupationLogement() {
 	return statutOccupationLogement;
     }

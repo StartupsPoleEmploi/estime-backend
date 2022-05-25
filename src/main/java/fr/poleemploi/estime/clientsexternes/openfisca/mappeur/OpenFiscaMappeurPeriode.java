@@ -31,7 +31,7 @@ public class OpenFiscaMappeurPeriode {
     private DateUtile dateUtile;
 
     @Autowired
-    private AideUtile aideeUtile;
+    private AideUtile aideUtile;
 
     @Autowired
     private PeriodeTravailleeAvantSimulationUtile periodeTravailleeAvantSimulationUtile;
@@ -152,9 +152,9 @@ public class OpenFiscaMappeurPeriode {
 	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode++) {
 	    float montantAide = 0;
 	    if (isNumeroMoisMontantARecupererDansPeriodeSimulation(numeroMoisMontantARecuperer)) {
-		montantAide = aideeUtile.getMontantAidePourCeMoisSimule(simulation, codeAide, numeroMoisMontantARecuperer);
+		montantAide = aideUtile.getMontantAidePourCeMoisSimule(simulation, codeAide, numeroMoisMontantARecuperer);
 	    } else {
-		montantAide = aideeUtile.getMontantAideAvantSimulation(numeroMoisMontantARecuperer, demandeurEmploi, codeAide, dateDebutSimulation);
+		montantAide = aideUtile.getMontantAideAvantSimulation(numeroMoisMontantARecuperer, demandeurEmploi, codeAide, dateDebutSimulation);
 	    }
 	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisPeriode, numeroMoisSimule), montantAide);
 	    numeroMoisMontantARecuperer++;

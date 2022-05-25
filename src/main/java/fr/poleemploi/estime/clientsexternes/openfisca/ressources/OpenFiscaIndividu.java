@@ -1,41 +1,57 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.ressources;
 
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AAH;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASI;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHOMAGE_NET;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DATE_NAISSANCE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT_A_CHARGE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSIONS_ALIMENTAIRES_PERCUES;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_RETRAITE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.REVENUS_LOCATIFS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_MARITAL;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OpenFiscaIndividu {
 
-    @JsonProperty("date_naissance")
+    @JsonProperty(DATE_NAISSANCE)
     private OpenFiscaPeriodes dateNaissance;
-    @JsonProperty("enfant_a_charge")
+    @JsonProperty(ENFANT_A_CHARGE)
     private OpenFiscaPeriodes enfantACharge;
-    @JsonProperty("statut_marital")
+    @JsonProperty(STATUT_MARITAL)
     private OpenFiscaPeriodes statutMarital;
-    @JsonProperty("salaire_de_base")
+    @JsonProperty(SALAIRE_BASE)
     private OpenFiscaPeriodes salaireDeBase;
-    @JsonProperty("salaire_imposable")
+    @JsonProperty(SALAIRE_IMPOSABLE)
     private OpenFiscaPeriodes salaireImposable;
-    @JsonProperty("aah")
+    @JsonProperty(AAH)
     private OpenFiscaPeriodes allocationAdulteHandicape;
-    @JsonProperty("ass")
+    @JsonProperty(ASS)
     private OpenFiscaPeriodes allocationSolidariteSpecifique;
-    @JsonProperty("chomage_net")
+    @JsonProperty(CHOMAGE_NET)
     private OpenFiscaPeriodes chomageNet;
-    @JsonProperty("revenus_locatifs")
+    @JsonProperty(REVENUS_LOCATIFS)
     private OpenFiscaPeriodes revenusLocatifs;
-    @JsonProperty("rpns_autres_revenus")
+    @JsonProperty(CHIFFRE_AFFAIRES_INDEPENDANT)
     private OpenFiscaPeriodes chiffreAffairesIndependant;
-    @JsonProperty("rpns_micro_entreprise_benefice")
+    @JsonProperty(BENEFICES_MICRO_ENTREPRISE)
     private OpenFiscaPeriodes beneficesMicroEntreprise;
-    @JsonProperty("pensions_alimentaires_percues")
+    @JsonProperty(PENSIONS_ALIMENTAIRES_PERCUES)
     private OpenFiscaPeriodes pensionsAlimentaires;
-    @JsonProperty("pensions_invalidite")
+    @JsonProperty(PENSION_INVALIDITE)
     private OpenFiscaPeriodes pensionInvalidite;
-    @JsonProperty("asi")
+    @JsonProperty(ASI)
     private OpenFiscaPeriodes allocationSupplementaireInvalidite;
-    @JsonProperty("retraite_nette")
+    @JsonProperty(PENSION_RETRAITE)
     private OpenFiscaPeriodes pensionRetraite;
 
-    @JsonProperty("aah")
+    @JsonProperty(AAH)
     public OpenFiscaPeriodes getAllocationAdulteHandicape() {
 	return allocationAdulteHandicape;
     }
@@ -44,7 +60,7 @@ public class OpenFiscaIndividu {
 	this.allocationAdulteHandicape = allocationAdulteHandicape;
     }
 
-    @JsonProperty("asi")
+    @JsonProperty(ASI)
     public OpenFiscaPeriodes getAllocationSupplementaireInvalidite() {
 	return allocationSupplementaireInvalidite;
     }
@@ -53,7 +69,7 @@ public class OpenFiscaIndividu {
 	this.allocationSupplementaireInvalidite = allocationSupplementaireInvalidite;
     }
 
-    @JsonProperty("ass")
+    @JsonProperty(ASS)
     public OpenFiscaPeriodes getAllocationSolidariteSpecifique() {
 	return allocationSolidariteSpecifique;
     }
@@ -62,7 +78,7 @@ public class OpenFiscaIndividu {
 	this.allocationSolidariteSpecifique = allocationSolidariteSpecifique;
     }
 
-    @JsonProperty("chomage_net")
+    @JsonProperty(CHOMAGE_NET)
     public OpenFiscaPeriodes getChomageNet() {
 	return chomageNet;
     }
@@ -71,7 +87,7 @@ public class OpenFiscaIndividu {
 	this.chomageNet = chomageNet;
     }
 
-    @JsonProperty("date_naissance")
+    @JsonProperty(DATE_NAISSANCE)
     public OpenFiscaPeriodes getDateNaissance() {
 	return dateNaissance;
     }
@@ -80,7 +96,7 @@ public class OpenFiscaIndividu {
 	this.dateNaissance = dateNaissance;
     }
 
-    @JsonProperty("enfant_a_charge")
+    @JsonProperty(ENFANT_A_CHARGE)
     public OpenFiscaPeriodes getEnfantACharge() {
 	return enfantACharge;
     }
@@ -89,7 +105,7 @@ public class OpenFiscaIndividu {
 	this.enfantACharge = enfantACharge;
     }
 
-    @JsonProperty("pensions_invalidite")
+    @JsonProperty(PENSION_INVALIDITE)
     public OpenFiscaPeriodes getPensionInvalidite() {
 	return pensionInvalidite;
     }
@@ -98,7 +114,7 @@ public class OpenFiscaIndividu {
 	this.pensionInvalidite = pensionInvalidite;
     }
 
-    @JsonProperty("revenus_locatifs")
+    @JsonProperty(REVENUS_LOCATIFS)
     public OpenFiscaPeriodes getRevenusLocatifs() {
 	return revenusLocatifs;
     }
@@ -107,7 +123,7 @@ public class OpenFiscaIndividu {
 	this.revenusLocatifs = revenusLocatifs;
     }
 
-    @JsonProperty("rpns_autres_revenus")
+    @JsonProperty(CHIFFRE_AFFAIRES_INDEPENDANT)
     public OpenFiscaPeriodes getChiffreAffairesIndependant() {
 	return chiffreAffairesIndependant;
     }
@@ -116,7 +132,7 @@ public class OpenFiscaIndividu {
 	this.chiffreAffairesIndependant = chiffreAffairesIndependant;
     }
 
-    @JsonProperty("rpns_micro_entreprise_benefice")
+    @JsonProperty(BENEFICES_MICRO_ENTREPRISE)
     public OpenFiscaPeriodes getBeneficesMicroEntreprise() {
 	return beneficesMicroEntreprise;
     }
@@ -125,7 +141,7 @@ public class OpenFiscaIndividu {
 	this.beneficesMicroEntreprise = beneficesMicroEntreprise;
     }
 
-    @JsonProperty("pensions_alimentaires_percues")
+    @JsonProperty(PENSIONS_ALIMENTAIRES_PERCUES)
     public OpenFiscaPeriodes getPensionsAlimentaires() {
 	return pensionsAlimentaires;
     }
@@ -134,7 +150,7 @@ public class OpenFiscaIndividu {
 	this.pensionsAlimentaires = pensionsAlimentaires;
     }
 
-    @JsonProperty("retraite_nette")
+    @JsonProperty(PENSION_RETRAITE)
     public OpenFiscaPeriodes getPensionRetraite() {
 	return pensionRetraite;
     }
@@ -143,7 +159,7 @@ public class OpenFiscaIndividu {
 	this.pensionRetraite = pensionRetraite;
     }
 
-    @JsonProperty("salaire_de_base")
+    @JsonProperty(SALAIRE_BASE)
     public OpenFiscaPeriodes getSalaireDeBase() {
 	return salaireDeBase;
     }
@@ -152,7 +168,7 @@ public class OpenFiscaIndividu {
 	this.salaireDeBase = salaireDeBase;
     }
 
-    @JsonProperty("salaire_imposable")
+    @JsonProperty(SALAIRE_IMPOSABLE)
     public OpenFiscaPeriodes getSalaireImposable() {
 	return salaireImposable;
     }
@@ -161,7 +177,7 @@ public class OpenFiscaIndividu {
 	this.salaireImposable = salaireImposable;
     }
 
-    @JsonProperty("statut_marital")
+    @JsonProperty(STATUT_MARITAL)
     public OpenFiscaPeriodes getStatutMarital() {
 	return statutMarital;
     }

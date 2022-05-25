@@ -1,39 +1,53 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.ressources;
 
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AF;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AIDE_LOGEMENT;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALF;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.APL;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASF;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CF;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANTS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PARENTS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PPA;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PRESTATION_ACCUEIL_JEUNE_ENFANT;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.RSA;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.RSA_ISOLEMENT_RECENT;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OpenFiscaFamille {
 
-    @JsonProperty("parents")
+    @JsonProperty(PARENTS)
     private List<String> parents;
-    @JsonProperty("enfants")
+    @JsonProperty(ENFANTS)
     private List<String> enfants;
-    @JsonProperty("asf")
+    @JsonProperty(ASF)
     private OpenFiscaPeriodes allocationSoutienFamilial;
-    @JsonProperty("af")
+    @JsonProperty(AF)
     private OpenFiscaPeriodes allocationsFamiliales;
-    @JsonProperty("cf")
+    @JsonProperty(CF)
     private OpenFiscaPeriodes complementFamilial;
-    @JsonProperty("paje_base")
+    @JsonProperty(PRESTATION_ACCUEIL_JEUNE_ENFANT)
     private OpenFiscaPeriodes prestationAccueilJeuneEnfant;
-    @JsonProperty("rsa")
+    @JsonProperty(RSA)
     private OpenFiscaPeriodes revenuSolidariteActive;
-    @JsonProperty("rsa_isolement_recent")
+    @JsonProperty(RSA_ISOLEMENT_RECENT)
     private OpenFiscaPeriodes rsaIsolementRecent;
-    @JsonProperty("ppa")
+    @JsonProperty(PPA)
     private OpenFiscaPeriodes primeActivite;
-    @JsonProperty("apl")
+    @JsonProperty(APL)
     private OpenFiscaPeriodes aidePersonnaliseeLogement;
-    @JsonProperty("alf")
+    @JsonProperty(ALF)
     private OpenFiscaPeriodes allocationLogementFamiliale;
-    @JsonProperty("als")
+    @JsonProperty(ALS)
     private OpenFiscaPeriodes allocationLogementSociale;
-    @JsonProperty("aide_logement")
+    @JsonProperty(AIDE_LOGEMENT)
     private OpenFiscaPeriodes aideLogement;
 
-    @JsonProperty("af")
+    @JsonProperty(AF)
     public OpenFiscaPeriodes getAllocationsFamiliales() {
 	return allocationsFamiliales;
     }
@@ -42,7 +56,7 @@ public class OpenFiscaFamille {
 	this.allocationsFamiliales = allocationsFamiliales;
     }
 
-    @JsonProperty("aide_logement")
+    @JsonProperty(AIDE_LOGEMENT)
     public OpenFiscaPeriodes getAideLogement() {
 	return aideLogement;
     }
@@ -51,7 +65,7 @@ public class OpenFiscaFamille {
 	this.aideLogement = aideLogement;
     }
 
-    @JsonProperty("alf")
+    @JsonProperty(ALF)
     public OpenFiscaPeriodes getAllocationLogementFamiliale() {
 	return allocationLogementFamiliale;
     }
@@ -60,7 +74,7 @@ public class OpenFiscaFamille {
 	this.allocationLogementFamiliale = allocationLogementFamiliale;
     }
 
-    @JsonProperty("als")
+    @JsonProperty(ALS)
     public OpenFiscaPeriodes getAllocationLogementSociale() {
 	return allocationLogementSociale;
     }
@@ -69,7 +83,7 @@ public class OpenFiscaFamille {
 	this.allocationLogementSociale = allocationLogementSociale;
     }
 
-    @JsonProperty("apl")
+    @JsonProperty(APL)
     public OpenFiscaPeriodes getAidePersonnaliseeLogement() {
 	return aidePersonnaliseeLogement;
     }
@@ -78,7 +92,7 @@ public class OpenFiscaFamille {
 	this.aidePersonnaliseeLogement = aidePersonnaliseeLogement;
     }
 
-    @JsonProperty("asf")
+    @JsonProperty(ASF)
     public OpenFiscaPeriodes getAllocationSoutienFamilial() {
 	return allocationSoutienFamilial;
     }
@@ -87,7 +101,7 @@ public class OpenFiscaFamille {
 	this.allocationSoutienFamilial = allocationSoutienFamilial;
     }
 
-    @JsonProperty("cf")
+    @JsonProperty(CF)
     public OpenFiscaPeriodes getComplementFamilial() {
 	return complementFamilial;
     }
@@ -96,7 +110,7 @@ public class OpenFiscaFamille {
 	this.complementFamilial = complementFamilial;
     }
 
-    @JsonProperty("enfants")
+    @JsonProperty(ENFANTS)
     public List<String> getEnfants() {
 	return enfants;
     }
@@ -105,7 +119,7 @@ public class OpenFiscaFamille {
 	this.enfants = enfants;
     }
 
-    @JsonProperty("parents")
+    @JsonProperty(PARENTS)
     public List<String> getParents() {
 	return parents;
     }
@@ -114,7 +128,7 @@ public class OpenFiscaFamille {
 	this.parents = parents;
     }
 
-    @JsonProperty("paje_base")
+    @JsonProperty(PRESTATION_ACCUEIL_JEUNE_ENFANT)
     public OpenFiscaPeriodes getPrestationAccueilJeuneEnfant() {
 	return prestationAccueilJeuneEnfant;
     }
@@ -123,7 +137,7 @@ public class OpenFiscaFamille {
 	this.prestationAccueilJeuneEnfant = prestationAccueilJeuneEnfant;
     }
 
-    @JsonProperty("ppa")
+    @JsonProperty(PPA)
     public OpenFiscaPeriodes getPrimeActivite() {
 	return primeActivite;
     }
@@ -132,7 +146,7 @@ public class OpenFiscaFamille {
 	this.primeActivite = primeActivite;
     }
 
-    @JsonProperty("rsa")
+    @JsonProperty(RSA)
     public OpenFiscaPeriodes getRevenuSolidariteActive() {
 	return revenuSolidariteActive;
     }
@@ -141,7 +155,7 @@ public class OpenFiscaFamille {
 	this.revenuSolidariteActive = revenuSolidariteActive;
     }
 
-    @JsonProperty("rsa_isolement_recent")
+    @JsonProperty(RSA_ISOLEMENT_RECENT)
     public OpenFiscaPeriodes getRsaIsolementRecent() {
 	return rsaIsolementRecent;
     }

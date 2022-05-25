@@ -10,6 +10,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 @Service
 public class OpenFiscaObjectMapperService {
 
+    private OpenFiscaObjectMapperService() {
+
+    }
+
     public static ObjectMapper getOpenFiscaObjectMapper() {
 	ObjectMapper mapper = new ObjectMapper();
 	mapper.setSerializationInclusion(Include.NON_NULL);
@@ -19,12 +23,20 @@ public class OpenFiscaObjectMapperService {
     }
 
     public static String getJsonStringFromObject(Object object) {
-
 	try {
 	    return String.format("%s", getOpenFiscaObjectMapper().writeValueAsString(object));
 	} catch (JsonProcessingException e) {
 	    e.printStackTrace();
 	    return "";
+	}
+    }
+
+    public static OpenFiscaRoot getOpenFiscaRootFromJsonString(String jsonString) {
+	try {
+	    return getOpenFiscaObjectMapper().readValue(jsonString, OpenFiscaRoot.class);
+	} catch (JsonProcessingException e) {
+	    e.printStackTrace();
+	    return new OpenFiscaRoot();
 	}
     }
 
