@@ -16,7 +16,7 @@ function replace_properties_in_application {
   perl -i -p -e "s|--TOMCAT_THREADS_MIN_SPARE--|${TOMCAT_THREADS_MIN_SPARE}|g" app/application.yml
   perl -i -p -e "s|--SENDINBLUE_API_URL--|${SENDINBLUE_API_URL}|g" app/application.yml
   perl -i -p -e "s|--SENDINBLUE_API_KEY--|${SENDINBLUE_API_KEY}|g" app/application.yml
-  perl -i -p -e "s|--SENDINBLUE_CONTACT_LIST_ID--|${SENDINBLUE_CONTACT_LIST_ID}|g" app/application.yml
+  perl -i -p -e "s|--SENDINBLUE_CONTACT_LIST--|${SENDINBLUE_CONTACT_LIST}|g" app/application.yml
 }
 
 function start_estime_application {

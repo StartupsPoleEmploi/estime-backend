@@ -28,8 +28,8 @@ public class SendinblueClient {
     @Value("${sendinblue-api-key}")
     private String sendinblueApiKey;
 
-    @Value("${sendinblue-contact-list-id}")
-    private String sendinblueContactListID;
+    @Value("${sendinblue-contact-list}")
+    private String sendinblueContactList;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -71,7 +71,7 @@ public class SendinblueClient {
 	try {
 	    JSONObject addContactToListPayload = mapAddContactToListPayload(email);
 	    HttpEntity<String> request = new HttpEntity<>(addContactToListPayload.toString(), getHeaders());
-	    restTemplate.postForObject(String.format("%s/lists/%s/contacts/add", sendinblueApiUrl, sendinblueContactListID), request, JSONObject.class);
+	    restTemplate.postForObject(String.format("%s/lists/%s/contacts/add", sendinblueApiUrl, sendinblueContactList), request, JSONObject.class);
 	} catch (Exception e) {
 	    if (!isBadRequestHttpClientError(e)) {
 		LOGGER.warn(String.format(LoggerMessages.SENDINBLUE_ADD_CONTACT_KO.getMessage(), e.getMessage()));
