@@ -57,6 +57,9 @@ public class RessourcesFinancieresControleur {
 	if (aidesCAF == null) {
 	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "allocationsCAF dans RessourcesFinancieres de DemandeurEmploi"));
 	}
+	if (aidesCAF.getAllocationRSA() == null) {
+	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "allocationMensuelleNetRSA"));
+	}
 	if (aidesCAF.getAllocationRSA() <= 0) {
 	    throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationMensuelleNetRSA"));
 	}
