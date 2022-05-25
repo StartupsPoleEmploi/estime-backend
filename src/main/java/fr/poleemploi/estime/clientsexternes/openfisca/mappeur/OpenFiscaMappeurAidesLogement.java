@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.tsohr.JSONObject;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaPeriodes;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
@@ -73,13 +73,7 @@ public class OpenFiscaMappeurAidesLogement {
 	}
     }
 
-    public JSONObject creerAllocationLogementJSON(AllocationsLogement allocationsLogement, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaPeriodes creerAllocationLogementOpenFisca(AllocationsLogement allocationsLogement, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	return openFiscaPeriodeMappeur.creerPeriodesAllocationsLogement(allocationsLogement, dateDebutSimulation, numeroMoisSimule);
-    }
-
-    public JSONObject creerAideLogementJSON(LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject periode = new JSONObject();
-	periode.put(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule), JSONObject.NULL);
-	return periode;
     }
 }

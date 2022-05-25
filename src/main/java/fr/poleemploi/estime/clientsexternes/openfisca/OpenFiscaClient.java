@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.github.tsohr.JSONException;
-import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurAidesLogement;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPrimeActivite;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurRSA;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
@@ -108,7 +108,7 @@ public class OpenFiscaClient {
 
     private String callApiCalculate(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	try {
-	    JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	    OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    HttpEntity<String> request = new HttpEntity<>(openFiscaPayload.toString(), headers);

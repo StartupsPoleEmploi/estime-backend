@@ -18,9 +18,9 @@ import org.springframework.test.context.TestPropertySource;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.tsohr.JSONException;
-import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
@@ -109,7 +109,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -167,7 +167,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -224,7 +224,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -278,7 +278,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -335,7 +335,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -388,7 +388,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -441,7 +441,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }

@@ -1,24 +1,15 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHARGES_LOCATIVES;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COLOC;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEPCOM;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CHAMBRE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CONVENTIONNE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CROUS;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOYER;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PERSONNE_DE_REFERENCE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.RESIDENCE_MAYOTTE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_OCCUPATION_LOGEMENT;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEMANDEUR;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.tsohr.JSONArray;
-import com.github.tsohr.JSONObject;
-
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaMenage;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Logement;
@@ -32,23 +23,35 @@ public class OpenFiscaMappeurMenage {
     @Autowired
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
-    public JSONObject creerMenageJSON(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject menage = new JSONObject();
-	JSONArray personneReferenceJSON = new JSONArray();
+    public OpenFiscaMenage creerMenageOpenFisca(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaMenage menageOpenFisca = new OpenFiscaMenage();
 	Logement logement = demandeurEmploi.getInformationsPersonnelles().getLogement();
-	personneReferenceJSON.put("demandeur");
-	menage.put(PERSONNE_DE_REFERENCE, personneReferenceJSON);
-	menage.put(STATUT_OCCUPATION_LOGEMENT, openFiscaPeriodeMappeur.creerPeriodes(informationsPersonnellesUtile.getStatutOccupationLogement(logement), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	if(logement != null) {
-	    menage.put(RESIDENCE_MAYOTTE, openFiscaPeriodeMappeur.creerPeriodes(logement.getCoordonnees().isDeMayotte(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	    menage.put(LOYER, openFiscaPeriodeMappeur.creerPeriodes(logement.getMontantLoyer(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	    menage.put(CHARGES_LOCATIVES, openFiscaPeriodeMappeur.creerPeriodes(logement.getMontantCharges(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	    menage.put(LOGEMENT_CROUS, openFiscaPeriodeMappeur.creerPeriodes(logement.isCrous(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	    menage.put(LOGEMENT_CONVENTIONNE, openFiscaPeriodeMappeur.creerPeriodes(logement.isConventionne(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	    menage.put(DEPCOM, openFiscaPeriodeMappeur.creerPeriodes(logement.getCoordonnees().getCodeInsee(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	    menage.put(COLOC, openFiscaPeriodeMappeur.creerPeriodes(logement.isColloc(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	    menage.put(LOGEMENT_CHAMBRE, openFiscaPeriodeMappeur.creerPeriodes(logement.isChambre(), dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+
+	if (logement != null) {
+	    menageOpenFisca.setDepcom(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getCoordonnees().getCodeInsee(), dateDebutSimulation, numeroMoisSimule,
+		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    menageOpenFisca.setResidenceMayotte(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getCoordonnees().isDeMayotte(), dateDebutSimulation, numeroMoisSimule,
+		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    menageOpenFisca.setLoyer(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getMontantLoyer(), dateDebutSimulation, numeroMoisSimule,
+		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    menageOpenFisca.setChargesLocatives(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getMontantCharges(), dateDebutSimulation, numeroMoisSimule,
+		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    menageOpenFisca.setLogementChambre(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isChambre(), dateDebutSimulation, numeroMoisSimule,
+		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    menageOpenFisca.setLogementCrous(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isCrous(), dateDebutSimulation, numeroMoisSimule,
+		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    menageOpenFisca.setLogementConventionne(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isConventionne(), dateDebutSimulation, numeroMoisSimule,
+		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    menageOpenFisca.setColoc(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isColloc(), dateDebutSimulation, numeroMoisSimule,
+		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	}
-	return menage;
+
+	List<String> personneDeReference = new ArrayList<>();
+	personneDeReference.add(DEMANDEUR);
+	menageOpenFisca.setPersonneDeReference(personneDeReference);
+	menageOpenFisca.setStatutOccupationLogement(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(informationsPersonnellesUtile.getStatutOccupationLogement(logement),
+		dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+
+	return menageOpenFisca;
     }
 }

@@ -20,9 +20,9 @@ public class ParametresOpenFisca {
     public static final String CHOMAGE_NET = "chomage_net";
     public static final String CHARGES_LOCATIVES = "charges_locatives";
     public static final String COLOC = "coloc";
-    public static final String CONJOINT = "conjoint";
+    public static final String CONJOINT = "2_conjoint";
     public static final String DATE_NAISSANCE = "date_naissance";
-    public static final String DEMANDEUR = "demandeur";
+    public static final String DEMANDEUR = "1_demandeur";
     public static final String DEPCOM = "depcom";
     public static final String ENFANT = "enfant";
     public static final String ENFANTS = "enfants";

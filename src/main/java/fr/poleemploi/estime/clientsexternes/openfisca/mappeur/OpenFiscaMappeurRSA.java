@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.tsohr.JSONObject;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -35,16 +34,10 @@ public class OpenFiscaMappeurRSA {
 	    JsonObject famille1JsonObject = famillesJsonObject.get(FAMILLE1).getAsJsonObject();
 	    JsonObject rsaJsonObject = famille1JsonObject.get(RSA).getAsJsonObject();
 	    String periodeFormateeRSA = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
-	    return rsaJsonObject.get(periodeFormateeRSA).getAsBigDecimal().setScale(0, RoundingMode.HALF_UP).floatValue();            
+	    return rsaJsonObject.get(periodeFormateeRSA).getAsBigDecimal().setScale(0, RoundingMode.HALF_UP).floatValue();
 	} catch (NullPointerException e) {
-	    LOGGER.error( String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
+	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
 	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
 	}
-    }
-
-    public JSONObject creerRSAJson(LocalDate dateDebutSimulation, int numeroMoisSimule) {        
-	JSONObject rsaJSON = new JSONObject();
-	rsaJSON.put(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule), JSONObject.NULL);
-	return rsaJSON;
     }
 }

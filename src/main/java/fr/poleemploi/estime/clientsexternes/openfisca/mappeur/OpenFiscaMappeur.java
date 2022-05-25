@@ -3,20 +3,21 @@ package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CONJOINT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEMANDEUR;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.FAMILLE1;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.FAMILLES;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.INDIVIDUS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.MENAGE1;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.MENAGES;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.tsohr.JSONObject;
-
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaFamille;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaIndividu;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaMenage;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.SituationFamilialeUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.SimulateurAidesCAF;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -38,37 +39,38 @@ public class OpenFiscaMappeur {
     @Autowired
     private OpenFiscaMappeurIndividu openFiscaMappeurIndividu;
 
-    public JSONObject mapDemandeurEmploiToOpenFiscaPayload(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject payloadOpenFisca = new JSONObject();
-	Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi, SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA);
-	payloadOpenFisca.put(INDIVIDUS, creerIndividusJSON(simulation, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
-	payloadOpenFisca.put(FAMILLES, creerFamillesJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
-	payloadOpenFisca.put(MENAGES, creerMenagesJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+    public OpenFiscaRoot mapDemandeurEmploiToOpenFiscaPayload(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaRoot payloadOpenFisca = new OpenFiscaRoot();
+	Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional = situationFamilialeUtile.getPersonnesAChargeAgeInferieurAgeLimite(demandeurEmploi,
+		SimulateurAidesCAF.AGE_MAX_PERSONNE_A_CHARGE_PPA_RSA);
+	payloadOpenFisca.setIndividus(creerIndividusOpenFisca(simulation, demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
+	payloadOpenFisca.setFamilles(creerFamillesOpenFisca(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
+	payloadOpenFisca.setMenages(creerMenagesOpenFisca(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
 	return payloadOpenFisca;
     }
 
-    private JSONObject creerIndividusJSON(Simulation simulation, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional,
-                                          LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject individu = new JSONObject();
-	individu.put(DEMANDEUR, openFiscaMappeurIndividu.creerDemandeurJSON(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+    private Map<String, OpenFiscaIndividu> creerIndividusOpenFisca(Simulation simulation, DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	Map<String, OpenFiscaIndividu> individus = new HashMap<>();
+	individus.put(DEMANDEUR, openFiscaMappeurIndividu.creerDemandeurOpenFisca(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
 	if (personneAChargeAgeInferieureAgeLimiteOptional.isPresent()) {
-	    openFiscaMappeurIndividu.ajouterPersonneACharge(individu, personneAChargeAgeInferieureAgeLimiteOptional.get(), dateDebutSimulation, numeroMoisSimule);
+	    openFiscaMappeurIndividu.ajouterPersonneAChargeIndividus(individus, personneAChargeAgeInferieureAgeLimiteOptional.get(), dateDebutSimulation, numeroMoisSimule);
 	}
 	if (situationFamilialeUtile.isEnCouple(demandeurEmploi)) {
-	    individu.put(CONJOINT, openFiscaMappeurIndividu.creerConjointJSON(demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimule));
+	    individus.put(CONJOINT, openFiscaMappeurIndividu.creerConjointOpenFisca(demandeurEmploi.getSituationFamiliale().getConjoint(), dateDebutSimulation, numeroMoisSimule));
 	}
-	return individu;
+	return individus;
     }
 
-    private JSONObject creerFamillesJSON(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject familles = new JSONObject();
-	familles.put(FAMILLE1, openFiscaMappeurFamille.creerFamilleJSON(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
+    private Map<String, OpenFiscaFamille> creerFamillesOpenFisca(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeAgeInferieureAgeLimiteOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	Map<String, OpenFiscaFamille> familles = new HashMap<>();
+	familles.put(FAMILLE1,
+		openFiscaMappeurFamille.creerFamilleOpenFisca(demandeurEmploi, personneAChargeAgeInferieureAgeLimiteOptional, dateDebutSimulation, numeroMoisSimule));
 	return familles;
     }
 
-    private JSONObject creerMenagesJSON(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject menages = new JSONObject();
-	menages.put(MENAGE1, openFiscaMappeurMenage.creerMenageJSON(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
+    private Map<String, OpenFiscaMenage> creerMenagesOpenFisca(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	Map<String, OpenFiscaMenage> menages = new HashMap<>();
+	menages.put(MENAGE1, openFiscaMappeurMenage.creerMenageOpenFisca(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
 	return menages;
     }
 }
