@@ -57,10 +57,6 @@ public class Individu {
 	this.informationsPersonnelles = informationsPersonnelles;
     }
 
-    public void setRessourcesFinancieres(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
-	this.ressourcesFinancieres = ressourcesFinancieres;
-    }
-
     @Override
     public String toString() {
 	return "Individu [idPoleEmploi=" + idPoleEmploi + ", beneficiaireAides=" + beneficiaireAides + ", isPopulationAutorisee=" + isPopulationAutorisee
