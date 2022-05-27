@@ -94,7 +94,7 @@ public class AreUtile {
     }
 
     private float getNombreJoursIndemnisables(ArePEIOOut areOut, DemandeurEmploi demandeurEmploi) {
-	float joursIndemnisablesMois = 0;
+	float joursIndemnisablesMois = 1;
 	if (areOut.getSoldePrevisionnelReliquat() != null) {
 	    joursIndemnisablesMois = areOut.getSoldePrevisionnelReliquat().floatValue();
 	} else {
@@ -122,7 +122,7 @@ public class AreUtile {
     }
 
     private int getNombreJoursIndemnisablesCalcule(float montantAllocationARE, float allocationJournaliereBrute) {
-	int nombreJoursIndemnisables = 0;
+	int nombreJoursIndemnisables = 1;
 	if (montantAllocationARE > 0 && allocationJournaliereBrute > 0) {
 	    nombreJoursIndemnisables = Math.round(montantAllocationARE / allocationJournaliereBrute);
 	}

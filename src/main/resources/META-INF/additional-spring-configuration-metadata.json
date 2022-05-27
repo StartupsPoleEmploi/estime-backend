@@ -50,7 +50,7 @@
     "description": "Clé API Sendinblue"
   },
   {
-    "name": "sendinblue-contact-list-id",
+    "name": "sendinblue-contact-list",
     "type": "java.lang.String",
     "description": "ID de la liste de contact Sendinblue à peupler"
   }  

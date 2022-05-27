@@ -57,7 +57,7 @@ public class InformationsPersonnellesUtile {
 
     public boolean isBeneficiaireACRE(DemandeurEmploi demandeurEmploi) {
 	return (demandeurEmploi != null && demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().isBeneficiaireACRE() != null
-		&& demandeurEmploi.getInformationsPersonnelles().isBeneficiaireACRE().booleanValue() == true
+		&& demandeurEmploi.getInformationsPersonnelles().isBeneficiaireACRE().booleanValue()
 		&& demandeurEmploi.getInformationsPersonnelles().getDateRepriseCreationEntreprise() != null);
     }
 

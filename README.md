@@ -219,7 +219,7 @@ Click droit sur **src/test/java** => **Run As -> Junit Test**
           POLE_EMPLOI_IO_URI: "%% à renseigner %%
           SENDINBLUE_API_URL: "%% à renseigner %%"
           SENDINBLUE_API_KEY: "%% à renseigner %%"
-          SENDINBLUE_CONTACT_LIST_ID: "%% à renseigner %%"
+          SENDINBLUE_CONTACT_LIST: "%% à renseigner %%"
           TZ: "Europe/Paris"
         ports:
           - 8081:8080
