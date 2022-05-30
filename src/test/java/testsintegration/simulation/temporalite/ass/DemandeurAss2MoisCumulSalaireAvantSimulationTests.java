@@ -152,7 +152,7 @@ class DemandeurAss2MoisCumulSalaireAvantSimulationTests extends Commun {
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa).isNotNull();
-		assertThat(ppa.getMontant()).isEqualTo(423);
+		assertThat(ppa.getMontant()).isEqualTo(399);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
