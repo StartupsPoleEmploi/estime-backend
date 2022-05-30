@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.github.tsohr.JSONArray;
 import com.github.tsohr.JSONObject;
 
-import fr.poleemploi.estime.commun.enumerations.ParcourUtilisateurEnum;
+import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateurEnum;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 
 @Component
@@ -61,7 +61,7 @@ public class SendinblueClient {
     private JSONObject mapCreateContactPayload(String email) {
 	JSONObject createContactPayload = new JSONObject();
 	JSONObject attributes = new JSONObject();
-	attributes.accumulate(SUIVI_PARCOURS_KEY, ParcourUtilisateurEnum.CONNEXION_REUSSIE.getParcours());
+	attributes.accumulate(SUIVI_PARCOURS_KEY, ParcoursUtilisateurEnum.CONNEXION_REUSSIE.getParcours());
 	createContactPayload.accumulate(EMAIL_KEY, email);
 	createContactPayload.accumulate(ATTRIBUTES_KEY, attributes);
 	return createContactPayload;

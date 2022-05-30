@@ -452,7 +452,7 @@ class OpenFiscaMappeurTests extends Commun {
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
-	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
 	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
@@ -504,7 +504,7 @@ class OpenFiscaMappeurTests extends Commun {
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
-	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
 	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 

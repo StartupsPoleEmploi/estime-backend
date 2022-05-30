@@ -3,7 +3,7 @@ package fr.poleemploi.estime.logique;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.poleemploi.estime.commun.enumerations.ParcourUtilisateurEnum;
+import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateurEnum;
 import fr.poleemploi.estime.commun.utile.ContactSendinblueUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
@@ -40,11 +40,11 @@ public class DemandeurEmploiLogique {
 	demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(),
+	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(),
 		    individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 	}
 
-	contactSendinblueUtile.miseAJourContactSendinblue(demandeurEmploi, ParcourUtilisateurEnum.SIMULATION_COMMENCEE.getParcours());
+	contactSendinblueUtile.miseAJourContactSendinblue(demandeurEmploi, ParcoursUtilisateurEnum.SIMULATION_COMMENCEE.getParcours());
 
 	return demandeurEmploi;
     }
@@ -54,11 +54,11 @@ public class DemandeurEmploiLogique {
 	Simulation simulation = simulateurAides.simuler(demandeurEmploi);
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcourUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
+	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
 		    demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 	}
 
-	contactSendinblueUtile.miseAJourContactSendinblue(demandeurEmploi, ParcourUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours());
+	contactSendinblueUtile.miseAJourContactSendinblue(demandeurEmploi, ParcoursUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours());
 
 	return simulation;
     }

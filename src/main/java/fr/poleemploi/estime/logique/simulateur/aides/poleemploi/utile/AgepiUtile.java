@@ -1,4 +1,4 @@
-package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
+package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class AgepiUtile {
      *     Vous élevez seul 1 ou plusieurs enfants de moins de 10 ans dont vous avez la charge et la garde.
      * @param numeroMoisSimule 
      */
-    public boolean isEligible(int numeroMoisSimule) {
+    public boolean isAgepiAVerser(int numeroMoisSimule) {
 	return simulateurAidesUtile.isPremierMois(numeroMoisSimule);
     }
 

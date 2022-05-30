@@ -431,7 +431,7 @@ class DemandeurAideLogementProchaineDeclarationMois2Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(208f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(272);
+		assertThat(apl.getMontant()).isEqualTo(272f);
 	    });
 	});
     }

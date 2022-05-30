@@ -82,6 +82,30 @@
                 "2020-09": 1000.0,
                 "2020-10": 1000.0,
                 "2020-11": 1000.0
+            },
+            "type_intensite_activite": {
+                "2020-07": "hebdomadaire"
+            },
+            "agepi_temps_travail_en_heure": {
+                "2020-07": 0.0
+            },
+            "pole_emploi_categorie_demandeur_emploi": {
+                "2020-07": "categorie_1"
+            },
+            "lieu_emploi_ou_formation": {
+                "2020-07": "metropole_hors_corse"
+            },
+            "contrat_de_travail_debut": {
+                "2020-07": "2020-07-01"
+            },
+            "agepi_date_demande": {
+                "2020-07": "2020-11-01"
+            },
+            "contrat_de_travail_type": {
+                "2020-07": "cdi"
+            },
+            "agepi": {
+                "2020-07": null
             }
         }
     },

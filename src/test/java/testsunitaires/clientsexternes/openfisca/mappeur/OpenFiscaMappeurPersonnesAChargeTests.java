@@ -294,7 +294,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	situationFamiliale.setIsEnCouple(false);
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
-	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
 	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
