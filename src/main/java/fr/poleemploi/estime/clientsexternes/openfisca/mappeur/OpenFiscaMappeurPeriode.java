@@ -44,6 +44,12 @@ public class OpenFiscaMappeurPeriode {
 	return periodesOpenFisca;
     }
 
+    public OpenFiscaPeriodes creerPeriodesOpenFiscaAgepi(Object valeur, LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), valeur);
+	return periodesOpenFisca;
+    }
+
     public OpenFiscaPeriodes creerPeriodesValeurNulleEgaleZero(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule, int nombrePeriode) {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < nombrePeriode; numeroMoisPeriode++) {
@@ -183,6 +189,13 @@ public class OpenFiscaMappeurPeriode {
 	ObjectMapper mapper = new ObjectMapper();
 	LocalDate dateDeclenchementCalculAide = dateDebutSimulation.plusMonths((long) numeroMoisSimule - 1);
 	periodesOpenFisca.put(getPeriodeFormatee(dateDeclenchementCalculAide), mapper.nullNode());
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes getPeriodeOpenfiscaCalculAgepi(LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	ObjectMapper mapper = new ObjectMapper();
+	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), mapper.nullNode());
 	return periodesOpenFisca;
     }
 

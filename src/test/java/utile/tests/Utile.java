@@ -26,6 +26,7 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -103,6 +104,7 @@ public class Utile {
 	demandeurEmploi.setSituationFamiliale(situationFamiliale);
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	futurTravail.setSalaire(salaire);
 	demandeurEmploi.setFuturTravail(futurTravail);
@@ -110,6 +112,14 @@ public class Utile {
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	initRessourcesFinancieres(ressourcesFinancieres, population);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	return demandeurEmploi;
+    }
+
+    public DemandeurEmploi creerBaseDemandeurEmploi(String population, boolean isEnCouple, List<Personne> personnesACharge) {
+	DemandeurEmploi demandeurEmploi = creerBaseDemandeurEmploi(population, isEnCouple, personnesACharge.size());
+
+	demandeurEmploi.getSituationFamiliale().setPersonnesACharge(personnesACharge);
 
 	return demandeurEmploi;
     }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
+import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AgepiUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AideMobiliteUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
@@ -21,10 +21,10 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 public class SimulateurAidesPoleEmploi {
 
     @Autowired
-    private AgepiUtile agepiUtile;
+    private AideMobiliteUtile aideMobiliteUtile;
 
     @Autowired
-    private AideMobiliteUtile aideMobiliteUtile;
+    private AgepiUtile agepiUtile;
 
     @Autowired
     private AreUtile areUtile;
@@ -54,13 +54,6 @@ public class SimulateurAidesPoleEmploi {
     }
 
     private void simulerAidesByCallingApiPEIO(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	if (agepiUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
-	    Optional<Aide> agepiOptional = agepiUtile.simulerAide(demandeurEmploi);
-	    if (agepiOptional.isPresent()) {
-		aidesPourCeMois.put(AideEnum.AGEPI.getCode(), agepiOptional.get());
-	    }
-	}
-
 	if (aideMobiliteUtile.isEligible(numeroMoisSimule, demandeurEmploi)) {
 	    Optional<Aide> aideMobiliteOptional = aideMobiliteUtile.simulerAide(demandeurEmploi);
 	    if (aideMobiliteOptional.isPresent()) {

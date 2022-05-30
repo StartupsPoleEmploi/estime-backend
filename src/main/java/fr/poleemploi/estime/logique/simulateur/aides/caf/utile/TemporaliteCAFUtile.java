@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
+import fr.poleemploi.estime.commun.enumerations.SituationAppelOpenFiscaEnum;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -43,6 +44,9 @@ public class TemporaliteCAFUtile {
     @Autowired
     private RSAUtile rsaUtile;
 
+    @Autowired
+    private AgepiUtile agepiUtile;
+
     /**
      * Fonction qui permet de déterminer les appels vers openfisca à effectuer, 
      * cette méthode permet notamment de réduire les appels en rassemblant les appels pour les différentes aides qui doivent s'effectuer dans le même mois
@@ -57,14 +61,14 @@ public class TemporaliteCAFUtile {
      */
     public void simulerTemporaliteAppelOpenfisca(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 
-	boolean isAideLogementAVerser = false;
-	boolean isRSAAVerser = false;
-	boolean isPrimeActiviteAVerser = false;
+	boolean isAideLogementAVerser = isAideLogementAVerser(numeroMoisSimule, demandeurEmploi);
+	boolean isRSAAVerser = isRSAAVerser(numeroMoisSimule, demandeurEmploi);
+	boolean isPrimeActiviteAVerser = isPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi);
+	boolean isAgepiAVerser = isAgepiAVerser(numeroMoisSimule);
 
-	isAideLogementAVerser = isAideLogementAVerser(numeroMoisSimule, demandeurEmploi);
-	isRSAAVerser = isRSAAVerser(numeroMoisSimule, demandeurEmploi);
-	isPrimeActiviteAVerser = isPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi);
-
+	if (isAgepiAVerser) {
+	    verserAgepi(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	}
 	// Si l'on doit verser l'aide au logement et la prime d'activité pour les demandeurs ASS/AAH/ARE/RSA
 	if (isAideLogementAVerser && isRSAAVerser && isPrimeActiviteAVerser) {
 	    verserAideLogementAvecPrimeActiviteEtRSA(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
@@ -98,6 +102,40 @@ public class TemporaliteCAFUtile {
 	}
     }
 
+    //    private void handleAgepiAVerser(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi, boolean isAideLogementAVerser, boolean isPrimeActiviteAVerser, boolean isRSAAVerser) {
+    //	if (isAideLogementAVerser && isRSAAVerser && isPrimeActiviteAVerser) {
+    //	    verserAgepiAvecAideLogementEtPrimeActiviteEtRSA(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+    //	} else {
+    //	    if (isAideLogementAVerser && isRSAAVerser) {
+    //		verserAgepiAvecAideLogementEtRSA(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+    //		primeActiviteUtile.reporterPrimeActivite(simulation, aidesPourCeMois, numeroMoisSimule);
+    //	    } else if (isAideLogementAVerser && isPrimeActiviteAVerser) {
+    //		verserAgepiAvecAideLogementEtPrimeActivite(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+    //		rsaUtile.reporterRsa(simulation, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    //	    } else if (isPrimeActiviteAVerser && isRSAAVerser) {
+    //		verserAgepiAvecPrimeActiviteEtRSA(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+    //		aidesLogementUtile.reporterAideLogement(simulation, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    //	    } else if (isAideLogementAVerser) {
+    //		verserAgepiAvecAideLogement(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+    //		rsaUtile.reporterRsa(simulation, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    //		primeActiviteUtile.reporterPrimeActivite(simulation, aidesPourCeMois, numeroMoisSimule);
+    //	    } else if (isPrimeActiviteAVerser) {
+    //		verserAgepiAvecPrimeActivite(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+    //		rsaUtile.reporterRsa(simulation, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    //		aidesLogementUtile.reporterAideLogement(simulation, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    //	    } else if (isRSAAVerser) {
+    //		verserAgepiAvecRSA(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+    //		aidesLogementUtile.reporterAideLogement(simulation, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    //		primeActiviteUtile.reporterPrimeActivite(simulation, aidesPourCeMois, numeroMoisSimule);
+    //	    } else {
+    //		verserAgepi(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+    //		aidesLogementUtile.reporterAideLogement(simulation, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    //		primeActiviteUtile.reporterPrimeActivite(simulation, aidesPourCeMois, numeroMoisSimule);
+    //		rsaUtile.reporterRsa(simulation, aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+    //	    }
+    //	}
+    //    }
+
     private boolean isRSAAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	boolean isRSAAVerser = false;
 	if (beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
@@ -125,46 +163,97 @@ public class TemporaliteCAFUtile {
 	return isPrimeActiviteAVerser;
     }
 
-    private void verserAideLogementAvecPrimeActiviteEtRSA(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogementAvecPrimeActiviteEtRSA(simulation, demandeurEmploi, dateDebutSimulation,
-		numeroMoisSimule - 1);
+    private boolean isAgepiAVerser(int numeroMoisSimule) {
+	return agepiUtile.isEligible(numeroMoisSimule);
+    }
 
+    private void verserAgepi(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+		SituationAppelOpenFiscaEnum.AGEPI);
+	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
+    }
+
+    //    private void verserAgepiAvecAideLogementEtPrimeActiviteEtRSA(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    //	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+    //		SituationAppelOpenFiscaEnum.AGEPI_PPA_RSA_AL);
+    //	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
+    //    }
+    //
+    //    private void verserAgepiAvecAideLogementEtPrimeActivite(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    //	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+    //		SituationAppelOpenFiscaEnum.AGEPI_PPA_AL);
+    //	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
+    //    }
+    //
+    //    private void verserAgepiAvecAideLogementEtRSA(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    //	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+    //		SituationAppelOpenFiscaEnum.AGEPI_RSA_AL);
+    //	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
+    //    }
+    //
+    //    private void verserAgepiAvecAideLogement(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    //	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+    //		SituationAppelOpenFiscaEnum.AGEPI_AL);
+    //	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
+    //    }
+    //
+    //    private void verserAgepiAvecPrimeActiviteEtRSA(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    //	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+    //		SituationAppelOpenFiscaEnum.AGEPI_PPA_RSA);
+    //	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
+    //    }
+    //
+    //    private void verserAgepiAvecPrimeActivite(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    //	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+    //		SituationAppelOpenFiscaEnum.AGEPI_PPA);
+    //	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
+    //    }
+    //
+    //    private void verserAgepiAvecRSA(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    //	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+    //		SituationAppelOpenFiscaEnum.AGEPI_RSA);
+    //	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
+    //    }
+
+    private void verserAideLogementAvecPrimeActiviteEtRSA(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+		SituationAppelOpenFiscaEnum.PPA_RSA_AL);
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
     private void verserAideLogementAvecPrimeActivite(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogementAvecPrimeActivite(simulation, demandeurEmploi, dateDebutSimulation,
-		numeroMoisSimule - 1);
-
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+		SituationAppelOpenFiscaEnum.PPA_AL);
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
     private void verserAideLogementAvecRSA(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogementAvecRSA(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule - 1);
-
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+		SituationAppelOpenFiscaEnum.RSA_AL);
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
     private void verserAideLogement(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideLogement(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule - 1);
-
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+		SituationAppelOpenFiscaEnum.AL);
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
     private void verserPrimeActiviteAvecRSA(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerRsaAvecPrimeActivite(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule - 1);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+		SituationAppelOpenFiscaEnum.PPA_RSA);
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
     private void verserPrimeActivite(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule - 1);
-
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+		SituationAppelOpenFiscaEnum.PPA);
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
     private void verserRSA(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerRSA(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule - 1);
-
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAidesSelonSituation(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule,
+		SituationAppelOpenFiscaEnum.RSA);
 	verserAide(aidesPourCeMois, openFiscaRetourSimulation);
     }
 
@@ -184,6 +273,10 @@ public class TemporaliteCAFUtile {
 	if (openFiscaRetourSimulation.getMontantPrimeActivite() > 0 && openFiscaRetourSimulation.getMontantRSA() > 0) {
 	    Aide primeActivite = primeActiviteRSAUtile.creerAidePrimeActivite(openFiscaRetourSimulation.getMontantPrimeActivite(), false);
 	    aidesPourCeMois.put(primeActivite.getCode(), primeActivite);
+	}
+	if (openFiscaRetourSimulation.getMontantAgepi() > 0) {
+	    Aide agepi = agepiUtile.creerAideAgepi(openFiscaRetourSimulation.getMontantAgepi());
+	    aidesPourCeMois.put(agepi.getCode(), agepi);
 	}
     }
 }

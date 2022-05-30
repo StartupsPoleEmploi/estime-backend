@@ -29,12 +29,12 @@ public class DateUtile {
     }
 
     public LocalDate getDatePremierJourDuMois(LocalDate dateCourante) {
-	YearMonth yearMonth = YearMonth.of( dateCourante.getYear(), dateCourante.getMonthValue() );
+	YearMonth yearMonth = YearMonth.of(dateCourante.getYear(), dateCourante.getMonthValue());
 	return yearMonth.atDay(1);
     }
 
     public LocalDate getDateDernierJourDuMois(LocalDate dateCourante) {
-	YearMonth yearMonth = YearMonth.of( dateCourante.getYear(), dateCourante.getMonthValue() );
+	YearMonth yearMonth = YearMonth.of(dateCourante.getYear(), dateCourante.getMonthValue());
 	return yearMonth.atEndOfMonth();
     }
 
@@ -51,21 +51,25 @@ public class DateUtile {
     }
 
     public String getMonthFromLocalDate(LocalDate localDate) {
-	DecimalFormat decimalFormat= new DecimalFormat("00");
+	DecimalFormat decimalFormat = new DecimalFormat("00");
 	return decimalFormat.format(Double.valueOf(localDate.getMonthValue()));
     }
 
-    public LocalDate convertDateToLocalDate(Date dateToConvert)  {
+    public LocalDate convertDateToLocalDate(Date dateToConvert) {
 	return dateToConvert.toInstant().atZone(ZONE_ID_FRANCE).toLocalDate();
     }
 
-
-    public String convertDateToString(LocalDate dateToConvert)  {
+    public String convertDateToString(LocalDate dateToConvert) {
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT);
 	return formatter.format(dateToConvert);
     }
 
-    public String convertDateToString(LocalDate dateToConvert, String dateFormat)  {
+    public String convertDateToStringOpenFisca(LocalDate dateToConvert) {
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_YYYY_MM_DD);
+	return formatter.format(dateToConvert);
+    }
+
+    public String convertDateToString(LocalDate dateToConvert, String dateFormat) {
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
 	return formatter.format(dateToConvert);
     }
@@ -84,7 +88,7 @@ public class DateUtile {
 
     public int getNombreJoursDansLeMois(LocalDate date) {
 	YearMonth yearMonthObject = YearMonth.of(date.getYear(), date.getMonthValue());
-	return yearMonthObject.lengthOfMonth();  
+	return yearMonthObject.lengthOfMonth();
     }
 
     public int getAge(LocalDate dateNaissance) {
@@ -93,5 +97,9 @@ public class DateUtile {
 	} else {
 	    return 0;
 	}
+    }
+
+    public LocalDate getDateNaissanceFromAge(int age) {
+	return LocalDate.now().minusYears(age);
     }
 }

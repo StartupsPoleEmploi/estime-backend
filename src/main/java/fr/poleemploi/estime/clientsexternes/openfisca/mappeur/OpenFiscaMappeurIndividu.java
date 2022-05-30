@@ -28,6 +28,9 @@ public class OpenFiscaMappeurIndividu {
     private OpenFiscaMappeurRessourcesPersonne openFiscaMappeurRessourcesFinancieres;
 
     @Autowired
+    private OpenFiscaMappeurAgepi openFiscaMappeurAgepi;
+
+    @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;
 
     @Autowired
@@ -96,6 +99,8 @@ public class OpenFiscaMappeurIndividu {
 		    demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite(), dateDebutSimulation, numeroMoisSimule,
 		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	}
+
+	openFiscaMappeurAgepi.addAgepiOpenFiscaIndividu(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
     }
 
     private OpenFiscaIndividu creerEnfantOpenFisca(Personne personneACharge, LocalDate dateDebutSimulation, int numeroMoisSimule) {

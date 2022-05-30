@@ -21,6 +21,7 @@ import com.github.tsohr.JSONException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
@@ -64,6 +65,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);
@@ -117,6 +119,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);
@@ -170,6 +173,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);
@@ -222,6 +226,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);
@@ -268,6 +273,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(1040);
 	salaire.setMontantBrut(1342);
@@ -316,6 +322,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(1040);
 	salaire.setMontantBrut(1342);
@@ -364,6 +371,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(1040);
 	salaire.setMontantBrut(1342);
@@ -410,6 +418,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(800);
 	salaire.setMontantBrut(1038);
@@ -460,6 +469,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(800);
 	salaire.setMontantBrut(1038);
@@ -509,6 +519,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);

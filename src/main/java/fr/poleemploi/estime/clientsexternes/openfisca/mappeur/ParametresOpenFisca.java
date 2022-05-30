@@ -9,6 +9,17 @@ public class ParametresOpenFisca {
     public static final String AAH = "aah";
     public static final String AF = "af";
     public static final String AGE = "age";
+
+    public static final String AGEPI = "agepi";
+    public static final String INTENSITE_ACTIVITE = "type_intensite_activite";
+    public static final String AGEPI_TEMPS_TRAVAIL = "agepi_temps_travail_en_heure";
+    public static final String CATEGORIE_DEMANDEUR_EMPLOI = "pole_emploi_categorie_demandeur_emploi";
+    public static final String LIEU_EMPLOI_OU_FORMATION = "lieu_emploi_ou_formation";
+    public static final String DEBUT_CONTRAT_TRAVAIL = "contrat_de_travail_debut";
+    public static final String AGEPI_DATE_DEMANDE = "agepi_date_demande";
+    public static final String TYPE_CONTRAT_TRAVAIL = "contrat_de_travail_type";
+    public static final String DUREE_CONTRAT_TRAVAIL = "contrat_de_travail_duree";
+
     public static final String AIDE_LOGEMENT = "aide_logement";
     public static final String ALF = "alf";
     public static final String ALS = "als";
