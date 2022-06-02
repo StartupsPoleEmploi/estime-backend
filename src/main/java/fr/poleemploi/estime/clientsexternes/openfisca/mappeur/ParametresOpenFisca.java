@@ -20,6 +20,13 @@ public class ParametresOpenFisca {
     public static final String TYPE_CONTRAT_TRAVAIL = "contrat_de_travail_type";
     public static final String DUREE_CONTRAT_TRAVAIL = "contrat_de_travail_duree";
 
+    public static final String AIDE_MOBILITE = "aide_mobilite";
+    public static final String CONTEXTE_ACTIVITE = "contexte_activite_pole_emploi";
+    public static final String AIDE_MOBILITE_DATE_DEMANDE = "aide_mobilite_date_demande";
+    public static final String DISTANCE_ACTIVITE_DOMICILE = "distance_activite_domicile";
+    public static final String NOMBRE_ALLERS_RETOURS = "nombre_allers_retours";
+    public static final String LIEU_RESIDENCE = "residence";
+
     public static final String AIDE_LOGEMENT = "aide_logement";
     public static final String ALF = "alf";
     public static final String ALS = "als";

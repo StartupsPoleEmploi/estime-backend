@@ -1,4 +1,4 @@
-package testsintegration.simulation.montants.openfisca.agepi;
+package testsintegration.simulation.montants.openfisca.aide_mobilite;
 
 import static org.mockito.Mockito.doReturn;
 
@@ -33,6 +33,30 @@ public class Commun {
 
     protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, List<Personne> personnesACharge) throws ParseException {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, personnesACharge);
+	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+
+	return demandeurEmploi;
+    }
+
+    protected DemandeurEmploi createDemandeurEmploiCDD(int nombreMoisTravailles, boolean isEnCouple, List<Personne> personnesACharge) throws ParseException {
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, personnesACharge);
+	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDD.name());
+	demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(nombreMoisTravailles);
+	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+
+	return demandeurEmploi;
+    }
+
+    protected DemandeurEmploi createDemandeurEmploiSuperieurAREMini(boolean isEnCouple, List<Personne> personnesACharge) throws ParseException {
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), isEnCouple, personnesACharge);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereBrute(30f);
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());

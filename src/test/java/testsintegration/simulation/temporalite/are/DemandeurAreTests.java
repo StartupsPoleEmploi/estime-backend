@@ -51,80 +51,83 @@ class DemandeurAreTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544f);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200f);
-	initMocks("23-10-2021", demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
-	// Alors les prestations du premier mois 11/2020 sont :
+	// Alors les prestations du premier mois 02/2022 sont :
 	// RSA : 500€
 	SimulationMensuelle simulationMois1 = simulation.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulationMensuelle -> {
-	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
-	    });
-	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).isEmpty();
-
-	});
-	// Alors les prestations du second mois 12/2020 sont :
-	// RSA : 500€
-	SimulationMensuelle simulationMois2 = simulation.getSimulationsMensuelles().get(1);
-	assertThat(simulationMois2).satisfies(simulationMensuelle -> {
-	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
-	    });
-	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).isEmpty();
-	});
-	// Alors les prestations du troisième mois 01/2021 sont :
-	// PA : 118 (simulateur CAF : 111€)
-	SimulationMensuelle simulationMois3 = simulation.getSimulationsMensuelles().get(2);
-	assertThat(simulationMois3).satisfies(simulationMensuelle -> {
-	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
-	    });
-	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).isEmpty();
-	});
-	// Alors les prestations du quatrième mois 02/2021 sont :
-	// PA : 118 (simulateur CAF : 111€)
-	SimulationMensuelle simulationMois4 = simulation.getSimulationsMensuelles().get(3);
-	assertThat(simulationMois4).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).isEmpty();
+	    assertThat(simulationMensuelle.getAides()).hasSize(1);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(am -> {
+		assertThat(am.getMontant()).isEqualTo(192);
+	    });
+
 	});
-	// Alors les prestations du cinquième mois 03/2021 sont :
-	// PA : 118€ (simulateur CAF : 111€)
-	SimulationMensuelle simulationMois5 = simulation.getSimulationsMensuelles().get(4);
-	assertThat(simulationMois5).satisfies(simulationMensuelle -> {
+	// Alors les prestations du second mois 03/2022 sont :
+	// RSA : 500€
+	SimulationMensuelle simulationMois2 = simulation.getSimulationsMensuelles().get(1);
+	assertThat(simulationMois2).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(1);
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(238f);
-	    });
+	    assertThat(simulationMensuelle.getAides()).isEmpty();
 	});
-	// Alors les prestations du sixième mois 04/2021 sont :
-	// PA : 174€ (simulateur CAF : 167€)
-	SimulationMensuelle simulationMois6 = simulation.getSimulationsMensuelles().get(5);
-	assertThat(simulationMois6).satisfies(simulationMensuelle -> {
+	// Alors les prestations du troisième mois 04/2022 sont :
+	// PA : 118 (simulateur CAF : 111€)
+	SimulationMensuelle simulationMois3 = simulation.getSimulationsMensuelles().get(2);
+	assertThat(simulationMois3).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getAides()).isEmpty();
+	});
+	// Alors les prestations du quatrième mois 05/2022 sont :
+	// PA : 118 (simulateur CAF : 111€)
+	SimulationMensuelle simulationMois4 = simulation.getSimulationsMensuelles().get(3);
+	assertThat(simulationMois4).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("05");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getAides()).isEmpty();
+	});
+	// Alors les prestations du cinquième mois 06/2022 sont :
+	// PA : 118€ (simulateur CAF : 111€)
+	SimulationMensuelle simulationMois5 = simulation.getSimulationsMensuelles().get(4);
+	assertThat(simulationMois5).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("06");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(238f);
+		assertThat(ppa.getMontant()).isEqualTo(236f);
+	    });
+	});
+	// Alors les prestations du sixième mois 07/2022 sont :
+	// PA : 174€ (simulateur CAF : 167€)
+	SimulationMensuelle simulationMois6 = simulation.getSimulationsMensuelles().get(5);
+	assertThat(simulationMois6).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("07");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getAides()).hasSize(1);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(236f);
 	    });
 	});
     }
@@ -141,30 +144,33 @@ class DemandeurAreTests extends Commun {
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setNombreJoursRestants(10f);
-	initMocks("23-10-2021", demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
-	// Alors les prestations du premier mois 11/2020 sont :
+	// Alors les prestations du premier mois 02/2022 sont :
 	// RSA : 350€
 	SimulationMensuelle simulationMois1 = simulation.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(1);
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(am -> {
+		assertThat(am.getMontant()).isEqualTo(192);
+	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(148);
 	    });
 	});
-	// Alors les prestations du second mois 12/2020 sont :
+	// Alors les prestations du second mois 03/2022 sont :
 	// RSA : 350€
 	SimulationMensuelle simulationMois2 = simulation.getSimulationsMensuelles().get(1);
 	assertThat(simulationMois2).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
@@ -172,12 +178,12 @@ class DemandeurAreTests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(148);
 	    });
 	});
-	// Alors les prestations du troisième mois 01/2021 sont :
+	// Alors les prestations du troisième mois 04/2022 sont :
 	// RSA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312€)
 	SimulationMensuelle simulationMois3 = simulation.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
@@ -186,43 +192,43 @@ class DemandeurAreTests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(74);
 	    });
 	});
-	// Alors les prestations du quatrième mois 02/2021 sont :
+	// Alors les prestations du quatrième mois 05/2022 sont :
 	// PA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312€)
 	SimulationMensuelle simulationMois4 = simulation.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("05");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).isEmpty();
 	});
-	// Alors les prestations du cinquième mois 03/2021 sont :
+	// Alors les prestations du cinquième mois 06/2022 sont :
 	// PA : 32€ (simulateur CAF : 0€), PA : 319€ (simulateur CAF : 312€)
 	SimulationMensuelle simulationMois5 = simulation.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("06");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(141f);
+		assertThat(ppa.getMontant()).isEqualTo(140f);
 	    });
 	});
-	// Alors les prestations du sixième mois 04/2021 sont :
+	// Alors les prestations du sixième mois 07/2022 sont :
 	// PA : 367€ (simulateur CAF : 353€)
 	SimulationMensuelle simulationMois6 = simulation.getSimulationsMensuelles().get(5);
 	assertThat(simulationMois6).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("07");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(141f);
+		assertThat(ppa.getMontant()).isEqualTo(140f);
 	    });
 	});
     }
@@ -238,32 +244,35 @@ class DemandeurAreTests extends Commun {
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
-	initMocks("23-07-2021", demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
-	// Alors les prestations du premier mois 08/2021 sont :
+	// Alors les prestations du premier mois 02/2022 sont :
 	// RSA : 380€
 	SimulationMensuelle simulationMois1 = simulation.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("08");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(1);
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(am -> {
+		assertThat(am.getMontant()).isEqualTo(192);
+	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(148);
 	    });
 	});
 
-	// Alors les prestations du second mois 09/2021 sont :
+	// Alors les prestations du second mois 03/2022 sont :
 	// RSA : 380€
 	SimulationMensuelle simulationMois2 = simulation.getSimulationsMensuelles().get(1);
 
 	assertThat(simulationMois2).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("09");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
@@ -271,13 +280,13 @@ class DemandeurAreTests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(148);
 	    });
 	});
-	// Alors les prestations du troisième mois 10/2021 sont :
+	// Alors les prestations du troisième mois 04/2022 sont :
 	// RSA : 54 (simulateur CAF : 38€), PA : 270 (simulateur CAF : 271€)
 	SimulationMensuelle simulationMois3 = simulation.getSimulationsMensuelles().get(2);
 	assertThat(simulationMois3).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("10");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
@@ -285,13 +294,13 @@ class DemandeurAreTests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(148);
 	    });
 	});
-	// Alors les prestations du quatrième mois 11/2021 sont :
+	// Alors les prestations du quatrième mois 05/2022 sont :
 	// RSA : 54 (simulateur CAF : 38€), PA : 270 (simulateur CAF : 271€)
 	SimulationMensuelle simulationMois4 = simulation.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("11");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("05");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
@@ -299,29 +308,12 @@ class DemandeurAreTests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(148);
 	    });
 	});
-	// Alors les prestations du cinquième mois 12/2021 sont :
+	// Alors les prestations du cinquième mois 06/2022 sont :
 	// RSA : 54 (simulateur CAF : 38€), PA : 270 (simulateur CAF : 271€)
 	SimulationMensuelle simulationMois5 = simulation.getSimulationsMensuelles().get(4);
 	assertThat(simulationMois5).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("12");
-		assertThat(dateMoisSimule.getYear()).isEqualTo(2021);
-	    });
-	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
-		assertThat(are.getMontant()).isEqualTo(148);
-	    });
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(121);
-	    });
-	});
-	// Alors les prestations du sixième mois 01/2022 sont :
-	// RSA : 16 (simulateur CAF : 0€), PA : 294 (simulateur CAF : 291€)
-	SimulationMensuelle simulationMois6 = simulation.getSimulationsMensuelles().get(5);
-	assertThat(simulationMois6).satisfies(simulationMensuelle -> {
-	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
-		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("01");
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("06");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
@@ -330,7 +322,24 @@ class DemandeurAreTests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(148);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(121);
+		assertThat(ppa.getMontant()).isEqualTo(115f);
+	    });
+	});
+	// Alors les prestations du sixième mois 07/2022 sont :
+	// RSA : 16 (simulateur CAF : 0€), PA : 294 (simulateur CAF : 291€)
+	SimulationMensuelle simulationMois6 = simulation.getSimulationsMensuelles().get(5);
+	assertThat(simulationMois6).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("07");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(148);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(115f);
 	    });
 	});
     }

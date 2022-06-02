@@ -31,6 +31,9 @@ public class OpenFiscaMappeurIndividu {
     private OpenFiscaMappeurAgepi openFiscaMappeurAgepi;
 
     @Autowired
+    private OpenFiscaMappeurAideMobilite openFiscaMappeurAideMobilite;
+
+    @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;
 
     @Autowired
@@ -101,13 +104,15 @@ public class OpenFiscaMappeurIndividu {
 	}
 
 	openFiscaMappeurAgepi.addAgepiOpenFiscaIndividu(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	openFiscaMappeurAideMobilite.addAideMobiliteOpenFiscaIndividu(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
     }
 
     private OpenFiscaIndividu creerEnfantOpenFisca(Personne personneACharge, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	OpenFiscaIndividu enfant = new OpenFiscaIndividu();
 	enfant.setDateNaissance(openFiscaMappeurPeriode.creerPeriodesOpenFisca(
-		dateUtile.convertDateToString(personneACharge.getInformationsPersonnelles().getDateNaissance(), DateUtile.DATE_FORMAT_YYYY_MM_DD), dateDebutSimulation,
-		numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+		dateUtile.convertDateToString(dateUtile.getDateNaissanceModifieeEnfantMoinsDUnAn(personneACharge.getInformationsPersonnelles().getDateNaissance()),
+			DateUtile.DATE_FORMAT_YYYY_MM_DD),
+		dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	enfant.setEnfantACharge(openFiscaMappeurPeriode.creerPeriodesEnfantACharge(dateDebutSimulation));
 	openFiscaMappeurRessourcesFinancieres.addRessourcesFinancieresPersonne(enfant, personneACharge, dateDebutSimulation, numeroMoisSimule);
 	return enfant;

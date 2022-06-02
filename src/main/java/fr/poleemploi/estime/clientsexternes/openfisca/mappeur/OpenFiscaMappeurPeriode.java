@@ -50,6 +50,10 @@ public class OpenFiscaMappeurPeriode {
 	return periodesOpenFisca;
     }
 
+    public OpenFiscaPeriodes creerPeriodesOpenFiscaAideMobilite(Object valeur, LocalDate dateDebutSimulation) {
+	return creerPeriodesOpenFiscaAgepi(valeur, dateDebutSimulation);
+    }
+
     public OpenFiscaPeriodes creerPeriodesValeurNulleEgaleZero(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule, int nombrePeriode) {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < nombrePeriode; numeroMoisPeriode++) {
@@ -197,6 +201,10 @@ public class OpenFiscaMappeurPeriode {
 	ObjectMapper mapper = new ObjectMapper();
 	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), mapper.nullNode());
 	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes getPeriodeOpenfiscaCalculAideMobilite(LocalDate dateDebutSimulation) {
+	return getPeriodeOpenfiscaCalculAgepi(dateDebutSimulation);
     }
 
     public String getPeriodeFormatee(LocalDate datePeriode) {

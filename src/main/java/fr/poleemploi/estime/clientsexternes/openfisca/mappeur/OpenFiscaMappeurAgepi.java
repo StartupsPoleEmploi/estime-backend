@@ -30,8 +30,6 @@ public class OpenFiscaMappeurAgepi {
     @Autowired
     private DateUtile dateUtile;
 
-    private static final int NOMBRE_MOIS_PERIODE_OPENFISCA_AGEPI = 1;
-
     private static final String INTENSITE_ACTIVITE = "hebdomadaire";
     private static final String CATEGORIE_DEMANDEUR_EMPLOI = "categorie_1";
     private static final String LIEU_EMPLOI_OU_FORMATION = "metropole_hors_corse";
@@ -68,8 +66,8 @@ public class OpenFiscaMappeurAgepi {
 		.setDebutContratTravail(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepi(dateUtile.convertDateToStringOpenFisca(dateDebutSimulation), dateDebutSimulation));
 	if (demandeurEmploi.getFuturTravail().getNombreMoisContratCDD() != null) {
 
-	    openFiscaIndividu.setDureeContratTravail(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(demandeurEmploi.getFuturTravail().getNombreMoisContratCDD(),
-		    dateDebutSimulation, numeroMoisSimule, NOMBRE_MOIS_PERIODE_OPENFISCA_AGEPI));
+	    openFiscaIndividu
+		    .setDureeContratTravail(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepi(demandeurEmploi.getFuturTravail().getNombreMoisContratCDD(), dateDebutSimulation));
 	}
 
 	openFiscaIndividu.setAgepi(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAgepi(dateDebutSimulation));

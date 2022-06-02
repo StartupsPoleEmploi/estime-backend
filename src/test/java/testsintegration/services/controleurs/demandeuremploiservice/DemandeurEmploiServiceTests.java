@@ -26,7 +26,7 @@ import fr.poleemploi.estime.services.exceptions.BadRequestException;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class DemandeurEmploiServiceTests extends CommunTests {
+class DemandeurEmploiServiceTests extends Commun {
 
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;

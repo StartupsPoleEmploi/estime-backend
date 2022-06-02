@@ -6,6 +6,7 @@ public class OpenFiscaRetourSimulation {
     private float montantPrimeActivite;
     private float montantAideLogement;
     private float montantAgepi;
+    private float montantAideMobilite;
     private String typeAideLogement;
 
     public float getMontantRSA() {
@@ -46,6 +47,14 @@ public class OpenFiscaRetourSimulation {
 
     public void setMontantAgepi(float montantAgepi) {
 	this.montantAgepi = montantAgepi;
+    }
+
+    public float getMontantAideMobilite() {
+	return montantAideMobilite;
+    }
+
+    public void setMontantAideMobilite(float montantAideMobilite) {
+	this.montantAideMobilite = montantAideMobilite;
     }
 
     @Override

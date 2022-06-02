@@ -74,6 +74,19 @@ public class DateUtile {
 	return formatter.format(dateToConvert);
     }
 
+    // Fonction qui permet d'ajouter 1 an et 1 mois aux enfants de moins d'1 an
+    // pour contourner une erreur dans le calcul des ages des enfants de moins d'un an de l'API AGEPI OpenFisca
+    public LocalDate getDateNaissanceModifieeEnfantMoinsDUnAn(LocalDate dateNaissance) {
+	if (getAge(dateNaissance) < 1) {
+	    return enleverMoisALocalDate(enleverAnneesALocalDate(dateNaissance, 1), 1);
+	}
+	return dateNaissance;
+    }
+
+    public LocalDate enleverAnneesALocalDate(LocalDate localDate, int nombreAnneesAAjouter) {
+	return localDate.minusYears(nombreAnneesAAjouter);
+    }
+
     public LocalDate ajouterMoisALocalDate(LocalDate localDate, int nombreMoisAAjouter) {
 	return localDate.plusMonths(nombreMoisAAjouter);
     }
@@ -101,5 +114,9 @@ public class DateUtile {
 
     public LocalDate getDateNaissanceFromAge(int age) {
 	return LocalDate.now().minusYears(age);
+    }
+
+    public LocalDate getDateNaissanceFromAge(LocalDate dateReference, int age) {
+	return dateReference.minusYears(age);
     }
 }

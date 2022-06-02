@@ -3,6 +3,7 @@ package fr.poleemploi.estime.clientsexternes.openfisca.ressources;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHARGES_LOCATIVES;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COLOC;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEPCOM;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LIEU_RESIDENCE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CHAMBRE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CONVENTIONNE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LOGEMENT_CROUS;
@@ -21,6 +22,8 @@ public class OpenFiscaMenage {
     private List<String> personneDeReference;
     @JsonProperty(DEPCOM)
     private OpenFiscaPeriodes depcom;
+    @JsonProperty(LIEU_RESIDENCE)
+    private OpenFiscaPeriodes lieuResidence;
     @JsonProperty(RESIDENCE_MAYOTTE)
     private OpenFiscaPeriodes residenceMayotte;
     @JsonProperty(STATUT_OCCUPATION_LOGEMENT)
@@ -63,6 +66,15 @@ public class OpenFiscaMenage {
 
     public void setDepcom(OpenFiscaPeriodes depcom) {
 	this.depcom = depcom;
+    }
+
+    @JsonProperty(LIEU_RESIDENCE)
+    public OpenFiscaPeriodes getLieuResidence() {
+	return lieuResidence;
+    }
+
+    public void setLieuResidence(OpenFiscaPeriodes lieuResidence) {
+	this.lieuResidence = lieuResidence;
     }
 
     @JsonProperty(LOGEMENT_CHAMBRE)

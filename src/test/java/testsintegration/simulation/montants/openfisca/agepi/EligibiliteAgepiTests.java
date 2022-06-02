@@ -50,7 +50,8 @@ class EligibiliteAgepiTests extends Commun {
 	personnesACharge.add(createEnfant(8));
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
-	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
+	initMocks();
+	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
 	// Alors le demandeur est éligible à l'AGEPI
@@ -60,6 +61,7 @@ class EligibiliteAgepiTests extends Commun {
     @Test
     void calculerEligibleTest2() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
+	initMocks();
 	// Si DE France Métropolitaine, célibataire, 2 enfants à charge moins de 10 ans
 	boolean isEnCouple = false;
 	List<Personne> personnesACharge = new ArrayList<>();
@@ -67,7 +69,7 @@ class EligibiliteAgepiTests extends Commun {
 	personnesACharge.add(createEnfant(5));
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
-	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
+	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
 	// Alors le demandeur est éligible à l'AGEPI
@@ -77,6 +79,7 @@ class EligibiliteAgepiTests extends Commun {
     @Test
     void calculerEligibleTest3() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
+	initMocks();
 	// Si DE France Métropolitaine, célibataire, 1 enfant à charge moins de 10 ans, 1 enfant à charge plus de 10 ans
 	boolean isEnCouple = false;
 	List<Personne> personnesACharge = new ArrayList<>();
@@ -84,7 +87,7 @@ class EligibiliteAgepiTests extends Commun {
 	personnesACharge.add(createEnfant(5));
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
-	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
+	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
 	// Alors le demandeur est éligible à l'AGEPI
@@ -94,12 +97,13 @@ class EligibiliteAgepiTests extends Commun {
     @Test
     void calculerNonEligibleTest4() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
+	initMocks();
 	// Si DE France Métropolitaine, célibataire, 0 enfant à charge moins de 10 ans
 	boolean isEnCouple = false;
 	List<Personne> personnesACharge = new ArrayList<>();
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
-	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
+	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
 	// Alors le demandeur est éligible à l'AGEPI
@@ -109,12 +113,13 @@ class EligibiliteAgepiTests extends Commun {
     @Test
     void calculerNonEligibleTest5() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
+	initMocks();
 	// Si DE France Métropolitaine, en couple, 0 enfant à charge moins de 10 ans
 	boolean isEnCouple = true;
 	List<Personne> personnesACharge = new ArrayList<>();
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
-	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
+	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
 	// Alors le demandeur est éligible à l'AGEPI
@@ -124,13 +129,14 @@ class EligibiliteAgepiTests extends Commun {
     @Test
     void calculerNonEligibleTest6() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
+	initMocks();
 	// Si DE France Métropolitaine, en couple, 1 enfant à charge moins de 10 ans
 	boolean isEnCouple = true;
 	List<Personne> personnesACharge = new ArrayList<>();
 	personnesACharge.add(createEnfant(8));
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
-	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
+	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
 	// Alors le demandeur est éligible à l'AGEPI
@@ -140,13 +146,14 @@ class EligibiliteAgepiTests extends Commun {
     @Test
     void calculerNonEligibleTest7() throws JSONException, ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
 
+	initMocks();
 	// Si DE France Métropolitaine, en couple, 1 enfant à charge plus de 10 ans
 	boolean isEnCouple = false;
 	List<Personne> personnesACharge = new ArrayList<>();
 	personnesACharge.add(createEnfant(12));
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
-	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("25-01-2021");
+	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
 	// Alors le demandeur est éligible à l'AGEPI

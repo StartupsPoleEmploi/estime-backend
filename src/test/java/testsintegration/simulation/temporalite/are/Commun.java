@@ -66,10 +66,9 @@ public class Commun {
 	return demandeurEmploi;
     }
 
-    protected void initMocks(String dateSimulation, float montantSalaireNet)
-	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+    protected void initMocks(float montantSalaireNet) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 	//mock création date de demande de simulation
-	doReturn(utile.getDate(dateSimulation)).when(dateUtile).getDateJour();
+	doReturn(utile.getDate("01-01-2022")).when(dateUtile).getDateJour();
 
 	//mock retour appel détail indemnisation de l'ESD 
 	DetailIndemnisationPEIOOut detailIndemnisationESD = utile.creerDetailIndemnisationPEIO(TypePopulationEnum.ARE.getLibelle());

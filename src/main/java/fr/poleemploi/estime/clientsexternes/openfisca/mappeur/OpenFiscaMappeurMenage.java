@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaMenage;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.CodeDepartementUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Logement;
@@ -23,6 +24,12 @@ public class OpenFiscaMappeurMenage {
     @Autowired
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
+    @Autowired
+    private CodeDepartementUtile codeDepartementUtile;
+
+    private static final String RESIDENCE_METROPOLE = "metropole";
+    private static final String RESIDENCE_DOM = "guadeloupe";
+
     public OpenFiscaMenage creerMenageOpenFisca(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	OpenFiscaMenage menageOpenFisca = new OpenFiscaMenage();
 	Logement logement = demandeurEmploi.getInformationsPersonnelles().getLogement();
@@ -32,6 +39,10 @@ public class OpenFiscaMappeurMenage {
 		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	    menageOpenFisca.setResidenceMayotte(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getCoordonnees().isDeMayotte(), dateDebutSimulation, numeroMoisSimule,
 		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    String lieuResidence = codeDepartementUtile.isDesDOM(demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal()) ? RESIDENCE_DOM
+		    : RESIDENCE_METROPOLE;
+	    menageOpenFisca.setLieuResidence(
+		    openFiscaPeriodeMappeur.creerPeriodesOpenFisca(lieuResidence, dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	    menageOpenFisca.setLoyer(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getMontantLoyer(), dateDebutSimulation, numeroMoisSimule,
 		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	    menageOpenFisca.setChargesLocatives(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getMontantCharges(), dateDebutSimulation, numeroMoisSimule,

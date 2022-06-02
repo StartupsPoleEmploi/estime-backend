@@ -60,6 +60,7 @@ public class Utile {
     protected DateUtile dateUtile;
 
     private int NOMBRE_MOIS_SALAIRES_AVANT_SIMULATION = 14;
+    public static final int AGE_MAX_ENFANT_AGEPI = 10;
 
     @Value("${openfisca-api-uri}")
     private String openFiscaURI;
@@ -268,6 +269,8 @@ public class Utile {
 	case "AAH":
 	case "RSA":
 	case "ARE":
+	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population));
+	    break;
 	case "ASS":
 	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population));
 	    break;

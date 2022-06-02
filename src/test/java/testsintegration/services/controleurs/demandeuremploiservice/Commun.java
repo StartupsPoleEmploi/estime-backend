@@ -13,7 +13,7 @@ import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
-public class CommunTests {
+public class Commun {
 
     protected SituationFamiliale creerSituationFamiliale() {
 	SituationFamiliale situationFamiliale = new SituationFamiliale();

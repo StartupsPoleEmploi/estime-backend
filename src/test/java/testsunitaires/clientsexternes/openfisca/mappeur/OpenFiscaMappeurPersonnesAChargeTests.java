@@ -84,6 +84,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -143,6 +144,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -204,6 +206,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -268,6 +271,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -324,6 +328,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -385,6 +390,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);

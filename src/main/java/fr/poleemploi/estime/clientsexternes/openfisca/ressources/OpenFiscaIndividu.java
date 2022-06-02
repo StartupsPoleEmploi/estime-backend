@@ -4,18 +4,23 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI_DATE_DEMANDE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI_TEMPS_TRAVAIL;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AIDE_MOBILITE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AIDE_MOBILITE_DATE_DEMANDE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CATEGORIE_DEMANDEUR_EMPLOI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHOMAGE_NET;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CONTEXTE_ACTIVITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DATE_NAISSANCE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEBUT_CONTRAT_TRAVAIL;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DISTANCE_ACTIVITE_DOMICILE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DUREE_CONTRAT_TRAVAIL;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT_A_CHARGE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.INTENSITE_ACTIVITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LIEU_EMPLOI_OU_FORMATION;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.NOMBRE_ALLERS_RETOURS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSIONS_ALIMENTAIRES_PERCUES;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_RETRAITE;
@@ -77,6 +82,16 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes dureeContratTravail;
     @JsonProperty(AGEPI)
     private OpenFiscaPeriodes agepi;
+    @JsonProperty(CONTEXTE_ACTIVITE)
+    private OpenFiscaPeriodes contexteActivite;
+    @JsonProperty(AIDE_MOBILITE_DATE_DEMANDE)
+    private OpenFiscaPeriodes aideMobiliteDateDemande;
+    @JsonProperty(NOMBRE_ALLERS_RETOURS)
+    private OpenFiscaPeriodes nombreAllersRetours;
+    @JsonProperty(DISTANCE_ACTIVITE_DOMICILE)
+    private OpenFiscaPeriodes distanceActiviteDomicile;
+    @JsonProperty(AIDE_MOBILITE)
+    private OpenFiscaPeriodes aideMobilite;
 
     @JsonProperty(AAH)
     public OpenFiscaPeriodes getAllocationAdulteHandicape() {
@@ -292,6 +307,51 @@ public class OpenFiscaIndividu {
 
     public void setAgepi(OpenFiscaPeriodes agepi) {
 	this.agepi = agepi;
+    }
+
+    @JsonProperty(CONTEXTE_ACTIVITE)
+    public OpenFiscaPeriodes getContexteActivite() {
+	return contexteActivite;
+    }
+
+    public void setContexteActivite(OpenFiscaPeriodes contexteActivite) {
+	this.contexteActivite = contexteActivite;
+    }
+
+    @JsonProperty(AIDE_MOBILITE_DATE_DEMANDE)
+    public OpenFiscaPeriodes getAideMobiliteDateDemande() {
+	return aideMobiliteDateDemande;
+    }
+
+    public void setAideMobiliteDateDemande(OpenFiscaPeriodes aideMobiliteDateDemande) {
+	this.aideMobiliteDateDemande = aideMobiliteDateDemande;
+    }
+
+    @JsonProperty(NOMBRE_ALLERS_RETOURS)
+    public OpenFiscaPeriodes getNombreAllersRetours() {
+	return nombreAllersRetours;
+    }
+
+    public void setNombreAllersRetours(OpenFiscaPeriodes nombreAllersRetours) {
+	this.nombreAllersRetours = nombreAllersRetours;
+    }
+
+    @JsonProperty(DISTANCE_ACTIVITE_DOMICILE)
+    public OpenFiscaPeriodes getDistanceActiviteDomicile() {
+	return distanceActiviteDomicile;
+    }
+
+    public void setDistanceActiviteDomicile(OpenFiscaPeriodes distanceActiviteDomicile) {
+	this.distanceActiviteDomicile = distanceActiviteDomicile;
+    }
+
+    @JsonProperty(AIDE_MOBILITE)
+    public OpenFiscaPeriodes getAideMobilite() {
+	return aideMobilite;
+    }
+
+    public void setAideMobilite(OpenFiscaPeriodes aideMobilite) {
+	this.aideMobilite = aideMobilite;
     }
 
     @Override

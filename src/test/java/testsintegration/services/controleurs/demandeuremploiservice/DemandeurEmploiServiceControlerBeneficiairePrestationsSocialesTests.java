@@ -28,7 +28,7 @@ import fr.poleemploi.estime.services.ressources.SituationFamiliale;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class BeneficiaireAidesControleurTests extends CommunTests {
+class BeneficiaireAidesControleurTests extends Commun {
     
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;
