@@ -15,6 +15,7 @@ import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
@@ -89,6 +90,11 @@ public class Commun {
 	aidesCAF.setAidesFamiliales(aidesFamiliales);
 	aidesCAF.setAidesLogement(aidesLogement);
 	return aidesCAF;
+    }
+
+    protected AidesPoleEmploi createAidesPE() {
+	AidesPoleEmploi aidesPE = new AidesPoleEmploi();
+	return aidesPE;
     }
 
     protected AidesLogement createAidesLogement() {

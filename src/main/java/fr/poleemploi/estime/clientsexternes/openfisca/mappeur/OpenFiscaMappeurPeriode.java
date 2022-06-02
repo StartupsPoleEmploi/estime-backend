@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaIndividu;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaPeriodes;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
@@ -156,6 +157,24 @@ public class OpenFiscaMappeurPeriode {
 	personneOpenFisca.setSalaireImposable(periodesOpenFiscaSalaireImposable);
     }
 
+    public OpenFiscaPeriodes creerPeriodesOpenFiscaARE(DemandeurEmploi demandeurEmploi, Simulation simulation, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	int numeroMoisMontantARecuperer = numeroMoisSimule - (OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA - 1);
+	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode++) {
+	    float montantAide = 0;
+	    if (!isNumeroMoisMontantARecupererDansPeriodeSimulation(numeroMoisMontantARecuperer)) {
+		montantAide = aideUtile.getMontantAideAvantSimulation(numeroMoisMontantARecuperer, demandeurEmploi, AideEnum.AIDE_RETOUR_EMPLOI.getCode(), dateDebutSimulation);
+	    } else if (isNumeroMoisComplementARE(numeroMoisMontantARecuperer)) {
+		montantAide = aideUtile.getMontantAidePourCeMoisSimule(simulation, AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode(), numeroMoisMontantARecuperer);
+	    } else {
+		montantAide = aideUtile.getMontantAidePourCeMoisSimule(simulation, AideEnum.AIDE_RETOUR_EMPLOI.getCode(), numeroMoisMontantARecuperer);
+	    }
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisPeriode, numeroMoisSimule), montantAide);
+	    numeroMoisMontantARecuperer++;
+	}
+	return periodesOpenFisca;
+    }
+
     public OpenFiscaPeriodes creerPeriodesOpenFiscaAide(DemandeurEmploi demandeurEmploi, Simulation simulation, String codeAide, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	int numeroMoisMontantARecuperer = numeroMoisSimule - (OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA - 1);
@@ -237,5 +256,16 @@ public class OpenFiscaMappeurPeriode {
      */
     private boolean isNumeroMoisMontantARecupererDansPeriodeSimulation(int numeroMoisMontantARecuperer) {
 	return numeroMoisMontantARecuperer > NUMERO_MOIS_PERIODE;
+    }
+
+    /**
+     * La simulation se fait sur N si le numeroMoisMontantARecuperer est < NUMERO_MOIS_PERIODE cela veut dire que l'on est sur un mois avant la simulation
+     * 
+     * @param numeroMoisMontantARecuperer : numéro du mois pour lequel on souhaite récupérer le montant de l'aide
+     * @return true si numeroMoisMontantARecuperer concerne un mois de la période de simulation false si numeroMoisMontantARecuperer concerne un mois
+     *         avant la période de simulation
+     */
+    private boolean isNumeroMoisComplementARE(int numeroMoisMontantARecuperer) {
+	return numeroMoisMontantARecuperer > NUMERO_MOIS_PERIODE + 1;
     }
 }

@@ -52,7 +52,7 @@ public class SimulateurAidesPoleEmploi {
 
 	//si l'utilisateur est un demandeur fictif, on ne peut pas simuler les aides necessitant un appel à une API peio sécurisée individu
 	if (stagingEnvironnementUtile.isNotDemandeurFictif(demandeurEmploi)) {
-	    simulerAidesByCallingApiPEIO(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+	    simulerAidesByCallingApiPEIO(aidesPourCeMois, numeroMoisSimule, demandeurEmploi, dateDebutSimulation);
 	}
 
 	if (beneficiaireAidesUtile.isBeneficiaireASS(demandeurEmploi) && allocationSolidariteSpecifiqueUtile.isEligible(numeroMoisSimule, demandeurEmploi, dateDebutSimulation)) {
@@ -65,9 +65,9 @@ public class SimulateurAidesPoleEmploi {
 	simulerAidesByCallingOpenFisca(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
     }
 
-    private void simulerAidesByCallingApiPEIO(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    private void simulerAidesByCallingApiPEIO(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 	if (beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
-	    areUtile.simuler(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
+	    areUtile.simuler(aidesPourCeMois, demandeurEmploi, numeroMoisSimule, dateDebutSimulation);
 	}
     }
 

@@ -46,6 +46,10 @@ public class DateUtile {
 	return LocalDate.now(ZONE_ID_FRANCE).with(TemporalAdjusters.firstDayOfNextMonth());
     }
 
+    public LocalDate getDateMoisPlusNombreMois() {
+	return LocalDate.now(ZONE_ID_FRANCE).with(TemporalAdjusters.firstDayOfNextMonth());
+    }
+
     public LocalDateTime getDateTimeJour() {
 	return LocalDateTime.now(ZONE_ID_FRANCE);
     }

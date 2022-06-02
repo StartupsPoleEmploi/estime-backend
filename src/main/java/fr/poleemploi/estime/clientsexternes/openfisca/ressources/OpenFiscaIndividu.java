@@ -6,12 +6,12 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI_TEMPS_TRAVAIL;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AIDE_MOBILITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AIDE_MOBILITE_DATE_DEMANDE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ARE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CATEGORIE_DEMANDEUR_EMPLOI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHOMAGE_NET;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CONTEXTE_ACTIVITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DATE_NAISSANCE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEBUT_CONTRAT_TRAVAIL;
@@ -48,8 +48,8 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes allocationAdulteHandicape;
     @JsonProperty(ASS)
     private OpenFiscaPeriodes allocationSolidariteSpecifique;
-    @JsonProperty(CHOMAGE_NET)
-    private OpenFiscaPeriodes chomageNet;
+    @JsonProperty(ARE)
+    private OpenFiscaPeriodes are;
     @JsonProperty(REVENUS_LOCATIFS)
     private OpenFiscaPeriodes revenusLocatifs;
     @JsonProperty(CHIFFRE_AFFAIRES_INDEPENDANT)
@@ -120,13 +120,13 @@ public class OpenFiscaIndividu {
 	this.allocationSolidariteSpecifique = allocationSolidariteSpecifique;
     }
 
-    @JsonProperty(CHOMAGE_NET)
-    public OpenFiscaPeriodes getChomageNet() {
-	return chomageNet;
+    @JsonProperty(ARE)
+    public OpenFiscaPeriodes getARE() {
+	return are;
     }
 
-    public void setChomageNet(OpenFiscaPeriodes chomageNet) {
-	this.chomageNet = chomageNet;
+    public void setARE(OpenFiscaPeriodes are) {
+	this.are = are;
     }
 
     @JsonProperty(DATE_NAISSANCE)

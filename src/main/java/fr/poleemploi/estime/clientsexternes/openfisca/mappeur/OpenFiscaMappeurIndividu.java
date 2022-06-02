@@ -74,8 +74,7 @@ public class OpenFiscaMappeurIndividu {
 		    AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasAllocationARE(demandeurEmploi.getRessourcesFinancieresAvantSimulation())) {
-	    demandeurOpenFisca.setChomageNet(
-		    openFiscaMappeurPeriode.creerPeriodesOpenFiscaAide(demandeurEmploi, simulation, AideEnum.AIDE_RETOUR_EMPLOI.getCode(), dateDebutSimulation, numeroMoisSimule));
+	    demandeurOpenFisca.setARE(openFiscaMappeurPeriode.creerPeriodesOpenFiscaARE(demandeurEmploi, simulation, dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasRevenusImmobilier(demandeurEmploi)) {
 	    demandeurOpenFisca.setRevenusLocatifs(openFiscaMappeurPeriode.creerPeriodesRevenusImmobilier(ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(demandeurEmploi),

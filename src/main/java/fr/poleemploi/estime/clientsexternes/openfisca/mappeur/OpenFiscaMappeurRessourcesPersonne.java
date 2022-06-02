@@ -67,9 +67,8 @@ public class OpenFiscaMappeurRessourcesPersonne {
     private void addRessourcesFinancieresPoleEmploi(OpenFiscaIndividu personneOpenFisca, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = personne.getRessourcesFinancieres();
 	if (personneUtile.hasAllocationARE(personne)) {
-	    personneOpenFisca
-		    .setChomageNet(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getAllocationMensuelleNet(),
-			    dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    personneOpenFisca.setARE(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getAllocationMensuelleNet(),
+		    dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	}
 	if (personneUtile.hasAllocationASS(personne)) {
 	    personneOpenFisca.setAllocationSolidariteSpecifique(

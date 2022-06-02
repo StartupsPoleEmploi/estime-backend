@@ -326,6 +326,7 @@ public class Utile {
 	}
 	if (AideEnum.AIDE_RETOUR_EMPLOI.getCode().equals(population)) {
 	    AllocationARE allocationARE = new AllocationARE();
+	    allocationARE.setAllocationJournaliereBrute(0.0f);
 	    aidesPoleEmploi.setAllocationARE(allocationARE);
 	}
 	return aidesPoleEmploi;

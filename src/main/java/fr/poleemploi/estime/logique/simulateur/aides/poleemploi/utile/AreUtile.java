@@ -36,16 +36,51 @@ public class AreUtile {
     private float nombreJoursRestants;
     private float montantComplementARE;
 
-    public void simuler(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
-	if (isMoisCalculARE(numeroMoisSimule)) {
+    private static final float ARE_MINI = 29.56f;
+    private static final float SEUIL_CSG_CRDS = 53f;
+    private static final float TAUX_DEDUCTION_CRC = 0.03f;
+    private static final float TAUX_DEDUCTION_CSG = 0.9825f * 0.062f;
+    private static final float TAUX_DEDUCTION_CRDS = 0.9825f * 0.005f;
+
+    public void simuler(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
+	if (isMoisReportARE(numeroMoisSimule)) {
+	    reporterARE(aidesPourCeMois, demandeurEmploi, numeroMoisSimule, dateDebutSimulation);
+	} else if (isMoisCalculComplementARE(numeroMoisSimule)) {
 	    calculerMontantComplementARE(aidesPourCeMois, demandeurEmploi);
 	} else {
 	    verserReliquatComplementARE(aidesPourCeMois);
 	}
     }
 
-    private boolean isMoisCalculARE(int numeroMoisSimule) {
+    private boolean isMoisReportARE(int numeroMoisSimule) {
 	return numeroMoisSimule == 1;
+    }
+
+    private boolean isMoisCalculComplementARE(int numeroMoisSimule) {
+	return numeroMoisSimule == 2;
+    }
+
+    private void reporterARE(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
+	float montantMensuelARE = calculerMontantMensuelARE(demandeurEmploi, numeroMoisSimule, dateDebutSimulation);
+	Aide are = creerARE(montantMensuelARE);
+	aidesPourCeMois.put(AideEnum.AIDE_RETOUR_EMPLOI.getCode(), are);
+    }
+
+    private float calculerMontantMensuelARE(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
+	float allocationJournaliereBrute = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute();
+	float sjr = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut();
+	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisSimule - 1));
+	float deductions = 0.0f;
+	if (allocationJournaliereBrute > ARE_MINI) {
+	    deductions = sjr * TAUX_DEDUCTION_CRC;
+	    if ((allocationJournaliereBrute - deductions) > SEUIL_CSG_CRDS) {
+		deductions += allocationJournaliereBrute * TAUX_DEDUCTION_CSG;
+		if ((allocationJournaliereBrute - deductions) > SEUIL_CSG_CRDS) {
+		    deductions += allocationJournaliereBrute * TAUX_DEDUCTION_CRDS;
+		}
+	    }
+	}
+	return (float) Math.floor((allocationJournaliereBrute - deductions) * nombreJoursDansLeMois);
     }
 
     private void calculerMontantComplementARE(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
@@ -63,7 +98,7 @@ public class AreUtile {
 	    } else {
 		complementARE = creerComplementARE(montantComplementARE, false);
 	    }
-	    aidesPourCeMois.put(AideEnum.AIDE_RETOUR_EMPLOI.getCode(), complementARE);
+	    aidesPourCeMois.put(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode(), complementARE);
 	} else {
 	    unsetComplementARE();
 	}
@@ -73,15 +108,21 @@ public class AreUtile {
 	this.nombreJoursRestants = getNombreJoursRestantsReliquat();
 	if (nombreJoursRestants > 0) {
 	    Aide complementARE = creerComplementARE(this.montantComplementARE, false);
-	    aidesPourCeMois.put(AideEnum.AIDE_RETOUR_EMPLOI.getCode(), complementARE);
+	    aidesPourCeMois.put(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode(), complementARE);
 	} else {
 	    float nombreJoursRestantsAvantCeMois = getNombreJoursRestantsReliquatAvantCeMois();
 	    if (nombreJoursRestantsAvantCeMois > 0) {
 		float montantReliquatComplementARE = (float) Math.floor((this.montantComplementARE / this.joursIndemnisables) * nombreJoursRestantsAvantCeMois);
 		Aide complementARE = creerComplementARE(montantReliquatComplementARE, true);
-		aidesPourCeMois.put(AideEnum.AIDE_RETOUR_EMPLOI.getCode(), complementARE);
+		aidesPourCeMois.put(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode(), complementARE);
 	    }
 	}
+    }
+
+    private Aide creerARE(float montantAide) {
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.MONTANT_ARE_AVANT_PAS.getMessage());
+	return aideUtile.creerAide(AideEnum.AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
     }
 
     private Aide creerComplementARE(float montantAide, boolean isDernierMoisComplementARE) {
@@ -90,7 +131,7 @@ public class AreUtile {
 	if (isDernierMoisComplementARE) {
 	    messagesAlerte.add(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage());
 	}
-	return aideUtile.creerAide(AideEnum.AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
+	return aideUtile.creerAide(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
     }
 
     private float getNombreJoursIndemnisables(ArePEIOOut areOut, DemandeurEmploi demandeurEmploi) {
