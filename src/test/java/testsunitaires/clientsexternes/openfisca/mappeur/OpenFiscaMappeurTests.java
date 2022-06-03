@@ -18,12 +18,15 @@ import org.springframework.test.context.TestPropertySource;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.tsohr.JSONException;
-import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
+import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.Coordonnees;
@@ -64,6 +67,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);
@@ -76,6 +80,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -104,7 +109,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -117,6 +122,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);
@@ -129,6 +135,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -157,7 +164,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -170,6 +177,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);
@@ -182,6 +190,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -210,7 +219,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -222,6 +231,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);
@@ -234,6 +244,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -254,7 +265,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -268,6 +279,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(1040);
 	salaire.setMontantBrut(1342);
@@ -280,6 +292,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -301,7 +314,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -316,6 +329,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(1040);
 	salaire.setMontantBrut(1342);
@@ -328,6 +342,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -349,7 +364,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -364,6 +379,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(1040);
 	salaire.setMontantBrut(1342);
@@ -377,6 +393,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -396,7 +413,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -410,6 +427,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(800);
 	salaire.setMontantBrut(1038);
@@ -422,6 +440,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -443,9 +462,9 @@ class OpenFiscaMappeurTests extends Commun {
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
-	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -460,6 +479,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(800);
 	salaire.setMontantBrut(1038);
@@ -472,6 +492,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -494,9 +515,9 @@ class OpenFiscaMappeurTests extends Commun {
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
-	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-02-2021");
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
@@ -509,6 +530,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
 	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
 	salaire.setMontantNet(900);
 	salaire.setMontantBrut(1165);
@@ -521,6 +543,7 @@ class OpenFiscaMappeurTests extends Commun {
 	logement.setMontantLoyer(500f);
 	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");
 	coordonnees.setDeMayotte(false);
 	logement.setCoordonnees(coordonnees);
@@ -548,7 +571,66 @@ class OpenFiscaMappeurTests extends Commun {
 
 	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
 
-	JSONObject openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
+
+    @Test
+    void mapDemandeurAREToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTests/demandeur-avec-are.json");
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+
+	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
+	Salaire salaire = new Salaire();
+	salaire.setMontantNet(900);
+	salaire.setMontantBrut(1165);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
+
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+	Logement logement = new Logement();
+	logement.setMontantLoyer(500f);
+	logement.setMontantCharges(50f);
+	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
+	coordonnees.setCodeInsee("44109");
+	coordonnees.setDeMayotte(false);
+	logement.setCoordonnees(coordonnees);
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	SituationFamiliale situationFamiliale = new SituationFamiliale();
+	situationFamiliale.setIsEnCouple(false);
+	demandeurEmploi.setSituationFamiliale(situationFamiliale);
+
+	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+	beneficiaireAides.setBeneficiaireARE(true);
+	demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	AidesPoleEmploi aidesPE = createAidesPE();
+	AllocationARE allocationARE = new AllocationARE();
+	allocationARE.setAllocationJournaliereBrute(37f);
+	allocationARE.setSalaireJournalierReferenceBrut(48f);
+	allocationARE.setNombreJoursRestants(65f);
+	aidesPE.setAllocationARE(allocationARE);
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	ressourcesFinancieres.setAidesPoleEmploi(aidesPE);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }

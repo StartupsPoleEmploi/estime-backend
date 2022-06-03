@@ -67,13 +67,9 @@ public class Commun {
     protected void initMocks(DemandeurEmploi demandeurEmploi)
 	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
-	doReturn(utileTests.getDate("20-10-2020")).when(dateUtile).getDateJour();
+	doReturn(utileTests.getDate("01-01-2022")).when(dateUtile).getDateJour();
 
 	DetailIndemnisationPEIOOut detailIndemnisationPEIO = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.AAH.getLibelle());
 	doReturn(detailIndemnisationPEIO).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
-
-	doReturn(400f).when(poleEmploiIOClient).getMontantAgepiSimulateurAides(Mockito.any(DemandeurEmploi.class));
-
-	doReturn(450f).when(poleEmploiIOClient).getMontantAideMobiliteSimulateurAides(Mockito.any(DemandeurEmploi.class));
     }
 }

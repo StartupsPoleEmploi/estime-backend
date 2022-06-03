@@ -34,9 +34,9 @@ public class Commun {
     @SpyBean
     protected DateUtile dateUtile;
 
-    protected void initMocks(String dateSimulation) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+    protected void initMocks() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 	//mock création date de demande de simulation
-	doReturn(utileTests.getDate(dateSimulation)).when(dateUtile).getDateJour();
+	doReturn(utileTests.getDate("01-01-2022")).when(dateUtile).getDateJour();
 
 	//mock retour appel détail indemnisation de l'ESD 
 	DetailIndemnisationPEIOOut detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.RSA.getLibelle());

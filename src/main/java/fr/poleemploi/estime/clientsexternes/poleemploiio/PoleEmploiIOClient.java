@@ -24,13 +24,7 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesP
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.EtatCivilPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.agepi.AgepiPEIOIn;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.agepi.AgepiPEIOOut;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.aidemobilite.AideMobilitePEIOIn;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.simulateuraides.aidemobilite.AideMobilitePEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.utile.AccessTokenUtile;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.utile.SimulateurAidesAgepiUtile;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.utile.SimulateurAidesAideMobiliteUtile;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.utile.SimulateurRepriseActiviteUtile;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
@@ -52,12 +46,6 @@ public class PoleEmploiIOClient {
 
     @Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.user-info-uri}")
     private String userInfoURI;
-
-    @Autowired
-    private SimulateurAidesAgepiUtile simulateurAidesAgepiUtile;
-
-    @Autowired
-    private SimulateurAidesAideMobiliteUtile simulateurAidesAideMobiliteUtile;
 
     @Autowired
     private SimulateurRepriseActiviteUtile simulateurRepriseActiviteUtile;
@@ -115,48 +103,6 @@ public class PoleEmploiIOClient {
 		LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), apiDetailIndemnisationURI));
 		throw new InternalServerException(InternalServerMessages.ACCES_APPLICATION_IMPOSSIBLE.getMessage());
 	    }
-	}
-    }
-
-    @Retryable(value = {
-	    TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
-    public float getMontantAgepiSimulateurAides(DemandeurEmploi demandeurEmploi) {
-	String apiSimulateurAidesAgepiURI = poleemploiioURI + "peconnect-simulateurs-aides/v1/demande-agepi/simuler";
-	try {
-	    //avant appel au service, vérification que l'access token est toujours valide
-	    refreshAccessToken(demandeurEmploi);
-	    HttpEntity<AgepiPEIOIn> httpEntity = simulateurAidesAgepiUtile.createHttpEntityAgepiSimulateurAides(demandeurEmploi);
-	    AgepiPEIOOut agepiPEIOOut = restTemplate.postForEntity(apiSimulateurAidesAgepiURI, httpEntity, AgepiPEIOOut.class).getBody();
-	    if (agepiPEIOOut != null && agepiPEIOOut.getDecisionAgepiAPI() != null) {
-		return agepiPEIOOut.getDecisionAgepiAPI().getMontant();
-	    }
-	    return 0;
-	} catch (Exception exception) {
-	    if (isTooManyRequestsHttpClientError(exception)) {
-		throw new TooManyRequestException(exception.getMessage());
-	    } else {
-		LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), apiSimulateurAidesAgepiURI));
-		throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
-	    }
-	}
-    }
-
-    @Retryable(value = {
-	    TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
-    public float getMontantAideMobiliteSimulateurAides(DemandeurEmploi demandeurEmploi) {
-	String apiSimulateurAidesAideMobiliteURI = poleemploiioURI + "peconnect-simulateurs-aides/v1/demande-aidemobilite/simuler";
-	try {
-	    //avant appel au service, vérification que l'access token est toujours valide
-	    refreshAccessToken(demandeurEmploi);
-	    HttpEntity<AideMobilitePEIOIn> httpEntity = simulateurAidesAideMobiliteUtile.createHttpEntityAgepiSimulateurAides(demandeurEmploi);
-	    AideMobilitePEIOOut aideMobilitePEIOOut = restTemplate.postForEntity(apiSimulateurAidesAideMobiliteURI, httpEntity, AideMobilitePEIOOut.class).getBody();
-	    if (aideMobilitePEIOOut != null && aideMobilitePEIOOut.getDecisionAideMobiliteAPI() != null) {
-		return aideMobilitePEIOOut.getDecisionAideMobiliteAPI().getMontant();
-	    }
-	    return 0;
-	} catch (Exception exception) {
-	    LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), apiSimulateurAidesAideMobiliteURI));
-	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
 	}
     }
 

@@ -18,80 +18,79 @@ import org.springframework.test.context.TestPropertySource;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import utile.tests.Utile;
 
-
 @ContextConfiguration
 @SpringBootTest
-@TestPropertySource(locations="classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 class DateUtileTests {
 
     @Autowired
     private DateUtile dateUtile;
-    
+
     @Autowired
     private Utile testUtile;
-    
+
     @Configuration
-    @ComponentScan({"utile.tests","fr.poleemploi.estime"})
+    @ComponentScan({ "utile.tests", "fr.poleemploi.estime" })
     public static class SpringConfig {
 
     }
-    
+
     @Test
     void getNbrMoisEntreDeuxDatesTest() throws ParseException {
-        
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String dateDebutString = "05-07-2012";
-        String dateFinString = "05-12-2012";
- 
-        Date dateDebut = formatter.parse(dateDebutString);
-        Date dateFin = formatter.parse(dateFinString);
-        
-        long nbrMoisEntreDeuxDates = dateUtile.getNbrMoisEntreDeuxDates(dateDebut, dateFin);
-        
-        assertThat(nbrMoisEntreDeuxDates).isEqualTo(5); 
+
+	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	String dateDebutString = "05-07-2012";
+	String dateFinString = "05-12-2012";
+
+	Date dateDebut = formatter.parse(dateDebutString);
+	Date dateFin = formatter.parse(dateFinString);
+
+	long nbrMoisEntreDeuxDates = dateUtile.getNbrMoisEntreDeuxDates(dateDebut, dateFin);
+
+	assertThat(nbrMoisEntreDeuxDates).isEqualTo(5);
     }
-    
+
     @Test
     void getNbrMoisEntreDeuxDatesTest2() throws ParseException {
-        
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String dateDebutString = "25-07-2012";
-        String dateFinString = "05-12-2012";
- 
-        Date dateDebut = formatter.parse(dateDebutString);
-        Date dateFin = formatter.parse(dateFinString);
-        
-        long nbrMoisEntreDeuxDates = dateUtile.getNbrMoisEntreDeuxDates(dateDebut, dateFin);
-        
-        assertThat(nbrMoisEntreDeuxDates).isEqualTo(4); 
+
+	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	String dateDebutString = "25-07-2012";
+	String dateFinString = "05-12-2012";
+
+	Date dateDebut = formatter.parse(dateDebutString);
+	Date dateFin = formatter.parse(dateFinString);
+
+	long nbrMoisEntreDeuxDates = dateUtile.getNbrMoisEntreDeuxDates(dateDebut, dateFin);
+
+	assertThat(nbrMoisEntreDeuxDates).isEqualTo(4);
     }
-    
+
     @Test
     void getDatePremierJourDuMois() throws ParseException {
-        String dateCouranteString = "13-10-2020";
-        LocalDate dateCouranteLocalDate = testUtile.getDate(dateCouranteString);
-        
-        LocalDate datePremierJourDuMois = dateUtile.getDatePremierJourDuMois(dateCouranteLocalDate);
-        
-        assertThat(datePremierJourDuMois).satisfies(d -> { 
-            assertThat(d.getDayOfMonth()).isEqualTo(1);
-            assertThat(d.getMonthValue()).isEqualTo(10);
-            assertThat(d.getYear()).isEqualTo(2020);
-        });
+	String dateCouranteString = "13-10-2022";
+	LocalDate dateCouranteLocalDate = testUtile.getDate(dateCouranteString);
+
+	LocalDate datePremierJourDuMois = dateUtile.getDatePremierJourDuMois(dateCouranteLocalDate);
+
+	assertThat(datePremierJourDuMois).satisfies(d -> {
+	    assertThat(d.getDayOfMonth()).isEqualTo(01);
+	    assertThat(d.getMonthValue()).isEqualTo(10);
+	    assertThat(d.getYear()).isEqualTo(2022);
+	});
     }
-    
+
     @Test
     void getDateDernierJourDuMois() throws ParseException {
-        String dateCouranteString = "13-10-2020";
-        LocalDate dateCouranteLocalDate = testUtile.getDate(dateCouranteString);
-        
-        LocalDate datePremierJourDuMois = dateUtile.getDateDernierJourDuMois(dateCouranteLocalDate);
-        
-        assertThat(datePremierJourDuMois).satisfies(d -> { 
-            assertThat(d.getDayOfMonth()).isEqualTo(31);
-            assertThat(d.getMonthValue()).isEqualTo(10);
-            assertThat(d.getYear()).isEqualTo(2020);
-        });
+	String dateCouranteString = "13-10-2022";
+	LocalDate dateCouranteLocalDate = testUtile.getDate(dateCouranteString);
+
+	LocalDate datePremierJourDuMois = dateUtile.getDateDernierJourDuMois(dateCouranteLocalDate);
+
+	assertThat(datePremierJourDuMois).satisfies(d -> {
+	    assertThat(d.getDayOfMonth()).isEqualTo(31);
+	    assertThat(d.getMonthValue()).isEqualTo(10);
+	    assertThat(d.getYear()).isEqualTo(2022);
+	});
     }
-    
+
 }

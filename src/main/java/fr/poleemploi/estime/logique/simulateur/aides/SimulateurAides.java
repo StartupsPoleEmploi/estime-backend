@@ -79,7 +79,7 @@ public class SimulateurAides {
 
 	ajouterAidesSansCalcul(aidesPourCeMois, demandeurEmploi);
 	simulateurAidesCAF.simuler(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
-	simulateurAidesPoleEmploi.simuler(aidesPourCeMois, numeroMoisSimule, dateMoisASimuler, demandeurEmploi, dateDebutSimulation);
+	simulateurAidesPoleEmploi.simuler(simulation, aidesPourCeMois, numeroMoisSimule, dateMoisASimuler, demandeurEmploi, dateDebutSimulation);
 
 	HashMap<String, RessourceFinanciere> ressourcesFinancieresPourCeMois = new HashMap<>();
 	simulationMensuelle.setRessourcesFinancieres(ressourcesFinancieresPourCeMois);

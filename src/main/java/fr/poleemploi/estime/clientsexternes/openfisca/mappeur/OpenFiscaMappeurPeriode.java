@@ -1,15 +1,15 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
-
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.tsohr.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaIndividu;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaPeriodes;
+import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
@@ -32,55 +32,67 @@ public class OpenFiscaMappeurPeriode {
     private DateUtile dateUtile;
 
     @Autowired
-    private AideUtile aideeUtile;
+    private AideUtile aideUtile;
 
     @Autowired
     private PeriodeTravailleeAvantSimulationUtile periodeTravailleeAvantSimulationUtile;
 
-    public JSONObject creerPeriodes(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule, int nombrePeriodes) {
-	JSONObject periode = new JSONObject();
+    public OpenFiscaPeriodes creerPeriodesOpenFisca(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule, int nombrePeriodes) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < nombrePeriodes; numeroMoisPeriode++) {
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), valeur);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), valeur);
 	}
-	return periode;
+	return periodesOpenFisca;
     }
 
-    public JSONObject creerPeriodesValeurNulleEgaleZero(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule, int nombrePeriode) {
-	JSONObject periode = new JSONObject();
+    public OpenFiscaPeriodes creerPeriodesOpenFiscaAgepi(Object valeur, LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), valeur);
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes creerPeriodesOpenFiscaAideMobilite(Object valeur, LocalDate dateDebutSimulation) {
+	return creerPeriodesOpenFiscaAgepi(valeur, dateDebutSimulation);
+    }
+
+    public OpenFiscaPeriodes creerPeriodesValeurNulleEgaleZero(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule, int nombrePeriode) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < nombrePeriode; numeroMoisPeriode++) {
 	    if (valeur != null) {
-		periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), valeur);
+		periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), valeur);
 	    } else {
-		periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), 0);
+		periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), 0.0);
 	    }
 	}
-	return periode;
+	return periodesOpenFisca;
     }
 
-    public JSONObject creerPeriodesRevenusImmobilier(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject periode = new JSONObject();
+    public OpenFiscaPeriodes creerPeriodesRevenusImmobilier(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	LocalDate datePlusNbrPeriodeMois = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisSimule);
 	for (int nombreMoisAEnlever = NOMBRE_MOIS_PERIODE_36; nombreMoisAEnlever >= 1; nombreMoisAEnlever--) {
 	    LocalDate datePeriode = dateUtile.enleverMoisALocalDate(datePlusNbrPeriodeMois, nombreMoisAEnlever);
-	    periode.put(getPeriodeFormatee(datePeriode), valeur);
+	    periodesOpenFisca.put(getPeriodeFormatee(datePeriode), valeur);
 	}
-	return periode;
+	return periodesOpenFisca;
     }
 
-    public JSONObject creerPeriodesRSA(float montantRsaDemandeur, float prochaineDeclarationRsa, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject periode = new JSONObject();
+    public OpenFiscaPeriodes creerPeriodesRSA(float montantRsaDemandeur, float prochaineDeclarationRsa, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	ObjectMapper mapper = new ObjectMapper();
 	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode++) {
 	    if (numeroMoisPeriode <= prochaineDeclarationRsa) {
-		periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), montantRsaDemandeur);
+		periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), montantRsaDemandeur);
 	    } else {
-		periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), JSONObject.NULL);
+		periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriode), mapper.nullNode());
 	    }
 	}
-	return periode;
+	return periodesOpenFisca;
     }
 
-    public JSONObject creerPeriodesAllocationsLogement(AllocationsLogement allocationsLogement, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject periode = new JSONObject();
+    public OpenFiscaPeriodes creerPeriodesAllocationsLogement(AllocationsLogement allocationsLogement, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	ObjectMapper mapper = new ObjectMapper();
 	float moisNMoins3 = 0;
 	float moisNMoins2 = 0;
 	float moisNMoins1 = 0;
@@ -90,81 +102,128 @@ public class OpenFiscaMappeurPeriode {
 	    moisNMoins1 = allocationsLogement.getMoisNMoins1();
 	}
 	if (numeroMoisSimule == 1) {
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), moisNMoins3);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), moisNMoins2);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), moisNMoins1);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), moisNMoins3);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), moisNMoins2);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), moisNMoins1);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), mapper.nullNode());
 	} else if (numeroMoisSimule == 2) {
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), moisNMoins2);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), moisNMoins1);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), JSONObject.NULL);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), moisNMoins2);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), moisNMoins1);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), mapper.nullNode());
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), mapper.nullNode());
 	} else if (numeroMoisSimule == 3) {
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), moisNMoins1);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), JSONObject.NULL);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), JSONObject.NULL);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), moisNMoins1);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), mapper.nullNode());
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), mapper.nullNode());
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), mapper.nullNode());
 	} else {
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), JSONObject.NULL);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), JSONObject.NULL);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), JSONObject.NULL);
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), JSONObject.NULL);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 0), mapper.nullNode());
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 1), mapper.nullNode());
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 2), mapper.nullNode());
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisSimule, 3), mapper.nullNode());
 	}
-	return periode;
+	return periodesOpenFisca;
     }
 
-    public void creerPeriodesSalaireDemandeur(JSONObject demandeurJSON, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject periodeSalaireDeBase = new JSONObject();
-	JSONObject periodeSalaireImposable = new JSONObject();
+    public void creerPeriodesSalaireDemandeur(OpenFiscaIndividu demandeurOpenFisca, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFiscaSalaireDeBase = new OpenFiscaPeriodes();
+	OpenFiscaPeriodes periodesOpenFiscaSalaireImposable = new OpenFiscaPeriodes();
 
 	for (int numeroMoisPeriodeOpenfisca = 0; numeroMoisPeriodeOpenfisca < NOMBRE_MOIS_PERIODE_OPENFISCA_SALAIRES; numeroMoisPeriodeOpenfisca++) {
 	    Salaire salairePourSimulation = periodeTravailleeAvantSimulationUtile.getSalaireAvantPeriodeSimulation(demandeurEmploi, numeroMoisSimule, numeroMoisPeriodeOpenfisca);
-	    periodeSalaireDeBase.put(getPeriodeFormateeSalaires(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantBrut());
-	    periodeSalaireImposable.put(getPeriodeFormateeSalaires(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantNet());
+	    periodesOpenFiscaSalaireDeBase.put(getPeriodeFormateeSalaires(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriodeOpenfisca),
+		    salairePourSimulation.getMontantBrut());
+	    periodesOpenFiscaSalaireImposable.put(getPeriodeFormateeSalaires(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriodeOpenfisca),
+		    salairePourSimulation.getMontantNet());
 	}
 
-	demandeurJSON.put(SALAIRE_BASE, periodeSalaireDeBase);
-	demandeurJSON.put(SALAIRE_IMPOSABLE, periodeSalaireImposable);
+	demandeurOpenFisca.setSalaireDeBase(periodesOpenFiscaSalaireDeBase);
+	demandeurOpenFisca.setSalaireImposable(periodesOpenFiscaSalaireImposable);
     }
 
-    public void creerPeriodesSalairePersonne(JSONObject personneJSON, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject periodeSalaireDeBase = new JSONObject();
-	JSONObject periodeSalaireImposable = new JSONObject();
+    public void creerPeriodesSalairePersonne(OpenFiscaIndividu personneOpenFisca, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFiscaSalaireDeBase = new OpenFiscaPeriodes();
+	OpenFiscaPeriodes periodesOpenFiscaSalaireImposable = new OpenFiscaPeriodes();
 
 	for (int numeroMoisPeriodeOpenfisca = 0; numeroMoisPeriodeOpenfisca < NOMBRE_MOIS_PERIODE_OPENFISCA_SALAIRES; numeroMoisPeriodeOpenfisca++) {
 	    Salaire salairePourSimulation = periodeTravailleeAvantSimulationUtile.getSalaireAvantPeriodeSimulationPersonne(personne, numeroMoisSimule, numeroMoisPeriodeOpenfisca);
-	    periodeSalaireDeBase.put(getPeriodeFormateeSalaires(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantBrut());
-	    periodeSalaireImposable.put(getPeriodeFormateeSalaires(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantNet());
+	    periodesOpenFiscaSalaireDeBase.put(getPeriodeFormateeSalaires(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriodeOpenfisca),
+		    salairePourSimulation.getMontantBrut());
+	    periodesOpenFiscaSalaireImposable.put(getPeriodeFormateeSalaires(dateDebutSimulation, numeroMoisSimule, numeroMoisPeriodeOpenfisca),
+		    salairePourSimulation.getMontantNet());
 	}
 
-	personneJSON.put(SALAIRE_BASE, periodeSalaireDeBase);
-	personneJSON.put(SALAIRE_IMPOSABLE, periodeSalaireImposable);
+	personneOpenFisca.setSalaireDeBase(periodesOpenFiscaSalaireDeBase);
+	personneOpenFisca.setSalaireImposable(periodesOpenFiscaSalaireImposable);
     }
 
-    public JSONObject creerPeriodesAide(DemandeurEmploi demandeurEmploi, Simulation simulation, String codeAide, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject periode = new JSONObject();
+    public OpenFiscaPeriodes creerPeriodesOpenFiscaARE(DemandeurEmploi demandeurEmploi, Simulation simulation, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	int numeroMoisMontantARecuperer = numeroMoisSimule - (OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA - 1);
 	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode++) {
-	    float montantAidee = 0;
-	    if (isNumeroMoisMontantARecupererDansPeriodeSimulation(numeroMoisMontantARecuperer)) {
-		montantAidee = aideeUtile.getMontantAidePourCeMoisSimule(simulation, codeAide, numeroMoisMontantARecuperer);
+	    float montantAide = 0;
+	    if (!isNumeroMoisMontantARecupererDansPeriodeSimulation(numeroMoisMontantARecuperer)) {
+		montantAide = aideUtile.getMontantAideAvantSimulation(numeroMoisMontantARecuperer, demandeurEmploi, AideEnum.AIDE_RETOUR_EMPLOI.getCode(), dateDebutSimulation);
+	    } else if (isNumeroMoisComplementARE(numeroMoisMontantARecuperer)) {
+		montantAide = aideUtile.getMontantAidePourCeMoisSimule(simulation, AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode(), numeroMoisMontantARecuperer);
 	    } else {
-		montantAidee = aideeUtile.getMontantAideAvantSimulation(numeroMoisMontantARecuperer, demandeurEmploi, codeAide, dateDebutSimulation);
+		montantAide = aideUtile.getMontantAidePourCeMoisSimule(simulation, AideEnum.AIDE_RETOUR_EMPLOI.getCode(), numeroMoisMontantARecuperer);
 	    }
-	    periode.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisPeriode, numeroMoisSimule), montantAidee);
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisPeriode, numeroMoisSimule), montantAide);
 	    numeroMoisMontantARecuperer++;
 	}
-	return periode;
+	return periodesOpenFisca;
     }
 
-    public JSONObject creerPeriodesAnnees(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject periode = new JSONObject();
+    public OpenFiscaPeriodes creerPeriodesOpenFiscaAide(DemandeurEmploi demandeurEmploi, Simulation simulation, String codeAide, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	int numeroMoisMontantARecuperer = numeroMoisSimule - (OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA - 1);
+	for (int numeroMoisPeriode = NUMERO_MOIS_PERIODE; numeroMoisPeriode < OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode++) {
+	    float montantAide = 0;
+	    if (isNumeroMoisMontantARecupererDansPeriodeSimulation(numeroMoisMontantARecuperer)) {
+		montantAide = aideUtile.getMontantAidePourCeMoisSimule(simulation, codeAide, numeroMoisMontantARecuperer);
+	    } else {
+		montantAide = aideUtile.getMontantAideAvantSimulation(numeroMoisMontantARecuperer, demandeurEmploi, codeAide, dateDebutSimulation);
+	    }
+	    periodesOpenFisca.put(getPeriodeFormateeRessourceFinanciere(dateDebutSimulation, numeroMoisPeriode, numeroMoisSimule), montantAide);
+	    numeroMoisMontantARecuperer++;
+	}
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes creerPeriodesAnnees(Object valeur, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	int anneeDateSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisSimule).getYear();
 	String anneeMoinsUnAnneeSimulation = String.valueOf(anneeDateSimulation - 1);
 	String anneeMoinsDeuxAnneeSimulation = String.valueOf(anneeDateSimulation - 2);
-	periode.put(anneeMoinsUnAnneeSimulation, valeur);
-	periode.put(anneeMoinsDeuxAnneeSimulation, valeur);
-	return periode;
+	periodesOpenFisca.put(anneeMoinsUnAnneeSimulation, valeur);
+	periodesOpenFisca.put(anneeMoinsDeuxAnneeSimulation, valeur);
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes creerPeriodesEnfantACharge(LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	periodesOpenFisca.put(String.valueOf(dateDebutSimulation.getYear()), true);
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes getPeriodeOpenfiscaCalculAideACalculer(LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	ObjectMapper mapper = new ObjectMapper();
+	LocalDate dateDeclenchementCalculAide = dateDebutSimulation.plusMonths((long) numeroMoisSimule - 1);
+	periodesOpenFisca.put(getPeriodeFormatee(dateDeclenchementCalculAide), mapper.nullNode());
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes getPeriodeOpenfiscaCalculAgepi(LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	ObjectMapper mapper = new ObjectMapper();
+	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), mapper.nullNode());
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes getPeriodeOpenfiscaCalculAideMobilite(LocalDate dateDebutSimulation) {
+	return getPeriodeOpenfiscaCalculAgepi(dateDebutSimulation);
     }
 
     public String getPeriodeFormatee(LocalDate datePeriode) {
@@ -197,5 +256,16 @@ public class OpenFiscaMappeurPeriode {
      */
     private boolean isNumeroMoisMontantARecupererDansPeriodeSimulation(int numeroMoisMontantARecuperer) {
 	return numeroMoisMontantARecuperer > NUMERO_MOIS_PERIODE;
+    }
+
+    /**
+     * La simulation se fait sur N si le numeroMoisMontantARecuperer est < NUMERO_MOIS_PERIODE cela veut dire que l'on est sur un mois avant la simulation
+     * 
+     * @param numeroMoisMontantARecuperer : numéro du mois pour lequel on souhaite récupérer le montant de l'aide
+     * @return true si numeroMoisMontantARecuperer concerne un mois de la période de simulation false si numeroMoisMontantARecuperer concerne un mois
+     *         avant la période de simulation
+     */
+    private boolean isNumeroMoisComplementARE(int numeroMoisMontantARecuperer) {
+	return numeroMoisMontantARecuperer > NUMERO_MOIS_PERIODE + 1;
     }
 }

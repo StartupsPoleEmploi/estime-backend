@@ -68,7 +68,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 1 mois et le DE a droit à 1 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(1);
@@ -102,7 +102,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 1 mois et le DE a droit à 0 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(0);
@@ -136,7 +136,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 1 mois et alors le DE a droit à 0 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(0);
@@ -170,7 +170,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 1 mois et le DE a droit à 0 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(0);
@@ -205,7 +205,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 2 mois et le DE a droit à 1 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(2);
@@ -240,7 +240,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors le DE a droit à 1 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(1);
@@ -274,7 +274,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 2 mois et le DE a droit à 0 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(0);
@@ -301,7 +301,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 2 mois le DE a droit à 0 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(0);
@@ -336,7 +336,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 3 mois et le DE a droit à 3 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(3);
@@ -364,7 +364,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 3 mois et le DE a droit à 2 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(2);
@@ -391,7 +391,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 3 mois et le DE a droit à 1 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(1);
@@ -424,7 +424,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 3 mois et le DE a droit à 0 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(0);
@@ -459,7 +459,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 4 mois et le DE a droit à 3 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(3);
@@ -494,7 +494,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 4 mois et  le DE a droit à 2 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(2);
@@ -528,7 +528,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors le DE a droit à 1 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(1);
@@ -562,7 +562,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	demandeurEmploi.setFuturTravail(futurTravail);
 
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
-	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2020"));
+	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
 	//alors la simulation se fait sur 4 mois et le DE a droit à 0 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(0);

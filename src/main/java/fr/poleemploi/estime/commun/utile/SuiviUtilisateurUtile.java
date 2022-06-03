@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
-import fr.poleemploi.estime.commun.enumerations.ParcourUtilisateurEnum;
+import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateurEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.donnees.entities.SuiviParcoursUtilisateurEntity;
 import fr.poleemploi.estime.donnees.managers.SuiviParcoursUtilisateurManager;
@@ -49,9 +49,9 @@ public class SuiviUtilisateurUtile {
 
     public String getParcoursAccesService(Individu individu) {
 	if (individu.isPopulationAutorisee()) {
-	    return ParcourUtilisateurEnum.CONNEXION_REUSSIE.getParcours();
+	    return ParcoursUtilisateurEnum.CONNEXION_REUSSIE.getParcours();
 	}
-	return ParcourUtilisateurEnum.CONNEXION_REFUSEE.getParcours();
+	return ParcoursUtilisateurEnum.CONNEXION_REFUSEE.getParcours();
     }
 
     private String getTypePopulation(BeneficiaireAides beneficiaireAides) {

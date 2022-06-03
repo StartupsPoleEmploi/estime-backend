@@ -1,27 +1,15 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.mappeur;
 
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AAH;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASI;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHOMAGE_NET;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DATE_NAISSANCE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT_A_CHARGE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSIONS_ALIMENTAIRES_PERCUES;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.PENSION_INVALIDITE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.REVENUS_LOCATIFS;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_MARITAL;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.tsohr.JSONObject;
-
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaIndividu;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.StatutMaritalEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
@@ -40,89 +28,93 @@ public class OpenFiscaMappeurIndividu {
     private OpenFiscaMappeurRessourcesPersonne openFiscaMappeurRessourcesFinancieres;
 
     @Autowired
+    private OpenFiscaMappeurAgepi openFiscaMappeurAgepi;
+
+    @Autowired
+    private OpenFiscaMappeurAideMobilite openFiscaMappeurAideMobilite;
+
+    @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;
 
     @Autowired
     private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
-    public JSONObject creerConjointJSON(Personne conjoint, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject conjointJSON = new JSONObject();
-	openFiscaMappeurRessourcesFinancieres.addRessourcesFinancieresPersonne(conjointJSON, conjoint, dateDebutSimulation, numeroMoisSimule);
-	return conjointJSON;
+    public OpenFiscaIndividu creerConjointOpenFisca(Personne conjoint, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaIndividu conjointOpenFisca = new OpenFiscaIndividu();
+	openFiscaMappeurRessourcesFinancieres.addRessourcesFinancieresPersonne(conjointOpenFisca, conjoint, dateDebutSimulation, numeroMoisSimule);
+	return conjointOpenFisca;
     }
 
-    public JSONObject creerDemandeurJSON(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject demandeurJSON = new JSONObject();
-	demandeurJSON.put(DATE_NAISSANCE, openFiscaMappeurPeriode.creerPeriodes(getDateNaissance(demandeurEmploi), dateDebutSimulation, numeroMoisSimule,
+    public OpenFiscaIndividu creerDemandeurOpenFisca(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaIndividu demandeurOpenFisca = new OpenFiscaIndividu();
+	demandeurOpenFisca.setDateNaissance(openFiscaMappeurPeriode.creerPeriodesOpenFisca(getDateNaissance(demandeurEmploi), dateDebutSimulation, numeroMoisSimule,
 		OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	demandeurJSON.put(STATUT_MARITAL, openFiscaMappeurPeriode.creerPeriodes(getStatutMarital(demandeurEmploi), dateDebutSimulation, numeroMoisSimule,
+	demandeurOpenFisca.setStatutMarital(openFiscaMappeurPeriode.creerPeriodesOpenFisca(getStatutMarital(demandeurEmploi), dateDebutSimulation, numeroMoisSimule,
 		OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurJSON, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	addRessourcesFinancieresDemandeur(demandeurJSON, demandeurEmploi, simulation, numeroMoisSimule, dateDebutSimulation);
-	return demandeurJSON;
+
+	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	addRessourcesFinancieresDemandeur(demandeurOpenFisca, demandeurEmploi, simulation, numeroMoisSimule, dateDebutSimulation);
+	return demandeurOpenFisca;
     }
 
-    public void ajouterPersonneACharge(JSONObject individu, List<Personne> personnesACharge, LocalDate dateJour, int numeroMoisSimule) {
+    public void ajouterPersonneAChargeIndividus(Map<String, OpenFiscaIndividu> individusOpenFisca, List<Personne> personnesACharge, LocalDate dateJour, int numeroMoisSimule) {
 	int index = 1;
 	for (Personne personneACharge : personnesACharge) {
-	    individu.put(ENFANT + index++, creerEnfantJSON(personneACharge, dateJour, numeroMoisSimule));
+	    individusOpenFisca.put(ENFANT + index++, creerEnfantOpenFisca(personneACharge, dateJour, numeroMoisSimule));
 	}
     }
 
-    private void addRessourcesFinancieresDemandeur(JSONObject demandeurJSON, DemandeurEmploi demandeurEmploi, Simulation simulation, int numeroMoisSimule, LocalDate dateDebutSimulation) {
+    private void addRessourcesFinancieresDemandeur(OpenFiscaIndividu demandeurOpenFisca, DemandeurEmploi demandeurEmploi, Simulation simulation, int numeroMoisSimule, LocalDate dateDebutSimulation) {
 	if (ressourcesFinancieresUtile.hasAllocationAdultesHandicapes(demandeurEmploi)) {
-	    demandeurJSON.put(AAH, openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulation, AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(),
-		    dateDebutSimulation, numeroMoisSimule));
+	    demandeurOpenFisca.setAllocationAdulteHandicape(openFiscaMappeurPeriode.creerPeriodesOpenFiscaAide(demandeurEmploi, simulation,
+		    AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasAllocationSolidariteSpecifique(demandeurEmploi.getRessourcesFinancieresAvantSimulation())) {
-	    demandeurJSON.put(ASS, openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulation, AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(),
-		    dateDebutSimulation, numeroMoisSimule));
+	    demandeurOpenFisca.setAllocationSolidariteSpecifique(openFiscaMappeurPeriode.creerPeriodesOpenFiscaAide(demandeurEmploi, simulation,
+		    AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode(), dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasAllocationARE(demandeurEmploi.getRessourcesFinancieresAvantSimulation())) {
-	    demandeurJSON.put(CHOMAGE_NET,
-		    openFiscaMappeurPeriode.creerPeriodesAide(demandeurEmploi, simulation, AideEnum.AIDE_RETOUR_EMPLOI.getCode(), dateDebutSimulation, numeroMoisSimule));
+	    demandeurOpenFisca.setARE(openFiscaMappeurPeriode.creerPeriodesOpenFiscaARE(demandeurEmploi, simulation, dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasRevenusImmobilier(demandeurEmploi)) {
-	    demandeurJSON.put(REVENUS_LOCATIFS, openFiscaMappeurPeriode.creerPeriodesRevenusImmobilier(ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(demandeurEmploi),
+	    demandeurOpenFisca.setRevenusLocatifs(openFiscaMappeurPeriode.creerPeriodesRevenusImmobilier(ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(demandeurEmploi),
 		    dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasRevenusTravailleurIndependant(demandeurEmploi)) {
-	    demandeurJSON.put(CHIFFRE_AFFAIRES_INDEPENDANT, openFiscaMappeurPeriode
-		    .creerPeriodesAnnees(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getChiffreAffairesIndependantDernierExercice(), dateDebutSimulation, numeroMoisSimule));
+	    demandeurOpenFisca.setChiffreAffairesIndependant(openFiscaMappeurPeriode.creerPeriodesAnnees(
+		    demandeurEmploi.getRessourcesFinancieresAvantSimulation().getChiffreAffairesIndependantDernierExercice(), dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasRevenusMicroEntreprise(demandeurEmploi)) {
-	    demandeurJSON.put(BENEFICES_MICRO_ENTREPRISE, openFiscaMappeurPeriode
-		    .creerPeriodesAnnees(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getBeneficesMicroEntrepriseDernierExercice(), dateDebutSimulation, numeroMoisSimule));
+	    demandeurOpenFisca.setBeneficesMicroEntreprise(openFiscaMappeurPeriode.creerPeriodesAnnees(
+		    demandeurEmploi.getRessourcesFinancieresAvantSimulation().getBeneficesMicroEntrepriseDernierExercice(), dateDebutSimulation, numeroMoisSimule));
 	}
 	if (ressourcesFinancieresUtile.hasPensionsAlimentaires(demandeurEmploi)) {
-	    demandeurJSON.put(PENSIONS_ALIMENTAIRES_PERCUES,
-		    openFiscaMappeurPeriode.creerPeriodes(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer(),
-			    dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    demandeurOpenFisca.setPensionsAlimentaires(openFiscaMappeurPeriode.creerPeriodesOpenFisca(
+		    demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPensionsAlimentairesFoyer(), dateDebutSimulation,
+		    numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	}
 	if (ressourcesFinancieresUtile.hasPensionInvalidite(demandeurEmploi)) {
-	    demandeurJSON.put(PENSION_INVALIDITE, openFiscaMappeurPeriode.creerPeriodes(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getPensionInvalidite(),
-		    dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	    demandeurJSON.put(ASI,
-		    openFiscaMappeurPeriode.creerPeriodesValeurNulleEgaleZero(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite(),
+	    demandeurOpenFisca.setPensionInvalidite(
+		    openFiscaMappeurPeriode.creerPeriodesOpenFisca(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getPensionInvalidite(),
 			    dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    demandeurOpenFisca.setAllocationSupplementaireInvalidite(openFiscaMappeurPeriode.creerPeriodesValeurNulleEgaleZero(
+		    demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite(), dateDebutSimulation, numeroMoisSimule,
+		    OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
 	}
+
+	openFiscaMappeurAgepi.addAgepiOpenFiscaIndividu(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	openFiscaMappeurAideMobilite.addAideMobiliteOpenFiscaIndividu(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
     }
 
-    private JSONObject creerEnfantJSON(Personne personneACharge, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	JSONObject enfant = new JSONObject();
-	enfant.put(DATE_NAISSANCE,
-		openFiscaMappeurPeriode.creerPeriodes(
-			dateUtile.convertDateToString(personneACharge.getInformationsPersonnelles().getDateNaissance(), DateUtile.DATE_FORMAT_YYYY_MM_DD), dateDebutSimulation,
-			numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	enfant.put(ENFANT_A_CHARGE, creerEnfantACharge(dateDebutSimulation));
+    private OpenFiscaIndividu creerEnfantOpenFisca(Personne personneACharge, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	OpenFiscaIndividu enfant = new OpenFiscaIndividu();
+	enfant.setDateNaissance(openFiscaMappeurPeriode.creerPeriodesOpenFisca(
+		dateUtile.convertDateToString(dateUtile.getDateNaissanceModifieeEnfantMoinsDUnAn(personneACharge.getInformationsPersonnelles().getDateNaissance()),
+			DateUtile.DATE_FORMAT_YYYY_MM_DD),
+		dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	enfant.setEnfantACharge(openFiscaMappeurPeriode.creerPeriodesEnfantACharge(dateDebutSimulation));
 	openFiscaMappeurRessourcesFinancieres.addRessourcesFinancieresPersonne(enfant, personneACharge, dateDebutSimulation, numeroMoisSimule);
 	return enfant;
-    }
-
-    private JSONObject creerEnfantACharge(LocalDate dateDebutSimulation) {
-	JSONObject enfantACharge = new JSONObject();
-	enfantACharge.put(String.valueOf(dateDebutSimulation.getYear()), true);
-	return enfantACharge;
     }
 
     private String getStatutMarital(DemandeurEmploi demandeurEmploi) {

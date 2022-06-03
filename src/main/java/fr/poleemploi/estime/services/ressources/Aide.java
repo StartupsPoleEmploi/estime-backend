@@ -43,7 +43,7 @@ public class Aide extends RessourceFinanciere {
 
     @Override
     public String toString() {
-	return "Aide [detail=" + detail + ", isReportee=" + isReportee + ", organisme=" + organisme + ", lienExterne=" + lienExterne + "]";
+	return "Aide [ montant=" + getMontant() + ", detail=" + detail + ", isReportee=" + isReportee + ", organisme=" + organisme + ", lienExterne=" + lienExterne + "]";
     }
 
 }

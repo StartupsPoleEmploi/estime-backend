@@ -1,7 +1,5 @@
 package testsunitaires.clientsexternes.openfisca.mappeur;
 
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
@@ -23,9 +21,9 @@ import org.springframework.test.context.TestPropertySource;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.tsohr.JSONException;
-import com.github.tsohr.JSONObject;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPeriode;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaIndividu;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -100,12 +98,12 @@ class OpenFiscaMappeurPeriodeSalairesPersonneAChargeTests extends Commun {
 	int numeroMoisSimulation = 0;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject personneJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneJSON, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
+	OpenFiscaIndividu personneOpenFisca = new OpenFiscaIndividu();
+	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
 		numeroMoisSimulation);
 
-	assertThat(personneJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(personneJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(personneOpenFisca.getSalaireDeBase().toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(personneOpenFisca.getSalaireImposable().toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -124,12 +122,12 @@ class OpenFiscaMappeurPeriodeSalairesPersonneAChargeTests extends Commun {
 	int numeroMoisSimulation = 1;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject personneJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneJSON, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
+	OpenFiscaIndividu personneOpenFisca = new OpenFiscaIndividu();
+	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
 		numeroMoisSimulation);
 
-	assertThat(personneJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(personneJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(personneOpenFisca.getSalaireDeBase().toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(personneOpenFisca.getSalaireImposable().toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -148,12 +146,12 @@ class OpenFiscaMappeurPeriodeSalairesPersonneAChargeTests extends Commun {
 	int numeroMoisSimulation = 2;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject personneJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneJSON, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
+	OpenFiscaIndividu personneOpenFisca = new OpenFiscaIndividu();
+	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
 		numeroMoisSimulation);
 
-	assertThat(personneJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(personneJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(personneOpenFisca.getSalaireDeBase().toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(personneOpenFisca.getSalaireImposable().toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -172,12 +170,12 @@ class OpenFiscaMappeurPeriodeSalairesPersonneAChargeTests extends Commun {
 	int numeroMoisSimulation = 3;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject personneJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneJSON, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
+	OpenFiscaIndividu personneOpenFisca = new OpenFiscaIndividu();
+	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
 		numeroMoisSimulation);
 
-	assertThat(personneJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(personneJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(personneOpenFisca.getSalaireDeBase().toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(personneOpenFisca.getSalaireImposable().toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -196,12 +194,12 @@ class OpenFiscaMappeurPeriodeSalairesPersonneAChargeTests extends Commun {
 	int numeroMoisSimulation = 4;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject personneJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneJSON, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
+	OpenFiscaIndividu personneOpenFisca = new OpenFiscaIndividu();
+	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
 		numeroMoisSimulation);
 
-	assertThat(personneJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(personneJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(personneOpenFisca.getSalaireDeBase().toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(personneOpenFisca.getSalaireImposable().toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -220,12 +218,12 @@ class OpenFiscaMappeurPeriodeSalairesPersonneAChargeTests extends Commun {
 	int numeroMoisSimulation = 5;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject personneJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneJSON, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
+	OpenFiscaIndividu personneOpenFisca = new OpenFiscaIndividu();
+	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
 		numeroMoisSimulation);
 
-	assertThat(personneJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(personneJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(personneOpenFisca.getSalaireDeBase().toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(personneOpenFisca.getSalaireImposable().toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     /**
@@ -244,12 +242,12 @@ class OpenFiscaMappeurPeriodeSalairesPersonneAChargeTests extends Commun {
 	int numeroMoisSimulation = 6;
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiSalairesTests();
 
-	JSONObject personneJSON = new JSONObject();
-	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneJSON, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
+	OpenFiscaIndividu personneOpenFisca = new OpenFiscaIndividu();
+	openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0), dateDebutSimulation,
 		numeroMoisSimulation);
 
-	assertThat(personneJSON.get(SALAIRE_BASE).toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
-	assertThat(personneJSON.get(SALAIRE_IMPOSABLE).toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+	assertThat(personneOpenFisca.getSalaireDeBase().toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(personneOpenFisca.getSalaireImposable().toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
     private DemandeurEmploi creerDemandeurEmploiSalairesTests() throws ParseException {

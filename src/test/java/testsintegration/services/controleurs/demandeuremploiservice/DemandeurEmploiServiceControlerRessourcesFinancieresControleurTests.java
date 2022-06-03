@@ -34,7 +34,7 @@ import utile.tests.Utile;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class DemandeurEmploiServiceControlerRessourcesFinancieresControleurTests extends CommunTests {
+class DemandeurEmploiServiceControlerRessourcesFinancieresControleurTests extends Commun {
     
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;
@@ -150,7 +150,7 @@ class DemandeurEmploiServiceControlerRessourcesFinancieresControleurTests extend
         AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
         AllocationASS allocationASS = new AllocationASS();
         allocationASS.setAllocationJournaliereNet(16.89f);
-        allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-04-2020"));
+        allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-04-2022"));
         aidesPoleEmploi.setAllocationASS(allocationASS);
         ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
         demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
