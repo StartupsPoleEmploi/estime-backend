@@ -146,7 +146,7 @@ public class AideUtile {
 	case AIDE_MOBILITE:
 	    return "https://candidat.pole-emploi.fr/candidat/aides/mobilite/tableaudebord\\r\\n";
 	case PRIME_ACTIVITE:
-	    return "https://www.caf.fr/allocataires/mes-services-en-ligne/faire-une-demande-de-prestation";
+	    return "https://wwwd.caf.fr/wps/portal/caffr/aidesetservices/lesservicesenligne/faireunedemandedeprestation#/solidariteetactivite";
 	default:
 	    return StringUtile.EMPTY;
 	}
