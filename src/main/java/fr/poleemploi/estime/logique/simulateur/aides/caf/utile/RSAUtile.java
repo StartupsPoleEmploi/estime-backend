@@ -1,5 +1,6 @@
 package fr.poleemploi.estime.logique.simulateur.aides.caf.utile;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
@@ -105,7 +107,7 @@ public class RSAUtile {
 	if (rsaMoisPrecedent.isPresent()) {
 	    aidesPourCeMois.put(AideEnum.RSA.getCode(), rsaMoisPrecedent.get());
 	} else if (isEligiblePourReportRSADeclare(numeroMoisSimule, demandeurEmploi)) {
-	    aidesPourCeMois.put(AideEnum.RSA.getCode(), getRSADeclare(demandeurEmploi));
+	    aidesPourCeMois.put(AideEnum.RSA.getCode(), getRSADeclare(demandeurEmploi, numeroMoisSimule));
 	}
     }
 
@@ -114,7 +116,7 @@ public class RSAUtile {
 	if (rsaMoisPrecedent.isPresent()) {
 	    aidesPourCeMois.put(AideEnum.RSA.getCode(), rsaMoisPrecedent.get());
 	} else if (isEligiblePourReportRSADeclare(numeroMoisSimule, demandeurEmploi)) {
-	    aidesPourCeMois.put(AideEnum.RSA.getCode(), getRSADeclare(demandeurEmploi));
+	    aidesPourCeMois.put(AideEnum.RSA.getCode(), getRSADeclare(demandeurEmploi, numeroMoisSimule));
 	}
 	Optional<Aide> primeActiviteMoisPrecedent = primeActiviteUtile.getPrimeActiviteMoisPrecedent(simulation, numeroMoisSimule);
 	if (primeActiviteMoisPrecedent.isPresent()) {
@@ -122,13 +124,17 @@ public class RSAUtile {
 	}
     }
 
-    protected Aide creerAideRSA(float montantRSA, boolean isAideReportee) {
-	return aideUtile.creerAide(AideEnum.RSA, Optional.of(OrganismeEnum.CAF), Optional.empty(), isAideReportee, montantRSA);
+    protected Aide creerAideRSA(float montantRSA, int numeroMoisSimule, boolean isAideReportee) {
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	if (numeroMoisSimule == 1) {
+	    messagesAlerte.add(MessageInformatifEnum.RSA_AIDES_DEPARTEMENTALES.getMessage());
+	}
+	return aideUtile.creerAide(AideEnum.RSA, Optional.of(OrganismeEnum.CAF), Optional.of(messagesAlerte), isAideReportee, montantRSA);
     }
 
-    private Aide getRSADeclare(DemandeurEmploi demandeurEmploi) {
+    private Aide getRSADeclare(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
 	float montantDeclare = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationRSA();
-	return creerAideRSA(montantDeclare, true);
+	return creerAideRSA(montantDeclare, numeroMoisSimule, true);
     }
 
     private Optional<Aide> getRSASimuleeMoisPrecedent(Simulation simulation, int numeroMoisSimule) {

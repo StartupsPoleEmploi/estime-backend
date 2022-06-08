@@ -122,13 +122,16 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides()).hasSize(3);
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
+		assertThat(ass.getMontant()).isEqualTo(506f);
 	    });
 	});
 	// Alors les prestations du quatrième mois 05/2022 sont :
@@ -246,12 +249,15 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides()).hasSize(3);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(900);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
+		assertThat(ass.getMontant()).isEqualTo(523f);
 	    });
 	});
 
@@ -327,7 +333,7 @@ class DemandeurAahAss2MoisTravaillesAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa).isNotNull();
-		assertThat(ppa.getMontant()).isEqualTo(170);
+		assertThat(ppa.getMontant()).isEqualTo(114f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);

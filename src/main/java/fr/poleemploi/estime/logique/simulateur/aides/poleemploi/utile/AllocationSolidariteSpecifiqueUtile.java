@@ -24,7 +24,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 @Component
 public class AllocationSolidariteSpecifiqueUtile {
 
-    private static final int NOMBRE_MOIS_MAX_ASS_ELIGIBLE = 3;
+    private static final int NOMBRE_MOIS_MAX_ASS_ELIGIBLE = 4;
     private static final int NOMBRE_MOIS_MAX_ASS_BENEFICIAIRE_ACRE_ELIGIBLE = 6;
 
     @Autowired

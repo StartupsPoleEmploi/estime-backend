@@ -461,8 +461,8 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
-	//alors la simulation se fait sur 4 mois et le DE a droit à 3 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(3);
+	//alors la simulation se fait sur 4 mois et le DE a droit à 4 mois d'ASS
+	assertThat(nombreMoisEligible).isEqualTo(4);
     }
 
     @Test
@@ -496,8 +496,8 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
-	//alors la simulation se fait sur 4 mois et  le DE a droit à 2 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(2);
+	//alors la simulation se fait sur 4 mois et  le DE a droit à 3 mois d'ASS
+	assertThat(nombreMoisEligible).isEqualTo(3);
     }
 
     @Test
@@ -530,8 +530,8 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
-	//alors le DE a droit à 1 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(1);
+	//alors le DE a droit à 2 mois d'ASS
+	assertThat(nombreMoisEligible).isEqualTo(2);
     }
 
     @Test
@@ -564,7 +564,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 	//Lorsque je calcul le nombre de mois éligible à l'ASS
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, utileTests.getDate("20-10-2022"));
 
-	//alors la simulation se fait sur 4 mois et le DE a droit à 0 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(0);
+	//alors la simulation se fait sur 4 mois et le DE a droit à 1 mois d'ASS
+	assertThat(nombreMoisEligible).isEqualTo(1);
     }
 }

@@ -103,9 +103,12 @@ class DemandeurAss1MoisCumulSalaireAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(1);
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
+		assertThat(ass.getMontant()).isEqualTo(506f);
 	    });
 	});
 	// Alors les prestations du quatrième mois 05/2022 sont :

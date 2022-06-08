@@ -139,7 +139,7 @@ public class TemporaliteCAFUtile {
 	    aidesPourCeMois.put(primeActivite.getCode(), primeActivite);
 	}
 	if (openFiscaRetourSimulation.getMontantRSA() > 0) {
-	    Aide rsa = rsaUtile.creerAideRSA(openFiscaRetourSimulation.getMontantRSA(), false);
+	    Aide rsa = rsaUtile.creerAideRSA(openFiscaRetourSimulation.getMontantRSA(), numeroMoisSimule, false);
 	    aidesPourCeMois.put(rsa.getCode(), rsa);
 	}
 	if (openFiscaRetourSimulation.getMontantPrimeActivite() > 0 && openFiscaRetourSimulation.getMontantRSA() > 0) {
