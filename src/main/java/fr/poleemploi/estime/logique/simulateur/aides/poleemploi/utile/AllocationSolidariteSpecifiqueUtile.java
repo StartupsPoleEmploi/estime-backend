@@ -75,7 +75,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 	} else {
 	    if (futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
 		return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
-	    } else if (futurTravailUtile.hasContratCDD(demandeurEmploi.getFuturTravail())) {
+	    } else if (futurTravailUtile.hasContratDureeDeterminee(demandeurEmploi.getFuturTravail())) {
 		return getNombreMoisEligiblesCDD(demandeurEmploi, nombreMoisCumulesASSPercueEtSalaire);
 	    }
 	}

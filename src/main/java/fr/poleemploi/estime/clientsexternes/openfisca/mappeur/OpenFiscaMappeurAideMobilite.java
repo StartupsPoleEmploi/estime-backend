@@ -18,6 +18,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
@@ -29,6 +30,9 @@ public class OpenFiscaMappeurAideMobilite {
 
     @Autowired
     private DateUtile dateUtile;
+
+    @Autowired
+    private FuturTravailUtile futurTravailUtile;
 
     private static final String CONTEXTE_REPRISE_EMPLOI = "reprise_emploi";
     private static final String CATEGORIE_DEMANDEUR_EMPLOI = "categorie_1";
@@ -53,7 +57,7 @@ public class OpenFiscaMappeurAideMobilite {
 
     public OpenFiscaIndividu addAideMobiliteOpenFiscaIndividu(OpenFiscaIndividu openFiscaIndividu, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	openFiscaIndividu.setTypeContratTravail(
-		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(demandeurEmploi.getFuturTravail().getTypeContrat().toLowerCase(), dateDebutSimulation));
+		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(futurTravailUtile.getTypeContratOpenFisca(demandeurEmploi.getFuturTravail()), dateDebutSimulation));
 	openFiscaIndividu.setContexteActivite(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(CONTEXTE_REPRISE_EMPLOI, dateDebutSimulation));
 	openFiscaIndividu.setCategorieDemandeurEmploi(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(CATEGORIE_DEMANDEUR_EMPLOI, dateDebutSimulation));
 	openFiscaIndividu.setAideMobiliteDateDemande(openFiscaPeriodeMappeur

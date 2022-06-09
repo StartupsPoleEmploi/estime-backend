@@ -634,4 +634,96 @@ class OpenFiscaMappeurTests extends Commun {
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
+
+    @Test
+    void mapDemandeurInterimToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTests/demandeur-interim.json");
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.INTERIM.name());
+	Salaire salaire = new Salaire();
+	salaire.setMontantNet(900);
+	salaire.setMontantBrut(1165);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
+
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+	Logement logement = new Logement();
+	logement.setMontantLoyer(500f);
+	logement.setMontantCharges(50f);
+	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
+	coordonnees.setCodeInsee("44109");
+	coordonnees.setDeMayotte(false);
+	logement.setCoordonnees(coordonnees);
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	SituationFamiliale situationFamiliale = new SituationFamiliale();
+	situationFamiliale.setIsEnCouple(false);
+	demandeurEmploi.setSituationFamiliale(situationFamiliale);
+
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
+
+    @Test
+    void mapDemandeurIAEToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurTests/demandeur-iae.json");
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	FuturTravail futurTravail = new FuturTravail();
+	futurTravail.setTypeContrat(TypeContratTravailEnum.IAE.name());
+	Salaire salaire = new Salaire();
+	salaire.setMontantNet(900);
+	salaire.setMontantBrut(1165);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
+
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	informationsPersonnelles.setDateNaissance(testUtile.getDate("05-07-1986"));
+	Logement logement = new Logement();
+	logement.setMontantLoyer(500f);
+	logement.setMontantCharges(50f);
+	Coordonnees coordonnees = new Coordonnees();
+	coordonnees.setCodePostal("44000");
+	coordonnees.setCodeInsee("44109");
+	coordonnees.setDeMayotte(false);
+	logement.setCoordonnees(coordonnees);
+	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
+	statutOccupationLogement.setLocataireNonMeuble(true);
+	logement.setStatutOccupationLogement(statutOccupationLogement);
+	informationsPersonnelles.setLogement(logement);
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	SituationFamiliale situationFamiliale = new SituationFamiliale();
+	situationFamiliale.setIsEnCouple(false);
+	demandeurEmploi.setSituationFamiliale(situationFamiliale);
+
+	LocalDate dateDebutPeriodeSimulee = testUtile.getDate("01-07-2020");
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(null, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
 }
