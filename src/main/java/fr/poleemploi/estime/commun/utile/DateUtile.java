@@ -28,6 +28,11 @@ public class DateUtile {
 	return (int) ChronoUnit.MONTHS.between(dateDebut, dateFin);
     }
 
+    public LocalDate getDateMoisASimuler(LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	int nombreMoisToAdd = numeroMoisSimule - 1;
+	return ajouterMoisALocalDate(dateDebutSimulation, nombreMoisToAdd);
+    }
+
     public LocalDate getDatePremierJourDuMois(LocalDate dateCourante) {
 	YearMonth yearMonth = YearMonth.of(dateCourante.getYear(), dateCourante.getMonthValue());
 	return yearMonth.atDay(1);

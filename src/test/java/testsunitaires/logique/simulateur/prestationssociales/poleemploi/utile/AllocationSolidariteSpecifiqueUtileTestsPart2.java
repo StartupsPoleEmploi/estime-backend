@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
+import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
@@ -35,6 +36,9 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
     @Autowired
     private Utile testUtile;
 
+    @Autowired
+    private DateUtile dateUtile;
+
     private LocalDate dateDebutSimulation;
 
     @Configuration
@@ -45,7 +49,7 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
 
     @BeforeEach
     void initBeforeTest() throws ParseException {
-	dateDebutSimulation = testUtile.getDate("01-11-2022");
+	dateDebutSimulation = testUtile.getDate("01-01-2022");
     }
 
     /***********  tests du calcul montant ASS **********/
@@ -54,28 +58,27 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
     void calculerMontantTest1() throws ParseException {
 
 	//Si DE avec montant ASS journalier net = 16,89€
-	//Mois simulé novembre 2022 (30 jours) 
-	//Date derniere ouverture droit 14/04/2022 soit date fin droit 14/10/2022 (avant 3ème mois simulé)
+	//Mois simulé janvier 2022 (31 jours) 
+	//Date derniere ouverture droit 01/08/2021 soit date fin droit 01/01/2022 (avant 3ème mois simulé)
 
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationASS allocationASS = new AllocationASS();
 	allocationASS.setAllocationJournaliereNet(16.89f);
-	allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-04-2022"));
+	allocationASS.setDateDerniereOuvertureDroit(dateUtile.enleverMoisALocalDate(dateDebutSimulation, 5));
 	aidesPoleEmploi.setAllocationASS(allocationASS);
 	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
-	String dateMoisSimuleJourMoisString = "01-11-2022";
-	LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
+	int numeroMoiSimule = 1;
 
 	//Lorsque je calcul le montant de l'ASS sur le mois total 
-	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
+	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, numeroMoiSimule, dateDebutSimulation);
 
 	//alors 
-	//le montant de l'ASS sur le mois de novembre 2022 est de 506€
-	assertThat(ass.get().getMontant()).isEqualTo(506);
+	//le montant de l'ASS sur le mois de janvier 2022 est de 523€
+	assertThat(ass.get().getMontant()).isEqualTo(523f);
 	//le message d'alerte sur le renouvellement de l'aide est présent
 	assertThat(ass.get().getMessagesAlerte()).contains(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
     }
@@ -84,27 +87,26 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
     void calculerMontantTest2() throws ParseException {
 
 	//Si DE avec montant ASS journalier net = 16,89€
-	//Mois simulé décembre 2022 (31 jours) 
-	//Date derniere ouverture droit 14/04/2022 soit date fin droit 14/10/2022 (avant 3ème mois simulé)
+	//Mois simulé février 2022 (28 jours) 
+	//Date derniere ouverture droit 01/08/2021 soit date fin droit 01/01/2022 (avant 3ème mois simulé)
 
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationASS allocationASS = new AllocationASS();
 	allocationASS.setAllocationJournaliereNet(16.89f);
-	allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-04-2022"));
+	allocationASS.setDateDerniereOuvertureDroit(dateUtile.enleverMoisALocalDate(dateDebutSimulation, 5));
 	aidesPoleEmploi.setAllocationASS(allocationASS);
 	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
-	String dateMoisSimuleJourMoisString = "01-12-2022";
-	LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
+	int numeroMoiSimule = 2;
 
 	//Lorsque je calcul le montant de l'ASS sur le mois total 
-	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
+	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, numeroMoiSimule, dateDebutSimulation);
 
-	//alors le montant de l'ASS sur le mois de décembre 2022 est de 523€
-	assertThat(ass.get().getMontant()).isEqualTo(523);
+	//alors le montant de l'ASS sur le mois de février 2022 est de 472€
+	assertThat(ass.get().getMontant()).isEqualTo(472f);
 	//le message d'alerte sur le renouvellement de l'aide est présent
 	assertThat(ass.get().getMessagesAlerte()).contains(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
     }
@@ -113,28 +115,27 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
     void calculerMontantTest3() throws ParseException {
 
 	//Si DE avec montant ASS journalier net = 16,89€ 
-	//Mois simulé janvier 2022 (31 jours) 
-	//Date derniere ouverture droit 14/09/2022 soit date fin droit 14/03/2022 (après 3ème mois simulé)
+	//Mois simulé mars 2022 (31 jours)
+	//Date derniere ouverture droit 01/12/2021 soit date fin droit 01/05/2022 (après 3ème mois simulé)
 
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationASS allocationASS = new AllocationASS();
 	allocationASS.setAllocationJournaliereNet(16.89f);
-	allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-09-2022"));
+	allocationASS.setDateDerniereOuvertureDroit(dateUtile.enleverMoisALocalDate(dateDebutSimulation, 1));
 	aidesPoleEmploi.setAllocationASS(allocationASS);
 	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
-	String dateMoisSimuleJourMoisString = "01-01-2022";
-	LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
+	int numeroMoiSimule = 3;
 
 	//Lorsque je calcul le montant de l'ASS sur le mois total 
-	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
+	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, numeroMoiSimule, dateDebutSimulation);
 
 	//alors 
-	//le montant de l'ASS sur le mois de janvier 2022 est de 523€
-	assertThat(ass.get().getMontant()).isEqualTo(523);
+	//le montant de l'ASS sur le mois de mars 2022 est de 523€
+	assertThat(ass.get().getMontant()).isEqualTo(523f);
 	//le message d'alerte sur le renouvellement de l'aide n'est pas présent
 	assertThat(ass.get().getMessagesAlerte()).isNull();
     }
@@ -156,15 +157,14 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
 	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
-	String dateMoisSimuleJourMoisString = "01-02-2022";
-	LocalDate dateMoisSimuleJourMoisDroitASS = testUtile.getDate(dateMoisSimuleJourMoisString);
+	int numeroMoiSimule = 4;
 
 	//Lorsque je calcul le montant de l'ASS sur le mois total 
-	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, dateMoisSimuleJourMoisDroitASS, dateDebutSimulation);
+	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, numeroMoiSimule, dateDebutSimulation);
 
 	//alors 
-	//le montant de l'ASS sur le mois de février 2022 est de 472€
-	assertThat(ass.get().getMontant()).isEqualTo(472);
+	//le montant de l'ASS sur le mois d'avril 2022 est de 506f
+	assertThat(ass.get().getMontant()).isEqualTo(506f);
 	//le message d'alerte sur le renouvellement de l'aide n'est pas présent
 	assertThat(ass.get().getMessagesAlerte()).isNull();
 	;

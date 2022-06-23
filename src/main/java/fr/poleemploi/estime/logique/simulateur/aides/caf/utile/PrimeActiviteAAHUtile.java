@@ -28,7 +28,7 @@ public class PrimeActiviteAAHUtile {
      *      |  -  M3     |          |    C1    |    V1    | (C2)/R1  |     V2   |    R2    | (C3)/R2  |  
      *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      */
-    protected boolean isPrimeActiviteACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public boolean isPrimeActiviteACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	return numeroMoisSimule == 1 || ((prochaineDeclarationTrimestrielle == 1 && (numeroMoisSimule == 4))
 		|| (prochaineDeclarationTrimestrielle == 2 && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
@@ -52,7 +52,7 @@ public class PrimeActiviteAAHUtile {
      *      |  -  M3     |          |    C1    |   (V1)   |  C2/R1   |   (V2)   |    R2    |  C3/R2   |  
      *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      */
-    protected boolean isPrimeActiviteAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public boolean isPrimeActiviteAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	return numeroMoisSimule == 2 || ((prochaineDeclarationTrimestrielle == 1 && (numeroMoisSimule == 5))
 		|| (prochaineDeclarationTrimestrielle == 2 && (numeroMoisSimule == 3 || numeroMoisSimule == 6))

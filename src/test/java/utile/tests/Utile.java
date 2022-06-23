@@ -267,7 +267,9 @@ public class Utile {
     private void initRessourcesFinancieres(RessourcesFinancieresAvantSimulation ressourcesFinancieres, String population) {
 	switch (population) {
 	case "AAH":
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(population));
 	case "RSA":
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(population));
 	case "ARE":
 	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population));
 	    break;
@@ -276,6 +278,7 @@ public class Utile {
 	    break;
 	case "AAH_ASS":
 	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode()));
 	default:
 	    break;
 	}
@@ -329,7 +332,24 @@ public class Utile {
 	    allocationARE.setAllocationJournaliereBrute(0.0f);
 	    aidesPoleEmploi.setAllocationARE(allocationARE);
 	}
+	if (AideEnum.AIDE_RETOUR_EMPLOI.getCode().equals(population)) {
+	    AllocationARE allocationARE = new AllocationARE();
+	    allocationARE.setAllocationJournaliereBrute(0.0f);
+	    aidesPoleEmploi.setAllocationARE(allocationARE);
+	}
 	return aidesPoleEmploi;
+    }
+
+    private AidesCAF creerAideCAF(String population) {
+	AidesCAF aidesCAF = new AidesCAF();
+	if (AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode().equals(population)) {
+	    aidesCAF.setAllocationAAH(0f);
+	}
+	if (AideEnum.RSA.getCode().equals(population)) {
+	    aidesCAF.setAllocationRSA(0f);
+	    aidesCAF.setProchaineDeclarationTrimestrielle(0);
+	}
+	return aidesCAF;
     }
 
     private Coordonnees creerCoordonnees() {

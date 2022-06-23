@@ -17,6 +17,7 @@ import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -42,8 +43,13 @@ public class AllocationSolidariteSpecifiqueUtile {
     @Autowired
     private PeriodeTravailleeAvantSimulationUtile periodeTravailleeAvantSimulationUtile;
 
-    public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi, LocalDate moisSimule, LocalDate dateDebutSimulation) {
-	float montantASS = calculerMontant(demandeurEmploi, moisSimule);
+    @Autowired
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresAvantSimulationUtile;
+
+    public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
+	LocalDate dateMoisASimuler = dateUtile.getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
+
+	float montantASS = calculerMontant(demandeurEmploi, dateMoisASimuler);
 	if (montantASS > 0) {
 	    Aide aideAllocationSolidariteSpecifique = creerAide(demandeurEmploi, dateDebutSimulation, montantASS);
 	    return Optional.of(aideAllocationSolidariteSpecifique);
@@ -53,18 +59,25 @@ public class AllocationSolidariteSpecifiqueUtile {
 
     public float calculerMontant(DemandeurEmploi demandeurEmploi, LocalDate mois) {
 	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);
-	if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
-		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS() != null
-		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null) {
-	    float montantJournalierNetSolidariteSpecifique = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS()
-		    .getAllocationJournaliereNet();
+	if (ressourcesFinancieresAvantSimulationUtile.hasAllocationSolidariteSpecifique(demandeurEmploi)) {
+	    float montantJournalierNetSolidariteSpecifique = ressourcesFinancieresAvantSimulationUtile.getAllocationSolidariteSpecifiqueJournaliere(demandeurEmploi);
+	    return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();
+	}
+	return 0;
+    }
+
+    public float calculerMontantSiEligible(DemandeurEmploi demandeurEmploi, int numeroMoisPeriode, LocalDate dateDebutSimulation) {
+	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisPeriode));
+	if (isEligible(numeroMoisPeriode + 1, demandeurEmploi, dateDebutSimulation)
+		&& ressourcesFinancieresAvantSimulationUtile.hasAllocationSolidariteSpecifique(demandeurEmploi)) {
+	    float montantJournalierNetSolidariteSpecifique = ressourcesFinancieresAvantSimulationUtile.getAllocationSolidariteSpecifiqueJournaliere(demandeurEmploi);
 	    return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();
 	}
 	return 0;
     }
 
     public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	return numeroMoisSimule <= getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
+	return numeroMoisSimule - 1 < getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
     }
 
     public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {

@@ -21,9 +21,9 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Simulation;
 
 @ContextConfiguration
 @SpringBootTest
@@ -60,11 +60,11 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
 	aidesCPAM.setPensionInvalidite(200f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCPAM(aidesCPAM);
 
-	Simulation simulation = createSimulation();
-
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-01-2022");
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulation, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 06/2022 est de 32€ (résultat simulateur CAF : 30€)
 	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(30f);
@@ -92,11 +92,11 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
 	aidesCPAM.setPensionInvalidite(200f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCPAM(aidesCPAM);
 
-	Simulation simulation = createSimulation();
-
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-01-2022");
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulation, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	// TODO montant : écart de 34€ avec CAF
 	// Alors le montant de la prime d'activité pour le 06/2022 est de 49€ (résultat simulateur CAF : 83€)
@@ -126,11 +126,11 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
 	aidesCPAM.setPensionInvalidite(200f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCPAM(aidesCPAM);
 
-	Simulation simulation = createSimulation();
-
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-01-2022");
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulation, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 06/2022 est de 18€ (résultat simulateur CAF : 0€)
 	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
@@ -154,11 +154,11 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
 	aidesCPAM.setAllocationSupplementaireInvalidite(200f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setAidesCPAM(aidesCPAM);
 
-	Simulation simulation = createSimulation();
-
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("01-01-2022");
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(simulation, demandeurEmploi, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
+
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 06/2022 est de 0€ (résultat simulateur CAF : 0€)
 	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isZero();

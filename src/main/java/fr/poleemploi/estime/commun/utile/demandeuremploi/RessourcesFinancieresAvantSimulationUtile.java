@@ -116,6 +116,13 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	return 0;
     }
 
+    public float getAllocationSolidariteSpecifiqueJournaliere(DemandeurEmploi demandeurEmploi) {
+	if (hasAllocationSolidariteSpecifique(demandeurEmploi)) {
+	    return demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet();
+	}
+	return 0;
+    }
+
     public float getAllocationsLogementSur1Mois(AllocationsLogement allocationsLogement) {
 	return BigDecimal.valueOf(allocationsLogement.getMoisNMoins1()).floatValue();
     }
@@ -339,6 +346,10 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	return ressourcesFinancieres != null && ressourcesFinancieres.getAidesPoleEmploi() != null && ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS() != null
 		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null
 		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() > 0;
+    }
+
+    public boolean hasAllocationSolidariteSpecifique(DemandeurEmploi demandeurEmploi) {
+	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && hasAllocationSolidariteSpecifique(demandeurEmploi.getRessourcesFinancieresAvantSimulation());
     }
 
     public boolean hasAllocationARE(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {

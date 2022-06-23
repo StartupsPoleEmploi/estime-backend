@@ -5,7 +5,6 @@ import static org.mockito.Mockito.doReturn;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.util.Optional;
 
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
@@ -52,15 +50,16 @@ public class Commun {
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1291);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1000);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
 	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setNombreJoursRestants(60f);
-	allocationARE.setAllocationJournaliereBrute(37f);
-	allocationARE.setSalaireJournalierReferenceBrut(48f);
+	allocationARE.setNombreJoursRestants(100f);
+	allocationARE.setAllocationJournaliereBrute(28f);
+	allocationARE.setSalaireJournalierReferenceBrut(40f);
+	allocationARE.setHasDegressiviteAre(false);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().setAllocationARE(allocationARE);
 
 	return demandeurEmploi;
@@ -73,18 +72,6 @@ public class Commun {
 	//mock retour appel détail indemnisation de l'ESD 
 	DetailIndemnisationPEIOOut detailIndemnisationESD = utile.creerDetailIndemnisationPEIO(TypePopulationEnum.ARE.getLibelle());
 	doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
-
-	//mock retour appel ARE de l'ESD
-	ArePEIOOut arePEIOOut = new ArePEIOOut();
-	if (montantSalaireNet < 1200) {
-	    arePEIOOut.setAllocationMensuelle(148f);
-	    arePEIOOut.setSalaireRetenuActiviteReprise(900f);
-	    arePEIOOut.setMontantCRC(0);
-	    arePEIOOut.setMontantCRDS(0);
-	    arePEIOOut.setMontantCSG(0);
-	}
-	Optional<ArePEIOOut> arePEIOOutOptional = Optional.of(arePEIOOut);
-	doReturn(arePEIOOutOptional).when(poleEmploiIOClient).getAreSimulateurRepriseActivite(Mockito.any(DemandeurEmploi.class));
     }
 
     protected Logement initLogement() {
