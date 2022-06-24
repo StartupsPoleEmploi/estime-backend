@@ -200,7 +200,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 
 	// TODO montant : écart de 21€ avec CAF
 	// Alors le montant de la prime d'activité pour le 11/2022 est de 169f€ (résultat simulateur CAF : 148€)
-	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(105f);
+	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(103f);
     }
 
     @Test
@@ -264,7 +264,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 
 	// TODO montant : écart de 34€ avec CAF
 	// Alors le montant de la prime d'activité pour le 11/2022 est de 128€ (résultat simulateur CAF : 94€)
-	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(122f);
+	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(121f);
     }
 
     @Test
@@ -297,6 +297,6 @@ class DemandeurASSEnCoupleTests extends Commun {
 
 	// TODO montant : écart de 34€ avec CAF
 	// Alors le montant de la prime d'activité pour le 11/2022 est de 74€ (résultat simulateur CAF : 40€ )
-	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(67f);
+	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(66f);
     }
 }
