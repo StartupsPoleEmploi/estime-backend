@@ -146,13 +146,6 @@ foo@bar:~$ mvn -v
                 include: "*"
         poleemploiio-uri: "%% à renseigner %%"
         openfisca-api-uri: "%% à renseigner %%"
-        mailjet-api-url: "%% à renseigner %%"
-        mailjet-api-secret-key: "%% à renseigner %%"
-        mailjet-api-key: "%% à renseigner %%"
-        mailjet-contact-list-id: "%% à renseigner %%"
-        sendinblue-api-url: "%% à renseigner %%"
-        sendinblue-api-key: "%% à renseigner %%"
-        sendinblue-contact-list-id: "%% à renseigner %%"
         ```
 
     1. Create a **Springboot launcher** in **Run -> Debug Configurations**

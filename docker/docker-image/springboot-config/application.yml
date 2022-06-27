@@ -55,8 +55,3 @@ poleemploiio-uri: "--POLE_EMPLOI_IO_URI--"
   
 #open fisca
 openfisca-api-uri: "http://openfisca-france:5000/calculate"
-
-#sendinblue
-sendinblue-api-url: "--SENDINBLUE_API_URL--"
-sendinblue-api-key: "--SENDINBLUE_API_KEY--"
-sendinblue-contact-list: "--SENDINBLUE_CONTACT_LIST--"

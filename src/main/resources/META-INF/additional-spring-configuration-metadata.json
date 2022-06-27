@@ -37,21 +37,6 @@
   {
     "name": "openfisca-api-uri",
     "type": "java.lang.String",
-    "description": "A description for 'open-fisca-api-uri'"
-  }, 
-  {
-    "name": "sendinblue-api-url",
-    "type": "java.lang.String",
-    "description": "URL de l'api Sendinblue"
-  },
-  {
-    "name": "sendinblue-api-key",
-    "type": "java.lang.String",
-    "description": "Clé API Sendinblue"
-  },
-  {
-    "name": "sendinblue-contact-list",
-    "type": "java.lang.String",
-    "description": "ID de la liste de contact Sendinblue à peupler"
-  }  
+    "description": "A description for 'openfisca-api-uri'"
+  }
 ]}

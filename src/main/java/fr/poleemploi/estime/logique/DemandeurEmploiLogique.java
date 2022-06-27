@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.ParcoursUtilisateurEnum;
-import fr.poleemploi.estime.commun.utile.ContactSendinblueUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.DemandeurEmploiUtile;
@@ -15,9 +14,6 @@ import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class DemandeurEmploiLogique {
-
-    @Autowired
-    private ContactSendinblueUtile contactSendinblueUtile;
 
     @Autowired
     private DemandeurEmploiUtile demandeurEmploiUtile;
@@ -44,8 +40,6 @@ public class DemandeurEmploiLogique {
 		    individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 	}
 
-	contactSendinblueUtile.miseAJourContactSendinblue(demandeurEmploi, ParcoursUtilisateurEnum.SIMULATION_COMMENCEE.getParcours());
-
 	return demandeurEmploi;
     }
 
@@ -57,8 +51,6 @@ public class DemandeurEmploiLogique {
 	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
 		    demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 	}
-
-	contactSendinblueUtile.miseAJourContactSendinblue(demandeurEmploi, ParcoursUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours());
 
 	return simulation;
     }

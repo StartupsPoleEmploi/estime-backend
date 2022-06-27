@@ -147,13 +147,6 @@ foo@bar:~$ mvn -v
                 include: "*"
         poleemploiio-uri: "%% à renseigner %%"
         openfisca-api-uri: "%% à renseigner %%"
-        mailjet-api-url: "%% à renseigner %%"
-        mailjet-api-secret-key: "%% à renseigner %%"
-        mailjet-api-key: "%% à renseigner %%"
-        mailjet-contact-list-id: "%% à renseigner %%"
-        sendinblue-api-url: "%% à renseigner %%"
-        sendinblue-api-key: "%% à renseigner %%"
-        sendinblue-contact-list-id: "%% à renseigner %%"
         ```
 
     1. Créer un **launcher Springboot** via **Run -> Debug Configurations**
@@ -206,10 +199,6 @@ Click droit sur **src/test/java** => **Run As -> Junit Test**
         image: estime-backend
         environment:
           ENVIRONMENT: "localhost"
-          MAILJET_API_URL: "%% à renseigner %%"
-          MAILJET_API_SECRET_KEY: "%% à renseigner %%"
-          MAILJET_API_KEY: "%% à renseigner %%"
-          MAILJET_CONTACT_LIST_ID: "%% à renseigner %%"
           PE_CONNECT_CLIENT_ID: "%% à renseigner %%"
           PE_CONNECT_CLIENT_SECRET: "%% à renseigner %%"
           PE_CONNECT_ISSUER_URI: "%% à renseigner %%"
@@ -217,9 +206,6 @@ Click droit sur **src/test/java** => **Run As -> Junit Test**
           PE_CONNECT_TOKEN_URI: "%% à renseigner %%"
           PE_CONNECT_USER_INFO_URI: "%% à renseigner %%
           POLE_EMPLOI_IO_URI: "%% à renseigner %%
-          SENDINBLUE_API_URL: "%% à renseigner %%"
-          SENDINBLUE_API_KEY: "%% à renseigner %%"
-          SENDINBLUE_CONTACT_LIST: "%% à renseigner %%"
           TZ: "Europe/Paris"
         ports:
           - 8081:8080

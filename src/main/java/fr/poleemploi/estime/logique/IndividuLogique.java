@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
-import fr.poleemploi.estime.commun.utile.ContactSendinblueUtile;
 import fr.poleemploi.estime.commun.utile.DemandeurDemoUtile;
 import fr.poleemploi.estime.commun.utile.IndividuUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
@@ -15,9 +14,6 @@ import fr.poleemploi.estime.services.ressources.Individu;
 
 @Component
 public class IndividuLogique {
-
-    @Autowired
-    private ContactSendinblueUtile contactSendinblueUtile;
 
     @Autowired
     private DemandeurDemoUtile demandeurDemoUtile;
@@ -62,8 +58,6 @@ public class IndividuLogique {
 	    suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoPEIO, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
 		    detailIndemnisationESD, trafficSource);
 	}
-
-	contactSendinblueUtile.ajouterContactSendinblue(individu);
 
 	return individu;
     }
