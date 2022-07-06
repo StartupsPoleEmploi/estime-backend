@@ -60,7 +60,6 @@ class OpenFiscaMappeurPeriodesASSTests extends Commun {
 
 	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiASSTests(0);
 	OpenFiscaPeriodes periodeAideeASS = openFiscaMappeurPeriode.creerPeriodesOpenFiscaASS(demandeurEmploi, dateDebutSimulation);
-
 	assertThat(periodeAideeASS.toString()).hasToString(openFiscaPayloadExpected);
     }
 
@@ -110,19 +109,19 @@ class OpenFiscaMappeurPeriodesASSTests extends Commun {
     /**
      * CONTEXTE DES TESTS 
      * 
-     * date demande simulation : 01-06-2020
+     * date demande simulation : 01-01-2022
      * 
      * avant simulation
-     * M-2 05/2020       
-     * M-1 06/2020 
+     * M-2 01-12-2021       
+     * M-1 01-11-2021 
      * 
      * période de la simulation sur 6 mois
-     * M1 07/2020       
-     * M2 08/2020   
-     * M3 09/2020    
-     * M4 10/2020
-     * M5 11/2020
-     * M6 12/2020
+     * M1 02/2022       
+     * M2 03/2022   
+     * M3 04/2022    
+     * M4 05/2022
+     * M5 06/2022
+     * M6 07/2022
      *      
      *  
      ********************************************************************************/
@@ -134,7 +133,7 @@ class OpenFiscaMappeurPeriodesASSTests extends Commun {
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
-	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.toString());
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1228);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(950);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);

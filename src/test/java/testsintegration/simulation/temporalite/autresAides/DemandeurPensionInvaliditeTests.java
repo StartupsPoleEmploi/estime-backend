@@ -134,8 +134,10 @@ class DemandeurPensionInvaliditeTests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
+	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
+		assertThat(ass.getMontant()).isEqualTo(523f);
+	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
 		assertThat(pi.getMontant()).isEqualTo(200);
 	    });
@@ -284,7 +286,10 @@ class DemandeurPensionInvaliditeTests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
+		assertThat(ass.getMontant()).isEqualTo(523f);
+	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PENSION_INVALIDITE.getCode())).satisfies(pi -> {
 		assertThat(pi.getMontant()).isEqualTo(200);
 	    });

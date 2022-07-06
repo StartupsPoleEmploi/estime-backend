@@ -31,7 +31,7 @@ import fr.poleemploi.estime.services.ressources.Salaire;
 @TestPropertySource(locations = "classpath:application-test.properties")
 class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 
-    private static final int NUMERA_MOIS_SIMULE_PPA = 5;
+    private static final int NUMERA_MOIS_SIMULE_PPA = 6;
 
     @Autowired
     private OpenFiscaClient openFiscaClient;
@@ -58,7 +58,6 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
-
 
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2022");
@@ -93,7 +92,6 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 
-
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2022");
 
@@ -124,7 +122,6 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
 	ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
-
 
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2022");
@@ -157,7 +154,6 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
 	ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
-
 
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2022");

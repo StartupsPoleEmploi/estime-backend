@@ -20,15 +20,14 @@ public class SimulateurAidesUtile {
     @Autowired
     private FuturTravailUtile futurTravailUtile;
 
-
     public LocalDate getDateDebutSimulation(LocalDate dateDemandeSimulation) {
 	return dateUtile.getDatePremierJourDuMois(dateDemandeSimulation.plusMonths(1));
     }
 
     public int getNombreMoisASimuler(DemandeurEmploi demandeurEmploi) {
-	if(futurTravailUtile.hasContratCDD(demandeurEmploi.getFuturTravail())) {
+	if (futurTravailUtile.hasContratDureeDeterminee(demandeurEmploi.getFuturTravail())) {
 	    int dureeContratCDDEnMois = demandeurEmploi.getFuturTravail().getNombreMoisContratCDD();
-	    if(dureeContratCDDEnMois < NOMBRE_MOIS_MAX_A_SIMULER) {
+	    if (dureeContratCDDEnMois < NOMBRE_MOIS_MAX_A_SIMULER) {
 		return dureeContratCDDEnMois;
 	    }
 	}
@@ -40,18 +39,18 @@ public class SimulateurAidesUtile {
     }
 
     public boolean isDeuxDerniersMois(int numeroMoisSimule) {
-	return numeroMoisSimule == 5 || numeroMoisSimule == 6;
+	return numeroMoisSimule >= 5;
     }
 
     public boolean isTroisDerniersMois(int numeroMoisSimule) {
-	return numeroMoisSimule == 4 || numeroMoisSimule == 5 || numeroMoisSimule == 6;
+	return numeroMoisSimule >= 4;
     }
 
     public boolean isQuatreDerniersMois(int numeroMoisSimule) {
-	return numeroMoisSimule == 3 ||numeroMoisSimule == 4 || numeroMoisSimule == 5 || numeroMoisSimule == 6;
+	return numeroMoisSimule >= 3;
     }
 
     public boolean isCinqDerniersMois(int numeroMoisSimule) {
-	return numeroMoisSimule == 2 ||numeroMoisSimule == 3 || numeroMoisSimule == 4 || numeroMoisSimule == 5 || numeroMoisSimule == 6;
+	return numeroMoisSimule >= 2;
     }
 }

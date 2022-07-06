@@ -133,7 +133,10 @@ class DemandeurMicroEntrepreneurTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
 		assertThat(micro.getMontant()).isEqualTo(100);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(1);
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
+		assertThat(ass.getMontant()).isEqualTo(523f);
+	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
