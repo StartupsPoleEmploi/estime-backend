@@ -38,6 +38,10 @@ public class SimulateurAidesUtile {
 	return numeroMoisSimule == 1;
     }
 
+    public boolean isSecondMois(int numeroMoisSimule) {
+	return numeroMoisSimule == 2;
+    }
+
     public boolean isDeuxDerniersMois(int numeroMoisSimule) {
 	return numeroMoisSimule >= 5;
     }

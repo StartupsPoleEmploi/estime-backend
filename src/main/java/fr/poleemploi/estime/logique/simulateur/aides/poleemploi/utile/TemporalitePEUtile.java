@@ -29,6 +29,6 @@ public class TemporalitePEUtile {
     }
 
     public boolean isAgepiEtAideMobiliteAVerser(int numeroMoisSimule) {
-	return simulateurAidesUtile.isPremierMois(numeroMoisSimule);
+	return simulateurAidesUtile.isSecondMois(numeroMoisSimule);
     }
 }
