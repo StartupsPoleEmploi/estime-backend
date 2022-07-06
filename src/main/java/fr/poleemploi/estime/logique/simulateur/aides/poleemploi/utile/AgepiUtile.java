@@ -21,6 +21,7 @@ public class AgepiUtile {
     public Aide creerAgepi(float montantAide) {
 	ArrayList<String> messagesAlerte = new ArrayList<>();
 	messagesAlerte.add(MessageInformatifEnum.AGEPI_IDF.getMessage());
+	messagesAlerte.add(MessageInformatifEnum.AGEPI_AM_DELAI_DEMANDE.getMessage());
 	return aideUtile.creerAide(AideEnum.AGEPI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
     }
 }
