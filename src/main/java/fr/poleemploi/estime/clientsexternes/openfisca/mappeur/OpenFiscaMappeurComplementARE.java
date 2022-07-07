@@ -65,7 +65,7 @@ public class OpenFiscaMappeurComplementARE {
 	}
     }
 
-    public float getNombresJoursIndemnisesComplementARE(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public float getNombreJoursIndemnisesComplementARE(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	try {
 	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
 	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
@@ -74,6 +74,22 @@ public class OpenFiscaMappeurComplementARE {
 	    Double nombresJoursIndemnises = (Double) openFiscaNombreJoursIndemnisesComplementARE.get(periodeFormateeComplementARE);
 
 	    return BigDecimal.valueOf(nombresJoursIndemnises).setScale(0, RoundingMode.HALF_UP).floatValue();
+
+	} catch (NullPointerException e) {
+	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
+	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
+	}
+    }
+
+    public float getNombreJoursRestantsARE(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	try {
+	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
+	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
+	    OpenFiscaPeriodes openFiscaNombreJoursRestantsARE = openFiscaIndividu.getNombreJoursRestantsARE();
+	    String periodeFormateeComplementARE = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
+	    Double nombreJoursRestantsARE = (Double) openFiscaNombreJoursRestantsARE.get(periodeFormateeComplementARE);
+
+	    return BigDecimal.valueOf(nombreJoursRestantsARE).setScale(0, RoundingMode.HALF_UP).floatValue();
 
 	} catch (NullPointerException e) {
 	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));

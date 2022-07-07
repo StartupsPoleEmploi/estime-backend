@@ -114,7 +114,8 @@ public class TemporaliteOpenFiscaUtile {
 	    aidesPourCeMois.put(rsa.getCode(), rsa);
 	}
 	if (openFiscaRetourSimulation.getMontantComplementARE() > 0) {
-	    Aide complementARE = areUtile.creerComplementARE(openFiscaRetourSimulation.getMontantComplementARE(), false);
+	    Aide complementARE = areUtile.creerComplementARE(openFiscaRetourSimulation.getMontantComplementARE(),
+		    openFiscaRetourSimulation.getNombreJoursRestantsARE() - openFiscaRetourSimulation.getNombreJoursIndemnisesComplementARE());
 	    aidesPourCeMois.put(complementARE.getCode(), complementARE);
 	}
 	if (openFiscaRetourSimulation.getMontantAgepi() > 0) {

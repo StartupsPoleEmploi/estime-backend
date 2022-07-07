@@ -126,6 +126,9 @@ public class OpenFiscaClient {
     public OpenFiscaRetourSimulation calculerComplementARE(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
 	openFiscaRetourSimulation.setMontantComplementARE(openFiscaMappeurComplementARE.getMontantComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setNombreJoursRestantsARE(openFiscaMappeurComplementARE.getNombreJoursRestantsARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation
+		.setNombreJoursIndemnisesComplementARE(openFiscaMappeurComplementARE.getNombreJoursIndemnisesComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
 	return openFiscaRetourSimulation;
     }
 

@@ -10,6 +10,7 @@ public class OpenFiscaRetourSimulation {
     private float montantComplementARE;
     private float montantDeductionsComplementARE;
     private float nombreJoursIndemnisesComplementARE;
+    private float nombreJoursRestantsARE;
     private String typeAideLogement;
 
     public float getMontantRSA() {
@@ -84,11 +85,19 @@ public class OpenFiscaRetourSimulation {
 	this.nombreJoursIndemnisesComplementARE = nombreJoursIndemnisesComplementARE;
     }
 
+    public float getNombreJoursRestantsARE() {
+	return nombreJoursRestantsARE;
+    }
+
+    public void setNombreJoursRestantsARE(float nombreJoursRestantsARE) {
+	this.nombreJoursRestantsARE = nombreJoursRestantsARE;
+    }
+
     @Override
     public String toString() {
 	return "OpenFiscaRetourSimulation [montantRSA=" + montantRSA + ", montantPrimeActivite=" + montantPrimeActivite + ", montantAideLogement=" + montantAideLogement
 		+ ", montantAgepi=" + montantAgepi + ", montantAideMobilite=" + montantAideMobilite + ", montantComplementARE=" + montantComplementARE
 		+ ", montantDeductionsComplementARE=" + montantDeductionsComplementARE + ", nombreJoursIndemnisesComplementARE=" + nombreJoursIndemnisesComplementARE
-		+ ", typeAideLogement=" + typeAideLogement + "]";
+		+ ", nombreJoursRestantsComplementARE=" + nombreJoursRestantsARE + ", typeAideLogement=" + typeAideLogement + "]";
     }
 }

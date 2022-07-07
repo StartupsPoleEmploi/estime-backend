@@ -62,10 +62,10 @@ public class AreUtile {
 	return aideUtile.creerAide(AideEnum.AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
     }
 
-    public Aide creerComplementARE(float montantAide, boolean isDernierMoisComplementARE) {
+    public Aide creerComplementARE(float montantAide, float nombreJoursRestantsARE) {
 	ArrayList<String> messagesAlerte = new ArrayList<>();
 	messagesAlerte.add(MessageInformatifEnum.ACTUALISATION_ARE.getMessage());
-	if (isDernierMoisComplementARE) {
+	if (nombreJoursRestantsARE <= 0) {
 	    messagesAlerte.add(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage());
 	}
 	return aideUtile.creerAide(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
