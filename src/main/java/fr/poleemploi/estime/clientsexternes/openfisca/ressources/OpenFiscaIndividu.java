@@ -9,7 +9,6 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALLOCATION_RETOUR_EMPLOI_JOURNALIERE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALLOCATION_RETOUR_EMPLOI_JOURNALIERE_TAUX_PLEIN;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ARE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CATEGORIE_DEMANDEUR_EMPLOI;
@@ -69,8 +68,6 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes pensionsAlimentaires;
     @JsonProperty(PENSION_INVALIDITE)
     private OpenFiscaPeriodes pensionInvalidite;
-    @JsonProperty(ASI)
-    private OpenFiscaPeriodes allocationSupplementaireInvalidite;
     @JsonProperty(PENSION_RETRAITE)
     private OpenFiscaPeriodes pensionRetraite;
     @JsonProperty(INTENSITE_ACTIVITE)
@@ -127,15 +124,6 @@ public class OpenFiscaIndividu {
 
     public void setAllocationAdulteHandicape(OpenFiscaPeriodes allocationAdulteHandicape) {
 	this.allocationAdulteHandicape = allocationAdulteHandicape;
-    }
-
-    @JsonProperty(ASI)
-    public OpenFiscaPeriodes getAllocationSupplementaireInvalidite() {
-	return allocationSupplementaireInvalidite;
-    }
-
-    public void setAllocationSupplementaireInvalidite(OpenFiscaPeriodes allocationSupplementaireInvalidite) {
-	this.allocationSupplementaireInvalidite = allocationSupplementaireInvalidite;
     }
 
     @JsonProperty(ASS)

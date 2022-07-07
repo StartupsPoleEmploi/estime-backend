@@ -89,8 +89,6 @@ public class OpenFiscaMappeurIndividu {
 	if (ressourcesFinancieresUtile.hasPensionInvalidite(demandeurEmploi)) {
 	    demandeurOpenFisca.setPensionInvalidite(openFiscaMappeurPeriode
 		    .creerPeriodesOpenFisca(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getPensionInvalidite(), dateDebutSimulation));
-	    demandeurOpenFisca.setAllocationSupplementaireInvalidite(openFiscaMappeurPeriode.creerPeriodesValeurNulleEgaleZero(
-		    demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite(), dateDebutSimulation));
 	}
 	if (ressourcesFinancieresUtile.hasAllocationARE(demandeurEmploi.getRessourcesFinancieresAvantSimulation())) {
 	    openFiscaMappeurComplementARE.addAREAvantSimulationOpenFiscaIndividu(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);

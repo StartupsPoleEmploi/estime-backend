@@ -232,32 +232,6 @@ class OpenFiscaMappeurTests extends Commun {
     }
 
     @Test
-    void mapDemandeurPensionInvaliditeEtASIToOpenFiscaPayloadTest()
-	    throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
-
-	String openFiscaPayloadExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-pension-invalidite-et-asi.json");
-
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
-
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
-
-	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
-	AidesCPAM aidesCPAM = new AidesCPAM();
-	aidesCPAM.setPensionInvalidite(200f);
-	aidesCPAM.setAllocationSupplementaireInvalidite(200f);
-	ressourcesFinancieres.setAidesCPAM(aidesCPAM);
-	AidesCAF aidesCAF = createAidesCAF();
-	ressourcesFinancieres.setAidesCAF(aidesCAF);
-	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
-
-	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
-
-	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
-    }
-
-    @Test
     void mapDemandeurRSAToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-rsa.json");

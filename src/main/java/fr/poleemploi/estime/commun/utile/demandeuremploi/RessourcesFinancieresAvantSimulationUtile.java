@@ -55,7 +55,6 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	}
 	if (beneficiaireAidesUtile.isBeneficiairePensionInvalidite(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getPensionInvalidite()));
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite()));
 	}
 	if (beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationRSA()));
@@ -276,14 +275,6 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	return pensionInvalidite;
     }
 
-    public float getAllocationSupplementaireInvalidite(DemandeurEmploi demandeurEmploi) {
-	float allocationSupplementaireInvalidite = 0;
-	if (hasAllocationSupplementaireInvalidite(demandeurEmploi)) {
-	    allocationSupplementaireInvalidite = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite();
-	}
-	return allocationSupplementaireInvalidite;
-    }
-
     public boolean hasAllocationsCAF(DemandeurEmploi demandeurEmploi) {
 	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF() != null;
     }
@@ -366,12 +357,6 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM() != null
 		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getPensionInvalidite() != null
 		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getPensionInvalidite() > 0;
-    }
-
-    public boolean hasAllocationSupplementaireInvalidite(DemandeurEmploi demandeurEmploi) {
-	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM() != null
-		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite() != null
-		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite() > 0;
     }
 
     public boolean hasRevenusImmobilier(DemandeurEmploi demandeurEmploi) {

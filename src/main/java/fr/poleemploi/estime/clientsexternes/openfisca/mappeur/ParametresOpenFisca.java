@@ -42,7 +42,6 @@ public class ParametresOpenFisca {
     public static final String ALS = "als";
     public static final String APL = "apl";
     public static final String ASF = "asf";
-    public static final String ASI = "asi";
     public static final String ASS = "ass";
     public static final String CF = "cf";
     public static final String ARE = "allocation_retour_emploi";

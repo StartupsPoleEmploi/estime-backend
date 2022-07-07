@@ -102,11 +102,6 @@ public class SimulateurAides {
 	    float montantPensionInvalidite = ressourcesFinancieresUtile.getPensionInvalidite(demandeurEmploi);
 	    aidesPourCeMois.put(AideEnum.PENSION_INVALIDITE.getCode(), creerAideSansCalcul(AideEnum.PENSION_INVALIDITE, Optional.of(OrganismeEnum.CPAM), montantPensionInvalidite));
 	}
-	if (ressourcesFinancieresUtile.hasAllocationSupplementaireInvalidite(demandeurEmploi)) {
-	    float montantAllocationSupplementaireInvalidite = ressourcesFinancieresUtile.getAllocationSupplementaireInvalidite(demandeurEmploi);
-	    aidesPourCeMois.put(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE.getCode(),
-		    creerAideSansCalcul(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE, Optional.of(OrganismeEnum.CPAM), montantAllocationSupplementaireInvalidite));
-	}
     }
 
     private void ajouterRessourcesFinancieres(Map<String, RessourceFinanciere> ressourcesFinancieresPourCeMois, DemandeurEmploi demandeurEmploi) {

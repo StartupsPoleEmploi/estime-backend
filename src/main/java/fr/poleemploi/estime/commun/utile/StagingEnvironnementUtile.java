@@ -141,7 +141,6 @@ public class StagingEnvironnementUtile {
 
     private void creerBouchonAllocationCPAM(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	AidesCPAM aidesCPAM = new AidesCPAM();
-	aidesCPAM.setAllocationSupplementaireInvalidite(0f);
 	ressourcesFinancieres.setAidesCPAM(aidesCPAM);
     }
 
