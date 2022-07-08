@@ -48,7 +48,6 @@ public class Commun {
 	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
 	statutOccupationLogement.setLocataireNonMeuble(true);
 	logement.setStatutOccupationLogement(statutOccupationLogement);
-	logement.setMontantCharges(50f);
 	logement.setMontantLoyer(500f);
 	logement.setCoordonnees(createCoordonnees());
 	return logement;

@@ -41,7 +41,6 @@ public class OpenFiscaMappeurMenage {
 		    : RESIDENCE_METROPOLE;
 	    menageOpenFisca.setLieuResidence(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(lieuResidence, dateDebutSimulation));
 	    menageOpenFisca.setLoyer(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getMontantLoyer(), dateDebutSimulation));
-	    menageOpenFisca.setChargesLocatives(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getMontantCharges(), dateDebutSimulation));
 	    menageOpenFisca.setLogementChambre(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isChambre(), dateDebutSimulation));
 	    menageOpenFisca.setLogementCrous(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isCrous(), dateDebutSimulation));
 	    menageOpenFisca.setLogementConventionne(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isConventionne(), dateDebutSimulation));

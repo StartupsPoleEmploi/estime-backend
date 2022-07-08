@@ -73,7 +73,6 @@ public class Commun {
 	informationsPersonnelles.setDateNaissance(utileTests.getDate("05-07-1986"));
 	Logement logement = new Logement();
 	logement.setMontantLoyer(500f);
-	logement.setMontantCharges(50f);
 	Coordonnees coordonnees = new Coordonnees();
 	coordonnees.setCodePostal("44000");
 	coordonnees.setCodeInsee("44109");

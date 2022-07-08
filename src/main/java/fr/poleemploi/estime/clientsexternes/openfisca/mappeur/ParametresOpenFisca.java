@@ -45,7 +45,6 @@ public class ParametresOpenFisca {
     public static final String ASS = "ass";
     public static final String CF = "cf";
     public static final String ARE = "allocation_retour_emploi";
-    public static final String CHARGES_LOCATIVES = "charges_locatives";
     public static final String COLOC = "coloc";
     public static final String CONJOINT = "2_conjoint";
     public static final String DATE_NAISSANCE = "date_naissance";

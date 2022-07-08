@@ -22,6 +22,7 @@ import com.github.tsohr.JSONException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
+import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
@@ -277,4 +278,64 @@ class OpenFiscaMappeurTests extends Commun {
 
 	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
     }
+
+    @Test
+    void mapDemandeurCDIToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-cdi.json");
+
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
+
+    @Test
+    void mapDemandeurCDDToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-cdd.json");
+
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDD.name());
+	demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
+
+    @Test
+    void mapDemandeurInterimToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-interim.json");
+
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.INTERIM.name());
+	demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
+
+    @Test
+    void mapDemandeurIAEToOpenFiscaPayloadTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-iae.json");
+
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.IAE.name());
+	demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
+
 }

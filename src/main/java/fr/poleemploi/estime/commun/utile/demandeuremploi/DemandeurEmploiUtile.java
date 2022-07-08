@@ -154,7 +154,6 @@ public class DemandeurEmploiUtile {
 	logement.setConventionne(false);
 	logement.setColloc(false);
 	logement.setCrous(false);
-	logement.setMontantCharges(null);
 	logement.setMontantLoyer(null);
 	logement.setCoordonnees(null);
 	logement.setStatutOccupationLogement(null);
