@@ -3,15 +3,12 @@ package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
@@ -96,29 +93,7 @@ public class AllocationSolidariteSpecifiqueUtile {
     }
 
     private Aide creerAide(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, float montantAide) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), getMessageAlerte(demandeurEmploi, dateDebutSimulation), false,
-		montantAide);
-    }
-
-    /**
-     * Méthode permettant de récupérer un message d'alerte sur l'aide ASS.
-     * Date de la dernière ouverture de droit à l'ASS  + 6 mois = date de fin  de droit
-     * Si date de fin  de droit avant M3 de la synthèse de résultat il faut créer un message d'alerte.
-     * 
-     * @param demandeurEmploi
-     * @param dateDebutSimulation
-     * @return message d'alerte sinon vide
-     */
-    private Optional<List<String>> getMessageAlerte(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	LocalDate dateDerniereOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroit();
-	LocalDate dateFinDroitASS = dateUtile.ajouterMoisALocalDate(dateDerniereOuvertureDroitASS, 6);
-	LocalDate date3emeMoisSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, 3);
-	if (dateUtile.isDateAvant(dateFinDroitASS, date3emeMoisSimulation)) {
-	    ArrayList<String> messagesAlerte = new ArrayList<>();
-	    messagesAlerte.add(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
-	    return Optional.of(messagesAlerte);
-	}
-	return Optional.empty();
+	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantAide);
     }
 
     private int getNombreMoisEligiblesCDI(int nombreMoisCumulesASSPercueEtSalaire) {

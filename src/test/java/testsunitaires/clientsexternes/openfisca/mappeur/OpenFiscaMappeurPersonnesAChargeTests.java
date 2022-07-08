@@ -70,7 +70,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	List<Personne> personnesACharge = demandeurEmploi.getSituationFamiliale().getPersonnesACharge();
 	Personne personneACharge = personnesACharge.get(0);
@@ -97,7 +97,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	List<Personne> personnesACharge = demandeurEmploi.getSituationFamiliale().getPersonnesACharge();
 	Personne personneACharge = personnesACharge.get(0);
@@ -126,7 +126,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	List<Personne> personnesACharge = demandeurEmploi.getSituationFamiliale().getPersonnesACharge();
 	Personne personneACharge = personnesACharge.get(0);
@@ -158,7 +158,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	List<Personne> personnesACharge = demandeurEmploi.getSituationFamiliale().getPersonnesACharge();
 	Personne personneACharge = personnesACharge.get(0);
@@ -183,7 +183,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	List<Personne> personnesACharge = demandeurEmploi.getSituationFamiliale().getPersonnesACharge();
 	Personne personneACharge = personnesACharge.get(0);
@@ -212,7 +212,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	List<Personne> personnesACharge = demandeurEmploi.getSituationFamiliale().getPersonnesACharge();
 	createPersonne(personnesACharge, testUtile.getDate("05-07-2016"));

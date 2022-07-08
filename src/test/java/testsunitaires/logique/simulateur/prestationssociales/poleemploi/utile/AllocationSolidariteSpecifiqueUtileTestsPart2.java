@@ -15,8 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
-import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
-import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
@@ -35,9 +33,6 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
 
     @Autowired
     private Utile testUtile;
-
-    @Autowired
-    private DateUtile dateUtile;
 
     private LocalDate dateDebutSimulation;
 
@@ -66,7 +61,6 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationASS allocationASS = new AllocationASS();
 	allocationASS.setAllocationJournaliereNet(16.89f);
-	allocationASS.setDateDerniereOuvertureDroit(dateUtile.enleverMoisALocalDate(dateDebutSimulation, 5));
 	aidesPoleEmploi.setAllocationASS(allocationASS);
 	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
@@ -79,8 +73,6 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
 	//alors 
 	//le montant de l'ASS sur le mois de janvier 2022 est de 523€
 	assertThat(ass.get().getMontant()).isEqualTo(523f);
-	//le message d'alerte sur le renouvellement de l'aide est présent
-	assertThat(ass.get().getMessagesAlerte()).contains(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
     }
 
     @Test
@@ -95,7 +87,6 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationASS allocationASS = new AllocationASS();
 	allocationASS.setAllocationJournaliereNet(16.89f);
-	allocationASS.setDateDerniereOuvertureDroit(dateUtile.enleverMoisALocalDate(dateDebutSimulation, 5));
 	aidesPoleEmploi.setAllocationASS(allocationASS);
 	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
@@ -107,8 +98,6 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
 
 	//alors le montant de l'ASS sur le mois de février 2022 est de 472€
 	assertThat(ass.get().getMontant()).isEqualTo(472f);
-	//le message d'alerte sur le renouvellement de l'aide est présent
-	assertThat(ass.get().getMessagesAlerte()).contains(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
     }
 
     @Test
@@ -123,7 +112,6 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationASS allocationASS = new AllocationASS();
 	allocationASS.setAllocationJournaliereNet(16.89f);
-	allocationASS.setDateDerniereOuvertureDroit(dateUtile.enleverMoisALocalDate(dateDebutSimulation, 1));
 	aidesPoleEmploi.setAllocationASS(allocationASS);
 	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
@@ -152,7 +140,6 @@ class AllocationSolidariteSpecifiqueUtileTestsPart2 {
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationASS allocationASS = new AllocationASS();
 	allocationASS.setAllocationJournaliereNet(16.89f);
-	allocationASS.setDateDerniereOuvertureDroit(testUtile.getDate("14-09-2022"));
 	aidesPoleEmploi.setAllocationASS(allocationASS);
 	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);

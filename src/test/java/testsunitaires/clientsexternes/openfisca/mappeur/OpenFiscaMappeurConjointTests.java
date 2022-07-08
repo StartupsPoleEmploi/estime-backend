@@ -68,7 +68,6 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
 
 	Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
 	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
@@ -94,7 +93,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
 	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
@@ -122,7 +121,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
 	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
@@ -151,7 +150,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
@@ -174,7 +173,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
@@ -201,7 +200,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
 
@@ -224,7 +223,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 
 	Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
 
