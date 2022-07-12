@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
+import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
 import fr.poleemploi.estime.services.ressources.AllocationASS;
 import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
@@ -27,7 +29,7 @@ import utile.tests.Utile;
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-class AllocationSolidariteSpecifiqueUtileTestsPart1 {
+class AllocationSolidariteSpecifiqueUtileTests {
 
     @Autowired
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifiqueUtile;
@@ -575,5 +577,58 @@ class AllocationSolidariteSpecifiqueUtileTestsPart1 {
 
 	//alors la simulation se fait sur 4 mois et le DE a droit à 1 mois d'ASS
 	assertThat(nombreMoisEligible).isEqualTo(1);
+    }
+
+    /***********  tests du calcul montant ASS **********/
+
+    @Test
+    void calculerMontantTest1() throws ParseException {
+
+	//Si DE avec montant ASS journalier net = 16,89€
+	//Mois simulé janvier 2022 (31 jours) 
+	//Date derniere ouverture droit 01/08/2021 soit date fin droit 01/01/2022 (avant 3ème mois simulé)
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+	AllocationASS allocationASS = new AllocationASS();
+	allocationASS.setAllocationJournaliereNet(16.89f);
+	aidesPoleEmploi.setAllocationASS(allocationASS);
+	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	int numeroMoiSimule = 1;
+
+	//Lorsque je calcul le montant de l'ASS sur le mois total 
+	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, numeroMoiSimule, dateDebutSimulation);
+
+	//alors 
+	//le montant de l'ASS sur le mois de janvier 2022 est de 523€
+	assertThat(ass.get().getMontant()).isEqualTo(523f);
+    }
+
+    @Test
+    void calculerMontantTest2() throws ParseException {
+
+	//Si DE avec montant ASS journalier net = 16,89€
+	//Mois simulé février 2022 (28 jours) 
+	//Date derniere ouverture droit 01/08/2021 soit date fin droit 01/01/2022 (avant 3ème mois simulé)
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+	AllocationASS allocationASS = new AllocationASS();
+	allocationASS.setAllocationJournaliereNet(16.89f);
+	aidesPoleEmploi.setAllocationASS(allocationASS);
+	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	int numeroMoiSimule = 2;
+
+	//Lorsque je calcul le montant de l'ASS sur le mois total 
+	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, numeroMoiSimule, dateDebutSimulation);
+
+	//alors le montant de l'ASS sur le mois de février 2022 est de 472€
+	assertThat(ass.get().getMontant()).isEqualTo(472f);
     }
 }

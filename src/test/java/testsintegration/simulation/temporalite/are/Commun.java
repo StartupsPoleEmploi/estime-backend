@@ -42,7 +42,9 @@ public class Commun {
     @SpyBean
     private PoleEmploiIOClient poleEmploiIOClient;
 
-    protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant) throws ParseException {
+    protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant)
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+	initMocks();
 	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), isEnCouple, nbEnfant);
 
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
@@ -65,7 +67,7 @@ public class Commun {
 	return demandeurEmploi;
     }
 
-    protected void initMocks(float montantSalaireNet) throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+    protected void initMocks() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 	//mock création date de demande de simulation
 	doReturn(utile.getDate("01-01-2022")).when(dateUtile).getDateJour();
 

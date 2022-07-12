@@ -52,13 +52,13 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	// RSA 500€, déclaration trimetrielle en M3, non travaillé au cours des 3 derniers mois
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
+	initMocks();
 
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -168,6 +168,7 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	// AF 130€, PAGE 170€
 	// conjoint salaire 380€
 	// enfant 2 ans, enfant 4 ans
+	initMocks();
 	boolean isEnCouple = true;
 	int nbEnfant = 2;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
@@ -192,7 +193,6 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	;
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -231,11 +231,11 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130);
 	    });
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
-		assertThat(paje.getMontant()).isEqualTo(170);
-	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(168f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
 	// Alors les prestations du troisième mois 04/2022 sont :
@@ -251,11 +251,11 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130);
 	    });
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
-		assertThat(paje.getMontant()).isEqualTo(170);
-	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(140f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
 	// Alors les prestations du quatrième mois 05/2022 sont :
@@ -267,7 +267,7 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(304f);
 	    });
@@ -276,6 +276,9 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(168f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -287,7 +290,7 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(304f);
 	    });
@@ -296,6 +299,9 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(140f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -307,7 +313,7 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(304f);
 	    });
@@ -316,6 +322,9 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(168);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
     }
@@ -326,6 +335,7 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	// Si DE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
 	// Futur contrat CDI 15h, salaire net 500€ brut 659€,kilométrage domicile -> taf = 10kms + 20 trajets
 	// RSA 380€, déclaration trimetrielle en M3, travaillé au cours des 3 derniers mois avec salaire 380 juillet, salaire 380 juin, salaire 0 mai
+	initMocks();
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
@@ -333,7 +343,6 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(utile.creerPeriodeTravailleeAvantSimulation(380, 508, 2));
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -443,6 +452,7 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	// mai
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
+	initMocks();
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
@@ -455,7 +465,6 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	periodeTravailleeAvantSimulation.setMois(utile.createMoisTravaillesAvantSimulation(salaires));
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -557,6 +566,7 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	// Futur contrat CDI 35h, salaire net 1231€ brut 1583€,kilométrage domicile -> taf = 10kms + 20 trajets
 	// RSA 500€, déclaration trimetrielle en M3, non travaillé au cours des 3 derniers mois
 	// APL 310€
+	initMocks();
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
@@ -566,7 +576,6 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(utile.creerAidePersonnaliseeLogement(310f));
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :

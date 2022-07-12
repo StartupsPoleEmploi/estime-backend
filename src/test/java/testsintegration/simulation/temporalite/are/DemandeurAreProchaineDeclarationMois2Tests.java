@@ -55,7 +55,7 @@ class DemandeurAreProchaineDeclarationMois2Tests extends Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -180,7 +180,7 @@ class DemandeurAreProchaineDeclarationMois2Tests extends Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -300,7 +300,7 @@ class DemandeurAreProchaineDeclarationMois2Tests extends Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(utile.creerAidePersonnaliseeLogement(310f));
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :

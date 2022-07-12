@@ -51,7 +51,7 @@ class DemandeurAreTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1544f);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1200f);
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -147,7 +147,7 @@ class DemandeurAreTests extends Commun {
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setNombreJoursRestants(45f);
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -250,7 +250,7 @@ class DemandeurAreTests extends Commun {
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :

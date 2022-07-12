@@ -212,7 +212,7 @@ public class Utile {
     }
 
     public LocalDate getDateNaissanceFromAge(int age) {
-	LocalDate dateJour = LocalDate.now();
+	LocalDate dateJour = dateUtile.getDateJour();
 	LocalDate minusYears = dateJour.minusYears(age);
 	LocalDate minusMonths = minusYears.minusMonths(1);
 	return minusMonths;

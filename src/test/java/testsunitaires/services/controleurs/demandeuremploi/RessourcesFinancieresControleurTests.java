@@ -29,7 +29,6 @@ import fr.poleemploi.estime.services.ressources.BeneficiaireAides;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
-import utile.tests.Utile;
 
 @SpringBootTest
 @ContextConfiguration
@@ -38,9 +37,6 @@ class RessourcesFinancieresControleurTests extends Commun {
 
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;
-
-    @Autowired
-    private Utile testUtile;
 
     @Configuration
     @ComponentScan({ "utile.tests", "fr.poleemploi.estime" })

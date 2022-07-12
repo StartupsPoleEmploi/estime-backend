@@ -164,6 +164,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
     @Test
     void simulerMesRessourcesFinancieresTest2() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
+	initMocks();
 	// Si DE Français, date naissance 5/07/1986, code postal 44200, en couple, non propriétaire
 	// Futur contrat CDI 15h, salaire net 500€ brut 659€,kilométrage domicile -> taf = 10kms + 20 trajets
 	// RSA 350€, déclaration trimetrielle en M3, non travaillé au cours des 3 derniers mois
@@ -203,7 +204,6 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-03-2017"));
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks();
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -275,7 +275,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(201);
 	    });
@@ -284,6 +284,9 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -295,7 +298,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(201);
 	    });
@@ -304,6 +307,9 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -315,7 +321,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(201);
 	    });
@@ -324,6 +330,9 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
     }

@@ -48,6 +48,7 @@ class DemandeurAreProchaineDeclarationMois1Tests extends Commun {
 	// Si DE Français, date naissance 5/07/1986, code postal 44200, célibataire, seul depuis plus de 18 mois, non propriétaire
 	// Futur contrat CDI 35h, salaire net 1231€ brut 1583€,kilométrage domicile -> taf = 10kms + 20 trajets
 	// RSA 500€, déclaration trimetrielle en M1, non travaillé au cours des 3 derniers mois
+	initMocks();
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
@@ -55,7 +56,6 @@ class DemandeurAreProchaineDeclarationMois1Tests extends Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
 
 	// Lorsque je simule mes prestations le 20/10/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -179,7 +179,7 @@ class DemandeurAreProchaineDeclarationMois1Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utile.getDate("05-03-2017"));
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -296,7 +296,7 @@ class DemandeurAreProchaineDeclarationMois1Tests extends Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(utile.creerAidePersonnaliseeLogement(310f));
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet());
+
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
