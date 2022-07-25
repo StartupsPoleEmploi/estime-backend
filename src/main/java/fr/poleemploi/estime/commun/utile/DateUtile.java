@@ -3,13 +3,16 @@ package fr.poleemploi.estime.commun.utile;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.Period;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.stereotype.Component;
 
@@ -57,6 +60,11 @@ public class DateUtile {
 
     public LocalDateTime getDateTimeJour() {
 	return LocalDateTime.now(ZONE_ID_FRANCE);
+    }
+
+    public String getMonthNameFromLocalDate(LocalDate localDate) {
+	Month month = localDate.getMonth();
+	return month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.FRANCE);
     }
 
     public String getMonthFromLocalDate(LocalDate localDate) {

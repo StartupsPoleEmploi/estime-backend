@@ -106,7 +106,7 @@ public class TemporaliteOpenFiscaUtile {
 	    aidesPourCeMois.put(aideLogement.getCode(), aideLogement);
 	}
 	if (openFiscaRetourSimulation.getMontantPrimeActivite() > 0) {
-	    Aide primeActivite = primeActiviteUtile.creerAidePrimeActivite(openFiscaRetourSimulation.getMontantPrimeActivite(), false);
+	    Aide primeActivite = primeActiviteUtile.creerAidePrimeActivite(openFiscaRetourSimulation.getMontantPrimeActivite(), false, dateDebutSimulation, numeroMoisSimule);
 	    aidesPourCeMois.put(primeActivite.getCode(), primeActivite);
 	}
 	if (openFiscaRetourSimulation.getMontantRSA() > 0) {
