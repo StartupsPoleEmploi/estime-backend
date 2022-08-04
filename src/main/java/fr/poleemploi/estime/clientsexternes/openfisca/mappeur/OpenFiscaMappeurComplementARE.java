@@ -37,7 +37,7 @@ public class OpenFiscaMappeurComplementARE {
 	try {
 	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
 	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
-	    OpenFiscaPeriodes openFiscaComplementARE = openFiscaIndividu.getAllocationMensuelleComplementARE();
+	    OpenFiscaPeriodes openFiscaComplementARE = openFiscaIndividu.getComplementAREBrut();
 	    String periodeFormateeComplementARE = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
 	    Double montantComplementARE = (Double) openFiscaComplementARE.get(periodeFormateeComplementARE);
 
@@ -53,7 +53,7 @@ public class OpenFiscaMappeurComplementARE {
 	try {
 	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
 	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
-	    OpenFiscaPeriodes openFiscaDeductionsComplementARE = openFiscaIndividu.getDeductionsMensuellesComplementARE();
+	    OpenFiscaPeriodes openFiscaDeductionsComplementARE = openFiscaIndividu.getDeductionsComplementARE();
 	    String periodeFormateeComplementARE = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
 	    Double deductionsMensuelles = (Double) openFiscaDeductionsComplementARE.get(periodeFormateeComplementARE);
 
@@ -109,9 +109,9 @@ public class OpenFiscaMappeurComplementARE {
 		openFiscaPeriodeMappeur.creerPeriodeUniqueOpenFisca(areUtile.getNombreJoursRestantsApresPremierMois(demandeurEmploi, dateDebutSimulation), dateDebutSimulation));
 
 	openFiscaIndividu.setNombreJoursIndemnisesComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesNouvelleAideOpenFisca(dateDebutSimulation));
-	openFiscaIndividu.setAllocationMensuelleComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesNouvelleAideOpenFisca(dateDebutSimulation));
-	openFiscaIndividu.setDeductionsMensuellesComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesNouvelleAideOpenFisca(dateDebutSimulation));
-	openFiscaIndividu.setAllocationMensuelleApresDeductionsComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesNouvelleAideOpenFisca(dateDebutSimulation));
+	openFiscaIndividu.setComplementAREBrut(openFiscaPeriodeMappeur.creerPeriodesCalculeesNouvelleAideOpenFisca(dateDebutSimulation));
+	openFiscaIndividu.setDeductionsComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesNouvelleAideOpenFisca(dateDebutSimulation));
+	openFiscaIndividu.setComplementARENet(openFiscaPeriodeMappeur.creerPeriodesCalculeesNouvelleAideOpenFisca(dateDebutSimulation));
 
 	return openFiscaIndividu;
     }

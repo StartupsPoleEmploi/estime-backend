@@ -176,7 +176,7 @@
                 "2022-05": null,
                 "2022-06": null
             },
-            "complement_are_allocation_mensuelle_due_brute": {
+            "complement_are_brut": {
                 "2022-01": null,
                 "2022-02": null,
                 "2022-03": null,
@@ -184,7 +184,7 @@
                 "2022-05": null,
                 "2022-06": null
             },
-            "complement_are_deductions_montant_mensuel": {
+            "complement_are_deductions": {
                 "2022-01": null,
                 "2022-02": null,
                 "2022-03": null,
@@ -192,7 +192,7 @@
                 "2022-05": null,
                 "2022-06": null
             },
-            "complement_are_allocation_mensuelle_due_brute_apres_deductions": {
+            "complement_are_net": {
                 "2022-01": null,
                 "2022-02": null,
                 "2022-03": null,

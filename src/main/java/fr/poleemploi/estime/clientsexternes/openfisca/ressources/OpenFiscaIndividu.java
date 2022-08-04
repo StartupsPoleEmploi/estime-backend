@@ -13,9 +13,9 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CATEGORIE_DEMANDEUR_EMPLOI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_ALLOCATION_MENSUELLE_DUE_BRUTE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_ALLOCATION_MENSUELLE_DUE_BRUTE_APRES_DEDUCTIONS;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_DEDUCTIONS_MONTANT_MENSUEL;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_BRUT;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_DEDUCTIONS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NET;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NOMBRE_JOURS_RESTANTS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CONTEXTE_ACTIVITE;
@@ -110,12 +110,12 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes salaireJournalierReference;
     @JsonProperty(COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES)
     private OpenFiscaPeriodes nombreJoursIndemnisesComplementARE;
-    @JsonProperty(COMPLEMENT_ARE_ALLOCATION_MENSUELLE_DUE_BRUTE)
-    private OpenFiscaPeriodes allocationMensuelleComplementARE;
-    @JsonProperty(COMPLEMENT_ARE_DEDUCTIONS_MONTANT_MENSUEL)
-    private OpenFiscaPeriodes deductionsMensuellesComplementARE;
-    @JsonProperty(COMPLEMENT_ARE_ALLOCATION_MENSUELLE_DUE_BRUTE_APRES_DEDUCTIONS)
-    private OpenFiscaPeriodes allocationMensuelleApresDeductionsComplementARE;
+    @JsonProperty(COMPLEMENT_ARE_BRUT)
+    private OpenFiscaPeriodes complementAREBrut;
+    @JsonProperty(COMPLEMENT_ARE_DEDUCTIONS)
+    private OpenFiscaPeriodes deductionsComplementARE;
+    @JsonProperty(COMPLEMENT_ARE_NET)
+    private OpenFiscaPeriodes complementARENet;
 
     @JsonProperty(AAH)
     public OpenFiscaPeriodes getAllocationAdulteHandicape() {
@@ -423,31 +423,31 @@ public class OpenFiscaIndividu {
 	this.nombreJoursIndemnisesComplementARE = nombreJoursIndemnisesComplementARE;
     }
 
-    @JsonProperty(COMPLEMENT_ARE_ALLOCATION_MENSUELLE_DUE_BRUTE)
-    public OpenFiscaPeriodes getAllocationMensuelleComplementARE() {
-	return allocationMensuelleComplementARE;
+    @JsonProperty(COMPLEMENT_ARE_BRUT)
+    public OpenFiscaPeriodes getComplementAREBrut() {
+	return complementAREBrut;
     }
 
-    public void setAllocationMensuelleComplementARE(OpenFiscaPeriodes allocationMensuelleComplementARE) {
-	this.allocationMensuelleComplementARE = allocationMensuelleComplementARE;
+    public void setComplementAREBrut(OpenFiscaPeriodes complementAREBrut) {
+	this.complementAREBrut = complementAREBrut;
     }
 
-    @JsonProperty(COMPLEMENT_ARE_DEDUCTIONS_MONTANT_MENSUEL)
-    public OpenFiscaPeriodes getDeductionsMensuellesComplementARE() {
-	return deductionsMensuellesComplementARE;
+    @JsonProperty(COMPLEMENT_ARE_DEDUCTIONS)
+    public OpenFiscaPeriodes getDeductionsComplementARE() {
+	return deductionsComplementARE;
     }
 
-    public void setDeductionsMensuellesComplementARE(OpenFiscaPeriodes deductionsMensuellesComplementARE) {
-	this.deductionsMensuellesComplementARE = deductionsMensuellesComplementARE;
+    public void setDeductionsComplementARE(OpenFiscaPeriodes deductionsComplementARE) {
+	this.deductionsComplementARE = deductionsComplementARE;
     }
 
-    @JsonProperty(COMPLEMENT_ARE_ALLOCATION_MENSUELLE_DUE_BRUTE_APRES_DEDUCTIONS)
-    public OpenFiscaPeriodes getAllocationMensuelleApresDeductionsComplementARE() {
-	return allocationMensuelleApresDeductionsComplementARE;
+    @JsonProperty(COMPLEMENT_ARE_NET)
+    public OpenFiscaPeriodes getComplementARENet() {
+	return complementARENet;
     }
 
-    public void setAllocationMensuelleApresDeductionsComplementARE(OpenFiscaPeriodes allocationMensuelleApresDeductionsComplementARE) {
-	this.allocationMensuelleApresDeductionsComplementARE = allocationMensuelleApresDeductionsComplementARE;
+    public void setComplementARENet(OpenFiscaPeriodes complementARENet) {
+	this.complementARENet = complementARENet;
     }
 
     @Override

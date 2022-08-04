@@ -33,9 +33,9 @@ public class ParametresOpenFisca {
     public static final String ALLOCATION_RETOUR_EMPLOI_JOURNALIERE_TAUX_PLEIN = "allocation_retour_emploi_journaliere_taux_plein";
     public static final String SALAIRE_JOURNALIER_REFERENCE_ARE = "salaire_journalier_reference_are";
     public static final String COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES = "complement_are_nombre_jours_indemnises";
-    public static final String COMPLEMENT_ARE_ALLOCATION_MENSUELLE_DUE_BRUTE = "complement_are_allocation_mensuelle_due_brute";
-    public static final String COMPLEMENT_ARE_DEDUCTIONS_MONTANT_MENSUEL = "complement_are_deductions_montant_mensuel";
-    public static final String COMPLEMENT_ARE_ALLOCATION_MENSUELLE_DUE_BRUTE_APRES_DEDUCTIONS = "complement_are_allocation_mensuelle_due_brute_apres_deductions";
+    public static final String COMPLEMENT_ARE_BRUT = "complement_are_brut";
+    public static final String COMPLEMENT_ARE_DEDUCTIONS = "complement_are_deductions";
+    public static final String COMPLEMENT_ARE_NET = "complement_are_net";
 
     public static final String AIDE_LOGEMENT = "aide_logement";
     public static final String ALF = "alf";
