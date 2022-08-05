@@ -102,12 +102,14 @@ public class DemandeurEmploiUtile {
 	informationsPersonnelles.setEmail(individu.getInformationsPersonnelles().getEmail());
 	informationsPersonnelles.setBeneficiaireACRE(null);
 
-	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-	    String bearerToken = individu.getPeConnectAuthorization().getBearerToken();
-	    addCodeDepartement(informationsPersonnelles, bearerToken);
-	    addDateNaissance(informationsPersonnelles, bearerToken);
-	} else {
-	    stagingEnvironnementUtile.bouchonnerCodeDepartementEtDateNaissance(informationsPersonnelles);
+	if (individu.getPeConnectAuthorization() != null) {
+	    if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
+		String bearerToken = individu.getPeConnectAuthorization().getBearerToken();
+		addCodeDepartement(informationsPersonnelles, bearerToken);
+		addDateNaissance(informationsPersonnelles, bearerToken);
+	    } else {
+		stagingEnvironnementUtile.bouchonnerCodeDepartementEtDateNaissance(informationsPersonnelles);
+	    }
 	}
 
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);

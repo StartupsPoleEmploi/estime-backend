@@ -24,9 +24,9 @@ public class IndividuService {
     private IndividuServiceControleur individuServiceControleur;
 
     @PostMapping(value = "/authentifier", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Individu authentifier(@RequestBody PeConnectPayload peConnectPayload, @RequestParam("trafficSource") final String trafficSource) {
-	individuServiceControleur.controlerDonneesEntreeServiceAuthentifier(peConnectPayload, trafficSource);
-	return individuLogique.authentifier(peConnectPayload.getCode(), peConnectPayload.getRedirectURI(), peConnectPayload.getNonce(), trafficSource);
+    public Individu authentifier(@RequestBody(required = false) PeConnectPayload peConnectPayload, @RequestParam("trafficSource") final String trafficSource) {
+	individuServiceControleur.controlerDonneesEntreeServiceAuthentifier(trafficSource);
+	return individuLogique.authentifier(peConnectPayload, trafficSource);
     }
 
 }

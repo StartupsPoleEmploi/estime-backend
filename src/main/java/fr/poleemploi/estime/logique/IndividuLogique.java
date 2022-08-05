@@ -11,6 +11,7 @@ import fr.poleemploi.estime.commun.utile.IndividuUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
 import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.services.ressources.Individu;
+import fr.poleemploi.estime.services.ressources.PeConnectPayload;
 
 @Component
 public class IndividuLogique {
@@ -30,10 +31,23 @@ public class IndividuLogique {
     @Autowired
     private SuiviUtilisateurUtile suiviUtilisateurUtile;
 
-    public Individu authentifier(String code, String redirectURI, String nonce, String trafficSource) {
+    public Individu authentifier(PeConnectPayload peConnectPayload, String trafficSource) {
 	Individu individu = new Individu();
 
-	individu.setPeConnectAuthorization(poleEmploiIOClient.getPeConnectAuthorizationByCode(code, redirectURI, nonce));
+	if (peConnectPayload != null) {
+	    return setIndividuAvecConnexion(individu, peConnectPayload, trafficSource);
+	}
+	return setIndividuSansConnexion();
+    }
+
+    public Individu setIndividuSansConnexion() {
+	return individuUtile.creerIndividuNonConnecte();
+    }
+
+    public Individu setIndividuAvecConnexion(Individu individu, PeConnectPayload peConnectPayload, String trafficSource) {
+
+	individu.setPeConnectAuthorization(
+		poleEmploiIOClient.getPeConnectAuthorizationByCode(peConnectPayload.getCode(), peConnectPayload.getRedirectURI(), peConnectPayload.getNonce()));
 
 	DetailIndemnisationPEIOOut detailIndemnisationESD = poleEmploiIOClient.getDetailIndemnisation(individu.getPeConnectAuthorization().getBearerToken());
 	UserInfoPEIOOut userInfoPEIO = poleEmploiIOClient.getUserInfo(individu.getPeConnectAuthorization().getBearerToken());

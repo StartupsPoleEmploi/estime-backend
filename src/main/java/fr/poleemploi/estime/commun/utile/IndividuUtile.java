@@ -77,4 +77,13 @@ public class IndividuUtile {
     private boolean isBeneficiaireASS(DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
 	return detailIndemnisationPEIO.getCodeIndemnisation() != null && TypePopulationEnum.ASS.getLibelle().equals(detailIndemnisationPEIO.getCodeIndemnisation());
     }
+
+    public Individu creerIndividuNonConnecte() {
+	Individu individu = new Individu();
+	individu.setBeneficiaireAides(new BeneficiaireAides());
+	individu.setInformationsPersonnelles(new InformationsPersonnelles());
+	individu.setRessourcesFinancieresAvantSimulation(new RessourcesFinancieresAvantSimulation());
+
+	return individu;
+    }
 }

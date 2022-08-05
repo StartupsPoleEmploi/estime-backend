@@ -20,10 +20,10 @@ public class JwtTokenValidator implements OAuth2TokenValidator<Jwt> {
 
     @Override
     public OAuth2TokenValidatorResult validate(Jwt token) {
-	if(isAzpClaimNotEqualsClientId(token)) {
+	if (isAzpClaimNotEqualsClientId(token)) {
 	    return generateOAuth2Error(AZP_CLAIM);
 	}
-	if(isAudClaimNotEqualsClientId(token)) {
+	if (isAudClaimNotEqualsClientId(token)) {
 	    return generateOAuth2Error(JwtClaimNames.AUD);
 	}
 	return OAuth2TokenValidatorResult.success();
@@ -38,7 +38,7 @@ public class JwtTokenValidator implements OAuth2TokenValidator<Jwt> {
     }
 
     private OAuth2TokenValidatorResult generateOAuth2Error(String claimName) {
-	OAuth2Error error = new OAuth2Error(ERROR_CODE, String.format(ERROR_DESCRIPTION, claimName) , null);
+	OAuth2Error error = new OAuth2Error(ERROR_CODE, String.format(ERROR_DESCRIPTION, claimName), null);
 	return OAuth2TokenValidatorResult.failure(error);
     }
 }
