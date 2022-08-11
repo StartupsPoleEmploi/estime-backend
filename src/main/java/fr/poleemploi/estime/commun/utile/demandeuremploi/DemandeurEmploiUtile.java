@@ -42,6 +42,28 @@ public class DemandeurEmploiUtile {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeurEmploiUtile.class);
 
+    public void creerDemandeurEmploiVide(DemandeurEmploi demandeurEmploi) {
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(creerRessourcesAvantSimulation());
+	demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
+    }
+
+    private RessourcesFinancieresAvantSimulation creerRessourcesAvantSimulation() {
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresAvantSimulation = new RessourcesFinancieresAvantSimulation();
+	ressourcesFinancieresAvantSimulation.setAidesCAF(creerAidesCAF());
+
+	return ressourcesFinancieresAvantSimulation;
+    }
+
+    private InformationsPersonnelles creerInformationsPersonnelles() {
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	Logement logement = creerLogement();
+	logement.setStatutOccupationLogement(creerStatutOccupationLogement());
+	logement.setCoordonnees(creerCoordonnees());
+	informationsPersonnelles.setLogement(logement);
+
+	return informationsPersonnelles;
+    }
+
     public boolean isSansRessourcesFinancieres(DemandeurEmploi demandeurEmploi) {
 	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() == null;
     }
