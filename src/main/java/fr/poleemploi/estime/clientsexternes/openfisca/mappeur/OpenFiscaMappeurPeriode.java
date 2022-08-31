@@ -197,8 +197,8 @@ public class OpenFiscaMappeurPeriode {
 
 	for (int numeroMoisPeriodeOpenfisca = -NOMBRE_MOIS_PERIODE_OPENFISCA_SALAIRES; numeroMoisPeriodeOpenfisca < NOMBRE_MOIS_SIMULATION; numeroMoisPeriodeOpenfisca++) {
 	    Salaire salairePourSimulation = periodeTravailleeAvantSimulationUtile.getSalaireAvantPeriodeSimulation(demandeurEmploi, numeroMoisPeriodeOpenfisca);
-	    periodesOpenFiscaSalaireDeBase.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantBrut());
-	    periodesOpenFiscaSalaireImposable.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantNet());
+	    periodesOpenFiscaSalaireDeBase.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantMensuelBrut());
+	    periodesOpenFiscaSalaireImposable.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantMensuelNet());
 	}
 
 	demandeurOpenFisca.setSalaireDeBase(periodesOpenFiscaSalaireDeBase);
@@ -211,8 +211,8 @@ public class OpenFiscaMappeurPeriode {
 
 	for (int numeroMoisPeriodeOpenfisca = -NOMBRE_MOIS_PERIODE_OPENFISCA_SALAIRES; numeroMoisPeriodeOpenfisca < NOMBRE_MOIS_SIMULATION; numeroMoisPeriodeOpenfisca++) {
 	    Salaire salairePourSimulation = periodeTravailleeAvantSimulationUtile.getSalaireAvantPeriodeSimulationPersonne(personne, numeroMoisPeriodeOpenfisca);
-	    periodesOpenFiscaSalaireDeBase.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantBrut());
-	    periodesOpenFiscaSalaireImposable.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantNet());
+	    periodesOpenFiscaSalaireDeBase.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantMensuelBrut());
+	    periodesOpenFiscaSalaireImposable.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriodeOpenfisca), salairePourSimulation.getMontantMensuelNet());
 	}
 
 	personneOpenFisca.setSalaireDeBase(periodesOpenFiscaSalaireDeBase);

@@ -129,7 +129,7 @@ public class RessourcesFinancieresAvantSimulationUtile {
     public float getFuturSalaire(DemandeurEmploi demandeurEmploi) {
 	float montantFuturSalaire = 0;
 	if (hasFuturSalaire(demandeurEmploi)) {
-	    montantFuturSalaire = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet()).floatValue();
+	    montantFuturSalaire = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaire().getMontantMensuelNet()).floatValue();
 	}
 	return montantFuturSalaire;
     }
@@ -137,7 +137,7 @@ public class RessourcesFinancieresAvantSimulationUtile {
     public float getSalaire(DemandeurEmploi demandeurEmploi) {
 	float montantSalaire = 0;
 	if (hasSalaire(demandeurEmploi)) {
-	    montantSalaire = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getSalaire().getMontantNet()).floatValue();
+	    montantSalaire = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getSalaire().getMontantMensuelNet()).floatValue();
 	}
 	return montantSalaire;
     }
@@ -398,7 +398,7 @@ public class RessourcesFinancieresAvantSimulationUtile {
     }
 
     public boolean hasFuturSalaire(FuturTravail futurTravail) {
-	return futurTravail != null && futurTravail.getSalaire() != null && futurTravail.getSalaire().getMontantNet() > 0;
+	return futurTravail != null && futurTravail.getSalaire() != null && futurTravail.getSalaire().getMontantMensuelNet() > 0;
     }
 
     public boolean hasSalaire(DemandeurEmploi demandeurEmploi) {
@@ -406,7 +406,7 @@ public class RessourcesFinancieresAvantSimulationUtile {
     }
 
     public boolean hasSalaire(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
-	return ressourcesFinancieres != null && ressourcesFinancieres.getSalaire() != null && ressourcesFinancieres.getSalaire().getMontantNet() > 0;
+	return ressourcesFinancieres != null && ressourcesFinancieres.getSalaire() != null && ressourcesFinancieres.getSalaire().getMontantMensuelNet() > 0;
     }
 
     public boolean hasTravailleAuCoursDerniersMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {

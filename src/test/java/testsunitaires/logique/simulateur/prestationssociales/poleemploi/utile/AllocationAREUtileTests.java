@@ -61,7 +61,7 @@ class AllocationAREUtileTests {
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setNombreJoursRestants(100f);
+	allocationARE.setNombreJoursRestants(100);
 	allocationARE.setAllocationJournaliereBrute(28f);
 	allocationARE.setSalaireJournalierReferenceBrut(40f);
 	allocationARE.setHasDegressiviteAre(false);
@@ -89,7 +89,7 @@ class AllocationAREUtileTests {
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setNombreJoursRestants(100f);
+	allocationARE.setNombreJoursRestants(100);
 	allocationARE.setAllocationJournaliereBrute(28f);
 	allocationARE.setSalaireJournalierReferenceBrut(40f);
 	allocationARE.setHasDegressiviteAre(false);
@@ -118,7 +118,7 @@ class AllocationAREUtileTests {
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
 	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
 	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setNombreJoursRestants(100f);
+	allocationARE.setNombreJoursRestants(100);
 	allocationARE.setAllocationJournaliereBrute(28f);
 	allocationARE.setSalaireJournalierReferenceBrut(40f);
 	allocationARE.setHasDegressiviteAre(false);

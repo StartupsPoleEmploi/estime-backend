@@ -124,6 +124,6 @@ public class PeriodeTravailleeAvantSimulationUtile {
     }
 
     private boolean isMoisTravaille(MoisTravailleAvantSimulation moisTravailleAvantSimulation) {
-	return !moisTravailleAvantSimulation.isSansSalaire() && moisTravailleAvantSimulation.getSalaire().getMontantNet() > 0;
+	return !moisTravailleAvantSimulation.isSansSalaire() && moisTravailleAvantSimulation.getSalaire().getMontantMensuelNet() > 0;
     }
 }

@@ -82,8 +82,8 @@ public class Commun {
 	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", true));
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(940);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1200);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
@@ -121,8 +121,8 @@ public class Commun {
 	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(940);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1200);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
@@ -159,8 +159,8 @@ public class Commun {
 	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement("44109", false));
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(940);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1200);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(20);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 

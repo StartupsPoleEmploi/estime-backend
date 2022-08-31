@@ -52,13 +52,13 @@ public class Commun {
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1000);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(800);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1000);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
 	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setNombreJoursRestants(100f);
+	allocationARE.setNombreJoursRestants(100);
 	allocationARE.setAllocationJournaliereBrute(28f);
 	allocationARE.setSalaireJournalierReferenceBrut(40f);
 	allocationARE.setHasDegressiviteAre(false);

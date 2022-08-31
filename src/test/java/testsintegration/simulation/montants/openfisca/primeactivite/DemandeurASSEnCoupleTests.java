@@ -79,8 +79,8 @@ class DemandeurASSEnCoupleTests extends Commun {
 	boolean isEnCouple = true;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1900);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(2428);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1900);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(2428);
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieresConjoint.setSalaire(createSalaireConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);

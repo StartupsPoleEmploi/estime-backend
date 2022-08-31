@@ -2,24 +2,27 @@ package fr.poleemploi.estime.services.ressources;
 
 public class Salaire {
 
-    private float montantBrut;
-    private float montantNet;
+    private float montantMensuelBrut;
+    private float montantMensuelNet;
 
-    public float getMontantBrut() {
-	return montantBrut;
+    public float getMontantMensuelBrut() {
+	return montantMensuelBrut;
     }
-    public void setMontantBrut(float montantBrut) {
-	this.montantBrut = montantBrut;
+
+    public void setMontantMensuelBrut(float montantMensuelBrut) {
+	this.montantMensuelBrut = montantMensuelBrut;
     }
-    public float getMontantNet() {
-	return montantNet;
+
+    public float getMontantMensuelNet() {
+	return montantMensuelNet;
     }
-    public void setMontantNet(float montantNet) {
-	this.montantNet = montantNet;
+
+    public void setMontantMensuelNet(float montantMensuelNet) {
+	this.montantMensuelNet = montantMensuelNet;
     }
 
     @Override
     public String toString() {
-	return "Salaire [montantBrut=" + montantBrut + ", montantNet=" + montantNet + "]";
+	return "Salaire [montantMensuelBrut=" + montantMensuelBrut + ", montantMensuelNet=" + montantMensuelNet + "]";
     }
 }

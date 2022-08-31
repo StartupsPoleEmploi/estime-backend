@@ -162,9 +162,9 @@ public class Utile {
 	    LocalDate date = dateUtile.convertDateToLocalDate(new Date());
 
 	    if (index < salaires.length && salaires[index] != null) {
-		salaire.setMontantBrut(salaires[index].getMontantBrut());
-		salaire.setMontantNet(salaires[index].getMontantNet());
-		if (salaires[index].getMontantNet() > 0) {
+		salaire.setMontantMensuelBrut(salaires[index].getMontantMensuelBrut());
+		salaire.setMontantMensuelNet(salaires[index].getMontantMensuelNet());
+		if (salaires[index].getMontantMensuelNet() > 0) {
 		    isSansSalaire = false;
 		}
 		date = dateUtile.enleverMoisALocalDate(date, index);
@@ -192,8 +192,8 @@ public class Utile {
 	for (int index = 0; index < NOMBRE_MOIS_SALAIRES_AVANT_SIMULATION; index++) {
 	    salaires[index] = new Salaire();
 	    if (index < nombreMois) {
-		salaires[index].setMontantBrut(montantBrut);
-		salaires[index].setMontantNet(montantNet);
+		salaires[index].setMontantMensuelBrut(montantBrut);
+		salaires[index].setMontantMensuelNet(montantNet);
 	    }
 	}
 	return salaires;
@@ -201,8 +201,8 @@ public class Utile {
 
     public Salaire creerSalaire(float montantNet, float montantBrut) {
 	Salaire salaire = new Salaire();
-	salaire.setMontantNet(montantNet);
-	salaire.setMontantBrut(montantBrut);
+	salaire.setMontantMensuelNet(montantNet);
+	salaire.setMontantMensuelBrut(montantBrut);
 	return salaire;
     }
 

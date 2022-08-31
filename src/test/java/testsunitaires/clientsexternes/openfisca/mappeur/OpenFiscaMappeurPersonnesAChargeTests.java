@@ -191,8 +191,8 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	personneACharge.setBeneficiaireAides(beneficiaireAides);
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresPersonneACharge = new RessourcesFinancieresAvantSimulation();
 	Salaire salairepersonneACharge = new Salaire();
-	salairepersonneACharge.setMontantNet(900);
-	salairepersonneACharge.setMontantBrut(1165);
+	salairepersonneACharge.setMontantMensuelNet(900);
+	salairepersonneACharge.setMontantMensuelBrut(1165);
 	ressourcesFinancieresPersonneACharge.setSalaire(salairepersonneACharge);
 	ressourcesFinancieresPersonneACharge.setHasTravailleAuCoursDerniersMois(true);
 	ressourcesFinancieresPersonneACharge.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(900, 1165, 13));

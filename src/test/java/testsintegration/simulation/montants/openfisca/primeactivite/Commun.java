@@ -50,8 +50,8 @@ public class Commun {
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(900);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1165);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1));
@@ -72,8 +72,8 @@ public class Commun {
 
     protected Salaire createSalaireConjoint() {
 	Salaire salaireConjoint = new Salaire();
-	salaireConjoint.setMontantNet(1200);
-	salaireConjoint.setMontantBrut(1544);
+	salaireConjoint.setMontantMensuelNet(1200);
+	salaireConjoint.setMontantMensuelBrut(1544);
 	return salaireConjoint;
     }
 

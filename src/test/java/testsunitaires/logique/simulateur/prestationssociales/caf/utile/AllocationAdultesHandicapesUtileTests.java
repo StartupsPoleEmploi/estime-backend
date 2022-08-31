@@ -50,8 +50,8 @@ class AllocationAdultesHandicapesUtileTests {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 	FuturTravail futurTravail = new FuturTravail();
 	Salaire salaire = new Salaire();
-	salaire.setMontantNet(770);
-	salaire.setMontantBrut(1000);
+	salaire.setMontantMensuelNet(770);
+	salaire.setMontantMensuelBrut(1000);
 	futurTravail.setSalaire(salaire);
 
 	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
@@ -92,8 +92,8 @@ class AllocationAdultesHandicapesUtileTests {
 
 	FuturTravail futurTravail = new FuturTravail();
 	Salaire salaire = new Salaire();
-	salaire.setMontantNet(295);
-	salaire.setMontantBrut(400);
+	salaire.setMontantMensuelNet(295);
+	salaire.setMontantMensuelBrut(400);
 	futurTravail.setSalaire(salaire);
 	demandeurEmploi.setFuturTravail(futurTravail);
 
@@ -133,8 +133,8 @@ class AllocationAdultesHandicapesUtileTests {
 
 	FuturTravail futurTravail = new FuturTravail();
 	Salaire salaire = new Salaire();
-	salaire.setMontantNet(374);
-	salaire.setMontantBrut(500);
+	salaire.setMontantMensuelNet(374);
+	salaire.setMontantMensuelBrut(500);
 	futurTravail.setSalaire(salaire);
 	demandeurEmploi.setFuturTravail(futurTravail);
 

@@ -178,8 +178,8 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	Personne conjoint = demandeurEmploi.getSituationFamiliale().getConjoint();
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	Salaire salaireConjoint = new Salaire();
-	salaireConjoint.setMontantNet(1200);
-	salaireConjoint.setMontantBrut(1544);
+	salaireConjoint.setMontantMensuelNet(1200);
+	salaireConjoint.setMontantMensuelBrut(1544);
 	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
 	ressourcesFinancieresConjoint.setHasTravailleAuCoursDerniersMois(true);
 	ressourcesFinancieresConjoint.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1200, 1544, 13));

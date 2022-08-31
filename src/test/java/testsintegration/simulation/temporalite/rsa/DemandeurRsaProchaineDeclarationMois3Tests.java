@@ -63,8 +63,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1231);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1583);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
@@ -179,8 +179,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(500);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(659);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(350f);
@@ -195,8 +195,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	Salaire salaireConjoint = new Salaire();
-	salaireConjoint.setMontantNet(380);
-	salaireConjoint.setMontantBrut(508);
+	salaireConjoint.setMontantMensuelNet(380);
+	salaireConjoint.setMontantMensuelBrut(508);
 	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 
@@ -353,8 +353,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(500);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(659);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(380f);
@@ -477,8 +477,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(500);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(659);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
@@ -609,8 +609,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1231);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1583);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);

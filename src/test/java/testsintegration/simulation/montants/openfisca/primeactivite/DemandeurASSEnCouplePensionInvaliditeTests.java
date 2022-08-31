@@ -52,8 +52,8 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(800);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1038);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
@@ -83,8 +83,8 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	int nbEnfant = 1;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(800);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1038);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
 	demandeurEmploi.getInformationsPersonnelles().setLogement(createLogement());
 
@@ -112,13 +112,13 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	boolean isEnCouple = true;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(800);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1038);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	Salaire salaireConjoint = createSalaireConjoint();
-	salaireConjoint.setMontantNet(1000);
-	salaireConjoint.setMontantBrut(1291);
+	salaireConjoint.setMontantMensuelNet(1000);
+	salaireConjoint.setMontantMensuelBrut(1291);
 	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
 	ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
@@ -143,14 +143,14 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	int nbEnfant = 1;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(4));
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(800);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1038);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(800);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1038);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(150f));
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	Salaire salaireConjoint = createSalaireConjoint();
-	salaireConjoint.setMontantNet(1000);
-	salaireConjoint.setMontantBrut(1291);
+	salaireConjoint.setMontantMensuelNet(1000);
+	salaireConjoint.setMontantMensuelBrut(1291);
 	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
 	ressourcesFinancieresConjoint.setAidesCPAM(createAidesCPAMConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);

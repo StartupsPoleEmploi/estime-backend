@@ -134,8 +134,8 @@ class OpenFiscaMappeurPeriodesASSTests extends Commun {
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1228);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(950);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1228);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(950);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 	if (nombreMoisTravaillesAvantSimulation > 0) {
 	    PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, nombreMoisTravaillesAvantSimulation);

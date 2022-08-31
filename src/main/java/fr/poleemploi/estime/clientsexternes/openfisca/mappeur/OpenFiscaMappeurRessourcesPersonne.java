@@ -29,8 +29,9 @@ public class OpenFiscaMappeurRessourcesPersonne {
 	    if (ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMoisAvantSimulation(ressourcesFinancieres)) {
 		openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, personne, dateDebutSimulation);
 	    } else if (ressourcesFinancieresUtile.hasSalaire(ressourcesFinancieres)) {
-		personneOpenFisca.setSalaireDeBase(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getSalaire().getMontantBrut(), dateDebutSimulation));
-		personneOpenFisca.setSalaireImposable(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getSalaire().getMontantNet(), dateDebutSimulation));
+		personneOpenFisca.setSalaireDeBase(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getSalaire().getMontantMensuelBrut(), dateDebutSimulation));
+		personneOpenFisca
+			.setSalaireImposable(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getSalaire().getMontantMensuelNet(), dateDebutSimulation));
 	    }
 	    if (ressourcesFinancieresUtile.hasRevenusTravailleurIndependant(ressourcesFinancieres)) {
 		personneOpenFisca.setChiffreAffairesIndependant(

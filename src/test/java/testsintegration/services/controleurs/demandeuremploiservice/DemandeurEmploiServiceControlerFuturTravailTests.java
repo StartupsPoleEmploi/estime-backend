@@ -140,8 +140,8 @@ class DemandeurEmploiServiceControlerFuturTravailTests extends Commun {
         
         FuturTravail futurTravail = creerFuturTravail();
         Salaire salaire = new Salaire();
-        salaire.setMontantNet(0);
-        salaire.setMontantBrut(0);
+        salaire.setMontantMensuelNet(0);
+        salaire.setMontantMensuelBrut(0);
         futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         
@@ -160,8 +160,8 @@ class DemandeurEmploiServiceControlerFuturTravailTests extends Commun {
         
         FuturTravail futurTravail = creerFuturTravail();
         Salaire salaire = new Salaire();
-        salaire.setMontantNet(0);
-        salaire.setMontantBrut(0);
+        salaire.setMontantMensuelNet(0);
+        salaire.setMontantMensuelBrut(0);
         futurTravail.setSalaire(salaire);
         demandeurEmploi.setFuturTravail(futurTravail);
         

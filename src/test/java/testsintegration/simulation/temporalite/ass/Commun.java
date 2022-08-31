@@ -47,8 +47,8 @@ public class Commun {
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1245);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1600);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1245);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1600);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
@@ -64,7 +64,7 @@ public class Commun {
 
 	demandeurEmploi.getInformationsPersonnelles().setBeneficiaireACRE(true);
 	demandeurEmploi.getInformationsPersonnelles()
-		.setDateRepriseCreationEntreprise(dateUtile.enleverMoisALocalDate(dateUtile.getDateJour(), nombreMoisDepuisReprisCreationEntreprise));
+		.setDateRepriseCreationEntreprise(dateUtile.enleverMoisALocalDate(dateUtile.getDateJour().plusMonths(1), nombreMoisDepuisReprisCreationEntreprise));
 
 	return demandeurEmploi;
     }

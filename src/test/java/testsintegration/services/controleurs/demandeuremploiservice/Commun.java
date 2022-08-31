@@ -57,8 +57,8 @@ public class Commun {
 	futurTravail.setDistanceKmDomicileTravail(50);
 	futurTravail.setNombreHeuresTravailleesSemaine(15);
 	Salaire salaire = new Salaire();
-	salaire.setMontantNet(900);
-	salaire.setMontantBrut(1200);
+	salaire.setMontantMensuelNet(900);
+	salaire.setMontantMensuelBrut(1200);
 	futurTravail.setSalaire(salaire);
 	futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
 	return futurTravail;

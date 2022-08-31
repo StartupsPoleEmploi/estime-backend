@@ -58,14 +58,14 @@ public class Commun {
 	FuturTravail futurTravail = new FuturTravail();
 	futurTravail.setTypeContrat(TypeContratTravailEnum.CDI.name());
 	Salaire salaire = new Salaire();
-	salaire.setMontantNet(900);
-	salaire.setMontantBrut(1165);
+	salaire.setMontantMensuelNet(900);
+	salaire.setMontantMensuelBrut(1165);
 	futurTravail.setSalaire(salaire);
 	demandeurEmploi.setFuturTravail(futurTravail);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1245);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1600);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1245);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1600);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 

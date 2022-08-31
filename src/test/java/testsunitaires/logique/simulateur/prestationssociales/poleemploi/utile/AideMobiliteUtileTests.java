@@ -18,10 +18,6 @@ import org.springframework.test.context.TestPropertySource;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AideMobiliteUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
-import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
-import fr.poleemploi.estime.services.ressources.AllocationARE;
-import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 
 @ContextConfiguration
 @SpringBootTest
@@ -44,27 +40,12 @@ class AideMobiliteUtileTests {
     @Test
     void messageAlerteAideMobiliteTest() throws ParseException {
 
-	//Si DE avec montant ARE journalière brute = 28€
-	//Mois simulé janvier 2022 (31 jours) 
-
-	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
-	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setNombreJoursRestants(100f);
-	allocationARE.setAllocationJournaliereBrute(28f);
-	allocationARE.setSalaireJournalierReferenceBrut(40f);
-	allocationARE.setHasDegressiviteAre(false);
-	aidesPoleEmploi.setAllocationARE(allocationARE);
-	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
-
-	Aide are = aideMobiliteUtile.creerAideMobilite(500f);
+	Aide aideMobilite = aideMobiliteUtile.creerAideMobilite(500f);
 
 	List<String> messagesAlertesAttendus = new ArrayList<>();
 	messagesAlertesAttendus.add(MessageInformatifEnum.AGEPI_AM_DELAI_DEMANDE.getMessage());
 
 	//le message d'alerte sur le délai de demande Aide mobilité est présent
-	assertThat(are.getMessagesAlerte()).isEqualTo(messagesAlertesAttendus);
+	assertThat(aideMobilite.getMessagesAlerte()).isEqualTo(messagesAlertesAttendus);
     }
 }

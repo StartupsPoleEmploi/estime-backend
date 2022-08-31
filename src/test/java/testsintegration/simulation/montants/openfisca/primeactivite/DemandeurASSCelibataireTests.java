@@ -75,8 +75,8 @@ class DemandeurASSCelibataireTests extends Commun {
 	int nbEnfant = 0;
 
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1900);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(2428);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1900);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(2428);
 
 	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);

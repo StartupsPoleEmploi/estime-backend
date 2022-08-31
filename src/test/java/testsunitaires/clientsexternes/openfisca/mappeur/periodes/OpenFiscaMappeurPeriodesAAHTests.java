@@ -152,8 +152,8 @@ class OpenFiscaMappeurPeriodesAAHTests extends Commun {
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.AAH.getLibelle(), isEnCouple, nbEnfant);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1000);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1200);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1000);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationAAH(900f);
 	if (nombreMoisTravaillesAvantSimulation > 0) {
 	    PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, nombreMoisTravaillesAvantSimulation);

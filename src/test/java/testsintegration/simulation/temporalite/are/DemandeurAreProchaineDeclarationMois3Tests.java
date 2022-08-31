@@ -183,8 +183,8 @@ class DemandeurAreProchaineDeclarationMois3Tests extends Commun {
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	Salaire salaireConjoint = new Salaire();
-	salaireConjoint.setMontantNet(380);
-	salaireConjoint.setMontantBrut(508);
+	salaireConjoint.setMontantMensuelNet(380);
+	salaireConjoint.setMontantMensuelBrut(508);
 	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 

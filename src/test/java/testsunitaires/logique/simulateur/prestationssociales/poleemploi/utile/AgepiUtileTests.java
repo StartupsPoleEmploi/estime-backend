@@ -18,10 +18,6 @@ import org.springframework.test.context.TestPropertySource;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AgepiUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
-import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
-import fr.poleemploi.estime.services.ressources.AllocationARE;
-import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 
 @ContextConfiguration
 @SpringBootTest
@@ -44,28 +40,13 @@ class AgepiUtileTests {
     @Test
     void messageAlerteAgepiTest() throws ParseException {
 
-	//Si DE avec montant ARE journalière brute = 28€
-	//Mois simulé janvier 2022 (31 jours) 
-
-	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
-	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
-	AllocationARE allocationARE = new AllocationARE();
-	allocationARE.setNombreJoursRestants(100f);
-	allocationARE.setAllocationJournaliereBrute(28f);
-	allocationARE.setSalaireJournalierReferenceBrut(40f);
-	allocationARE.setHasDegressiviteAre(false);
-	aidesPoleEmploi.setAllocationARE(allocationARE);
-	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
-	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
-
-	Aide are = agepiUtile.creerAgepi(500f);
+	Aide agepi = agepiUtile.creerAgepi(500f);
 
 	List<String> messagesAlertesAttendus = new ArrayList<>();
 	messagesAlertesAttendus.add(MessageInformatifEnum.AGEPI_IDF.getMessage());
 	messagesAlertesAttendus.add(MessageInformatifEnum.AGEPI_AM_DELAI_DEMANDE.getMessage());
 
 	//le message d'alerte sur le délai de demande Agepi est présent
-	assertThat(are.getMessagesAlerte()).isEqualTo(messagesAlertesAttendus);
+	assertThat(agepi.getMessagesAlerte()).isEqualTo(messagesAlertesAttendus);
     }
 }
