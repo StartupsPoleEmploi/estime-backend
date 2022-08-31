@@ -48,7 +48,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 
 	float montantASS = calculerMontant(demandeurEmploi, dateMoisASimuler);
 	if (montantASS > 0) {
-	    Aide aideAllocationSolidariteSpecifique = creerAide(demandeurEmploi, dateDebutSimulation, montantASS);
+	    Aide aideAllocationSolidariteSpecifique = creerAide(montantASS);
 	    return Optional.of(aideAllocationSolidariteSpecifique);
 	}
 	return Optional.empty();
@@ -80,9 +80,10 @@ public class AllocationSolidariteSpecifiqueUtile {
     public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 	int nombreMoisCumulesASSPercueEtSalaire = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
 	if (informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)
-		&& informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation) <= 12) {
+		&& informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation) < 12) {
+
 	    return getNombreMoisEligiblesBeneficiaireACRE(informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation));
-	} else {
+	} else if (!informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)) {
 	    if (futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
 		return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
 	    } else if (futurTravailUtile.hasContratDureeDeterminee(demandeurEmploi.getFuturTravail())) {
@@ -92,7 +93,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 	return 0;
     }
 
-    private Aide creerAide(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, float montantAide) {
+    private Aide creerAide(float montantAide) {
 	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantAide);
     }
 
