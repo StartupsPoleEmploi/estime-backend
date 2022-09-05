@@ -98,7 +98,7 @@ class OpenFiscaMappeurPeriodesSalairesTests extends Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS, isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1291);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1000);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);

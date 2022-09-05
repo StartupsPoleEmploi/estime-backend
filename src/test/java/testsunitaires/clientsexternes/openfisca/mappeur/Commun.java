@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
@@ -30,29 +31,29 @@ public class Commun {
     @Autowired
     protected Utile utileTests;
 
-    protected DemandeurEmploi createDemandeurEmploiCelibataireSansEnfant(String typePopulation) throws ParseException {
+    protected DemandeurEmploi createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum typePopulation) throws ParseException {
 	return createDemandeurEmploi(typePopulation, false, 0);
     }
 
-    protected DemandeurEmploi createDemandeurEmploiCelibataireAvecEnfant(String typePopulation) throws ParseException {
+    protected DemandeurEmploi createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum typePopulation) throws ParseException {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(typePopulation, false, 1);
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDate("22-05-2013"));
 
 	return demandeurEmploi;
     }
 
-    protected DemandeurEmploi createDemandeurEmploiEnCoupleSansEnfant(String typePopulation) throws ParseException {
+    protected DemandeurEmploi createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum typePopulation) throws ParseException {
 	return createDemandeurEmploi(typePopulation, true, 0);
     }
 
-    protected DemandeurEmploi createDemandeurEmploiEnCoupleAvecEnfant(String typePopulation) throws ParseException {
+    protected DemandeurEmploi createDemandeurEmploiEnCoupleAvecEnfant(TypePopulationEnum typePopulation) throws ParseException {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(typePopulation, true, 1);
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDate("22-05-2013"));
 
 	return demandeurEmploi;
     }
 
-    protected DemandeurEmploi createDemandeurEmploi(String typePopulation, boolean isEnCouple, int nbEnfant) throws ParseException {
+    protected DemandeurEmploi createDemandeurEmploi(TypePopulationEnum typePopulation, boolean isEnCouple, int nbEnfant) throws ParseException {
 	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(typePopulation, isEnCouple, nbEnfant);
 
 	FuturTravail futurTravail = new FuturTravail();

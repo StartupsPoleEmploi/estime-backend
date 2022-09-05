@@ -33,6 +33,8 @@ public class OpenFiscaMappeurPeriode {
     public static final int NOMBRE_MOIS_PERIODE_OPENFISCA_COMPLEMENT_ARE = 7;
     public static final int NOMBRE_MOIS_PERIODE_OPENFISCA_SALAIRES = 13;
     public static final int NOMBRE_MOIS_PERIODE_36 = 36;
+    public static final String TYPE_ACTIVITE_CHOMEUR = "chomeur";
+    public static final String TYPE_ACTIVITE_ACTIF = "actif";
 
     @Autowired
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifiqueUtile;
@@ -59,6 +61,18 @@ public class OpenFiscaMappeurPeriode {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	for (int numeroMoisPeriode = -NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
 	    periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), valeur);
+	}
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes creerPeriodesActiviteOpenFisca(LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	for (int numeroMoisPeriode = -NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
+	    if (numeroMoisPeriode < 0) {
+		periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), TYPE_ACTIVITE_CHOMEUR);
+	    } else {
+		periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), TYPE_ACTIVITE_ACTIF);
+	    }
 	}
 	return periodesOpenFisca;
     }

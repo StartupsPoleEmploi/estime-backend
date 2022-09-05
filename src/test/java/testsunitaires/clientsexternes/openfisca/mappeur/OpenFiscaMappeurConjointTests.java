@@ -65,7 +65,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/conjoint/demandeur-avec-conjoint-aah.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -90,7 +90,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/conjoint/demandeur-avec-conjoint-ass.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -118,7 +118,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/conjoint/demandeur-avec-conjoint-are.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -147,7 +147,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/conjoint/demandeur-avec-conjoint-pension-invalidite.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -170,7 +170,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/conjoint/demandeur-avec-conjoint-salaire.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -197,7 +197,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/conjoint/demandeur-avec-conjoint-revenus-locatifs.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -220,7 +220,7 @@ class OpenFiscaMappeurConjointTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/conjoint/demandeur-avec-conjoint-pension-retraite.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiEnCoupleSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 

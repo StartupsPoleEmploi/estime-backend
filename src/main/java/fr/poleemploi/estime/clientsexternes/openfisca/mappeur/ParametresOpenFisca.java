@@ -8,6 +8,7 @@ public class ParametresOpenFisca {
 
     public static final String AAH = "aah";
     public static final String AF = "af";
+    public static final String ACTIVITE = "activite";
     public static final String AGE = "age";
 
     public static final String AGEPI = "agepi";
@@ -31,7 +32,7 @@ public class ParametresOpenFisca {
     public static final String COMPLEMENT_ARE_NOMBRE_JOURS_RESTANTS = "complement_are_nombre_jours_restants";
     public static final String ALLOCATION_RETOUR_EMPLOI_JOURNALIERE = "allocation_retour_emploi_journaliere";
     public static final String ALLOCATION_RETOUR_EMPLOI_JOURNALIERE_TAUX_PLEIN = "allocation_retour_emploi_journaliere_taux_plein";
-    public static final String SALAIRE_JOURNALIER_REFERENCE_ARE = "salaire_journalier_reference_are";
+    public static final String SALAIRE_JOURNALIER_REFERENCE_ARE = "are_salaire_journalier_reference";
     public static final String COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES = "complement_are_nombre_jours_indemnises";
     public static final String COMPLEMENT_ARE_BRUT = "complement_are_brut";
     public static final String COMPLEMENT_ARE_DEDUCTIONS = "complement_are_deductions";

@@ -56,6 +56,7 @@ public class OpenFiscaMappeurIndividu {
 	OpenFiscaIndividu demandeurOpenFisca = new OpenFiscaIndividu();
 	demandeurOpenFisca.setDateNaissance(openFiscaMappeurPeriode.creerPeriodesOpenFisca(getDateNaissance(demandeurEmploi), dateDebutSimulation));
 	demandeurOpenFisca.setStatutMarital(openFiscaMappeurPeriode.creerPeriodesOpenFisca(getStatutMarital(demandeurEmploi), dateDebutSimulation));
+	demandeurOpenFisca.setActivite(openFiscaMappeurPeriode.creerPeriodesActiviteOpenFisca(dateDebutSimulation));
 
 	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
 	addRessourcesFinancieresDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);

@@ -347,15 +347,12 @@ class DemandeurAahAss4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(ass -> {
 		assertThat(ass.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
-	    });
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(270f);
 	    });
 	});
 
@@ -455,9 +452,12 @@ class DemandeurAahAss4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides()).hasSize(3);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(ass -> {
 		assertThat(ass.getMontant()).isEqualTo(180);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(57f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
@@ -479,7 +479,7 @@ class DemandeurAahAss4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(ass.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(192f);
+		assertThat(ppa.getMontant()).isEqualTo(57f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
@@ -501,7 +501,7 @@ class DemandeurAahAss4MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(ass.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(192f);
+		assertThat(ppa.getMontant()).isEqualTo(57f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);

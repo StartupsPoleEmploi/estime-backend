@@ -1,6 +1,7 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.ressources;
 
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AAH;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ACTIVITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI_DATE_DEMANDE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI_TEMPS_TRAVAIL;
@@ -48,6 +49,8 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes enfantACharge;
     @JsonProperty(STATUT_MARITAL)
     private OpenFiscaPeriodes statutMarital;
+    @JsonProperty(ACTIVITE)
+    private OpenFiscaPeriodes activite;
     @JsonProperty(SALAIRE_BASE)
     private OpenFiscaPeriodes salaireDeBase;
     @JsonProperty(SALAIRE_IMPOSABLE)
@@ -448,6 +451,15 @@ public class OpenFiscaIndividu {
 
     public void setComplementARENet(OpenFiscaPeriodes complementARENet) {
 	this.complementARENet = complementARENet;
+    }
+
+    @JsonProperty(ACTIVITE)
+    public OpenFiscaPeriodes getActivite() {
+	return activite;
+    }
+
+    public void setActivite(OpenFiscaPeriodes activite) {
+	this.activite = activite;
     }
 
     @Override

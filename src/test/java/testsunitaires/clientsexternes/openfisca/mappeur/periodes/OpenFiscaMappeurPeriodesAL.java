@@ -99,7 +99,7 @@ class OpenFiscaMappeurPeriodesAL extends Commun {
     private DemandeurEmploi creerDemandeurEmploiALTests(int prochaineDeclarationTrimestrielle) throws ParseException {
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1200);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1000);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAidesLogement(utileTests.creerAidePersonnaliseeLogement(300));

@@ -27,6 +27,7 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -84,7 +85,7 @@ public class Utile {
 	return aide;
     }
 
-    public DemandeurEmploi creerBaseDemandeurEmploi(String population, boolean isEnCouple, int nbEnfant) {
+    public DemandeurEmploi creerBaseDemandeurEmploi(TypePopulationEnum population, boolean isEnCouple, int nbEnfant) {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 	demandeurEmploi.setIdPoleEmploi("idPoleEmploi");
 
@@ -117,7 +118,7 @@ public class Utile {
 	return demandeurEmploi;
     }
 
-    public DemandeurEmploi creerBaseDemandeurEmploi(String population, boolean isEnCouple, List<Personne> personnesACharge) {
+    public DemandeurEmploi creerBaseDemandeurEmploi(TypePopulationEnum population, boolean isEnCouple, List<Personne> personnesACharge) {
 	DemandeurEmploi demandeurEmploi = creerBaseDemandeurEmploi(population, isEnCouple, personnesACharge.size());
 
 	demandeurEmploi.getSituationFamiliale().setPersonnesACharge(personnesACharge);
@@ -135,18 +136,20 @@ public class Utile {
 	return aidesLogement;
     }
 
-    public DetailIndemnisationPEIOOut creerDetailIndemnisationPEIO(String population) {
+    public DetailIndemnisationPEIOOut creerDetailIndemnisationPEIO(TypePopulationEnum population) {
 	switch (population) {
-	case "AAH":
+	case AAH:
 	    return creerDetailIndemnisationPEIO(true, false, false, false);
-	case "ARE":
+	case ARE:
 	    return creerDetailIndemnisationPEIO(false, true, false, false);
-	case "ASS":
+	case ASS:
 	    return creerDetailIndemnisationPEIO(false, false, true, false);
-	case "RSA":
+	case RSA:
 	    return creerDetailIndemnisationPEIO(false, false, false, true);
-	case "AAH_ASS":
+	case AAH_ASS:
 	    return creerDetailIndemnisationPEIO(true, false, true, false);
+	case AAH_ARE:
+	    return creerDetailIndemnisationPEIO(true, true, false, false);
 	default:
 	    return null;
 	}
@@ -238,18 +241,20 @@ public class Utile {
 	return aidesLogement;
     }
 
-    private BeneficiaireAides creerBeneficiaireAides(String population) {
+    private BeneficiaireAides creerBeneficiaireAides(TypePopulationEnum population) {
 	switch (population) {
-	case "AAH":
+	case AAH:
 	    return creerBeneficiaireAides(true, false, false, false);
-	case "ARE":
+	case ARE:
 	    return creerBeneficiaireAides(false, true, false, false);
-	case "ASS":
+	case ASS:
 	    return creerBeneficiaireAides(false, false, true, false);
-	case "RSA":
+	case RSA:
 	    return creerBeneficiaireAides(false, false, false, true);
-	case "AAH_ASS":
+	case AAH_ASS:
 	    return creerBeneficiaireAides(true, false, true, false);
+	case AAH_ARE:
+	    return creerBeneficiaireAides(true, true, false, false);
 	default:
 	    return creerBeneficiaireAides(false, false, false, false);
 	}
@@ -264,21 +269,28 @@ public class Utile {
 	return detailIndemnisationPEIO;
     }
 
-    private void initRessourcesFinancieres(RessourcesFinancieresAvantSimulation ressourcesFinancieres, String population) {
+    private void initRessourcesFinancieres(RessourcesFinancieresAvantSimulation ressourcesFinancieres, TypePopulationEnum population) {
 	switch (population) {
-	case "AAH":
-	    ressourcesFinancieres.setAidesCAF(creerAideCAF(population));
-	case "RSA":
-	    ressourcesFinancieres.setAidesCAF(creerAideCAF(population));
-	case "ARE":
-	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population));
+	case AAH:
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(population.getLibelle()));
 	    break;
-	case "ASS":
-	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population));
+	case RSA:
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(population.getLibelle()));
 	    break;
-	case "AAH_ASS":
+	case ARE:
+	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population.getLibelle()));
+	    break;
+	case ASS:
+	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population.getLibelle()));
+	    break;
+	case AAH_ASS:
 	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));
 	    ressourcesFinancieres.setAidesCAF(creerAideCAF(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode()));
+	    break;
+	case AAH_ARE:
+	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(AideEnum.AIDE_RETOUR_EMPLOI.getCode()));
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode()));
+	    break;
 	default:
 	    break;
 	}

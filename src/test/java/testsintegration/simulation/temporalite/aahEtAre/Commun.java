@@ -1,4 +1,4 @@
-package testsintegration.simulation.temporalite.are;
+package testsintegration.simulation.temporalite.aahEtAre;
 
 import static org.mockito.Mockito.doReturn;
 
@@ -20,7 +20,6 @@ import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.commun.utile.SuiviUtilisateurUtile;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.Coordonnees;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -37,15 +36,15 @@ public class Commun {
     protected DateUtile dateUtile;
 
     @SpyBean
-    private SuiviUtilisateurUtile suiviUtilisateurUtile;
-
-    @SpyBean
     private PoleEmploiIOClient poleEmploiIOClient;
 
+    private static int PROCHAINE_DECLARATION_TRIMESTRIELLE = 0;
+
     protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant)
-	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+	    throws ParseException, JSONException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException {
+
 	initMocks();
-	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.ARE, isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utile.creerBaseDemandeurEmploi(TypePopulationEnum.AAH_ARE, isEnCouple, nbEnfant);
 
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utile.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
@@ -64,15 +63,19 @@ public class Commun {
 	allocationARE.setHasDegressiviteAre(false);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().setAllocationARE(allocationARE);
 
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setNombreMoisTravaillesDerniersMois(0);
+
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationAAH(400f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 	return demandeurEmploi;
     }
 
     protected void initMocks() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
-	//mock création date de demande de simulation
+
 	doReturn(utile.getDate("01-01-2022")).when(dateUtile).getDateJour();
 
-	//mock retour appel détail indemnisation de l'ESD 
-	DetailIndemnisationPEIOOut detailIndemnisationESD = utile.creerDetailIndemnisationPEIO(TypePopulationEnum.ARE);
+	DetailIndemnisationPEIOOut detailIndemnisationESD = utile.creerDetailIndemnisationPEIO(TypePopulationEnum.AAH_ARE);
 	doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
     }
 
@@ -93,5 +96,4 @@ public class Commun {
 	coordonnees.setDeMayotte(false);
 	return coordonnees;
     }
-
 }

@@ -32,7 +32,7 @@ public class Commun {
     protected DateUtile dateUtile;
 
     protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, List<Personne> personnesACharge) throws ParseException {
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, personnesACharge);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS, isEnCouple, personnesACharge);
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
@@ -43,7 +43,7 @@ public class Commun {
     }
 
     protected DemandeurEmploi createDemandeurEmploiCDD(int nombreMoisTravailles, boolean isEnCouple, List<Personne> personnesACharge) throws ParseException {
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, personnesACharge);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS, isEnCouple, personnesACharge);
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDD.name());
@@ -55,7 +55,7 @@ public class Commun {
     }
 
     protected DemandeurEmploi createDemandeurEmploiSuperieurAREMini(boolean isEnCouple, List<Personne> personnesACharge) throws ParseException {
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE.getLibelle(), isEnCouple, personnesACharge);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ARE, isEnCouple, personnesACharge);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereBrute(30f);
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());

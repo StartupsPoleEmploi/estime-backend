@@ -61,7 +61,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-apl.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -88,7 +88,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-alf.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -115,7 +115,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-als.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -143,7 +143,7 @@ class OpenFiscaMappeurTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-revenus-locatifs.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -165,7 +165,7 @@ class OpenFiscaMappeurTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-revenus-travailleur-independant.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -187,7 +187,7 @@ class OpenFiscaMappeurTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-revenus-micro-entreprise.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -208,7 +208,7 @@ class OpenFiscaMappeurTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-pension-invalidite.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -230,7 +230,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-rsa.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.RSA.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.RSA);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(400f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(3);
@@ -245,7 +245,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-are.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ARE.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ARE);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereBrute(37f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setSalaireJournalierReferenceBrut(48f);
@@ -262,7 +262,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-ass.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -276,7 +276,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-cdi.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 
@@ -290,7 +290,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-cdd.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDD.name());
 	demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);
@@ -305,7 +305,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-interim.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.INTERIM.name());
 	demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);
@@ -320,7 +320,7 @@ class OpenFiscaMappeurTests extends Commun {
 
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-iae.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.IAE.name());
 	demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);

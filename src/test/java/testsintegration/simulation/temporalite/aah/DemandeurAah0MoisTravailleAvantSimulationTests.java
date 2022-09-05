@@ -289,7 +289,7 @@ class DemandeurAah0MoisTravailleAvantSimulationTests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(900);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(170f);
+		assertThat(ppa.getMontant()).isEqualTo(176f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
@@ -429,7 +429,7 @@ class DemandeurAah0MoisTravailleAvantSimulationTests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(900);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(170f);
+		assertThat(ppa.getMontant()).isEqualTo(182f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);

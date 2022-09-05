@@ -55,7 +55,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// RSA 500€, déclaration trimetrielle en M3, non travaillé au cours des 3 derniers mois
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -173,7 +173,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// enfant 2 ans, enfant 4 ans
 	boolean isEnCouple = true;
 	int nbEnfant = 2;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -345,7 +345,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// RSA 380€, déclaration trimetrielle en M3, travaillé au cours des 3 derniers mois avec salaire 380 juillet, salaire 380 juin, salaire 0 mai
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -469,7 +469,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// mai
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -600,7 +600,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// APL 310€
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 

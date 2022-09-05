@@ -67,7 +67,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/personnesACharge/demandeur-avec-enfant-aah.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -94,7 +94,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/personnesACharge/demandeur-avec-enfant-are.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -123,7 +123,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/personnesACharge/demandeur-avec-enfant-ass.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -155,7 +155,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	String openFiscaPayloadExpected = testUtile.getStringFromJsonFile(
 		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/personnesACharge/demandeur-avec-enfant-pension-invalidite.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -180,7 +180,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/personnesACharge/demandeur-avec-enfant-salaire.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
@@ -209,7 +209,7 @@ class OpenFiscaMappeurPersonnesAChargeTests extends Commun {
 	String openFiscaPayloadExpected = testUtile
 		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/personnesACharge/demandeur-avec-enfants-et-af.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS.getLibelle());
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireAvecEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 

@@ -53,7 +53,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	// RSA 500€, déclaration trimetrielle en M2, non travaillé au cours des 3 derniers mois
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -163,7 +163,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(232f);
+		assertThat(ppa.getMontant()).isEqualTo(237f);
 	    });
 	});
     }
@@ -176,7 +176,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	// RSA 500€, déclaration trimetrielle en M2, travaillé au cours des 3 derniers mois avec salaire 0€ juillet, salaire 500€ juin, salaire 0 mai
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -309,7 +309,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	// APL 310€
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -436,7 +436,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(165f);
+		assertThat(ppa.getMontant()).isEqualTo(170f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
 		assertThat(als.getMontant()).isEqualTo(272f);

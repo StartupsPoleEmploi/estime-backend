@@ -40,7 +40,7 @@ class SituationFamilialeUtileTests {
 	//si 1 enfant à charge de 15 ans
 	boolean isEnCouple = false;
 	int nbEnfants = 1;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfants);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS, isEnCouple, nbEnfants);
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(15));
 
 	//lorsque l'on appelle getNombreEnfantAChargeInferieurAgeLimite avec age limite Agepi.AGE_MAX_ENFANT
@@ -56,7 +56,7 @@ class SituationFamilialeUtileTests {
 	//si 3 enfants à charge de 15 ans, 10 ans et 9 ans
 	boolean isEnCouple = false;
 	int nbEnfants = 3;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfants);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS, isEnCouple, nbEnfants);
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(15));
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(10));
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(2).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));

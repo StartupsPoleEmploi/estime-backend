@@ -41,7 +41,7 @@ public class Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 1;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.AAH_ASS.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.AAH_ASS, isEnCouple, nbEnfant);
 
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
@@ -68,7 +68,6 @@ public class Commun {
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
 
-
 	return demandeurEmploi;
     }
 
@@ -77,7 +76,7 @@ public class Commun {
 
 	doReturn(utileTests.getDate("01-01-2022")).when(dateUtile).getDateJour();
 
-	DetailIndemnisationPEIOOut detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.AAH_ASS.getLibelle());
+	DetailIndemnisationPEIOOut detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.AAH_ASS);
 	doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
     }
 }

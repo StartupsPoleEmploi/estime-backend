@@ -53,7 +53,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	// RSA 500€, déclaration trimetrielle en M1, non travaillé au cours des 3 derniers mois
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getSituationFamiliale().setIsEnCouple(false);
@@ -140,7 +140,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(232);
+		assertThat(ppa.getMontant()).isEqualTo(236f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -155,7 +155,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(232);
+		assertThat(ppa.getMontant()).isEqualTo(236f);
 	    });
 	});
     }
@@ -170,7 +170,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	// enfant 4 ans (05/03/2017)
 	boolean isEnCouple = true;
 	int nbEnfant = 1;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
@@ -275,7 +275,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(424f);
+		assertThat(ppa.getMontant()).isEqualTo(431f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -289,7 +289,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(424f);
+		assertThat(ppa.getMontant()).isEqualTo(431f);
 	    });
 	});
     }
@@ -303,7 +303,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	// APL 310€
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setLogement(initLogement());
@@ -404,7 +404,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(165);
+		assertThat(ppa.getMontant()).isEqualTo(169f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
 		assertThat(als.getMontant()).isEqualTo(272f);
@@ -421,7 +421,7 @@ class DemandeurRsaProchaineDeclarationMois1Tests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(165);
+		assertThat(ppa.getMontant()).isEqualTo(169f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
 		assertThat(als.getMontant()).isEqualTo(272f);
