@@ -26,10 +26,6 @@ public class RessourcesFinancieresControleur {
 	    if (aidesPoleEmploi.getAllocationASS().getAllocationJournaliereNet() <= 0) {
 		throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationJournaliereNetASS"));
 	    }
-	    if (aidesPoleEmploi.getAllocationASS().getDateDerniereOuvertureDroit() == null) {
-		throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(),
-			"dateDerniereOuvertureDroitASS dans AllocationsPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
-	    }
 	}
 	controlerHasTravailleAvantSimulation(ressourcesFinancieres);
     }

@@ -69,7 +69,7 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(300f);
+		assertThat(apl.getMontant()).isEqualTo(370f);
 	    });
 	});
 	// Alors les prestations du second mois 03/2022 sont :
@@ -115,7 +115,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(415f);
 	    });
@@ -135,7 +134,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(415f);
 	    });
@@ -155,7 +153,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(415f);
 	    });
@@ -197,7 +194,7 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_FAMILIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(300f);
+		assertThat(apl.getMontant()).isEqualTo(440f);
 	    });
 	});
 	// Alors les prestations du second mois 03/2022 sont :
@@ -243,7 +240,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(415f);
 	    });
@@ -263,7 +259,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(415f);
 	    });
@@ -283,7 +278,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(415f);
 	    });
@@ -324,7 +318,7 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(rsa.getMontant()).isEqualTo(500f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(300f);
+		assertThat(apl.getMontant()).isEqualTo(272f);
 	    });
 	});
 	// Alors les prestations du second mois 03/2022 sont :
@@ -370,7 +364,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(136f);
 	    });
@@ -387,7 +380,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(136f);
 	    });
@@ -404,7 +396,6 @@ class DemandeurAideLogementProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(136f);
 	    });

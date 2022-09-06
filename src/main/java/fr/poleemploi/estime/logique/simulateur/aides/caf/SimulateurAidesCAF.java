@@ -10,10 +10,8 @@ import fr.poleemploi.estime.commun.utile.demandeuremploi.BeneficiaireAidesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AidesFamilialesUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.AllocationAdultesHandicapesUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.caf.utile.TemporaliteCAFUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class SimulateurAidesCAF {
@@ -33,10 +31,7 @@ public class SimulateurAidesCAF {
     @Autowired
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
-    @Autowired
-    private TemporaliteCAFUtile temporaliteCAFUtile;
-
-    public void simuler(Simulation simulation, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simuler(Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	if (isEligibleAidesCAF(demandeurEmploi)) {
 	    if (beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
 		allocationAdultesHandicapesUtile.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
@@ -44,7 +39,6 @@ public class SimulateurAidesCAF {
 	    if (aidesFamilialesUtile.isEligibleAidesFamiliales(demandeurEmploi, numeroMoisSimule)) {
 		aidesFamilialesUtile.simulerAidesFamiliales(aidesPourCeMois, demandeurEmploi, numeroMoisSimule);
 	    }
-	    temporaliteCAFUtile.simulerTemporaliteAppelOpenfisca(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
 	}
     }
 

@@ -38,19 +38,23 @@ public class SimulateurAidesUtile {
 	return numeroMoisSimule == 1;
     }
 
+    public boolean isSecondMois(int numeroMoisSimule) {
+	return numeroMoisSimule == 2;
+    }
+
     public boolean isDeuxDerniersMois(int numeroMoisSimule) {
-	return numeroMoisSimule == 5 || numeroMoisSimule == 6;
+	return numeroMoisSimule >= 5;
     }
 
     public boolean isTroisDerniersMois(int numeroMoisSimule) {
-	return numeroMoisSimule == 4 || numeroMoisSimule == 5 || numeroMoisSimule == 6;
+	return numeroMoisSimule >= 4;
     }
 
     public boolean isQuatreDerniersMois(int numeroMoisSimule) {
-	return numeroMoisSimule == 3 || numeroMoisSimule == 4 || numeroMoisSimule == 5 || numeroMoisSimule == 6;
+	return numeroMoisSimule >= 3;
     }
 
     public boolean isCinqDerniersMois(int numeroMoisSimule) {
-	return numeroMoisSimule == 2 || numeroMoisSimule == 3 || numeroMoisSimule == 4 || numeroMoisSimule == 5 || numeroMoisSimule == 6;
+	return numeroMoisSimule >= 2;
     }
 }

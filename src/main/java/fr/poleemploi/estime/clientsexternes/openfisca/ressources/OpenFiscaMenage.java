@@ -1,6 +1,5 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.ressources;
 
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHARGES_LOCATIVES;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COLOC;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEPCOM;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.LIEU_RESIDENCE;
@@ -30,8 +29,6 @@ public class OpenFiscaMenage {
     private OpenFiscaPeriodes statutOccupationLogement;
     @JsonProperty(LOYER)
     private OpenFiscaPeriodes loyer;
-    @JsonProperty(CHARGES_LOCATIVES)
-    private OpenFiscaPeriodes chargesLocatives;
     @JsonProperty(COLOC)
     private OpenFiscaPeriodes coloc;
     @JsonProperty(LOGEMENT_CHAMBRE)
@@ -40,15 +37,6 @@ public class OpenFiscaMenage {
     private OpenFiscaPeriodes logementConventionne;
     @JsonProperty(LOGEMENT_CROUS)
     private OpenFiscaPeriodes logementCrous;
-
-    @JsonProperty(CHARGES_LOCATIVES)
-    public OpenFiscaPeriodes getChargesLocatives() {
-	return chargesLocatives;
-    }
-
-    public void setChargesLocatives(OpenFiscaPeriodes chargesLocatives) {
-	this.chargesLocatives = chargesLocatives;
-    }
 
     @JsonProperty(COLOC)
     public OpenFiscaPeriodes getColoc() {

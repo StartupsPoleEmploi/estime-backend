@@ -141,7 +141,6 @@ public class StagingEnvironnementUtile {
 
     private void creerBouchonAllocationCPAM(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	AidesCPAM aidesCPAM = new AidesCPAM();
-	aidesCPAM.setAllocationSupplementaireInvalidite(0f);
 	ressourcesFinancieres.setAidesCPAM(aidesCPAM);
     }
 
@@ -151,7 +150,6 @@ public class StagingEnvironnementUtile {
 	logement.setConventionne(false);
 	logement.setColloc(false);
 	logement.setCrous(false);
-	logement.setMontantCharges(null);
 	logement.setMontantLoyer(null);
 	logement.setCoordonnees(creerBouchonCoordonnees());
 	logement.setStatutOccupationLogement(creerBouchonStatutOccupationLogement());

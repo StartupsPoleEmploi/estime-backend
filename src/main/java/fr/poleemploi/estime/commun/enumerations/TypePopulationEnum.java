@@ -8,6 +8,7 @@ public enum TypePopulationEnum {
     ASS("ASS"),
     RSA("RSA"),
     AAH_ASS("AAH_ASS"),
+    AAH_ARE("AAH_ARE"),
     NON_BENEFICIAIRE("Non bénéficiaire d'allocations");
 
     private String libelle;

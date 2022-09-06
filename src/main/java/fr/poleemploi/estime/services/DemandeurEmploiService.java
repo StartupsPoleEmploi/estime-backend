@@ -28,8 +28,7 @@ public class DemandeurEmploiService {
     private DemandeurEmploiLogique demandeurEmploiLogique;
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public DemandeurEmploi creerDemandeurEmploi(@RequestBody Individu individu) {
-	demandeurEmploiServiceControleur.controlerDonneesEntreeServiceCreerDemandeurEmploi(individu);
+    public DemandeurEmploi creerDemandeurEmploi(@RequestBody(required = false) Individu individu) {
 	return demandeurEmploiLogique.creerDemandeurEmploi(individu);
     }
 

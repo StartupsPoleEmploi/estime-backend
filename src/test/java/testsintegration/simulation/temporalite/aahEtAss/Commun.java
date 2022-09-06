@@ -41,7 +41,7 @@ public class Commun {
 
 	boolean isEnCouple = false;
 	int nbEnfant = 1;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.AAH_ASS.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.AAH_ASS, isEnCouple, nbEnfant);
 
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
@@ -50,8 +50,8 @@ public class Commun {
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(940);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1200);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(940);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1200);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 
@@ -67,7 +67,6 @@ public class Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setProchaineDeclarationTrimestrielle(PROCHAINE_DECLARATION_TRIMESTRIELLE);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
 
 	return demandeurEmploi;
     }
@@ -77,7 +76,7 @@ public class Commun {
 
 	doReturn(utileTests.getDate("01-01-2022")).when(dateUtile).getDateJour();
 
-	DetailIndemnisationPEIOOut detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.AAH_ASS.getLibelle());
+	DetailIndemnisationPEIOOut detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.AAH_ASS);
 	doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
     }
 }

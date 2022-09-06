@@ -45,15 +45,16 @@ public class Commun {
     }
 
     protected DemandeurEmploi createDemandeurEmploi(boolean isEnCouple, int nbEnfant) throws ParseException {
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(900);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1165);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(900);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1165);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1));
 
 	return demandeurEmploi;
     }
@@ -71,8 +72,8 @@ public class Commun {
 
     protected Salaire createSalaireConjoint() {
 	Salaire salaireConjoint = new Salaire();
-	salaireConjoint.setMontantNet(1200);
-	salaireConjoint.setMontantBrut(1544);
+	salaireConjoint.setMontantMensuelNet(1200);
+	salaireConjoint.setMontantMensuelBrut(1544);
 	return salaireConjoint;
     }
 
@@ -88,7 +89,6 @@ public class Commun {
 	statutOccupationLogement.setLocataireNonMeuble(true);
 	logement.setStatutOccupationLogement(statutOccupationLogement);
 	logement.setMontantLoyer(500f);
-	logement.setMontantCharges(50f);
 	logement.setCoordonnees(createCoordonnees());
 	return logement;
     }

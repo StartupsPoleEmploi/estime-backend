@@ -10,6 +10,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
@@ -50,6 +52,12 @@ public class SimulateurAides {
     @Autowired
     private SimulateurAidesPoleEmploi simulateurAidesPoleEmploi;
 
+    @Autowired
+    private TemporaliteOpenFiscaUtile temporaliteOpenFiscaUtile;
+
+    @Autowired
+    private OpenFiscaClient openFiscaClient;
+
     public Simulation simuler(DemandeurEmploi demandeurEmploi) {
 	Simulation simulation = new Simulation();
 	simulation.setSimulationsMensuelles(new ArrayList<>());
@@ -60,15 +68,16 @@ public class SimulateurAides {
 	simulation.setMontantRessourcesFinancieresMoisAvantSimulation(ressourcesFinancieresUtile.calculerMontantRessourcesFinancieresMoisAvantSimulation(demandeurEmploi));
 
 	int nombreMoisASimuler = simulateurAidesUtile.getNombreMoisASimuler(demandeurEmploi);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
 
 	for (int numeroMoisSimule = 1; numeroMoisSimule <= nombreMoisASimuler; numeroMoisSimule++) {
-	    simulerAidesPourCeMois(simulation, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	    simulerAidesPourCeMois(openFiscaRoot, simulation, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
 	}
 	return simulation;
     }
 
-    private void simulerAidesPourCeMois(Simulation simulation, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	LocalDate dateMoisASimuler = getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
+    private void simulerAidesPourCeMois(OpenFiscaRoot openFiscaRoot, Simulation simulation, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	LocalDate dateMoisASimuler = dateUtile.getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
 
 	SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
 	simulationMensuelle.setDatePremierJourMoisSimule(dateMoisASimuler);
@@ -78,30 +87,20 @@ public class SimulateurAides {
 	simulationMensuelle.setAides(aidesPourCeMois);
 
 	ajouterAidesSansCalcul(aidesPourCeMois, demandeurEmploi);
-	simulateurAidesCAF.simuler(simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
-	simulateurAidesPoleEmploi.simuler(simulation, aidesPourCeMois, numeroMoisSimule, dateMoisASimuler, demandeurEmploi, dateDebutSimulation);
+	temporaliteOpenFiscaUtile.simulerTemporaliteAppelOpenfisca(openFiscaRoot, simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	simulateurAidesCAF.simuler(aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	simulateurAidesPoleEmploi.simuler(aidesPourCeMois, numeroMoisSimule, demandeurEmploi, dateDebutSimulation);
 
 	HashMap<String, RessourceFinanciere> ressourcesFinancieresPourCeMois = new HashMap<>();
 	simulationMensuelle.setRessourcesFinancieres(ressourcesFinancieresPourCeMois);
 
 	ajouterRessourcesFinancieres(ressourcesFinancieresPourCeMois, demandeurEmploi);
-
-    }
-
-    private LocalDate getDateMoisASimuler(LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	int nombreMoisToAdd = numeroMoisSimule - 1;
-	return dateUtile.ajouterMoisALocalDate(dateDebutSimulation, nombreMoisToAdd);
     }
 
     private void ajouterAidesSansCalcul(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi) {
 	if (ressourcesFinancieresUtile.hasPensionInvalidite(demandeurEmploi)) {
 	    float montantPensionInvalidite = ressourcesFinancieresUtile.getPensionInvalidite(demandeurEmploi);
 	    aidesPourCeMois.put(AideEnum.PENSION_INVALIDITE.getCode(), creerAideSansCalcul(AideEnum.PENSION_INVALIDITE, Optional.of(OrganismeEnum.CPAM), montantPensionInvalidite));
-	}
-	if (ressourcesFinancieresUtile.hasAllocationSupplementaireInvalidite(demandeurEmploi)) {
-	    float montantAllocationSupplementaireInvalidite = ressourcesFinancieresUtile.getAllocationSupplementaireInvalidite(demandeurEmploi);
-	    aidesPourCeMois.put(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE.getCode(),
-		    creerAideSansCalcul(AideEnum.ALLOCATION_SUPPLEMENTAIRE_INVALIDITE, Optional.of(OrganismeEnum.CPAM), montantAllocationSupplementaireInvalidite));
 	}
     }
 

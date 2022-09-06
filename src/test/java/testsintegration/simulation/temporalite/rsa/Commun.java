@@ -39,7 +39,7 @@ public class Commun {
 	doReturn(utileTests.getDate("01-01-2022")).when(dateUtile).getDateJour();
 
 	//mock retour appel détail indemnisation de l'ESD 
-	DetailIndemnisationPEIOOut detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.RSA.getLibelle());
+	DetailIndemnisationPEIOOut detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.RSA);
 	doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
     }
 
@@ -48,7 +48,6 @@ public class Commun {
 	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
 	statutOccupationLogement.setLocataireNonMeuble(true);
 	logement.setStatutOccupationLogement(statutOccupationLogement);
-	logement.setMontantCharges(50f);
 	logement.setMontantLoyer(500f);
 	logement.setCoordonnees(createCoordonnees());
 	return logement;

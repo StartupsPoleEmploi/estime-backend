@@ -42,6 +42,28 @@ public class DemandeurEmploiUtile {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeurEmploiUtile.class);
 
+    public void creerDemandeurEmploiVide(DemandeurEmploi demandeurEmploi) {
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(creerRessourcesAvantSimulation());
+	demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
+    }
+
+    private RessourcesFinancieresAvantSimulation creerRessourcesAvantSimulation() {
+	RessourcesFinancieresAvantSimulation ressourcesFinancieresAvantSimulation = new RessourcesFinancieresAvantSimulation();
+	ressourcesFinancieresAvantSimulation.setAidesCAF(creerAidesCAF());
+
+	return ressourcesFinancieresAvantSimulation;
+    }
+
+    private InformationsPersonnelles creerInformationsPersonnelles() {
+	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
+	Logement logement = creerLogement();
+	logement.setStatutOccupationLogement(creerStatutOccupationLogement());
+	logement.setCoordonnees(creerCoordonnees());
+	informationsPersonnelles.setLogement(logement);
+
+	return informationsPersonnelles;
+    }
+
     public boolean isSansRessourcesFinancieres(DemandeurEmploi demandeurEmploi) {
 	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() == null;
     }
@@ -102,12 +124,14 @@ public class DemandeurEmploiUtile {
 	informationsPersonnelles.setEmail(individu.getInformationsPersonnelles().getEmail());
 	informationsPersonnelles.setBeneficiaireACRE(null);
 
-	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-	    String bearerToken = individu.getPeConnectAuthorization().getBearerToken();
-	    addCodeDepartement(informationsPersonnelles, bearerToken);
-	    addDateNaissance(informationsPersonnelles, bearerToken);
-	} else {
-	    stagingEnvironnementUtile.bouchonnerCodeDepartementEtDateNaissance(informationsPersonnelles);
+	if (individu.getPeConnectAuthorization() != null) {
+	    if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
+		String bearerToken = individu.getPeConnectAuthorization().getBearerToken();
+		addCodeDepartement(informationsPersonnelles, bearerToken);
+		addDateNaissance(informationsPersonnelles, bearerToken);
+	    } else {
+		stagingEnvironnementUtile.bouchonnerCodeDepartementEtDateNaissance(informationsPersonnelles);
+	    }
 	}
 
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
@@ -154,7 +178,6 @@ public class DemandeurEmploiUtile {
 	logement.setConventionne(false);
 	logement.setColloc(false);
 	logement.setCrous(false);
-	logement.setMontantCharges(null);
 	logement.setMontantLoyer(null);
 	logement.setCoordonnees(null);
 	logement.setStatutOccupationLogement(null);

@@ -53,7 +53,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	// RSA 500€, déclaration trimetrielle en M2, non travaillé au cours des 3 derniers mois
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -61,8 +61,8 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1231);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1583);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
@@ -163,7 +163,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(232f);
+		assertThat(ppa.getMontant()).isEqualTo(237f);
 	    });
 	});
     }
@@ -176,7 +176,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	// RSA 500€, déclaration trimetrielle en M2, travaillé au cours des 3 derniers mois avec salaire 0€ juillet, salaire 500€ juin, salaire 0 mai
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -184,8 +184,8 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(500);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(659);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
@@ -309,7 +309,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	// APL 310€
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -318,8 +318,8 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1231);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1583);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
@@ -436,7 +436,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(165f);
+		assertThat(ppa.getMontant()).isEqualTo(170f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
 		assertThat(als.getMontant()).isEqualTo(272f);

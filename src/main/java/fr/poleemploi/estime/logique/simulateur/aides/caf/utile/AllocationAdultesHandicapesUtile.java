@@ -42,18 +42,30 @@ public class AllocationAdultesHandicapesUtile {
      *
      */
     public void simulerAide(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
-	int nombreMoisTravaillesDerniersMois = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes6DerniersMoisAvantSimulation(demandeurEmploi);
-	int diffNbrMoisSimulationEtNbrMoisTravailles = SimulateurAidesUtile.NOMBRE_MOIS_MAX_A_SIMULER - nombreMoisTravaillesDerniersMois;
-	if (numeroMoisSimule > diffNbrMoisSimulationEtNbrMoisTravailles) {
-	    float montantAllocationAAHReduit = calculerMontantReduit(demandeurEmploi);
-	    if (montantAllocationAAHReduit > 0) {
-		aidesPourCeMois.put(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), creerAide(montantAllocationAAHReduit));
-	    }
+	float montant = calculerMontant(demandeurEmploi, numeroMoisSimule - 1);
+	if (montant > 0) {
+	    aidesPourCeMois.put(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), creerAide(montant));
+	}
+    }
+
+    public float calculerMontant(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+	if (isMontantAReduire(demandeurEmploi, numeroMoisSimule)) {
+	    return calculerMontantReduit(demandeurEmploi);
 	} else {
 	    //le demandeur cumule son AAH avant la simulation
-	    float montantAllocationAAHAvantSimulation = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationAAH();
-	    aidesPourCeMois.put(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode(), creerAide(montantAllocationAAHAvantSimulation));
+	    return demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationAAH();
 	}
+    }
+
+    private boolean isMontantAReduire(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
+	boolean isMontantReduit = false;
+	int nombreMoisTravaillesDerniersMois = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes6DerniersMoisAvantSimulation(demandeurEmploi);
+
+	if (numeroMoisSimule >= 0 && nombreMoisTravaillesDerniersMois > 0
+		&& (SimulateurAidesUtile.NOMBRE_MOIS_MAX_A_SIMULER - numeroMoisSimule) <= nombreMoisTravaillesDerniersMois) {
+	    isMontantReduit = true;
+	}
+	return isMontantReduit;
     }
 
     /**
@@ -76,7 +88,7 @@ public class AllocationAdultesHandicapesUtile {
     }
 
     private BigDecimal calculerPartSalairePourDeduction(DemandeurEmploi demandeurEmploi) {
-	BigDecimal salaireBrut = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaire().getMontantBrut());
+	BigDecimal salaireBrut = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaire().getMontantMensuelBrut());
 	if (isSalaireInferieurOuEgalSalaireBrutPalier(salaireBrut)) {
 	    return salaireBrut.multiply(BigDecimal.valueOf(POURCENTAGE_SALAIRE_PALIER_1)).setScale(0, RoundingMode.DOWN);
 	} else {

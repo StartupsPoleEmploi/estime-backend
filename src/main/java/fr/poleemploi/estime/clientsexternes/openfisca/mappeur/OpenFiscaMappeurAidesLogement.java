@@ -19,7 +19,6 @@ import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
-import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 
 @Component
 public class OpenFiscaMappeurAidesLogement {
@@ -34,7 +33,7 @@ public class OpenFiscaMappeurAidesLogement {
 	    Map<String, OpenFiscaFamille> openFiscaFamilles = openFiscaRoot.getFamilles();
 	    OpenFiscaFamille openFiscaFamille = openFiscaFamilles.get(FAMILLE1);
 	    OpenFiscaPeriodes openFiscaAideLogement = openFiscaFamille.getAideLogement();
-	    String periodeFormateeAideLogement = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
+	    String periodeFormateeAideLogement = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
 	    Double montantAideLogement = (Double) openFiscaAideLogement.get(periodeFormateeAideLogement);
 
 	    return BigDecimal.valueOf(montantAideLogement).setScale(0, RoundingMode.HALF_UP).floatValue();
@@ -53,7 +52,7 @@ public class OpenFiscaMappeurAidesLogement {
 	    OpenFiscaPeriodes openFiscaAidePersonnaliseeLogement = openFiscaFamille.getAidePersonnaliseeLogement();
 	    OpenFiscaPeriodes openFiscaAllocationLogementFamiliale = openFiscaFamille.getAllocationLogementFamiliale();
 	    OpenFiscaPeriodes openFiscaAllocationLogementSociale = openFiscaFamille.getAllocationLogementSociale();
-	    String periodeFormateeAideLogement = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
+	    String periodeFormateeAideLogement = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
 	    Double montantAidePersonnaliseeLogement = (Double) openFiscaAidePersonnaliseeLogement.get(periodeFormateeAideLogement);
 	    Double montantAllocationLogementFamiliale = (Double) openFiscaAllocationLogementFamiliale.get(periodeFormateeAideLogement);
 	    Double montantAllocationLogementSociale = (Double) openFiscaAllocationLogementSociale.get(periodeFormateeAideLogement);
@@ -70,9 +69,5 @@ public class OpenFiscaMappeurAidesLogement {
 	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
 	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
 	}
-    }
-
-    public OpenFiscaPeriodes creerAllocationLogementOpenFisca(AllocationsLogement allocationsLogement, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	return openFiscaPeriodeMappeur.creerPeriodesAllocationsLogement(allocationsLogement, dateDebutSimulation, numeroMoisSimule);
     }
 }

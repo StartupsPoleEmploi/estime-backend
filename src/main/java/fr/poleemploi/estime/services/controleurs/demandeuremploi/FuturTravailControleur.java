@@ -40,11 +40,11 @@ public class FuturTravailControleur {
 		throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "salaire de futurTravail"));
 	    }
 
-	    if (futurTravail.getSalaire().getMontantNet() == 0) {
+	    if (futurTravail.getSalaire().getMontantMensuelNet() == 0) {
 		throw new BadRequestException(BadRequestMessages.SALAIRE_MENSUEL_NET_ZERO.getMessage());
 	    }
 
-	    if (futurTravail.getSalaire().getMontantBrut() == 0) {
+	    if (futurTravail.getSalaire().getMontantMensuelBrut() == 0) {
 		throw new BadRequestException(BadRequestMessages.SALAIRE_MENSUEL_BRUT_ZERO.getMessage());
 	    }
 	}

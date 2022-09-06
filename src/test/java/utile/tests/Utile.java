@@ -27,6 +27,7 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
+import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
@@ -84,7 +85,7 @@ public class Utile {
 	return aide;
     }
 
-    public DemandeurEmploi creerBaseDemandeurEmploi(String population, boolean isEnCouple, int nbEnfant) {
+    public DemandeurEmploi creerBaseDemandeurEmploi(TypePopulationEnum population, boolean isEnCouple, int nbEnfant) {
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 	demandeurEmploi.setIdPoleEmploi("idPoleEmploi");
 
@@ -117,7 +118,7 @@ public class Utile {
 	return demandeurEmploi;
     }
 
-    public DemandeurEmploi creerBaseDemandeurEmploi(String population, boolean isEnCouple, List<Personne> personnesACharge) {
+    public DemandeurEmploi creerBaseDemandeurEmploi(TypePopulationEnum population, boolean isEnCouple, List<Personne> personnesACharge) {
 	DemandeurEmploi demandeurEmploi = creerBaseDemandeurEmploi(population, isEnCouple, personnesACharge.size());
 
 	demandeurEmploi.getSituationFamiliale().setPersonnesACharge(personnesACharge);
@@ -135,18 +136,20 @@ public class Utile {
 	return aidesLogement;
     }
 
-    public DetailIndemnisationPEIOOut creerDetailIndemnisationPEIO(String population) {
+    public DetailIndemnisationPEIOOut creerDetailIndemnisationPEIO(TypePopulationEnum population) {
 	switch (population) {
-	case "AAH":
+	case AAH:
 	    return creerDetailIndemnisationPEIO(true, false, false, false);
-	case "ARE":
+	case ARE:
 	    return creerDetailIndemnisationPEIO(false, true, false, false);
-	case "ASS":
+	case ASS:
 	    return creerDetailIndemnisationPEIO(false, false, true, false);
-	case "RSA":
+	case RSA:
 	    return creerDetailIndemnisationPEIO(false, false, false, true);
-	case "AAH_ASS":
+	case AAH_ASS:
 	    return creerDetailIndemnisationPEIO(true, false, true, false);
+	case AAH_ARE:
+	    return creerDetailIndemnisationPEIO(true, true, false, false);
 	default:
 	    return null;
 	}
@@ -162,9 +165,9 @@ public class Utile {
 	    LocalDate date = dateUtile.convertDateToLocalDate(new Date());
 
 	    if (index < salaires.length && salaires[index] != null) {
-		salaire.setMontantBrut(salaires[index].getMontantBrut());
-		salaire.setMontantNet(salaires[index].getMontantNet());
-		if (salaires[index].getMontantNet() > 0) {
+		salaire.setMontantMensuelBrut(salaires[index].getMontantMensuelBrut());
+		salaire.setMontantMensuelNet(salaires[index].getMontantMensuelNet());
+		if (salaires[index].getMontantMensuelNet() > 0) {
 		    isSansSalaire = false;
 		}
 		date = dateUtile.enleverMoisALocalDate(date, index);
@@ -192,8 +195,8 @@ public class Utile {
 	for (int index = 0; index < NOMBRE_MOIS_SALAIRES_AVANT_SIMULATION; index++) {
 	    salaires[index] = new Salaire();
 	    if (index < nombreMois) {
-		salaires[index].setMontantBrut(montantBrut);
-		salaires[index].setMontantNet(montantNet);
+		salaires[index].setMontantMensuelBrut(montantBrut);
+		salaires[index].setMontantMensuelNet(montantNet);
 	    }
 	}
 	return salaires;
@@ -201,8 +204,8 @@ public class Utile {
 
     public Salaire creerSalaire(float montantNet, float montantBrut) {
 	Salaire salaire = new Salaire();
-	salaire.setMontantNet(montantNet);
-	salaire.setMontantBrut(montantBrut);
+	salaire.setMontantMensuelNet(montantNet);
+	salaire.setMontantMensuelBrut(montantBrut);
 	return salaire;
     }
 
@@ -212,7 +215,7 @@ public class Utile {
     }
 
     public LocalDate getDateNaissanceFromAge(int age) {
-	LocalDate dateJour = LocalDate.now();
+	LocalDate dateJour = dateUtile.getDateJour();
 	LocalDate minusYears = dateJour.minusYears(age);
 	LocalDate minusMonths = minusYears.minusMonths(1);
 	return minusMonths;
@@ -238,18 +241,20 @@ public class Utile {
 	return aidesLogement;
     }
 
-    private BeneficiaireAides creerBeneficiaireAides(String population) {
+    private BeneficiaireAides creerBeneficiaireAides(TypePopulationEnum population) {
 	switch (population) {
-	case "AAH":
+	case AAH:
 	    return creerBeneficiaireAides(true, false, false, false);
-	case "ARE":
+	case ARE:
 	    return creerBeneficiaireAides(false, true, false, false);
-	case "ASS":
+	case ASS:
 	    return creerBeneficiaireAides(false, false, true, false);
-	case "RSA":
+	case RSA:
 	    return creerBeneficiaireAides(false, false, false, true);
-	case "AAH_ASS":
+	case AAH_ASS:
 	    return creerBeneficiaireAides(true, false, true, false);
+	case AAH_ARE:
+	    return creerBeneficiaireAides(true, true, false, false);
 	default:
 	    return creerBeneficiaireAides(false, false, false, false);
 	}
@@ -264,18 +269,28 @@ public class Utile {
 	return detailIndemnisationPEIO;
     }
 
-    private void initRessourcesFinancieres(RessourcesFinancieresAvantSimulation ressourcesFinancieres, String population) {
+    private void initRessourcesFinancieres(RessourcesFinancieresAvantSimulation ressourcesFinancieres, TypePopulationEnum population) {
 	switch (population) {
-	case "AAH":
-	case "RSA":
-	case "ARE":
-	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population));
+	case AAH:
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(population.getLibelle()));
 	    break;
-	case "ASS":
-	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population));
+	case RSA:
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(population.getLibelle()));
 	    break;
-	case "AAH_ASS":
+	case ARE:
+	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population.getLibelle()));
+	    break;
+	case ASS:
+	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(population.getLibelle()));
+	    break;
+	case AAH_ASS:
 	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode()));
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode()));
+	    break;
+	case AAH_ARE:
+	    ressourcesFinancieres.setAidesPoleEmploi(creerAidePoleEmploi(AideEnum.AIDE_RETOUR_EMPLOI.getCode()));
+	    ressourcesFinancieres.setAidesCAF(creerAideCAF(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode()));
+	    break;
 	default:
 	    break;
 	}
@@ -329,7 +344,24 @@ public class Utile {
 	    allocationARE.setAllocationJournaliereBrute(0.0f);
 	    aidesPoleEmploi.setAllocationARE(allocationARE);
 	}
+	if (AideEnum.AIDE_RETOUR_EMPLOI.getCode().equals(population)) {
+	    AllocationARE allocationARE = new AllocationARE();
+	    allocationARE.setAllocationJournaliereBrute(0.0f);
+	    aidesPoleEmploi.setAllocationARE(allocationARE);
+	}
 	return aidesPoleEmploi;
+    }
+
+    private AidesCAF creerAideCAF(String population) {
+	AidesCAF aidesCAF = new AidesCAF();
+	if (AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode().equals(population)) {
+	    aidesCAF.setAllocationAAH(0f);
+	}
+	if (AideEnum.RSA.getCode().equals(population)) {
+	    aidesCAF.setAllocationRSA(0f);
+	    aidesCAF.setProchaineDeclarationTrimestrielle(0);
+	}
+	return aidesCAF;
     }
 
     private Coordonnees creerCoordonnees() {

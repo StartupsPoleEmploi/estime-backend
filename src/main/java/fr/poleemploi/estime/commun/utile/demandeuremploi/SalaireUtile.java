@@ -9,8 +9,8 @@ public class SalaireUtile {
 
     public Salaire getSalaireMontantZero() {
 	Salaire salaire = new Salaire();
-	salaire.setMontantBrut(0);
-	salaire.setMontantNet(0);
+	salaire.setMontantMensuelBrut(0);
+	salaire.setMontantMensuelNet(0);
 	return salaire;
-    }    
+    }
 }

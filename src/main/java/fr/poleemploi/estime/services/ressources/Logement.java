@@ -15,7 +15,6 @@ public class Logement {
     @JsonProperty("isChambre")
     private boolean isChambre;
     private Float montantLoyer;
-    private Float montantCharges;
 
     public Coordonnees getCoordonnees() {
 	return coordonnees;
@@ -77,18 +76,10 @@ public class Logement {
 	this.montantLoyer = montantLoyer;
     }
 
-    public Float getMontantCharges() {
-	return montantCharges;
-    }
-
-    public void setMontantCharges(Float montantCharges) {
-	this.montantCharges = montantCharges;
-    }
-
     @Override
     public String toString() {
 	return "Logement [statutOccupationLogement=" + statutOccupationLogement + ", coordonnees=" + coordonnees + ", isCrous=" + isCrous + ", isColloc=" + isColloc
-		+ ", isConventionne=" + isConventionne + ", isChambre=" + isChambre + ", montantLoyer=" + montantLoyer + ", montantCharges=" + montantCharges + "]";
+		+ ", isConventionne=" + isConventionne + ", isChambre=" + isChambre + ", montantLoyer=" + montantLoyer + "]";
     }
 
 }

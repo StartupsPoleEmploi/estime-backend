@@ -30,14 +30,19 @@ public class DemandeurEmploiLogique {
     public DemandeurEmploi creerDemandeurEmploi(Individu individu) {
 
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
-	demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
-	demandeurEmploiUtile.addInformationsPersonnelles(demandeurEmploi, individu);
-	demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
-	demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
 
-	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(),
-		    individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
+	if (individu != null) {
+	    demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
+	    demandeurEmploiUtile.addInformationsPersonnelles(demandeurEmploi, individu);
+	    demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
+	    demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
+
+	    if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
+		suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(),
+			individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
+	    }
+	} else {
+	    demandeurEmploiUtile.creerDemandeurEmploiVide(demandeurEmploi);
 	}
 
 	return demandeurEmploi;

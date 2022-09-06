@@ -26,6 +26,9 @@ public class OpenFiscaMappeurFamille {
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
 
     @Autowired
+    private OpenFiscaMappeurRSA openFiscaMappeurRSA;
+
+    @Autowired
     private SituationFamilialeUtile situationFamilialeUtile;
 
     @Autowired
@@ -34,40 +37,30 @@ public class OpenFiscaMappeurFamille {
     @Autowired
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
-    public OpenFiscaFamille creerFamilleOpenFisca(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeInferieur25ansOptional, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	OpenFiscaFamille famille = new OpenFiscaFamille();
-	famille.setParents(creerParentsOpenFisca(demandeurEmploi));
-	famille.setEnfants(creerPersonnesAChargeOpenFisca(personneAChargeInferieur25ansOptional));
-	famille.setAllocationSoutienFamilial(openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getAllocationSoutienFamilial(demandeurEmploi),
-		dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	famille.setAllocationsFamiliales(openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getAllocationsFamiliales(demandeurEmploi),
-		dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	famille.setComplementFamilial(openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getComplementFamilial(demandeurEmploi),
-		dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	famille.setPrestationAccueilJeuneEnfant(
-		openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getPrestationAccueilJeuneEnfant(demandeurEmploi), dateDebutSimulation,
-			numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+    public OpenFiscaFamille creerFamilleOpenFisca(DemandeurEmploi demandeurEmploi, Optional<List<Personne>> personneAChargeInferieur25ansOptional, LocalDate dateDebutSimulation) {
+	OpenFiscaFamille openFiscaFamille = new OpenFiscaFamille();
+	openFiscaFamille.setParents(creerParentsOpenFisca(demandeurEmploi));
+	openFiscaFamille.setEnfants(creerPersonnesAChargeOpenFisca(personneAChargeInferieur25ansOptional));
+	openFiscaFamille.setAllocationSoutienFamilial(
+		openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getAllocationSoutienFamilial(demandeurEmploi), dateDebutSimulation));
+	openFiscaFamille.setAllocationsFamiliales(
+		openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getAllocationsFamiliales(demandeurEmploi), dateDebutSimulation));
+	openFiscaFamille.setComplementFamilial(
+		openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getComplementFamilial(demandeurEmploi), dateDebutSimulation));
+	openFiscaFamille.setPrestationAccueilJeuneEnfant(
+		openFiscaPeriodeMappeur.creerPeriodesValeurNulleEgaleZero(ressourcesFinancieresUtile.getPrestationAccueilJeuneEnfant(demandeurEmploi), dateDebutSimulation));
 	if (beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
-	    float montantRsaDemandeur = ressourcesFinancieresUtile.getAllocationsRSANet(demandeurEmploi);
-	    if (montantRsaDemandeur > 0) {
-		famille.setRevenuSolidariteActive(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAideACalculer(dateDebutSimulation, numeroMoisSimule));
-		famille.setRsaIsolementRecent(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(!situationFamilialeUtile.isSeulPlusDe18Mois(demandeurEmploi), dateDebutSimulation,
-			numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-	    }
+	    openFiscaMappeurRSA.addRSAOpenFiscaIndividu(openFiscaFamille, demandeurEmploi, dateDebutSimulation);
+	    openFiscaFamille
+		    .setRsaIsolementRecent(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(!situationFamilialeUtile.isSeulPlusDe18Mois(demandeurEmploi), dateDebutSimulation));
+
 	}
-	famille.setPrimeActivite(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAideACalculer(dateDebutSimulation, numeroMoisSimule));
-
-	famille.setAidePersonnaliseeLogement(openFiscaPeriodeMappeur.creerPeriodesAllocationsLogement(
-		demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAidePersonnaliseeLogement(), dateDebutSimulation, numeroMoisSimule));
-
-	famille.setAllocationLogementFamiliale(openFiscaPeriodeMappeur.creerPeriodesAllocationsLogement(
-		demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAllocationLogementFamiliale(), dateDebutSimulation,
-		numeroMoisSimule));
-
-	famille.setAllocationLogementSociale(openFiscaPeriodeMappeur.creerPeriodesAllocationsLogement(
-		demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesLogement().getAllocationLogementSociale(), dateDebutSimulation, numeroMoisSimule));
-	famille.setAideLogement(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAideACalculer(dateDebutSimulation, numeroMoisSimule));
-	return famille;
+	openFiscaFamille.setPrimeActivite(openFiscaPeriodeMappeur.creerPeriodesCalculeesOpenFisca(dateDebutSimulation));
+	openFiscaFamille.setAidePersonnaliseeLogement(openFiscaPeriodeMappeur.creerPeriodesAPL(demandeurEmploi, dateDebutSimulation));
+	openFiscaFamille.setAllocationLogementFamiliale(openFiscaPeriodeMappeur.creerPeriodesALF(demandeurEmploi, dateDebutSimulation));
+	openFiscaFamille.setAllocationLogementSociale(openFiscaPeriodeMappeur.creerPeriodesALS(demandeurEmploi, dateDebutSimulation));
+	openFiscaFamille.setAideLogement(openFiscaPeriodeMappeur.creerPeriodesCalculeesOpenFisca(dateDebutSimulation));
+	return openFiscaFamille;
     }
 
     private List<String> creerParentsOpenFisca(DemandeurEmploi demandeurEmploi) {

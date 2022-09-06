@@ -32,10 +32,9 @@ public class PrimeActiviteASSUtile {
      *      |  -        3              |          |   (C1)   |    V1    |    R1    | (C2)/R1  |     V2    |    R2    |
      *      |__________________________|__________|__________|__________|__________|__________|___________|__________|
      */
-    protected boolean isPrimeActiviteACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public boolean isPrimeActiviteACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	if (ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMoisAvantSimulation(demandeurEmploi)) {
-	    int nombreMoisTravaillesDerniersMois = periodeTravailleeAvantSimulationUtile
-		    .getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
+	    int nombreMoisTravaillesDerniersMois = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
 	    return nombreMoisTravaillesDerniersMois == 1 && (numeroMoisSimule == 3 || numeroMoisSimule == 6)
 		    || (nombreMoisTravaillesDerniersMois == 2 && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
 		    || (nombreMoisTravaillesDerniersMois == 3 && (numeroMoisSimule == 1 || numeroMoisSimule == 4));
@@ -59,12 +58,10 @@ public class PrimeActiviteASSUtile {
      *      |  -        3              |          |    C1    |   (V1)   |    R1    |  C2/R1   |    (V2)   |    R2    |
      *      |__________________________|__________|__________|__________|__________|__________|___________|__________|
      */
-    protected boolean isPrimeActiviteAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public boolean isPrimeActiviteAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	if (ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMoisAvantSimulation(demandeurEmploi)) {
-	    int nombreMoisTravaillesDerniersMois = periodeTravailleeAvantSimulationUtile
-		    .getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
-	    return nombreMoisTravaillesDerniersMois == 1 && numeroMoisSimule == 4
-		    || (nombreMoisTravaillesDerniersMois == 2 && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
+	    int nombreMoisTravaillesDerniersMois = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
+	    return nombreMoisTravaillesDerniersMois == 1 && numeroMoisSimule == 4 || (nombreMoisTravaillesDerniersMois == 2 && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
 		    || (nombreMoisTravaillesDerniersMois == 3 && (numeroMoisSimule == 2 || numeroMoisSimule == 5));
 	}
 	return numeroMoisSimule == 5;
