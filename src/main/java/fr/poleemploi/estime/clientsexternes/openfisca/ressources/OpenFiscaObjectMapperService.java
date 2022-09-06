@@ -9,7 +9,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
+import fr.poleemploi.estime.services.exceptions.InternalServerException;
 
 @Service
 public class OpenFiscaObjectMapperService {
@@ -32,9 +34,8 @@ public class OpenFiscaObjectMapperService {
 	try {
 	    return String.format("%s", getOpenFiscaObjectMapper().writeValueAsString(object));
 	} catch (JsonProcessingException e) {
-	    String messageError = String.format(LoggerMessages.SERIALIZATION_OPENFISCA_IMPOSSIBLE.getMessage(), e.getMessage());
-	    LOGGER.error(messageError);
-	    return "";
+	    LOGGER.error(String.format(LoggerMessages.SERIALIZATION_OPENFISCA_IMPOSSIBLE.getMessage(), e.getMessage()));
+	    throw new InternalServerException(InternalServerMessages.SERIALIZATION_OPENFISCA_IMPOSSIBLE.getMessage());
 	}
     }
 
@@ -42,9 +43,8 @@ public class OpenFiscaObjectMapperService {
 	try {
 	    return getOpenFiscaObjectMapper().readValue(jsonString, OpenFiscaRoot.class);
 	} catch (JsonProcessingException e) {
-	    String messageError = String.format(LoggerMessages.SERIALIZATION_OPENFISCA_IMPOSSIBLE.getMessage(), e.getMessage());
-	    LOGGER.error(messageError);
-	    return new OpenFiscaRoot();
+	    LOGGER.error(String.format(LoggerMessages.SERIALIZATION_OPENFISCA_IMPOSSIBLE.getMessage(), e.getMessage()));
+	    throw new InternalServerException(InternalServerMessages.SERIALIZATION_OPENFISCA_IMPOSSIBLE.getMessage());
 	}
     }
 
