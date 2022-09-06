@@ -21,6 +21,9 @@ public class PrimeActiviteRSAUtile {
     private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     @Autowired
+    private PrimeActiviteUtile primeActiviteUtile;
+
+    @Autowired
     private AideUtile aideUtile;
 
     /**
@@ -40,10 +43,9 @@ public class PrimeActiviteRSAUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|    
      *  
      */
-    boolean isPrimeActiviteACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public boolean isPrimeActiviteACalculer(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
-	return ((prochaineDeclarationTrimestrielle == numeroMoisSimule) || (prochaineDeclarationTrimestrielle == numeroMoisSimule - 3)
-		|| (prochaineDeclarationTrimestrielle == numeroMoisSimule - 6));
+	return primeActiviteUtile.isPrimeActiviteACalculerDeclarationTrimestrielle(numeroMoisSimule, prochaineDeclarationTrimestrielle);
     }
 
     /**
@@ -63,12 +65,9 @@ public class PrimeActiviteRSAUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|   
      *       
      */
-    boolean isPrimeActiviteAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public boolean isPrimeActiviteAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
-	return (((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 1 || numeroMoisSimule == 4))
-		|| ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 2 || numeroMoisSimule == 5))
-		|| ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 3 || numeroMoisSimule == 6))
-		|| ((prochaineDeclarationTrimestrielle == 3) && (numeroMoisSimule == 4)));
+	return primeActiviteUtile.isPrimeActiviteAVerserDeclarationTrimestrielle(numeroMoisSimule, prochaineDeclarationTrimestrielle);
     }
 
     /**
@@ -88,13 +87,9 @@ public class PrimeActiviteRSAUtile {
      *      |____________|__________|__________|__________|__________|__________|__________|__________|   
      *       
      */
-    boolean isPrimeActiviteAReporter(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public boolean isPrimeActiviteAReporter(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
-	return (((prochaineDeclarationTrimestrielle == 0) && (numeroMoisSimule == 2 || numeroMoisSimule == 3 || numeroMoisSimule == 5 || numeroMoisSimule == 6))
-		|| ((prochaineDeclarationTrimestrielle == 1) && (numeroMoisSimule == 1 || numeroMoisSimule == 3 || numeroMoisSimule == 4 || numeroMoisSimule == 6))
-		|| ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 1 || numeroMoisSimule == 2 || numeroMoisSimule == 4 || numeroMoisSimule == 5))
-		|| ((prochaineDeclarationTrimestrielle == 3)
-			&& (numeroMoisSimule == 1 || numeroMoisSimule == 2 || numeroMoisSimule == 3 || numeroMoisSimule == 5 || numeroMoisSimule == 6)));
+	return primeActiviteUtile.isPrimeActiviteAReporterDeclarationTrimestrielle(numeroMoisSimule, prochaineDeclarationTrimestrielle);
     }
 
     public Aide creerAidePrimeActivite(float montantPrimeActivite, boolean isAideReportee) {

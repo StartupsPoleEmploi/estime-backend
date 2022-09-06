@@ -1,9 +1,10 @@
 package testsunitaires.services.controleurs.demandeuremploi;
 
-import java.time.LocalDate;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
+import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.Coordonnees;
 import fr.poleemploi.estime.services.ressources.FuturTravail;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
@@ -15,12 +16,15 @@ import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 public class Commun {
 
+    @SpyBean
+    protected DateUtile dateUtile;
+
     protected SituationFamiliale creerSituationFamiliale() {
 	SituationFamiliale situationFamiliale = new SituationFamiliale();
 	situationFamiliale.setIsEnCouple(true);
 	Personne personne = new Personne();
 	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-	informationsPersonnelles.setDateNaissance(LocalDate.now());
+	informationsPersonnelles.setDateNaissance(dateUtile.getDateJour());
 	personne.setInformationsPersonnelles(informationsPersonnelles);
 	situationFamiliale.setConjoint(personne);
 	return situationFamiliale;
@@ -28,7 +32,7 @@ public class Commun {
 
     protected InformationsPersonnelles creerInformationsPersonnelles() {
 	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
-	informationsPersonnelles.setDateNaissance(LocalDate.now());
+	informationsPersonnelles.setDateNaissance(dateUtile.getDateJour());
 	informationsPersonnelles.setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	informationsPersonnelles.setLogement(creerLogement());
 	return informationsPersonnelles;
@@ -40,8 +44,8 @@ public class Commun {
 	futurTravail.setDistanceKmDomicileTravail(50);
 	futurTravail.setNombreHeuresTravailleesSemaine(15);
 	Salaire salaire = new Salaire();
-	salaire.setMontantNet(900);
-	salaire.setMontantBrut(1200);
+	salaire.setMontantMensuelNet(900);
+	salaire.setMontantMensuelBrut(1200);
 	futurTravail.setSalaire(salaire);
 	futurTravail.setTypeContrat(TypeContratTravailEnum.CDD.name());
 	return futurTravail;

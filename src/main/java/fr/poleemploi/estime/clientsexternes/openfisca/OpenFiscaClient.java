@@ -18,6 +18,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurAgepi;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurAideMobilite;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurAidesLogement;
+import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurComplementARE;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPrimeActivite;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurRSA;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
@@ -26,7 +27,6 @@ import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessage
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
-import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
 public class OpenFiscaClient {
@@ -53,36 +53,30 @@ public class OpenFiscaClient {
     private OpenFiscaMappeurAideMobilite openFiscaMappeurAideMobilite;
 
     @Autowired
+    private OpenFiscaMappeurComplementARE openFiscaMappeurComplementARE;
+
+    @Autowired
     private RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaClient.class);
 
-    public OpenFiscaRetourSimulation calculerAidesSelonSituation(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule, SituationAppelOpenFiscaEnum situation) {
+    public OpenFiscaRetourSimulation calculerAidesSelonSituation(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule, SituationAppelOpenFiscaEnum situation) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
 	switch (situation) {
 	case AGEPI_AM:
-	    openFiscaRetourSimulation = calculerAgepiEtAideMobilite(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	    openFiscaRetourSimulation = calculerAgepiEtAideMobilite(openFiscaRoot, dateDebutSimulation);
 	    break;
 	case PPA:
-	    openFiscaRetourSimulation = calculerPrimeActivite(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	    openFiscaRetourSimulation = calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, numeroMoisSimule);
 	    break;
 	case RSA:
-	    openFiscaRetourSimulation = calculerRSA(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	    openFiscaRetourSimulation = calculerRSA(openFiscaRoot, dateDebutSimulation, numeroMoisSimule);
 	    break;
 	case AL:
-	    openFiscaRetourSimulation = calculerAideLogement(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	    openFiscaRetourSimulation = calculerAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule);
 	    break;
-	case RSA_PPA:
-	    openFiscaRetourSimulation = calculerRsaAvecPrimeActivite(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	    break;
-	case AL_PPA:
-	    openFiscaRetourSimulation = calculerAideLogementAvecPrimeActivite(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	    break;
-	case AL_RSA:
-	    openFiscaRetourSimulation = calculerAideLogementAvecRSA(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	    break;
-	case AL_PPA_RSA:
-	    openFiscaRetourSimulation = calculerAideLogementAvecPrimeActiviteEtRSA(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	case ARE:
+	    openFiscaRetourSimulation = calculerComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule);
 	    break;
 	default:
 	    break;
@@ -91,90 +85,58 @@ public class OpenFiscaClient {
 
     }
 
-    public OpenFiscaRetourSimulation calculerAgepi(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerAgepi(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantAgepi(openFiscaMappeurAgepi.getMontantAgepi(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantAgepi(openFiscaMappeurAgepi.getMontantAgepi(openFiscaRoot, dateDebutSimulation, 1));
 	return openFiscaRetourSimulation;
     }
 
-    public OpenFiscaRetourSimulation calculerAideMobilite(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerAideMobilite(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantAideMobilite(openFiscaMappeurAideMobilite.getMontantAideMobilite(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantAideMobilite(openFiscaMappeurAideMobilite.getMontantAideMobilite(openFiscaRoot, dateDebutSimulation, 1));
 	return openFiscaRetourSimulation;
     }
 
-    public OpenFiscaRetourSimulation calculerAgepiEtAideMobilite(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerAgepiEtAideMobilite(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantAgepi(openFiscaMappeurAgepi.getMontantAgepi(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setMontantAideMobilite(openFiscaMappeurAideMobilite.getMontantAideMobilite(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantAgepi(openFiscaMappeurAgepi.getMontantAgepi(openFiscaRoot, dateDebutSimulation, 1));
+	openFiscaRetourSimulation.setMontantAideMobilite(openFiscaMappeurAideMobilite.getMontantAideMobilite(openFiscaRoot, dateDebutSimulation, 1));
 	return openFiscaRetourSimulation;
     }
 
-    public OpenFiscaRetourSimulation calculerPrimeActivite(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerPrimeActivite(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaMappeurPrimeActivite.getMontantPrimeActivite(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaMappeurPrimeActivite.getMontantPrimeActivite(openFiscaRoot, dateDebutSimulation, numeroMoisSimule - 1));
 	return openFiscaRetourSimulation;
     }
 
-    public OpenFiscaRetourSimulation calculerRSA(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerRSA(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantRSA(openFiscaMappeurRSA.getMontantRSA(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantRSA(openFiscaMappeurRSA.getMontantRSA(openFiscaRoot, dateDebutSimulation, numeroMoisSimule - 1));
 	return openFiscaRetourSimulation;
     }
 
-    public OpenFiscaRetourSimulation calculerAideLogement(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerAideLogement(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantAideLogement(openFiscaMappeurAidesLogement.getMontantAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setTypeAideLogement(openFiscaMappeurAidesLogement.getTypeAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantAideLogement(openFiscaMappeurAidesLogement.getMontantAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule - 1));
+	openFiscaRetourSimulation.setTypeAideLogement(openFiscaMappeurAidesLogement.getTypeAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule - 1));
 	return openFiscaRetourSimulation;
     }
 
-    public OpenFiscaRetourSimulation calculerRsaAvecPrimeActivite(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRetourSimulation calculerComplementARE(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantRSA(openFiscaMappeurRSA.getMontantRSA(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaMappeurPrimeActivite.getMontantPrimeActivite(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantComplementARE(openFiscaMappeurComplementARE.getMontantComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setNombreJoursRestantsARE(openFiscaMappeurComplementARE.getNombreJoursRestantsARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation
+		.setNombreJoursIndemnisesComplementARE(openFiscaMappeurComplementARE.getNombreJoursIndemnisesComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
 	return openFiscaRetourSimulation;
     }
 
-    public OpenFiscaRetourSimulation calculerAideLogementAvecPrimeActivite(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaMappeurPrimeActivite.getMontantPrimeActivite(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setMontantAideLogement(openFiscaMappeurAidesLogement.getMontantAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setTypeAideLogement(openFiscaMappeurAidesLogement.getTypeAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	return openFiscaRetourSimulation;
-    }
-
-    public OpenFiscaRetourSimulation calculerAideLogementAvecRSA(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantRSA(openFiscaMappeurRSA.getMontantRSA(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setMontantAideLogement(openFiscaMappeurAidesLogement.getMontantAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setTypeAideLogement(openFiscaMappeurAidesLogement.getTypeAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	return openFiscaRetourSimulation;
-    }
-
-    public OpenFiscaRetourSimulation calculerAideLogementAvecPrimeActiviteEtRSA(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
-	OpenFiscaRoot openFiscaRoot = callApiCalculate(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
-	openFiscaRetourSimulation.setMontantRSA(openFiscaMappeurRSA.getMontantRSA(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setMontantPrimeActivite(openFiscaMappeurPrimeActivite.getMontantPrimeActivite(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setMontantAideLogement(openFiscaMappeurAidesLogement.getMontantAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setTypeAideLogement(openFiscaMappeurAidesLogement.getTypeAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	return openFiscaRetourSimulation;
-    }
-
-    private OpenFiscaRoot callApiCalculate(Simulation simulation, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaRoot callApiCalculate(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 	try {
-	    OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(simulation, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
+	    OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
 	    HttpHeaders headers = new HttpHeaders();
+
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    HttpEntity<String> request = new HttpEntity<>(openFiscaPayload.toString(), headers);
 	    return restTemplate.postForObject(openFiscaURI, request, OpenFiscaRoot.class);

@@ -1,20 +1,28 @@
 package fr.poleemploi.estime.clientsexternes.openfisca.ressources;
 
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AAH;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ACTIVITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI_DATE_DEMANDE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AGEPI_TEMPS_TRAVAIL;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AIDE_MOBILITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.AIDE_MOBILITE_DATE_DEMANDE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALLOCATION_RETOUR_EMPLOI_JOURNALIERE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ALLOCATION_RETOUR_EMPLOI_JOURNALIERE_TAUX_PLEIN;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ARE;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CATEGORIE_DEMANDEUR_EMPLOI;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_BRUT;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_DEDUCTIONS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NET;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NOMBRE_JOURS_RESTANTS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CONTEXTE_ACTIVITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DATE_NAISSANCE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEBUT_CONTRAT_TRAVAIL;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEGRESSIVITE_ARE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DISTANCE_ACTIVITE_DOMICILE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DUREE_CONTRAT_TRAVAIL;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ENFANT_A_CHARGE;
@@ -27,6 +35,7 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.REVENUS_LOCATIFS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_BASE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_IMPOSABLE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.SALAIRE_JOURNALIER_REFERENCE_ARE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.STATUT_MARITAL;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.TYPE_CONTRAT_TRAVAIL;
 
@@ -40,6 +49,8 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes enfantACharge;
     @JsonProperty(STATUT_MARITAL)
     private OpenFiscaPeriodes statutMarital;
+    @JsonProperty(ACTIVITE)
+    private OpenFiscaPeriodes activite;
     @JsonProperty(SALAIRE_BASE)
     private OpenFiscaPeriodes salaireDeBase;
     @JsonProperty(SALAIRE_IMPOSABLE)
@@ -60,8 +71,6 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes pensionsAlimentaires;
     @JsonProperty(PENSION_INVALIDITE)
     private OpenFiscaPeriodes pensionInvalidite;
-    @JsonProperty(ASI)
-    private OpenFiscaPeriodes allocationSupplementaireInvalidite;
     @JsonProperty(PENSION_RETRAITE)
     private OpenFiscaPeriodes pensionRetraite;
     @JsonProperty(INTENSITE_ACTIVITE)
@@ -92,6 +101,24 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes distanceActiviteDomicile;
     @JsonProperty(AIDE_MOBILITE)
     private OpenFiscaPeriodes aideMobilite;
+    @JsonProperty(DEGRESSIVITE_ARE)
+    private OpenFiscaPeriodes degressiviteAre;
+    @JsonProperty(COMPLEMENT_ARE_NOMBRE_JOURS_RESTANTS)
+    private OpenFiscaPeriodes nombreJoursRestantsARE;
+    @JsonProperty(ALLOCATION_RETOUR_EMPLOI_JOURNALIERE)
+    private OpenFiscaPeriodes allocationJournaliere;
+    @JsonProperty(ALLOCATION_RETOUR_EMPLOI_JOURNALIERE_TAUX_PLEIN)
+    private OpenFiscaPeriodes allocationJournaliereTauxPlein;
+    @JsonProperty(SALAIRE_JOURNALIER_REFERENCE_ARE)
+    private OpenFiscaPeriodes salaireJournalierReference;
+    @JsonProperty(COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES)
+    private OpenFiscaPeriodes nombreJoursIndemnisesComplementARE;
+    @JsonProperty(COMPLEMENT_ARE_BRUT)
+    private OpenFiscaPeriodes complementAREBrut;
+    @JsonProperty(COMPLEMENT_ARE_DEDUCTIONS)
+    private OpenFiscaPeriodes deductionsComplementARE;
+    @JsonProperty(COMPLEMENT_ARE_NET)
+    private OpenFiscaPeriodes complementARENet;
 
     @JsonProperty(AAH)
     public OpenFiscaPeriodes getAllocationAdulteHandicape() {
@@ -100,15 +127,6 @@ public class OpenFiscaIndividu {
 
     public void setAllocationAdulteHandicape(OpenFiscaPeriodes allocationAdulteHandicape) {
 	this.allocationAdulteHandicape = allocationAdulteHandicape;
-    }
-
-    @JsonProperty(ASI)
-    public OpenFiscaPeriodes getAllocationSupplementaireInvalidite() {
-	return allocationSupplementaireInvalidite;
-    }
-
-    public void setAllocationSupplementaireInvalidite(OpenFiscaPeriodes allocationSupplementaireInvalidite) {
-	this.allocationSupplementaireInvalidite = allocationSupplementaireInvalidite;
     }
 
     @JsonProperty(ASS)
@@ -352,6 +370,96 @@ public class OpenFiscaIndividu {
 
     public void setAideMobilite(OpenFiscaPeriodes aideMobilite) {
 	this.aideMobilite = aideMobilite;
+    }
+
+    @JsonProperty(DEGRESSIVITE_ARE)
+    public OpenFiscaPeriodes getDegressiviteAre() {
+	return degressiviteAre;
+    }
+
+    public void setDegressiviteAre(OpenFiscaPeriodes degressiviteAre) {
+	this.degressiviteAre = degressiviteAre;
+    }
+
+    @JsonProperty(COMPLEMENT_ARE_NOMBRE_JOURS_RESTANTS)
+    public OpenFiscaPeriodes getNombreJoursRestantsARE() {
+	return nombreJoursRestantsARE;
+    }
+
+    public void setNombreJoursRestantsARE(OpenFiscaPeriodes nombreJoursRestantsARE) {
+	this.nombreJoursRestantsARE = nombreJoursRestantsARE;
+    }
+
+    @JsonProperty(ALLOCATION_RETOUR_EMPLOI_JOURNALIERE)
+    public OpenFiscaPeriodes getAllocationJournaliere() {
+	return allocationJournaliere;
+    }
+
+    public void setAllocationJournaliere(OpenFiscaPeriodes allocationJournaliere) {
+	this.allocationJournaliere = allocationJournaliere;
+    }
+
+    @JsonProperty(ALLOCATION_RETOUR_EMPLOI_JOURNALIERE_TAUX_PLEIN)
+    public OpenFiscaPeriodes getAllocationJournaliereTauxPlein() {
+	return allocationJournaliereTauxPlein;
+    }
+
+    public void setAllocationJournaliereTauxPlein(OpenFiscaPeriodes allocationJournaliereTauxPlein) {
+	this.allocationJournaliereTauxPlein = allocationJournaliereTauxPlein;
+    }
+
+    @JsonProperty(SALAIRE_JOURNALIER_REFERENCE_ARE)
+    public OpenFiscaPeriodes getSalaireJournalierReference() {
+	return salaireJournalierReference;
+    }
+
+    public void setSalaireJournalierReference(OpenFiscaPeriodes salaireJournalierReference) {
+	this.salaireJournalierReference = salaireJournalierReference;
+    }
+
+    @JsonProperty(COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES)
+    public OpenFiscaPeriodes getNombreJoursIndemnisesComplementARE() {
+	return nombreJoursIndemnisesComplementARE;
+    }
+
+    public void setNombreJoursIndemnisesComplementARE(OpenFiscaPeriodes nombreJoursIndemnisesComplementARE) {
+	this.nombreJoursIndemnisesComplementARE = nombreJoursIndemnisesComplementARE;
+    }
+
+    @JsonProperty(COMPLEMENT_ARE_BRUT)
+    public OpenFiscaPeriodes getComplementAREBrut() {
+	return complementAREBrut;
+    }
+
+    public void setComplementAREBrut(OpenFiscaPeriodes complementAREBrut) {
+	this.complementAREBrut = complementAREBrut;
+    }
+
+    @JsonProperty(COMPLEMENT_ARE_DEDUCTIONS)
+    public OpenFiscaPeriodes getDeductionsComplementARE() {
+	return deductionsComplementARE;
+    }
+
+    public void setDeductionsComplementARE(OpenFiscaPeriodes deductionsComplementARE) {
+	this.deductionsComplementARE = deductionsComplementARE;
+    }
+
+    @JsonProperty(COMPLEMENT_ARE_NET)
+    public OpenFiscaPeriodes getComplementARENet() {
+	return complementARENet;
+    }
+
+    public void setComplementARENet(OpenFiscaPeriodes complementARENet) {
+	this.complementARENet = complementARENet;
+    }
+
+    @JsonProperty(ACTIVITE)
+    public OpenFiscaPeriodes getActivite() {
+	return activite;
+    }
+
+    public void setActivite(OpenFiscaPeriodes activite) {
+	this.activite = activite;
     }
 
     @Override

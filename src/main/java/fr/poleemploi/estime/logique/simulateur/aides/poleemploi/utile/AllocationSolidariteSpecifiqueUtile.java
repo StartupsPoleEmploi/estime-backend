@@ -3,20 +3,18 @@ package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
-import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -42,10 +40,15 @@ public class AllocationSolidariteSpecifiqueUtile {
     @Autowired
     private PeriodeTravailleeAvantSimulationUtile periodeTravailleeAvantSimulationUtile;
 
-    public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi, LocalDate moisSimule, LocalDate dateDebutSimulation) {
-	float montantASS = calculerMontant(demandeurEmploi, moisSimule);
+    @Autowired
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresAvantSimulationUtile;
+
+    public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
+	LocalDate dateMoisASimuler = dateUtile.getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
+
+	float montantASS = calculerMontant(demandeurEmploi, dateMoisASimuler);
 	if (montantASS > 0) {
-	    Aide aideAllocationSolidariteSpecifique = creerAide(demandeurEmploi, dateDebutSimulation, montantASS);
+	    Aide aideAllocationSolidariteSpecifique = creerAide(montantASS);
 	    return Optional.of(aideAllocationSolidariteSpecifique);
 	}
 	return Optional.empty();
@@ -53,26 +56,34 @@ public class AllocationSolidariteSpecifiqueUtile {
 
     public float calculerMontant(DemandeurEmploi demandeurEmploi, LocalDate mois) {
 	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);
-	if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
-		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS() != null
-		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null) {
-	    float montantJournalierNetSolidariteSpecifique = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS()
-		    .getAllocationJournaliereNet();
+	if (ressourcesFinancieresAvantSimulationUtile.hasAllocationSolidariteSpecifique(demandeurEmploi)) {
+	    float montantJournalierNetSolidariteSpecifique = ressourcesFinancieresAvantSimulationUtile.getAllocationSolidariteSpecifiqueJournaliere(demandeurEmploi);
+	    return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();
+	}
+	return 0;
+    }
+
+    public float calculerMontantSiEligible(DemandeurEmploi demandeurEmploi, int numeroMoisPeriode, LocalDate dateDebutSimulation) {
+	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisPeriode));
+	if (isEligible(numeroMoisPeriode + 1, demandeurEmploi, dateDebutSimulation)
+		&& ressourcesFinancieresAvantSimulationUtile.hasAllocationSolidariteSpecifique(demandeurEmploi)) {
+	    float montantJournalierNetSolidariteSpecifique = ressourcesFinancieresAvantSimulationUtile.getAllocationSolidariteSpecifiqueJournaliere(demandeurEmploi);
 	    return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();
 	}
 	return 0;
     }
 
     public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	return numeroMoisSimule <= getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
+	return numeroMoisSimule - 1 < getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
     }
 
     public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 	int nombreMoisCumulesASSPercueEtSalaire = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
 	if (informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)
-		&& informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation) <= 12) {
+		&& informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation) < 12) {
+
 	    return getNombreMoisEligiblesBeneficiaireACRE(informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation));
-	} else {
+	} else if (!informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)) {
 	    if (futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
 		return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
 	    } else if (futurTravailUtile.hasContratDureeDeterminee(demandeurEmploi.getFuturTravail())) {
@@ -82,30 +93,8 @@ public class AllocationSolidariteSpecifiqueUtile {
 	return 0;
     }
 
-    private Aide creerAide(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, float montantAide) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), getMessageAlerte(demandeurEmploi, dateDebutSimulation), false,
-		montantAide);
-    }
-
-    /**
-     * Méthode permettant de récupérer un message d'alerte sur l'aide ASS.
-     * Date de la dernière ouverture de droit à l'ASS  + 6 mois = date de fin  de droit
-     * Si date de fin  de droit avant M3 de la synthèse de résultat il faut créer un message d'alerte.
-     * 
-     * @param demandeurEmploi
-     * @param dateDebutSimulation
-     * @return message d'alerte sinon vide
-     */
-    private Optional<List<String>> getMessageAlerte(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	LocalDate dateDerniereOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroit();
-	LocalDate dateFinDroitASS = dateUtile.ajouterMoisALocalDate(dateDerniereOuvertureDroitASS, 6);
-	LocalDate date3emeMoisSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, 3);
-	if (dateUtile.isDateAvant(dateFinDroitASS, date3emeMoisSimulation)) {
-	    ArrayList<String> messagesAlerte = new ArrayList<>();
-	    messagesAlerte.add(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
-	    return Optional.of(messagesAlerte);
-	}
-	return Optional.empty();
+    private Aide creerAide(float montantAide) {
+	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantAide);
     }
 
     private int getNombreMoisEligiblesCDI(int nombreMoisCumulesASSPercueEtSalaire) {

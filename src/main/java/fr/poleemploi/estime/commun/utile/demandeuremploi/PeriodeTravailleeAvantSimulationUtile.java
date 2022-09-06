@@ -28,7 +28,8 @@ public class PeriodeTravailleeAvantSimulationUtile {
     public int getNombreMoisTravaillesAuCoursDesXDerniersMoisAvantSimulation(DemandeurEmploi demandeurEmploi, int nombreDeMoisAConsiderer) {
 	int nombreMoisTravaillesDerniersMois = 0;
 	for (int moisAvantSimulation = 0; moisAvantSimulation < nombreDeMoisAConsiderer; moisAvantSimulation++) {
-	    if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation() != null
+	    if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null
+		    && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation() != null
 		    && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois() != null) {
 		MoisTravailleAvantSimulation moisTravailleAvantSimulation = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation()
 			.getMois()[moisAvantSimulation];
@@ -49,17 +50,17 @@ public class PeriodeTravailleeAvantSimulationUtile {
      * 
      * 		0		1		2		3		4		5
      * 	0	M-12 [11]	M-11 [10]	M-10 [9]	M-9 [8]		M-8 [7]		M-7 [6]
-     * 	1	M-11 [10]	M-10 [9]	M-9 [8]		M-8 [7]		M-7 [6]		M-6 [5]
-     * 	2	M-10 [9]	M-9 [8]		M-8 [7]		M-7 [6]		M-6 [5]		M-5 [4]
-     * 	3	M-9 [8]		M-8 [7]		M-7 [5]		M-6 [5]		M-5 [4]		M-4 [3]
-     * 	4	M-8 [7]		M-7 [6]		M-6 [5]		M-5 [4]		M-4 [3]		M-3 [2]
-     * 	5	M-7 [6]		M-6 [5]		M-5 [4]		M-4 [3]		M-3 [2]		M-2 [1]
-     * 	6	M-6 [5]		M-5 [4]		M-4 [3]		M-3 [2]		M-2 [1]		M-1 [0]
-     * 	7	M-5 [4]		M-4 [3]		M-3 [2]		M-2 [1]		M-1 [0]		M0   /
-     * 	8	M-4 [3]		M-3 [2]		M-2 [1]		M-1 [0]		M0   /		M1 futur
-     * 	9	M-3 [2]		M-2 [1]		M-1 [0]		M0   /		M1 futur	M2 futur
-     * 	10	M-2 [1]		M-1 [0]		M0   /		M1 futur	M2 futur	M3 futur
-     * 	11	M-1 [0]		M0   /		M1 futur	M2 futur	M3 futur	M4 futur
+     * 	1	M-11 [10]	M-10 [9]	M-9  [8]	M-8 [7]		M-7 [6]		M-6 [5]
+     * 	2	M-10 [9]	M-9  [8]	M-8  [7]	M-7 [6]		M-6 [5]		M-5 [4]
+     * 	3	M-9  [8]	M-8  [7]	M-7  [5]	M-6 [5]		M-5 [4]		M-4 [3]
+     * 	4	M-8  [7]	M-7  [6]	M-6  [5]	M-5 [4]		M-4 [3]		M-3 [2]
+     * 	5	M-7  [6]	M-6  [5]	M-5  [4]	M-4 [3]		M-3 [2]		M-2 [1]
+     * 	6	M-6  [5]	M-5  [4]	M-4  [3]	M-3 [2]		M-2 [1]		M-1 [0]
+     * 	7	M-5  [4]	M-4  [3]	M-3  [2]	M-2 [1]		M-1 [0]		M0   /
+     * 	8	M-4  [3]	M-3  [2]	M-2  [1]	M-1 [0]		M0   /		M1 futur
+     * 	9	M-3  [2]	M-2  [1]	M-1  [0]	M0   /		M1 futur	M2 futur
+     * 	10	M-2  [1]	M-1  [0]	M0   /		M1 futur	M2 futur	M3 futur
+     * 	11	M-1  [0]	M0   /		M1 futur	M2 futur	M3 futur	M4 futur
      * 
      * Les salaires des mois M0 sont par défault valorisés à 0 car on ne connait pas actuellement le montant du salaire du mois en cours
      * 
@@ -68,23 +69,20 @@ public class PeriodeTravailleeAvantSimulationUtile {
      * @param numeroMoisPeriodeOpenfisca numéro du mois recherché parmis les 12 derniers salaires
      * @return
      */
-    public Salaire getSalaireAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, int numeroMoisPeriodeOpenfisca) {
-	int indexMoisAvantPeriode = INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION - (numeroMoisPeriodeOpenfisca + (numeroMoisSimule));
-	if (indexMoisAvantPeriode < 0) {
+    public Salaire getSalaireAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
+	int indexMoisAvantPeriode = INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION + (numeroMoisPeriodeOpenfisca + 1);
+	if (indexMoisAvantPeriode > INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION) {
 	    return demandeurEmploi.getFuturTravail().getSalaire();
 	}
-	return getMoisTravaillesAvantSimulation(demandeurEmploi, indexMoisAvantPeriode).getSalaire();
+	return getMoisTravaillesAvantSimulation(demandeurEmploi, Math.abs(numeroMoisPeriodeOpenfisca + 1)).getSalaire();
     }
 
-    public Salaire getSalaireAvantPeriodeSimulationPersonne(Personne personne, int numeroMoisSimule, int numeroMoisPeriodeOpenfisca) {
-	int indexMoisAvantPeriode = INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION - (numeroMoisPeriodeOpenfisca + (numeroMoisSimule));
-	if (indexMoisAvantPeriode < 0) {
-	    if (personne.getRessourcesFinancieres().getSalaire() != null) {
-		return personne.getRessourcesFinancieres().getSalaire();
-	    }
-	    return new Salaire();
+    public Salaire getSalaireAvantPeriodeSimulationPersonne(Personne personne, int numeroMoisPeriodeOpenfisca) {
+	int indexMoisAvantPeriode = INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION + (numeroMoisPeriodeOpenfisca + 1);
+	if (indexMoisAvantPeriode > INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION) {
+	    return personne.getRessourcesFinancieres().getSalaire();
 	}
-	return getMoisTravaillesAvantSimulationPersonne(personne, indexMoisAvantPeriode).getSalaire();
+	return getMoisTravaillesAvantSimulationPersonne(personne, Math.abs(numeroMoisPeriodeOpenfisca + 1)).getSalaire();
     }
 
     public MoisTravailleAvantSimulation getMoisTravaillesAvantSimulation(DemandeurEmploi demandeurEmploi, int index) {
@@ -113,7 +111,8 @@ public class PeriodeTravailleeAvantSimulationUtile {
     }
 
     public boolean hasSalairesAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int index) {
-	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation() != null
+	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation() != null
 		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois() != null
 		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois()[index] != null;
     }
@@ -125,6 +124,6 @@ public class PeriodeTravailleeAvantSimulationUtile {
     }
 
     private boolean isMoisTravaille(MoisTravailleAvantSimulation moisTravailleAvantSimulation) {
-	return !moisTravailleAvantSimulation.isSansSalaire() && moisTravailleAvantSimulation.getSalaire().getMontantNet() > 0;
+	return !moisTravailleAvantSimulation.isSansSalaire() && moisTravailleAvantSimulation.getSalaire().getMontantMensuelNet() > 0;
     }
 }

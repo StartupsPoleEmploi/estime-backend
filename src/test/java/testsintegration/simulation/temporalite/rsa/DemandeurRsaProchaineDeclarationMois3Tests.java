@@ -55,7 +55,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// RSA 500€, déclaration trimetrielle en M3, non travaillé au cours des 3 derniers mois
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -63,8 +63,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1231);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1583);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
@@ -164,6 +164,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
     @Test
     void simulerMesRessourcesFinancieresTest2() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
+	initMocks();
 	// Si DE Français, date naissance 5/07/1986, code postal 44200, en couple, non propriétaire
 	// Futur contrat CDI 15h, salaire net 500€ brut 659€,kilométrage domicile -> taf = 10kms + 20 trajets
 	// RSA 350€, déclaration trimetrielle en M3, non travaillé au cours des 3 derniers mois
@@ -172,14 +173,14 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// enfant 2 ans, enfant 4 ans
 	boolean isEnCouple = true;
 	int nbEnfant = 2;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(500);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(659);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(350f);
@@ -194,8 +195,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieresConjoint = new RessourcesFinancieresAvantSimulation();
 	Salaire salaireConjoint = new Salaire();
-	salaireConjoint.setMontantNet(380);
-	salaireConjoint.setMontantBrut(508);
+	salaireConjoint.setMontantMensuelNet(380);
+	salaireConjoint.setMontantMensuelBrut(508);
 	ressourcesFinancieresConjoint.setSalaire(salaireConjoint);
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 
@@ -203,7 +204,6 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(1).getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-03-2017"));
 
 	// Lorsque je simule mes prestations le 01/01/2022
-	initMocks();
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
@@ -275,7 +275,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(201);
 	    });
@@ -284,6 +284,9 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -295,7 +298,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(201);
 	    });
@@ -304,6 +307,9 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -315,7 +321,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(201);
 	    });
@@ -324,6 +330,9 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRESTATION_ACCUEIL_JEUNE_ENFANT.getCode())).satisfies(paje -> {
+		assertThat(paje.getMontant()).isEqualTo(170);
 	    });
 	});
     }
@@ -336,7 +345,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// RSA 380€, déclaration trimetrielle en M3, travaillé au cours des 3 derniers mois avec salaire 380 juillet, salaire 380 juin, salaire 0 mai
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -344,8 +353,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(500);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(659);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(380f);
@@ -460,7 +469,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// mai
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -468,8 +477,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(15);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(500);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(659);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(500);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(659);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
@@ -591,7 +600,7 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	// APL 310€
 	boolean isEnCouple = false;
 	int nbEnfant = 0;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.RSA, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 
@@ -600,8 +609,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	demandeurEmploi.getSituationFamiliale().setIsSeulPlusDe18Mois(true);
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1231);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1583);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1231);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1583);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(10);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(20);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().setAllocationRSA(500f);
@@ -626,8 +635,8 @@ class DemandeurRsaProchaineDeclarationMois3Tests extends Commun {
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(500);
 	    });
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_PERSONNALISEE_LOGEMENT.getCode())).satisfies(apl -> {
-		assertThat(apl.getMontant()).isEqualTo(310f);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
+		assertThat(als.getMontant()).isEqualTo(272f);
 	    });
 	});
 	// Alors les prestations du second mois 03/2022 sont :

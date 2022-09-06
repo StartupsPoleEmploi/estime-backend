@@ -18,21 +18,17 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.AccessTokenPEIOOut;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOIn;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.ArePEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.CoordonneesPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.EtatCivilPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.UserInfoPEIOOut;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.utile.AccessTokenUtile;
-import fr.poleemploi.estime.clientsexternes.poleemploiio.utile.SimulateurRepriseActiviteUtile;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.UnauthorizedMessages;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.exceptions.TooManyRequestException;
 import fr.poleemploi.estime.services.exceptions.UnauthorizedException;
-import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PeConnectAuthorization;
 
 @Component
@@ -46,9 +42,6 @@ public class PoleEmploiIOClient {
 
     @Value("${spring.security.oauth2.client.provider.oauth-pole-emploi.user-info-uri}")
     private String userInfoURI;
-
-    @Autowired
-    private SimulateurRepriseActiviteUtile simulateurRepriseActiviteUtile;
 
     @Autowired
     private AccessTokenUtile accessTokenUtile;
@@ -136,29 +129,6 @@ public class PoleEmploiIOClient {
 	return Optional.empty();
     }
 
-    @Retryable(value = {
-	    TooManyRequestException.class }, maxAttempts = MAX_ATTEMPTS_AFTER_TOO_MANY_REQUEST_HTTP_ERROR, backoff = @Backoff(delay = RETRY_DELAY_AFTER_TOO_MANY_REQUEST_HTTP_ERROR))
-    public Optional<ArePEIOOut> getAreSimulateurRepriseActivite(DemandeurEmploi demandeurEmploi) {
-	String apiSimulateurRepriseActiviteURI = poleemploiioURI + "peconnect-simuler-reprise-activite/v1/simulation-droits/reprise-activite";
-	try {
-	    //avant appel au service, vérification que l'access token est toujours valide
-	    refreshAccessToken(demandeurEmploi);
-	    HttpEntity<ArePEIOIn> httpEntity = simulateurRepriseActiviteUtile.createHttpEntityAre(demandeurEmploi);
-	    return Optional.of(restTemplate.postForEntity(apiSimulateurRepriseActiviteURI, httpEntity, ArePEIOOut.class).getBody());
-	} catch (Exception exception) {
-	    if (isTooManyRequestsHttpClientError(exception)) {
-		throw new TooManyRequestException(exception.getMessage());
-	    } else if (isNombreDeJoursIndemnisesEgalAZeroError(exception)) {
-		// TODO: améliorer la gestion des retours en erreur de l'API reprise d'activité quand le demandeur n'a pas le droit à du complément ARE 
-		LOGGER.info(String.format(LoggerMessages.RETOUR_API_ARE_ZERO_JOUR_INDEMNISE.getMessage(), apiSimulateurRepriseActiviteURI, exception.getMessage()));
-		return Optional.empty();
-	    } else {
-		LOGGER.error(String.format(LoggerMessages.RETOUR_SERVICE_KO.getMessage(), exception.getMessage(), apiSimulateurRepriseActiviteURI));
-		throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
-	    }
-	}
-    }
-
     private AccessTokenPEIOOut callAccessTokenEndPoint(HttpEntity<MultiValueMap<String, String>> httpEntity) {
 	try {
 	    return restTemplate.postForEntity(accessTokenURI, httpEntity, AccessTokenPEIOOut.class).getBody();
@@ -172,20 +142,9 @@ public class PoleEmploiIOClient {
 	return exception instanceof HttpClientErrorException && ((HttpClientErrorException) exception).getRawStatusCode() == HttpStatus.TOO_MANY_REQUESTS.value();
     }
 
-    private boolean isNombreDeJoursIndemnisesEgalAZeroError(Exception exception) {
-	return exception instanceof HttpClientErrorException && ((HttpClientErrorException) exception).getRawStatusCode() == HttpStatus.PRECONDITION_FAILED.value();
-    }
-
     private HttpEntity<String> createAuthorizationHttpEntity(String bearerToken) {
 	HttpHeaders headers = new HttpHeaders();
 	headers.add("Authorization", bearerToken);
 	return new HttpEntity<>(headers);
-    }
-
-    private void refreshAccessToken(DemandeurEmploi demandeurEmploi) {
-	if (accessTokenUtile.isAccessTokenExpired(demandeurEmploi.getPeConnectAuthorization().getExpireInDate())) {
-	    PeConnectAuthorization newPeConnectAuthorization = getPeConnectAuthorizationByRefreshToken(demandeurEmploi.getPeConnectAuthorization().getRefreshToken());
-	    demandeurEmploi.setPeConnectAuthorization(newPeConnectAuthorization);
-	}
     }
 }

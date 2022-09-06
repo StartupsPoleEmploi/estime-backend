@@ -37,19 +37,19 @@ public class Commun {
     protected DemandeurEmploi createDemandeurEmploi() throws ParseException {
 	boolean isEnCouple = false;
 	int nbEnfant = 1;
-	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS.getLibelle(), isEnCouple, nbEnfant);
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.ASS, isEnCouple, nbEnfant);
 	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
 	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantNet(1245);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantBrut(1600);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1245);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1600);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(utileTests.getDate("14-04-2022"));
+
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117f);
 
 	return demandeurEmploi;
@@ -59,7 +59,7 @@ public class Commun {
 
 	doReturn(utileTests.getDate("01-01-2022")).when(dateUtile).getDateJour();
 
-	DetailIndemnisationPEIOOut detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.ASS.getLibelle());
+	DetailIndemnisationPEIOOut detailIndemnisationESD = utileTests.creerDetailIndemnisationPEIO(TypePopulationEnum.ASS);
 	doReturn(detailIndemnisationESD).when(poleEmploiIOClient).getDetailIndemnisation(Mockito.any(String.class));
     }
 }

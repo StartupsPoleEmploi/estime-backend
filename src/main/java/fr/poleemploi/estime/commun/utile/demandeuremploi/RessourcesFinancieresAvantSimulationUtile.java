@@ -55,7 +55,6 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	}
 	if (beneficiaireAidesUtile.isBeneficiairePensionInvalidite(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getPensionInvalidite()));
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite()));
 	}
 	if (beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationRSA()));
@@ -116,6 +115,13 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	return 0;
     }
 
+    public float getAllocationSolidariteSpecifiqueJournaliere(DemandeurEmploi demandeurEmploi) {
+	if (hasAllocationSolidariteSpecifique(demandeurEmploi)) {
+	    return demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet();
+	}
+	return 0;
+    }
+
     public float getAllocationsLogementSur1Mois(AllocationsLogement allocationsLogement) {
 	return BigDecimal.valueOf(allocationsLogement.getMoisNMoins1()).floatValue();
     }
@@ -123,7 +129,7 @@ public class RessourcesFinancieresAvantSimulationUtile {
     public float getFuturSalaire(DemandeurEmploi demandeurEmploi) {
 	float montantFuturSalaire = 0;
 	if (hasFuturSalaire(demandeurEmploi)) {
-	    montantFuturSalaire = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaire().getMontantNet()).floatValue();
+	    montantFuturSalaire = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaire().getMontantMensuelNet()).floatValue();
 	}
 	return montantFuturSalaire;
     }
@@ -131,7 +137,7 @@ public class RessourcesFinancieresAvantSimulationUtile {
     public float getSalaire(DemandeurEmploi demandeurEmploi) {
 	float montantSalaire = 0;
 	if (hasSalaire(demandeurEmploi)) {
-	    montantSalaire = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getSalaire().getMontantNet()).floatValue();
+	    montantSalaire = BigDecimal.valueOf(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getSalaire().getMontantMensuelNet()).floatValue();
 	}
 	return montantSalaire;
     }
@@ -269,14 +275,6 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	return pensionInvalidite;
     }
 
-    public float getAllocationSupplementaireInvalidite(DemandeurEmploi demandeurEmploi) {
-	float allocationSupplementaireInvalidite = 0;
-	if (hasAllocationSupplementaireInvalidite(demandeurEmploi)) {
-	    allocationSupplementaireInvalidite = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite();
-	}
-	return allocationSupplementaireInvalidite;
-    }
-
     public boolean hasAllocationsCAF(DemandeurEmploi demandeurEmploi) {
 	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF() != null;
     }
@@ -341,6 +339,10 @@ public class RessourcesFinancieresAvantSimulationUtile {
 		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() > 0;
     }
 
+    public boolean hasAllocationSolidariteSpecifique(DemandeurEmploi demandeurEmploi) {
+	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && hasAllocationSolidariteSpecifique(demandeurEmploi.getRessourcesFinancieresAvantSimulation());
+    }
+
     public boolean hasAllocationARE(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
 	return ressourcesFinancieres != null && ressourcesFinancieres.getAidesPoleEmploi() != null && ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE() != null
 		&& ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute() != null
@@ -355,12 +357,6 @@ public class RessourcesFinancieresAvantSimulationUtile {
 	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM() != null
 		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getPensionInvalidite() != null
 		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getPensionInvalidite() > 0;
-    }
-
-    public boolean hasAllocationSupplementaireInvalidite(DemandeurEmploi demandeurEmploi) {
-	return demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM() != null
-		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite() != null
-		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCPAM().getAllocationSupplementaireInvalidite() > 0;
     }
 
     public boolean hasRevenusImmobilier(DemandeurEmploi demandeurEmploi) {
@@ -402,7 +398,7 @@ public class RessourcesFinancieresAvantSimulationUtile {
     }
 
     public boolean hasFuturSalaire(FuturTravail futurTravail) {
-	return futurTravail != null && futurTravail.getSalaire() != null && futurTravail.getSalaire().getMontantNet() > 0;
+	return futurTravail != null && futurTravail.getSalaire() != null && futurTravail.getSalaire().getMontantMensuelNet() > 0;
     }
 
     public boolean hasSalaire(DemandeurEmploi demandeurEmploi) {
@@ -410,7 +406,7 @@ public class RessourcesFinancieresAvantSimulationUtile {
     }
 
     public boolean hasSalaire(RessourcesFinancieresAvantSimulation ressourcesFinancieres) {
-	return ressourcesFinancieres != null && ressourcesFinancieres.getSalaire() != null && ressourcesFinancieres.getSalaire().getMontantNet() > 0;
+	return ressourcesFinancieres != null && ressourcesFinancieres.getSalaire() != null && ressourcesFinancieres.getSalaire().getMontantMensuelNet() > 0;
     }
 
     public boolean hasTravailleAuCoursDerniersMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {

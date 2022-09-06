@@ -44,7 +44,7 @@ public class OpenFiscaMappeurAideMobilite {
 	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
 	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
 	    OpenFiscaPeriodes openFiscaAideMobilite = openFiscaIndividu.getAideMobilite();
-	    String periodeFormateeAideMobilite = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
+	    String periodeFormateeAideMobilite = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
 	    Double montantAideMobilite = (Double) openFiscaAideMobilite.get(periodeFormateeAideMobilite);
 
 	    return BigDecimal.valueOf(montantAideMobilite).setScale(0, RoundingMode.HALF_UP).floatValue();
@@ -55,24 +55,24 @@ public class OpenFiscaMappeurAideMobilite {
 	}
     }
 
-    public OpenFiscaIndividu addAideMobiliteOpenFiscaIndividu(OpenFiscaIndividu openFiscaIndividu, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	openFiscaIndividu.setTypeContratTravail(
-		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(futurTravailUtile.getTypeContratOpenFisca(demandeurEmploi.getFuturTravail()), dateDebutSimulation));
-	openFiscaIndividu.setContexteActivite(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(CONTEXTE_REPRISE_EMPLOI, dateDebutSimulation));
-	openFiscaIndividu.setCategorieDemandeurEmploi(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(CATEGORIE_DEMANDEUR_EMPLOI, dateDebutSimulation));
-	openFiscaIndividu.setAideMobiliteDateDemande(openFiscaPeriodeMappeur
-		.creerPeriodesOpenFiscaAideMobilite(dateUtile.convertDateToStringOpenFisca(dateDebutSimulation.plusMonths((long) numeroMoisSimule - 1)), dateDebutSimulation));
+    public OpenFiscaIndividu addAideMobiliteOpenFiscaIndividu(OpenFiscaIndividu openFiscaIndividu, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	openFiscaIndividu.setTypeContratTravail(openFiscaPeriodeMappeur
+		.creerPeriodesOpenFiscaAgepiEtAideMobilite(futurTravailUtile.getTypeContratOpenFisca(demandeurEmploi.getFuturTravail()), dateDebutSimulation));
+	openFiscaIndividu.setContexteActivite(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(CONTEXTE_REPRISE_EMPLOI, dateDebutSimulation));
+	openFiscaIndividu.setCategorieDemandeurEmploi(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(CATEGORIE_DEMANDEUR_EMPLOI, dateDebutSimulation));
+	openFiscaIndividu.setAideMobiliteDateDemande(
+		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(dateUtile.convertDateToStringOpenFisca(dateDebutSimulation), dateDebutSimulation));
 	openFiscaIndividu.setNombreAllersRetours(
-		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(demandeurEmploi.getFuturTravail().getNombreTrajetsDomicileTravail(), dateDebutSimulation));
+		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(demandeurEmploi.getFuturTravail().getNombreTrajetsDomicileTravail(), dateDebutSimulation));
 	openFiscaIndividu.setDistanceActiviteDomicile(
-		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(demandeurEmploi.getFuturTravail().getDistanceKmDomicileTravail(), dateDebutSimulation));
+		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(demandeurEmploi.getFuturTravail().getDistanceKmDomicileTravail(), dateDebutSimulation));
 	openFiscaIndividu.setDebutContratTravail(
-		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(dateUtile.convertDateToStringOpenFisca(dateDebutSimulation), dateDebutSimulation));
+		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(dateUtile.convertDateToStringOpenFisca(dateDebutSimulation), dateDebutSimulation));
 	if (demandeurEmploi.getFuturTravail().getNombreMoisContratCDD() != null) {
 	    openFiscaIndividu.setDureeContratTravail(
-		    openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAideMobilite(demandeurEmploi.getFuturTravail().getNombreMoisContratCDD(), dateDebutSimulation));
+		    openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(demandeurEmploi.getFuturTravail().getNombreMoisContratCDD(), dateDebutSimulation));
 	}
-	openFiscaIndividu.setAideMobilite(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAideMobilite(dateDebutSimulation));
+	openFiscaIndividu.setAideMobilite(openFiscaPeriodeMappeur.creerPeriodesCalculeesAgepiEtAideMobiliteOpenFisca(dateDebutSimulation));
 
 	return openFiscaIndividu;
     }

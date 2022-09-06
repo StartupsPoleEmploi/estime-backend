@@ -81,7 +81,6 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(1019f);
 	    });
@@ -98,7 +97,6 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(1019f);
 	    });
@@ -115,7 +113,6 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(1019f);
 	    });
@@ -206,7 +203,6 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(1019f);
 	    });
@@ -223,7 +219,6 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(1019f);
 	    });
@@ -240,7 +235,6 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
 		assertThat(rsa.getMontant()).isEqualTo(1019f);
 	    });
@@ -384,7 +378,7 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(205f);
+		assertThat(ppa.getMontant()).isEqualTo(208f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(272f);
@@ -401,7 +395,7 @@ class DemandeurAideLogementProchaineDeclarationMois1Tests extends Commun {
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(205f);
+		assertThat(ppa.getMontant()).isEqualTo(208f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(apl -> {
 		assertThat(apl.getMontant()).isEqualTo(272f);

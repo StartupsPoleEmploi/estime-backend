@@ -7,7 +7,7 @@ public class AllocationARE {
     private Float allocationJournaliereBrute;
     private Float allocationMensuelleNet;
     private Float salaireJournalierReferenceBrut;
-    private Float nombreJoursRestants;
+    private Integer nombreJoursRestants;
     @JsonProperty("hasDegressiviteAre")
     private Boolean hasDegressiviteAre;
     private Boolean isTauxPlein;
@@ -37,11 +37,11 @@ public class AllocationARE {
 	this.salaireJournalierReferenceBrut = salaireJournalierReferenceBrut;
     }
 
-    public Float getNombreJoursRestants() {
+    public Integer getNombreJoursRestants() {
 	return nombreJoursRestants;
     }
 
-    public void setNombreJoursRestants(Float nombreJoursRestants) {
+    public void setNombreJoursRestants(Integer nombreJoursRestants) {
 	this.nombreJoursRestants = nombreJoursRestants;
     }
 

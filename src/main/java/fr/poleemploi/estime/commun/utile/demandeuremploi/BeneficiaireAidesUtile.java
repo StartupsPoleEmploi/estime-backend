@@ -26,6 +26,10 @@ public class BeneficiaireAidesUtile {
 	return isBeneficiaireAideMinimaSocial(demandeurEmploi) || isBeneficiaireAREMini(demandeurEmploi);
     }
 
+    public boolean isBeneficiaireCAF(DemandeurEmploi demandeurEmploi) {
+	return isBeneficiaireAAH(demandeurEmploi) || isBeneficiaireRSA(demandeurEmploi);
+    }
+
     public boolean isBeneficiaireARE(Personne personne) {
 	return personne.getBeneficiaireAides() != null && personne.getBeneficiaireAides().isBeneficiaireARE();
     }

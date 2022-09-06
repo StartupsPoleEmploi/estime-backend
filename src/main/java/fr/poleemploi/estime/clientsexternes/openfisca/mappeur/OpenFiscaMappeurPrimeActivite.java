@@ -32,7 +32,7 @@ public class OpenFiscaMappeurPrimeActivite {
 	    Map<String, OpenFiscaFamille> openFiscaFamilles = openFiscaRoot.getFamilles();
 	    OpenFiscaFamille openFiscaFamille = openFiscaFamilles.get(FAMILLE1);
 	    OpenFiscaPeriodes openFiscaPrimeActivite = openFiscaFamille.getPrimeActivite();
-	    String periodeFormateePrimeActivite = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
+	    String periodeFormateePrimeActivite = getPeriodeARecuperer(dateDebutSimulation, numeroMoisSimule);
 	    Double montantPrimeActivite = (Double) openFiscaPrimeActivite.get(periodeFormateePrimeActivite);
 
 	    return BigDecimal.valueOf(montantPrimeActivite).setScale(0, RoundingMode.HALF_UP).floatValue();
@@ -41,5 +41,9 @@ public class OpenFiscaMappeurPrimeActivite {
 	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
 	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
 	}
+    }
+
+    public String getPeriodeARecuperer(LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	return openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
     }
 }

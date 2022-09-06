@@ -18,12 +18,13 @@ import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @Component
 public class OpenFiscaMappeurRSA {
 
     @Autowired
-    private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
+    private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaMappeurRSA.class);
 
@@ -32,7 +33,7 @@ public class OpenFiscaMappeurRSA {
 	    Map<String, OpenFiscaFamille> openFiscaFamilles = openFiscaRoot.getFamilles();
 	    OpenFiscaFamille openFiscaFamille = openFiscaFamilles.get(FAMILLE1);
 	    OpenFiscaPeriodes openFiscaRevenuSolidariteActive = openFiscaFamille.getRevenuSolidariteActive();
-	    String periodeFormateeRSA = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
+	    String periodeFormateeRSA = openFiscaMappeurPeriode.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
 	    Double montantRSA = (Double) openFiscaRevenuSolidariteActive.get(periodeFormateeRSA);
 
 	    return BigDecimal.valueOf(montantRSA).setScale(0, RoundingMode.HALF_UP).floatValue();
@@ -41,5 +42,10 @@ public class OpenFiscaMappeurRSA {
 	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
 	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
 	}
+    }
+
+    public OpenFiscaFamille addRSAOpenFiscaIndividu(OpenFiscaFamille openFiscaFamille, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	openFiscaFamille.setRevenuSolidariteActive(openFiscaMappeurPeriode.creerPeriodesOpenFiscaRSA(demandeurEmploi, dateDebutSimulation));
+	return openFiscaFamille;
     }
 }

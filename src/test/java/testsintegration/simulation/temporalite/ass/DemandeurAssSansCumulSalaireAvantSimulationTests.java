@@ -59,14 +59,7 @@ class DemandeurAssSansCumulSalaireAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(4);
-
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
-		assertThat(agepi.getMontant()).isEqualTo(400);
-	    });
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
-		assertThat(aideMobilite.getMontant()).isEqualTo(192);
-	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
 		assertThat(ass.getMontant()).isEqualTo(472f);
 	    });
@@ -82,8 +75,13 @@ class DemandeurAssSansCumulSalaireAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
+		assertThat(agepi.getMontant()).isEqualTo(400f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
+		assertThat(aideMobilite.getMontant()).isEqualTo(192f);
+	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
 		assertThat(ass.getMontant()).isEqualTo(523);
 	    });
@@ -117,11 +115,11 @@ class DemandeurAssSansCumulSalaireAvantSimulationTests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
-		assertThat(asf.getMontant()).isEqualTo(117);
-	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
 		assertThat(ass.getMontant()).isEqualTo(523f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :

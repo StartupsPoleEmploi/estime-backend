@@ -18,7 +18,6 @@ import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
@@ -31,9 +30,6 @@ public class OpenFiscaMappeurAgepi {
     @Autowired
     private DateUtile dateUtile;
 
-    @Autowired
-    private FuturTravailUtile futurTravailUtile;
-
     private static final String INTENSITE_ACTIVITE = "hebdomadaire";
     private static final String CATEGORIE_DEMANDEUR_EMPLOI = "categorie_1";
     private static final String LIEU_EMPLOI_OU_FORMATION = "metropole_hors_corse";
@@ -45,7 +41,7 @@ public class OpenFiscaMappeurAgepi {
 	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
 	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
 	    OpenFiscaPeriodes openFiscaAgepi = openFiscaIndividu.getAgepi();
-	    String periodeFormateeAgepi = openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAide(dateDebutSimulation, numeroMoisSimule);
+	    String periodeFormateeAgepi = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
 	    Double montantAgepi = (Double) openFiscaAgepi.get(periodeFormateeAgepi);
 
 	    return BigDecimal.valueOf(montantAgepi).setScale(0, RoundingMode.HALF_UP).floatValue();
@@ -56,25 +52,25 @@ public class OpenFiscaMappeurAgepi {
 	}
     }
 
-    public OpenFiscaIndividu addAgepiOpenFiscaIndividu(OpenFiscaIndividu openFiscaIndividu, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public OpenFiscaIndividu addAgepiOpenFiscaIndividu(OpenFiscaIndividu openFiscaIndividu, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 	openFiscaIndividu.setTypeContratTravail(
-		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepi(futurTravailUtile.getTypeContratOpenFisca(demandeurEmploi.getFuturTravail()), dateDebutSimulation));
-	openFiscaIndividu.setIntensiteActivite(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepi(INTENSITE_ACTIVITE, dateDebutSimulation));
-	openFiscaIndividu
-		.setTempsDeTravail(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepi(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine(), dateDebutSimulation));
-	openFiscaIndividu.setCategorieDemandeurEmploi(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepi(CATEGORIE_DEMANDEUR_EMPLOI, dateDebutSimulation));
-	openFiscaIndividu.setLieuEmploiOuFormation(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepi(LIEU_EMPLOI_OU_FORMATION, dateDebutSimulation));
-	openFiscaIndividu.setAgepiDateDemande(openFiscaPeriodeMappeur
-		.creerPeriodesOpenFiscaAgepi(dateUtile.convertDateToStringOpenFisca(dateDebutSimulation.plusMonths((long) numeroMoisSimule - 1)), dateDebutSimulation));
-	openFiscaIndividu
-		.setDebutContratTravail(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepi(dateUtile.convertDateToStringOpenFisca(dateDebutSimulation), dateDebutSimulation));
+		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(demandeurEmploi.getFuturTravail().getTypeContrat().toLowerCase(), dateDebutSimulation));
+	openFiscaIndividu.setIntensiteActivite(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(INTENSITE_ACTIVITE, dateDebutSimulation));
+	openFiscaIndividu.setTempsDeTravail(
+		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(demandeurEmploi.getFuturTravail().getNombreHeuresTravailleesSemaine(), dateDebutSimulation));
+	openFiscaIndividu.setCategorieDemandeurEmploi(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(CATEGORIE_DEMANDEUR_EMPLOI, dateDebutSimulation));
+	openFiscaIndividu.setLieuEmploiOuFormation(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(LIEU_EMPLOI_OU_FORMATION, dateDebutSimulation));
+	openFiscaIndividu.setAgepiDateDemande(
+		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(dateUtile.convertDateToStringOpenFisca(dateDebutSimulation), dateDebutSimulation));
+	openFiscaIndividu.setDebutContratTravail(
+		openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(dateUtile.convertDateToStringOpenFisca(dateDebutSimulation), dateDebutSimulation));
 	if (demandeurEmploi.getFuturTravail().getNombreMoisContratCDD() != null) {
 
-	    openFiscaIndividu
-		    .setDureeContratTravail(openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepi(demandeurEmploi.getFuturTravail().getNombreMoisContratCDD(), dateDebutSimulation));
+	    openFiscaIndividu.setDureeContratTravail(
+		    openFiscaPeriodeMappeur.creerPeriodesOpenFiscaAgepiEtAideMobilite(demandeurEmploi.getFuturTravail().getNombreMoisContratCDD(), dateDebutSimulation));
 	}
 
-	openFiscaIndividu.setAgepi(openFiscaPeriodeMappeur.getPeriodeOpenfiscaCalculAgepi(dateDebutSimulation));
+	openFiscaIndividu.setAgepi(openFiscaPeriodeMappeur.creerPeriodesCalculeesAgepiEtAideMobiliteOpenFisca(dateDebutSimulation));
 
 	return openFiscaIndividu;
     }

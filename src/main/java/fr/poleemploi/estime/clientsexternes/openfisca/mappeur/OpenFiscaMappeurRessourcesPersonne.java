@@ -23,65 +23,63 @@ public class OpenFiscaMappeurRessourcesPersonne {
     @Autowired
     private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
-    public void addRessourcesFinancieresPersonne(OpenFiscaIndividu personneOpenFisca, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public void addRessourcesFinancieresPersonne(OpenFiscaIndividu personneOpenFisca, Personne personne, LocalDate dateDebutSimulation) {
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = personne.getRessourcesFinancieres();
 	if (ressourcesFinancieres != null) {
 	    if (ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMoisAvantSimulation(ressourcesFinancieres)) {
-		openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, personne, dateDebutSimulation, numeroMoisSimule);
+		openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, personne, dateDebutSimulation);
 	    } else if (ressourcesFinancieresUtile.hasSalaire(ressourcesFinancieres)) {
-		personneOpenFisca.setSalaireDeBase(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getSalaire().getMontantBrut(), dateDebutSimulation,
-			numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
-		personneOpenFisca.setSalaireImposable(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getSalaire().getMontantNet(), dateDebutSimulation,
-			numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+		personneOpenFisca.setSalaireDeBase(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getSalaire().getMontantMensuelBrut(), dateDebutSimulation));
+		personneOpenFisca
+			.setSalaireImposable(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getSalaire().getMontantMensuelNet(), dateDebutSimulation));
 	    }
 	    if (ressourcesFinancieresUtile.hasRevenusTravailleurIndependant(ressourcesFinancieres)) {
-		personneOpenFisca.setChiffreAffairesIndependant(openFiscaMappeurPeriode
-			.creerPeriodesAnnees(ressourcesFinancieresUtile.getRevenusTravailleurIndependant(ressourcesFinancieres), dateDebutSimulation, numeroMoisSimule));
+		personneOpenFisca.setChiffreAffairesIndependant(
+			openFiscaMappeurPeriode.creerPeriodesAnnees(ressourcesFinancieresUtile.getRevenusTravailleurIndependant(ressourcesFinancieres), dateDebutSimulation));
 	    }
 	    if (ressourcesFinancieresUtile.hasRevenusMicroEntreprise(ressourcesFinancieres)) {
-		personneOpenFisca.setBeneficesMicroEntreprise(openFiscaMappeurPeriode
-			.creerPeriodesAnnees(ressourcesFinancieresUtile.getRevenusMicroEntreprise(ressourcesFinancieres), dateDebutSimulation, numeroMoisSimule));
+		personneOpenFisca.setBeneficesMicroEntreprise(
+			openFiscaMappeurPeriode.creerPeriodesAnnees(ressourcesFinancieresUtile.getRevenusMicroEntreprise(ressourcesFinancieres), dateDebutSimulation));
 	    }
 	    if (ressourcesFinancieresUtile.hasPensionRetraite(ressourcesFinancieres)) {
-		personneOpenFisca.setPensionRetraite(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieresUtile.getPensionRetraite(ressourcesFinancieres),
-			dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+		personneOpenFisca.setPensionRetraite(
+			openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieresUtile.getPensionRetraite(ressourcesFinancieres), dateDebutSimulation));
 	    }
 	    if (ressourcesFinancieresUtile.hasRevenusImmobilier(ressourcesFinancieres)) {
 		personneOpenFisca.setRevenusLocatifs(openFiscaMappeurPeriode
-			.creerPeriodesRevenusImmobilier(ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(ressourcesFinancieres), dateDebutSimulation, numeroMoisSimule));
+			.creerPeriodesRevenusImmobilier(ressourcesFinancieresUtile.getRevenusImmobilierSur1Mois(ressourcesFinancieres), dateDebutSimulation));
 	    }
-	    addRessourcesFinancieresCAF(personneOpenFisca, ressourcesFinancieres, dateDebutSimulation, numeroMoisSimule);
-	    addRessourcesFinancieresPoleEmploi(personneOpenFisca, personne, dateDebutSimulation, numeroMoisSimule);
-	    addRessourcesFinancieresCPAM(personneOpenFisca, ressourcesFinancieres, dateDebutSimulation, numeroMoisSimule);
+	    addRessourcesFinancieresCAF(personneOpenFisca, ressourcesFinancieres, dateDebutSimulation);
+	    addRessourcesFinancieresPoleEmploi(personneOpenFisca, personne, dateDebutSimulation);
+	    addRessourcesFinancieresCPAM(personneOpenFisca, ressourcesFinancieres, dateDebutSimulation);
 	}
     }
 
-    private void addRessourcesFinancieresCAF(OpenFiscaIndividu personneOpenFisca, RessourcesFinancieresAvantSimulation ressourcesFinancieres, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    private void addRessourcesFinancieresCAF(OpenFiscaIndividu personneOpenFisca, RessourcesFinancieresAvantSimulation ressourcesFinancieres, LocalDate dateDebutSimulation) {
 	if (ressourcesFinancieres.getAidesCAF() != null && ressourcesFinancieres.getAidesCAF().getAllocationAAH() != null
 		&& ressourcesFinancieres.getAidesCAF().getAllocationAAH() > 0) {
-	    personneOpenFisca.setAllocationAdulteHandicape(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesCAF().getAllocationAAH(),
-		    dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    personneOpenFisca
+		    .setAllocationAdulteHandicape(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesCAF().getAllocationAAH(), dateDebutSimulation));
 	}
     }
 
-    private void addRessourcesFinancieresPoleEmploi(OpenFiscaIndividu personneOpenFisca, Personne personne, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    private void addRessourcesFinancieresPoleEmploi(OpenFiscaIndividu personneOpenFisca, Personne personne, LocalDate dateDebutSimulation) {
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = personne.getRessourcesFinancieres();
 	if (personneUtile.hasAllocationARE(personne)) {
-	    personneOpenFisca.setARE(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getAllocationMensuelleNet(),
-		    dateDebutSimulation, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    personneOpenFisca.setARE(
+		    openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesPoleEmploi().getAllocationARE().getAllocationMensuelleNet(), dateDebutSimulation));
 	}
 	if (personneUtile.hasAllocationASS(personne)) {
 	    personneOpenFisca.setAllocationSolidariteSpecifique(
-		    openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS().getAllocationMensuelleNet(), dateDebutSimulation,
-			    numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+		    openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesPoleEmploi().getAllocationASS().getAllocationMensuelleNet(), dateDebutSimulation));
 	}
     }
 
-    private void addRessourcesFinancieresCPAM(OpenFiscaIndividu personneOpenFisca, RessourcesFinancieresAvantSimulation ressourcesFinancieres, LocalDate dateDebutPeriodeSimulee, int numeroMoisSimule) {
+    private void addRessourcesFinancieresCPAM(OpenFiscaIndividu personneOpenFisca, RessourcesFinancieresAvantSimulation ressourcesFinancieres, LocalDate dateDebutPeriodeSimulee) {
 	if (ressourcesFinancieres.getAidesCPAM() != null && ressourcesFinancieres.getAidesCPAM().getPensionInvalidite() != null
 		&& ressourcesFinancieres.getAidesCPAM().getPensionInvalidite() > 0) {
-	    personneOpenFisca.setPensionInvalidite(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesCPAM().getPensionInvalidite(),
-		    dateDebutPeriodeSimulee, numeroMoisSimule, OpenFiscaMappeurPeriode.NOMBRE_MOIS_PERIODE_OPENFISCA));
+	    personneOpenFisca
+		    .setPensionInvalidite(openFiscaMappeurPeriode.creerPeriodesOpenFisca(ressourcesFinancieres.getAidesCPAM().getPensionInvalidite(), dateDebutPeriodeSimulee));
 	}
     }
 }

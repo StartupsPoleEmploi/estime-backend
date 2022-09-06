@@ -8,6 +8,7 @@ public class ParametresOpenFisca {
 
     public static final String AAH = "aah";
     public static final String AF = "af";
+    public static final String ACTIVITE = "activite";
     public static final String AGE = "age";
 
     public static final String AGEPI = "agepi";
@@ -27,16 +28,24 @@ public class ParametresOpenFisca {
     public static final String NOMBRE_ALLERS_RETOURS = "nombre_allers_retours";
     public static final String LIEU_RESIDENCE = "residence";
 
+    public static final String DEGRESSIVITE_ARE = "degressivite_are";
+    public static final String COMPLEMENT_ARE_NOMBRE_JOURS_RESTANTS = "complement_are_nombre_jours_restants";
+    public static final String ALLOCATION_RETOUR_EMPLOI_JOURNALIERE = "allocation_retour_emploi_journaliere";
+    public static final String ALLOCATION_RETOUR_EMPLOI_JOURNALIERE_TAUX_PLEIN = "allocation_retour_emploi_journaliere_taux_plein";
+    public static final String SALAIRE_JOURNALIER_REFERENCE_ARE = "are_salaire_journalier_reference";
+    public static final String COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES = "complement_are_nombre_jours_indemnises";
+    public static final String COMPLEMENT_ARE_BRUT = "complement_are_brut";
+    public static final String COMPLEMENT_ARE_DEDUCTIONS = "complement_are_deductions";
+    public static final String COMPLEMENT_ARE_NET = "complement_are_net";
+
     public static final String AIDE_LOGEMENT = "aide_logement";
     public static final String ALF = "alf";
     public static final String ALS = "als";
     public static final String APL = "apl";
     public static final String ASF = "asf";
-    public static final String ASI = "asi";
     public static final String ASS = "ass";
     public static final String CF = "cf";
     public static final String ARE = "allocation_retour_emploi";
-    public static final String CHARGES_LOCATIVES = "charges_locatives";
     public static final String COLOC = "coloc";
     public static final String CONJOINT = "2_conjoint";
     public static final String DATE_NAISSANCE = "date_naissance";

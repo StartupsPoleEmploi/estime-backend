@@ -23,9 +23,9 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
+import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
-import fr.poleemploi.estime.services.ressources.Simulation;
 
 @SpringBootTest
 @ContextConfiguration
@@ -52,8 +52,9 @@ class MontantsAgepiTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
 	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(openFiscaRoot, dateDebutPeriodeSimulee);
 	// Alors le demandeur est éligible à l'AGEPI
 	assertThat(openFiscaRetourSimulation.getMontantAgepi()).isEqualTo(400);
     }
@@ -70,7 +71,9 @@ class MontantsAgepiTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
 	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
+
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(openFiscaRoot, dateDebutPeriodeSimulee);
 
 	// Alors le demandeur est éligible à l'AGEPI
 	assertThat(openFiscaRetourSimulation.getMontantAgepi()).isEqualTo(460);
@@ -90,8 +93,9 @@ class MontantsAgepiTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
 	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(openFiscaRoot, dateDebutPeriodeSimulee);
 	// Alors le demandeur est éligible à l'AGEPI
 	assertThat(openFiscaRetourSimulation.getMontantAgepi()).isEqualTo(520);
     }
@@ -110,8 +114,9 @@ class MontantsAgepiTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
 	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(openFiscaRoot, dateDebutPeriodeSimulee);
 	// Alors le demandeur est éligible à l'AGEPI
 	assertThat(openFiscaRetourSimulation.getMontantAgepi()).isEqualTo(520);
     }
@@ -130,8 +135,9 @@ class MontantsAgepiTests extends Commun {
 	demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().setDeMayotte(true);
 	// Lorsque je calcul le montant de l'AGEPI
 	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(openFiscaRoot, dateDebutPeriodeSimulee);
 	// Alors le demandeur est éligible à l'AGEPI
 	assertThat(openFiscaRetourSimulation.getMontantAgepi()).isEqualTo(200);
     }
@@ -151,8 +157,9 @@ class MontantsAgepiTests extends Commun {
 	demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().setDeMayotte(true);
 	// Lorsque je calcul le montant de l'AGEPI
 	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(openFiscaRoot, dateDebutPeriodeSimulee);
 	// Alors le demandeur est éligible à l'AGEPI
 	assertThat(openFiscaRetourSimulation.getMontantAgepi()).isEqualTo(230);
     }
@@ -174,8 +181,9 @@ class MontantsAgepiTests extends Commun {
 	demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().setDeMayotte(true);
 	// Lorsque je calcul le montant de l'AGEPI
 	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
-	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(new Simulation(), demandeurEmploi, dateDebutPeriodeSimulee, 1);
 
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAgepi(openFiscaRoot, dateDebutPeriodeSimulee);
 	// Alors le demandeur est éligible à l'AGEPI
 	assertThat(openFiscaRetourSimulation.getMontantAgepi()).isEqualTo(260);
     }
