@@ -1,6 +1,5 @@
 package fr.poleemploi.estime.logique.simulateur.aides.caf;
 
-import java.time.LocalDate;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class SimulateurAidesCAF {
     @Autowired
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
-    public void simuler(Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+    public void simuler(Map<String, Aide> aidesPourCeMois, int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	if (isEligibleAidesCAF(demandeurEmploi)) {
 	    if (beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
 		allocationAdultesHandicapesUtile.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);

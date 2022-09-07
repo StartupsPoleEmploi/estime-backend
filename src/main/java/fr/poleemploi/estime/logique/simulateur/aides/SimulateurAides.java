@@ -88,7 +88,7 @@ public class SimulateurAides {
 
 	ajouterAidesSansCalcul(aidesPourCeMois, demandeurEmploi);
 	temporaliteOpenFiscaUtile.simulerTemporaliteAppelOpenfisca(openFiscaRoot, simulation, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
-	simulateurAidesCAF.simuler(aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
+	simulateurAidesCAF.simuler(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
 	simulateurAidesPoleEmploi.simuler(aidesPourCeMois, numeroMoisSimule, demandeurEmploi, dateDebutSimulation);
 
 	HashMap<String, RessourceFinanciere> ressourcesFinancieresPourCeMois = new HashMap<>();

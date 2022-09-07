@@ -340,13 +340,13 @@ public class OpenFiscaMappeurPeriode {
     }
 
     public String getPeriodeFormateeRessourceFinanciere(LocalDate dateDebutSimulation, int numeroMoisSimule, int numeroPeriodeOpenfisca) {
-	LocalDate dateDeclenchementCalculAide = dateDebutSimulation.plusMonths((long) numeroMoisSimule);
+	LocalDate dateDeclenchementCalculAide = dateDebutSimulation.plusMonths(numeroMoisSimule);
 	LocalDate dateDebutPeriodeOpenfisca = dateDeclenchementCalculAide.minusMonths(NOMBRE_MOIS_PERIODE_OPENFISCA - ((long) numeroPeriodeOpenfisca));
 	return getPeriodeFormatee(dateDebutPeriodeOpenfisca);
     }
 
     public String getPeriodeFormateePlusMonth(LocalDate dateDebutSimulation, int numeroPeriodeOpenfisca) {
-	LocalDate dateDebutPeriodeOpenfisca = dateDebutSimulation.plusMonths(((long) numeroPeriodeOpenfisca));
+	LocalDate dateDebutPeriodeOpenfisca = dateDebutSimulation.plusMonths(numeroPeriodeOpenfisca);
 	return getPeriodeFormatee(dateDebutPeriodeOpenfisca);
     }
 

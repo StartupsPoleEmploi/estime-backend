@@ -22,10 +22,8 @@ public class RessourcesFinancieresControleur {
 	if (aidesPoleEmploi == null) {
 	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "aidesPoleEmploi dans RessourcesFinancieres de DemandeurEmploi"));
 	}
-	if (aidesPoleEmploi.getAllocationASS() != null) {
-	    if (aidesPoleEmploi.getAllocationASS().getAllocationJournaliereNet() <= 0) {
-		throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationJournaliereNetASS"));
-	    }
+	if (aidesPoleEmploi.getAllocationASS() != null && aidesPoleEmploi.getAllocationASS().getAllocationJournaliereNet() <= 0) {
+	    throw new BadRequestException(String.format(BadRequestMessages.MONTANT_INCORRECT_INFERIEUR_EGAL_ZERO.getMessage(), "allocationJournaliereNetASS"));
 	}
 	controlerHasTravailleAvantSimulation(ressourcesFinancieres);
     }

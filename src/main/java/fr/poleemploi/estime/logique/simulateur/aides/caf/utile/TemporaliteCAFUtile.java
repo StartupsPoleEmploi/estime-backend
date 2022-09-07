@@ -14,13 +14,7 @@ public class TemporaliteCAFUtile {
     private BeneficiaireAidesUtile beneficiaireAidesUtile;
 
     @Autowired
-    private PrimeActiviteRSAUtile primeActiviteRSAUtile;
-
-    @Autowired
     private AidesLogementUtile aidesLogementUtile;
-
-    @Autowired
-    private PrimeActiviteAAHUtile primeActiviteAAHUtile;
 
     @Autowired
     private PrimeActiviteAREUtile primeActiviteAREUtile;
@@ -60,12 +54,6 @@ public class TemporaliteCAFUtile {
 	} else if (beneficiaireAidesUtile.isBeneficiaireARE(demandeurEmploi)) {
 	    isPrimeActiviteAVerser = primeActiviteAREUtile.isPrimeActiviteAVerser(numeroMoisSimule);
 	}
-	//	if (beneficiaireAidesUtile.isBeneficiaireRSA(demandeurEmploi)) {
-	//	    isPrimeActiviteAVerser = primeActiviteRSAUtile.isPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi);
-	//	}
-	//	else if (beneficiaireAidesUtile.isBeneficiaireAAH(demandeurEmploi)) {
-	//	    isPrimeActiviteAVerser = primeActiviteAAHUtile.isPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi);
-	//
 	return isPrimeActiviteAVerser;
     }
 }

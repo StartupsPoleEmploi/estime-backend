@@ -14,8 +14,8 @@ import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 
 /**
- * Classe offrant de méthodes pour tracer le parcours de l'utilisateur et povoir le recontacter par la suite. TODO : traitement à supprimer après la
- * phase de croissance
+ * Classe offrant de méthodes pour tracer le parcours de l'utilisateur et povoir le recontacter par la suite. 
+ * Traitement à supprimer après la phase de croissance
  * 
  * @author ijla5100
  *

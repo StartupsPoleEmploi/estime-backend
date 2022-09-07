@@ -116,7 +116,7 @@ class AllocationSolidariteSpecifiqueUtileTests {
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
 
 	//alors la simulation se fait sur 1 mois et le DE a droit à 0 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(0);
+	assertThat(nombreMoisEligible).isZero();
     }
 
     @Test
@@ -150,7 +150,7 @@ class AllocationSolidariteSpecifiqueUtileTests {
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
 
 	//alors la simulation se fait sur 1 mois et alors le DE a droit à 0 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(0);
+	assertThat(nombreMoisEligible).isZero();
     }
 
     @Test
@@ -184,7 +184,7 @@ class AllocationSolidariteSpecifiqueUtileTests {
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
 
 	//alors la simulation se fait sur 1 mois et le DE a droit à 0 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(0);
+	assertThat(nombreMoisEligible).isZero();
     }
 
     /***** tests nombre mois eligible ASS si CDD de 2 mois *****/
@@ -288,7 +288,7 @@ class AllocationSolidariteSpecifiqueUtileTests {
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
 
 	//alors la simulation se fait sur 2 mois et le DE a droit à 0 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(0);
+	assertThat(nombreMoisEligible).isZero();
     }
 
     @Test
@@ -315,7 +315,7 @@ class AllocationSolidariteSpecifiqueUtileTests {
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
 
 	//alors la simulation se fait sur 2 mois le DE a droit à 0 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(0);
+	assertThat(nombreMoisEligible).isZero();
     }
 
     /***** tests nombre mois eligible ASS si CDD de 3 mois *****/
@@ -438,7 +438,7 @@ class AllocationSolidariteSpecifiqueUtileTests {
 	int nombreMoisEligible = allocationSolidariteSpecifiqueUtile.getNombreMoisEligibles(demandeurEmploi, dateDebutSimulation);
 
 	//alors la simulation se fait sur 3 mois et le DE a droit à 0 mois d'ASS
-	assertThat(nombreMoisEligible).isEqualTo(0);
+	assertThat(nombreMoisEligible).isZero();
     }
 
     /***** tests nombre mois eligible ASS si CDD de 4 mois *****/

@@ -131,6 +131,6 @@ class DemandeurASSCelibatairePensionInvaliditeTests extends Commun {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 06/2022 est de 18€ (résultat simulateur CAF : 0€)
-	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isEqualTo(0);
+	assertThat(openFiscaRetourSimulation.getMontantPrimeActivite()).isZero();
     }
 }

@@ -68,7 +68,6 @@ public class IndividuLogique {
 	}
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-	    // @TODO JLA : remettre individu.isPopulationAutorisee() à la place de true après expérimentation
 	    suiviUtilisateurUtile.tracerParcoursUtilisateurAuthentification(userInfoPEIO, suiviUtilisateurUtile.getParcoursAccesService(individu), individu.getBeneficiaireAides(),
 		    detailIndemnisationESD, trafficSource);
 	}
