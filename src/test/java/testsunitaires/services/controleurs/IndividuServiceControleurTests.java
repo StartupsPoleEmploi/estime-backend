@@ -26,7 +26,7 @@ import fr.poleemploi.estime.services.exceptions.BadRequestException;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource(locations="classpath:application-test.properties")
-class IndividuServiceControleur {
+class IndividuServiceControleurTests {
     
     @Autowired
     private DemandeurEmploiService demandeurEmploiService;
