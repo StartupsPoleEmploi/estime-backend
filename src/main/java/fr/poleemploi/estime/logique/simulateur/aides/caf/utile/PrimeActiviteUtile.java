@@ -12,7 +12,6 @@ import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.Simulation;
@@ -25,9 +24,6 @@ public class PrimeActiviteUtile {
 
     @Autowired
     private DateUtile dateUtile;
-
-    @Autowired
-    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     public void reporterPrimeActivite(Simulation simulation, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule) {
 	Optional<Aide> primeActiviteMoisPrecedent = getPrimeActiviteMoisPrecedent(simulation, numeroMoisSimule);

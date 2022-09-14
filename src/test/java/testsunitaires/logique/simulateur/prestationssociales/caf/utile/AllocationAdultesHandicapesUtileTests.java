@@ -123,7 +123,7 @@ class AllocationAdultesHandicapesUtileTests {
     void simulerAAHTest3() {
 
 	// Si DE a déjà travaillé 6 mois sur les 6 derniers mois
-	// futur travail avec salaire brut = 500€
+	// futur travail avec salaire brut = 550€ (au dessus du seuil)
 	// AAH = 450€
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
@@ -133,7 +133,48 @@ class AllocationAdultesHandicapesUtileTests {
 
 	FuturTravail futurTravail = new FuturTravail();
 	Salaire salaire = new Salaire();
-	salaire.setMontantMensuelNet(374);
+	salaire.setMontantMensuelNet(420);
+	salaire.setMontantMensuelBrut(550);
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
+
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+	ressourcesFinancieres.setHasTravailleAuCoursDerniersMois(true);
+	ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 6));
+
+	AidesCAF aidesCAF = new AidesCAF();
+	aidesCAF.setAllocationAAH(450f);
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	// Lorsque l'on appel simulerAAH
+	Map<String, Aide> aidesPourCeMois = new HashMap<>();
+	int numeroMoisSimule = 1;
+	allocationAdultesHandicapesUtile.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
+
+	// Alors le montant de l'AAH est de 150€
+	// 60% du salaire = 330
+	// AAH - 60% du salaire = 450 - 330 = 120€
+	assertThat(aidesPourCeMois.get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aideAAH -> {
+	    assertThat(aideAAH.getMontant()).isEqualTo(120);
+	});
+    }
+
+    @Test
+    void simulerAAHTest4() {
+
+	// Si DE a déjà travaillé 6 mois sur les 6 derniers mois
+	// futur travail avec salaire brut = 500€ (en dessous du seuil)
+	// AAH = 450€
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+
+	BeneficiaireAides beneficiaireAides = new BeneficiaireAides();
+	beneficiaireAides.setBeneficiaireAAH(true);
+	demandeurEmploi.setBeneficiaireAides(beneficiaireAides);
+
+	FuturTravail futurTravail = new FuturTravail();
+	Salaire salaire = new Salaire();
+	salaire.setMontantMensuelNet(370);
 	salaire.setMontantMensuelBrut(500);
 	futurTravail.setSalaire(salaire);
 	demandeurEmploi.setFuturTravail(futurTravail);
@@ -153,10 +194,10 @@ class AllocationAdultesHandicapesUtileTests {
 	allocationAdultesHandicapesUtile.simulerAide(aidesPourCeMois, numeroMoisSimule, demandeurEmploi);
 
 	// Alors le montant de l'AAH est de 150€
-	// 60% du salaire = 300
-	// AAH - 60% du salaire = 450 - 300 = 150€
+	// 20% du salaire = 100
+	// AAH - 60% du salaire = 450 - 100 = 350€
 	assertThat(aidesPourCeMois.get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aideAAH -> {
-	    assertThat(aideAAH.getMontant()).isEqualTo(150);
+	    assertThat(aideAAH.getMontant()).isEqualTo(350);
 	});
     }
 
