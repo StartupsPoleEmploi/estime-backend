@@ -90,6 +90,19 @@ public class OpenFiscaMappeurPeriode {
 	return periodesOpenFisca;
     }
 
+    public OpenFiscaPeriodes creerPeriodeUniqueEffectiveDeuxiemeMoisOpenFisca(Object valeur, LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	ObjectMapper mapper = new ObjectMapper();
+	for (int numeroMoisPeriode = 1; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
+	    if (numeroMoisPeriode == 1) {
+		periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), valeur);
+	    } else {
+		periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), mapper.nullNode());
+	    }
+	}
+	return periodesOpenFisca;
+    }
+
     public OpenFiscaPeriodes creerPeriodesCalculeesOpenFisca(LocalDate dateDebutSimulation) {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	ObjectMapper mapper = new ObjectMapper();
@@ -103,6 +116,15 @@ public class OpenFiscaMappeurPeriode {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	ObjectMapper mapper = new ObjectMapper();
 	for (int numeroMoisPeriode = 0; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
+	    periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), mapper.nullNode());
+	}
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes creerPeriodesCalculeesEffectiveDeuxiemeMoisOpenFisca(LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	ObjectMapper mapper = new ObjectMapper();
+	for (int numeroMoisPeriode = 1; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
 	    periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), mapper.nullNode());
 	}
 	return periodesOpenFisca;
