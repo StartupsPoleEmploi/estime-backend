@@ -129,7 +129,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(400f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(72f);
+		assertThat(ppa.getMontant()).isEqualTo(100f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(168f);
@@ -149,7 +149,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(400f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(72f);
+		assertThat(ppa.getMontant()).isEqualTo(100f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(140f);
@@ -169,7 +169,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(400f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(72f);
+		assertThat(ppa.getMontant()).isEqualTo(100f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
 		assertThat(are.getMontant()).isEqualTo(168f);
@@ -299,7 +299,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(400f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(183f);
+		assertThat(rsa.getMontant()).isEqualTo(211f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130f);
@@ -325,7 +325,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(400f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(183f);
+		assertThat(rsa.getMontant()).isEqualTo(211f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130f);
@@ -351,7 +351,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(400f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(183f);
+		assertThat(rsa.getMontant()).isEqualTo(211f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATIONS_FAMILIALES.getCode())).satisfies(af -> {
 		assertThat(af.getMontant()).isEqualTo(130f);
@@ -452,7 +452,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(168f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(72f);
+		assertThat(ppa.getMontant()).isEqualTo(100f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -469,7 +469,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(140f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(72f);
+		assertThat(ppa.getMontant()).isEqualTo(100f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -486,7 +486,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(168f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(72f);
+		assertThat(ppa.getMontant()).isEqualTo(100f);
 	    });
 	});
     }
@@ -582,7 +582,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(168f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(72f);
+		assertThat(ppa.getMontant()).isEqualTo(100f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -598,7 +598,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(140f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(72f);
+		assertThat(ppa.getMontant()).isEqualTo(100f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -614,7 +614,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(168f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(72f);
+		assertThat(ppa.getMontant()).isEqualTo(100f);
 	    });
 	});
     }
@@ -711,7 +711,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(400f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(28f);
+		assertThat(ppa.getMontant()).isEqualTo(56f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
 		assertThat(als.getMontant()).isEqualTo(272f);
@@ -733,7 +733,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(400f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(28f);
+		assertThat(ppa.getMontant()).isEqualTo(56f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
 		assertThat(als.getMontant()).isEqualTo(272f);
@@ -755,7 +755,7 @@ class DemandeurAahAreProchaineDeclarationMois3Tests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(400f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(28f);
+		assertThat(ppa.getMontant()).isEqualTo(56f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_LOGEMENT_SOCIALE.getCode())).satisfies(als -> {
 		assertThat(als.getMontant()).isEqualTo(272f);
