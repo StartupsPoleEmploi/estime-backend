@@ -78,11 +78,14 @@ public class PeriodeTravailleeAvantSimulationUtile {
     }
 
     public Salaire getSalaireAvantPeriodeSimulationPersonne(Personne personne, int numeroMoisPeriodeOpenfisca) {
+	Salaire salairePersonne = new Salaire();
 	int indexMoisAvantPeriode = INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION + (numeroMoisPeriodeOpenfisca + 1);
-	if (indexMoisAvantPeriode > INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION) {
-	    return personne.getRessourcesFinancieres().getSalaire();
+	if (indexMoisAvantPeriode > INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION && personne.getRessourcesFinancieres().getSalaire() != null) {
+	    salairePersonne = personne.getRessourcesFinancieres().getSalaire();
+	} else {
+	    salairePersonne = getMoisTravaillesAvantSimulationPersonne(personne, Math.abs(numeroMoisPeriodeOpenfisca + 1)).getSalaire();
 	}
-	return getMoisTravaillesAvantSimulationPersonne(personne, Math.abs(numeroMoisPeriodeOpenfisca + 1)).getSalaire();
+	return salairePersonne;
     }
 
     public MoisTravailleAvantSimulation getMoisTravaillesAvantSimulation(DemandeurEmploi demandeurEmploi, int index) {
@@ -108,6 +111,18 @@ public class PeriodeTravailleeAvantSimulationUtile {
 	Salaire salaireVide = new Salaire();
 	moisTravailleAvantSimulationVide.setSalaire(salaireVide);
 	return moisTravailleAvantSimulationVide;
+    }
+
+    public boolean hasSalairesAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi) {
+	if (demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois() != null) {
+	    for (MoisTravailleAvantSimulation mois : demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois()) {
+		if (mois != null)
+		    return true;
+	    }
+	}
+	return false;
     }
 
     public boolean hasSalairesAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int index) {
