@@ -136,5 +136,4 @@ public class SimulateurAides {
     private RessourceFinanciere creerRessourceFinanciere(AideEnum aideEnum, Optional<List<String>> messageAlerteOptional, float montant) {
 	return ressourceFinanciereUtile.creerRessourceFinanciere(aideEnum, messageAlerteOptional, montant);
     }
-
 }

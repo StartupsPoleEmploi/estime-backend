@@ -19,7 +19,8 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 @Component
 public class AllocationAdultesHandicapesUtile {
 
-    public static final float MONTANT_SALAIRE_BRUT_PALIER = 446.38f;
+    // Source : https://www.service-public.fr/particuliers/vosdroits/F21615
+    public static final float MONTANT_SALAIRE_BRUT_PALIER = 503.68f;
     public static final float POURCENTAGE_SALAIRE_PALIER_1 = 0.2f;
     public static final float POURCENTAGE_SALAIRE_PALIER_2 = 0.6f;
 
@@ -91,9 +92,8 @@ public class AllocationAdultesHandicapesUtile {
 	BigDecimal salaireBrut = BigDecimal.valueOf(demandeurEmploi.getFuturTravail().getSalaire().getMontantMensuelBrut());
 	if (isSalaireInferieurOuEgalSalaireBrutPalier(salaireBrut)) {
 	    return salaireBrut.multiply(BigDecimal.valueOf(POURCENTAGE_SALAIRE_PALIER_1)).setScale(0, RoundingMode.DOWN);
-	} else {
-	    return salaireBrut.multiply(BigDecimal.valueOf(POURCENTAGE_SALAIRE_PALIER_2)).setScale(0, RoundingMode.DOWN);
 	}
+	return salaireBrut.multiply(BigDecimal.valueOf(POURCENTAGE_SALAIRE_PALIER_2)).setScale(0, RoundingMode.DOWN);
     }
 
     private boolean isSalaireInferieurOuEgalSalaireBrutPalier(BigDecimal salaireBrut) {

@@ -142,6 +142,11 @@ public class AideUtile {
 
     public String getLienExterne(AideEnum aideEnum) {
 	switch (aideEnum) {
+	case AIDES_LOGEMENT:
+	case AIDE_PERSONNALISEE_LOGEMENT:
+	case ALLOCATION_LOGEMENT_SOCIALE:
+	case ALLOCATION_LOGEMENT_FAMILIALE:
+	    return "https://wwwd.caf.fr/wps/portal/caffr/aidesetservices/lesservicesenligne/faireunedemandedeprestation#DAL";
 	case AGEPI:
 	case AIDE_MOBILITE:
 	    return "https://candidat.pole-emploi.fr/candidat/aides/mobilite/tableaudebord\\r\\n";

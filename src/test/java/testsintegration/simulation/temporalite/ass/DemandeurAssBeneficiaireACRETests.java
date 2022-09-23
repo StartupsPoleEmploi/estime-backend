@@ -820,12 +820,9 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("06");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
-	    });
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(136f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -836,12 +833,9 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("07");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
-	    });
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(136f);
 	    });
 	});
     }
@@ -916,10 +910,12 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("05");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(1);
-
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(130f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -935,7 +931,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(266f);
+		assertThat(ppa.getMontant()).isEqualTo(130f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -951,7 +947,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(266f);
+		assertThat(ppa.getMontant()).isEqualTo(130f);
 	    });
 	});
     }
@@ -1016,17 +1012,18 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 	    });
 	});
 	// Alors les prestations du quatrième mois 05/2022 sont :
-	// aucune aide
 	SimulationMensuelle simulationMois4 = simulation.getSimulationsMensuelles().get(3);
 	assertThat(simulationMois4).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("05");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(1);
-
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(260f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -1042,7 +1039,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(396f);
+		assertThat(ppa.getMontant()).isEqualTo(260f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -1058,7 +1055,7 @@ class DemandeurAssBeneficiaireACRETests extends Commun {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(396f);
+		assertThat(ppa.getMontant()).isEqualTo(260f);
 	    });
 	});
     }
