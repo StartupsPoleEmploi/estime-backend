@@ -35,16 +35,15 @@ public class AreUtile {
 
     public void reporterARE(Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
 	float montantMensuelARE = calculerMontantMensuelARE(demandeurEmploi, numeroMoisSimule, dateDebutSimulation);
-	Aide are = creerARE(montantMensuelARE);
+	float nombreJoursRestantsApresPremierMois = getNombreJoursRestantsApresPremierMois(demandeurEmploi, dateDebutSimulation);
+	Aide are = creerARE(montantMensuelARE, nombreJoursRestantsApresPremierMois);
 	aidesPourCeMois.put(AideEnum.AIDE_RETOUR_EMPLOI.getCode(), are);
     }
 
     public float calculerMontantMensuelARE(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
 	float allocationJournaliereBrute = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute();
 	float sjr = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut();
-	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisSimule - 1));
-	int nombreJoursRestantsRenseigne = getNombreJoursRestantsRenseigne(demandeurEmploi);
-	int nombreJoursRestants = nombreJoursRestantsRenseigne < nombreJoursDansLeMois ? nombreJoursRestantsRenseigne : nombreJoursDansLeMois;
+	int nombreJoursRestants = getNombreJoursRestantsARE(demandeurEmploi, numeroMoisSimule, dateDebutSimulation);
 
 	float deductions = 0.0f;
 	if (allocationJournaliereBrute > ARE_MINI) {
@@ -59,9 +58,19 @@ public class AreUtile {
 	return (float) Math.floor((allocationJournaliereBrute - deductions) * nombreJoursRestants);
     }
 
-    public Aide creerARE(float montantAide) {
+    private int getNombreJoursRestantsARE(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
+	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisSimule - 1));
+	int nombreJoursRestantsRenseigne = getNombreJoursRestantsRenseigne(demandeurEmploi);
+
+	return nombreJoursRestantsRenseigne < nombreJoursDansLeMois ? nombreJoursRestantsRenseigne : nombreJoursDansLeMois;
+    }
+
+    public Aide creerARE(float montantAide, float nombreJoursRestantsARE) {
 	ArrayList<String> messagesAlerte = new ArrayList<>();
 	messagesAlerte.add(MessageInformatifEnum.MONTANT_ARE_AVANT_PAS.getMessage());
+	if (nombreJoursRestantsARE <= 0) {
+	    messagesAlerte.add(MessageInformatifEnum.FIN_DE_DROIT_ARE.getMessage());
+	}
 	return aideUtile.creerAide(AideEnum.AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
     }
 
