@@ -11,6 +11,7 @@ public enum LoggerMessages {
     SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE("Erreur technique : simulation impossible dûe à l'erreur : %s"),
     SIMULATION_IMPOSSIBLE_DEMANDE_REFUSEE("Erreur Technique : impossible d'effectuer la simulation car la demande a été refusée."),
     SUIVI_UTILISATEUR_ENREGISTREMENT_KO("Erreur Technique : enregistrement utilisateur impossible dûe à l'erreur : %s."),
+    AUTRES_SITUATIONS_ENREGISTREMENT_KO("Erreur Technique : enregistrement d'autre situations impossible dûe à l'erreur : %s."),
     SERIALIZATION_OPENFISCA_IMPOSSIBLE("Erreur Technique : la serialization de l'objet OpenFiscaRoot a échoué à cause de l'erreur : %s.");
 
     private String message;

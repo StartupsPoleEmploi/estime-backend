@@ -22,6 +22,7 @@ public class SuiviParcoursUtilisateurEntity {
     @Column(name = "date_creation", columnDefinition = "TIMESTAMP")
     private LocalDateTime dateCreation;
 
+    private String idEstime;
     private String idPoleEmploi;
     private String nom;
     private String email;
@@ -33,20 +34,36 @@ public class SuiviParcoursUtilisateurEntity {
     private String codePostal;
     private String trafficSource;
 
-    public boolean isEsdBeneficiaireAssuranceChomage() {
-	return esdBeneficiaireAssuranceChomage;
+    public Integer getIdSuiviParcoursUtilisateur() {
+	return idSuiviParcoursUtilisateur;
     }
 
-    public void setEsdBeneficiaireAssuranceChomage(boolean esdBeneficiaireAssuranceChomage) {
-	this.esdBeneficiaireAssuranceChomage = esdBeneficiaireAssuranceChomage;
+    public void setIdSuiviParcoursUtilisateur(Integer idSuiviParcoursUtilisateur) {
+	this.idSuiviParcoursUtilisateur = idSuiviParcoursUtilisateur;
     }
 
-    public String getEsdCodeIndemnisation() {
-	return esdCodeIndemnisation;
+    public LocalDateTime getDateCreation() {
+	return dateCreation;
     }
 
-    public void setEsdCodeIndemnisation(String esdCodeIndemnisation) {
-	this.esdCodeIndemnisation = esdCodeIndemnisation;
+    public void setDateCreation(LocalDateTime dateCreation) {
+	this.dateCreation = dateCreation;
+    }
+
+    public String getIdEstime() {
+	return idEstime;
+    }
+
+    public void setIdEstime(String idEstime) {
+	this.idEstime = idEstime;
+    }
+
+    public String getIdPoleEmploi() {
+	return idPoleEmploi;
+    }
+
+    public void setIdPoleEmploi(String idPoleEmploi) {
+	this.idPoleEmploi = idPoleEmploi;
     }
 
     public String getNom() {
@@ -65,28 +82,28 @@ public class SuiviParcoursUtilisateurEntity {
 	this.email = email;
     }
 
+    public boolean isEsdBeneficiaireAssuranceChomage() {
+	return esdBeneficiaireAssuranceChomage;
+    }
+
+    public void setEsdBeneficiaireAssuranceChomage(boolean esdBeneficiaireAssuranceChomage) {
+	this.esdBeneficiaireAssuranceChomage = esdBeneficiaireAssuranceChomage;
+    }
+
+    public String getEsdCodeIndemnisation() {
+	return esdCodeIndemnisation;
+    }
+
+    public void setEsdCodeIndemnisation(String esdCodeIndemnisation) {
+	this.esdCodeIndemnisation = esdCodeIndemnisation;
+    }
+
     public String getPrenom() {
 	return prenom;
     }
 
     public void setPrenom(String prenom) {
 	this.prenom = prenom;
-    }
-
-    public Integer getIdSuiviParcoursUtilisateur() {
-	return idSuiviParcoursUtilisateur;
-    }
-
-    public void setIdSuiviParcoursUtilisateur(Integer idSuiviParcoursUtilisateur) {
-	this.idSuiviParcoursUtilisateur = idSuiviParcoursUtilisateur;
-    }
-
-    public String getIdPoleEmploi() {
-	return idPoleEmploi;
-    }
-
-    public void setIdPoleEmploi(String idPoleEmploi) {
-	this.idPoleEmploi = idPoleEmploi;
     }
 
     public String getSuiviParcours() {
@@ -103,14 +120,6 @@ public class SuiviParcoursUtilisateurEntity {
 
     public void setTypePopulation(String typePopulation) {
 	this.typePopulation = typePopulation;
-    }
-
-    public LocalDateTime getDateCreation() {
-	return dateCreation;
-    }
-
-    public void setDateCreation(LocalDateTime dateCreation) {
-	this.dateCreation = dateCreation;
     }
 
     public String getCodePostal() {
@@ -161,9 +170,9 @@ public class SuiviParcoursUtilisateurEntity {
 
     @Override
     public String toString() {
-	return "SuiviParcoursUtilisateurEntity [idSuiviParcoursUtilisateur=" + idSuiviParcoursUtilisateur + ", dateCreation=" + dateCreation + ", idPoleEmploi=" + idPoleEmploi
-		+ ", nom=" + nom + ", email=" + email + ", esdBeneficiaireAssuranceChomage=" + esdBeneficiaireAssuranceChomage + ", esdCodeIndemnisation=" + esdCodeIndemnisation
-		+ ", prenom=" + prenom + ", suiviParcours=" + suiviParcours + ", typePopulation=" + typePopulation + ", codePostal=" + codePostal + ", trafficSource="
-		+ trafficSource + "]";
+	return "SuiviParcoursUtilisateurEntity [idSuiviParcoursUtilisateur=" + idSuiviParcoursUtilisateur + ", dateCreation=" + dateCreation + ", idEstime=" + idEstime
+		+ ", idPoleEmploi=" + idPoleEmploi + ", nom=" + nom + ", email=" + email + ", esdBeneficiaireAssuranceChomage=" + esdBeneficiaireAssuranceChomage
+		+ ", esdCodeIndemnisation=" + esdCodeIndemnisation + ", prenom=" + prenom + ", suiviParcours=" + suiviParcours + ", typePopulation=" + typePopulation
+		+ ", codePostal=" + codePostal + ", trafficSource=" + trafficSource + "]";
     }
 }

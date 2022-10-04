@@ -14,6 +14,7 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.EtatCivilPEI
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.StagingEnvironnementUtile;
+import fr.poleemploi.estime.commun.utile.StringUtile;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
@@ -35,6 +36,9 @@ public class DemandeurEmploiUtile {
     private DateUtile dateUtile;
 
     @Autowired
+    private StringUtile stringUtile;
+
+    @Autowired
     private StagingEnvironnementUtile stagingEnvironnementUtile;
 
     @Autowired
@@ -43,8 +47,13 @@ public class DemandeurEmploiUtile {
     private static final Logger LOGGER = LoggerFactory.getLogger(DemandeurEmploiUtile.class);
 
     public void creerDemandeurEmploiVide(DemandeurEmploi demandeurEmploi) {
+	demandeurEmploi.setIdEstime(creerIdEstime());
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(creerRessourcesAvantSimulation());
 	demandeurEmploi.setInformationsPersonnelles(creerInformationsPersonnelles());
+    }
+
+    public String creerIdEstime() {
+	return stringUtile.generateRandomString();
     }
 
     private RessourcesFinancieresAvantSimulation creerRessourcesAvantSimulation() {

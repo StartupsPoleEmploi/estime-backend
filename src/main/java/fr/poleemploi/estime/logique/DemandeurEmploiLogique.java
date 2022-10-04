@@ -31,15 +31,16 @@ public class DemandeurEmploiLogique {
 
 	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
 
-	if (individu != null) {
+	if (individu != null && individu.getIdPoleEmploi() != null) {
 	    demandeurEmploi.setIdPoleEmploi(individu.getIdPoleEmploi());
+	    demandeurEmploi.setIdEstime(demandeurEmploiUtile.creerIdEstime());
 	    demandeurEmploiUtile.addInformationsPersonnelles(demandeurEmploi, individu);
 	    demandeurEmploi.setBeneficiaireAides(individu.getBeneficiaireAides());
 	    demandeurEmploiUtile.addRessourcesFinancieres(demandeurEmploi, individu);
 
 	    if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-		suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(),
-			individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
+		suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), demandeurEmploi.getIdEstime(),
+			ParcoursUtilisateurEnum.SIMULATION_COMMENCEE.getParcours(), individu.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 	    }
 	} else {
 	    demandeurEmploiUtile.creerDemandeurEmploiVide(demandeurEmploi);
@@ -53,8 +54,8 @@ public class DemandeurEmploiLogique {
 	Simulation simulation = simulateurAides.simuler(demandeurEmploi);
 
 	if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {
-	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), ParcoursUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(),
-		    demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
+	    suiviUtilisateurUtile.tracerParcoursUtilisateurCreationSimulation(demandeurEmploi.getIdPoleEmploi(), demandeurEmploi.getIdEstime(),
+		    ParcoursUtilisateurEnum.SIMULATION_EFFECTUEE.getParcours(), demandeurEmploi.getBeneficiaireAides(), demandeurEmploi.getInformationsPersonnelles());
 	}
 
 	return simulation;

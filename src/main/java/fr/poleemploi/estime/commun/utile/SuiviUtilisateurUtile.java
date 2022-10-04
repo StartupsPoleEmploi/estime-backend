@@ -36,8 +36,8 @@ public class SuiviUtilisateurUtile {
 	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
     }
 
-    public void tracerParcoursUtilisateurCreationSimulation(String idPoleEmploi, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles) {
-	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityCreationSimulation(idPoleEmploi, parcours,
+    public void tracerParcoursUtilisateurCreationSimulation(String idPoleEmploi, String idEstime, String parcours, BeneficiaireAides beneficiaireAides, InformationsPersonnelles informationsPersonnelles) {
+	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = creerSuiviParcoursUtilisateurEntityCreationSimulation(idPoleEmploi, idEstime, parcours,
 		getTypePopulation(beneficiaireAides), getCodePostal(informationsPersonnelles), getEmail(informationsPersonnelles));
 
 	suiviParcoursUtilisateurManager.creerSuiviParcoursUtilisateur(suiviParcoursUtilisateurEntity);
@@ -77,10 +77,11 @@ public class SuiviUtilisateurUtile {
 	return suiviParcoursUtilisateurEntity;
     }
 
-    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityCreationSimulation(String idPoleEmploi, String parcours, String typePopulation, String codePostal, String email) {
+    private SuiviParcoursUtilisateurEntity creerSuiviParcoursUtilisateurEntityCreationSimulation(String idPoleEmploi, String idEstime, String parcours, String typePopulation, String codePostal, String email) {
 	SuiviParcoursUtilisateurEntity suiviParcoursUtilisateurEntity = new SuiviParcoursUtilisateurEntity();
 	suiviParcoursUtilisateurEntity.setDateCreation(dateUtile.getDateTimeJour());
 	suiviParcoursUtilisateurEntity.setIdPoleEmploi(idPoleEmploi);
+	suiviParcoursUtilisateurEntity.setIdEstime(idEstime);
 	suiviParcoursUtilisateurEntity.setSuiviParcours(parcours);
 	suiviParcoursUtilisateurEntity.setTypePopulation(typePopulation);
 	suiviParcoursUtilisateurEntity.setCodePostal(codePostal);

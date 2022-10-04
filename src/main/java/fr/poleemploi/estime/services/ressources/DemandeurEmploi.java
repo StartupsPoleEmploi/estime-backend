@@ -3,6 +3,7 @@ package fr.poleemploi.estime.services.ressources;
 public class DemandeurEmploi {
 
     private String idPoleEmploi;
+    private String idEstime;
     private BeneficiaireAides beneficiaireAides;
     private FuturTravail futurTravail;
     private InformationsPersonnelles informationsPersonnelles;
@@ -24,6 +25,14 @@ public class DemandeurEmploi {
 
     public void setIdPoleEmploi(String idPoleEmploi) {
 	this.idPoleEmploi = idPoleEmploi;
+    }
+
+    public String getIdEstime() {
+	return idEstime;
+    }
+
+    public void setIdEstime(String idEstime) {
+	this.idEstime = idEstime;
     }
 
     public RessourcesFinancieresAvantSimulation getRessourcesFinancieresAvantSimulation() {
@@ -68,8 +77,8 @@ public class DemandeurEmploi {
 
     @Override
     public String toString() {
-	return "DemandeurEmploi [idPoleEmploi=" + idPoleEmploi + ", beneficiaireAides=" + beneficiaireAides + ", futurTravail=" + futurTravail + ", informationsPersonnelles="
-		+ informationsPersonnelles + ", peConnectAuthorization=" + peConnectAuthorization + ", ressourcesFinancieresAvantSimulation=" + ressourcesFinancieresAvantSimulation
-		+ ", situationFamiliale=" + situationFamiliale + "]";
+	return "DemandeurEmploi [idPoleEmploi=" + idPoleEmploi + ", idEstime=" + idEstime + ", beneficiaireAides=" + beneficiaireAides + ", futurTravail=" + futurTravail
+		+ ", informationsPersonnelles=" + informationsPersonnelles + ", peConnectAuthorization=" + peConnectAuthorization + ", ressourcesFinancieresAvantSimulation="
+		+ ressourcesFinancieresAvantSimulation + ", situationFamiliale=" + situationFamiliale + "]";
     }
 }
