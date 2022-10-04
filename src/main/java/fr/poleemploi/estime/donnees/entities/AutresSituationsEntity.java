@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -15,14 +12,10 @@ import javax.persistence.Table;
 public class AutresSituationsEntity {
 
     @Id
-    @SequenceGenerator(name = "id_autres_situations_seq", sequenceName = "autres_situations_id_autres_situations_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_autres_situations_seq")
-    private Integer idAutresSituations;
+    private String idEstime;
 
     @Column(name = "date_creation", columnDefinition = "TIMESTAMP")
     private LocalDateTime dateCreation;
-
-    private String idEstime;
     private boolean salaire;
     private boolean alternant;
     private boolean formation;
@@ -32,14 +25,6 @@ public class AutresSituationsEntity {
     private boolean aucuneRessource;
     private boolean autre;
     private String autreContenu;
-
-    public Integer getIdSuiviAutresSituations() {
-	return idAutresSituations;
-    }
-
-    public void setIdSuiviAutresSituations(Integer idSuiviAutresSituations) {
-	this.idAutresSituations = idSuiviAutresSituations;
-    }
 
     public LocalDateTime getDateCreation() {
 	return dateCreation;
@@ -133,7 +118,7 @@ public class AutresSituationsEntity {
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = (prime * result) + ((this.idAutresSituations == null) ? 0 : this.idAutresSituations.hashCode());
+	result = (prime * result) + ((this.idEstime == null) ? 0 : this.idEstime.hashCode());
 	return result;
     }
 
@@ -156,20 +141,13 @@ public class AutresSituationsEntity {
 	} else if (!this.idEstime.equals(other.idEstime)) {
 	    return false;
 	}
-	if (this.idAutresSituations == null) {
-	    if (other.idAutresSituations != null) {
-		return false;
-	    }
-	} else if (!this.idAutresSituations.equals(other.idAutresSituations)) {
-	    return false;
-	}
 	return true;
     }
 
     @Override
     public String toString() {
-	return "AutresSituationsEntity [idAutresSituations=" + idAutresSituations + ", dateCreation=" + dateCreation + ", idEstime=" + idEstime + ", salaire=" + salaire
-		+ ", alternant=" + alternant + ", formation=" + formation + ", cej=" + cej + ", ada=" + ada + ", securisationProfessionnelle=" + securisationProfessionnelle
-		+ ", aucuneRessource=" + aucuneRessource + ", autre=" + autre + ", autreContenu=" + autreContenu + "]";
+	return "AutresSituationsEntity [idEstime=" + idEstime + ", dateCreation=" + dateCreation + ", salaire=" + salaire + ", alternant=" + alternant + ", formation=" + formation
+		+ ", cej=" + cej + ", ada=" + ada + ", securisationProfessionnelle=" + securisationProfessionnelle + ", aucuneRessource=" + aucuneRessource + ", autre=" + autre
+		+ ", autreContenu=" + autreContenu + "]";
     }
 }
