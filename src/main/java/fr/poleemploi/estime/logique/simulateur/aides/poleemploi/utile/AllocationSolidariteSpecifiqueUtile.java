@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.FuturTravailUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.MoisTravailleAvantSimulation;
 
 @Component
 public class AllocationSolidariteSpecifiqueUtile {
@@ -30,9 +30,6 @@ public class AllocationSolidariteSpecifiqueUtile {
 
     @Autowired
     private DateUtile dateUtile;
-
-    @Autowired
-    private FuturTravailUtile futurTravailUtile;
 
     @Autowired
     private InformationsPersonnellesUtile informationsPersonnellesUtile;
@@ -55,12 +52,16 @@ public class AllocationSolidariteSpecifiqueUtile {
     }
 
     public float calculerMontant(DemandeurEmploi demandeurEmploi, LocalDate mois) {
-	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);
 	if (ressourcesFinancieresAvantSimulationUtile.hasAllocationSolidariteSpecifique(demandeurEmploi)) {
-	    float montantJournalierNetSolidariteSpecifique = ressourcesFinancieresAvantSimulationUtile.getAllocationSolidariteSpecifiqueJournaliere(demandeurEmploi);
-	    return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();
+	    LocalDate dateOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroit();
+	    if (!dateUtile.isDateAvant(mois, dateOuvertureDroitASS)) {
+		int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);
+		float montantJournalierNetSolidariteSpecifique = ressourcesFinancieresAvantSimulationUtile.getAllocationSolidariteSpecifiqueJournaliere(demandeurEmploi);
+		return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();
+	    }
 	}
 	return 0;
+
     }
 
     public float calculerMontantSiEligible(DemandeurEmploi demandeurEmploi, int numeroMoisPeriode, LocalDate dateDebutSimulation) {
@@ -78,40 +79,51 @@ public class AllocationSolidariteSpecifiqueUtile {
     }
 
     public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	int nombreMoisCumulesASSPercueEtSalaire = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes3DerniersMoisAvantSimulation(demandeurEmploi);
 	if (informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)
 		&& informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation) < 12) {
-
 	    return getNombreMoisEligiblesBeneficiaireACRE(informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation));
 	} else if (!informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)) {
-	    if (futurTravailUtile.hasContratCDI(demandeurEmploi.getFuturTravail())) {
-		return getNombreMoisEligiblesCDI(nombreMoisCumulesASSPercueEtSalaire);
-	    } else if (futurTravailUtile.hasContratDureeDeterminee(demandeurEmploi.getFuturTravail())) {
-		return getNombreMoisEligiblesCDD(demandeurEmploi, nombreMoisCumulesASSPercueEtSalaire);
-	    }
+	    return getNombreMoisEligiblesCumulRestants(demandeurEmploi, dateDebutSimulation);
 	}
 	return 0;
+    }
+
+    public int getNombreMoisEligiblesCumulRestants(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	int nombreMoisCumul = 0;
+	int nombreMoisDePause = 0;
+	int nombreMoisDepuisOuvertureASS = getNombreMoisDepuisOuvertureASS(demandeurEmploi, dateDebutSimulation);
+	if (periodeTravailleeAvantSimulationUtile.hasSalairesAvantPeriodeSimulation(demandeurEmploi)) {
+	    MoisTravailleAvantSimulation[] mois = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getPeriodeTravailleeAvantSimulation().getMois();
+	    for (int index = mois.length - 1; index >= 0; index--) {
+		if (periodeTravailleeAvantSimulationUtile.isMoisTravaille(mois[index])) {
+		    nombreMoisDePause = 0;
+		    nombreMoisCumul++;
+		} else {
+		    nombreMoisDePause++;
+		    if (nombreMoisDePause >= 3) {
+			nombreMoisCumul = 0;
+		    }
+		}
+		if (index == nombreMoisDepuisOuvertureASS) {
+		    nombreMoisDePause = 0;
+		    nombreMoisCumul = 0;
+		}
+	    }
+	}
+	return Math.max(0, NOMBRE_MOIS_MAX_ASS_ELIGIBLE - nombreMoisCumul);
+
+    }
+
+    private int getNombreMoisDepuisOuvertureASS(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	LocalDate dateOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroit();
+	boolean isDateOuverturePremierJourDuMois = dateUtile.isDatePremierJourDuMois(dateOuvertureDroitASS);
+	boolean isDateDebutSimulationPremierJourDuMois = dateUtile.isDatePremierJourDuMois(dateDebutSimulation);
+	int nombreMoisDepuisDateOuvertureDroitASS = dateUtile.getNbrMoisEntreDeuxLocalDates(dateOuvertureDroitASS, dateDebutSimulation);
+	return (isDateOuverturePremierJourDuMois && isDateDebutSimulationPremierJourDuMois) ? nombreMoisDepuisDateOuvertureDroitASS : (nombreMoisDepuisDateOuvertureDroitASS - 1);
     }
 
     private Aide creerAide(float montantAide) {
 	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantAide);
-    }
-
-    private int getNombreMoisEligiblesCDI(int nombreMoisCumulesASSPercueEtSalaire) {
-	return NOMBRE_MOIS_MAX_ASS_ELIGIBLE - nombreMoisCumulesASSPercueEtSalaire;
-    }
-
-    private int getNombreMoisEligiblesCDD(DemandeurEmploi demandeurEmploi, int nombreMoisCumulesAssEtSalaire) {
-	int dureeContratCDDEnMois = demandeurEmploi.getFuturTravail().getNombreMoisContratCDD();
-	if (dureeContratCDDEnMois >= NOMBRE_MOIS_MAX_ASS_ELIGIBLE) {
-	    return NOMBRE_MOIS_MAX_ASS_ELIGIBLE - nombreMoisCumulesAssEtSalaire;
-	} else {
-	    int nombreMoisEligibles = dureeContratCDDEnMois - nombreMoisCumulesAssEtSalaire;
-	    if (nombreMoisEligibles > 0) {
-		return nombreMoisEligibles;
-	    }
-	}
-	return 0;
     }
 
     private int getNombreMoisEligiblesBeneficiaireACRE(int nombreMoisDepuisCreationEntreprise) {

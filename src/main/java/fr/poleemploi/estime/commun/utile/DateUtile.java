@@ -112,6 +112,14 @@ public class DateUtile {
 	return localDate.minusMonths(nombreMoisAEnlever);
     }
 
+    public LocalDate ajouterJourALocalDate(LocalDate localDate, int nombreJoursAAjouter) {
+	return localDate.plusDays(nombreJoursAAjouter);
+    }
+
+    public LocalDate enleverJoursALocalDate(LocalDate localDate, int nombreJoursAEnlever) {
+	return localDate.minusDays(nombreJoursAEnlever);
+    }
+
     public boolean isDateAvant(LocalDate dateToCheck, LocalDate dateLimite) {
 	return dateToCheck.isBefore(dateLimite);
     }
@@ -135,5 +143,9 @@ public class DateUtile {
 
     public LocalDate getDateNaissanceFromAge(LocalDate dateReference, int age) {
 	return dateReference.minusYears(age);
+    }
+
+    public boolean isDatePremierJourDuMois(LocalDate date) {
+	return date.getDayOfMonth() == 1;
     }
 }

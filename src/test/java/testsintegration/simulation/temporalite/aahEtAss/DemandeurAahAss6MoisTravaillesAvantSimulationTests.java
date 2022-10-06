@@ -57,8 +57,6 @@ class DemandeurAahAss6MoisTravaillesAvantSimulationTests extends Commun {
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
-	// AGEPI : 400€
-	// Aide mobilité : 450€,
 	// AAH : 180€ (dégressivité : 900 - 60% * 1200 = 180)
 	SimulationMensuelle simulationMois1 = simulation.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulationMensuelle -> {
@@ -66,10 +64,7 @@ class DemandeurAahAss6MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-		assertThat(ass.getMontant()).isEqualTo(472f);
-	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode())).satisfies(aah -> {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
@@ -79,6 +74,8 @@ class DemandeurAahAss6MoisTravaillesAvantSimulationTests extends Commun {
 	});
 
 	// Alors les prestations du second mois 03/2022 sont :
+	// AGEPI : 400€
+	// Aide mobilité : 192€,
 	// AAH : 180€ (report AAH dégressif)
 	// Prime d'activité : 146€ (Simulateur CAF : 135€)
 	SimulationMensuelle simulationMois2 = simulation.getSimulationsMensuelles().get(1);
@@ -134,7 +131,7 @@ class DemandeurAahAss6MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(135f);
+		assertThat(ppa.getMontant()).isEqualTo(270f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
@@ -156,7 +153,7 @@ class DemandeurAahAss6MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(135f);
+		assertThat(ppa.getMontant()).isEqualTo(270f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
@@ -178,7 +175,7 @@ class DemandeurAahAss6MoisTravaillesAvantSimulationTests extends Commun {
 		assertThat(aah.getMontant()).isEqualTo(180);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(135f);
+		assertThat(ppa.getMontant()).isEqualTo(270f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);

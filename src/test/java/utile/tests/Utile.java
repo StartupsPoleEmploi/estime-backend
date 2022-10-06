@@ -60,7 +60,7 @@ public class Utile {
     @Autowired
     protected DateUtile dateUtile;
 
-    private int NOMBRE_MOIS_SALAIRES_AVANT_SIMULATION = 14;
+    public static final int NOMBRE_MOIS_SALAIRES_AVANT_SIMULATION = 14;
     public static final int AGE_MAX_ENFANT_AGEPI = 10;
 
     @Value("${openfisca-api-uri}")
