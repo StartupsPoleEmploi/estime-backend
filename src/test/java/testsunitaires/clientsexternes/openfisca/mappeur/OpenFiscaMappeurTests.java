@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +25,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
@@ -36,6 +38,9 @@ import utile.tests.Utile;
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
 class OpenFiscaMappeurTests extends Commun {
+
+    @SpyBean
+    protected DateUtile dateUtile;
 
     @Autowired
     private OpenFiscaMappeur openFiscaMappeur;
@@ -64,6 +69,8 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
@@ -91,6 +98,8 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
@@ -118,6 +127,8 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
 	AidesCAF aidesCAF = createAidesCAF();
@@ -146,6 +157,8 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setRevenusImmobilier3DerniersMois(3000f);
@@ -168,6 +181,8 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setChiffreAffairesIndependantDernierExercice(1000f);
@@ -190,6 +205,8 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
 	ressourcesFinancieres.setBeneficesMicroEntrepriseDernierExercice(600f);
@@ -211,6 +228,8 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
 	AidesCPAM aidesCPAM = new AidesCPAM();
@@ -265,6 +284,8 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 
 	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
 

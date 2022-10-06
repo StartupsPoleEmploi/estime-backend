@@ -24,6 +24,6 @@ public class StringUtile {
 
     public String generateRandomString() {
 	UUID randomUUID = UUID.randomUUID();
-	return randomUUID.toString().replaceAll("_", "").substring(0, 15);
+	return randomUUID.toString().replace("_", "").substring(0, 15);
     }
 }

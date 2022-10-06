@@ -136,7 +136,7 @@ public class PeriodeTravailleeAvantSimulationUtile {
 		&& personne.getRessourcesFinancieres().getPeriodeTravailleeAvantSimulation().getMois()[index] != null;
     }
 
-    private boolean isMoisTravaille(MoisTravailleAvantSimulation moisTravailleAvantSimulation) {
-	return !moisTravailleAvantSimulation.isSansSalaire() && moisTravailleAvantSimulation.getSalaire().getMontantMensuelNet() > 0;
+    public boolean isMoisTravaille(MoisTravailleAvantSimulation moisTravailleAvantSimulation) {
+	return moisTravailleAvantSimulation.getSalaire().getMontantMensuelNet() > 0;
     }
 }

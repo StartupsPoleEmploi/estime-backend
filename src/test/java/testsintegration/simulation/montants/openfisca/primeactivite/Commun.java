@@ -1,6 +1,7 @@
 package testsintegration.simulation.montants.openfisca.primeactivite;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.Coordonnees;
@@ -27,6 +29,9 @@ public class Commun {
 
     @Autowired
     protected Utile utileTests;
+
+    @Autowired
+    protected DateUtile dateUtile;
 
     public SimulationMensuelle createSimulationMensuelleASS(float montantASS) {
 	SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
@@ -53,6 +58,8 @@ public class Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(900);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1165);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1101, 850, 1));
 

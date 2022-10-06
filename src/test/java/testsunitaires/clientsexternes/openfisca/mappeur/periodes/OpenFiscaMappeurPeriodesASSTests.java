@@ -24,6 +24,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPe
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaPeriodes;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
 
@@ -34,6 +35,9 @@ class OpenFiscaMappeurPeriodesASSTests extends Commun {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;
+
+    @Autowired
+    private DateUtile dateUtile;
 
     private LocalDate dateDebutSimulation;
 
@@ -137,6 +141,8 @@ class OpenFiscaMappeurPeriodesASSTests extends Commun {
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1228);
 	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(950);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(dateDebutSimulation, 6);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
 	if (nombreMoisTravaillesAvantSimulation > 0) {
 	    PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = utileTests.creerPeriodeTravailleeAvantSimulation(850, 1101, nombreMoisTravaillesAvantSimulation);
 	    demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
