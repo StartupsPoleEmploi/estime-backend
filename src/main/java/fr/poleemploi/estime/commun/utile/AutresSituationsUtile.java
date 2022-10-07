@@ -32,7 +32,6 @@ public class AutresSituationsUtile {
 	autresSituationsEntity.setAda(autresSituations.isAda());
 	autresSituationsEntity.setCej(autresSituations.isCej());
 	autresSituationsEntity.setSecurisationProfessionnelle(autresSituations.isSecurisationProfessionnelle());
-	autresSituationsEntity.setAucuneRessource(autresSituations.isAucuneRessource());
 	autresSituationsEntity.setAutre(autresSituations.isAutre());
 	autresSituationsEntity.setAutreContenu(autresSituations.getAutreContenu());
 

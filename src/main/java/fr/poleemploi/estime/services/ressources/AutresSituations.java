@@ -11,8 +11,6 @@ public class AutresSituations {
     private boolean ada;
     @JsonProperty("securisation_professionnelle")
     private boolean securisationProfessionnelle;
-    @JsonProperty("aucune_ressource")
-    private boolean aucuneRessource;
     private boolean autre;
     @JsonProperty("autre_contenu")
     private String autreContenu;
@@ -66,15 +64,6 @@ public class AutresSituations {
 	this.securisationProfessionnelle = securisationProfessionnelle;
     }
 
-    @JsonProperty("aucune_ressource")
-    public boolean isAucuneRessource() {
-	return aucuneRessource;
-    }
-
-    public void setAucuneRessource(boolean aucuneRessource) {
-	this.aucuneRessource = aucuneRessource;
-    }
-
     public boolean isAutre() {
 	return autre;
     }
@@ -95,6 +84,6 @@ public class AutresSituations {
     @Override
     public String toString() {
 	return "AutresSituations [salaire=" + salaire + ", alternant=" + alternant + ", formation=" + formation + ", cej=" + cej + ", ada=" + ada + ", securisationProfessionnelle="
-		+ securisationProfessionnelle + ", aucuneRessource=" + aucuneRessource + ", autre=" + autre + ", autreContenu=" + autreContenu + "]";
+		+ securisationProfessionnelle + ", autre=" + autre + ", autreContenu=" + autreContenu + "]";
     }
 }

@@ -22,7 +22,6 @@ public class AutresSituationsEntity {
     private boolean cej;
     private boolean ada;
     private boolean securisationProfessionnelle;
-    private boolean aucuneRessource;
     private boolean autre;
     private String autreContenu;
 
@@ -90,14 +89,6 @@ public class AutresSituationsEntity {
 	this.securisationProfessionnelle = securisationProfessionnelle;
     }
 
-    public boolean isAucuneRessource() {
-	return aucuneRessource;
-    }
-
-    public void setAucuneRessource(boolean aucuneRessource) {
-	this.aucuneRessource = aucuneRessource;
-    }
-
     public boolean isAutre() {
 	return autre;
     }
@@ -147,7 +138,6 @@ public class AutresSituationsEntity {
     @Override
     public String toString() {
 	return "AutresSituationsEntity [idEstime=" + idEstime + ", dateCreation=" + dateCreation + ", salaire=" + salaire + ", alternant=" + alternant + ", formation=" + formation
-		+ ", cej=" + cej + ", ada=" + ada + ", securisationProfessionnelle=" + securisationProfessionnelle + ", aucuneRessource=" + aucuneRessource + ", autre=" + autre
-		+ ", autreContenu=" + autreContenu + "]";
+		+ ", cej=" + cej + ", ada=" + ada + ", securisationProfessionnelle=" + securisationProfessionnelle + ", autre=" + autre + ", autreContenu=" + autreContenu + "]";
     }
 }

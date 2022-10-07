@@ -119,4 +119,12 @@ public class BeneficiaireAidesUtile {
 			|| demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getComplementFamilial() > 0
 			|| demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().getPrestationAccueilJeuneEnfant() > 0);
     }
+
+    public boolean isBeneficiaireAucuneAide(DemandeurEmploi demandeurEmploi) {
+	return !demandeurEmploi.getBeneficiaireAides().isBeneficiaireAAH() 
+		&& !demandeurEmploi.getBeneficiaireAides().isBeneficiaireASS()
+		&& !demandeurEmploi.getBeneficiaireAides().isBeneficiaireARE() 
+		&& !demandeurEmploi.getBeneficiaireAides().isBeneficiaireRSA()
+		&& !demandeurEmploi.getBeneficiaireAides().isBeneficiairePensionInvalidite();
+    }
 }
