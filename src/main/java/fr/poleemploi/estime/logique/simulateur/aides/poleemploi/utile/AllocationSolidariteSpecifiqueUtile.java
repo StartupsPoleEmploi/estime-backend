@@ -3,12 +3,14 @@ package fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
@@ -45,7 +47,7 @@ public class AllocationSolidariteSpecifiqueUtile {
 
 	float montantASS = calculerMontant(demandeurEmploi, dateMoisASimuler);
 	if (montantASS > 0) {
-	    Aide aideAllocationSolidariteSpecifique = creerAide(montantASS);
+	    Aide aideAllocationSolidariteSpecifique = creerASS(montantASS);
 	    return Optional.of(aideAllocationSolidariteSpecifique);
 	}
 	return Optional.empty();
@@ -119,8 +121,10 @@ public class AllocationSolidariteSpecifiqueUtile {
 	return dateUtile.getNbrMoisEntreDeuxLocalDates(dateOuvertureDroitASS, dateDebutSimulation);
     }
 
-    private Aide creerAide(float montantAide) {
-	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantAide);
+    private Aide creerASS(float montantAide) {
+	ArrayList<String> messagesAlerte = new ArrayList<>();
+	messagesAlerte.add(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
+	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
     }
 
     private int getNombreMoisEligiblesBeneficiaireACRE(int nombreMoisDepuisCreationEntreprise) {

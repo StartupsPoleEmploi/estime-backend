@@ -4,7 +4,7 @@ public enum MessageInformatifEnum {
 
     AGEPI_IDF(
 	    "Si vous êtes domicilé⸱e en Ile de France, veuillez vous rapprocher de votre conseiller référent pour en faire la demande. (Les montants peuvent être légèrement différents)."),
-    ASS_DEMANDE_RENOUVELLEMENT("L'ASS peut être cumulée avec votre salaire pendant 3 mois maximum à condition d'avoir renouvelé vos droits."),
+    ASS_DEMANDE_RENOUVELLEMENT("L'ASS peut être cumulée avec vos revenus d'activité pendant 3 mois maximum à condition d'avoir renouvelé vos droits."),
     PPA_AUTOMATIQUE_SI_BENEFICIAIRE_RSA(
 	    "Si vous êtes bénéficiaire du RSA, vos droits à la prime d’activité seront automatiquement calculés lors de votre prochaine déclaration trimestrielle."),
     CHANGEMENT_MONTANT_PRESTATIONS_FAMILIALES(
