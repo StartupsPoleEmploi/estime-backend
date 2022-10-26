@@ -36,8 +36,8 @@ public class InformationsPersonnellesUtile {
 	return NationaliteEnum.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite());
     }
 
-    public boolean isTitreSejourEnFranceValide(InformationsPersonnelles informationsPersonnelles) {
-	return informationsPersonnelles.getTitreSejourEnFranceValide().booleanValue();
+    public boolean hasTitreSejourEnFranceValide(InformationsPersonnelles informationsPersonnelles) {
+	return informationsPersonnelles.hasTitreSejourEnFranceValide();
     }
 
     public boolean isDeFranceMetropolitaine(DemandeurEmploi demandeurEmploi) {
@@ -56,8 +56,7 @@ public class InformationsPersonnellesUtile {
     }
 
     public boolean isBeneficiaireACRE(DemandeurEmploi demandeurEmploi) {
-	return (demandeurEmploi != null && demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().isBeneficiaireACRE() != null
-		&& demandeurEmploi.getInformationsPersonnelles().isBeneficiaireACRE().booleanValue()
+	return (demandeurEmploi != null && demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().isBeneficiaireACRE()
 		&& demandeurEmploi.getInformationsPersonnelles().getDateRepriseCreationEntreprise() != null);
     }
 

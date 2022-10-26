@@ -44,7 +44,7 @@ public class InformationsPersonnellesControleur {
 
     private void controleNationalite(InformationsPersonnelles informationsPersonnelles) {
 	isValeurNationnaliteCorrecte(informationsPersonnelles.getNationalite());
-	if (NationaliteEnum.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite()) && informationsPersonnelles.getTitreSejourEnFranceValide() == null) {
+	if (NationaliteEnum.AUTRE.getValeur().equalsIgnoreCase(informationsPersonnelles.getNationalite()) && !informationsPersonnelles.hasTitreSejourEnFranceValide()) {
 	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "titreSejourEnFranceValide de informationsPersonnelles"));
 	}
     }

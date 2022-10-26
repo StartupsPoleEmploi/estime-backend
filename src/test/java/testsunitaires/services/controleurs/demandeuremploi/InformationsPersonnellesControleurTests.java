@@ -159,7 +159,6 @@ class InformationsPersonnellesControleurTests extends Commun {
 
 	InformationsPersonnelles informationsPersonnelles = creerInformationsPersonnelles();
 	informationsPersonnelles.setNationalite(NationaliteEnum.AUTRE.getValeur());
-	informationsPersonnelles.setTitreSejourEnFranceValide(null);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
 	assertThat(Assertions.assertThrows(BadRequestException.class, () -> {

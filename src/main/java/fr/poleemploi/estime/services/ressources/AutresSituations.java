@@ -7,6 +7,7 @@ public class AutresSituations {
     private boolean salaire;
     private boolean alternant;
     private boolean formation;
+    private boolean independant;
     private boolean cej;
     private boolean ada;
     @JsonProperty("securisation_professionnelle")
@@ -37,6 +38,14 @@ public class AutresSituations {
 
     public void setFormation(boolean formation) {
 	this.formation = formation;
+    }
+
+    public boolean isIndependant() {
+	return independant;
+    }
+
+    public void setIndependant(boolean independant) {
+	this.independant = independant;
     }
 
     public boolean isCej() {
@@ -83,7 +92,7 @@ public class AutresSituations {
 
     @Override
     public String toString() {
-	return "AutresSituations [salaire=" + salaire + ", alternant=" + alternant + ", formation=" + formation + ", cej=" + cej + ", ada=" + ada + ", securisationProfessionnelle="
-		+ securisationProfessionnelle + ", autre=" + autre + ", autreContenu=" + autreContenu + "]";
+	return "AutresSituations [salaire=" + salaire + ", alternant=" + alternant + ", formation=" + formation + ", independant=" + independant + ", cej=" + cej + ", ada=" + ada
+		+ ", securisationProfessionnelle=" + securisationProfessionnelle + ", autre=" + autre + ", autreContenu=" + autreContenu + "]";
     }
 }

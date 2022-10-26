@@ -45,6 +45,6 @@ public class SimulateurAidesCAF {
 	return informationsPersonnellesUtile.isFrancais(demandeurEmploi.getInformationsPersonnelles())
 		|| informationsPersonnellesUtile.isEuropeenOuSuisse(demandeurEmploi.getInformationsPersonnelles())
 		|| (informationsPersonnellesUtile.isNotFrancaisOuEuropeenOuSuisse(demandeurEmploi.getInformationsPersonnelles())
-			&& informationsPersonnellesUtile.isTitreSejourEnFranceValide(demandeurEmploi.getInformationsPersonnelles()));
+			&& informationsPersonnellesUtile.hasTitreSejourEnFranceValide(demandeurEmploi.getInformationsPersonnelles()));
     }
 }

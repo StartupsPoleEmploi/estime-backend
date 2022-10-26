@@ -131,7 +131,6 @@ public class DemandeurEmploiUtile {
 	logement.setCoordonnees(creerCoordonnees());
 	informationsPersonnelles.setLogement(logement);
 	informationsPersonnelles.setEmail(individu.getInformationsPersonnelles().getEmail());
-	informationsPersonnelles.setBeneficiaireACRE(null);
 
 	if (individu.getPeConnectAuthorization() != null) {
 	    if (stagingEnvironnementUtile.isNotLocalhostEnvironnement()) {

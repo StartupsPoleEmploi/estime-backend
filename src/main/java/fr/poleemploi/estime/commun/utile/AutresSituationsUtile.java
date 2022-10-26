@@ -29,6 +29,7 @@ public class AutresSituationsUtile {
 	autresSituationsEntity.setSalaire(autresSituations.isSalaire());
 	autresSituationsEntity.setAlternant(autresSituations.isAlternant());
 	autresSituationsEntity.setFormation(autresSituations.isFormation());
+	autresSituationsEntity.setIndependant(autresSituations.isIndependant());
 	autresSituationsEntity.setAda(autresSituations.isAda());
 	autresSituationsEntity.setCej(autresSituations.isCej());
 	autresSituationsEntity.setSecurisationProfessionnelle(autresSituations.isSecurisationProfessionnelle());
