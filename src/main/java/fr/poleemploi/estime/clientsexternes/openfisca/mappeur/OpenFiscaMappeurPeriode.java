@@ -77,24 +77,26 @@ public class OpenFiscaMappeurPeriode {
 	return periodesOpenFisca;
     }
 
-    public OpenFiscaPeriodes creerPeriodeUniqueOpenFisca(Object valeur, LocalDate dateDebutSimulation) {
-	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
-	ObjectMapper mapper = new ObjectMapper();
-	for (int numeroMoisPeriode = 0; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
-	    if (numeroMoisPeriode == 0) {
-		periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), valeur);
-	    } else {
-		periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), mapper.nullNode());
-	    }
+    public OpenFiscaPeriodes creerPeriodeUniqueAREOpenFisca(DemandeurEmploi demandeurEmploi, Object valeur, LocalDate dateDebutSimulation) {
+	if (periodeTravailleeAvantSimulationUtile.hasSalairesAvantPeriodeSimulation(demandeurEmploi, 0)) {
+	    return creerPeriodeUniqueEffectivePremierMoisOpenFisca(valeur, dateDebutSimulation);
 	}
-	return periodesOpenFisca;
+	return creerPeriodeUniqueEffectiveDeuxiemeMoisOpenFisca(valeur, dateDebutSimulation);
+    }
+
+    public OpenFiscaPeriodes creerPeriodeUniqueEffectivePremierMoisOpenFisca(Object valeur, LocalDate dateDebutSimulation) {
+	return creerPeriodeUniqueEffectiveMoisXOpenFisca(valeur, dateDebutSimulation, 1);
     }
 
     public OpenFiscaPeriodes creerPeriodeUniqueEffectiveDeuxiemeMoisOpenFisca(Object valeur, LocalDate dateDebutSimulation) {
+	return creerPeriodeUniqueEffectiveMoisXOpenFisca(valeur, dateDebutSimulation, 2);
+    }
+
+    private OpenFiscaPeriodes creerPeriodeUniqueEffectiveMoisXOpenFisca(Object valeur, LocalDate dateDebutSimulation, int numeroMoisEffectif) {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	ObjectMapper mapper = new ObjectMapper();
-	for (int numeroMoisPeriode = 1; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
-	    if (numeroMoisPeriode == 1) {
+	for (int numeroMoisPeriode = numeroMoisEffectif - 1; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
+	    if (numeroMoisPeriode == numeroMoisEffectif - 1) {
 		periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), valeur);
 	    } else {
 		periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), mapper.nullNode());
@@ -121,10 +123,25 @@ public class OpenFiscaMappeurPeriode {
 	return periodesOpenFisca;
     }
 
+    public OpenFiscaPeriodes creerPeriodesCalculeesAREOpenFisca(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	if (periodeTravailleeAvantSimulationUtile.hasSalairesAvantPeriodeSimulation(demandeurEmploi, 0)) {
+	    return creerPeriodesCalculeesEffectivePremierMoisOpenFisca(dateDebutSimulation);
+	}
+	return creerPeriodesCalculeesEffectiveDeuxiemeMoisOpenFisca(dateDebutSimulation);
+    }
+
+    public OpenFiscaPeriodes creerPeriodesCalculeesEffectivePremierMoisOpenFisca(LocalDate dateDebutSimulation) {
+	return creerPeriodesCalculeesEffectiveMoisXOpenFisca(dateDebutSimulation, 1);
+    }
+
     public OpenFiscaPeriodes creerPeriodesCalculeesEffectiveDeuxiemeMoisOpenFisca(LocalDate dateDebutSimulation) {
+	return creerPeriodesCalculeesEffectiveMoisXOpenFisca(dateDebutSimulation, 2);
+    }
+
+    private OpenFiscaPeriodes creerPeriodesCalculeesEffectiveMoisXOpenFisca(LocalDate dateDebutSimulation, int numeroMoisEffectif) {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	ObjectMapper mapper = new ObjectMapper();
-	for (int numeroMoisPeriode = 1; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
+	for (int numeroMoisPeriode = numeroMoisEffectif - 1; numeroMoisPeriode < NOMBRE_MOIS_SIMULATION; numeroMoisPeriode++) {
 	    periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode), mapper.nullNode());
 	}
 	return periodesOpenFisca;
@@ -143,7 +160,8 @@ public class OpenFiscaMappeurPeriode {
 
     public OpenFiscaPeriodes creerPeriodesAREAvantSimulation(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
-	for (int numeroMoisPeriode = -NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode < 0; numeroMoisPeriode++) {
+	int moisPassageComplementARE = areUtile.numeroMoisPassageAuComplementARE(demandeurEmploi);
+	for (int numeroMoisPeriode = -NOMBRE_MOIS_PERIODE_OPENFISCA; numeroMoisPeriode < moisPassageComplementARE; numeroMoisPeriode++) {
 	    periodesOpenFisca.put(getPeriodeFormateePlusMonth(dateDebutSimulation, numeroMoisPeriode),
 		    areUtile.calculerMontantMensuelARE(demandeurEmploi, numeroMoisPeriode, dateDebutSimulation));
 	}

@@ -4,7 +4,7 @@ public enum AideEnum {
 
     AGEPI("AGEPI", "Aide à la Garde d'Enfants pour Parent Isolé", "agepi.html"), AIDE_MOBILITE("AM", "Aide à la mobilité", "aide-mobilite.html"),
     AIDES_LOGEMENT("AL", "Aides au Logement", "aide_logement.html"), AIDE_PERSONNALISEE_LOGEMENT("APL", "Aide Personnalisée au Logement", "aide_logement.html"),
-    AIDE_RETOUR_EMPLOI("ARE", "Allocation de Retour à l'Emploi", ""), COMPLEMENT_AIDE_RETOUR_EMPLOI("ARE", "Complément d'Allocation de Retour à l'Emploi", ""),
+    AIDE_RETOUR_EMPLOI("ARE", "Allocation d'Aide au Retour à l'Emploi", ""), COMPLEMENT_AIDE_RETOUR_EMPLOI("CARE", "Complément d'Allocation d'aide au Retour à l'Emploi", ""),
     ALLOCATION_ADULTES_HANDICAPES("AAH", "Allocation aux Adultes Handicapés", "aah.html"),
     ALLOCATION_LOGEMENT_FAMILIALE("ALF", "Allocation de Logement Familiale", "aide_logement.html"),
     ALLOCATION_LOGEMENT_SOCIALE("ALS", "Allocation de Logement Sociale", "aide_logement.html"),
