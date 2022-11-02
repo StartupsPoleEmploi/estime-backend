@@ -116,7 +116,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(240f);
+		assertThat(ppa.getMontant()).isEqualTo(161f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -130,7 +130,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(240f);
+		assertThat(ppa.getMontant()).isEqualTo(161f);
 	    });
 	});
     }
@@ -214,7 +214,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(240f);
+		assertThat(ppa.getMontant()).isEqualTo(161f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -228,7 +228,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(240f);
+		assertThat(ppa.getMontant()).isEqualTo(161f);
 	    });
 	});
     }
@@ -318,7 +318,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(191f);
+		assertThat(ppa.getMontant()).isEqualTo(94f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -332,7 +332,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(191f);
+		assertThat(ppa.getMontant()).isEqualTo(94f);
 	    });
 	});
     }
@@ -426,7 +426,7 @@ class DemandeurAreTests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(140f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(191f);
+		assertThat(ppa.getMontant()).isEqualTo(94f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -443,7 +443,7 @@ class DemandeurAreTests extends Commun {
 		assertThat(are.getMontant()).isEqualTo(168f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(191f);
+		assertThat(ppa.getMontant()).isEqualTo(94f);
 	    });
 	});
     }
