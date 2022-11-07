@@ -67,8 +67,8 @@ public class Commun {
 
 	demandeurEmploi.getInformationsPersonnelles().setBeneficiaireACRE(true);
 	demandeurEmploi.getInformationsPersonnelles()
-		.setDateRepriseCreationEntreprise(dateUtile.enleverMoisALocalDate(dateUtile.getDateJour().plusMonths(1), nombreMoisDepuisReprisCreationEntreprise));
-
+		.setDateRepriseCreationEntreprise(dateUtile.enleverMoisALocalDate(dateUtile.getDateJour(), nombreMoisDepuisReprisCreationEntreprise));
+	
 	return demandeurEmploi;
     }
 

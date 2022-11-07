@@ -62,7 +62,12 @@ public class InformationsPersonnellesUtile {
 
     public int getNombreMoisDepuisCreationEntreprise(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
 	if (isBeneficiaireACRE(demandeurEmploi)) {
-	    return dateUtile.getNbrMoisEntreDeuxLocalDates(demandeurEmploi.getInformationsPersonnelles().getDateRepriseCreationEntreprise(), dateDebutSimulation);
+	    return dateUtile.getNbrMoisEntreDeuxLocalDates(
+		    dateUtile.getDateDernierJourDuMois(
+			    demandeurEmploi.getInformationsPersonnelles().getDateRepriseCreationEntreprise()
+			    ),
+		    dateDebutSimulation
+		    );
 	}
 	return 0;
     }
