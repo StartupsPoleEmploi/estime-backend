@@ -120,11 +120,10 @@ public class AreUtile {
     }
 
     public float calculerMontantAreAvantSimulation(DemandeurEmploi demandeurEmploi, LocalDate mois) {
-
 	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);
 	float allocationJournaliereBrute = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute();
 	float sjr = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut();
-
+	
 	float allocationJournaliereNette = calculerAllocationJournaliereNetteARE(allocationJournaliereBrute, sjr);
 	return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(allocationJournaliereNette)).setScale(0, RoundingMode.DOWN).floatValue();
     }

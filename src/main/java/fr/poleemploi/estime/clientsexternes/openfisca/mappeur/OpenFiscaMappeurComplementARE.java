@@ -33,7 +33,7 @@ public class OpenFiscaMappeurComplementARE {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaMappeurComplementARE.class);
 
-    public float getMontantComplementARE(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+    public float getMontantComplementAREBrut(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	try {
 	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
 	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
@@ -58,6 +58,22 @@ public class OpenFiscaMappeurComplementARE {
 	    Double deductionsMensuelles = (Double) openFiscaDeductionsComplementARE.get(periodeFormateeComplementARE);
 
 	    return BigDecimal.valueOf(deductionsMensuelles).setScale(0, RoundingMode.HALF_UP).floatValue();
+
+	} catch (NullPointerException e) {
+	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
+	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
+	}
+    }
+
+    public float getMontantComplementARENet(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	try {
+	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
+	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
+	    OpenFiscaPeriodes openFiscaComplementARE = openFiscaIndividu.getComplementARENet();
+	    String periodeFormateeComplementARE = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
+	    Double montantComplementARE = (Double) openFiscaComplementARE.get(periodeFormateeComplementARE);
+
+	    return BigDecimal.valueOf(montantComplementARE).setScale(0, RoundingMode.HALF_UP).floatValue();
 
 	} catch (NullPointerException e) {
 	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
