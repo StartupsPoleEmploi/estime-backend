@@ -138,17 +138,11 @@ public class OpenFiscaClient {
 	return openFiscaRetourSimulation;
     }
 
-    public OpenFiscaRoot callApiCalculate(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, Boolean isParcoursComplementARE) {
+    public OpenFiscaRoot callApiCalculate(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, boolean isParcoursComplementARE) {
 	try {
 	    OpenFiscaRoot openFiscaPayload;
-	    if (isParcoursComplementARE) {
-		openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayloadComplementARE(demandeurEmploi, dateDebutSimulation);
-	    } else {
-		openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
-	    }
-
-	    System.out.println(openFiscaPayload.toString());
-
+	    openFiscaPayload = isParcoursComplementARE ? openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayloadComplementARE(demandeurEmploi, dateDebutSimulation)
+		    : openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
 	    HttpHeaders headers = new HttpHeaders();
 
 	    headers.setContentType(MediaType.APPLICATION_JSON);
