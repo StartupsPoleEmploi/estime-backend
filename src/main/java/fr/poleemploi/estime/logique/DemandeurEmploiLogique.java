@@ -62,8 +62,7 @@ public class DemandeurEmploiLogique {
     }
 
     public Simulation simulerComplementARE(DemandeurEmploi demandeurEmploi) {
-	Simulation simulation = simulateurAides.simulerComplementARE(demandeurEmploi);
-	return simulation;
+	return simulateurAides.simulerComplementARE(demandeurEmploi);
     }
 
     public void supprimerSuiviParcoursUtilisateur(String idPoleEmploi) {
