@@ -100,6 +100,18 @@ public class AreUtile {
 	return aideUtile.creerAide(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
     }
 
+    public Aide creerMontantCRCComplementARE(float montantCRC) {
+	return aideUtile.creerAide(AideEnum.CRC, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantCRC);
+    }
+
+    public Aide creerMontantCRDSComplementARE(float montantCRDS) {
+	return aideUtile.creerAide(AideEnum.CRDS, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantCRDS);
+    }
+
+    public Aide creerMontantCSGComplementARE(float montantCSG) {
+	return aideUtile.creerAide(AideEnum.CSG, Optional.of(OrganismeEnum.PE), Optional.empty(), false, montantCSG);
+    }
+
     private int getNombreJoursRestantsRenseigne(DemandeurEmploi demandeurEmploi) {
 	int nombreJoursRestantsRenseigne = 0;
 	if (demandeurEmploi != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null
@@ -123,7 +135,7 @@ public class AreUtile {
 	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);
 	float allocationJournaliereBrute = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getAllocationJournaliereBrute();
 	float sjr = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().getSalaireJournalierReferenceBrut();
-	
+
 	float allocationJournaliereNette = calculerAllocationJournaliereNetteARE(allocationJournaliereBrute, sjr);
 	return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(allocationJournaliereNette)).setScale(0, RoundingMode.DOWN).floatValue();
     }

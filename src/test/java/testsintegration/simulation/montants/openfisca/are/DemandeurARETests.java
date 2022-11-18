@@ -23,15 +23,12 @@ import com.google.gson.JsonSyntaxException;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaClient;
 import fr.poleemploi.estime.clientsexternes.openfisca.OpenFiscaRetourSimulation;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
-import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @ContextConfiguration
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
 class DemandeurARETests extends Commun {
-
-    private static final int NUMERA_MOIS_SIMULE_PPA = 6;
 
     @Autowired
     private OpenFiscaClient openFiscaClient;
@@ -57,7 +54,7 @@ class DemandeurARETests extends Commun {
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerComplementARE(openFiscaRoot, dateDebutSimulation, 2);
 
 	// Alors le montant du complément ARE pour le 01/2022 est de € (résultat simulateur CAF : 30€)
@@ -73,7 +70,7 @@ class DemandeurARETests extends Commun {
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerComplementARE(openFiscaRoot, dateDebutSimulation, 3);
 
 	// Alors le montant de la prime d'activité pour le 06/2022 est de 19f€ (résultat simulateur CAF : 30€)
@@ -89,7 +86,7 @@ class DemandeurARETests extends Commun {
 	int nbEnfant = 0;
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, nbEnfant);
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerComplementARE(openFiscaRoot, dateDebutSimulation, 4);
 
 	// Alors le montant de la prime d'activité pour le 06/2022 est de 19f€ (résultat simulateur CAF : 30€)

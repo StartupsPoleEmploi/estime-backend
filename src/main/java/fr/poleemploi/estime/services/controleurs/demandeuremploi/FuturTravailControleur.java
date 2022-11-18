@@ -22,6 +22,28 @@ public class FuturTravailControleur {
     @Autowired
     private TypeContratUtile typeContratUtile;
 
+    public void controlerDonneesComplementARE(FuturTravail futurTravail) {
+	if (futurTravail == null) {
+	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "futurTravail"));
+	} else {
+	    if (futurTravail.getNombreHeuresTravailleesSemaine() == 0) {
+		throw new BadRequestException(BadRequestMessages.NOMBRE_HEURE_TRAVAILLEES_ZERO.getMessage());
+	    }
+
+	    if (futurTravail.getSalaire() == null) {
+		throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "salaire de futurTravail"));
+	    }
+
+	    if (futurTravail.getSalaire().getMontantMensuelNet() == 0) {
+		throw new BadRequestException(BadRequestMessages.SALAIRE_MENSUEL_NET_ZERO.getMessage());
+	    }
+
+	    if (futurTravail.getSalaire().getMontantMensuelBrut() == 0) {
+		throw new BadRequestException(BadRequestMessages.SALAIRE_MENSUEL_BRUT_ZERO.getMessage());
+	    }
+	}
+    }
+
     public void controlerDonnees(FuturTravail futurTravail) {
 	if (futurTravail == null) {
 	    throw new BadRequestException(String.format(BadRequestMessages.CHAMP_OBLIGATOIRE.getMessage(), "futurTravail"));

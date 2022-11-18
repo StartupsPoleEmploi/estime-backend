@@ -39,4 +39,12 @@ public class DemandeurEmploiServiceControleur {
 	    situationFamilialeControleur.controlerDonnees(demandeurEmploi.getSituationFamiliale(), demandeurEmploi.getBeneficiaireAides());
 	}
     }
+
+    public void controlerDonneesEntreeServiceSimulerComplementARE(DemandeurEmploi demandeurEmploi) {
+	if (demandeurEmploi == null) {
+	    throw new BadRequestException(BadRequestMessages.DEMANDEUR_EMPLOI_OBLIGATOIRE.getMessage());
+	} else {
+	    futurTravailControleur.controlerDonneesComplementARE(demandeurEmploi.getFuturTravail());
+	}
+    }
 }

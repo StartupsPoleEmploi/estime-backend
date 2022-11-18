@@ -24,6 +24,10 @@ public class SimulateurAidesUtile {
 	return dateUtile.getDatePremierJourDuMois(dateDemandeSimulation.plusMonths(1));
     }
 
+    public LocalDate getDateDebutSimulationParcoursComplementARE(LocalDate dateDemandeSimulation) {
+	return dateUtile.getDatePremierJourDuMois(dateDemandeSimulation);
+    }
+
     public int getNombreMoisASimuler(DemandeurEmploi demandeurEmploi) {
 	if (futurTravailUtile.hasContratDureeDeterminee(demandeurEmploi.getFuturTravail())) {
 	    int dureeContratCDDEnMois = demandeurEmploi.getFuturTravail().getNombreMoisContratCDD();

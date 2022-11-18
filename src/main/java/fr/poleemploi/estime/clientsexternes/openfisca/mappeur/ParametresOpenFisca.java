@@ -36,6 +36,9 @@ public class ParametresOpenFisca {
     public static final String COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES = "complement_are_nombre_jours_indemnises";
     public static final String COMPLEMENT_ARE_BRUT = "complement_are_brut";
     public static final String COMPLEMENT_ARE_DEDUCTIONS = "complement_are_deductions";
+    public static final String COMPLEMENT_ARE_CRC = "complement_are_cotisation_retraite_complementaire";
+    public static final String COMPLEMENT_ARE_CRDS = "complement_are_crds";
+    public static final String COMPLEMENT_ARE_CSG = "complement_are_csg";
     public static final String COMPLEMENT_ARE_NET = "complement_are_net";
 
     public static final String AIDE_LOGEMENT = "aide_logement";

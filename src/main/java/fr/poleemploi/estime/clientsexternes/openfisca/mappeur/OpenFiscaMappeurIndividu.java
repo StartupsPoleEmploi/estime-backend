@@ -63,6 +63,16 @@ public class OpenFiscaMappeurIndividu {
 	return demandeurOpenFisca;
     }
 
+    public OpenFiscaIndividu creerDemandeurOpenFiscaComplementARE(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	OpenFiscaIndividu demandeurOpenFisca = new OpenFiscaIndividu();
+	demandeurOpenFisca.setActivite(openFiscaMappeurPeriode.creerPeriodesActiviteOpenFisca(dateDebutSimulation));
+
+	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
+	openFiscaMappeurComplementARE.addComplementAREOpenFiscaIndividuParcoursComplementARE(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
+
+	return demandeurOpenFisca;
+    }
+
     public void ajouterPersonneAChargeIndividus(Map<String, OpenFiscaIndividu> individusOpenFisca, List<Personne> personnesACharge, LocalDate dateJour) {
 	int index = 1;
 	for (Personne personneACharge : personnesACharge) {

@@ -71,4 +71,16 @@ public class OpenFiscaMappeur {
 	menages.put(MENAGE1, openFiscaMappeurMenage.creerMenageOpenFisca(demandeurEmploi, dateDebutSimulation));
 	return menages;
     }
+
+    public OpenFiscaRoot mapDemandeurEmploiToOpenFiscaPayloadComplementARE(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	OpenFiscaRoot payloadOpenFisca = new OpenFiscaRoot();
+	payloadOpenFisca.setIndividus(creerIndividuOpenFiscaComplementARE(demandeurEmploi, dateDebutSimulation));
+	return payloadOpenFisca;
+    }
+
+    private Map<String, OpenFiscaIndividu> creerIndividuOpenFiscaComplementARE(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	Map<String, OpenFiscaIndividu> individus = new HashMap<>();
+	individus.put(DEMANDEUR, openFiscaMappeurIndividu.creerDemandeurOpenFiscaComplementARE(demandeurEmploi, dateDebutSimulation));
+	return individus;
+    }
 }

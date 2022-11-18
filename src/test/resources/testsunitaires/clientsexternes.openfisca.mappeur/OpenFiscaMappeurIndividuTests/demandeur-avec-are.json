@@ -207,7 +207,28 @@
                 "2022-04": null,
                 "2022-05": null,
                 "2022-06": null
-            }
+            },
+			"complement_are_cotisation_retraite_complementaire": {
+				"2022-02": null,
+				"2022-03": null,
+				"2022-04": null,
+				"2022-05": null,
+				"2022-06": null
+			},
+			"complement_are_crds": {
+				"2022-02": null,
+				"2022-03": null,
+				"2022-04": null,
+				"2022-05": null,
+				"2022-06": null
+			},
+			"complement_are_csg": {
+				"2022-02": null,
+				"2022-03": null,
+				"2022-04": null,
+				"2022-05": null,
+				"2022-06": null
+			}
         }
     },
     "familles": {

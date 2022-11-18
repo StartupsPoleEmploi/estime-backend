@@ -17,6 +17,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaPeriod
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
+import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
 import fr.poleemploi.estime.services.ressources.AllocationARE;
@@ -30,6 +31,9 @@ public class OpenFiscaMappeurComplementARE {
 
     @Autowired
     private AreUtile areUtile;
+
+    @Autowired
+    private DateUtile dateUtile;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaMappeurComplementARE.class);
 
@@ -58,6 +62,54 @@ public class OpenFiscaMappeurComplementARE {
 	    Double deductionsMensuelles = (Double) openFiscaDeductionsComplementARE.get(periodeFormateeComplementARE);
 
 	    return BigDecimal.valueOf(deductionsMensuelles).setScale(0, RoundingMode.HALF_UP).floatValue();
+
+	} catch (NullPointerException e) {
+	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
+	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
+	}
+    }
+
+    public float getMontantCRCComplementARE(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	try {
+	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
+	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
+	    OpenFiscaPeriodes openFiscaMontantCRCComplementARE = openFiscaIndividu.getMontantCRCComplementARE();
+	    String periodeFormateeComplementARE = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
+	    Double deductionsMensuelles = (Double) openFiscaMontantCRCComplementARE.get(periodeFormateeComplementARE);
+
+	    return BigDecimal.valueOf(deductionsMensuelles).abs().setScale(2, RoundingMode.HALF_UP).floatValue();
+
+	} catch (NullPointerException e) {
+	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
+	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
+	}
+    }
+
+    public float getMontantCRDSComplementARE(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	try {
+	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
+	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
+	    OpenFiscaPeriodes openFiscaMontantCRDSComplementARE = openFiscaIndividu.getMontantCRDSComplementARE();
+	    String periodeFormateeComplementARE = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
+	    Double deductionsMensuelles = (Double) openFiscaMontantCRDSComplementARE.get(periodeFormateeComplementARE);
+
+	    return BigDecimal.valueOf(deductionsMensuelles).abs().setScale(2, RoundingMode.HALF_UP).floatValue();
+
+	} catch (NullPointerException e) {
+	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
+	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
+	}
+    }
+
+    public float getMontantCSGComplementARE(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	try {
+	    Map<String, OpenFiscaIndividu> openFiscaIndividus = openFiscaRoot.getIndividus();
+	    OpenFiscaIndividu openFiscaIndividu = openFiscaIndividus.get(DEMANDEUR);
+	    OpenFiscaPeriodes openFiscaMontantCSGComplementARE = openFiscaIndividu.getMontantCSGComplementARE();
+	    String periodeFormateeComplementARE = openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
+	    Double deductionsMensuelles = (Double) openFiscaMontantCSGComplementARE.get(periodeFormateeComplementARE);
+
+	    return BigDecimal.valueOf(deductionsMensuelles).abs().setScale(2, RoundingMode.HALF_UP).floatValue();
 
 	} catch (NullPointerException e) {
 	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
@@ -119,7 +171,8 @@ public class OpenFiscaMappeurComplementARE {
 
 	openFiscaIndividu.setDegressiviteAre(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(allocationARE.hasDegressiviteAre(), dateDebutSimulation));
 	openFiscaIndividu.setAllocationJournaliere(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(allocationARE.getAllocationJournaliereBrute(), dateDebutSimulation));
-	openFiscaIndividu.setAllocationJournaliereTauxPlein(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(allocationARE.getAllocationJournaliereBrute(), dateDebutSimulation));
+	openFiscaIndividu
+		.setAllocationJournaliereTauxPlein(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(allocationARE.getAllocationJournaliereBruteTauxPlein(), dateDebutSimulation));
 	openFiscaIndividu.setSalaireJournalierReference(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(allocationARE.getSalaireJournalierReferenceBrut(), dateDebutSimulation));
 	openFiscaIndividu.setNombreJoursRestantsARE(openFiscaPeriodeMappeur.creerPeriodeUniqueAREOpenFisca(demandeurEmploi,
 		areUtile.getNombreJoursRestantsApresPremierMois(demandeurEmploi, dateDebutSimulation), dateDebutSimulation));
@@ -127,7 +180,36 @@ public class OpenFiscaMappeurComplementARE {
 	openFiscaIndividu.setNombreJoursIndemnisesComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFisca(demandeurEmploi, dateDebutSimulation));
 	openFiscaIndividu.setComplementAREBrut(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFisca(demandeurEmploi, dateDebutSimulation));
 	openFiscaIndividu.setDeductionsComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFisca(demandeurEmploi, dateDebutSimulation));
+	openFiscaIndividu.setMontantCRCComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFisca(demandeurEmploi, dateDebutSimulation));
+	openFiscaIndividu.setMontantCRDSComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFisca(demandeurEmploi, dateDebutSimulation));
+	openFiscaIndividu.setMontantCSGComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFisca(demandeurEmploi, dateDebutSimulation));
 	openFiscaIndividu.setComplementARENet(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFisca(demandeurEmploi, dateDebutSimulation));
+
+	return openFiscaIndividu;
+    }
+
+    public OpenFiscaIndividu addComplementAREOpenFiscaIndividuParcoursComplementARE(OpenFiscaIndividu openFiscaIndividu, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+
+	AllocationARE allocationARE = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE();
+
+	openFiscaIndividu.setDegressiviteAre(openFiscaPeriodeMappeur.creerPeriodeUniqueAREOpenFiscaParcoursComplementARE(allocationARE.hasDegressiviteAre(), dateDebutSimulation));
+	openFiscaIndividu.setAllocationJournaliere(
+		openFiscaPeriodeMappeur.creerPeriodeUniqueAREOpenFiscaParcoursComplementARE(allocationARE.getAllocationJournaliereBrute(), dateDebutSimulation));
+	openFiscaIndividu.setAllocationJournaliereTauxPlein(
+		openFiscaPeriodeMappeur.creerPeriodeUniqueAREOpenFiscaParcoursComplementARE(allocationARE.getAllocationJournaliereBruteTauxPlein(), dateDebutSimulation));
+	openFiscaIndividu.setSalaireJournalierReference(
+		openFiscaPeriodeMappeur.creerPeriodeUniqueAREOpenFiscaParcoursComplementARE(allocationARE.getSalaireJournalierReferenceBrut(), dateDebutSimulation));
+	openFiscaIndividu.setNombreJoursRestantsARE(
+		openFiscaPeriodeMappeur.creerPeriodeUniqueAREOpenFiscaParcoursComplementARE((float) dateUtile.getNombreJoursDansLeMois(dateDebutSimulation), dateDebutSimulation));
+
+	openFiscaIndividu
+		.setNombreJoursIndemnisesComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFiscaParcoursComplementARE(demandeurEmploi, dateDebutSimulation));
+	openFiscaIndividu.setComplementAREBrut(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFiscaParcoursComplementARE(demandeurEmploi, dateDebutSimulation));
+	openFiscaIndividu.setDeductionsComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFiscaParcoursComplementARE(demandeurEmploi, dateDebutSimulation));
+	openFiscaIndividu.setMontantCRCComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFiscaParcoursComplementARE(demandeurEmploi, dateDebutSimulation));
+	openFiscaIndividu.setMontantCRDSComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFiscaParcoursComplementARE(demandeurEmploi, dateDebutSimulation));
+	openFiscaIndividu.setMontantCSGComplementARE(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFiscaParcoursComplementARE(demandeurEmploi, dateDebutSimulation));
+	openFiscaIndividu.setComplementARENet(openFiscaPeriodeMappeur.creerPeriodesCalculeesAREOpenFiscaParcoursComplementARE(demandeurEmploi, dateDebutSimulation));
 
 	return openFiscaIndividu;
     }

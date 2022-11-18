@@ -118,6 +118,25 @@ public class Utile {
 	return demandeurEmploi;
     }
 
+    public DemandeurEmploi creerBaseDemandeurEmploiParcoursComplementARE() {
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	demandeurEmploi.setIdPoleEmploi("idPoleEmploi");
+
+	FuturTravail futurTravail = new FuturTravail();
+	Salaire salaire = new Salaire();
+	futurTravail.setSalaire(salaire);
+	demandeurEmploi.setFuturTravail(futurTravail);
+
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+	AllocationARE allocationARE = new AllocationARE();
+	aidesPoleEmploi.setAllocationARE(allocationARE);
+	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	return demandeurEmploi;
+    }
+
     public DemandeurEmploi creerBaseDemandeurEmploi(TypePopulationEnum population, boolean isEnCouple, List<Personne> personnesACharge) {
 	DemandeurEmploi demandeurEmploi = creerBaseDemandeurEmploi(population, isEnCouple, personnesACharge.size());
 

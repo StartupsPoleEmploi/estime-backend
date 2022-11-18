@@ -19,6 +19,9 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NET;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NOMBRE_JOURS_RESTANTS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_CRC;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_CRDS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_CSG;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CONTEXTE_ACTIVITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DATE_NAISSANCE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEBUT_CONTRAT_TRAVAIL;
@@ -119,6 +122,12 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes deductionsComplementARE;
     @JsonProperty(COMPLEMENT_ARE_NET)
     private OpenFiscaPeriodes complementARENet;
+    @JsonProperty(COMPLEMENT_ARE_CRC)
+    private OpenFiscaPeriodes montantCRCComplementARE;
+    @JsonProperty(COMPLEMENT_ARE_CRDS)
+    private OpenFiscaPeriodes montantCRDSComplementARE;
+    @JsonProperty(COMPLEMENT_ARE_CSG)
+    private OpenFiscaPeriodes montantCSGComplementARE;
 
     @JsonProperty(AAH)
     public OpenFiscaPeriodes getAllocationAdulteHandicape() {
@@ -450,8 +459,36 @@ public class OpenFiscaIndividu {
     }
 
     public void setComplementARENet(OpenFiscaPeriodes complementARENet) {
-	this.complementARENet = complementARENet;
+        this.complementARENet = complementARENet;
     }
+
+    @JsonProperty(COMPLEMENT_ARE_CRC)
+    public OpenFiscaPeriodes getMontantCRCComplementARE() {
+        return montantCRCComplementARE;
+    }
+
+    public void setMontantCRCComplementARE(OpenFiscaPeriodes montantCRCComplementARE) {
+        this.montantCRCComplementARE = montantCRCComplementARE;
+    }
+
+    @JsonProperty(COMPLEMENT_ARE_CRDS)
+    public OpenFiscaPeriodes getMontantCRDSComplementARE() {
+        return montantCRDSComplementARE;
+    }
+
+    public void setMontantCRDSComplementARE(OpenFiscaPeriodes montantCRDSComplementARE) {
+        this.montantCRDSComplementARE = montantCRDSComplementARE;
+    }
+
+    @JsonProperty(COMPLEMENT_ARE_CSG)
+    public OpenFiscaPeriodes getMontantCSGComplementARE() {
+        return montantCSGComplementARE;
+    }
+
+    public void setMontantCSGComplementARE(OpenFiscaPeriodes montantCSGComplementARE) {
+        this.montantCSGComplementARE = montantCSGComplementARE;
+    }
+    
 
     @JsonProperty(ACTIVITE)
     public OpenFiscaPeriodes getActivite() {

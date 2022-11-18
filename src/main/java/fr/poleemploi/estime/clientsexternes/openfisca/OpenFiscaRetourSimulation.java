@@ -8,7 +8,11 @@ public class OpenFiscaRetourSimulation {
     private float montantAgepi;
     private float montantAideMobilite;
     private float montantComplementARE;
+    private float montantComplementAREBrut;
     private float montantDeductionsComplementARE;
+    private float montantCSGComplementARE;
+    private float montantCRCComplementARE;
+    private float montantCRDSComplementARE;
     private float nombreJoursIndemnisesComplementARE;
     private float nombreJoursRestantsARE;
     private String typeAideLogement;
@@ -69,6 +73,14 @@ public class OpenFiscaRetourSimulation {
 	this.montantComplementARE = montantComplementARE;
     }
 
+    public float getMontantComplementAREBrut() {
+        return montantComplementAREBrut;
+    }
+
+    public void setMontantComplementAREBrut(float montantComplementAREBrut) {
+        this.montantComplementAREBrut = montantComplementAREBrut;
+    }
+
     public float getMontantDeductionsComplementARE() {
 	return montantDeductionsComplementARE;
     }
@@ -93,11 +105,36 @@ public class OpenFiscaRetourSimulation {
 	this.nombreJoursRestantsARE = nombreJoursRestantsARE;
     }
 
+    public float getMontantCSGComplementARE() {
+        return montantCSGComplementARE;
+    }
+
+    public void setMontantCSGComplementARE(float montantCSGComplementARE) {
+        this.montantCSGComplementARE = montantCSGComplementARE;
+    }
+
+    public float getMontantCRCComplementARE() {
+        return montantCRCComplementARE;
+    }
+
+    public void setMontantCRCComplementARE(float montantCRCComplementARE) {
+        this.montantCRCComplementARE = montantCRCComplementARE;
+    }
+
+    public float getMontantCRDSComplementARE() {
+        return montantCRDSComplementARE;
+    }
+
+    public void setMontantCRDSComplementARE(float montantCRDSComplementARE) {
+        this.montantCRDSComplementARE = montantCRDSComplementARE;
+    }
+
     @Override
     public String toString() {
 	return "OpenFiscaRetourSimulation [montantRSA=" + montantRSA + ", montantPrimeActivite=" + montantPrimeActivite + ", montantAideLogement=" + montantAideLogement
 		+ ", montantAgepi=" + montantAgepi + ", montantAideMobilite=" + montantAideMobilite + ", montantComplementARE=" + montantComplementARE
-		+ ", montantDeductionsComplementARE=" + montantDeductionsComplementARE + ", nombreJoursIndemnisesComplementARE=" + nombreJoursIndemnisesComplementARE
-		+ ", nombreJoursRestantsComplementARE=" + nombreJoursRestantsARE + ", typeAideLogement=" + typeAideLogement + "]";
+		+ ", montantDeductionsComplementARE=" + montantDeductionsComplementARE + ", montantCSGComplementARE=" + montantCSGComplementARE + ", montantCRCComplementARE="
+		+ montantCRCComplementARE + ", montantCRDSComplementARE=" + montantCRDSComplementARE + ", nombreJoursIndemnisesComplementARE=" + nombreJoursIndemnisesComplementARE
+		+ ", nombreJoursRestantsARE=" + nombreJoursRestantsARE + ", typeAideLogement=" + typeAideLogement + "]";
     }
 }

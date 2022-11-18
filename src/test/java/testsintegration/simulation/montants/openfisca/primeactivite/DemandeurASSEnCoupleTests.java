@@ -63,7 +63,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 	ressourcesFinancieresConjoint.setSalaire(createSalaireConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 11/2022 est de 85€ (résultat simulateur CAF : 81€)
@@ -85,7 +85,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 	ressourcesFinancieresConjoint.setSalaire(createSalaireConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 11/2022 est de 0€ (résultat simulateur CAF : 0€)
@@ -107,7 +107,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 	ressourcesFinancieresConjoint.setSalaire(createSalaireConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 11/2022 est de 141f€ (résultat simulateur CAF : 136€)
@@ -131,7 +131,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 	ressourcesFinancieresConjoint.setSalaire(createSalaireConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 11/2022 est de 153f€ (résultat simulateur CAF : 147€)
@@ -157,7 +157,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	demandeurEmploi.getInformationsPersonnelles().setLogement(createLogement());
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 11/2022 est de 98f€ (résultat simulateur CAF : 197€)
@@ -183,7 +183,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 	ressourcesFinancieresConjoint.setSalaire(createSalaireConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// TODO montant : écart de 21€ avec CAF
@@ -213,7 +213,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	demandeurEmploi.getInformationsPersonnelles().setLogement(createLogement());
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// TODO montant : écart de 30€ avec CAF
@@ -241,7 +241,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 	ressourcesFinancieresConjoint.setSalaire(createSalaireConjoint());
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// TODO montant : écart de 34€ avec CAF
@@ -271,7 +271,7 @@ class DemandeurASSEnCoupleTests extends Commun {
 	demandeurEmploi.getSituationFamiliale().getConjoint().setRessourcesFinancieresAvantSimulation(ressourcesFinancieresConjoint);
 	demandeurEmploi.getInformationsPersonnelles().setLogement(createLogement());
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutSimulation, NUMERA_MOIS_SIMULE_PPA);
 
 	// TODO montant : écart de 34€ avec CAF

@@ -68,7 +68,7 @@ public class SimulateurAides {
 	simulation.setMontantRessourcesFinancieresMoisAvantSimulation(ressourcesFinancieresUtile.calculerMontantRessourcesFinancieresMoisAvantSimulation(demandeurEmploi));
 
 	int nombreMoisASimuler = simulateurAidesUtile.getNombreMoisASimuler(demandeurEmploi);
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, false);
 
 	for (int numeroMoisSimule = 1; numeroMoisSimule <= nombreMoisASimuler; numeroMoisSimule++) {
 	    simulerAidesPourCeMois(openFiscaRoot, simulation, dateDebutSimulation, numeroMoisSimule, demandeurEmploi);
@@ -135,5 +135,32 @@ public class SimulateurAides {
 
     private RessourceFinanciere creerRessourceFinanciere(AideEnum aideEnum, Optional<List<String>> messageAlerteOptional, float montant) {
 	return ressourceFinanciereUtile.creerRessourceFinanciere(aideEnum, messageAlerteOptional, montant);
+    }
+
+    public Simulation simulerComplementARE(DemandeurEmploi demandeurEmploi) {
+	Simulation simulation = new Simulation();
+	simulation.setSimulationsMensuelles(new ArrayList<>());
+
+	LocalDate dateDemandeSimulation = dateUtile.getDateJour();
+	LocalDate dateDebutSimulation = simulateurAidesUtile.getDateDebutSimulationParcoursComplementARE(dateDemandeSimulation);
+
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutSimulation, true);
+	simulerComplementAREPourCeMois(openFiscaRoot, simulation, dateDebutSimulation, demandeurEmploi);
+	return simulation;
+    }
+
+    private void simulerComplementAREPourCeMois(OpenFiscaRoot openFiscaRoot, Simulation simulation, LocalDate dateDebutSimulation, DemandeurEmploi demandeurEmploi) {
+	SimulationMensuelle simulationMensuelle = new SimulationMensuelle();
+	simulationMensuelle.setDatePremierJourMoisSimule(dateDebutSimulation);
+	simulation.getSimulationsMensuelles().add(simulationMensuelle);
+
+	HashMap<String, Aide> aidesPourCeMois = new HashMap<>();
+	simulationMensuelle.setAides(aidesPourCeMois);
+	simulateurAidesPoleEmploi.simulerComplementARE(openFiscaRoot, aidesPourCeMois, demandeurEmploi, dateDebutSimulation);
+
+	HashMap<String, RessourceFinanciere> ressourcesFinancieresPourCeMois = new HashMap<>();
+	simulationMensuelle.setRessourcesFinancieres(ressourcesFinancieresPourCeMois);
+
+	ajouterRessourcesFinancieres(ressourcesFinancieresPourCeMois, demandeurEmploi);
     }
 }

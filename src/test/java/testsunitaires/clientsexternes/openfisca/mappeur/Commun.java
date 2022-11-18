@@ -15,6 +15,7 @@ import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesFamiliales;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
 import fr.poleemploi.estime.services.ressources.AidesPoleEmploi;
+import fr.poleemploi.estime.services.ressources.AllocationARE;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.Coordonnees;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -30,6 +31,23 @@ public class Commun {
 
     @Autowired
     protected Utile utileTests;
+
+    protected DemandeurEmploi createDemandeurEmploiParcoursComplementARE() throws ParseException {
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploiParcoursComplementARE();
+
+	AllocationARE allocationARE = new AllocationARE();
+	allocationARE.setAllocationJournaliereBrute(112.02f);
+	allocationARE.setAllocationJournaliereBruteTauxPlein(112.02f);
+	allocationARE.setSalaireJournalierReferenceBrut(196.53f);
+	allocationARE.setHasDegressiviteAre(false);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().setAllocationARE(allocationARE);
+
+	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(35);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1245.0f);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1600.0f);
+
+	return demandeurEmploi;
+    }
 
     protected DemandeurEmploi createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum typePopulation) throws ParseException {
 	return createDemandeurEmploi(typePopulation, false, 0);

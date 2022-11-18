@@ -127,15 +127,28 @@ public class OpenFiscaClient {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = new OpenFiscaRetourSimulation();
 	openFiscaRetourSimulation.setMontantComplementARE(openFiscaMappeurComplementARE.getMontantComplementARENet(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
 	openFiscaRetourSimulation.setNombreJoursRestantsARE(openFiscaMappeurComplementARE.getNombreJoursRestantsARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
-	openFiscaRetourSimulation.setMontantDeductionsComplementARE(openFiscaMappeurComplementARE.getMontantDeductionsComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation
+		.setMontantDeductionsComplementARE(openFiscaMappeurComplementARE.getMontantDeductionsComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantComplementAREBrut(openFiscaMappeurComplementARE.getMontantComplementAREBrut(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantCRCComplementARE(openFiscaMappeurComplementARE.getMontantCRCComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantCRDSComplementARE(openFiscaMappeurComplementARE.getMontantCRDSComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
+	openFiscaRetourSimulation.setMontantCSGComplementARE(openFiscaMappeurComplementARE.getMontantCSGComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
 	openFiscaRetourSimulation
 		.setNombreJoursIndemnisesComplementARE(openFiscaMappeurComplementARE.getNombreJoursIndemnisesComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
 	return openFiscaRetourSimulation;
     }
 
-    public OpenFiscaRoot callApiCalculate(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+    public OpenFiscaRoot callApiCalculate(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, Boolean isParcoursComplementARE) {
 	try {
-	    OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
+	    OpenFiscaRoot openFiscaPayload;
+	    if (isParcoursComplementARE) {
+		openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayloadComplementARE(demandeurEmploi, dateDebutSimulation);
+	    } else {
+		openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
+	    }
+
+	    System.out.println(openFiscaPayload.toString());
+
 	    HttpHeaders headers = new HttpHeaders();
 
 	    headers.setContentType(MediaType.APPLICATION_JSON);

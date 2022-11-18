@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AllocationARE {
 
     private Float allocationJournaliereBrute;
+    private Float allocationJournaliereBruteTauxPlein;
     private Float allocationMensuelleNet;
     private Float salaireJournalierReferenceBrut;
     private Integer nombreJoursRestants;
@@ -27,6 +28,14 @@ public class AllocationARE {
 
     public void setAllocationJournaliereBrute(Float allocationJournaliereBrute) {
 	this.allocationJournaliereBrute = allocationJournaliereBrute;
+    }
+
+    public Float getAllocationJournaliereBruteTauxPlein() {
+	return allocationJournaliereBruteTauxPlein;
+    }
+
+    public void setAllocationJournaliereBruteTauxPlein(Float allocationJournaliereBruteTauxPlein) {
+	this.allocationJournaliereBruteTauxPlein = allocationJournaliereBruteTauxPlein;
     }
 
     public Float getSalaireJournalierReferenceBrut() {

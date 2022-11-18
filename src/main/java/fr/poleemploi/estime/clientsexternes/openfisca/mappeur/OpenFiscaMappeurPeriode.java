@@ -130,6 +130,20 @@ public class OpenFiscaMappeurPeriode {
 	return creerPeriodesCalculeesEffectiveDeuxiemeMoisOpenFisca(dateDebutSimulation);
     }
 
+    public OpenFiscaPeriodes creerPeriodeUniqueAREOpenFiscaParcoursComplementARE(Object valeur, LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), valeur);
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes creerPeriodesCalculeesAREOpenFiscaParcoursComplementARE(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	ObjectMapper mapper = new ObjectMapper();
+	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), mapper.nullNode());
+
+	return periodesOpenFisca;
+    }
+
     public OpenFiscaPeriodes creerPeriodesCalculeesEffectivePremierMoisOpenFisca(LocalDate dateDebutSimulation) {
 	return creerPeriodesCalculeesEffectiveMoisXOpenFisca(dateDebutSimulation, 1);
     }

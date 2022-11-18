@@ -38,6 +38,12 @@ public class DemandeurEmploiService {
 	return demandeurEmploiLogique.simulerMesAides(demandeurEmploi);
     }
 
+    @PostMapping(value = "/simulation_complement_are", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Simulation simulerComplementARE(@RequestBody DemandeurEmploi demandeurEmploi) {
+	demandeurEmploiServiceControleur.controlerDonneesEntreeServiceSimulerComplementARE(demandeurEmploi);
+	return demandeurEmploiLogique.simulerComplementARE(demandeurEmploi);
+    }
+
     @DeleteMapping(value = "suivi_parcours", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public void supprimerSuiviParcoursUtilisateur(@RequestParam("idPoleEmploi") final String idPoleEmploi) {

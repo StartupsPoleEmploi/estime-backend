@@ -62,7 +62,7 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2022");
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	// TODO montant : écart de 30€ avec CAF
@@ -95,7 +95,7 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2022");
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	// TODO montant : écart de 127€ avec CAF
@@ -126,7 +126,7 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2022");
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	// Alors le montant de la prime d'activité pour le 01/2022 est de 0€ (résultat simulateur CAF : 26€)
@@ -158,7 +158,7 @@ class DemandeurASSEnCouplePensionInvaliditeTests extends Commun {
 	// Lorsque je calcul le montant de la prime d'activité
 	LocalDate dateDebutPeriodeSimulee = utileTests.getDate("05-07-2022");
 
-	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee);
+	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerPrimeActivite(openFiscaRoot, dateDebutPeriodeSimulee, NUMERA_MOIS_SIMULE_PPA);
 
 	// TODO montant : écart de 32€ avec CAF

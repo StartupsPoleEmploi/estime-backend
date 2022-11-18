@@ -267,6 +267,7 @@ class OpenFiscaMappeurTests extends Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ARE);
 
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereBrute(37f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setAllocationJournaliereBruteTauxPlein(37f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setSalaireJournalierReferenceBrut(48f);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setNombreJoursRestants(65);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationARE().setHasDegressiviteAre(false);
