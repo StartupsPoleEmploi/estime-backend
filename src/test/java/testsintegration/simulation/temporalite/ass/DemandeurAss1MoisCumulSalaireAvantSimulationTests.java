@@ -65,7 +65,7 @@ class DemandeurAss1MoisCumulSalaireAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-		assertThat(ass.getMontant()).isEqualTo(472f);
+		assertThat(ass.getMontant()).isEqualTo(523f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
@@ -87,7 +87,7 @@ class DemandeurAss1MoisCumulSalaireAvantSimulationTests extends Commun {
 		assertThat(aideMobilite.getMontant()).isEqualTo(192f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-		assertThat(ass.getMontant()).isEqualTo(523f);
+		assertThat(ass.getMontant()).isEqualTo(472f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
@@ -103,7 +103,7 @@ class DemandeurAss1MoisCumulSalaireAvantSimulationTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-		assertThat(ass.getMontant()).isEqualTo(506f);
+		assertThat(ass.getMontant()).isEqualTo(523f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);

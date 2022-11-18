@@ -43,7 +43,7 @@ public class AllocationSolidariteSpecifiqueUtile {
     private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresAvantSimulationUtile;
 
     public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
-	LocalDate dateMoisASimuler = dateUtile.getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
+	LocalDate dateMoisASimuler = dateUtile.getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule - 1);
 
 	float montantASS = calculerMontant(demandeurEmploi, dateMoisASimuler);
 	if (montantASS > 0) {

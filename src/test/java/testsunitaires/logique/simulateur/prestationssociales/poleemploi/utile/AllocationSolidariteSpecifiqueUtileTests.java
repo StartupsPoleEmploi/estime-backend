@@ -427,7 +427,7 @@ class AllocationSolidariteSpecifiqueUtileTests {
 	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, numeroMoiSimule, dateDebutSimulation);
 
 	//alors 
-	//le montant de l'ASS sur le mois de janvier 2022 est de 523€
+	//le montant de l'ASS sur le mois de janvier 2022 est de 523€ (décembre reporté)
 	assertThat(ass.get().getMontant()).isEqualTo(523f);
     }
 
@@ -455,7 +455,35 @@ class AllocationSolidariteSpecifiqueUtileTests {
 	//Lorsque je calcul le montant de l'ASS sur le mois total 
 	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, numeroMoiSimule, dateDebutSimulation);
 
-	//alors le montant de l'ASS sur le mois de février 2022 est de 472€
+	//alors le montant de l'ASS sur le mois de février 2022 est de 523€ (montant de janvier reporté)
+	assertThat(ass.get().getMontant()).isEqualTo(523f);
+    }
+
+    @Test
+    void calculerMontantTest3() throws ParseException {
+
+	//Si DE avec montant ASS journalier net = 16,89€
+	//Mois simulé février 2022 (28 jours) 
+	//Date derniere ouverture droit 01/08/2021 soit date fin droit 01/01/2022 (avant 3ème mois simulé)
+
+	DemandeurEmploi demandeurEmploi = new DemandeurEmploi();
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = new RessourcesFinancieresAvantSimulation();
+	AidesPoleEmploi aidesPoleEmploi = new AidesPoleEmploi();
+	AllocationASS allocationASS = new AllocationASS();
+	allocationASS.setAllocationJournaliereNet(16.89f);
+	aidesPoleEmploi.setAllocationASS(allocationASS);
+	allocationASS.setAllocationJournaliereNet(16.89f);
+	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(dateDebutSimulation, 6);
+	allocationASS.setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
+	ressourcesFinancieres.setAidesPoleEmploi(aidesPoleEmploi);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	int numeroMoiSimule = 3;
+
+	//Lorsque je calcul le montant de l'ASS sur le mois total 
+	Optional<Aide> ass = allocationSolidariteSpecifiqueUtile.simulerAide(demandeurEmploi, numeroMoiSimule, dateDebutSimulation);
+
+	//alors le montant de l'ASS sur le mois de mars 2022 est de 523€ (montant de février reporté)
 	assertThat(ass.get().getMontant()).isEqualTo(472f);
     }
 }
