@@ -130,20 +130,6 @@ public class OpenFiscaMappeurPeriode {
 	return creerPeriodesCalculeesEffectiveDeuxiemeMoisOpenFisca(dateDebutSimulation);
     }
 
-    public OpenFiscaPeriodes creerPeriodeUniqueAREOpenFiscaParcoursComplementARE(Object valeur, LocalDate dateDebutSimulation) {
-	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
-	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), valeur);
-	return periodesOpenFisca;
-    }
-
-    public OpenFiscaPeriodes creerPeriodesCalculeesAREOpenFiscaParcoursComplementARE(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
-	ObjectMapper mapper = new ObjectMapper();
-	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), mapper.nullNode());
-
-	return periodesOpenFisca;
-    }
-
     public OpenFiscaPeriodes creerPeriodesCalculeesEffectivePremierMoisOpenFisca(LocalDate dateDebutSimulation) {
 	return creerPeriodesCalculeesEffectiveMoisXOpenFisca(dateDebutSimulation, 1);
     }
@@ -161,12 +147,12 @@ public class OpenFiscaMappeurPeriode {
 	return periodesOpenFisca;
     }
 
-    public OpenFiscaPeriodes creerPeriodesCalculeesAgepiEtAideMobiliteOpenFisca(LocalDate dateDebutSimulation) {
+    public OpenFiscaPeriodes creerPeriodeCalculeeUniqueOpenFisca(LocalDate dateDebutSimulation) {
 	ObjectMapper mapper = new ObjectMapper();
-	return creerPeriodesOpenFiscaAgepiEtAideMobilite(mapper.nullNode(), dateDebutSimulation);
+	return creerPeriodeUniqueOpenFisca(mapper.nullNode(), dateDebutSimulation);
     }
 
-    public OpenFiscaPeriodes creerPeriodesOpenFiscaAgepiEtAideMobilite(Object valeur, LocalDate dateDebutSimulation) {
+    public OpenFiscaPeriodes creerPeriodeUniqueOpenFisca(Object valeur, LocalDate dateDebutSimulation) {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
 	periodesOpenFisca.put(getPeriodeFormatee(dateDebutSimulation), valeur);
 	return periodesOpenFisca;

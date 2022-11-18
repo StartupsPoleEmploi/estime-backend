@@ -156,7 +156,7 @@ public class SimulateurAides {
 
 	HashMap<String, Aide> aidesPourCeMois = new HashMap<>();
 	simulationMensuelle.setAides(aidesPourCeMois);
-	simulateurAidesPoleEmploi.simulerComplementARE(openFiscaRoot, aidesPourCeMois, demandeurEmploi, dateDebutSimulation);
+	simulateurAidesPoleEmploi.simulerComplementARE(openFiscaRoot, aidesPourCeMois, dateDebutSimulation);
 
 	HashMap<String, RessourceFinanciere> ressourcesFinancieresPourCeMois = new HashMap<>();
 	simulationMensuelle.setRessourcesFinancieres(ressourcesFinancieresPourCeMois);

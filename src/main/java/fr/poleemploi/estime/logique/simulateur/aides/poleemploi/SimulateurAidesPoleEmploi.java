@@ -20,7 +20,7 @@ import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 @Component
 public class SimulateurAidesPoleEmploi {
 
-    static int NUMERO_MOIS_RECUPERATION_COMPLEMENT_ARE = 1;
+    private static final int NUMERO_MOIS_RECUPERATION_COMPLEMENT_ARE = 1;
 
     @Autowired
     private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifiqueUtile;
@@ -44,7 +44,7 @@ public class SimulateurAidesPoleEmploi {
 	}
     }
 
-    public void simulerComplementARE(OpenFiscaRoot openFiscaRoot, Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+    public void simulerComplementARE(OpenFiscaRoot openFiscaRoot, Map<String, Aide> aidesPourCeMois, LocalDate dateDebutSimulation) {
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerComplementARE(openFiscaRoot, dateDebutSimulation, NUMERO_MOIS_RECUPERATION_COMPLEMENT_ARE);
 	Aide complementARE = areUtile.creerComplementARE(openFiscaRetourSimulation.getMontantComplementAREBrut(), openFiscaRetourSimulation.getNombreJoursRestantsARE());
 	Aide crc = areUtile.creerMontantCRCComplementARE(openFiscaRetourSimulation.getMontantCRCComplementARE());
