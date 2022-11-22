@@ -10,10 +10,10 @@ public class AutresSituations {
     private boolean independant;
     private boolean cej;
     private boolean ada;
-    @JsonProperty("securisation_professionnelle")
+    @JsonProperty("securisationProfessionnelle")
     private boolean securisationProfessionnelle;
     private boolean autre;
-    @JsonProperty("autre_contenu")
+    @JsonProperty("autreContenu")
     private String autreContenu;
 
     public boolean isSalaire() {
@@ -64,7 +64,7 @@ public class AutresSituations {
 	this.ada = ada;
     }
 
-    @JsonProperty("securisation_professionnelle")
+    @JsonProperty("securisationProfessionnelle")
     public boolean isSecurisationProfessionnelle() {
 	return securisationProfessionnelle;
     }
@@ -81,7 +81,7 @@ public class AutresSituations {
 	this.autre = autre;
     }
 
-    @JsonProperty("autre_contenu")
+    @JsonProperty("autreContenu")
     public String getAutreContenu() {
 	return autreContenu;
     }
