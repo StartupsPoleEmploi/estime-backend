@@ -145,8 +145,6 @@ public class OpenFiscaClient {
 		    : openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
 	    HttpHeaders headers = new HttpHeaders();
 
-	    System.out.println(openFiscaPayload.toString());
-
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    HttpEntity<String> request = new HttpEntity<>(openFiscaPayload.toString(), headers);
 	    return restTemplate.postForObject(openFiscaURI, request, OpenFiscaRoot.class);
