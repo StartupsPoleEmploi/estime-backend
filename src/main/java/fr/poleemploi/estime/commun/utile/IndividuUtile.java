@@ -16,14 +16,6 @@ import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimula
 @Component
 public class IndividuUtile {
 
-    /**
-     * Population autorisée ASS, RSA ou AAH, et pouvant cumuler ces 3 prestations.
-     */
-    public boolean isPopulationAutorisee(DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
-	return isBeneficiaireARE(detailIndemnisationPEIO) || isBeneficiaireASS(detailIndemnisationPEIO) || detailIndemnisationPEIO.isBeneficiaireAAH()
-		|| detailIndemnisationPEIO.isBeneficiaireRSA();
-    }
-
     public void addInformationsDetailIndemnisationPoleEmploi(Individu individu, DetailIndemnisationPEIOOut detailIndemnisationPEIO) {
 	addInformationsBeneficiaireAides(individu, detailIndemnisationPEIO);
 	addInformationsRessourcesFinancieresPoleEmploi(individu, detailIndemnisationPEIO);

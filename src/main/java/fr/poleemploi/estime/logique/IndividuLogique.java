@@ -51,17 +51,16 @@ public class IndividuLogique {
 
 	DetailIndemnisationPEIOOut detailIndemnisationESD = poleEmploiIOClient.getDetailIndemnisation(individu.getPeConnectAuthorization().getBearerToken());
 	UserInfoPEIOOut userInfoPEIO = poleEmploiIOClient.getUserInfo(individu.getPeConnectAuthorization().getBearerToken());
+	individu.setPopulationAutorisee(true);
 
 	if (stagingEnvironnementUtile.isStagingEnvironnement() && stagingEnvironnementUtile.isUtilisateurFictif(userInfoPEIO)) {
 	    stagingEnvironnementUtile.gererAccesAvecBouchon(individu, userInfoPEIO);
 	} else {
 	    individu.setIdPoleEmploi(userInfoPEIO.getSub());
 	    if (demandeurDemoUtile.isDemandeurDemo(userInfoPEIO)) {
-		individu.setPopulationAutorisee(true);
 		demandeurDemoUtile.addInformationsDetailIndemnisationPoleEmploi(individu);
 		demandeurDemoUtile.addInformationsPersonnelles(individu, userInfoPEIO);
 	    } else {
-		individu.setPopulationAutorisee(individuUtile.isPopulationAutorisee(detailIndemnisationESD));
 		individuUtile.addInformationsDetailIndemnisationPoleEmploi(individu, detailIndemnisationESD);
 		individuUtile.addInformationsPersonnelles(individu, userInfoPEIO);
 	    }

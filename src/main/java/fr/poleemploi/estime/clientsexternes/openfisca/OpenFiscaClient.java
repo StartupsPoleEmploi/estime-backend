@@ -76,7 +76,7 @@ public class OpenFiscaClient {
 	    openFiscaRetourSimulation = calculerAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule);
 	    break;
 	case ARE:
-	    openFiscaRetourSimulation = calculerComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule);
+	    openFiscaRetourSimulation = calculerComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule - 1);
 	    break;
 	default:
 	    break;
@@ -144,6 +144,8 @@ public class OpenFiscaClient {
 	    openFiscaPayload = isParcoursComplementARE ? openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayloadComplementARE(demandeurEmploi, dateDebutSimulation)
 		    : openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
 	    HttpHeaders headers = new HttpHeaders();
+
+	    System.out.println(openFiscaPayload.toString());
 
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    HttpEntity<String> request = new HttpEntity<>(openFiscaPayload.toString(), headers);

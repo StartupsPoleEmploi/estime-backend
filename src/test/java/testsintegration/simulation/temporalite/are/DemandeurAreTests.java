@@ -276,7 +276,7 @@ class DemandeurAreTests extends Commun {
 		assertThat(am.getMontant()).isEqualTo(192f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
-		assertThat(are.getMontant()).isEqualTo(168f);
+		assertThat(are.getMontant()).isEqualTo(84f);
 	    });
 	});
 	// Alors les prestations du troisième mois 04/2022 sont :
@@ -290,7 +290,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
-		assertThat(are.getMontant()).isEqualTo(140f);
+		assertThat(are.getMontant()).isEqualTo(168f);
 	    });
 	});
 	// Alors les prestations du quatrième mois 05/2022 sont :
@@ -304,7 +304,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
-		assertThat(are.getMontant()).isEqualTo(168f);
+		assertThat(are.getMontant()).isEqualTo(140f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -316,9 +316,12 @@ class DemandeurAreTests extends Commun {
 		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
-	    assertThat(simulationMensuelle.getAides()).hasSize(1);
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(94f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
+		assertThat(are.getMontant()).isEqualTo(84f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -381,7 +384,7 @@ class DemandeurAreTests extends Commun {
 		assertThat(am.getMontant()).isEqualTo(192f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
-		assertThat(are.getMontant()).isEqualTo(168f);
+		assertThat(are.getMontant()).isEqualTo(84f);
 	    });
 	});
 	// Alors les prestations du troisième mois 04/2022 sont :
@@ -395,7 +398,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
-		assertThat(are.getMontant()).isEqualTo(140f);
+		assertThat(are.getMontant()).isEqualTo(168f);
 	    });
 	});
 	// Alors les prestations du quatrième mois 05/2022 sont :
@@ -409,7 +412,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
-		assertThat(are.getMontant()).isEqualTo(168f);
+		assertThat(are.getMontant()).isEqualTo(140f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -423,7 +426,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
-		assertThat(are.getMontant()).isEqualTo(140f);
+		assertThat(are.getMontant()).isEqualTo(168f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(94f);
@@ -440,7 +443,7 @@ class DemandeurAreTests extends Commun {
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.COMPLEMENT_AIDE_RETOUR_EMPLOI.getCode())).satisfies(are -> {
-		assertThat(are.getMontant()).isEqualTo(168f);
+		assertThat(are.getMontant()).isEqualTo(140f);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
 		assertThat(ppa.getMontant()).isEqualTo(94f);
