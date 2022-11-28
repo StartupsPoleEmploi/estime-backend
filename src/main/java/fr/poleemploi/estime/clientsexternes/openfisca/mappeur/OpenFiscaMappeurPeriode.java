@@ -85,11 +85,11 @@ public class OpenFiscaMappeurPeriode {
     }
 
     public OpenFiscaPeriodes creerPeriodeUniqueEffectivePremierMoisOpenFisca(Object valeur, LocalDate dateDebutSimulation) {
-	return creerPeriodeUniqueEffectiveMoisXOpenFisca(valeur, dateDebutSimulation, 1);
+	return creerPeriodeUniqueEffectiveMoisXOpenFisca(valeur, dateDebutSimulation, 0);
     }
 
     public OpenFiscaPeriodes creerPeriodeUniqueEffectiveDeuxiemeMoisOpenFisca(Object valeur, LocalDate dateDebutSimulation) {
-	return creerPeriodeUniqueEffectiveMoisXOpenFisca(valeur, dateDebutSimulation, 2);
+	return creerPeriodeUniqueEffectiveMoisXOpenFisca(valeur, dateDebutSimulation, 1);
     }
 
     private OpenFiscaPeriodes creerPeriodeUniqueEffectiveMoisXOpenFisca(Object valeur, LocalDate dateDebutSimulation, int numeroMoisEffectif) {
@@ -131,11 +131,11 @@ public class OpenFiscaMappeurPeriode {
     }
 
     public OpenFiscaPeriodes creerPeriodesCalculeesEffectivePremierMoisOpenFisca(LocalDate dateDebutSimulation) {
-	return creerPeriodesCalculeesEffectiveMoisXOpenFisca(dateDebutSimulation, 1);
+	return creerPeriodesCalculeesEffectiveMoisXOpenFisca(dateDebutSimulation, 0);
     }
 
     public OpenFiscaPeriodes creerPeriodesCalculeesEffectiveDeuxiemeMoisOpenFisca(LocalDate dateDebutSimulation) {
-	return creerPeriodesCalculeesEffectiveMoisXOpenFisca(dateDebutSimulation, 2);
+	return creerPeriodesCalculeesEffectiveMoisXOpenFisca(dateDebutSimulation, 1);
     }
 
     private OpenFiscaPeriodes creerPeriodesCalculeesEffectiveMoisXOpenFisca(LocalDate dateDebutSimulation, int numeroMoisEffectif) {

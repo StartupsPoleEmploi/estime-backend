@@ -76,7 +76,7 @@ public class OpenFiscaClient {
 	    openFiscaRetourSimulation = calculerAideLogement(openFiscaRoot, dateDebutSimulation, numeroMoisSimule);
 	    break;
 	case ARE:
-	    openFiscaRetourSimulation = calculerComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule);
+	    openFiscaRetourSimulation = calculerComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule - 1);
 	    break;
 	default:
 	    break;

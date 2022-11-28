@@ -1,4 +1,4 @@
-package testsunitaires.commun.utile.demandeuremploi;
+package testsunitaires.commun.utile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
