@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaIndividu;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PersonneUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
+import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 
@@ -25,6 +26,7 @@ public class OpenFiscaMappeurRessourcesPersonne {
 
     public void addRessourcesFinancieresPersonne(OpenFiscaIndividu personneOpenFisca, Personne personne, LocalDate dateDebutSimulation) {
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = personne.getRessourcesFinancieres();
+	InformationsPersonnelles informationsPersonnelles = personne.getInformationsPersonnelles();
 	if (ressourcesFinancieres != null) {
 	    if (ressourcesFinancieresUtile.hasTravailleAuCoursDerniersMoisAvantSimulation(ressourcesFinancieres)) {
 		openFiscaMappeurPeriode.creerPeriodesSalairePersonne(personneOpenFisca, personne, dateDebutSimulation);

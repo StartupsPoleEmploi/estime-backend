@@ -19,6 +19,7 @@ import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurAg
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurAideMobilite;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurAidesLogement;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurComplementARE;
+import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurMicroEntreprise;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurPrimeActivite;
 import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeurRSA;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
@@ -54,6 +55,9 @@ public class OpenFiscaClient {
 
     @Autowired
     private OpenFiscaMappeurComplementARE openFiscaMappeurComplementARE;
+
+    @Autowired
+    private OpenFiscaMappeurMicroEntreprise openFiscaMappeurMicroEntreprise;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -136,6 +140,10 @@ public class OpenFiscaClient {
 	openFiscaRetourSimulation
 		.setNombreJoursIndemnisesComplementARE(openFiscaMappeurComplementARE.getNombreJoursIndemnisesComplementARE(openFiscaRoot, dateDebutSimulation, numeroMoisSimule));
 	return openFiscaRetourSimulation;
+    }
+
+    public float calculerMontantBeneficesMicroEntreprise(OpenFiscaRoot openFiscaRoot, LocalDate dateDebutSimulation) {
+	return openFiscaMappeurMicroEntreprise.getMontantBeneficesMicroEntreprise(openFiscaRoot, dateDebutSimulation);
     }
 
     public OpenFiscaRoot callApiCalculate(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, boolean isParcoursComplementARE) {

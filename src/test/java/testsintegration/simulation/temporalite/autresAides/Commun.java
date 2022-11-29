@@ -22,6 +22,7 @@ import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.MicroEntreprise;
 import utile.tests.Utile;
 
 public class Commun {
@@ -44,8 +45,8 @@ public class Commun {
 	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
 	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1245);
-	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1600);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(800);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1245);
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
@@ -56,6 +57,32 @@ public class Commun {
 	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117f);
 
 	return demandeurEmploi;
+    }
+
+    protected DemandeurEmploi createDemandeurEmploiMicroEntrepreneur(String typesBenefices) throws ParseException {
+	boolean isEnCouple = false;
+	int nbEnfant = 1;
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.NON_BENEFICIAIRE, isEnCouple, nbEnfant);
+	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
+	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(800);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1245);
+	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
+	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117f);
+
+	demandeurEmploi.getInformationsPersonnelles().setMicroEntrepreneur(true);
+	demandeurEmploi.getInformationsPersonnelles().setMicroEntreprise(new MicroEntreprise());
+	demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise().setDateRepriseCreationEntreprise(dateUtile.enleverMoisALocalDate(dateUtile.getDateJour(), 10));
+	demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise().setTypeBenefices(typesBenefices);
+	demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise().setChiffreAffairesN(1200f);
+	demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise().setChiffreAffairesNMoins1(3000f);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setBeneficesMicroEntrepriseDernierExercice(1200f);
+	return demandeurEmploi;
+
     }
 
     protected void initMocks() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {

@@ -82,5 +82,9 @@ public class ParametresOpenFisca {
     public static final String STATUT_MARITAL = "statut_marital";
     public static final String STATUT_OCCUPATION_LOGEMENT = "statut_occupation_logement";
     public static final String CHIFFRE_AFFAIRES_INDEPENDANT = "rpns_autres_revenus";
-    public static final String BENEFICES_MICRO_ENTREPRISE = "rpns_micro_entreprise_benefice";
+
+    public static final String CHIFFRE_AFFAIRES_AR_MICRO_ENTREPRISE = "rpns_auto_entrepreneur_CA_achat_revente";
+    public static final String CHIFFRE_AFFAIRES_BIC_MICRO_ENTREPRISE = "rpns_auto_entrepreneur_CA_bic";
+    public static final String CHIFFRE_AFFAIRES_BNC_MICRO_ENTREPRISE = "rpns_auto_entrepreneur_CA_bnc";
+    public static final String BENEFICES_MICRO_ENTREPRISE = "rpns_auto_entrepreneur_benefice";
 }

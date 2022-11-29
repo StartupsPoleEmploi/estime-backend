@@ -1,5 +1,7 @@
 package fr.poleemploi.estime.commun.utile.demandeuremploi;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,18 +58,13 @@ public class InformationsPersonnellesUtile {
     }
 
     public boolean isBeneficiaireACRE(DemandeurEmploi demandeurEmploi) {
-	return (demandeurEmploi != null && demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().isBeneficiaireACRE()
-		&& demandeurEmploi.getInformationsPersonnelles().getDateRepriseCreationEntreprise() != null);
+	return (demandeurEmploi.getInformationsPersonnelles().isBeneficiaireACRE() && hasMicroEntreprise(demandeurEmploi));
     }
 
     public int getNombreMoisDepuisCreationEntreprise(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	if (isBeneficiaireACRE(demandeurEmploi)) {
+	if (hasMicroEntreprise(demandeurEmploi)) {
 	    return dateUtile.getNbrMoisEntreDeuxLocalDates(
-		    dateUtile.getDateDernierJourDuMois(
-			    demandeurEmploi.getInformationsPersonnelles().getDateRepriseCreationEntreprise()
-			    ),
-		    dateDebutSimulation
-		    );
+		    dateUtile.getDateDernierJourDuMois(demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise().getDateRepriseCreationEntreprise()), dateDebutSimulation);
 	}
 	return 0;
     }
@@ -101,5 +98,18 @@ public class InformationsPersonnellesUtile {
 	    }
 	}
 	return StatutOccupationLogementEnum.NON_RENSEIGNE.getLibelle();
+    }
+
+    public boolean hasMicroEntreprise(DemandeurEmploi demandeurEmploi) {
+	return (demandeurEmploi != null && demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().isMicroEntrepreneur()
+		&& demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise() != null);
+    }
+
+    public float getRevenusActuelsSur1MoisMicroEntreprise(DemandeurEmploi demandeurEmploi) {
+	if (hasMicroEntreprise(demandeurEmploi)) {
+	    return BigDecimal.valueOf(demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise().getChiffreAffairesN())
+		    .divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_UP).floatValue();
+	}
+	return 0;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaIndividu;
 import fr.poleemploi.estime.commun.enumerations.StatutMaritalEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Personne;
@@ -35,6 +36,9 @@ public class OpenFiscaMappeurIndividu {
     private OpenFiscaMappeurComplementARE openFiscaMappeurComplementARE;
 
     @Autowired
+    private OpenFiscaMappeurMicroEntreprise openFiscaMappeurMicroEntreprise;
+
+    @Autowired
     private OpenFiscaMappeurASS openFiscaMappeurASS;
 
     @Autowired
@@ -45,6 +49,9 @@ public class OpenFiscaMappeurIndividu {
 
     @Autowired
     private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
+
+    @Autowired
+    private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
     public OpenFiscaIndividu creerConjointOpenFisca(Personne conjoint, LocalDate dateDebutSimulation) {
 	OpenFiscaIndividu conjointOpenFisca = new OpenFiscaIndividu();
@@ -89,9 +96,8 @@ public class OpenFiscaMappeurIndividu {
 	    demandeurOpenFisca.setChiffreAffairesIndependant(openFiscaMappeurPeriode
 		    .creerPeriodesAnnees(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getChiffreAffairesIndependantDernierExercice(), dateDebutSimulation));
 	}
-	if (ressourcesFinancieresUtile.hasRevenusMicroEntreprise(demandeurEmploi)) {
-	    demandeurOpenFisca.setBeneficesMicroEntreprise(openFiscaMappeurPeriode
-		    .creerPeriodesAnnees(demandeurEmploi.getRessourcesFinancieresAvantSimulation().getBeneficesMicroEntrepriseDernierExercice(), dateDebutSimulation));
+	if (informationsPersonnellesUtile.hasMicroEntreprise(demandeurEmploi)) {
+	    openFiscaMappeurMicroEntreprise.addChiffreAffairesMicroEntreprise(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
 	}
 	if (ressourcesFinancieresUtile.hasPensionsAlimentaires(demandeurEmploi)) {
 	    demandeurOpenFisca.setPensionsAlimentaires(openFiscaMappeurPeriode.creerPeriodesOpenFisca(

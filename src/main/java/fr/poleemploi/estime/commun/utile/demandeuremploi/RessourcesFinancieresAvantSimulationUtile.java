@@ -96,9 +96,7 @@ public class RessourcesFinancieresAvantSimulationUtile {
 
     private float calculerMontantRevenusMoisAvantSimulation(DemandeurEmploi demandeurEmploi) {
 	BigDecimal montantTotal = BigDecimal.ZERO;
-	if (hasRevenusMicroEntreprise(demandeurEmploi.getRessourcesFinancieresAvantSimulation())) {
-	    montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusMicroEntrepriseSur1Mois(demandeurEmploi)));
-	}
+
 	if (hasRevenusTravailleurIndependant(demandeurEmploi.getRessourcesFinancieresAvantSimulation())) {
 	    montantTotal = montantTotal.add(BigDecimal.valueOf(getRevenusTravailleurIndependantSur1Mois(demandeurEmploi)));
 	}

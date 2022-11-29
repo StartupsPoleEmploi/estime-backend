@@ -19,6 +19,7 @@ import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.MicroEntreprise;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.Simulation;
@@ -358,6 +359,15 @@ public class OpenFiscaMappeurPeriode {
 	String anneeMoinsDeuxAnneeSimulation = String.valueOf(anneeDateSimulation - 2);
 	periodesOpenFisca.put(anneeMoinsUnAnneeSimulation, valeur);
 	periodesOpenFisca.put(anneeMoinsDeuxAnneeSimulation, valeur);
+	return periodesOpenFisca;
+    }
+
+    public OpenFiscaPeriodes creerPeriodesChiffreAffairesMicroEntreprise(MicroEntreprise microEntreprise, LocalDate dateDebutSimulation) {
+	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
+	int anneeDateSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, NOMBRE_MOIS_SIMULATION).getYear();
+	periodesOpenFisca.put(String.valueOf(anneeDateSimulation), microEntreprise.getChiffreAffairesN());
+	periodesOpenFisca.put(String.valueOf(anneeDateSimulation - 1), microEntreprise.getChiffreAffairesNMoins1());
+	periodesOpenFisca.put(String.valueOf(anneeDateSimulation - 2), microEntreprise.getChiffreAffairesNMoins2());
 	return periodesOpenFisca;
     }
 

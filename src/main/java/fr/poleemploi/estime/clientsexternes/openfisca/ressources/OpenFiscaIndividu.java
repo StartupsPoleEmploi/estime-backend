@@ -13,15 +13,18 @@ import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresO
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.ASS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.BENEFICES_MICRO_ENTREPRISE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CATEGORIE_DEMANDEUR_EMPLOI;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_AR_MICRO_ENTREPRISE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_BIC_MICRO_ENTREPRISE;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_BNC_MICRO_ENTREPRISE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CHIFFRE_AFFAIRES_INDEPENDANT;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_BRUT;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_CRC;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_CRDS;
+import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_CSG;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_DEDUCTIONS;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NET;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NOMBRE_JOURS_INDEMNISES;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_NOMBRE_JOURS_RESTANTS;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_CRC;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_CRDS;
-import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.COMPLEMENT_ARE_CSG;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.CONTEXTE_ACTIVITE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DATE_NAISSANCE;
 import static fr.poleemploi.estime.clientsexternes.openfisca.mappeur.ParametresOpenFisca.DEBUT_CONTRAT_TRAVAIL;
@@ -68,6 +71,12 @@ public class OpenFiscaIndividu {
     private OpenFiscaPeriodes revenusLocatifs;
     @JsonProperty(CHIFFRE_AFFAIRES_INDEPENDANT)
     private OpenFiscaPeriodes chiffreAffairesIndependant;
+    @JsonProperty(CHIFFRE_AFFAIRES_AR_MICRO_ENTREPRISE)
+    private OpenFiscaPeriodes chiffreAffairesARMicroEntreprise;
+    @JsonProperty(CHIFFRE_AFFAIRES_BIC_MICRO_ENTREPRISE)
+    private OpenFiscaPeriodes chiffreAffairesBICMicroEntreprise;
+    @JsonProperty(CHIFFRE_AFFAIRES_BNC_MICRO_ENTREPRISE)
+    private OpenFiscaPeriodes chiffreAffairesBNCMicroEntreprise;
     @JsonProperty(BENEFICES_MICRO_ENTREPRISE)
     private OpenFiscaPeriodes beneficesMicroEntreprise;
     @JsonProperty(PENSIONS_ALIMENTAIRES_PERCUES)
@@ -208,6 +217,33 @@ public class OpenFiscaIndividu {
 
     public void setBeneficesMicroEntreprise(OpenFiscaPeriodes beneficesMicroEntreprise) {
 	this.beneficesMicroEntreprise = beneficesMicroEntreprise;
+    }
+
+    @JsonProperty(CHIFFRE_AFFAIRES_AR_MICRO_ENTREPRISE)
+    public OpenFiscaPeriodes getChiffreAffairesARMicroEntreprise() {
+	return chiffreAffairesARMicroEntreprise;
+    }
+
+    public void setChiffreAffairesARMicroEntreprise(OpenFiscaPeriodes chiffreAffairesARMicroEntreprise) {
+	this.chiffreAffairesARMicroEntreprise = chiffreAffairesARMicroEntreprise;
+    }
+
+    @JsonProperty(CHIFFRE_AFFAIRES_BIC_MICRO_ENTREPRISE)
+    public OpenFiscaPeriodes getChiffreAffairesBICMicroEntreprise() {
+	return chiffreAffairesBICMicroEntreprise;
+    }
+
+    public void setChiffreAffairesBICMicroEntreprise(OpenFiscaPeriodes chiffreAffairesBICMicroEntreprise) {
+	this.chiffreAffairesBICMicroEntreprise = chiffreAffairesBICMicroEntreprise;
+    }
+
+    @JsonProperty(CHIFFRE_AFFAIRES_BNC_MICRO_ENTREPRISE)
+    public OpenFiscaPeriodes getChiffreAffairesBNCMicroEntreprise() {
+	return chiffreAffairesBNCMicroEntreprise;
+    }
+
+    public void setChiffreAffairesBNCMicroEntreprise(OpenFiscaPeriodes chiffreAffairesBNCMicroEntreprise) {
+	this.chiffreAffairesBNCMicroEntreprise = chiffreAffairesBNCMicroEntreprise;
     }
 
     @JsonProperty(PENSIONS_ALIMENTAIRES_PERCUES)
@@ -459,36 +495,35 @@ public class OpenFiscaIndividu {
     }
 
     public void setComplementARENet(OpenFiscaPeriodes complementARENet) {
-        this.complementARENet = complementARENet;
+	this.complementARENet = complementARENet;
     }
 
     @JsonProperty(COMPLEMENT_ARE_CRC)
     public OpenFiscaPeriodes getMontantCRCComplementARE() {
-        return montantCRCComplementARE;
+	return montantCRCComplementARE;
     }
 
     public void setMontantCRCComplementARE(OpenFiscaPeriodes montantCRCComplementARE) {
-        this.montantCRCComplementARE = montantCRCComplementARE;
+	this.montantCRCComplementARE = montantCRCComplementARE;
     }
 
     @JsonProperty(COMPLEMENT_ARE_CRDS)
     public OpenFiscaPeriodes getMontantCRDSComplementARE() {
-        return montantCRDSComplementARE;
+	return montantCRDSComplementARE;
     }
 
     public void setMontantCRDSComplementARE(OpenFiscaPeriodes montantCRDSComplementARE) {
-        this.montantCRDSComplementARE = montantCRDSComplementARE;
+	this.montantCRDSComplementARE = montantCRDSComplementARE;
     }
 
     @JsonProperty(COMPLEMENT_ARE_CSG)
     public OpenFiscaPeriodes getMontantCSGComplementARE() {
-        return montantCSGComplementARE;
+	return montantCSGComplementARE;
     }
 
     public void setMontantCSGComplementARE(OpenFiscaPeriodes montantCSGComplementARE) {
-        this.montantCSGComplementARE = montantCSGComplementARE;
+	this.montantCSGComplementARE = montantCSGComplementARE;
     }
-    
 
     @JsonProperty(ACTIVITE)
     public OpenFiscaPeriodes getActivite() {

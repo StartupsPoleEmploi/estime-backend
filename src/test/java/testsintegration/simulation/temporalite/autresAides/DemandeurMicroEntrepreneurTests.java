@@ -19,6 +19,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
+import fr.poleemploi.estime.commun.enumerations.TypesBeneficesMicroEntrepriseEnum;
 import fr.poleemploi.estime.services.DemandeurEmploiService;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Simulation;
@@ -39,24 +40,21 @@ class DemandeurMicroEntrepreneurTests extends Commun {
     }
 
     @Test
-    void simulerMesRessourcesFinancieresMicroEntrepreneurTest()
+    void simulerMesRessourcesFinancieresMicroEntrepreneurARTest()
 	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
 	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, asf = 117€
 	// Montant net journalier ASS = 16,89€, 0 mois cumulé ASS + salaire sur 3 derniers mois
 	// futur contrat CDI, salaire brut 1600€, soit 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
-	// DE micro entrepreneur
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
-	demandeurEmploi.getInformationsPersonnelles().setMicroEntrepreneur(true);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setBeneficesMicroEntrepriseDernierExercice(1200f);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(false);
+	// DE micro entrepreneur, bénéfices de type achat/revente
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiMicroEntrepreneur(TypesBeneficesMicroEntrepriseEnum.AR.getCode());
 
 	// Lorsque je simule mes prestations le 01/01/2022
 	initMocks();
 	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
 
 	// Alors les prestations du premier mois 02/2022 sont :
-	// AGEPI : 400€, Aide mobilité : 450€, ASS : 506€
+	// AGEPI : 400€, Aide mobilité : 450€, ASS : 506€, CA abattu = (1200 / 12) * 29
 	SimulationMensuelle simulationMois1 = simulation.getSimulationsMensuelles().get(0);
 	assertThat(simulationMois1).satisfies(simulationMensuelle -> {
 	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
@@ -65,12 +63,9 @@ class DemandeurMicroEntrepreneurTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
-		assertThat(micro.getMontant()).isEqualTo(100);
+		assertThat(micro.getMontant()).isEqualTo(29f);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-		assertThat(ass.getMontant()).isEqualTo(523f);
-	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(1);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
@@ -85,7 +80,7 @@ class DemandeurMicroEntrepreneurTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
-		assertThat(micro.getMontant()).isEqualTo(100);
+		assertThat(micro.getMontant()).isEqualTo(29f);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(4);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
@@ -94,11 +89,11 @@ class DemandeurMicroEntrepreneurTests extends Commun {
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
 		assertThat(aideMobilite.getMontant()).isEqualTo(192f);
 	    });
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-		assertThat(ass.getMontant()).isEqualTo(472f);
-	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(35f);
 	    });
 	});
 	// Alors les prestations du troisième mois 04/2022 sont :
@@ -111,14 +106,14 @@ class DemandeurMicroEntrepreneurTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
-		assertThat(micro.getMontant()).isEqualTo(100);
+		assertThat(micro.getMontant()).isEqualTo(29f);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-		assertThat(ass.getMontant()).isEqualTo(523f);
-	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(35f);
 	    });
 	});
 	// Alors les prestations du quatrième mois 05/2022 sont :
@@ -131,17 +126,14 @@ class DemandeurMicroEntrepreneurTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
-		assertThat(micro.getMontant()).isEqualTo(100);
+		assertThat(micro.getMontant()).isEqualTo(29f);
 	    });
-	    assertThat(simulationMensuelle.getAides()).hasSize(3);
-	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode())).satisfies(ass -> {
-		assertThat(ass.getMontant()).isEqualTo(506f);
-	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(20f);
+		assertThat(ppa.getMontant()).isEqualTo(35f);
 	    });
 	});
 	// Alors les prestations du cinquième mois 06/2022 sont :
@@ -154,14 +146,14 @@ class DemandeurMicroEntrepreneurTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
-		assertThat(micro.getMontant()).isEqualTo(100);
+		assertThat(micro.getMontant()).isEqualTo(29f);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(20f);
+		assertThat(ppa.getMontant()).isEqualTo(452f);
 	    });
 	});
 	// Alors les prestations du sixième mois 07/2022 sont :
@@ -174,14 +166,292 @@ class DemandeurMicroEntrepreneurTests extends Commun {
 	    });
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
 	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
-		assertThat(micro.getMontant()).isEqualTo(100);
+		assertThat(micro.getMontant()).isEqualTo(29f);
 	    });
 	    assertThat(simulationMensuelle.getAides()).hasSize(2);
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
 		assertThat(asf.getMontant()).isEqualTo(117);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
-		assertThat(ppa.getMontant()).isEqualTo(20f);
+		assertThat(ppa.getMontant()).isEqualTo(452f);
+	    });
+	});
+    }
+
+    @Test
+    void simulerMesRessourcesFinancieresMicroEntrepreneurBICTest()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+
+	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, asf = 117€
+	// Montant net journalier ASS = 16,89€, 0 mois cumulé ASS + salaire sur 3 derniers mois
+	// futur contrat CDI, salaire brut 1600€, soit 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
+	// DE micro entrepreneur, bénéfices de type BIC
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiMicroEntrepreneur(TypesBeneficesMicroEntrepriseEnum.BIC.getCode());
+
+	// Lorsque je simule mes prestations le 01/01/2022
+	initMocks();
+	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
+
+	// Alors les prestations du premier mois 02/2022 sont :
+	// AGEPI : 400€, Aide mobilité : 450€, ASS : 506€, CA abattu = (1200 / 12) * 0.5
+	SimulationMensuelle simulationMois1 = simulation.getSimulationsMensuelles().get(0);
+	assertThat(simulationMois1).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(50f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(1);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	});
+	// Alors les prestations du second mois 03/2022 sont :
+	// ASS : 523€
+	SimulationMensuelle simulationMois2 = simulation.getSimulationsMensuelles().get(1);
+	assertThat(simulationMois2).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(50f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
+		assertThat(agepi.getMontant()).isEqualTo(400f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
+		assertThat(aideMobilite.getMontant()).isEqualTo(192f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(61f);
+	    });
+	});
+	// Alors les prestations du troisième mois 04/2022 sont :
+	// ASS : 523€
+	SimulationMensuelle simulationMois3 = simulation.getSimulationsMensuelles().get(2);
+	assertThat(simulationMois3).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(50f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(61f);
+	    });
+	});
+	// Alors les prestations du quatrième mois 05/2022 sont :
+	// aucune aide
+	SimulationMensuelle simulationMois4 = simulation.getSimulationsMensuelles().get(3);
+	assertThat(simulationMois4).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("05");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(50f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(61f);
+	    });
+	});
+	// Alors les prestations du cinquième mois 06/2022 sont :
+	// Prime d'activité : 140€ (simulateur CAF : 129€)
+	SimulationMensuelle simulationMois5 = simulation.getSimulationsMensuelles().get(4);
+	assertThat(simulationMois5).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("06");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(50f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(449f);
+	    });
+	});
+	// Alors les prestations du sixième mois 07/2022 sont :
+	// Prime d'activité : 140€
+	SimulationMensuelle simulationMois6 = simulation.getSimulationsMensuelles().get(5);
+	assertThat(simulationMois6).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("07");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(50f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(449f);
+	    });
+	});
+    }
+
+    @Test
+    void simulerMesRessourcesFinancieresMicroEntrepreneurBNCTest()
+	    throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
+
+	// Si DE Français de France métropolitaine né le 5/07/1986, célibataire, 1 enfant à charge de 9ans, asf = 117€
+	// Montant net journalier ASS = 16,89€, 0 mois cumulé ASS + salaire sur 3 derniers mois
+	// futur contrat CDI, salaire brut 1600€, soit 1245€ par mois, 20h/semaine, kilométrage domicile -> taf = 80kms + 12 trajets
+	// DE micro entrepreneur, bénéfices de type BNC
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiMicroEntrepreneur(TypesBeneficesMicroEntrepriseEnum.BNC.getCode());
+
+	// Lorsque je simule mes prestations le 01/01/2022
+	initMocks();
+	Simulation simulation = demandeurEmploiService.simulerAides(demandeurEmploi);
+
+	// Alors les prestations du premier mois 02/2022 sont :
+	// AGEPI : 400€, Aide mobilité : 450€, ASS : 506€, CA abattu = (1200 / 12) * 0.66
+	SimulationMensuelle simulationMois1 = simulation.getSimulationsMensuelles().get(0);
+	assertThat(simulationMois1).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("02");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(66f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(1);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	});
+	// Alors les prestations du second mois 03/2022 sont :
+	// ASS : 523€, CA abattu = (1200 / 12) * 0.66
+	SimulationMensuelle simulationMois2 = simulation.getSimulationsMensuelles().get(1);
+	assertThat(simulationMois2).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("03");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(66f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(4);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AGEPI.getCode())).satisfies(agepi -> {
+		assertThat(agepi.getMontant()).isEqualTo(400f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.AIDE_MOBILITE.getCode())).satisfies(aideMobilite -> {
+		assertThat(aideMobilite.getMontant()).isEqualTo(192f);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(81f);
+	    });
+	});
+	// Alors les prestations du troisième mois 04/2022 sont :
+	// ASS : 523€, CA abattu = (1200 / 12) * 0.66
+	SimulationMensuelle simulationMois3 = simulation.getSimulationsMensuelles().get(2);
+	assertThat(simulationMois3).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("04");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(66f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(81f);
+	    });
+	});
+	// Alors les prestations du quatrième mois 05/2022 sont :
+	// aucune aide, CA abattu = (1200 / 12) * 0.66
+	SimulationMensuelle simulationMois4 = simulation.getSimulationsMensuelles().get(3);
+	assertThat(simulationMois4).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("05");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(66f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(81f);
+	    });
+	});
+	// Alors les prestations du cinquième mois 06/2022 sont :
+	// Prime d'activité : 140€ (simulateur CAF : 129€), CA abattu = (1200 / 12) * 0.66
+	SimulationMensuelle simulationMois5 = simulation.getSimulationsMensuelles().get(4);
+	assertThat(simulationMois5).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("06");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(66f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(447f);
+	    });
+	});
+	// Alors les prestations du sixième mois 07/2022 sont :
+	// Prime d'activité : 140€, CA abattu = (1200 / 12) * 0.66
+	SimulationMensuelle simulationMois6 = simulation.getSimulationsMensuelles().get(5);
+	assertThat(simulationMois6).satisfies(simulationMensuelle -> {
+	    assertThat(simulationMensuelle.getDatePremierJourMoisSimule()).satisfies(dateMoisSimule -> {
+		assertThat(dateUtile.getMonthFromLocalDate(dateMoisSimule)).isEqualTo("07");
+		assertThat(dateMoisSimule.getYear()).isEqualTo(2022);
+	    });
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.SALAIRE.getCode())).isNotNull();
+	    assertThat(simulationMensuelle.getRessourcesFinancieres().get(AideEnum.MICRO_ENTREPRENEUR.getCode())).satisfies(micro -> {
+		assertThat(micro.getMontant()).isEqualTo(66f);
+	    });
+	    assertThat(simulationMensuelle.getAides()).hasSize(2);
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.ALLOCATION_SOUTIEN_FAMILIAL.getCode())).satisfies(asf -> {
+		assertThat(asf.getMontant()).isEqualTo(117);
+	    });
+	    assertThat(simulationMensuelle.getAides().get(AideEnum.PRIME_ACTIVITE.getCode())).satisfies(ppa -> {
+		assertThat(ppa.getMontant()).isEqualTo(447f);
 	    });
 	});
     }

@@ -20,9 +20,11 @@ import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemn
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.enumerations.TypesBeneficesMicroEntrepriseEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.MicroEntreprise;
 import utile.tests.Utile;
 
 public class Commun {
@@ -66,9 +68,12 @@ public class Commun {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 
 	demandeurEmploi.getInformationsPersonnelles().setBeneficiaireACRE(true);
-	demandeurEmploi.getInformationsPersonnelles()
+	demandeurEmploi.getInformationsPersonnelles().setMicroEntrepreneur(true);
+	demandeurEmploi.getInformationsPersonnelles().setMicroEntreprise(new MicroEntreprise());
+	demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise().setTypeBenefices(TypesBeneficesMicroEntrepriseEnum.BIC.getCode());
+	demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise()
 		.setDateRepriseCreationEntreprise(dateUtile.enleverMoisALocalDate(dateUtile.getDateJour(), nombreMoisDepuisReprisCreationEntreprise));
-	
+
 	return demandeurEmploi;
     }
 

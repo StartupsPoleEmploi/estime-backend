@@ -14,6 +14,7 @@ public class InformationsPersonnelles {
     private String nom;
     private String prenom;
     private Logement logement;
+    private MicroEntreprise microEntreprise;
     @JsonProperty("hasTitreSejourEnFranceValide")
     private boolean hasTitreSejourEnFranceValide;
     @JsonProperty("hasPensionRetraite")
@@ -30,8 +31,6 @@ public class InformationsPersonnelles {
     private boolean isSansRessource;
     @JsonProperty("isBeneficiaireACRE")
     private boolean isBeneficiaireACRE;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate dateRepriseCreationEntreprise;
 
     public LocalDate getDateNaissance() {
 	return dateNaissance;
@@ -79,6 +78,14 @@ public class InformationsPersonnelles {
 
     public void setLogement(Logement logement) {
 	this.logement = logement;
+    }
+
+    public MicroEntreprise getMicroEntreprise() {
+	return microEntreprise;
+    }
+
+    public void setMicroEntreprise(MicroEntreprise microEntreprise) {
+	this.microEntreprise = microEntreprise;
     }
 
     @JsonProperty("hasTitreSejourEnFranceValide")
@@ -153,21 +160,12 @@ public class InformationsPersonnelles {
 	this.isBeneficiaireACRE = isBeneficiaireACRE;
     }
 
-    public LocalDate getDateRepriseCreationEntreprise() {
-	return dateRepriseCreationEntreprise;
-    }
-
-    public void setDateRepriseCreationEntreprise(LocalDate dateRepriseCreationEntreprise) {
-	this.dateRepriseCreationEntreprise = dateRepriseCreationEntreprise;
-    }
-
     @Override
     public String toString() {
 	return "InformationsPersonnelles [dateNaissance=" + dateNaissance + ", email=" + email + ", nationalite=" + nationalite + ", nom=" + nom + ", prenom=" + prenom
-		+ ", logement=" + logement + ", hasPensionRetraite=" + hasPensionRetraite + ", hasRevenusImmobilier=" + hasRevenusImmobilier + ", isTravailleurIndependant="
-		+ isTravailleurIndependant + ", isMicroEntrepreneur=" + isMicroEntrepreneur + ", isSalarie=" + isSalarie + ", isSansRessource=" + isSansRessource
-		+ ", hasTitreSejourEnFranceValide=" + hasTitreSejourEnFranceValide + ", isBeneficiaireACRE=" + isBeneficiaireACRE + ", dateRepriseCreationEntreprise="
-		+ dateRepriseCreationEntreprise + "]";
+		+ ", logement=" + logement + ", microEntreprise=" + microEntreprise + ", hasTitreSejourEnFranceValide=" + hasTitreSejourEnFranceValide + ", hasPensionRetraite="
+		+ hasPensionRetraite + ", hasRevenusImmobilier=" + hasRevenusImmobilier + ", isTravailleurIndependant=" + isTravailleurIndependant + ", isMicroEntrepreneur="
+		+ isMicroEntrepreneur + ", isSalarie=" + isSalarie + ", isSansRessource=" + isSansRessource + ", isBeneficiaireACRE=" + isBeneficiaireACRE + "]";
     }
 
 }

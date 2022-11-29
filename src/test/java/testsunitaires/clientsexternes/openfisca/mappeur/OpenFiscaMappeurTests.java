@@ -25,12 +25,15 @@ import fr.poleemploi.estime.clientsexternes.openfisca.mappeur.OpenFiscaMappeur;
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
+import fr.poleemploi.estime.commun.enumerations.TypesBeneficesMicroEntrepriseEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.AidesCAF;
 import fr.poleemploi.estime.services.ressources.AidesCPAM;
 import fr.poleemploi.estime.services.ressources.AidesLogement;
 import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
+import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
+import fr.poleemploi.estime.services.ressources.MicroEntreprise;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import utile.tests.Utile;
 
@@ -196,23 +199,92 @@ class OpenFiscaMappeurTests extends Commun {
     }
 
     @Test
-    void mapDemandeurRevenusMicroEntrepriseToOpenFiscaPayloadTest()
+    void mapDemandeurRevenusMicroEntrepriseARToOpenFiscaPayloadTest()
 	    throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
 
 	String openFiscaPayloadExpected = testUtile
-		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-revenus-micro-entreprise.json");
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-revenus-micro-entreprise-ar.json");
 
-	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.ASS);
-
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setAllocationJournaliereNet(16.89f);
-	LocalDate dateDerniereOuvertureDroitASS = dateUtile.enleverMoisALocalDate(utileTests.getDate("01-01-2022"), 6);
-	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().setDateDerniereOuvertureDroit(dateDerniereOuvertureDroitASS);
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.NON_BENEFICIAIRE);
 
 	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
-	ressourcesFinancieres.setBeneficesMicroEntrepriseDernierExercice(600f);
 	AidesCAF aidesCAF = createAidesCAF();
 	ressourcesFinancieres.setAidesCAF(aidesCAF);
 	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	InformationsPersonnelles informationsPersonnelles = demandeurEmploi.getInformationsPersonnelles();
+	informationsPersonnelles.setMicroEntrepreneur(true);
+	MicroEntreprise microEntreprise = new MicroEntreprise();
+	microEntreprise.setDateRepriseCreationEntreprise(dateUtile.enleverAnneesALocalDate(dateDebutSimulation, 2));
+	microEntreprise.setTypeBenefices(TypesBeneficesMicroEntrepriseEnum.AR.getCode());
+	microEntreprise.setChiffreAffairesN(4000f);
+	microEntreprise.setChiffreAffairesNMoins1(3000f);
+	microEntreprise.setChiffreAffairesNMoins2(2000f);
+	informationsPersonnelles.setMicroEntreprise(microEntreprise);
+
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
+
+    @Test
+    void mapDemandeurRevenusMicroEntrepriseBICToOpenFiscaPayloadTest()
+	    throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-revenus-micro-entreprise-bic.json");
+
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.NON_BENEFICIAIRE);
+
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	InformationsPersonnelles informationsPersonnelles = demandeurEmploi.getInformationsPersonnelles();
+	informationsPersonnelles.setMicroEntrepreneur(true);
+	MicroEntreprise microEntreprise = new MicroEntreprise();
+	microEntreprise.setDateRepriseCreationEntreprise(dateUtile.enleverAnneesALocalDate(dateDebutSimulation, 2));
+	microEntreprise.setTypeBenefices(TypesBeneficesMicroEntrepriseEnum.BIC.getCode());
+	microEntreprise.setChiffreAffairesN(4000f);
+	microEntreprise.setChiffreAffairesNMoins1(3000f);
+	microEntreprise.setChiffreAffairesNMoins2(2000f);
+	informationsPersonnelles.setMicroEntreprise(microEntreprise);
+
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
+
+    @Test
+    void mapDemandeurRevenusMicroEntrepriseBNCToOpenFiscaPayloadTest()
+	    throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-revenus-micro-entreprise-bnc.json");
+
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.NON_BENEFICIAIRE);
+
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
+	AidesCAF aidesCAF = createAidesCAF();
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
+
+	InformationsPersonnelles informationsPersonnelles = demandeurEmploi.getInformationsPersonnelles();
+	informationsPersonnelles.setMicroEntrepreneur(true);
+	MicroEntreprise microEntreprise = new MicroEntreprise();
+	microEntreprise.setDateRepriseCreationEntreprise(dateUtile.enleverAnneesALocalDate(dateDebutSimulation, 2));
+	microEntreprise.setTypeBenefices(TypesBeneficesMicroEntrepriseEnum.BNC.getCode());
+	microEntreprise.setChiffreAffairesN(4000f);
+	microEntreprise.setChiffreAffairesNMoins1(3000f);
+	microEntreprise.setChiffreAffairesNMoins2(2000f);
+	informationsPersonnelles.setMicroEntreprise(microEntreprise);
+
+	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
 
 	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
 
