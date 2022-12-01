@@ -82,6 +82,11 @@ public class AreUtile {
 	return nombreJoursRestantsRenseigne < nombreJoursDansLeMois ? nombreJoursRestantsRenseigne : nombreJoursDansLeMois;
     }
 
+    public float getMontantAREAvantSimulation(int numeroMoisMontantARecuperer, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	LocalDate moisAvantPeriodeSimulation = aideUtile.getMoisAvantSimulation(numeroMoisMontantARecuperer, dateDebutSimulation);
+	return calculerMontantAreAvantSimulation(demandeurEmploi, moisAvantPeriodeSimulation);
+    }
+
     public Aide creerARE(float montantAide, float nombreJoursRestantsARE) {
 	ArrayList<String> messagesAlerte = new ArrayList<>();
 	messagesAlerte.add(MessageInformatifEnum.MONTANT_ARE_AVANT_PAS.getMessage());

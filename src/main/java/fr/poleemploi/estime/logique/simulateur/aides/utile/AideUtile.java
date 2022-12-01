@@ -20,28 +20,19 @@ import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.StringUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AllocationSolidariteSpecifiqueUtile;
-import fr.poleemploi.estime.logique.simulateur.aides.poleemploi.utile.AreUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
-import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Simulation;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
 
 @Component
 public class AideUtile {
 
-    @Autowired
-    private DateUtile dateUtile;
-
-    @Autowired
-    private AllocationSolidariteSpecifiqueUtile allocationSolidariteSpecifiqueUtile;
-
-    @Autowired
-    private AreUtile areUtile;
-
     public static final String PATH_DIR_DETAIL_PRESTATION = "details-aides/";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AideUtile.class);
+
+    @Autowired
+    private DateUtile dateUtile;
 
     public Aide creerAide(AideEnum aideEnum, Optional<OrganismeEnum> organismeEnumOptional, Optional<List<String>> messageAlerteOptional, boolean isAideReportee, float montantAide) {
 	Aide aide = new Aide();
@@ -77,35 +68,10 @@ public class AideUtile {
 	return aide;
     }
 
-    public Optional<String> getDescription(String nomFichier) {
-	try {
-	    File resource = new ClassPathResource(PATH_DIR_DETAIL_PRESTATION + nomFichier).getFile();
-	    return Optional.of(new String(Files.readAllBytes(resource.toPath())));
-	} catch (IOException e) {
-	    LOGGER.error(e.getMessage());
-	}
-	return Optional.empty();
-    }
-
     public float getMontantAidePourCeMoisSimule(Simulation simulation, String codeAide, int numeroMoisMontantARecuperer) {
 	Optional<Aide> aidePourCeMois = getAidePourCeMoisSimule(simulation, codeAide, numeroMoisMontantARecuperer);
 	if (aidePourCeMois.isPresent()) {
 	    return aidePourCeMois.get().getMontant();
-	}
-	return 0;
-    }
-
-    public float getMontantAideAvantSimulation(int numeroMoisMontantARecuperer, DemandeurEmploi demandeurEmploi, String codeAide, LocalDate dateDebutSimulation) {
-	if (AideEnum.ALLOCATION_ADULTES_HANDICAPES.getCode().equals(codeAide)) {
-	    return demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationAAH();
-	}
-	if (AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE.getCode().equals(codeAide)) {
-	    LocalDate moisAvantPeriodeSimulation = getMoisAvantSimulation(numeroMoisMontantARecuperer, dateDebutSimulation);
-	    return allocationSolidariteSpecifiqueUtile.calculerMontant(demandeurEmploi, moisAvantPeriodeSimulation);
-	}
-	if (AideEnum.AIDE_RETOUR_EMPLOI.getCode().equals(codeAide)) {
-	    LocalDate moisAvantPeriodeSimulation = getMoisAvantSimulation(numeroMoisMontantARecuperer, dateDebutSimulation);
-	    return areUtile.calculerMontantAreAvantSimulation(demandeurEmploi, moisAvantPeriodeSimulation);
 	}
 	return 0;
     }
@@ -140,6 +106,16 @@ public class AideUtile {
 	return String.join(" / ", aidesStream.map(AideEnum::getCode).collect(Collectors.toList()));
     }
 
+    public Optional<String> getDescription(String nomFichier) {
+	try {
+	    File resource = new ClassPathResource(PATH_DIR_DETAIL_PRESTATION + nomFichier).getFile();
+	    return Optional.of(new String(Files.readAllBytes(resource.toPath())));
+	} catch (IOException e) {
+	    LOGGER.error(e.getMessage());
+	}
+	return Optional.empty();
+    }
+
     public String getLienExterne(AideEnum aideEnum) {
 	switch (aideEnum) {
 	case AIDES_LOGEMENT:
@@ -157,7 +133,7 @@ public class AideUtile {
 	}
     }
 
-    private LocalDate getMoisAvantSimulation(int numeroMoisMontantARecuperer, LocalDate dateDebutSimulation) {
+    public LocalDate getMoisAvantSimulation(int numeroMoisMontantARecuperer, LocalDate dateDebutSimulation) {
 	LocalDate dateDemandeSimulation = dateUtile.enleverMoisALocalDate(dateDebutSimulation, 1);
 	if (numeroMoisMontantARecuperer < 0) {
 	    return dateUtile.enleverMoisALocalDate(dateDemandeSimulation, Math.abs(numeroMoisMontantARecuperer));

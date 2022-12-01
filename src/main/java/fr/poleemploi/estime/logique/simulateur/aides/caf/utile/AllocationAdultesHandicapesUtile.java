@@ -58,6 +58,10 @@ public class AllocationAdultesHandicapesUtile {
 	}
     }
 
+    public float getMontantAAHAvantSimulation(DemandeurEmploi demandeurEmploi) {
+	return demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAllocationAAH();
+    }
+
     private boolean isMontantAReduire(DemandeurEmploi demandeurEmploi, int numeroMoisSimule) {
 	boolean isMontantReduit = false;
 	int nombreMoisTravaillesDerniersMois = periodeTravailleeAvantSimulationUtile.getNombreMoisTravaillesAuCoursDes6DerniersMoisAvantSimulation(demandeurEmploi);
