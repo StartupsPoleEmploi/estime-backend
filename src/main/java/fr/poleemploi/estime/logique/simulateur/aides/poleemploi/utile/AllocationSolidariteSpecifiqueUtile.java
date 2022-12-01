@@ -15,7 +15,6 @@ import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.PeriodeTravailleeAvantSimulationUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
@@ -39,9 +38,6 @@ public class AllocationSolidariteSpecifiqueUtile {
     @Autowired
     private PeriodeTravailleeAvantSimulationUtile periodeTravailleeAvantSimulationUtile;
 
-    @Autowired
-    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresAvantSimulationUtile;
-
     public Optional<Aide> simulerAide(DemandeurEmploi demandeurEmploi, int numeroMoisSimule, LocalDate dateDebutSimulation) {
 	LocalDate dateMoisASimuler = dateUtile.getDateMoisASimuler(dateDebutSimulation, numeroMoisSimule);
 
@@ -54,26 +50,40 @@ public class AllocationSolidariteSpecifiqueUtile {
     }
 
     public float calculerMontant(DemandeurEmploi demandeurEmploi, LocalDate mois) {
-	if (ressourcesFinancieresAvantSimulationUtile.hasAllocationSolidariteSpecifique(demandeurEmploi)) {
+	if (demandeurEmploi != null && hasAllocationSolidariteSpecifiqueAvantSimulation(demandeurEmploi)) {
 	    LocalDate dateOuvertureDroitASS = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getDateDerniereOuvertureDroit();
 	    if (!dateUtile.isDateAvant(mois, dateOuvertureDroitASS)) {
 		int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(mois);
-		float montantJournalierNetSolidariteSpecifique = ressourcesFinancieresAvantSimulationUtile.getAllocationSolidariteSpecifiqueJournaliere(demandeurEmploi);
+		float montantJournalierNetSolidariteSpecifique = getMontantAllocationSolidariteSpecifiqueAvantSimulation(demandeurEmploi);
 		return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();
 	    }
 	}
 	return 0;
-
     }
 
     public float calculerMontantSiEligible(DemandeurEmploi demandeurEmploi, int numeroMoisPeriode, LocalDate dateDebutSimulation) {
 	int nombreJoursDansLeMois = dateUtile.getNombreJoursDansLeMois(dateUtile.ajouterMoisALocalDate(dateDebutSimulation, numeroMoisPeriode));
-	if (isEligible(numeroMoisPeriode + 1, demandeurEmploi, dateDebutSimulation)
-		&& ressourcesFinancieresAvantSimulationUtile.hasAllocationSolidariteSpecifique(demandeurEmploi)) {
-	    float montantJournalierNetSolidariteSpecifique = ressourcesFinancieresAvantSimulationUtile.getAllocationSolidariteSpecifiqueJournaliere(demandeurEmploi);
+	if (isEligible(numeroMoisPeriode + 1, demandeurEmploi, dateDebutSimulation) && hasAllocationSolidariteSpecifiqueAvantSimulation(demandeurEmploi)) {
+	    float montantJournalierNetSolidariteSpecifique = getMontantAllocationSolidariteSpecifiqueAvantSimulation(demandeurEmploi);
 	    return BigDecimal.valueOf(nombreJoursDansLeMois).multiply(BigDecimal.valueOf(montantJournalierNetSolidariteSpecifique)).setScale(0, RoundingMode.DOWN).floatValue();
 	}
 	return 0;
+    }
+
+    private boolean hasAllocationSolidariteSpecifiqueAvantSimulation(DemandeurEmploi demandeurEmploi) {
+	return (demandeurEmploi != null && demandeurEmploi.getRessourcesFinancieresAvantSimulation() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS() != null
+		&& demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS().getAllocationJournaliereNet() != null);
+    }
+
+    private float getMontantAllocationSolidariteSpecifiqueAvantSimulation(DemandeurEmploi demandeurEmploi) {
+	float montantAllocationSolidariteSpecifiqueAvantSimulation = 0;
+	if (hasAllocationSolidariteSpecifiqueAvantSimulation(demandeurEmploi)) {
+	    montantAllocationSolidariteSpecifiqueAvantSimulation = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesPoleEmploi().getAllocationASS()
+		    .getAllocationJournaliereNet();
+	}
+	return montantAllocationSolidariteSpecifiqueAvantSimulation;
     }
 
     public boolean isEligible(int numeroMoisSimule, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
@@ -121,10 +131,15 @@ public class AllocationSolidariteSpecifiqueUtile {
 	return dateUtile.getNbrMoisEntreDeuxLocalDates(dateOuvertureDroitASS, dateDebutSimulation);
     }
 
-    private Aide creerASS(float montantAide) {
+    public Aide creerASS(float montantAide) {
 	ArrayList<String> messagesAlerte = new ArrayList<>();
 	messagesAlerte.add(MessageInformatifEnum.ASS_DEMANDE_RENOUVELLEMENT.getMessage());
 	return aideUtile.creerAide(AideEnum.ALLOCATION_SOLIDARITE_SPECIFIQUE, Optional.of(OrganismeEnum.PE), Optional.of(messagesAlerte), false, montantAide);
+    }
+
+    public float getMontantASSAvantSimulation(int numeroMoisMontantARecuperer, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	LocalDate moisAvantPeriodeSimulation = aideUtile.getMoisAvantSimulation(numeroMoisMontantARecuperer, dateDebutSimulation);
+	return calculerMontant(demandeurEmploi, moisAvantPeriodeSimulation);
     }
 
     private int getNombreMoisEligiblesBeneficiaireACRE(int nombreMoisDepuisCreationEntreprise) {
