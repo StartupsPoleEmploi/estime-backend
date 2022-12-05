@@ -348,8 +348,10 @@ public class OpenFiscaMappeurPeriode {
 
     public OpenFiscaPeriodes creerPeriodesChiffreAffairesMicroEntreprise(MicroEntreprise microEntreprise, LocalDate dateDebutSimulation) {
 	OpenFiscaPeriodes periodesOpenFisca = new OpenFiscaPeriodes();
-	int anneeDateSimulation = dateUtile.ajouterMoisALocalDate(dateDebutSimulation, NOMBRE_MOIS_SIMULATION).getYear();
+	int anneeDateSimulation = dateUtile.enleverMoisALocalDate(dateDebutSimulation, 1).getYear();
+	int anneeDateDebutSimulation = dateDebutSimulation.getYear();
 	periodesOpenFisca.put(String.valueOf(anneeDateSimulation), microEntreprise.getChiffreAffairesN());
+	periodesOpenFisca.put(String.valueOf(anneeDateDebutSimulation), microEntreprise.getChiffreAffairesN());
 	periodesOpenFisca.put(String.valueOf(anneeDateSimulation - 1), microEntreprise.getChiffreAffairesNMoins1());
 	periodesOpenFisca.put(String.valueOf(anneeDateSimulation - 2), microEntreprise.getChiffreAffairesNMoins2());
 	return periodesOpenFisca;
