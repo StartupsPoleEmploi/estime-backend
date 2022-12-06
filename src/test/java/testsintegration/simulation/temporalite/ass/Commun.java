@@ -64,10 +64,23 @@ public class Commun {
 	return demandeurEmploi;
     }
 
-    protected DemandeurEmploi createDemandeurEmploiBeneficiaireACRE(int nombreMoisDepuisReprisCreationEntreprise) throws ParseException {
+    protected DemandeurEmploi createDemandeurEmploiMicroEntrepreneurAvecACRE(int nombreMoisDepuisReprisCreationEntreprise) throws ParseException {
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
 
 	demandeurEmploi.getInformationsPersonnelles().setBeneficiaireACRE(true);
+	demandeurEmploi.getInformationsPersonnelles().setMicroEntrepreneur(true);
+	demandeurEmploi.getInformationsPersonnelles().setMicroEntreprise(new MicroEntreprise());
+	demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise().setTypeBenefices(TypesBeneficesMicroEntrepriseEnum.BIC.getCode());
+	demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise()
+		.setDateRepriseCreationEntreprise(dateUtile.enleverMoisALocalDate(dateUtile.getDateJour(), nombreMoisDepuisReprisCreationEntreprise));
+
+	return demandeurEmploi;
+    }
+
+    protected DemandeurEmploi createDemandeurEmploiMicroEntrepreneurNonACRE(int nombreMoisDepuisReprisCreationEntreprise) throws ParseException {
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploi();
+
+	demandeurEmploi.getInformationsPersonnelles().setBeneficiaireACRE(false);
 	demandeurEmploi.getInformationsPersonnelles().setMicroEntrepreneur(true);
 	demandeurEmploi.getInformationsPersonnelles().setMicroEntreprise(new MicroEntreprise());
 	demandeurEmploi.getInformationsPersonnelles().getMicroEntreprise().setTypeBenefices(TypesBeneficesMicroEntrepriseEnum.BIC.getCode());

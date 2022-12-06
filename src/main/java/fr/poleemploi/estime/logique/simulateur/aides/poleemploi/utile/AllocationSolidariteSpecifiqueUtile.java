@@ -91,10 +91,13 @@ public class AllocationSolidariteSpecifiqueUtile {
     }
 
     public int getNombreMoisEligibles(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	if (informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)
+	if (informationsPersonnellesUtile.hasMicroEntreprise(demandeurEmploi) && !informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)) {
+	    return getNombreMoisEligiblesMicroEntrepreneurNonACRE(informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation));
+	} else if (informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)
 		&& informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation) < 12) {
-	    return getNombreMoisEligiblesBeneficiaireACRE(informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation));
-	} else if (!informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)) {
+	    return getNombreMoisEligiblesMicroEntrepreneurBeneficiaireACRE(
+		    informationsPersonnellesUtile.getNombreMoisDepuisCreationEntreprise(demandeurEmploi, dateDebutSimulation));
+	} else if (!informationsPersonnellesUtile.hasMicroEntreprise(demandeurEmploi) && !informationsPersonnellesUtile.isBeneficiaireACRE(demandeurEmploi)) {
 	    return getNombreMoisEligiblesCumulRestants(demandeurEmploi, dateDebutSimulation);
 	}
 	return 0;
@@ -142,11 +145,15 @@ public class AllocationSolidariteSpecifiqueUtile {
 	return calculerMontant(demandeurEmploi, moisAvantPeriodeSimulation);
     }
 
-    private int getNombreMoisEligiblesBeneficiaireACRE(int nombreMoisDepuisCreationEntreprise) {
+    private int getNombreMoisEligiblesMicroEntrepreneurBeneficiaireACRE(int nombreMoisDepuisCreationEntreprise) {
 	if (nombreMoisDepuisCreationEntreprise > 6) {
 	    int nombreDeMoisApres6PremiersMois = nombreMoisDepuisCreationEntreprise - 6;
 	    return NOMBRE_MOIS_MAX_ASS_BENEFICIAIRE_ACRE_ELIGIBLE - nombreDeMoisApres6PremiersMois;
 	}
 	return NOMBRE_MOIS_MAX_ASS_BENEFICIAIRE_ACRE_ELIGIBLE;
+    }
+
+    private int getNombreMoisEligiblesMicroEntrepreneurNonACRE(int nombreMoisDepuisCreationEntreprise) {
+	return Math.max(0, NOMBRE_MOIS_MAX_ASS_ELIGIBLE - nombreMoisDepuisCreationEntreprise);
     }
 }
