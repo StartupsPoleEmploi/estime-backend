@@ -2,20 +2,11 @@ package fr.poleemploi.estime.services.ressources;
 
 public class Aide extends RessourceFinanciere {
 
-    private String detail;
     //true si l'aide n'a pas été créée mais reportée depuis un mois précédent 
     //ex : prime d'acivité, l'aide créée au mois N est reportée au mois N+1 et N+2 
     private boolean isReportee;
     private String organisme;
     private String lienExterne;
-
-    public String getDetail() {
-	return detail;
-    }
-
-    public void setDetail(String detail) {
-	this.detail = detail;
-    }
 
     public boolean isReportee() {
 	return isReportee;
@@ -43,7 +34,6 @@ public class Aide extends RessourceFinanciere {
 
     @Override
     public String toString() {
-	return "Aide [ montant=" + getMontant() + ", detail=" + detail + ", isReportee=" + isReportee + ", organisme=" + organisme + ", lienExterne=" + lienExterne + "]";
+	return "Aide [ montant=" + getMontant() + ", isReportee=" + isReportee + ", organisme=" + organisme + ", lienExterne=" + lienExterne + "]";
     }
-
 }
