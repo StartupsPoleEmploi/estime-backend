@@ -6,7 +6,6 @@ public class Aide extends RessourceFinanciere {
     //ex : prime d'acivité, l'aide créée au mois N est reportée au mois N+1 et N+2 
     private boolean isReportee;
     private String organisme;
-    private String lienExterne;
 
     public boolean isReportee() {
 	return isReportee;
@@ -24,16 +23,8 @@ public class Aide extends RessourceFinanciere {
 	this.organisme = organisme;
     }
 
-    public String getLienExterne() {
-	return lienExterne;
-    }
-
-    public void setLienExterne(String lienExterne) {
-	this.lienExterne = lienExterne;
-    }
-
     @Override
     public String toString() {
-	return "Aide [ montant=" + getMontant() + ", isReportee=" + isReportee + ", organisme=" + organisme + ", lienExterne=" + lienExterne + "]";
+	return "Aide [ montant=" + getMontant() + ", isReportee=" + isReportee + ", organisme=" + organisme + "]";
     }
 }

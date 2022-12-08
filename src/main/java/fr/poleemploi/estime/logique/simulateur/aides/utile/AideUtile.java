@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
-import fr.poleemploi.estime.commun.utile.StringUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
 import fr.poleemploi.estime.services.ressources.Simulation;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
@@ -33,7 +32,6 @@ public class AideUtile {
 	    aide.setOrganisme(organismeEnumOptional.get().getNomCourt());
 	}
 	aide.setReportee(isAideReportee);
-	aide.setLienExterne(getLienExterne(aideEnum));
 	return aide;
     }
 
@@ -41,7 +39,6 @@ public class AideUtile {
 	Aide aide = new Aide();
 	aide.setCode(aideEnum.getCode());
 	aide.setNom(aideEnum.getNom());
-	aide.setLienExterne(getLienExterne(aideEnum));
 	return aide;
     }
 
@@ -67,23 +64,6 @@ public class AideUtile {
 	    }
 	}
 	return Optional.empty();
-    }
-
-    public String getLienExterne(AideEnum aideEnum) {
-	switch (aideEnum) {
-	case AIDES_LOGEMENT:
-	case AIDE_PERSONNALISEE_LOGEMENT:
-	case ALLOCATION_LOGEMENT_SOCIALE:
-	case ALLOCATION_LOGEMENT_FAMILIALE:
-	    return "https://wwwd.caf.fr/wps/portal/caffr/aidesetservices/lesservicesenligne/faireunedemandedeprestation#DAL";
-	case AGEPI:
-	case AIDE_MOBILITE:
-	    return "https://candidat.pole-emploi.fr/candidat/aides/mobilite/tableaudebord\\r\\n";
-	case PRIME_ACTIVITE:
-	    return "https://wwwd.caf.fr/wps/portal/caffr/aidesetservices/lesservicesenligne/faireunedemandedeprestation#/solidariteetactivite";
-	default:
-	    return StringUtile.EMPTY;
-	}
     }
 
     public LocalDate getMoisAvantSimulation(int numeroMoisMontantARecuperer, LocalDate dateDebutSimulation) {
