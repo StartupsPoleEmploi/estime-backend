@@ -12,8 +12,10 @@ import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Simulation;
 
 @Component
@@ -23,12 +25,17 @@ public class PrimeActiviteUtile {
     private AideUtile aideUtile;
 
     @Autowired
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresAvantSimulationUtile;
+
+    @Autowired
     private DateUtile dateUtile;
 
-    public void reporterPrimeActivite(Simulation simulation, Map<String, Aide> aidesPourCeMois, int numeroMoisSimule) {
+    public void reporterPrimeActivite(Simulation simulation, Map<String, Aide> aidesPourCeMois, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
 	Optional<Aide> primeActiviteMoisPrecedent = getPrimeActiviteMoisPrecedent(simulation, numeroMoisSimule);
 	if (primeActiviteMoisPrecedent.isPresent()) {
 	    aidesPourCeMois.put(AideEnum.PRIME_ACTIVITE.getCode(), primeActiviteMoisPrecedent.get());
+	} else if (isEligiblePourReportPrimeActiviteDeclare(numeroMoisSimule, demandeurEmploi)) {
+	    aidesPourCeMois.put(AideEnum.PRIME_ACTIVITE.getCode(), getPrimeActiviteDeclare(demandeurEmploi, dateDebutSimulation, numeroMoisSimule));
 	}
     }
 
@@ -125,5 +132,21 @@ public class PrimeActiviteUtile {
 		|| ((prochaineDeclarationTrimestrielle == 2) && (numeroMoisSimule == 1 || numeroMoisSimule == 2 || numeroMoisSimule == 4 || numeroMoisSimule == 5))
 		|| ((prochaineDeclarationTrimestrielle == 3)
 			&& (numeroMoisSimule == 1 || numeroMoisSimule == 2 || numeroMoisSimule == 3 || numeroMoisSimule == 5 || numeroMoisSimule == 6)));
+    }
+
+    private Aide getPrimeActiviteDeclare(DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation, int numeroMoisSimule) {
+	float montantDeclare = demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getPrimeActivite();
+	return creerAidePrimeActivite(montantDeclare, true, dateDebutSimulation, numeroMoisSimule);
+    }
+
+    public boolean isEligiblePourReportPrimeActiviteDeclare(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
+	boolean isEligiblePourReportPrimeActiviteDeclare = false;
+	if (ressourcesFinancieresAvantSimulationUtile.hasPrimeActivite(demandeurEmploi)) {
+	    int prochaineDeclarationTrimestrielle = ressourcesFinancieresAvantSimulationUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
+	    isEligiblePourReportPrimeActiviteDeclare = prochaineDeclarationTrimestrielle != 0 && ((prochaineDeclarationTrimestrielle == 3) && numeroMoisSimule <= 1)
+		    || (prochaineDeclarationTrimestrielle == 1 && numeroMoisSimule <= 2) || (prochaineDeclarationTrimestrielle == 2 && numeroMoisSimule <= 3);
+
+	}
+	return isEligiblePourReportPrimeActiviteDeclare;
     }
 }

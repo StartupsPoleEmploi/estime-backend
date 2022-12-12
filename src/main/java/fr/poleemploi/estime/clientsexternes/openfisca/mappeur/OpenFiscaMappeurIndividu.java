@@ -65,7 +65,7 @@ public class OpenFiscaMappeurIndividu {
 	demandeurOpenFisca.setStatutMarital(openFiscaMappeurPeriode.creerPeriodesOpenFisca(getStatutMarital(demandeurEmploi), dateDebutSimulation));
 	demandeurOpenFisca.setActivite(openFiscaMappeurPeriode.creerPeriodesActiviteOpenFisca(dateDebutSimulation));
 
-	openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
+	addSalaireDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
 	addRessourcesFinancieresDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
 	return demandeurOpenFisca;
     }
@@ -120,6 +120,14 @@ public class OpenFiscaMappeurIndividu {
 
 	openFiscaMappeurAgepi.addAgepiOpenFiscaIndividu(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
 	openFiscaMappeurAideMobilite.addAideMobiliteOpenFiscaIndividu(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
+    }
+
+    private void addSalaireDemandeur(OpenFiscaIndividu demandeurOpenFisca, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	if (informationsPersonnellesUtile.hasCumulAncienEtNouveauSalaire(demandeurEmploi)) {
+	    openFiscaMappeurPeriode.creerPeriodesSalaireCumulDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
+	} else {
+	    openFiscaMappeurPeriode.creerPeriodesSalaireDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
+	}
     }
 
     private OpenFiscaIndividu creerEnfantOpenFisca(Personne personneACharge, LocalDate dateDebutSimulation) {

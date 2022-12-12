@@ -17,13 +17,18 @@ import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaPeriod
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
+import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
+import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @Component
 public class OpenFiscaMappeurPrimeActivite {
 
     @Autowired
-    private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
+    private OpenFiscaMappeurPeriode openFiscaMappeurPeriode;
+
+    @Autowired
+    private RessourcesFinancieresAvantSimulationUtile ressourcesFinancieresUtile;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenFiscaMappeurPrimeActivite.class);
 
@@ -43,7 +48,15 @@ public class OpenFiscaMappeurPrimeActivite {
 	}
     }
 
+    public void addPrimeActiviteOpenFisca(OpenFiscaFamille openFiscaFamille, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
+	if (ressourcesFinancieresUtile.hasPrimeActivite(demandeurEmploi)) {
+	    openFiscaFamille.setPrimeActivite(openFiscaMappeurPeriode.creerPeriodesPrimeActiviteOpenFisca(demandeurEmploi, dateDebutSimulation));
+	} else {
+	    openFiscaFamille.setPrimeActivite(openFiscaMappeurPeriode.creerPeriodesCalculeesOpenFisca(dateDebutSimulation));
+	}
+    }
+
     public String getPeriodeARecuperer(LocalDate dateDebutSimulation, int numeroMoisSimule) {
-	return openFiscaPeriodeMappeur.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
+	return openFiscaMappeurPeriode.getPeriodeNumeroMoisSimule(dateDebutSimulation, numeroMoisSimule);
     }
 }

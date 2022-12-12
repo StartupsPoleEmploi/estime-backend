@@ -45,7 +45,6 @@ public class TemporaliteCAFUtile {
 
     public boolean isPrimeActiviteAVerser(int numeroMoisSimule, DemandeurEmploi demandeurEmploi) {
 	boolean isPrimeActiviteAVerser = false;
-
 	if (beneficiaireAidesUtile.isBeneficiaireCAF(demandeurEmploi) || beneficiaireAidesUtile.isBeneficiaireAucuneAide(demandeurEmploi)) {
 	    int prochaineDeclarationTrimestrielle = ressourcesFinancieresUtile.getProchaineDeclarationTrimestrielle(demandeurEmploi);
 	    isPrimeActiviteAVerser = primeActiviteUtile.isPrimeActiviteAVerserDeclarationTrimestrielle(numeroMoisSimule, prochaineDeclarationTrimestrielle);

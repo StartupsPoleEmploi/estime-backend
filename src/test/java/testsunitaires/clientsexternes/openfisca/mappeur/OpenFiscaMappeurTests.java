@@ -34,7 +34,9 @@ import fr.poleemploi.estime.services.ressources.AllocationsLogement;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.MicroEntreprise;
+import fr.poleemploi.estime.services.ressources.PeriodeTravailleeAvantSimulation;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
+import fr.poleemploi.estime.services.ressources.Salaire;
 import utile.tests.Utile;
 
 @ContextConfiguration
@@ -418,6 +420,41 @@ class OpenFiscaMappeurTests extends Commun {
 
 	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.IAE.name());
 	demandeurEmploi.getFuturTravail().setNombreMoisContratCDD(4);
+
+	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
+
+	assertThat(openFiscaPayload.toString()).hasToString(openFiscaPayloadExpected);
+    }
+
+    @Test
+    void mapDemandeurSalarieAvecPrimeActiviteToOpenFiscaPayloadTest()
+	    throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadExpected = testUtile
+		.getStringFromJsonFile("testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurIndividuTests/demandeur-avec-prime-activite.json");
+
+	DemandeurEmploi demandeurEmploi = createDemandeurEmploiCelibataireSansEnfant(TypePopulationEnum.NON_BENEFICIAIRE);
+
+	RessourcesFinancieresAvantSimulation ressourcesFinancieres = demandeurEmploi.getRessourcesFinancieresAvantSimulation();
+	AidesCAF aidesCAF = ressourcesFinancieres.getAidesCAF();
+	aidesCAF.setHasPrimeActivite(true);
+	aidesCAF.setPrimeActivite(500f);
+	aidesCAF.setProchaineDeclarationTrimestrielle(3);
+	ressourcesFinancieres.setAidesCAF(aidesCAF);
+
+	demandeurEmploi.getInformationsPersonnelles().setSalarie(true);
+	demandeurEmploi.getInformationsPersonnelles().setCumulAncienEtNouveauSalaire(true);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
+	Salaire[] salaires = utileTests.creerSalaires(0, 0, 3);
+	Salaire salaire = utileTests.creerSalaire(1000, 1238);
+	salaires = utileTests.ajouterSalaire(salaires, salaire, 0);
+	salaires = utileTests.ajouterSalaire(salaires, salaire, 1);
+	salaires = utileTests.ajouterSalaire(salaires, salaire, 2);
+	periodeTravailleeAvantSimulation.setMois(utileTests.createMoisTravaillesAvantSimulation(salaires));
+	ressourcesFinancieres.setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
+
+	demandeurEmploi.setRessourcesFinancieresAvantSimulation(ressourcesFinancieres);
 
 	OpenFiscaRoot openFiscaPayload = openFiscaMappeur.mapDemandeurEmploiToOpenFiscaPayload(demandeurEmploi, dateDebutSimulation);
 

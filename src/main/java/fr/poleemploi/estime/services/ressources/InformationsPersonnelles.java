@@ -27,6 +27,8 @@ public class InformationsPersonnelles {
     private boolean isMicroEntrepreneur;
     @JsonProperty("isSalarie")
     private boolean isSalarie;
+    @JsonProperty("hasCumulAncienEtNouveauSalaire")
+    private boolean hasCumulAncienEtNouveauSalaire;
     @JsonProperty("isSansRessource")
     private boolean isSansRessource;
     @JsonProperty("isBeneficiaireACRE")
@@ -140,6 +142,15 @@ public class InformationsPersonnelles {
 
     public void setSalarie(boolean isSalarie) {
 	this.isSalarie = isSalarie;
+    }
+
+    @JsonProperty("hasCumulAncienEtNouveauSalaire")
+    public boolean hasCumulAncienEtNouveauSalaire() {
+	return hasCumulAncienEtNouveauSalaire;
+    }
+
+    public void setCumulAncienEtNouveauSalaire(boolean hasCumulAncienEtNouveauSalaire) {
+	this.hasCumulAncienEtNouveauSalaire = hasCumulAncienEtNouveauSalaire;
     }
 
     @JsonProperty("isSansRessource")

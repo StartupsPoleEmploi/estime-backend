@@ -112,4 +112,12 @@ public class InformationsPersonnellesUtile {
 	}
 	return 0;
     }
+
+    public boolean isSalarie(DemandeurEmploi demandeurEmploi) {
+	return (demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().isSalarie());
+    }
+
+    public boolean hasCumulAncienEtNouveauSalaire(DemandeurEmploi demandeurEmploi) {
+	return (isSalarie(demandeurEmploi) && demandeurEmploi.getInformationsPersonnelles().hasCumulAncienEtNouveauSalaire());
+    }
 }

@@ -85,6 +85,29 @@ public class Commun {
 
     }
 
+    protected DemandeurEmploi createDemandeurEmploiSalarie() throws ParseException {
+	boolean isEnCouple = false;
+	int nbEnfant = 1;
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.NON_BENEFICIAIRE, isEnCouple, nbEnfant);
+	demandeurEmploi.getInformationsPersonnelles().setDateNaissance(utileTests.getDate("05-07-1986"));
+	demandeurEmploi.getInformationsPersonnelles().setNationalite(NationaliteEnum.FRANCAISE.getValeur());
+	demandeurEmploi.getSituationFamiliale().getPersonnesACharge().get(0).getInformationsPersonnelles().setDateNaissance(utileTests.getDateNaissanceFromAge(9));
+	demandeurEmploi.getFuturTravail().setTypeContrat(TypeContratTravailEnum.CDI.name());
+	demandeurEmploi.getFuturTravail().setNombreHeuresTravailleesSemaine(20);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(800);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1245);
+	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(80);
+	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(12);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().getAidesCAF().getAidesFamiliales().setAllocationSoutienFamilial(117f);
+
+	demandeurEmploi.getInformationsPersonnelles().setSalarie(true);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(utileTests.creerPeriodeTravailleeAvantSimulation(1000, 1291, 1));
+
+	return demandeurEmploi;
+
+    }
+
     protected void initMocks() throws ParseException, JsonIOException, JsonSyntaxException, FileNotFoundException, URISyntaxException, JSONException {
 
 	doReturn(utileTests.getDate("01-01-2022")).when(dateUtile).getDateJour();

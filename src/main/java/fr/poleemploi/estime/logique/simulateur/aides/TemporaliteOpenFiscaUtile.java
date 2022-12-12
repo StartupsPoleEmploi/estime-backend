@@ -87,7 +87,7 @@ public class TemporaliteOpenFiscaUtile {
 	if (temporaliteCAFUtile.isPrimeActiviteAVerser(numeroMoisSimule, demandeurEmploi)) {
 	    verserAide(openFiscaRoot, aidesPourCeMois, dateDebutSimulation, numeroMoisSimule, SituationAppelOpenFiscaEnum.PPA);
 	} else {
-	    primeActiviteUtile.reporterPrimeActivite(simulation, aidesPourCeMois, numeroMoisSimule);
+	    primeActiviteUtile.reporterPrimeActivite(simulation, aidesPourCeMois, demandeurEmploi, dateDebutSimulation, numeroMoisSimule);
 	}
 	if (temporalitePEUtile.isAREAReporter(demandeurEmploi, numeroMoisSimule)) {
 	    areUtile.reporterARE(aidesPourCeMois, demandeurEmploi, numeroMoisSimule, dateDebutSimulation);
