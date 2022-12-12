@@ -77,6 +77,26 @@ public class PeriodeTravailleeAvantSimulationUtile {
 	return getMoisTravaillesAvantSimulation(demandeurEmploi, Math.abs(numeroMoisPeriodeOpenfisca + 1)).getSalaire();
     }
 
+    public Salaire getSalaireAvecCumulAvantPeriodeSimulation(DemandeurEmploi demandeurEmploi, int numeroMoisPeriodeOpenfisca) {
+	int indexMoisAvantPeriode = INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION + (numeroMoisPeriodeOpenfisca + 1);
+	if (indexMoisAvantPeriode > INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION) {
+	    return getSalaireCumul(demandeurEmploi);
+	}
+	return getMoisTravaillesAvantSimulation(demandeurEmploi, Math.abs(numeroMoisPeriodeOpenfisca + 1)).getSalaire();
+    }
+
+    public Salaire getSalaireCumul(DemandeurEmploi demandeurEmploi) {
+	Salaire futurSalaire = demandeurEmploi.getFuturTravail().getSalaire();
+	Salaire ancienSalaire = getMoisTravaillesAvantSimulation(demandeurEmploi, 0).getSalaire();
+	float salaireNet = futurSalaire.getMontantMensuelNet() + ancienSalaire.getMontantMensuelNet();
+	float salaireBrut = futurSalaire.getMontantMensuelBrut() + ancienSalaire.getMontantMensuelBrut();
+	Salaire salaireCumule = new Salaire();
+	salaireCumule.setMontantMensuelNet(salaireNet);
+	salaireCumule.setMontantMensuelBrut(salaireBrut);
+
+	return salaireCumule;
+    }
+
     public Salaire getSalaireAvantPeriodeSimulationPersonne(Personne personne, int numeroMoisPeriodeOpenfisca) {
 	int indexMoisAvantPeriode = INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION + (numeroMoisPeriodeOpenfisca + 1);
 	if (indexMoisAvantPeriode > INDEX_MAX_MOIS_TRAVAILLES_AVANT_SIMULATION && personne.getRessourcesFinancieres().getSalaire() != null) {

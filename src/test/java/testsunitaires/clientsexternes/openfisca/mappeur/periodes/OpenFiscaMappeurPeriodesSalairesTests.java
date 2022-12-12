@@ -94,6 +94,28 @@ class OpenFiscaMappeurPeriodesSalairesTests extends Commun {
 	assertThat(demandeurOpenFisca.getSalaireImposable().toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
     }
 
+    /**
+     * Demandeur ASS sans cumul ASS + salaire dans les 3 mois avant la simulation
+     * Création de la période salaire pour une simulation au mois M5
+     * 
+     */
+    @Test
+    void mapPeriodeCumulAncienEtNouveauSalaireTest() throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ParseException {
+
+	String openFiscaPayloadSalaireImposableExpected = utileTests.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodesSalairesTests/demandeur/salaire-imposable-cumul-ancien-et-nouveau-salaire.json");
+	String openFiscaPayloadSalaireBaseExpected = utileTests.getStringFromJsonFile(
+		"testsunitaires/clientsexternes.openfisca.mappeur/OpenFiscaMappeurPeriodesSalairesTests/demandeur/salaire-base-cumul-ancien-et-nouveau-salaire.json");
+
+	DemandeurEmploi demandeurEmploi = creerDemandeurEmploiCumulAncienEtNouveauSalairesTests();
+
+	OpenFiscaIndividu demandeurOpenFisca = new OpenFiscaIndividu();
+	openFiscaMappeurPeriode.creerPeriodesSalaireCumulDemandeur(demandeurOpenFisca, demandeurEmploi, dateDebutSimulation);
+
+	assertThat(demandeurOpenFisca.getSalaireDeBase().toString()).hasToString(openFiscaPayloadSalaireBaseExpected);
+	assertThat(demandeurOpenFisca.getSalaireImposable().toString()).hasToString(openFiscaPayloadSalaireImposableExpected);
+    }
+
     private DemandeurEmploi creerDemandeurEmploiSalairesTests() throws ParseException {
 
 	boolean isEnCouple = false;
@@ -113,6 +135,41 @@ class OpenFiscaMappeurPeriodesSalairesTests extends Commun {
 	Salaire salaireMoisMoins7 = utileTests.creerSalaire(850, 1101);
 	Salaire salaireMoisMoins9 = utileTests.creerSalaire(850, 1101);
 	Salaire salaireMoisMoins11 = utileTests.creerSalaire(850, 1101);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins1, 1);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins3, 3);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins4, 4);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins5, 5);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins7, 7);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins9, 9);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins11, 11);
+	periodeTravailleeAvantSimulation.setMois(utileTests.createMoisTravaillesAvantSimulation(salaires));
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setPeriodeTravailleeAvantSimulation(periodeTravailleeAvantSimulation);
+
+	return demandeurEmploi;
+    }
+
+    private DemandeurEmploi creerDemandeurEmploiCumulAncienEtNouveauSalairesTests() throws ParseException {
+
+	boolean isEnCouple = false;
+	int nbEnfant = 0;
+	DemandeurEmploi demandeurEmploi = utileTests.creerBaseDemandeurEmploi(TypePopulationEnum.NON_BENEFICIAIRE, isEnCouple, nbEnfant);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelBrut(1291);
+	demandeurEmploi.getFuturTravail().getSalaire().setMontantMensuelNet(1000);
+	demandeurEmploi.getInformationsPersonnelles().setSalarie(true);
+	demandeurEmploi.getInformationsPersonnelles().setCumulAncienEtNouveauSalaire(true);
+
+	demandeurEmploi.getRessourcesFinancieresAvantSimulation().setHasTravailleAuCoursDerniersMois(true);
+	PeriodeTravailleeAvantSimulation periodeTravailleeAvantSimulation = new PeriodeTravailleeAvantSimulation();
+	Salaire[] salaires = utileTests.creerSalaires(0, 0, 12);
+	Salaire salaireMois0 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins1 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins3 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins4 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins5 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins7 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins9 = utileTests.creerSalaire(850, 1101);
+	Salaire salaireMoisMoins11 = utileTests.creerSalaire(850, 1101);
+	salaires = utileTests.ajouterSalaire(salaires, salaireMois0, 0);
 	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins1, 1);
 	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins3, 3);
 	salaires = utileTests.ajouterSalaire(salaires, salaireMoisMoins4, 4);

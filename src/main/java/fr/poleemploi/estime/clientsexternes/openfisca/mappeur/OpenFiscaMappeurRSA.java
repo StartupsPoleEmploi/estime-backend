@@ -18,7 +18,6 @@ import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaRoot;
 import fr.poleemploi.estime.commun.enumerations.exceptions.InternalServerMessages;
 import fr.poleemploi.estime.commun.enumerations.exceptions.LoggerMessages;
 import fr.poleemploi.estime.services.exceptions.InternalServerException;
-import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 
 @Component
 public class OpenFiscaMappeurRSA {
@@ -42,10 +41,5 @@ public class OpenFiscaMappeurRSA {
 	    LOGGER.error(String.format(LoggerMessages.SIMULATION_IMPOSSIBLE_PROBLEME_TECHNIQUE.getMessage(), e.getMessage()));
 	    throw new InternalServerException(InternalServerMessages.SIMULATION_IMPOSSIBLE.getMessage());
 	}
-    }
-
-    public OpenFiscaFamille addRSAOpenFiscaIndividu(OpenFiscaFamille openFiscaFamille, DemandeurEmploi demandeurEmploi, LocalDate dateDebutSimulation) {
-	openFiscaFamille.setRevenuSolidariteActive(openFiscaMappeurPeriode.creerPeriodesOpenFiscaRSA(demandeurEmploi, dateDebutSimulation));
-	return openFiscaFamille;
     }
 }
