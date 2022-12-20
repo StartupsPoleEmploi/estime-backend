@@ -3,12 +3,15 @@ package testsintegration.simulation.montants.openfisca.aide_mobilite;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -35,10 +38,17 @@ class MontantsAideMobiliteTests extends Commun {
     @Autowired
     private OpenFiscaClient openFiscaClient;
 
+    private LocalDate dateDebutPeriodeSimulee;
+
     @Configuration
     @ComponentScan({ "utile.tests", "fr.poleemploi.estime" })
     public static class SpringConfig {
 
+    }
+
+    @BeforeEach
+    void initBeforeTest() throws ParseException {
+	dateDebutPeriodeSimulee = dateUtile.getDateJour();
     }
 
     @Test
@@ -52,13 +62,12 @@ class MontantsAideMobiliteTests extends Commun {
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(65);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(10);
 	// Lorsque je calcul le montant de l'Aide Mobilité
-	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 
 	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideMobilite(openFiscaRoot, dateDebutPeriodeSimulee);
 
 	// Alors le demandeur est éligible à l'Aide Mobilité
-	assertThat(openFiscaRetourSimulation.getMontantAideMobilite()).isEqualTo(0.20f * 65.0f * 10.0f);
+	assertThat(openFiscaRetourSimulation.getMontantAideMobilite()).isEqualTo(BigDecimal.valueOf(0.23f * 65.0f * 10.0f).setScale(0, RoundingMode.HALF_UP).floatValue());
     }
 
     @Test
@@ -75,13 +84,12 @@ class MontantsAideMobiliteTests extends Commun {
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(30);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(10);
 	// Lorsque je calcul le montant de l'Aide Mobilité
-	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 
 	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideMobilite(openFiscaRoot, dateDebutPeriodeSimulee);
 
 	// Alors le demandeur est éligible à l'Aide Mobilité
-	assertThat(openFiscaRetourSimulation.getMontantAideMobilite()).isEqualTo(0.20f * 30.0f * 10.0f);
+	assertThat(openFiscaRetourSimulation.getMontantAideMobilite()).isEqualTo(BigDecimal.valueOf(0.23f * 30.0f * 10.0f).setScale(0, RoundingMode.HALF_UP).floatValue());
     }
 
     @Test
@@ -96,12 +104,11 @@ class MontantsAideMobiliteTests extends Commun {
 	demandeurEmploi.getFuturTravail().setDistanceKmDomicileTravail(65);
 	demandeurEmploi.getFuturTravail().setNombreTrajetsDomicileTravail(10);
 	// Lorsque je calcul le montant de l'Aide Mobilité
-	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
 
 	OpenFiscaRoot openFiscaRoot = openFiscaClient.callApiCalculate(demandeurEmploi, dateDebutPeriodeSimulee, false);
 	OpenFiscaRetourSimulation openFiscaRetourSimulation = openFiscaClient.calculerAideMobilite(openFiscaRoot, dateDebutPeriodeSimulee);
 
 	// Alors le demandeur est éligible à l'Aide Mobilité
-	assertThat(openFiscaRetourSimulation.getMontantAideMobilite()).isEqualTo(0.20f * 65.0f * 10.0f);
+	assertThat(openFiscaRetourSimulation.getMontantAideMobilite()).isEqualTo(BigDecimal.valueOf(0.23f * 65.0f * 10.0f).setScale(0, RoundingMode.HALF_UP).floatValue());
     }
 }

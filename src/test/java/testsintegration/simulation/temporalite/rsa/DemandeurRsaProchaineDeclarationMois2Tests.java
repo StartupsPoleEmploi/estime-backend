@@ -295,7 +295,7 @@ class DemandeurRsaProchaineDeclarationMois2Tests extends Commun {
 		assertThat(ppa.getMontant()).isEqualTo(294);
 	    });
 	    assertThat(simulationMensuelle.getAides().get(AideEnum.RSA.getCode())).satisfies(rsa -> {
-		assertThat(rsa.getMontant()).isEqualTo(84);
+		assertThat(rsa.getMontant()).isEqualTo(94);
 	    });
 	});
     }

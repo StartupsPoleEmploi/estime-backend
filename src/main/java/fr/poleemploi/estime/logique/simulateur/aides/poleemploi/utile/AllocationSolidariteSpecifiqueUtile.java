@@ -23,6 +23,7 @@ import fr.poleemploi.estime.services.ressources.MoisTravailleAvantSimulation;
 @Component
 public class AllocationSolidariteSpecifiqueUtile {
 
+    private static final int NOMBRE_MOIS_MAX_ASS_MICRO_ENTREPRENEUR_ELIGIBLE = 3;
     private static final int NOMBRE_MOIS_MAX_ASS_ELIGIBLE = 4;
     private static final int NOMBRE_MOIS_MAX_ASS_BENEFICIAIRE_ACRE_ELIGIBLE = 6;
 
@@ -154,6 +155,6 @@ public class AllocationSolidariteSpecifiqueUtile {
     }
 
     private int getNombreMoisEligiblesMicroEntrepreneurNonACRE(int nombreMoisDepuisCreationEntreprise) {
-	return Math.max(0, NOMBRE_MOIS_MAX_ASS_ELIGIBLE - nombreMoisDepuisCreationEntreprise);
+	return Math.max(0, NOMBRE_MOIS_MAX_ASS_MICRO_ENTREPRENEUR_ELIGIBLE - nombreMoisDepuisCreationEntreprise);
     }
 }
