@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.MessageInformatifEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
+import fr.poleemploi.estime.commun.enumerations.StatutOccupationLogementEnum;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.RessourcesFinancieresAvantSimulationUtile;
 import fr.poleemploi.estime.logique.simulateur.aides.utile.AideUtile;
 import fr.poleemploi.estime.services.ressources.Aide;
@@ -139,9 +140,11 @@ public class AidesLogementUtile {
 	boolean isEligible = false;
 	if (demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().getLogement() != null
 		&& demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement() != null
-		&& (demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireHLM()
-			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireMeuble()
-			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().isLocataireNonMeuble())) {
+		&& (demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement().equals(StatutOccupationLogementEnum.LOCATAIRE_HLM.getLibelle())
+			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement()
+				.equals(StatutOccupationLogementEnum.LOCATAIRE_MEUBLE.getLibelle())
+			|| demandeurEmploi.getInformationsPersonnelles().getLogement().getStatutOccupationLogement()
+				.equals(StatutOccupationLogementEnum.LOCATAIRE_NON_MEUBLE.getLibelle()))) {
 	    isEligible = true;
 	}
 	return isEligible;

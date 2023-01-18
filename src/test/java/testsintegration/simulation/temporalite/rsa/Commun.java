@@ -16,11 +16,11 @@ import com.google.gson.JsonSyntaxException;
 
 import fr.poleemploi.estime.clientsexternes.poleemploiio.PoleEmploiIOClient;
 import fr.poleemploi.estime.clientsexternes.poleemploiio.ressources.DetailIndemnisationPEIOOut;
+import fr.poleemploi.estime.commun.enumerations.StatutOccupationLogementEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.Coordonnees;
 import fr.poleemploi.estime.services.ressources.Logement;
-import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
 
 public class Commun {
@@ -45,9 +45,7 @@ public class Commun {
 
     protected Logement initLogement() {
 	Logement logement = new Logement();
-	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-	statutOccupationLogement.setLocataireNonMeuble(true);
-	logement.setStatutOccupationLogement(statutOccupationLogement);
+	logement.setStatutOccupationLogement(StatutOccupationLogementEnum.LOCATAIRE_NON_MEUBLE.getLibelle());
 	logement.setMontantLoyer(500f);
 	logement.setCoordonnees(createCoordonnees());
 	return logement;

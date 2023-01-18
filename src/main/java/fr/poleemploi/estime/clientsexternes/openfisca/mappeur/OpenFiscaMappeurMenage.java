@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.clientsexternes.openfisca.ressources.OpenFiscaMenage;
 import fr.poleemploi.estime.commun.utile.demandeuremploi.CodeDepartementUtile;
-import fr.poleemploi.estime.commun.utile.demandeuremploi.InformationsPersonnellesUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.Logement;
 
@@ -20,9 +19,6 @@ public class OpenFiscaMappeurMenage {
 
     @Autowired
     private OpenFiscaMappeurPeriode openFiscaPeriodeMappeur;
-
-    @Autowired
-    private InformationsPersonnellesUtile informationsPersonnellesUtile;
 
     @Autowired
     private CodeDepartementUtile codeDepartementUtile;
@@ -50,8 +46,7 @@ public class OpenFiscaMappeurMenage {
 	List<String> personneDeReference = new ArrayList<>();
 	personneDeReference.add(DEMANDEUR);
 	menageOpenFisca.setPersonneDeReference(personneDeReference);
-	menageOpenFisca.setStatutOccupationLogement(
-		openFiscaPeriodeMappeur.creerPeriodesOpenFisca(informationsPersonnellesUtile.getStatutOccupationLogement(logement), dateDebutSimulation));
+	menageOpenFisca.setStatutOccupationLogement(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getStatutOccupationLogement(), dateDebutSimulation));
 
 	return menageOpenFisca;
     }

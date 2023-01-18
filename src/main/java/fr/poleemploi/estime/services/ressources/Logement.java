@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Logement {
 
-    private StatutOccupationLogement statutOccupationLogement;
+    private String statutOccupationLogement;
     private Coordonnees coordonnees;
     @JsonProperty("isCrous")
     private boolean isCrous;
@@ -24,11 +24,11 @@ public class Logement {
 	this.coordonnees = coordonnees;
     }
 
-    public StatutOccupationLogement getStatutOccupationLogement() {
+    public String getStatutOccupationLogement() {
 	return statutOccupationLogement;
     }
 
-    public void setStatutOccupationLogement(StatutOccupationLogement statutOccupationLogement) {
+    public void setStatutOccupationLogement(String statutOccupationLogement) {
 	this.statutOccupationLogement = statutOccupationLogement;
     }
 

@@ -21,7 +21,6 @@ import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
-import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
 public class StagingEnvironnementUtile {
@@ -152,19 +151,8 @@ public class StagingEnvironnementUtile {
 	logement.setCrous(false);
 	logement.setMontantLoyer(null);
 	logement.setCoordonnees(creerBouchonCoordonnees());
-	logement.setStatutOccupationLogement(creerBouchonStatutOccupationLogement());
+	logement.setStatutOccupationLogement(null);
 	informationsPersonnelles.setLogement(logement);
-    }
-
-    private StatutOccupationLogement creerBouchonStatutOccupationLogement() {
-	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-	statutOccupationLogement.setLocataireHLM(false);
-	statutOccupationLogement.setLocataireMeuble(false);
-	statutOccupationLogement.setLocataireNonMeuble(false);
-	statutOccupationLogement.setLogeGratuitement(false);
-	statutOccupationLogement.setProprietaire(false);
-	statutOccupationLogement.setProprietaireAvecEmprunt(false);
-	return statutOccupationLogement;
     }
 
     private Coordonnees creerBouchonCoordonnees() {

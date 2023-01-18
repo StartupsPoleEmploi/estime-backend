@@ -49,7 +49,6 @@ import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
-import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
 public class Utile {
@@ -93,8 +92,7 @@ public class Utile {
 	informationsPersonnelles.setNom("DUPONT");
 	informationsPersonnelles.setPrenom("DANIEL");
 	Logement logement = new Logement();
-	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-	logement.setStatutOccupationLogement(statutOccupationLogement);
+	logement.setStatutOccupationLogement(null);
 	logement.setCoordonnees(creerCoordonnees());
 	informationsPersonnelles.setLogement(logement);
 	demandeurEmploi.setInformationsPersonnelles(informationsPersonnelles);
