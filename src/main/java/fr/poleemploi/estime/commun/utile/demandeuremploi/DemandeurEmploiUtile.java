@@ -24,7 +24,6 @@ import fr.poleemploi.estime.services.ressources.Individu;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
 import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.RessourcesFinancieresAvantSimulation;
-import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
 public class DemandeurEmploiUtile {
@@ -66,7 +65,6 @@ public class DemandeurEmploiUtile {
     private InformationsPersonnelles creerInformationsPersonnelles() {
 	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
 	Logement logement = creerLogement();
-	logement.setStatutOccupationLogement(creerStatutOccupationLogement());
 	logement.setCoordonnees(creerCoordonnees());
 	informationsPersonnelles.setLogement(logement);
 
@@ -127,7 +125,7 @@ public class DemandeurEmploiUtile {
     public void addInformationsPersonnelles(DemandeurEmploi demandeurEmploi, Individu individu) {
 	InformationsPersonnelles informationsPersonnelles = new InformationsPersonnelles();
 	Logement logement = creerLogement();
-	logement.setStatutOccupationLogement(creerStatutOccupationLogement());
+	logement.setStatutOccupationLogement(null);
 	logement.setCoordonnees(creerCoordonnees());
 	informationsPersonnelles.setLogement(logement);
 	informationsPersonnelles.setEmail(individu.getInformationsPersonnelles().getEmail());
@@ -190,17 +188,6 @@ public class DemandeurEmploiUtile {
 	logement.setCoordonnees(null);
 	logement.setStatutOccupationLogement(null);
 	return logement;
-    }
-
-    private StatutOccupationLogement creerStatutOccupationLogement() {
-	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-	statutOccupationLogement.setLocataireHLM(false);
-	statutOccupationLogement.setLocataireMeuble(false);
-	statutOccupationLogement.setLocataireNonMeuble(false);
-	statutOccupationLogement.setLogeGratuitement(false);
-	statutOccupationLogement.setProprietaire(false);
-	statutOccupationLogement.setProprietaireAvecEmprunt(false);
-	return statutOccupationLogement;
     }
 
     private Coordonnees creerCoordonnees() {

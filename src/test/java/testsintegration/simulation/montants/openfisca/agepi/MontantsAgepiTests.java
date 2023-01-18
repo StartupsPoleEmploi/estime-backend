@@ -89,7 +89,7 @@ class MontantsAgepiTests extends Commun {
 	personnesACharge.add(createEnfant(12));
 	personnesACharge.add(createEnfant(9));
 	personnesACharge.add(createEnfant(7));
-	personnesACharge.add(createEnfant(0));
+	personnesACharge.add(createEnfant(1));
 	DemandeurEmploi demandeurEmploi = createDemandeurEmploi(isEnCouple, personnesACharge);
 	// Lorsque je calcul le montant de l'AGEPI
 	LocalDate dateDebutPeriodeSimulee = dateUtile.getDateJour();
@@ -187,4 +187,5 @@ class MontantsAgepiTests extends Commun {
 	// Alors le demandeur est éligible à l'AGEPI
 	assertThat(openFiscaRetourSimulation.getMontantAgepi()).isEqualTo(260);
     }
+
 }

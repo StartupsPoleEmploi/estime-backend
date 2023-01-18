@@ -11,7 +11,6 @@ public class AllocationARE {
     private Integer nombreJoursRestants;
     @JsonProperty("hasDegressiviteAre")
     private Boolean hasDegressiviteAre;
-    private Boolean isTauxPlein;
     private Boolean isTauxReduit;
 
     public Float getAllocationMensuelleNet() {
@@ -63,14 +62,6 @@ public class AllocationARE {
 	this.hasDegressiviteAre = hasDegressiviteAre;
     }
 
-    public Boolean isTauxPlein() {
-	return isTauxPlein;
-    }
-
-    public void setTauxPlein(Boolean isTauxPlein) {
-	this.isTauxPlein = isTauxPlein;
-    }
-
     public Boolean isTauxReduit() {
 	return isTauxReduit;
     }
@@ -83,6 +74,6 @@ public class AllocationARE {
     public String toString() {
 	return "AllocationARE [allocationJournaliereBrute=" + allocationJournaliereBrute + ", allocationMensuelleNet=" + allocationMensuelleNet
 		+ ", salaireJournalierReferenceBrut=" + salaireJournalierReferenceBrut + ", nombreJoursRestants=" + nombreJoursRestants + ", hasDegressiviteAre="
-		+ hasDegressiviteAre + ", isTauxPlein=" + isTauxPlein + ", isTauxReduit=" + isTauxReduit + "]";
+		+ hasDegressiviteAre + ", isTauxReduit=" + isTauxReduit + "]";
     }
 }

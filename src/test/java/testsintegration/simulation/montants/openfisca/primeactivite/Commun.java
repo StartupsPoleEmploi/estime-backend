@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import fr.poleemploi.estime.commun.enumerations.AideEnum;
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
 import fr.poleemploi.estime.commun.enumerations.OrganismeEnum;
+import fr.poleemploi.estime.commun.enumerations.StatutOccupationLogementEnum;
 import fr.poleemploi.estime.commun.enumerations.TypeContratTravailEnum;
 import fr.poleemploi.estime.commun.enumerations.TypePopulationEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
@@ -22,7 +23,6 @@ import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.Simulation;
 import fr.poleemploi.estime.services.ressources.SimulationMensuelle;
-import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 import utile.tests.Utile;
 
 public class Commun {
@@ -92,9 +92,7 @@ public class Commun {
 
     protected Logement createLogement() {
 	Logement logement = new Logement();
-	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-	statutOccupationLogement.setLocataireNonMeuble(true);
-	logement.setStatutOccupationLogement(statutOccupationLogement);
+	logement.setStatutOccupationLogement(StatutOccupationLogementEnum.LOCATAIRE_NON_MEUBLE.getLibelle());
 	logement.setMontantLoyer(500f);
 	logement.setCoordonnees(createCoordonnees());
 	return logement;

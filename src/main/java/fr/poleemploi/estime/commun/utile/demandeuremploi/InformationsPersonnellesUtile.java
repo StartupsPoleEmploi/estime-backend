@@ -8,12 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.poleemploi.estime.commun.enumerations.NationaliteEnum;
-import fr.poleemploi.estime.commun.enumerations.StatutOccupationLogementEnum;
 import fr.poleemploi.estime.commun.utile.DateUtile;
 import fr.poleemploi.estime.services.ressources.DemandeurEmploi;
 import fr.poleemploi.estime.services.ressources.InformationsPersonnelles;
-import fr.poleemploi.estime.services.ressources.Logement;
-import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 @Component
 public class InformationsPersonnellesUtile {
@@ -73,31 +70,6 @@ public class InformationsPersonnellesUtile {
 	return demandeurEmploi.getInformationsPersonnelles() != null && demandeurEmploi.getInformationsPersonnelles().getLogement() != null
 		&& demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees() != null
 		&& demandeurEmploi.getInformationsPersonnelles().getLogement().getCoordonnees().getCodePostal() != null;
-    }
-
-    public String getStatutOccupationLogement(Logement logement) {
-	if (logement != null) {
-	    StatutOccupationLogement statutOccupationLogement = logement.getStatutOccupationLogement();
-	    if (statutOccupationLogement.isLogeGratuitement()) {
-		return StatutOccupationLogementEnum.LOGE_GRATUITEMENT.getLibelle();
-	    }
-	    if (statutOccupationLogement.isLocataireHLM()) {
-		return StatutOccupationLogementEnum.LOCATAIRE_HLM.getLibelle();
-	    }
-	    if (statutOccupationLogement.isLocataireMeuble()) {
-		return StatutOccupationLogementEnum.LOCATAIRE_MEUBLE.getLibelle();
-	    }
-	    if (statutOccupationLogement.isLocataireNonMeuble()) {
-		return StatutOccupationLogementEnum.LOCATAIRE_NON_MEUBLE.getLibelle();
-	    }
-	    if (statutOccupationLogement.isProprietaire()) {
-		return StatutOccupationLogementEnum.PROPRIETAIRE.getLibelle();
-	    }
-	    if (statutOccupationLogement.isProprietaireAvecEmprunt()) {
-		return StatutOccupationLogementEnum.PROPRIETAIRE_AVEC_EMPRUNT.getLibelle();
-	    }
-	}
-	return StatutOccupationLogementEnum.NON_RENSEIGNE.getLibelle();
     }
 
     public boolean hasMicroEntreprise(DemandeurEmploi demandeurEmploi) {

@@ -12,7 +12,6 @@ import fr.poleemploi.estime.services.ressources.Logement;
 import fr.poleemploi.estime.services.ressources.Personne;
 import fr.poleemploi.estime.services.ressources.Salaire;
 import fr.poleemploi.estime.services.ressources.SituationFamiliale;
-import fr.poleemploi.estime.services.ressources.StatutOccupationLogement;
 
 public class Commun {
 
@@ -53,8 +52,7 @@ public class Commun {
 
     protected Logement creerLogement() {
 	Logement logement = new Logement();
-	StatutOccupationLogement statutOccupationLogement = new StatutOccupationLogement();
-	logement.setStatutOccupationLogement(statutOccupationLogement);
+	logement.setStatutOccupationLogement(null);
 	logement.setCoordonnees(creerCoordonnees());
 	return logement;
     }
