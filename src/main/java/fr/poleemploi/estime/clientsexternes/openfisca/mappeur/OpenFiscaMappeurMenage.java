@@ -41,13 +41,12 @@ public class OpenFiscaMappeurMenage {
 	    menageOpenFisca.setLogementCrous(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isCrous(), dateDebutSimulation));
 	    menageOpenFisca.setLogementConventionne(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isConventionne(), dateDebutSimulation));
 	    menageOpenFisca.setColoc(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.isColloc(), dateDebutSimulation));
+	    menageOpenFisca.setStatutOccupationLogement(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getStatutOccupationLogement(), dateDebutSimulation));
 	}
 
 	List<String> personneDeReference = new ArrayList<>();
 	personneDeReference.add(DEMANDEUR);
 	menageOpenFisca.setPersonneDeReference(personneDeReference);
-	menageOpenFisca.setStatutOccupationLogement(openFiscaPeriodeMappeur.creerPeriodesOpenFisca(logement.getStatutOccupationLogement(), dateDebutSimulation));
-
 	return menageOpenFisca;
     }
 }
